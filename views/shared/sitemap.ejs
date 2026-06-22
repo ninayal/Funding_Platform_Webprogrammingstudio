@@ -1,0 +1,34 @@
+<%- include('header') %>
+<div class="page-header"><div class="container"><h1>Sitemap</h1><p>Overview of all pages on MySite.</p></div></div>
+<div class="container" style="max-width:800px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;">
+    <div class="card"><h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">🏠 Main</h2><ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;"><li><a href="/">Home</a></li><li><a href="/sitemap">Sitemap</a></li></ul></div>
+    <div class="card"><h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">👤 Account</h2><ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;"><li><a href="/auth/register">Register</a></li><li><a href="/auth/login">Log In</a></li><li><a href="/auth/profile">My Profile</a></li><li><a href="/admin">Administration</a></li></ul></div>
+    <div class="card"><h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">🛒 Shopping</h2><ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;"><li><a href="/cart/products">Browse Products</a></li><li><a href="/cart">My Cart</a></li><li><a href="/cart/checkout">Checkout</a></li></ul></div>
+    <div class="card">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">💬 Forum</h2>
+      <ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;">
+        <li><a href="/forum">All Threads</a></li>
+        <li><a href="/forum/new">New Thread</a></li>
+        <% threads.forEach(t => { %><li><a href="/forum/<%= t.id %>"><%= t.title %></a></li><% }) %>
+      </ul>
+    </div>
+    <div class="card">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">📝 Blog</h2>
+      <ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;">
+        <li><a href="/blog">All Posts</a></li>
+        <li><a href="/blog/new">New Post</a></li>
+        <% blogPosts.forEach(p => { %><li><a href="/blog/<%= p.id %>"><%= p.title %></a></li><% }) %>
+      </ul>
+    </div>
+    <div class="card">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">⭐ Reviews</h2>
+      <ul style="font-size:.9rem;display:flex;flex-direction:column;gap:.4rem;">
+        <li><a href="/reviews">All Reviews</a></li>
+        <li><a href="/reviews/new">Write a Review</a></li>
+        <% reviews.forEach(r => { %><li><a href="/reviews/<%= r.id %>"><%= r.title %></a></li><% }) %>
+      </ul>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

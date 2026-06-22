@@ -1,0 +1,27 @@
+<%- include('../shared/header') %>
+<% const author = users.find(u=>u.id===post.authorId); %>
+<div class="page-header"><div class="container">
+  <p style="font-size:.85rem;color:var(--color-muted);margin-bottom:.4rem;"><a href="/blog">← Back to Blog</a></p>
+  <h1 style="font-size:1.75rem;"><%= post.title %></h1>
+  <p>by <strong><%= author?author.username:'Unknown' %></strong> · <%= post.createdAt.toDateString() %> · <span class="badge badge-blue"><%= post.category %></span></p>
+</div></div>
+
+<div class="container" style="max-width:760px;">
+  <% if(user && user.id===post.authorId){ %>
+  <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;">
+    <a href="/blog/<%= post.id %>/edit" class="btn btn-outline btn-sm">Edit Post</a>
+    <form action="/blog/<%= post.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete this post?')"><button class="btn btn-danger btn-sm">Delete Post</button></form>
+  </div>
+  <% } %>
+
+  <div style="height:280px;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-dk));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:6rem;margin-bottom:1.5rem;">
+    <%= post.category==='Technology'?'💻':post.category==='Education'?'🎓':'🌿' %>
+  </div>
+
+  <div class="card" style="line-height:1.8;font-size:.97rem;white-space:pre-wrap;"><%= post.content %></div>
+
+  <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+    <% post.tags.forEach(tag => { %><span class="badge badge-amber">#<%= tag %></span><% }) %>
+  </div>
+</div>
+<%- include('../shared/footer') %>

@@ -1,0 +1,114 @@
+<%- include('header') %>
+<div class="container" style="max-width:480px;margin-top:2.5rem;">
+  <div class="card">
+    <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem;">Create an Account</h1>
+    <p style="color:var(--color-muted);font-size:.9rem;margin-bottom:1.5rem;">Already have an account? <a href="/auth/login">Log in</a></p>
+
+    <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <form id="registerForm" action="/auth/register" method="POST" novalidate>
+      <div class="form-group">
+        <label for="username">Username *</label>
+        <input type="text" id="username" name="username" placeholder="e.g. john_doe" required minlength="3" maxlength="30" autocomplete="username" />
+        <span class="field-error" id="err-username"></span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+        <span class="field-error" id="err-email"></span>
+      </div>
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input type="password" id="password" name="password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
+        <span class="field-error" id="err-password"></span>
+      </div>
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password *</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password" />
+        <span class="field-error" id="err-confirm"></span>
+      </div>
+      <div class="form-group">
+        <label for="bio">Short Bio</label>
+        <textarea id="bio" name="bio" placeholder="Tell us a little about yourself…" rows="3" maxlength="300"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<style>
+.field-error { color: var(--color-danger); font-size:.8rem; margin-top:.2rem; display:block; min-height:1rem; }
+input.invalid { border-color: var(--color-danger); }
+input.valid   { border-color: var(--color-success); }
+</style>
+
+<script>
+const form = document.getElementById('registerForm');
+
+function showError(id, msg) {
+  document.getElementById('err-' + id).textContent = msg;
+  document.getElementById(id).classList.add('invalid');
+  document.getElementById(id).classList.remove('valid');
+}
+function clearError(id) {
+  document.getElementById('err-' + id).textContent = '';
+  document.getElementById(id).classList.remove('invalid');
+  document.getElementById(id).classList.add('valid');
+}
+
+// Live validation
+document.getElementById('username').addEventListener('input', function() {
+  if (this.value.length < 3) showError('username', 'Username must be at least 3 characters.');
+  else if (!/^[a-zA-Z0-9_]+$/.test(this.value)) showError('username', 'Only letters, numbers, and underscores.');
+  else clearError('username');
+  localStorage.setItem('reg_username', this.value);
+});
+
+document.getElementById('email').addEventListener('input', function() {
+  if (!/^\S+@\S+\.\S+$/.test(this.value)) showError('email', 'Enter a valid email address.');
+  else clearError('email');
+  localStorage.setItem('reg_email', this.value);
+});
+
+document.getElementById('password').addEventListener('input', function() {
+  if (this.value.length < 8) showError('password', 'Password must be at least 8 characters.');
+  else clearError('password');
+});
+
+document.getElementById('confirm_password').addEventListener('input', function() {
+  if (this.value !== document.getElementById('password').value) showError('confirm', 'Passwords do not match.');
+  else clearError('confirm');
+});
+
+document.getElementById('bio').addEventListener('input', function() {
+  localStorage.setItem('reg_bio', this.value);
+});
+
+// Restore saved data (Web Storage API)
+window.addEventListener('load', () => {
+  const u = localStorage.getItem('reg_username');
+  const e = localStorage.getItem('reg_email');
+  const b = localStorage.getItem('reg_bio');
+  if (u) document.getElementById('username').value = u;
+  if (e) document.getElementById('email').value    = e;
+  if (b) document.getElementById('bio').value      = b;
+});
+
+// Submit validation
+form.addEventListener('submit', function(e) {
+  let valid = true;
+  const username = document.getElementById('username').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const confirm  = document.getElementById('confirm_password').value;
+
+  if (username.length < 3)              { showError('username', 'Username must be at least 3 characters.'); valid = false; }
+  if (!/^\S+@\S+\.\S+$/.test(email))   { showError('email', 'Enter a valid email address.');               valid = false; }
+  if (password.length < 8)             { showError('password', 'Password must be at least 8 characters.'); valid = false; }
+  if (password !== confirm)            { showError('confirm', 'Passwords do not match.');                   valid = false; }
+
+  if (!valid) e.preventDefault();
+  else localStorage.removeItem('reg_username'), localStorage.removeItem('reg_email'), localStorage.removeItem('reg_bio');
+});
+</script>
+<%- include('footer') %>

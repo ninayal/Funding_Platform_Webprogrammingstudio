@@ -1,0 +1,72 @@
+<%- include('../shared/header') %>
+<div class="page-header"><div class="container">
+  <p style="font-size:.85rem;color:var(--color-muted);margin-bottom:.4rem;"><a href="/forum">← Forum</a></p>
+  <h1 style="font-size:1.5rem;"><%= thread.title %></h1>
+  <% const author = users.find(u=>u.id===thread.authorId); %>
+  <p>by <strong><%= author?author.username:'Unknown' %></strong> · <%= thread.createdAt.toDateString() %> · <%= thread.replies.length %> replies</p>
+</div></div>
+
+<div class="container" style="max-width:780px;">
+  <article class="card" style="border-left:4px solid var(--color-primary);margin-bottom:1rem;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;">
+      <p class="card__meta" style="margin:0;"><strong><%= author?author.username:'Unknown' %></strong> · <%= thread.createdAt.toLocaleString() %></p>
+      <% if (user && user.id === thread.authorId) { %>
+      <div style="display:flex;gap:.5rem;">
+        <a href="/forum/<%= thread.id %>/edit" class="btn btn-outline btn-sm">Edit</a>
+        <form action="/forum/<%= thread.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete this thread?')"><button class="btn btn-danger btn-sm">Delete</button></form>
+      </div>
+      <% } %>
+    </div>
+    <p style="margin-top:.75rem;"><%= thread.content %></p>
+  </article>
+
+  <h2 style="font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;"><%= thread.replies.length %> Replies</h2>
+
+  <% thread.replies.forEach(reply => { %>
+    <% const replyAuthor = users.find(u=>u.id===reply.authorId); %>
+    <article class="card" style="margin-bottom:.75rem;">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;">
+        <p class="card__meta" style="margin:0;"><strong><%= replyAuthor?replyAuthor.username:'Unknown' %></strong> · <%= reply.createdAt.toLocaleString() %></p>
+        <% if (user && user.id === reply.authorId) { %>
+          <span style="font-size:.8rem;color:var(--color-muted);">(your reply)</span>
+        <% } %>
+      </div>
+      <p style="margin-top:.6rem;font-size:.93rem;"><%= reply.content %></p>
+    </article>
+  <% }) %>
+
+  <% if (user) { %>
+  <div class="card" style="margin-top:1.5rem;">
+    <h2 style="font-size:1rem;font-weight:700;margin-bottom:1rem;">Post a Reply</h2>
+    <form id="replyForm" action="/forum/<%= thread.id %>/reply" method="POST" novalidate>
+      <div class="form-group">
+        <label for="content">Your Reply *</label>
+        <textarea id="content" name="content" rows="4" placeholder="Write your reply here…" required></textarea>
+        <span class="field-error" id="err-content"></span>
+      </div>
+      <button type="submit" class="btn btn-primary">Post Reply</button>
+    </form>
+  </div>
+  <% } else { %>
+  <div class="card" style="text-align:center;margin-top:1.5rem;"><p><a href="/auth/login">Log in</a> to post a reply.</p></div>
+  <% } %>
+</div>
+
+<style>.field-error{color:var(--color-danger);font-size:.8rem;margin-top:.2rem;display:block;min-height:1rem;}</style>
+<script>
+document.getElementById('replyForm') && document.getElementById('replyForm').addEventListener('submit', function(e) {
+  const content = document.getElementById('content').value.trim();
+  if (!content) { document.getElementById('err-content').textContent='Reply cannot be empty.'; e.preventDefault(); }
+  else document.getElementById('err-content').textContent='';
+});
+// Web Storage - save draft reply
+const contentEl = document.getElementById('content');
+if (contentEl) {
+  const key = 'reply_draft_<%= thread.id %>';
+  const saved = localStorage.getItem(key);
+  if (saved) contentEl.value = saved;
+  contentEl.addEventListener('input', () => localStorage.setItem(key, contentEl.value));
+  document.getElementById('replyForm').addEventListener('submit', () => localStorage.removeItem(key));
+}
+</script>
+<%- include('../shared/footer') %>

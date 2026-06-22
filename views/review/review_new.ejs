@@ -1,0 +1,38 @@
+<%- include('../shared/header') %>
+<div class="page-header"><div class="container">
+  <p style="font-size:.85rem;color:var(--color-muted);margin-bottom:.4rem;"><a href="/reviews">← Back to Reviews</a></p>
+  <h1><%= review ? 'Edit Review' : 'Write a Review' %></h1>
+</div></div>
+<div class="container" style="max-width:640px;">
+  <div class="card">
+    <% if(error){ %><div class="alert alert-error"><%= error %></div><% } %>
+    <form id="reviewForm" action="<%= review?'/reviews/'+review.id+'/edit':'/reviews/new' %>" method="POST" novalidate>
+      <div class="form-group"><label>Review Title *</label><input type="text" name="title" id="revTitle" value="<%= review?review.title:'' %>" placeholder="Summarise your experience" required /><span class="field-error" id="err-title"></span></div>
+      <div class="form-group"><label>Product Name</label><input type="text" name="product" value="<%= review?review.product||'':'' %>" placeholder="e.g. Wireless Headphones" /></div>
+      <div class="form-group">
+        <label>Star Rating *</label>
+        <select name="rating" id="ratingSelect" required>
+          <option value="">Select rating</option>
+          <% for(let i=5;i>=1;i--){ %><option value="<%= i %>" <%=review&&review.rating===i?'selected':''%>><%= '★'.repeat(i) %><%= '☆'.repeat(5-i) %> <%= ['','Terrible','Poor','Average','Good','Excellent'][i] %></option><% } %>
+        </select>
+        <span class="field-error" id="err-rating"></span>
+      </div>
+      <div class="form-group"><label>Full Review *</label><textarea name="description" id="revDesc" rows="6" placeholder="Describe your experience in detail…" required><%= review?review.description:'' %></textarea><span class="field-error" id="err-desc"></span></div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem;">
+        <button type="submit" class="btn btn-primary"><%= review?'Save Changes':'Submit Review' %></button>
+        <a href="/reviews" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+<style>.field-error{color:var(--color-danger);font-size:.8rem;margin-top:.2rem;display:block;min-height:1rem;}</style>
+<script>
+document.getElementById('reviewForm').addEventListener('submit', function(e) {
+  let valid=true;
+  if(!document.getElementById('revTitle').value.trim()) { document.getElementById('err-title').textContent='Title is required.'; valid=false; } else document.getElementById('err-title').textContent='';
+  if(!document.getElementById('ratingSelect').value)    { document.getElementById('err-rating').textContent='Please select a rating.'; valid=false; } else document.getElementById('err-rating').textContent='';
+  if(!document.getElementById('revDesc').value.trim())  { document.getElementById('err-desc').textContent='Review content is required.'; valid=false; } else document.getElementById('err-desc').textContent='';
+  if(!valid) e.preventDefault();
+});
+</script>
+<%- include('../shared/footer') %>

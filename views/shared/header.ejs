@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %> | MySite</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <a class="navbar__brand" href="/">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/forum">Forum</a></li>
+      <li><a href="/cart/products">Shop</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/reviews">Reviews</a></li>
+      <li><a href="/sitemap">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <% if (user) { %>
+        <% if (user.role === 'admin') { %><a href="/admin" class="btn btn-outline btn-sm">⚙️ Admin</a><% } %>
+        <a href="/auth/profile" class="btn btn-outline btn-sm">👤 <%= user.username %></a>
+        <a href="/auth/logout" class="btn btn-sm">Log Out</a>
+      <% } else { %>
+        <a href="/auth/login"    class="btn btn-outline btn-sm">Log In</a>
+        <a href="/auth/register" class="btn btn-primary btn-sm">Register</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+<main class="page-body" id="main-content">

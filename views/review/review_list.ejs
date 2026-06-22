@@ -1,0 +1,36 @@
+<%- include('../shared/header') %>
+<div class="page-header"><div class="container"><div class="header-row"><div><h1>Product Reviews</h1><p>Honest feedback from real customers.</p></div><% if(user){ %><a href="/reviews/new" class="btn btn-primary">+ Write a Review</a><% } %></div></div></div>
+<div class="container">
+  <form method="GET" action="/reviews" class="toolbar">
+    <input type="search" name="search" placeholder="Search reviews…" value="<%= query.search||'' %>" />
+    <select name="rating" onchange="this.form.submit()">
+      <option value="">All Ratings</option>
+      <option value="5" <%=query.rating==='5'?'selected':''%>>★★★★★ 5 Stars</option>
+      <option value="4" <%=query.rating==='4'?'selected':''%>>★★★★ 4+ Stars</option>
+      <option value="3" <%=query.rating==='3'?'selected':''%>>★★★ 3+ Stars</option>
+    </select>
+    <select name="sort" onchange="this.form.submit()">
+      <option value="latest"      <%=query.sort==='latest'?'selected':''%>>Newest First</option>
+      <option value="rating_desc" <%=query.sort==='rating_desc'?'selected':''%>>Highest Rating</option>
+    </select>
+    <button type="submit" class="btn btn-outline btn-sm">Search</button>
+  </form>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:2rem;">
+    <% if(reviews.length===0){ %><p style="color:var(--color-muted);">No reviews found.</p><% } %>
+    <% reviews.forEach(r => { %>
+      <% const reviewer = users.find(u=>u.id===r.reviewerId); %>
+      <article class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:150px;background:linear-gradient(135deg,#1E293B,#0F172A);display:flex;align-items:center;justify-content:center;font-size:4rem;">⭐</div>
+        <div style="padding:1.1rem;flex:1;display:flex;flex-direction:column;">
+          <div class="stars stars--sm" aria-label="<%= r.rating %> out of 5 stars"><%= '★'.repeat(r.rating) %><%= '☆'.repeat(5-r.rating) %></div>
+          <h2 style="font-size:.97rem;font-weight:700;margin:.3rem 0;"><a href="/reviews/<%= r.id %>"><%= r.title %></a></h2>
+          <p class="card__meta">by <strong><%= reviewer?reviewer.username:'Unknown' %></strong> · <%= r.createdAt.toDateString() %></p>
+          <p style="font-size:.87rem;color:var(--color-muted);flex:1;"><%= r.description.substring(0,100) %>…</p>
+          <a href="/reviews/<%= r.id %>" class="btn btn-outline btn-sm" style="margin-top:.85rem;align-self:flex-start;">Read Full Review</a>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</div>
+<%- include('../shared/footer') %>

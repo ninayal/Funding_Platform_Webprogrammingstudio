@@ -1,0 +1,77 @@
+<%- include('header') %>
+<div class="page-header"><div class="container"><div class="header-row"><div><h1>Site Administration</h1><p>Manage users and forum content.</p></div><span class="badge badge-red">Admin Only</span></div></div></div>
+<div class="container">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;">
+    <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);"><%= users.length %></p><p style="font-size:.85rem;color:var(--color-muted);">Total Users</p></div>
+    <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);"><%= threads.filter(t=>!t.isArchived).length %></p><p style="font-size:.85rem;color:var(--color-muted);">Active Threads</p></div>
+    <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);"><%= users.filter(u=>u.isLocked).length %></p><p style="font-size:.85rem;color:var(--color-muted);">Locked Accounts</p></div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">User Management</h2>
+    <div class="toolbar"><input type="search" id="userSearch" placeholder="Search users…" /><select id="statusFilter"><option value="">All Status</option><option value="active">Active</option><option value="locked">Locked</option></select></div>
+    <div class="table-wrap">
+      <table id="userTable">
+        <thead><tr><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% users.forEach(u => { %>
+          <tr data-status="<%= u.isLocked?'locked':'active' %>">
+            <td><strong><%= u.username %></strong></td>
+            <td><%= u.email %></td>
+            <td><span class="badge badge-<%= u.role==='admin'?'blue':'amber' %>"><%= u.role %></span></td>
+            <td><span class="badge badge-<%= u.isLocked?'red':'green' %>"><%= u.isLocked?'Locked':'Active' %></span></td>
+            <td>
+              <% if (!u.isLocked) { %>
+                <form action="/admin/users/<%= u.id %>/lock" method="POST" style="display:inline;"><button class="btn btn-danger btn-sm">Lock</button></form>
+              <% } else { %>
+                <form action="/admin/users/<%= u.id %>/unlock" method="POST" style="display:inline;"><button class="btn btn-primary btn-sm">Unlock</button></form>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Forum Management</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Thread Title</th><th>Replies</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% threads.forEach(t => { %>
+          <tr>
+            <td><a href="/forum/<%= t.id %>"><%= t.title %></a></td>
+            <td><%= t.replies.length %></td>
+            <td><span class="badge badge-<%= t.isArchived?'red':'green' %>"><%= t.isArchived?'Archived':'Active' %></span></td>
+            <td>
+              <% if (!t.isArchived) { %>
+                <form action="/admin/threads/<%= t.id %>/archive" method="POST" style="display:inline;"><button class="btn btn-outline btn-sm">Archive</button></form>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// Live search + filter for user table
+function filterUsers() {
+  const search = document.getElementById('userSearch').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  document.querySelectorAll('#userTable tbody tr').forEach(row => {
+    const text   = row.textContent.toLowerCase();
+    const rowStatus = row.dataset.status;
+    const matchSearch = text.includes(search);
+    const matchStatus = !status || rowStatus === status;
+    row.style.display = matchSearch && matchStatus ? '' : 'none';
+  });
+}
+document.getElementById('userSearch').addEventListener('input', filterUsers);
+document.getElementById('statusFilter').addEventListener('change', filterUsers);
+</script>
+<%- include('footer') %>
