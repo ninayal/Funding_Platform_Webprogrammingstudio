@@ -2,6 +2,7 @@ const express  = require('express');
 const router   = express.Router();
 const bcrypt   = require('bcryptjs');
 const { users } = require('../constants/data');
+const { requireLogin } = require('../middleware/auth');
 
 router.get('/register', (req, res) => res.render('shared/register', { title: 'Register', error: null }));
 
