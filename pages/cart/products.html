@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Products | MySite</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../forum/forum_list.html">Forum</a></li>
+      <li><a href="products.html" class="active">Shop</a></li>
+      <li><a href="../blog/blog_list.html">Blog</a></li>
+      <li><a href="../review/review_list.html">Reviews</a></li>
+      <li><a href="../shared/sitemap.html">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <a href="../shared/login.html" class="btn btn-outline btn-sm">Log In</a>
+      <a href="../shared/register.html" class="btn btn-primary btn-sm">Register</a>
+    </div>
+  </div></nav>
+
+  <main class="page-body">
+    <div class="page-header"><div class="container">
+      <div class="header-row">
+        <div><h1>Browse Products</h1><p>Find what you are looking for and add it to your cart.</p></div>
+        <a href="cart.html" class="btn btn-outline">🛒 View Cart (3)</a>
+      </div>
+    </div></div>
+    <div class="container">
+      <div class="toolbar">
+        <input type="search" placeholder="Search products…" aria-label="Search products" />
+        <select aria-label="Sort by"><option>Sort: Featured</option><option>Price Low–High</option><option>Price High–Low</option><option>Name A–Z</option></select>
+        <select aria-label="Category"><option>All Categories</option><option>Electronics</option><option>Books</option><option>Furniture</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-bottom:2rem;">
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">🎧</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Electronics</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">Wireless Noise-Cancelling Headphones</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">High-quality audio with 30-hour battery life.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$149.99</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">📚</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Books</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">Python Programming – 3rd Edition</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">Comprehensive guide from beginner to advanced Python.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$39.99</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">🪑</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Furniture</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">Ergonomic Office Chair</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">Lumbar support and adjustable armrests.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$299.00</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">🔌</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Electronics</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">USB-C Hub 7-in-1</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">Expand your laptop with HDMI, USB 3.0, and SD card ports.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$49.99</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">⌨️</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Electronics</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">Mechanical Keyboard (TKL)</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">Tactile switches, RGB backlighting, compact layout.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$89.99</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;">
+          <div style="background:var(--color-bg);height:160px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--color-border);font-size:3rem;">🖥️</div>
+          <div style="padding:1rem;"><span class="badge badge-blue" style="margin-bottom:.4rem;">Electronics</span><h2 style="font-size:.95rem;font-weight:700;margin-bottom:.25rem;">27" 4K Monitor</h2><p style="font-size:.82rem;color:var(--color-muted);margin-bottom:.6rem;">Crisp IPS panel with USB-C connectivity and 144Hz refresh.</p><div style="display:flex;align-items:center;justify-content:space-between;"><strong style="font-size:1.05rem;color:var(--color-primary);">$399.00</strong><a href="cart.html" class="btn btn-primary btn-sm">Add to Cart</a></div></div>
+        </article>
+      </div>
+      <nav class="pagination" aria-label="Pagination"><span class="current">1</span><a href="#">2</a><a href="#">Next »</a></nav>
+    </div>
+  </main>
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body>
+</html>

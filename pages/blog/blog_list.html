@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blog | MySite</title><link rel="stylesheet" href="../../css/style.css"/></head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links"><li><a href="../../index.html">Home</a></li><li><a href="../forum/forum_list.html">Forum</a></li><li><a href="../cart/products.html">Shop</a></li><li><a href="blog_list.html" class="active">Blog</a></li><li><a href="../review/review_list.html">Reviews</a></li><li><a href="../shared/sitemap.html">Sitemap</a></li></ul>
+    <div class="navbar__auth"><a href="../shared/login.html" class="btn btn-outline btn-sm">Log In</a><a href="../shared/register.html" class="btn btn-primary btn-sm">Register</a></div>
+  </div></nav>
+  <main class="page-body">
+    <div class="page-header"><div class="container"><div class="header-row"><div><h1>Blog</h1><p>Articles, tutorials, and stories from our community.</p></div><a href="blog_new.html" class="btn btn-primary">+ New Post</a></div></div></div>
+    <div class="container">
+      <div class="toolbar">
+        <input type="search" placeholder="Search posts…" aria-label="Search blog posts" />
+        <select aria-label="Category"><option>All Categories</option><option>Technology</option><option>Lifestyle</option><option>Education</option></select>
+        <select aria-label="Sort"><option>Newest First</option><option>Oldest First</option><option>Title A–Z</option></select>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:2rem;">
+        <article class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="height:170px;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">💻</div>
+          <div style="padding:1.1rem;flex:1;display:flex;flex-direction:column;"><span class="badge badge-blue" style="align-self:flex-start;margin-bottom:.5rem;">Technology</span><h2 style="font-size:1rem;font-weight:700;margin-bottom:.3rem;"><a href="blog_detail.html">Getting Started with Web Development</a></h2><p class="card__meta">by <strong>jane_d</strong> · Jun 20, 2026</p><p style="font-size:.87rem;color:var(--color-muted);flex:1;">Learn the fundamentals of HTML, CSS, and JavaScript to build your first web page from scratch.</p><a href="blog_detail.html" class="btn btn-outline btn-sm" style="margin-top:.85rem;align-self:flex-start;">Read More</a></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="height:170px;background:linear-gradient(135deg,#8B5CF6,#6D28D9);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🎨</div>
+          <div style="padding:1.1rem;flex:1;display:flex;flex-direction:column;"><span class="badge badge-blue" style="align-self:flex-start;margin-bottom:.5rem;">Technology</span><h2 style="font-size:1rem;font-weight:700;margin-bottom:.3rem;"><a href="blog_detail.html">10 Tips for Better CSS</a></h2><p class="card__meta">by <strong>css_pro</strong> · Jun 18, 2026</p><p style="font-size:.87rem;color:var(--color-muted);flex:1;">Practical techniques to write cleaner, more maintainable CSS — from Flexbox tricks to custom properties.</p><a href="blog_detail.html" class="btn btn-outline btn-sm" style="margin-top:.85rem;align-self:flex-start;">Read More</a></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="height:170px;background:linear-gradient(135deg,#10B981,#047857);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🐍</div>
+          <div style="padding:1.1rem;flex:1;display:flex;flex-direction:column;"><span class="badge badge-green" style="align-self:flex-start;margin-bottom:.5rem;">Education</span><h2 style="font-size:1rem;font-weight:700;margin-bottom:.3rem;"><a href="blog_detail.html">Why Python is Great for Beginners</a></h2><p class="card__meta">by <strong>pydev</strong> · Jun 15, 2026</p><p style="font-size:.87rem;color:var(--color-muted);flex:1;">Python clean syntax and vast libraries make it the perfect first programming language.</p><a href="blog_detail.html" class="btn btn-outline btn-sm" style="margin-top:.85rem;align-self:flex-start;">Read More</a></div>
+        </article>
+        <article class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="height:170px;background:linear-gradient(135deg,#F59E0B,#B45309);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🏠</div>
+          <div style="padding:1.1rem;flex:1;display:flex;flex-direction:column;"><span class="badge badge-amber" style="align-self:flex-start;margin-bottom:.5rem;">Lifestyle</span><h2 style="font-size:1rem;font-weight:700;margin-bottom:.3rem;"><a href="blog_detail.html">Staying Productive While Working From Home</a></h2><p class="card__meta">by <strong>remote_life</strong> · Jun 10, 2026</p><p style="font-size:.87rem;color:var(--color-muted);flex:1;">My daily routine and tools that keep me focused and energised working remotely.</p><a href="blog_detail.html" class="btn btn-outline btn-sm" style="margin-top:.85rem;align-self:flex-start;">Read More</a></div>
+        </article>
+      </div>
+      <nav class="pagination" aria-label="Blog pagination"><span class="current">1</span><a href="#">2</a><a href="#">Next »</a></nav>
+    </div>
+  </main>
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body></html>

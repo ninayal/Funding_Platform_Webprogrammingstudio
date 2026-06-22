@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>My Cart | MySite</title><link rel="stylesheet" href="../../css/style.css"/></head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links"><li><a href="../../index.html">Home</a></li><li><a href="../forum/forum_list.html">Forum</a></li><li><a href="products.html" class="active">Shop</a></li><li><a href="../blog/blog_list.html">Blog</a></li><li><a href="../review/review_list.html">Reviews</a></li><li><a href="../shared/sitemap.html">Sitemap</a></li></ul>
+    <div class="navbar__auth"><a href="../shared/login.html" class="btn btn-outline btn-sm">Log In</a><a href="../shared/register.html" class="btn btn-primary btn-sm">Register</a></div>
+  </div></nav>
+  <main class="page-body">
+    <div class="page-header"><div class="container"><div class="header-row"><h1>My Shopping Cart</h1><a href="products.html" class="btn btn-outline">← Continue Shopping</a></div></div></div>
+    <div class="container">
+      <div class="toolbar"><select aria-label="Sort cart"><option>Sort: Default</option><option>Title A–Z</option><option>Price Low–High</option><option>Quantity</option></select></div>
+      <div class="table-wrap card" style="padding:0;">
+        <table>
+          <thead><tr><th>Product</th><th>Colour / Size</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><div style="display:flex;align-items:center;gap:.75rem;"><span style="font-size:1.5rem;">🎧</span><span style="font-weight:600;">Wireless Headphones</span></div></td><td style="color:var(--color-muted);">Black / One Size</td><td>$149.99</td><td><input type="number" value="1" min="1" max="99" style="width:60px;padding:.3rem .5rem;border:1px solid var(--color-border);border-radius:4px;font-size:.9rem;"/> <button class="btn btn-outline btn-sm">Update</button></td><td style="font-weight:700;">$149.99</td><td><button class="btn btn-danger btn-sm">Remove</button></td></tr>
+            <tr><td><div style="display:flex;align-items:center;gap:.75rem;"><span style="font-size:1.5rem;">🔌</span><span style="font-weight:600;">USB-C Hub 7-in-1</span></div></td><td style="color:var(--color-muted);">Silver / One Size</td><td>$49.99</td><td><input type="number" value="2" min="1" max="99" style="width:60px;padding:.3rem .5rem;border:1px solid var(--color-border);border-radius:4px;font-size:.9rem;"/> <button class="btn btn-outline btn-sm">Update</button></td><td style="font-weight:700;">$99.98</td><td><button class="btn btn-danger btn-sm">Remove</button></td></tr>
+            <tr><td><div style="display:flex;align-items:center;gap:.75rem;"><span style="font-size:1.5rem;">⌨️</span><span style="font-weight:600;">Mechanical Keyboard</span></div></td><td style="color:var(--color-muted);">Grey / TKL</td><td>$89.99</td><td><input type="number" value="1" min="1" max="99" style="width:60px;padding:.3rem .5rem;border:1px solid var(--color-border);border-radius:4px;font-size:.9rem;"/> <button class="btn btn-outline btn-sm">Update</button></td><td style="font-weight:700;">$89.99</td><td><button class="btn btn-danger btn-sm">Remove</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:1.5rem;">
+        <div class="card" style="min-width:300px;">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:1rem;">Order Summary</h2>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.5rem;font-size:.92rem;"><span>Subtotal (4 items)</span><span>$339.96</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:.5rem;font-size:.92rem;"><span>Shipping</span><span>$9.99</span></div>
+          <hr style="margin:.75rem 0;border:none;border-top:1px solid var(--color-border);" />
+          <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1.05rem;"><span>Total</span><span>$349.95</span></div>
+          <a href="checkout.html" class="btn btn-primary" style="margin-top:1rem;width:100%;justify-content:center;">Proceed to Checkout</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body></html>
