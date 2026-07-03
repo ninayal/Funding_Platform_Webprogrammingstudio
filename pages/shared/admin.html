@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration | MySite</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../forum/forum_list.html">Forum</a></li>
+      <li><a href="../cart/products.html">Shop</a></li>
+      <li><a href="../blog/blog_list.html">Blog</a></li>
+      <li><a href="../review/review_list.html">Reviews</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <a href="profile.html" class="btn btn-outline btn-sm">👤 Admin</a>
+      <a href="login.html" class="btn btn-sm">Log Out</a>
+    </div>
+  </div></nav>
+
+  <main class="page-body">
+    <div class="page-header"><div class="container">
+      <div class="header-row">
+        <div><h1>Site Administration</h1><p>Manage users, forum content, and site settings.</p></div>
+        <span class="badge badge-red">Admin Only</span>
+      </div>
+    </div></div>
+
+    <div class="container">
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;">
+        <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);">142</p><p style="font-size:.85rem;color:var(--color-muted);">Total Users</p></div>
+        <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);">38</p><p style="font-size:.85rem;color:var(--color-muted);">Active Threads</p></div>
+        <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);">74</p><p style="font-size:.85rem;color:var(--color-muted);">Blog Posts</p></div>
+        <div class="card" style="text-align:center;"><p style="font-size:2rem;font-weight:800;color:var(--color-primary);">215</p><p style="font-size:.85rem;color:var(--color-muted);">Reviews</p></div>
+      </div>
+
+      <!-- Users -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">User Management</h2>
+        <div class="toolbar">
+          <input type="search" placeholder="Search users…" aria-label="Search users" />
+          <select aria-label="Filter by status"><option>All Status</option><option>Active</option><option>Locked</option></select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><strong>alice_w</strong></td><td>alice@example.com</td><td><span class="badge badge-blue">Admin</span></td><td><span class="badge badge-green">Active</span></td><td>Jan 10, 2026</td><td><a href="#" class="btn btn-outline btn-sm">View</a></td></tr>
+              <tr><td><strong>bob_smith</strong></td><td>bob@example.com</td><td><span class="badge badge-amber">User</span></td><td><span class="badge badge-green">Active</span></td><td>Feb 3, 2026</td><td><a href="#" class="btn btn-outline btn-sm">View</a> <a href="#" class="btn btn-danger btn-sm">Lock</a></td></tr>
+              <tr><td><strong>spammer99</strong></td><td>spam@example.com</td><td><span class="badge badge-amber">User</span></td><td><span class="badge badge-red">Locked</span></td><td>Mar 22, 2026</td><td><a href="#" class="btn btn-outline btn-sm">View</a> <a href="#" class="btn btn-primary btn-sm">Unlock</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Forum -->
+      <div class="card">
+        <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:1rem;">Forum Management</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Thread Title</th><th>Author</th><th>Replies</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td><a href="../forum/forum_thread.html">Best laptops for students in 2026?</a></td><td>alice_w</td><td>12</td><td><span class="badge badge-green">Active</span></td><td><a href="#" class="btn btn-outline btn-sm">Archive</a></td></tr>
+              <tr><td><a href="../forum/forum_thread.html">How do I set up a home server?</a></td><td>devguru</td><td>8</td><td><span class="badge badge-green">Active</span></td><td><a href="#" class="btn btn-outline btn-sm">Archive</a></td></tr>
+              <tr><td>Spam: Buy cheap followers now!!!</td><td>spammer99</td><td>0</td><td><span class="badge badge-red">Archived</span></td><td><a href="#" class="btn btn-primary btn-sm">Restore</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | MySite</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../forum/forum_list.html">Forum</a></li>
+      <li><a href="../cart/products.html">Shop</a></li>
+      <li><a href="../blog/blog_list.html">Blog</a></li>
+      <li><a href="../review/review_list.html">Reviews</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+      <a href="register.html" class="btn btn-primary btn-sm active">Register</a>
+    </div>
+  </div></nav>
+
+  <main class="page-body">
+    <div class="container" style="max-width:480px;margin-top:2.5rem;">
+      <div class="card">
+        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem;">Create an Account</h1>
+        <p style="color:var(--color-muted);font-size:.9rem;margin-bottom:1.5rem;">
+          Already have an account? <a href="login.html">Log in</a>
+        </p>
+        <form action="#" method="POST" novalidate>
+          <div class="form-group">
+            <label for="username">Username <span style="color:var(--color-danger)">*</span></label>
+            <input type="text" id="username" name="username" placeholder="e.g. john_doe" required minlength="3" maxlength="30" autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address <span style="color:var(--color-danger)">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password <span style="color:var(--color-danger)">*</span></label>
+            <input type="password" id="password" name="password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password <span style="color:var(--color-danger)">*</span></label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label for="bio">Short Bio</label>
+            <textarea id="bio" name="bio" placeholder="Tell us a little about yourself…" rows="3" maxlength="300"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body>
+</html>

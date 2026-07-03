@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | MySite</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../forum/forum_list.html">Forum</a></li>
+      <li><a href="../cart/products.html">Shop</a></li>
+      <li><a href="../blog/blog_list.html">Blog</a></li>
+      <li><a href="../review/review_list.html">Reviews</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <a href="login.html" class="btn btn-outline btn-sm active">Log In</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+    </div>
+  </div></nav>
+
+  <main class="page-body">
+    <div class="container" style="max-width:440px;margin-top:2.5rem;">
+      <div class="card">
+        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem;">Welcome Back</h1>
+        <p style="color:var(--color-muted);font-size:.9rem;margin-bottom:1.5rem;">
+          Don't have an account? <a href="register.html">Register</a>
+        </p>
+        <form action="#" method="POST" novalidate>
+          <div class="form-group">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" placeholder="john_doe or you@example.com" required autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Your password" required autocomplete="current-password" />
+          </div>
+          <div style="text-align:right;margin-bottom:1rem;">
+            <a href="forgot_password.html" style="font-size:.85rem;">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Log In</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
+</body>
+</html>
