@@ -3,103 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home | MySite</title>
+  <title>Home | Lang & Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <div class="container">
-      <a class="navbar__brand" href="index.html">🌐 MySite</a>
-      <ul class="navbar__links" role="list">
+  <!-- TOPBAR -->
+  <div class="topbar">✦ New Collection Available Now ✦</div>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <nav class="nav">
+      <a class="nav__logo" href="index.html">
+        Lang &amp; Co.
+        <small>Vietnamese Crafts</small>
+      </a>
+      <ul class="nav__links">
         <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="pages/forum/forum_list.html">Forum</a></li>
-        <li><a href="pages/cart/products.html">Shop</a></li>
-        <li><a href="pages/blog/blog_list.html">Blog</a></li>
-        <li><a href="pages/review/review_list.html">Reviews</a></li>
-        <li><a href="pages/shared/sitemap.html">Sitemap</a></li>
+        <li><a href="pages/shoppingcart.html">Shop</a></li>
+        <li><a href="pages/forum.html">Forum</a></li>
+        <li><a href="pages/blog.html">Blog</a></li>
+        <li><a href="pages/reviews.html">Reviews</a></li>
+        <li><a href="pages/wishlists.html">Wishlists</a></li>
       </ul>
-      <div class="navbar__auth">
-        <a href="pages/shared/login.html"    class="btn btn-outline btn-sm">Log In</a>
-        <a href="pages/shared/register.html" class="btn btn-primary btn-sm">Register</a>
-      </div>
+      <a class="nav__btn" href="pages/login.html">Sign In</a>
+    </nav>
+
+    <div class="hero__title">
+      <span class="script">Lang &amp; Co.</span>
+      <span class="serif">Vietnamese Traditional Crafts</span>
     </div>
-  </nav>
 
-  <main class="page-body" id="main-content">
+  </section>
 
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="container">
-        <h1 id="hero-heading">Welcome to MySite</h1>
-        <p>Your all-in-one platform for shopping, discussion, blogging, and product reviews.</p>
-        <a href="pages/shared/register.html" class="btn btn-primary" style="font-size:1rem;padding:.7rem 1.8rem;">Get Started</a>
+  <!-- WAVE TRANSITION -->
+  <div class="wave">
+    <div class="below">
+
+      <div class="polaroid polaroid--left">
+        <div class="polaroid__img">🏺</div>
       </div>
-    </section>
 
-    <section class="container" aria-labelledby="features-heading" style="margin-top:2.5rem;">
-      <h2 id="features-heading" style="font-size:1.4rem;font-weight:800;margin-bottom:1.5rem;">Explore Our Features</h2>
-      <div class="features-grid">
-
-        <article class="feature-card">
-          <div class="icon" aria-hidden="true">🛒</div>
-          <h3>Shopping Cart</h3>
-          <p>Browse products, manage your cart, and complete secure purchases with ease.</p>
-          <a href="pages/cart/products.html" class="btn btn-outline btn-sm" style="margin-top:.75rem;">Browse Products</a>
-        </article>
-
-        <article class="feature-card">
-          <div class="icon" aria-hidden="true">💬</div>
-          <h3>Discussion Forum</h3>
-          <p>Join community conversations, start threads, and reply to other members.</p>
-          <a href="pages/forum/forum_list.html" class="btn btn-outline btn-sm" style="margin-top:.75rem;">Visit Forum</a>
-        </article>
-
-        <article class="feature-card">
-          <div class="icon" aria-hidden="true">📝</div>
-          <h3>Blog</h3>
-          <p>Read and publish articles, tutorials, and stories shared by our community.</p>
-          <a href="pages/blog/blog_list.html" class="btn btn-outline btn-sm" style="margin-top:.75rem;">Read Posts</a>
-        </article>
-
-        <article class="feature-card">
-          <div class="icon" aria-hidden="true">⭐</div>
-          <h3>Product Reviews</h3>
-          <p>Rate and review products, and read honest feedback from real customers.</p>
-          <a href="pages/review/review_list.html" class="btn btn-outline btn-sm" style="margin-top:.75rem;">See Reviews</a>
-        </article>
-
+      <div class="polaroid polaroid--right">
+        <div class="polaroid__img">🧵</div>
       </div>
-    </section>
 
-    <section class="container" aria-labelledby="latest-heading" style="margin-top:2.5rem;">
-      <h2 id="latest-heading" style="font-size:1.4rem;font-weight:800;margin-bottom:1rem;">Latest Activity</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+      <p class="below__headline">
+        <span class="sparkle">✦</span>
+        Where Craft Meets<br>Living Tradition
+        <span class="sparkle">✦</span>
+      </p>
 
-        <div class="card">
-          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">🔥 Hot Threads</h3>
-          <ul style="display:flex;flex-direction:column;gap:.6rem;">
-            <li><a href="pages/forum/forum_thread.html">Best laptops for students in 2026?</a><br><span style="font-size:.8rem;color:var(--color-muted);">by alice_w · 12 replies</span></li>
-            <li><a href="pages/forum/forum_thread.html">How do I set up a home server?</a><br><span style="font-size:.8rem;color:var(--color-muted);">by devguru · 8 replies</span></li>
-            <li><a href="pages/forum/forum_thread.html">Recommendations for online courses</a><br><span style="font-size:.8rem;color:var(--color-muted);">by learner99 · 5 replies</span></li>
-          </ul>
-        </div>
+      <p class="below__sub">
+        A curated marketplace where ancient Vietnamese artistry —
+        ceramics, silk, lacquer, and wood — finds a home
+        in the modern world.
+      </p>
 
-        <div class="card">
-          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;">📰 Recent Posts</h3>
-          <ul style="display:flex;flex-direction:column;gap:.6rem;">
-            <li><a href="pages/blog/blog_detail.html">Getting Started with Web Development</a><br><span style="font-size:.8rem;color:var(--color-muted);">by jane_d · June 20, 2026</span></li>
-            <li><a href="pages/blog/blog_detail.html">10 Tips for Better CSS</a><br><span style="font-size:.8rem;color:var(--color-muted);">by css_pro · June 18, 2026</span></li>
-            <li><a href="pages/blog/blog_detail.html">Why Python is Great for Beginners</a><br><span style="font-size:.8rem;color:var(--color-muted);">by pydev · June 15, 2026</span></li>
-          </ul>
-        </div>
+      <a class="below__btn" href="pages/shop.html">Explore the Collection</a>
 
-      </div>
-    </section>
+    </div>
+  </div>
 
-  </main>
+  <!-- CATEGORY PILLS -->
+  <div class="cats">
+    <a class="cat-pill" href="pages/shop.html"><span>🏺</span> Gốm · Ceramics</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🎨</span> Tranh · Paintings</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🧵</span> Lụa · Silk</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🕯</span> Nhang · Incense</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🪵</span> Gỗ điêu khắc</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🎋</span> Đồ đan tre</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🎭</span> Rối nước</a>
+    <a class="cat-pill" href="pages/shop.html"><span>🔮</span> Đá phong thủy</a>
+  </div>
 
-  <footer>
-    <p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p>
+  <!-- FOOTER -->
+  <footer class="footer">
+    &copy; 2026 Lang &amp; Co. — Vietnamese Traditional Crafts
   </footer>
 
 </body>

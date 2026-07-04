@@ -1,0 +1,392 @@
+/* ================================================
+   Lang & Co. — Main Stylesheet
+   Vietnamese Traditional Crafts
+   ================================================ */
+:root {
+  --cream:   #FEF9E1;
+  --tan:     #E5D0AC;
+  --sand:    #AF8F6F;
+  --brown:   #74512D;
+  --deep:    #010100;
+  --red:     #A31D1D;
+  --darkred: #6D2323;
+
+  --ff-script: 'Playfair Display', serif;
+  --ff-body:   'Cormorant Garamond', serif;
+  --ff-ui:     'DM Sans', sans-serif;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  overflow-x: hidden;
+}
+
+/* ================================================
+   TOPBAR
+   ================================================ */
+.topbar {
+  background: var(--red);
+  text-align: center;
+  padding: .45rem 1rem;
+  font-family: var(--ff-ui);
+  font-size: .65rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+/* ================================================
+   NAVBAR
+   ================================================ */
+.nav {
+  position: absolute;
+  top: 2.8rem; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+
+.nav__logo {
+  font-family: var(--ff-script);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--cream);
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(84,51,16,.4);
+  line-height: 1;
+}
+
+.nav__logo small {
+  display: block;
+  font-family: var(--ff-ui);
+  font-size: .55rem;
+  font-weight: 300;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-style: normal;
+  opacity: .8;
+  margin-top: .1rem;
+}
+
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav__links a {
+  font-family: var(--ff-ui);
+  font-size: .7rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(254,249,225,.9);
+  text-decoration: none;
+  text-shadow: 0 1px 4px rgba(84,51,16,.5);
+  transition: color .2s;
+}
+
+.nav__links a:hover,
+.nav__links a.active { color: var(--tan); }
+
+.nav__btn {
+  font-family: var(--ff-ui);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: var(--red);
+  color: var(--cream);
+  padding: .6rem 1.6rem;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: background .2s, transform .15s;
+}
+
+.nav__btn:hover {
+  background: var(--darkred);
+  transform: translateY(-1px);
+}
+
+/* Nav on light background (non-hero pages) */
+.nav--light {
+  position: relative;
+  top: auto;
+  background: var(--cream);
+  padding: 1rem 3rem;
+  border-bottom: 1px solid rgba(175,143,111,.2);
+}
+
+.nav--light .nav__logo      { color: var(--deep); text-shadow: none; }
+.nav--light .nav__links a   { color: var(--sand); text-shadow: none; }
+.nav--light .nav__links a:hover,
+.nav--light .nav__links a.active { color: var(--red); }
+
+/* ================================================
+   HERO
+   ================================================ */
+.hero {
+  position: relative;
+  height: 85vh;
+  min-height: 520px;
+  overflow: visible;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../images/background.png');
+  background-size: cover;
+  background-position: center 25%;
+}
+
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(84,51,16,.25) 0%,
+    rgba(84,51,16,.05) 40%,
+    rgba(84,51,16,.45) 100%
+  );
+}
+
+.hero__title {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.hero__title .script {
+  display: block;
+  font-family: var(--ff-script);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  line-height: .9;
+  text-shadow:
+    0 2px 20px rgba(84,51,16,.5),
+    0 0  60px rgba(84,51,16,.25);
+  letter-spacing: -.01em;
+}
+
+.hero__title .serif {
+  display: block;
+  font-family: var(--ff-body);
+  font-size: clamp(1.1rem, 2.5vw, 2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--tan);
+  letter-spacing: .18em;
+  text-shadow: 0 1px 8px rgba(84,51,16,.5);
+  margin-top: .3rem;
+}
+
+/* ================================================
+   WAVE TRANSITION
+   ================================================ */
+.wave {
+  position: relative;
+  z-index: 20;
+  margin-top: -8vw;
+  background: var(--cream);
+  border-radius: 50% 50% 0 0 / 8vw 8vw 0 0;
+  padding-top: 5vw;
+}
+
+/* ================================================
+   BELOW-FOLD SECTION
+   ================================================ */
+.below {
+  position: relative;
+  padding: 2rem 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.polaroid {
+  position: absolute;
+  width: 160px;
+  background: white;
+  padding: .6rem .6rem .6rem;
+  box-shadow: 0 6px 24px rgba(84,51,16,.15);
+  top: 1rem;
+}
+
+.polaroid--left  { left: -1.5rem; transform: rotate(-6deg); }
+.polaroid--right { right: -1.5rem; top: 2rem; transform: rotate(5deg); }
+
+.polaroid__img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--tan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--sand);
+  margin-bottom: .4rem;
+  overflow: hidden;
+}
+
+.polaroid__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sparkle {
+  color: var(--red);
+  font-size: 1.1rem;
+  display: inline-block;
+  margin: 0 .4rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.below__headline {
+  font-family: var(--ff-script);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--red);
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.below__sub {
+  font-family: var(--ff-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--sand);
+  line-height: 1.7;
+  max-width: 34ch;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.below__btn {
+  font-family: var(--ff-ui);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: var(--red);
+  color: var(--cream);
+  padding: .85rem 2.2rem;
+  border-radius: 99px;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+  transition: background .2s, transform .15s;
+}
+
+.below__btn:hover {
+  background: var(--darkred);
+  transform: translateY(-1px);
+}
+
+/* ================================================
+   CATEGORY PILLS
+   ================================================ */
+.cats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  padding: 2.5rem 2rem 3.5rem;
+  background: var(--cream);
+}
+
+.cat-pill {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem 1.2rem;
+  border: 1px solid var(--tan);
+  border-radius: 99px;
+  text-decoration: none;
+  font-family: var(--ff-body);
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--brown);
+  background: white;
+  transition: background .18s, border-color .18s, color .18s;
+}
+
+.cat-pill:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--cream);
+}
+
+.cat-pill span { font-style: normal; }
+
+/* ================================================
+   SHARED UTILITIES
+   ================================================ */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.page-body {
+  min-height: 60vh;
+  padding: 2.5rem 0;
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+.footer {
+  background: var(--deep);
+  color: var(--tan);
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--ff-ui);
+  font-size: .75rem;
+  font-weight: 300;
+  letter-spacing: .1em;
+  opacity: .9;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 700px) {
+  .nav           { padding: 0 1.2rem; top: 1.5rem; }
+  .nav--light    { padding: .9rem 1.2rem; }
+  .nav__links    { display: none; }
+  .polaroid      { display: none; }
+
+  .hero__title .script { font-size: clamp(3rem, 16vw, 6rem); }
+  .wave { margin-top: -5vw; border-radius: 50% 50% 0 0 / 5vw 5vw 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
