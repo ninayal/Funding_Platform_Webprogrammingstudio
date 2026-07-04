@@ -59,7 +59,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   font-style: italic;
-  color: var(--cream);
+  color: var(--red);
   text-decoration: none;
   text-shadow: 0 1px 8px rgba(84,51,16,.4);
   line-height: 1;
@@ -96,7 +96,7 @@ body {
 }
 
 .nav__links a:hover,
-.nav__links a.active { color: var(--tan); }
+.nav__links a.active { color: var(--darkred); }
 
 .nav__btn {
   font-family: var(--ff-ui);
@@ -139,6 +139,7 @@ body {
   height: 85vh;
   min-height: 520px;
   overflow: hidden; 
+}
 
 .hero__bg {
   position: absolute;
@@ -179,7 +180,7 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
   font-style: italic;
-  color: var(--cream);
+  color: var(--red);
   line-height: .9;
   text-shadow:
     0 2px 20px rgba(84,51,16,.5),
@@ -193,7 +194,7 @@ body {
   font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--tan);
+  color: var(--darkred);
   letter-spacing: .18em;
   text-shadow: 0 1px 8px rgba(84,51,16,.5);
   margin-top: .3rem;
@@ -391,4 +392,53 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+}
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh;
+    min-height: 380px;
+  }
+
+  .hero__bg {
+    background-position: center top; 
+  }
+}
+
+
+
+/* ── Dark theme variables ── */
+[data-theme="dark"],
+#theme-toggle:checked ~ * {
+  --cream:   #1A1208;
+  --tan:     #3A2A14;
+  --sand:    #8A7060;
+  --brown:   #C4A070;
+  --deep:    #E5D0AC;
+  --red:     #C43030;
+}
+
+/* ── Toggle button ── */
+.theme-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+  transition: background .3s;
+}
+
+/* ── Change icon when dark ── */
+#theme-toggle:checked ~ * .theme-btn,
+#theme-toggle:checked + .theme-btn {
+  content: '🌙';
 }
