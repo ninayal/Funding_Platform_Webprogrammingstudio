@@ -54,12 +54,18 @@ body {
   padding: 0 3rem;
 }
 
+.nav__logo img {
+  height: 70px;       /* đổi số này để to/nhỏ hơn */
+  width: auto;
+  display: block;
+}
+
 .nav__logo {
   font-family: var(--ff-script);
   font-size: 1.5rem;
   font-weight: 700;
   font-style: italic;
-  color: var(--red);
+  color: var(--cream);
   text-decoration: none;
   text-shadow: 0 1px 8px rgba(84,51,16,.4);
   line-height: 1;
@@ -85,7 +91,7 @@ body {
 
 .nav__links a {
   font-family: var(--ff-ui);
-  font-size: .7rem;
+  font-size: 19px;
   font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -101,10 +107,10 @@ body {
 .nav__btn {
   font-family: var(--ff-ui);
   font-size: .68rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  background: var(--red);
+  background: rgba(179, 99, 93, 0.57);
   color: var(--cream);
   padding: .6rem 1.6rem;
   border-radius: 99px;
@@ -180,7 +186,7 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
   font-style: italic;
-  color: var(--red);
+  color: var(--cream);
   line-height: .9;
   text-shadow:
     0 2px 20px rgba(84,51,16,.5),
@@ -194,14 +200,14 @@ body {
   font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--darkred);
+  color: var(--tan);
   letter-spacing: .18em;
   text-shadow: 0 1px 8px rgba(84,51,16,.5);
   margin-top: .3rem;
 }
 
 /* ================================================
-   WAVE TRANSITION
+   Curve transition btw hero section and body
    ================================================ */
 .wave {
   position: relative;
@@ -362,6 +368,206 @@ body {
   padding: 2.5rem 0;
 }
 
+
+/* ── CIRCLE SECTION ─────────────────────────────── */
+.circle-section {
+  background: var(--cream);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── TOP CIRCLE ── */
+.circle-top {
+  display: flex;
+  justify-content: center;
+  /* pull up slightly so circle bleeds from top */
+  margin-top: -2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.circle-top__ring {
+  width: min(80vw, 640px);
+  height: min(80vw, 640px);
+  border-radius: 50%;
+  background: var(--red);
+  position: relative;
+  /* only show bottom half — clip top half off screen */
+  margin-top: calc(min(80vw, 640px) * -0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image circle inset — top left like reference */
+.circle-top__img {
+  position: absolute;
+  top: 52%;
+  left: 18%;
+  width: 28%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-image: url('../images/background.png');
+  background-size: cover;
+  background-position: center;
+  border: 3px solid rgba(254,249,225,.3);
+}
+
+/* Text block in circle */
+.circle-top__text {
+  position: relative;
+  z-index: 2;
+  padding: 0 2rem 2.5rem;
+  text-align: left;
+}
+
+.circle-script {
+  display: block;
+  font-family: var(--ff-script);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  line-height: .9;
+  letter-spacing: -.02em;
+}
+
+.circle-serif {
+  display: inline-block;
+  font-family: var(--ff-script);
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1;
+  letter-spacing: -.01em;
+  margin-top: -.3rem;
+}
+
+.circle-desc {
+  font-family: var(--ff-ui);
+  font-size: .72rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(254,249,225,.75);
+  margin-top: .65rem;
+  max-width: 22ch;
+}
+
+/* ── BODY ── */
+.circle-body {
+  position: relative;
+  padding: 3rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Giant faint watermark ornament */
+.circle-watermark {
+  position: absolute;
+  left: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(8rem, 25vw, 18rem);
+  color: var(--tan);
+  opacity: .12;
+  font-family: var(--ff-script);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+/* ── CRAFT LIST (like City tours) ── */
+.circle-list {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 640px;
+}
+
+.circle-list__label {
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--red);
+  text-align: center;
+  margin-bottom: 1.2rem;
+  letter-spacing: .06em;
+}
+
+.circle-list__item {
+  display: flex;
+  align-items: center;
+  font-family: var(--ff-script);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--tan);
+  text-decoration: none;
+  line-height: 1.25;
+  padding: .1rem 0;
+  transition: color .2s;
+  position: relative;
+}
+
+.circle-list__item:hover { color: var(--brown); }
+
+/* Active item — full width red band like reference */
+.circle-list__item--active {
+  color: var(--cream) !important;
+  background: var(--red);
+  margin: 0 -2rem;         /* bleed to edges */
+  padding: .3rem 2rem;
+  font-weight: 700;
+}
+
+/* Oval images beside active item */
+.circle-list__ovals {
+  display: inline-flex;
+  gap: .5rem;
+  margin-left: 1.5rem;
+  align-items: center;
+}
+
+.oval {
+  display: inline-block;
+  width: 52px;
+  height: 68px;
+  border-radius: 50%;
+  background-image: url('../images/background.png');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(254,249,225,.4);
+  flex-shrink: 0;
+}
+
+.oval--1 { background-position: 20% center; }
+.oval--2 { background-position: 80% center; }
+
+/* ── BOTTOM TWO HALF-CIRCLES ── */
+.circle-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 2rem 0;
+  overflow: hidden;
+}
+
+.circle-half {
+  width: min(42vw, 320px);
+  height: min(25vw, 190px);
+  border-radius: min(42vw, 320px) min(42vw, 320px) 0 0;
+  overflow: hidden;
+  background-image: url('../images/background.png');
+  background-size: cover;
+}
+
+.circle-half--left  { background-position: 30% center; }
+.circle-half--right { background-position: 70% center; }
+
+
+
+
 /* ================================================
    FOOTER
    ================================================ */
@@ -442,3 +648,6 @@ body {
 #theme-toggle:checked + .theme-btn {
   content: '🌙';
 }
+
+
+
