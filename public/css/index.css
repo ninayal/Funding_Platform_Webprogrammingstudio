@@ -55,7 +55,7 @@ body {
 }
 
 .nav__logo img {
-  height: 70px;       /* đổi số này để to/nhỏ hơn */
+  height: 150px;       /* đổi số này để to/nhỏ hơn */
   width: auto;
   display: block;
 }
@@ -186,7 +186,7 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
   font-style: italic;
-  color: var(--red);
+  color: var(--cream);
   line-height: .9;
   text-shadow:
     0 2px 20px rgba(84,51,16,.5),
@@ -200,7 +200,7 @@ body {
   font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--darkred);
+  color: var(--tan);
   letter-spacing: .18em;
   text-shadow: 0 1px 8px rgba(84,51,16,.5);
   margin-top: .3rem;
