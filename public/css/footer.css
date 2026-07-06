@@ -1,0 +1,11 @@
+.footer {
+  background: var(--deep);
+  color: var(--tan);
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--ff-ui);
+  font-size: .75rem;
+  font-weight: 300;
+  letter-spacing: .1em;
+  opacity: .9;
+}

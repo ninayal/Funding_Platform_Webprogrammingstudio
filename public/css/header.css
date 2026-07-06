@@ -1,0 +1,113 @@
+/* ================================================
+   Lang & Co. — header.css
+   Topbar + Navigation bar
+   ================================================ */
+
+/* ================================================
+   TOPBAR
+   ================================================ */
+.topbar {
+  background: var(--red);
+  text-align: center;
+  padding: .45rem 1rem;
+  font-family: var(--ff-ui);
+  font-size: .65rem;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+/* ================================================
+   NAVBAR
+   ================================================ */
+.nav {
+  position: absolute;
+  top: 2.8rem;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+
+.nav__logo img {
+  margin-top: 0%;
+  margin-bottom: 6%;
+  height: 130px;
+  /* đổi số này để to/nhỏ hơn */
+}
+
+.nav__logo {
+  font-family: var(--ff-script);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--cream);
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(84, 51, 16, .4);
+  line-height: 1;
+}
+
+.nav__logo small {
+  display: block;
+  font-family: var(--ff-ui);
+  font-size: .55rem;
+  font-weight: 300;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-style: normal;
+  opacity: .8;
+  margin-top: .1rem;
+}
+
+.nav__links {
+  margin-top: 0%;
+  margin-bottom: 4%;
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav__links a {
+  font-family: var(--ff-ui);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(254, 249, 225, .9);
+  text-decoration: none;
+  text-shadow: 0 1px 4px rgba(84, 51, 16, .5);
+  transition: color .2s;
+}
+
+.nav__links a:hover,
+.nav__links a.active {
+  color: var(--darkred);
+}
+
+.nav--light {
+  position: relative;
+  top: auto;
+  background: var(--cream);
+  padding: 1rem 3rem;
+  border-bottom: 1px solid rgba(175, 143, 111, .2);
+}
+
+.nav--light .nav__logo {
+  color: var(--deep);
+  text-shadow: none;
+}
+
+.nav--light .nav__links a {
+  color: var(--sand);
+  text-shadow: none;
+}
+
+.nav--light .nav__links a:hover,
+.nav--light .nav__links a.active {
+  color: var(--red);
+}
+
