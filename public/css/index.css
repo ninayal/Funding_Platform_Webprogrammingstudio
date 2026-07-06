@@ -3,22 +3,32 @@
    Vietnamese Traditional Crafts
    ================================================ */
 :root {
-  --cream:   #FEF9E1;
-  --tan:     #E5D0AC;
-  --sand:    #AF8F6F;
-  --brown:   #74512D;
-  --deep:    #010100;
-  --red:     #A31D1D;
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
   --darkred: #6D2323;
 
   --ff-script: 'Playfair Display', serif;
-  --ff-body:   'Cormorant Garamond', serif;
-  --ff-ui:     'DM Sans', sans-serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
 }
 
 /* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--cream);
   color: var(--deep);
@@ -46,7 +56,9 @@ body {
    ================================================ */
 .nav {
   position: absolute;
-  top: 2.8rem; left: 0; right: 0;
+  top: 2.8rem;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -57,7 +69,8 @@ body {
 .nav__logo img {
   margin-top: 0%;
   margin-bottom: 6%;
-  height: 130px;       /* đổi số này để to/nhỏ hơn */
+  height: 130px;
+  /* đổi số này để to/nhỏ hơn */
 }
 
 .nav__logo {
@@ -67,7 +80,7 @@ body {
   font-style: italic;
   color: var(--cream);
   text-decoration: none;
-  text-shadow: 0 1px 8px rgba(84,51,16,.4);
+  text-shadow: 0 1px 8px rgba(84, 51, 16, .4);
   line-height: 1;
 }
 
@@ -97,14 +110,16 @@ body {
   font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(254,249,225,.9);
+  color: rgba(254, 249, 225, .9);
   text-decoration: none;
-  text-shadow: 0 1px 4px rgba(84,51,16,.5);
+  text-shadow: 0 1px 4px rgba(84, 51, 16, .5);
   transition: color .2s;
 }
 
 .nav__links a:hover,
-.nav__links a.active { color: var(--darkred); }
+.nav__links a.active {
+  color: var(--darkred);
+}
 
 
 
@@ -113,13 +128,23 @@ body {
   top: auto;
   background: var(--cream);
   padding: 1rem 3rem;
-  border-bottom: 1px solid rgba(175,143,111,.2);
+  border-bottom: 1px solid rgba(175, 143, 111, .2);
 }
 
-.nav--light .nav__logo      { color: var(--deep); text-shadow: none; }
-.nav--light .nav__links a   { color: var(--sand); text-shadow: none; }
+.nav--light .nav__logo {
+  color: var(--deep);
+  text-shadow: none;
+}
+
+.nav--light .nav__links a {
+  color: var(--sand);
+  text-shadow: none;
+}
+
 .nav--light .nav__links a:hover,
-.nav--light .nav__links a.active { color: var(--red); }
+.nav--light .nav__links a.active {
+  color: var(--red);
+}
 
 /* ================================================
    HERO
@@ -128,7 +153,7 @@ body {
   position: relative;
   height: 85vh;
   min-height: 520px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .hero__bg {
@@ -146,12 +171,10 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(84,51,16,.25) 0%,
-    rgba(84,51,16,.05) 40%,
-    rgba(84,51,16,.45) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(84, 51, 16, .25) 0%,
+      rgba(84, 51, 16, .05) 40%,
+      rgba(84, 51, 16, .45) 100%);
 }
 
 .hero__title {
@@ -173,8 +196,8 @@ body {
   color: var(--cream);
   line-height: .9;
   text-shadow:
-    0 2px 20px rgba(84,51,16,.5),
-    0 0  60px rgba(84,51,16,.25);
+    0 2px 20px rgb(255, 255, 255),
+    0 0 60px rgba(84, 51, 16, .25);
   letter-spacing: -.01em;
 }
 
@@ -186,9 +209,74 @@ body {
   font-style: italic;
   color: var(--tan);
   letter-spacing: .18em;
-  text-shadow: 0 1px 8px rgba(84,51,16,.5);
+  text-shadow: 0 1px 8px rgba(84, 51, 16, .5);
   margin-top: .3rem;
 }
+
+
+
+/* ── HERO CTA BUTTONS ── */
+.hero__cta {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.hero__cta-primary {
+  font-family: var(--ff-disp);
+  font-size: .88rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  background: transparent;
+  padding: .9rem 2rem;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  box-shadow: 0 4px 20px rgba(74, 46, 20, .35);
+  border: 1px solid rgba(229, 208, 172, .6);
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+
+.hero__cta-primary:hover {
+  background: rgba(245, 239, 224, .12);
+  border-color: rgba(245, 239, 224, 0.477);
+  transform: translateY(-2px);
+}
+
+.hero__cta-ghost {
+  font-family: var(--ff-disp);
+  font-size: .88rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  background: transparent;
+  padding: .9rem 2rem;
+  border-radius: 99px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border: 1px solid rgba(229, 208, 172, .6);
+  transition: background .2s, transform .15s, box-shadow .2s;
+  text-decoration: none;
+}
+
+
+.hero__cta-ghost:hover {
+  background: rgba(245, 239, 224, .12);
+  border-color: rgba(245, 239, 224, 0.477);
+  transform: translateY(-2px);
+}
+
+
 
 /* ================================================
    Curve transition btw hero section and body
@@ -220,12 +308,20 @@ body {
   width: 160px;
   background: white;
   padding: .6rem .6rem .6rem;
-  box-shadow: 0 6px 24px rgba(84,51,16,.15);
+  box-shadow: 0 6px 24px rgba(84, 51, 16, .15);
   top: 1rem;
 }
 
-.polaroid--left  { left: -1.5rem; transform: rotate(-6deg); }
-.polaroid--right { right: -1.5rem; top: 2rem; transform: rotate(5deg); }
+.polaroid--left {
+  left: -1.5rem;
+  transform: rotate(-6deg);
+}
+
+.polaroid--right {
+  right: -1.5rem;
+  top: 2rem;
+  transform: rotate(5deg);
+}
 
 .polaroid__img {
   width: 100%;
@@ -335,7 +431,9 @@ body {
   color: var(--cream);
 }
 
-.cat-pill span { font-style: normal; }
+.cat-pill span {
+  font-style: normal;
+}
 
 /* ================================================
    SHARED UTILITIES
@@ -395,7 +493,7 @@ body {
   background-image: url('../images/background.png');
   background-size: cover;
   background-position: center;
-  border: 3px solid rgba(254,249,225,.3);
+  border: 3px solid rgba(254, 249, 225, .3);
 }
 
 /* Text block in circle */
@@ -434,7 +532,7 @@ body {
   font-size: .72rem;
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(254,249,225,.75);
+  color: rgba(254, 249, 225, .75);
   margin-top: .65rem;
   max-width: 22ch;
 }
@@ -494,13 +592,16 @@ body {
   position: relative;
 }
 
-.circle-list__item:hover { color: var(--brown); }
+.circle-list__item:hover {
+  color: var(--brown);
+}
 
 /* Active item — full width red band like reference */
 .circle-list__item--active {
   color: var(--cream) !important;
   background: var(--red);
-  margin: 0 -2rem;         /* bleed to edges */
+  margin: 0 -2rem;
+  /* bleed to edges */
   padding: .3rem 2rem;
   font-weight: 700;
 }
@@ -521,12 +622,17 @@ body {
   background-image: url('../images/background.png');
   background-size: cover;
   background-position: center;
-  border: 2px solid rgba(254,249,225,.4);
+  border: 2px solid rgba(254, 249, 225, .4);
   flex-shrink: 0;
 }
 
-.oval--1 { background-position: 20% center; }
-.oval--2 { background-position: 80% center; }
+.oval--1 {
+  background-position: 20% center;
+}
+
+.oval--2 {
+  background-position: 80% center;
+}
 
 /* ── BOTTOM TWO HALF-CIRCLES ── */
 .circle-bottom {
@@ -546,8 +652,13 @@ body {
   background-size: cover;
 }
 
-.circle-half--left  { background-position: 30% center; }
-.circle-half--right { background-position: 70% center; }
+.circle-half--left {
+  background-position: 30% center;
+}
+
+.circle-half--right {
+  background-position: 70% center;
+}
 
 
 
@@ -571,18 +682,39 @@ body {
    RESPONSIVE
    ================================================ */
 @media (max-width: 700px) {
-  .nav           { padding: 0 1.2rem; top: 1.5rem; }
-  .nav--light    { padding: .9rem 1.2rem; }
-  .nav__links    { display: none; }
-  .polaroid      { display: none; }
+  .nav {
+    padding: 0 1.2rem;
+    top: 1.5rem;
+  }
 
-  .hero__title .script { font-size: clamp(3rem, 16vw, 6rem); }
-  .wave { margin-top: -5vw; border-radius: 50% 50% 0 0 / 5vw 5vw 0 0; }
+  .nav--light {
+    padding: .9rem 1.2rem;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .polaroid {
+    display: none;
+  }
+
+  .hero__title .script {
+    font-size: clamp(3rem, 16vw, 6rem);
+  }
+
+  .wave {
+    margin-top: -5vw;
+    border-radius: 50% 50% 0 0 / 5vw 5vw 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  * {
+    transition: none !important;
+  }
 }
+
 @media (max-width: 768px) {
   .hero {
     height: 60vh;
@@ -590,7 +722,7 @@ body {
   }
 
   .hero__bg {
-    background-position: center top; 
+    background-position: center top;
   }
 }
 
@@ -598,13 +730,13 @@ body {
 
 /* ── Dark theme variables ── */
 [data-theme="dark"],
-#theme-toggle:checked ~ * {
-  --cream:   #1A1208;
-  --tan:     #3A2A14;
-  --sand:    #8A7060;
-  --brown:   #C4A070;
-  --deep:    #E5D0AC;
-  --red:     #C43030;
+#theme-toggle:checked~* {
+  --cream: #1A1208;
+  --tan: #3A2A14;
+  --sand: #8A7060;
+  --brown: #C4A070;
+  --deep: #E5D0AC;
+  --red: #C43030;
 }
 
 /* ── Toggle button ── */
@@ -623,15 +755,12 @@ body {
   justify-content: center;
   cursor: pointer;
   font-size: 1.2rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
   transition: background .3s;
 }
 
 /* ── Change icon when dark ── */
-#theme-toggle:checked ~ * .theme-btn,
-#theme-toggle:checked + .theme-btn {
+#theme-toggle:checked~* .theme-btn,
+#theme-toggle:checked+.theme-btn {
   content: '🌙';
 }
-
-
-
