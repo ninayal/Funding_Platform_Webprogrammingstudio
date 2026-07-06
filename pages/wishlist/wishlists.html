@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8" />
 
@@ -14,63 +12,48 @@
 
     <title>Làng & Co. — Wishlist</title>
 
-    <!-- Google Fonts -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    />
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    />
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap"
-        rel="stylesheet"
-    />
-
     <!-- Wishlist CSS -->
     <link
         rel="stylesheet"
         href="../../public/css/wishlist.css"
     />
+    <link
+        rel="stylesheet"
+        href="../../public/css/index.css"
+    />
 </head>
 
 <body>
-  <div class="announcement">✦ New collection available now ✦</div>
 
-  <header class="site-header">
-    <nav class="nav" aria-label="Primary navigation">
-      <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Shop</a>
-        <a href="#">Forum</a>
-        <a href="#">Stories</a>
-      </div>
+  <div class="topbar">✦ New Collection Available Now ✦</div>
 
-      <a class="brandmark" href="#" aria-label="Làng and Company home">Làng &amp; Co.</a>
+  <!-- Navigation bar -->
+  <section class="hero">
 
-      <div class="nav-actions">
-        <a href="#">Log in</a>
-        <a class="bag-pill" href="#bag-status" aria-label="Open bag status">
-          Bag <span>0</span>
-        </a>
-      </div>
+    <div class="hero__bg"></div>
+
+    <nav class="nav">
+      <a class="nav__logo" href="../../index.html">
+        <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+      </a>
+      <ul class="nav__links">
+        <li><a href="../../index.html" class="active">Home</a></li>
+        <li><a href="../cart/shoppingcart.html">Shop</a></li>
+        <li><a href="../blog/blog.html">Blog</a></li>
+        <li><a href="../forum/forum.html">Forum</a></li>
+        <li><a href="wishlists.html">wishlists</a></li>
+      </ul>
     </nav>
-  </header>
 
-  <section class="wishlist-hero">
-    <div class="hero-inner">
-      <p class="eyebrow">A private collection of things worth keeping</p>
-      <h1>My Wishlist</h1>
-      <p class="hero-copy">
-        Handcrafted pieces shaped by skilled hands, saved so you can consider them slowly
-        and choose them carefully.
-      </p>
+    <div class="hero__title">
+      <span class="script">Làng &amp; Co.</span>
+      <span class="serif">Vietnamese Traditional Crafts</span>
     </div>
-    <div class="curve" aria-hidden="true"></div>
+
+    <div class="wave">
+      <div class="below"></div>
+    </div>
+
   </section>
 
   <main class="wishlist-page">
