@@ -55,9 +55,9 @@ body {
 }
 
 .nav__logo img {
-  height: 150px;       /* đổi số này để to/nhỏ hơn */
-  width: auto;
-  display: block;
+  margin-top: 0%;
+  margin-bottom: 6%;
+  height: 130px;       /* đổi số này để to/nhỏ hơn */
 }
 
 .nav__logo {
@@ -84,6 +84,8 @@ body {
 }
 
 .nav__links {
+  margin-top: 0%;
+  margin-bottom: 4%;
   display: flex;
   gap: 2rem;
   list-style: none;
@@ -104,24 +106,6 @@ body {
 .nav__links a:hover,
 .nav__links a.active { color: var(--darkred); }
 
-.nav__btn {
-  font-family: var(--ff-ui);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  background: var(--red);
-  color: var(--cream);
-  padding: .6rem 1.6rem;
-  border-radius: 99px;
-  text-decoration: none;
-  transition: background .2s, transform .15s;
-}
-
-.nav__btn:hover {
-  background: var(--darkred);
-  transform: translateY(-1px);
-}
 
 
 .nav--light {
