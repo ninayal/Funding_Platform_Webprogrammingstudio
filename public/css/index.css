@@ -110,7 +110,7 @@ body {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  background: rgba(179, 99, 93, 0.57);
+  background: var(--red);
   color: var(--cream);
   padding: .6rem 1.6rem;
   border-radius: 99px;
@@ -186,7 +186,7 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
   font-style: italic;
-  color: var(--cream);
+  color: var(--red);
   line-height: .9;
   text-shadow:
     0 2px 20px rgba(84,51,16,.5),
@@ -200,7 +200,7 @@ body {
   font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--tan);
+  color: var(--darkred);
   letter-spacing: .18em;
   text-shadow: 0 1px 8px rgba(84,51,16,.5);
   margin-top: .3rem;
