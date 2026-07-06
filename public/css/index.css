@@ -55,7 +55,7 @@ body {
 }
 
 .nav__logo img {
-  height: 70px;       /* đổi số này để to/nhỏ hơn */
+  height: 150px;       /* đổi số này để to/nhỏ hơn */
   width: auto;
   display: block;
 }
@@ -110,7 +110,7 @@ body {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  background: rgba(179, 99, 93, 0.57);
+  background: var(--red);
   color: var(--cream);
   padding: .6rem 1.6rem;
   border-radius: 99px;

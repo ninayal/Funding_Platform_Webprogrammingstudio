@@ -1,61 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register | MySite</title>
-  <link rel="stylesheet" href="../../css/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Làng & Co.</title>
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/register.css" />
 </head>
 <body>
-  <nav class="navbar"><div class="container">
-    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
-    <ul class="navbar__links">
-      <li><a href="../../index.html">Home</a></li>
-      <li><a href="../forum/forum_list.html">Forum</a></li>
-      <li><a href="../cart/products.html">Shop</a></li>
-      <li><a href="../blog/blog_list.html">Blog</a></li>
-      <li><a href="../review/review_list.html">Reviews</a></li>
-      <li><a href="sitemap.html">Sitemap</a></li>
-    </ul>
-    <div class="navbar__auth">
-      <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
-      <a href="register.html" class="btn btn-primary btn-sm active">Register</a>
-    </div>
-  </div></nav>
 
-  <main class="page-body">
-    <div class="container" style="max-width:480px;margin-top:2.5rem;">
-      <div class="card">
-        <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:.25rem;">Create an Account</h1>
-        <p style="color:var(--color-muted);font-size:.9rem;margin-bottom:1.5rem;">
-          Already have an account? <a href="login.html">Log in</a>
-        </p>
-        <form action="#" method="POST" novalidate>
-          <div class="form-group">
-            <label for="username">Username <span style="color:var(--color-danger)">*</span></label>
-            <input type="text" id="username" name="username" placeholder="e.g. john_doe" required minlength="3" maxlength="30" autocomplete="username" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address <span style="color:var(--color-danger)">*</span></label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
-          </div>
-          <div class="form-group">
-            <label for="password">Password <span style="color:var(--color-danger)">*</span></label>
-            <input type="password" id="password" name="password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
-          </div>
-          <div class="form-group">
-            <label for="confirm_password">Confirm Password <span style="color:var(--color-danger)">*</span></label>
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password" />
-          </div>
-          <div class="form-group">
-            <label for="bio">Short Bio</label>
-            <textarea id="bio" name="bio" placeholder="Tell us a little about yourself…" rows="3" maxlength="300"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Create Account</button>
-        </form>
+  <main class="login-page">
+
+    <div class="login-page__bg"></div>
+
+    <!-- LEFT -->
+    <div class="login-brand">
+  <h1 class="login-brand__title">
+    Craft lives<br>
+    in the <em>hands</em><br>
+    that make it.
+  </h1>
+  <p class="login-brand__sub">
+    Sign in to access your orders,<br>
+    wishlist and community.
+  </p>
+</div>
+
+    <!-- RIGHT: glass panel -->
+    <div class="login-glass">
+
+      <div class="login-glass__logo">
+        <img src="../../public/images/logo.png" alt="Lang & Co." />
+        <div class="login-glass__logo-text">
+          <span class="logo-name">Làng &amp; Co.</span>
+          <span class="logo-sub">Vietnamese Traditional Crafts</span>
+        </div>
       </div>
+
+      <h2 class="register-glass__title">Create an account</h2>
+      <p> Change this little slogan here nha !!! </p>
+
+      <form class="login-form" action="#" method="POST" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail</label>
+          <input
+            class="form-input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="E-mail Address"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input
+            class="form-input"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="············"
+            required
+            autocomplete="current-password"
+          />
+          <a class="form-forgot" href="forgot_password.html">Forgot password?</a>
+        </div>
+
+        <button class="login-btn" type="submit">Sign In</button>
+
+      </form>
+
+      <!-- trong .login-glass, sau .login-guest -->
+
+<div class="login-divider">
+  <span class="login-divider__line"></span>
+  <span class="login-divider__text">Or</span>
+  <span class="login-divider__line"></span>
+</div>
+
+
+<!-- Social buttons -->
+<div class="login-socials">
+  <a class="social-btn" href="#">
+    <img src="../../public/images/facebook.png" alt="Facebook" />
+    Facebook
+  </a>
+  <a class="social-btn" href="#">
+    <img src="../../public/images/instagram.png" alt="Instagram" />
+    Instagram
+  </a>
+  <a class="social-btn" href="#">
+    <img src="../../public/images/twitter.png" alt="X" />
+    X
+  </a>
+</div>
+
+
+<div class="login-divider">
+  <span class="login-divider__line"></span>
+  <span class="login-divider__line"></span>
+</div>
+
+<p class="login-signup-text">
+  Don't have an account? <a href="register.html">Sign Up</a>
+</p>
+
+<div class="login-divider">
+  <span class="login-divider__line"></span>
+  <span class="login-divider__line"></span>
+</div>
+
+  <div>
+<a class="login-guest" href="../../index.html">
+  <span class="guest-icon">✦</span>
+  <span class="guest-text">Continue exploring as a guest</span>
+  <span class="guest-arrow">→</span>
+</a>
+</div>
+
     </div>
+
   </main>
 
-  <footer><p>&copy; 2026 MySite — COSC3060 Web Programming Studio</p></footer>
 </body>
 </html>
