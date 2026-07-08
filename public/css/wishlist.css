@@ -324,7 +324,7 @@ input {
   min-height: 38px;
   display: flex;
   align-items: center;
-  padding: 0 34px 0 12px;
+  padding: 0 44px 0 12px;
   border-radius: 999px;
   border: 1px solid transparent;
   font-size: 11px;
@@ -338,11 +338,15 @@ input {
 }
 
 .sort-menu summary::after {
-  content: "âŒ„";
+  content: "\25BE";
   position: absolute;
   right: 13px;
-  top: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--brown);
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .sort-menu[open] summary {
@@ -591,8 +595,11 @@ input {
 }
 
 .move-toggle:checked ~ .product-media .move-action::after {
-  content: "âœ“";
+  content: "\2713";
   font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
 }
 
 .move-toggle:checked ~ .product-media .move-action {
