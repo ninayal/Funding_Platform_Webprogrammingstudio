@@ -1000,3 +1000,17 @@ input {
     padding: 28px 22px;
   }
 }
+.eyebrow,
+.section-kicker {
+  margin: 0 0 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  opacity: .76;
+  color: var(--cream);
+  font-size: 13px;
+}
