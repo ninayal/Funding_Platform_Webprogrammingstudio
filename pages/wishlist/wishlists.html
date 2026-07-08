@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" /> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="theme-color" content="#A31D1D" />
-    <title>Làng & Co. — Wishlist</title>
-    <!-- Shared styles -->
-    <link rel="stylesheet" href="../../public/css/index.css" />
-    <link rel="stylesheet" href="../../public/css/header.css" />
-    <link rel="stylesheet" href="../../public/css/shared-include.css" />
 
-    <!-- Wishlist-specific styles -->
-    <link rel="stylesheet" href="../../public/css/wishlist.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Làng & Co. — Wishlist</title>
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+
+  <!-- Wishlist-specific styles -->
+  <link rel="stylesheet" href="../../public/css/wishlist.css" />
 </head>
 
 <body>
-
   <section class="hero">
 
     <div class="hero__bg"></div>
 
-    <iframe
-      src="../shared/header.html#nav-wishlist"
-      title="Header"
-      class="shared-include shared-header"
-      loading="eager"
-      scrolling="no"
-    ></iframe>
+    <iframe src="../shared/header.html#nav-wishlist" title="Header" class="shared-include shared-header" loading="eager"
+      scrolling="no"></iframe>
 
     <div class="hero__title">
       <span class="script">Làng &amp; Co.</span>
       <span class="serif">Vietnamese Traditional Crafts</span>
     </div>
   </section>
-   
+
 
   <main class="wishlist-page">
     <!-- CSS-only category state -->
@@ -59,24 +54,18 @@
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-3.8-3.8"></path>
             </svg>
-            <input
-              id="searchInput"
-              name="q"
-              type="search"
-              placeholder="Search by piece, craft village, or material..."
-              autocomplete="off"
-            />
+            <input id="searchInput" name="q" type="search" placeholder="Search by piece, craft village, or material..."
+              autocomplete="off" />
             <button class="clear-search" type="reset" aria-label="Clear search">×</button>
           </form>
 
           <div class="utility-actions">
             <!-- Hardcoded HTML share action -->
-            <a
-              class="btn"
+            <a class="btn"
               href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Wishlist&amp;body=Take%20a%20look%20at%20my%20saved%20craft%20pieces."
-              aria-label="Share wishlist by email"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              aria-label="Share wishlist by email">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                aria-hidden="true">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
                 <circle cx="18" cy="19" r="3"></circle>
@@ -86,7 +75,8 @@
             </a>
 
             <a class="btn btn-primary" href="#new-collection-modal">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                aria-hidden="true">
                 <path d="M12 5v14M5 12h14"></path>
               </svg>
               New collection
@@ -136,13 +126,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Handcrafted blue ceramic vase"
-            />
+              alt="Handcrafted blue ceramic vase" />
             <span class="product-badge">Ceramics</span>
 
-            <label class="heart-btn" for="remove-1" aria-label="Remove Hand-painted Blue Lotus Vase from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-1" aria-label="Remove Hand-painted Blue Lotus Vase from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -151,7 +143,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-1" title="Save to a collection" aria-label="Save Hand-painted Blue Lotus Vase to a collection">＋</label>
+              <label class="move-action" for="move-1" title="Save to a collection"
+                aria-label="Save Hand-painted Blue Lotus Vase to a collection">＋</label>
             </div>
           </div>
 
@@ -174,13 +167,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Handcrafted ceramic tea cup"
-            />
+              alt="Handcrafted ceramic tea cup" />
             <span class="product-badge">Ceramics</span>
 
-            <label class="heart-btn" for="remove-2" aria-label="Remove Ash Glaze Tea Cup from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-2" aria-label="Remove Ash Glaze Tea Cup from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -189,7 +184,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-2" title="Save to a collection" aria-label="Save Ash Glaze Tea Cup to a collection">＋</label>
+              <label class="move-action" for="move-2" title="Save to a collection"
+                aria-label="Save Ash Glaze Tea Cup to a collection">＋</label>
             </div>
           </div>
 
@@ -212,13 +208,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Handcrafted decorative lacquer tray"
-            />
+              alt="Handcrafted decorative lacquer tray" />
             <span class="product-badge">Lacquer</span>
 
-            <label class="heart-btn" for="remove-3" aria-label="Remove Vermilion Lacquer Tray from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-3" aria-label="Remove Vermilion Lacquer Tray from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -227,7 +225,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-3" title="Save to a collection" aria-label="Save Vermilion Lacquer Tray to a collection">＋</label>
+              <label class="move-action" for="move-3" title="Save to a collection"
+                aria-label="Save Vermilion Lacquer Tray to a collection">＋</label>
             </div>
           </div>
 
@@ -250,13 +249,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Handcrafted multicolored silk scarf"
-            />
+              alt="Handcrafted multicolored silk scarf" />
             <span class="product-badge">Textiles &amp; silk</span>
 
-            <label class="heart-btn" for="remove-4" aria-label="Remove Five-Color Cloud Silk Scarf from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-4" aria-label="Remove Five-Color Cloud Silk Scarf from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -265,7 +266,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-4" title="Save to a collection" aria-label="Save Five-Color Cloud Silk Scarf to a collection">＋</label>
+              <label class="move-action" for="move-4" title="Save to a collection"
+                aria-label="Save Five-Color Cloud Silk Scarf to a collection">＋</label>
             </div>
           </div>
 
@@ -288,13 +290,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Handwoven rattan craft piece"
-            />
+              alt="Handwoven rattan craft piece" />
             <span class="product-badge">Rattan &amp; bamboo</span>
 
-            <label class="heart-btn" for="remove-5" aria-label="Remove Fox-Eye Woven Rattan Basket from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-5" aria-label="Remove Fox-Eye Woven Rattan Basket from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -303,7 +307,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-5" title="Save to a collection" aria-label="Save Fox-Eye Woven Rattan Basket to a collection">＋</label>
+              <label class="move-action" for="move-5" title="Save to a collection"
+                aria-label="Save Fox-Eye Woven Rattan Basket to a collection">＋</label>
             </div>
           </div>
 
@@ -326,13 +331,15 @@
           <div class="product-media">
             <img
               src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-              alt="Decorative handcrafted wooden box"
-            />
+              alt="Decorative handcrafted wooden box" />
             <span class="product-badge">Wood</span>
 
-            <label class="heart-btn" for="remove-6" aria-label="Remove Crescent Moon Mother-of-Pearl Box from wishlist" title="Remove from wishlist">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+            <label class="heart-btn" for="remove-6" aria-label="Remove Crescent Moon Mother-of-Pearl Box from wishlist"
+              title="Remove from wishlist">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                stroke-width="1.5" aria-hidden="true">
+                <path
+                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </label>
 
@@ -341,7 +348,8 @@
                 <span class="add-text">Add to bag</span>
                 <span class="added-text">Added</span>
               </label>
-              <label class="move-action" for="move-6" title="Save to a collection" aria-label="Save Crescent Moon Mother-of-Pearl Box to a collection">＋</label>
+              <label class="move-action" for="move-6" title="Save to a collection"
+                aria-label="Save Crescent Moon Mother-of-Pearl Box to a collection">＋</label>
             </div>
           </div>
 
@@ -394,13 +402,8 @@
     </div>
   </main>
 
-  <iframe
-    src="../shared/footer.html"
-    title="Footer"
-    class="shared-include shared-footer"
-    loading="lazy"
-    scrolling="no"
-  ></iframe>
+  <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
 
   <!-- CSS :target modal: bag status -->
   <section id="bag-status" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bagTitle">
@@ -418,7 +421,8 @@
   </section>
 
   <!-- CSS :target modal: create collection prototype -->
-  <section id="new-collection-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="newCollectionTitle">
+  <section id="new-collection-modal" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="newCollectionTitle">
     <div class="modal">
       <a class="modal-close" href="#" aria-label="Close new collection dialog">×</a>
       <p class="modal-kicker">Collections</p>
@@ -436,13 +440,15 @@
   </section>
 
   <!-- Hardcoded creation confirmation -->
-  <section id="collection-created" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="createdTitle">
+  <section id="collection-created" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="createdTitle">
     <div class="modal">
       <a class="modal-close" href="#" aria-label="Close confirmation">×</a>
       <p class="modal-kicker">Prototype state</p>
       <h3 id="createdTitle">Collection created</h3>
       <p>
-        This is a hardcoded confirmation. HTML and CSS alone cannot read the entered name and generate a new collection card.
+        This is a hardcoded confirmation. HTML and CSS alone cannot read the entered name and generate a new collection
+        card.
       </p>
       <div class="modal-actions">
         <a class="btn btn-primary" href="#">Done</a>
@@ -451,7 +457,8 @@
   </section>
 
   <!-- Hardcoded collection detail modals -->
-  <section id="collection-home" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="homeCollectionTitle">
+  <section id="collection-home" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="homeCollectionTitle">
     <div class="modal">
       <a class="modal-close" href="#" aria-label="Close collection">×</a>
       <p class="modal-kicker">Home ritual · 3 pieces</p>
@@ -464,7 +471,8 @@
     </div>
   </section>
 
-  <section id="collection-tea" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="teaCollectionTitle">
+  <section id="collection-tea" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="teaCollectionTitle">
     <div class="modal">
       <a class="modal-close" href="#" aria-label="Close collection">×</a>
       <p class="modal-kicker">Tea &amp; table · 2 pieces</p>
@@ -476,7 +484,8 @@
     </div>
   </section>
 
-  <section id="collection-gifts" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="giftCollectionTitle">
+  <section id="collection-gifts" class="modal-backdrop" role="dialog" aria-modal="true"
+    aria-labelledby="giftCollectionTitle">
     <div class="modal">
       <a class="modal-close" href="#" aria-label="Close collection">×</a>
       <p class="modal-kicker">Gift ideas · 1 piece</p>
@@ -487,4 +496,5 @@
     </div>
   </section>
 </body>
+
 </html>
