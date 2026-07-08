@@ -43,7 +43,7 @@ input {
   font: inherit;
 }
 
-img {
+.wishlist-page img {
   display: block;
   width: 100%;
 }
@@ -59,56 +59,6 @@ img {
   pointer-events: none;
 }
 
-.announcement {
-  min-height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--darkred);
-  color: var(--cream);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.site-header {
-  position: relative;
-  z-index: 5;
-  background: var(--red);
-  color: var(--cream);
-  border-bottom: 1px solid rgba(254, 249, 225, 0.16);
-}
-
-.nav {
-  width: min(1240px, calc(100% - 48px));
-  height: 78px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 24px;
-}
-
-.nav-links,
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 27px;
-}
-
-.nav-actions {
-  justify-content: flex-end;
-}
-
-.nav a {
-  color: inherit;
-  text-decoration: none;
-  padding: 6px 0;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-}
 
 .brandmark {
   font-family: var(--ff-script);
@@ -121,14 +71,7 @@ img {
   text-decoration: none;
 }
 
-.bag-pill {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid rgba(254, 249, 225, 0.42);
-  padding: 8px 12px !important;
-  border-radius: 999px;
-}
+
 
 .wishlist-hero {
   position: relative;
@@ -926,10 +869,6 @@ img {
     grid-template-columns: 1fr auto;
   }
 
-  .nav-links {
-    display: none;
-  }
-
   .brandmark {
     justify-self: start;
   }
@@ -948,18 +887,6 @@ img {
 }
 
 @media (max-width: 700px) {
-  .announcement {
-    font-size: 7px;
-  }
-
-  .nav {
-    width: min(100% - 28px, 1240px);
-    height: 68px;
-  }
-
-  .nav-actions > a:not(.bag-pill) {
-    display: none;
-  }
 
   .brandmark {
     font-size: 26px !important;

@@ -2,7 +2,7 @@
   background: var(--deep);
   color: var(--tan);
   text-align: center;
-  padding: 1.5rem;
+  padding: 1rem; /* reduced padding to tighten vertical spacing */
   font-family: var(--ff-ui);
   font-size: .75rem;
   font-weight: 300;

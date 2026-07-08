@@ -1,0 +1,28 @@
+/* Shared styles for included iframe header/footer */
+.shared-include {
+  width: 100%;
+  border: 0;
+  overflow: hidden;
+  display: block;
+}
+
+.shared-header {
+  min-height: 240px;
+  position: relative;
+  z-index: 2;
+}
+
+.shared-footer {
+   max-height: 48px;
+}
+
+/* Allow iframe content to render transparently over hero background */
+.shared-include,
+.shared-header,
+iframe.shared-header {
+  background: transparent !important;
+}
+
+@media (max-width: 640px) {
+  .shared-header { min-height: 160px; }
+}

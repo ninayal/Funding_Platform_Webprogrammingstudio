@@ -1,60 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    />
-
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="theme-color" content="#A31D1D" />
-
     <title>Làng & Co. — Wishlist</title>
+    <!-- Shared styles -->
+    <link rel="stylesheet" href="../../public/css/index.css" />
+    <link rel="stylesheet" href="../../public/css/header.css" />
+    <link rel="stylesheet" href="../../public/css/shared-include.css" />
 
-    <!-- Wishlist CSS -->
-    <link
-        rel="stylesheet"
-        href="../../public/css/wishlist.css"
-    />
-    <link
-        rel="stylesheet"
-        href="../../public/css/index.css"
-    />
+    <!-- Wishlist-specific styles -->
+    <link rel="stylesheet" href="../../public/css/wishlist.css" />
 </head>
 
 <body>
 
-  <div class="topbar">✦ New Collection Available Now ✦</div>
-
-  <!-- Navigation bar -->
   <section class="hero">
 
     <div class="hero__bg"></div>
 
-    <nav class="nav">
-      <a class="nav__logo" href="../../index.html">
-        <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
-      </a>
-      <ul class="nav__links">
-        <li><a href="../../index.html" class="active">Home</a></li>
-        <li><a href="../cart/shoppingcart.html">Shop</a></li>
-        <li><a href="../blog/blog.html">Blog</a></li>
-        <li><a href="../forum/forum.html">Forum</a></li>
-        <li><a href="wishlists.html">wishlists</a></li>
-      </ul>
-    </nav>
+    <iframe
+      src="../shared/header.html#nav-wishlist"
+      title="Header"
+      class="shared-include shared-header"
+      loading="eager"
+      scrolling="no"
+    ></iframe>
 
     <div class="hero__title">
       <span class="script">Làng &amp; Co.</span>
       <span class="serif">Vietnamese Traditional Crafts</span>
     </div>
-
-    <div class="wave">
-      <div class="below"></div>
-    </div>
-
   </section>
+   
 
   <main class="wishlist-page">
     <!-- CSS-only category state -->
@@ -415,10 +394,13 @@
     </div>
   </main>
 
-  <footer class="footer">
-    <span class="brandmark">Làng &amp; Co.</span>
-    <p>Vietnamese traditional crafts · Objects with provenance</p>
-  </footer>
+  <iframe
+    src="../shared/footer.html"
+    title="Footer"
+    class="shared-include shared-footer"
+    loading="lazy"
+    scrolling="no"
+  ></iframe>
 
   <!-- CSS :target modal: bag status -->
   <section id="bag-status" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bagTitle">

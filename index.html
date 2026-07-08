@@ -7,31 +7,24 @@
   <title>Home | Lang & Co.</title>
   <link rel="stylesheet" href="public/css/index.css" />
   <link rel="stylesheet" href="public/css/header.css" />
-  <link rel="stylesheet" href="public/css/header.css" />
+  <link rel="stylesheet" href="public/css/shared-include.css" />
 </head>
 
 <body>
 
   <!-- banner showup the new collection when pop landing page up -->
-  <div class="topbar">✦ New Collection Available Now ✦</div>
 
-  <!-- Navigation bar -->
   <section class="hero">
 
     <div class="hero__bg"></div>
 
-    <nav class="nav">
-      <a class="nav__logo" href="index.html">
-        <img src="public/images/logo.png" alt="Lang & Co. logo" />
-      </a>
-      <ul class="nav__links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="pages/shoppingcart.html">Shop</a></li>
-        <li><a href="pages/blog.html">Blog</a></li>
-        <li><a href="pages/forum.html">Forum</a></li>
-        <li><a href="pages/wishlist/wishlists.html">wishlists</a></li>
-      </ul>
-    </nav>
+    <iframe
+      src="pages/shared/header.html#nav-home"
+      title="Header"
+      class="shared-include shared-header"
+      loading="eager"
+      scrolling="no"
+    ></iframe>
 
     <div class="hero__title">
       <span class="script">Làng &amp; Co.</span>
@@ -69,10 +62,13 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    &copy; 2026 Lang &amp; Co. — Vietnamese Traditional Crafts
-  </footer>
+  <iframe
+    src="pages/shared/footer.html"
+    title="Footer"
+    class="shared-include shared-footer"
+    loading="lazy"
+    scrolling="no"
+  ></iframe>
 
 </body>
 
