@@ -271,17 +271,21 @@ input {
 }
 
 .chip {
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--muted);
-  min-height: 36px;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 11px;
-  letter-spacing: 0.02em;
-  transition: 0.2s ease;
   cursor: pointer;
-  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 35px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, .24);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  transition: .2s ease;
 }
 
 .chip span {
@@ -300,8 +304,8 @@ input {
 #filter-textile:checked ~ .wishlist-shell label[for="filter-textile"],
 #filter-bamboo:checked ~ .wishlist-shell label[for="filter-bamboo"],
 #filter-wood:checked ~ .wishlist-shell label[for="filter-wood"] {
-  background: var(--deep);
-  border-color: var(--deep);
+  background: var(--red);
+  border-color: var(--red);
   color: var(--cream);
 }
 
