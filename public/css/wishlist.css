@@ -131,6 +131,7 @@ input {
   opacity: 0.92;
 }
 
+.hero-curve,
 .curve {
   position: absolute;
   z-index: 2;

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DISCUSSION FORUM | Lang & Co.</title>
+  <link rel="stylesheet" href="public/css/header.css" />
+  <link rel="stylesheet" href="public/css/index.css" />
+  <link rel="stylesheet" href="public/css/shared-include.css" />
+</head>
+
+<body>
+  <nav class="navbar"><div class="container">
+    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
+    <ul class="navbar__links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../forum/forum_list.html">Forum</a></li>
+      <li><a href="../cart/products.html">Shop</a></li>
+      <li><a href="../blog/blog_list.html">Blog</a></li>
+      <li><a href="../review/review_list.html">Reviews</a></li>
+      <li><a href="sitemap.html">Sitemap</a></li>
+    </ul>
+    <div class="navbar__auth">
+      <a href="profile.html" class="btn btn-outline btn-sm">👤 Admin</a>
+      <a href="login.html" class="btn btn-sm">Log Out</a>
+    </div>
+    </div>
+  </nav>
+<body>
+
+  <!-- banner showup the new collection when pop landing page up -->
+
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <iframe
+      src="pages/shared/header.html#nav-home"
+      title="Header"
+      class="shared-include shared-header"
+      loading="eager"
+      scrolling="no"
+    ></iframe>
+
+    <div class="hero__title">
+      <span class="script">Làng &amp; Co.</span>
+      <span class="serif">Vietnamese Traditional Crafts</span>
+    </div>
+
+    <!-- CTA Buttons below hero title -->
+    <div class="hero__cta">
+      <a class="hero__cta-primary" href="pages/shared/register.html">
+        Explore the Collection →
+      </a>
+      <a class="hero__cta-ghost" href="pages/shared/login.html">
+        Already have an account? Sign In →
+      </a>
+    </div>
+
+<body>
+  <div>
+    <h1>DISCUSSION FORUM</h1>
+  </div>
+
+  <div class="topics-section">
+    <div class="topic-search-row">
+      <h2 class="section-label"> Topics </h2>
+
+    <!-- Search bar for searching thread's name -->
+      <form class="search-form" action="/search" method="GET">
+        <input type="text" name="q" class="search-input" placeholder="">
+        <button type="submit" class="search-btn" aria-label="Search">
+        <img src ="Image/search_icon.png" alt="Search" class = "Search-icon">  
+        </button>
+      </form>  
+    </div> 
+    <!-- Create thread button -->
+    <div class ="create-thread">
+      <button class="create-thread-btn">+ CREATE THREADS</button>
+    </div>
+    <!-- Topic Selection Block -->
+    <div class = "topics-block">
+      <button class="topics-block"> Topic 1</button>
+      <button class="topics-block"> Topic 2</button>
+      <button class="topics-block"> Topic 3</button>
+      <button class="topics-block"> Topic 4</button>
+    </div>   
+    
+  </div>
+  <!-- Popular thread list -->
+  <div class = "thread-section">
+    <div class = "thread-section-header">
+      <h2 class="section-label">Popular Threads</h2>
+      <a href="" class="more-link">More →</a>
+    </div>
+    <div class = "thread-list" id="popularThreadList"></div>
+  
+  <!-- Recent thread list -->
+    <div class = "thread-section-header">
+      <h2 class="section-label">Recent Threads</h2>
+      <a href="" class="more-link">More →</a>
+    </div>
+    <div class = "thread-list" id="popularThreadList"></div>
+  </div>
+
+  <!-- Create thread button -->
+  <div class ="create-thread">
+    <button class="create-thread-btn">+ CREATE THREADS</button>
+  </div>
+
+
+  </div>
+
+
+
+<style>
+    html, body { background: transparent; }
+    body { margin: 0; }
+  </style>
+<body>
+  <footer class="footer">
+    &copy; 2026 Lang &amp; Co. — Vietnamese Traditional Crafts
+  </footer>
+</body>
+
+</html>
