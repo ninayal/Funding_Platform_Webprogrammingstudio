@@ -1,0 +1,358 @@
+/* ================================================
+   Lang & Co. — Forum Stylesheet
+   Vietnamese Traditional Crafts
+   ================================================ */
+:root {
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
+  --darkred: #6D2323;
+
+  --ff-script: 'Playfair Display', serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
+
+  --paper: var(--cream);
+  --surface: rgba(254, 249, 225, 0.88);
+  --ink: var(--deep);
+  --muted: #7e6952;
+  --line: rgba(116, 81, 45, 0.22);
+  --white: #fffdf3;
+  --shadow: 0 24px 70px rgba(109, 35, 35, 0.15);
+  --shadow-soft: 0 16px 38px rgba(116, 81, 45, 0.10);
+  --radius: 20px;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff-ui);
+}
+
+/* -----------------------------
+   PAGE TITLE
+------------------------------ */
+.forum-title {
+  padding: 46px 24px 8px;
+  text-align: center;
+}
+
+.forum-title h1 {
+  margin: 0;
+  font-family: var(--ff-script);
+  font-size: clamp(38px, 6vw, 64px);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  color: var(--red);
+}
+
+.section-label {
+  margin: 0;
+  font-family: var(--ff-script);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* -----------------------------
+   TOPICS TOOLBAR
+------------------------------ */
+.topics-section {
+  width: min(1100px, calc(100% - 48px));
+  margin: 18px auto 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.topic-search-row {
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  flex: 1 1 320px;
+  max-width: 420px;
+  min-height: 44px;
+  padding: 0 8px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .5);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+}
+
+.search-input::placeholder {
+  color: #99816b;
+}
+
+.search-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--darkred) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FEF9E1' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cline x1='20' y1='20' x2='15.6' y2='15.6'/%3E%3C/svg%3E") center / 16px no-repeat;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.search-btn:hover {
+  background-color: var(--red);
+}
+
+/* Missing asset (Image/search_icon.png) — icon is drawn on .search-btn instead */
+.search-btn .Search-icon {
+  display: none;
+}
+
+/* -----------------------------
+   CREATE THREAD BUTTON
+------------------------------ */
+.create-thread {
+  margin-top: 18px;
+}
+
+.create-thread-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--darkred);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.create-thread-btn:hover {
+  background: var(--red);
+  transform: translateY(-1px);
+}
+
+/* Second create-threads button lower on the page */
+.thread-section + .create-thread {
+  width: min(1100px, calc(100% - 48px));
+  margin: 40px auto 60px;
+  text-align: center;
+}
+
+/* -----------------------------
+   TOPIC FILTER PILLS
+------------------------------ */
+.topics-block {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-right: 46px;
+  border-top: 1px solid var(--line);
+}
+
+button.topics-block {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin: 0;
+  padding: 0 18px;
+  border: 1px solid var(--tan);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--brown);
+  font-family: var(--ff-body);
+  font-style: italic;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+button.topics-block:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--cream);
+}
+
+div.topics-block::after {
+  content: "\2192";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(calc(-50% + 10px));
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--red);
+  font-size: 14px;
+}
+
+/* -----------------------------
+   THREAD SECTIONS
+------------------------------ */
+.thread-section {
+  width: min(1100px, calc(100% - 48px));
+  margin: 44px auto 0;
+}
+
+.thread-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.thread-section-header:not(:first-child) {
+  margin-top: 36px;
+}
+
+.more-link {
+  color: var(--red);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: transform .2s ease;
+}
+
+.more-link:hover {
+  transform: translateX(3px);
+  display: inline-block;
+}
+
+.thread-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* -----------------------------
+   THREAD CARD
+------------------------------ */
+.thread-card {
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .4);
+  box-shadow: var(--shadow-soft);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.thread-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(163, 29, 29, .3);
+  box-shadow: 0 20px 44px rgba(116, 81, 45, .16);
+}
+
+.thread-card__title {
+  margin: 0 0 8px;
+  font-family: var(--ff-script);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.thread-card__brief {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.thread-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--brown);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.thread-card__meta .meta-topic {
+  color: var(--red);
+}
+
+/* -----------------------------
+   FOOTER
+------------------------------ */
+.footer {
+  min-height: 60px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: var(--deep);
+  color: var(--tan);
+  font-family: var(--ff-ui);
+  font-size: .75rem;
+  font-weight: 300;
+  letter-spacing: .1em;
+  opacity: .9;
+  text-align: center;
+}
+
+/* -----------------------------
+   RESPONSIVE
+------------------------------ */
+@media (max-width: 640px) {
+  .topics-section {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .topic-search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form {
+    max-width: none;
+  }
+
+  .thread-card {
+    padding: 20px;
+  }
+
+  .thread-card__meta {
+    gap: 10px 16px;
+  }
+}

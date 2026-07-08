@@ -4,68 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DISCUSSION FORUM | Lang & Co.</title>
-  <link rel="stylesheet" href="public/css/header.css" />
-  <link rel="stylesheet" href="public/css/index.css" />
-  <link rel="stylesheet" href="public/css/shared-include.css" />
+  <title>FORUM | Lang & Co.</title>
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+  <link rel="stylesheet" href="../../public/css/forum.css" />
 </head>
 
-<body>
-  <nav class="navbar"><div class="container">
-    <a class="navbar__brand" href="../../index.html">🌐 MySite</a>
-    <ul class="navbar__links">
-      <li><a href="../../index.html">Home</a></li>
-      <li><a href="../forum/forum_list.html">Forum</a></li>
-      <li><a href="../cart/products.html">Shop</a></li>
-      <li><a href="../blog/blog_list.html">Blog</a></li>
-      <li><a href="../review/review_list.html">Reviews</a></li>
-      <li><a href="sitemap.html">Sitemap</a></li>
-    </ul>
-    <div class="navbar__auth">
-      <a href="profile.html" class="btn btn-outline btn-sm">👤 Admin</a>
-      <a href="login.html" class="btn btn-sm">Log Out</a>
-    </div>
-    </div>
-  </nav>
-<body>
+  <!-- Header and navigation -->
+    <section class="hero">
 
-  <!-- banner showup the new collection when pop landing page up -->
+        <div class="hero__bg"></div>
 
-  <section class="hero">
+        <iframe src="../shared/header.html#nav-forum" title="Header" class="shared-include shared-header" loading="eager"
+            scrolling="no"></iframe>
 
-    <div class="hero__bg"></div>
+        <div class="hero__title">
+            <span class="script">Làng &amp; Co.</span>
+            <span class="serif">Vietnamese Traditional Crafts</span>
+        </div>
+  </section>
 
-    <iframe
-      src="pages/shared/header.html#nav-home"
-      title="Header"
-      class="shared-include shared-header"
-      loading="eager"
-      scrolling="no"
-    ></iframe>
-
-    <div class="hero__title">
-      <span class="script">Làng &amp; Co.</span>
-      <span class="serif">Vietnamese Traditional Crafts</span>
-    </div>
-
-    <!-- CTA Buttons below hero title -->
-    <div class="hero__cta">
-      <a class="hero__cta-primary" href="pages/shared/register.html">
-        Explore the Collection →
-      </a>
-      <a class="hero__cta-ghost" href="pages/shared/login.html">
-        Already have an account? Sign In →
-      </a>
-    </div>
-
-<body>
-  <div>
+  <div class="forum-title">
     <h1>DISCUSSION FORUM</h1>
   </div>
 
   <div class="topics-section">
     <div class="topic-search-row">
-      <h2 class="section-label"> Topics </h2>
 
     <!-- Search bar for searching thread's name -->
       <form class="search-form" action="/search" method="GET">
@@ -94,19 +59,52 @@
       <h2 class="section-label">Popular Threads</h2>
       <a href="" class="more-link">More →</a>
     </div>
-    <div class = "thread-list" id="popularThreadList"></div>
-  
+    <div class = "thread-list" id="popularThreadList">
+      <article class="thread-card">
+        <h3 class="thread-card__title">Thread Title</h3>
+        <p class="thread-card__brief">Brief Content</p>
+        <div class="thread-card__meta">
+          <span class="meta-author">AUTHOR</span>
+          <span class="meta-topic">TOPIC</span>
+          <span class="meta-comments">No. Comments</span>
+        </div>
+      </article>
+      <article class="thread-card">
+        <h3 class="thread-card__title">Thread Title</h3>
+        <p class="thread-card__brief">Brief Content</p>
+        <div class="thread-card__meta">
+          <span class="meta-author">AUTHOR</span>
+          <span class="meta-topic">TOPIC</span>
+          <span class="meta-comments">No. Comments</span>
+        </div>
+      </article>
+    </div>
+
   <!-- Recent thread list -->
     <div class = "thread-section-header">
       <h2 class="section-label">Recent Threads</h2>
       <a href="" class="more-link">More →</a>
     </div>
-    <div class = "thread-list" id="popularThreadList"></div>
-  </div>
-
-  <!-- Create thread button -->
-  <div class ="create-thread">
-    <button class="create-thread-btn">+ CREATE THREADS</button>
+    <div class = "thread-list" id="recentThreadList">
+      <article class="thread-card">
+        <h3 class="thread-card__title">Thread Title</h3>
+        <p class="thread-card__brief">Brief Content</p>
+        <div class="thread-card__meta">
+          <span class="meta-author">AUTHOR</span>
+          <span class="meta-topic">TOPIC</span>
+          <span class="meta-comments">No. Comments</span>
+        </div>
+      </article>
+      <article class="thread-card">
+        <h3 class="thread-card__title">Thread Title</h3>
+        <p class="thread-card__brief">Brief Content</p>
+        <div class="thread-card__meta">
+          <span class="meta-author">AUTHOR</span>
+          <span class="meta-topic">TOPIC</span>
+          <span class="meta-comments">No. Comments</span>
+        </div>
+      </article>
+    </div>
   </div>
 
 
@@ -123,5 +121,5 @@
     &copy; 2026 Lang &amp; Co. — Vietnamese Traditional Crafts
   </footer>
 </body>
-
+</body>
 </html>
