@@ -36,7 +36,7 @@
 .nav__logo img {
   margin-top: 0%;
   margin-bottom: 6%;
-  height: 130px;
+  height: 180px; 
 }
 
 .nav__logo {
@@ -80,6 +80,7 @@
   text-decoration: none;
   text-shadow: 0 1px 4px rgba(84, 51, 16, .5);
   transition: color .2s;
+  flex-wrap: wrap;
 }
 /* Remove blue focus box after mouse click */
 .nav__links a:focus {

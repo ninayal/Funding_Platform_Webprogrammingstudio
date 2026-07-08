@@ -84,10 +84,10 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 400;
   font-style: italic;
-  color: var(--cream);
+  color: var(--red);
   line-height: .9;
   text-shadow:
-    0 2px 20px rgb(255, 255, 255),
+    0 2px 20px rgba(234, 93, 93, 0.33),
     0 0 60px rgba(84, 51, 16, .25);
   letter-spacing: -.01em;
 }
@@ -98,7 +98,7 @@ body {
   font-size: clamp(1.1rem, 2.5vw, 2rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--tan);
+  color: var(--darkred);
   letter-spacing: .18em;
   text-shadow: 0 1px 8px rgba(84, 51, 16, .5);
   margin-top: .3rem;
