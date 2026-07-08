@@ -4,68 +4,30 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#A31D1D" />
     <title>Làng & Co. — Journal</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <!-- Shared styles -->
+    <link rel="stylesheet" href="../../public/css/index.css" />
+    <link rel="stylesheet" href="../../public/css/header.css" />
+    <link rel="stylesheet" href="../../public/css/shared-include.css" />
+    <!-- Blog styles -->
+    <link rel="stylesheet" href="../../public/css/blog.css" />
 </head>
 
 <body>
-    <!--
-    HTML + CSS ONLY BUILD
-    ----------------------------------------------------------
-    What works in a static browser preview:
-    - Same Làng & Co. header system as the wishlist page
-    - CSS-only category filtering
-    - CSS :target detailed article views
-    - CSS :target create/edit/delete confirmation modals
-    - CSS-only hardcoded "created" / "updated" states
-    - CSS-only deletion of the marked "own post" card
-    - Hardcoded email sharing
 
-    What cannot be truly implemented with HTML + CSS alone:
-    - Secure MongoDB persistence
-    - Authentication / ownership verification
-    - Arbitrary text search over stored posts
-    - Dynamic create/edit/delete operations using entered form values
-    - Persistent comments
+    <!-- Header and navigation -->
+    <section class="hero">
 
-    MongoDB integration contract prepared in this HTML:
-    - Create form fields map to: title, author, dateAdded, categories, content, imageUrl
-    - Forms point to /api/posts-style endpoints for later server implementation
-    - Recommended secure architecture: Browser -> Server API -> MongoDB
-    - Never connect a browser directly to MongoDB or expose database credentials in HTML/CSS
-  -->
+        <div class="hero__bg"></div>
 
-    <!-- CSS state targets -->
-    <div id="post-created" class="state-target" aria-hidden="true"></div>
-    <div id="post-updated" class="state-target" aria-hidden="true"></div>
+        <iframe src="../shared/header.html#nav-blog" title="Header" class="shared-include shared-header" loading="eager"
+            scrolling="no"></iframe>
 
-    <div class="announcement">✦ Notes from makers, villages, and the people building Làng &amp; Co. ✦</div>
-
-    <!-- Same header system as the previous wishlist page -->
-    <header class="site-header">
-        <nav class="nav" aria-label="Main navigation">
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Shop</a>
-                <a href="#">Forum</a>
-                <a class="active" href="#journal">Stories</a>
-            </div>
-
-            <a class="brandmark" href="#" aria-label="Làng and Company">Làng &amp; Co.</a>
-
-            <div class="nav-actions">
-                <a href="#">Log in</a>
-                <a class="bag-pill" href="#">Bag <span>0</span></a>
-            </div>
-        </nav>
-    </header>
+        <div class="hero__title">
+            <span class="script">Làng &amp; Co.</span>
+            <span class="serif">Vietnamese Traditional Crafts</span>
+        </div>
+    </section>
 
     <!-- Journal masthead -->
     <section class="journal-hero" id="journal">
@@ -99,7 +61,6 @@
                         <path d="m20 20-3.8-3.8"></path>
                     </svg>
                     <input type="search" placeholder="Search title, author, date, tag, or story text..." />
-                    <span class="prototype-tag">Prototype</span>
                 </label>
 
                 <div class="tool-actions">
@@ -789,7 +750,6 @@
 
     <!-- ======================================================
        CREATE / EDIT UI
-       Forms are backend-ready, but persistence requires server code.
        ====================================================== -->
 
     <section id="create-post" class="form-overlay" aria-label="Create a new blog post">
@@ -810,8 +770,8 @@
                 </div>
                 <div class="form-grid two-col">
                     <label>Date added<input type="date" name="dateAdded" required /></label>
-                    <label>Tags or categories<input type="text" name="categories" placeholder="Mission, Donation, Places, Guide"
-                            required /></label>
+                    <label>Tags or categories<input type="text" name="categories"
+                            placeholder="Mission, Donation, Places, Guide" required /></label>
                 </div>
                 <label>Image content / URL<input type="url" name="imageUrl" placeholder="https://example.com/image.jpg"
                         required /></label>
@@ -859,7 +819,6 @@
         </div>
     </section>
 
-    <!-- Hardcoded CSS-only success toasts -->
     <div class="state-toast created-toast" role="status">Post published in static demo state. MongoDB persistence
         requires the server API.</div>
     <div class="state-toast updated-toast" role="status">Post updated in static demo state. MongoDB persistence requires
