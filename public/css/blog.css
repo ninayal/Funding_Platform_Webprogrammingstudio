@@ -215,6 +215,8 @@ button {
 
 .eyebrow {
   opacity: .76;
+  color: var(--cream);
+  font-size: 13px;
 }
 
 .journal-hero h1 {
@@ -351,7 +353,7 @@ button {
 }
 
 .btn-primary {
-  background: var(--darkred);
+  background: #a31d1d;
   color: var(--cream);
   border-color: var(--darkred);
 }
