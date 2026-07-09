@@ -99,18 +99,12 @@ body {
 
 .login-brand {
     position: relative;
-
     z-index: 10;
-
     flex: 0 0 63%;
-
     width: 63%;
     max-width: 63%;
     height: 100%;
-
-    padding:
-        48px 48px 8% 5%;
-
+    padding: 48px 48px 8% 5%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -320,13 +314,10 @@ body {
 
 .logo-name {
     font-family: var(--ff-disp);
-    font-size: 30px;
+    font-size: 50px;
     font-weight: 700;
-
     line-height: 100%;
-
     letter-spacing: 1px;
-
     color: #ffffff;
 }
 
@@ -357,17 +348,12 @@ body {
 
 .login-glass__title {
     margin-bottom: 24px;
-
     font-family: var(--ff-disp);
     font-size: 36px;
     font-weight: 600;
-
     line-height: 110%;
-
     letter-spacing: -1px;
-
     color: #ffffff;
-
     text-shadow:
         0px 5px 20px rgba(0, 0, 0, 0.24);
 }
@@ -380,9 +366,7 @@ body {
 .login-form {
     display: flex;
     flex-direction: column;
-
     gap: 16px;
-
     margin-bottom: 16px;
 }
 
@@ -390,7 +374,6 @@ body {
 .form-group {
     display: flex;
     flex-direction: column;
-
     gap: 7px;
 }
 
@@ -401,13 +384,10 @@ body {
 
 .form-label {
     font-family: var(--ff-ui);
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 600;
-
     line-height: 130%;
-
     letter-spacing: 0.7px;
-
     color: rgba(255, 255, 255, 0.94);
 }
 
@@ -419,34 +399,18 @@ body {
 .form-input {
     width: 100%;
     height: 50px;
-
-    padding:
-        0px 20px;
-
+    padding: 0px 20px;
     font-family: var(--ff-ui);
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 400;
-
     color: #ffffff;
-
-    background:
-        rgba(255, 255, 255, 0.15);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.36);
-
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.36);
     border-radius: 25px;
-
     outline: none;
-
-    box-shadow:
-        inset 0px 1px 0px rgba(255, 255, 255, 0.10),
-        0px 3px 12px rgba(0, 0, 0, 0.08);
-
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.10), 0px 3px 12px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(8px);
-
     -webkit-backdrop-filter: blur(8px);
-
     transition:
         background 200ms ease,
         border-color 200ms ease,
@@ -461,27 +425,16 @@ body {
 
 
 .form-input:hover {
-    background:
-        rgba(255, 255, 255, 0.18);
-
-    border-color:
-        rgba(255, 255, 255, 0.48);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.48);
 }
 
 
 .form-input:focus {
-    background:
-        rgba(255, 255, 255, 0.22);
-
-    border-color:
-        rgba(229, 208, 172, 0.95);
-
-    box-shadow:
-        0px 0px 0px 3px rgba(229, 208, 172, 0.14),
-        inset 0px 1px 0px rgba(255, 255, 255, 0.14);
-
-    transform:
-        translateY(-1px);
+    background:rgba(255, 255, 255, 0.22);
+    border-color: rgba(229, 208, 172, 0.95);
+    box-shadow:0px 0px 0px 3px rgba(229, 208, 172, 0.14), inset 0px 1px 0px rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
 }
 
 
@@ -491,24 +444,15 @@ body {
 
 .form-forgot {
     align-self: flex-end;
-
     margin-top: 3px;
-
     font-family: var(--ff-ui);
-    font-size: 11px;
+    font-size: 17px;
     font-weight: 500;
-
     line-height: 130%;
-
-    color:
-        rgba(255, 255, 255, 0.76);
-
+    color:rgba(255, 255, 255, 0.76);
     text-decoration: none;
-
-    transition:
-        color 200ms ease;
+    transition: color 200ms ease;
 }
-
 
 .form-forgot:hover {
     color: var(--tan);
@@ -522,58 +466,31 @@ body {
 .login-btn {
     width: 100%;
     height: 50px;
-
     margin-top: 7px;
-
-    padding:
-        0px 20px;
-
+    padding: 0px 20px;
     font-family: var(--ff-ui);
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
-
     letter-spacing: 1px;
-
     color: #ffffff;
-
-    background:
-        linear-gradient(135deg,
-            var(--red) 0%,
-            var(--darkred) 100%);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.20);
-
+    background:linear-gradient(135deg, var(--red) 0%, var(--darkred) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.20);
     border-radius: 25px;
-
     cursor: pointer;
-
     box-shadow:
         0px 10px 28px rgba(109, 35, 35, 0.38),
         inset 0px 1px 0px rgba(255, 255, 255, 0.20);
-
-    transition:
-        transform 200ms ease,
-        box-shadow 220ms ease,
-        filter 220ms ease;
+    transition:transform 200ms ease, box-shadow 220ms ease, filter 220ms ease;
 }
-
 
 .login-btn:hover {
     filter: brightness(1.08);
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0px 14px 34px rgba(109, 35, 35, 0.46),
-        inset 0px 1px 0px rgba(255, 255, 255, 0.22);
+    transform: translateY(-2px);
+    box-shadow: 0px 14px 34px rgba(109, 35, 35, 0.46), inset 0px 1px 0px rgba(255, 255, 255, 0.22);
 }
 
-
 .login-btn:active {
-    transform:
-        translateY(0px);
+transform: translateY(0px);
 }
 
 
@@ -583,27 +500,18 @@ body {
 
 .login-divider {
     width: 100%;
-
     display: flex;
     align-items: center;
-
     gap: 12px;
-
     margin:
-        16px 0px;
+        26px 0px;
 }
 
 
 .login-divider__line {
     flex: 1;
-
     height: 1px;
-
-    background:
-        linear-gradient(90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.34) 50%,
-            transparent 100%);
+    background:linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.34) 50%, transparent 100%);
 }
 
 
@@ -611,12 +519,8 @@ body {
     font-family: var(--ff-ui);
     font-size: 10px;
     font-weight: 500;
-
     letter-spacing: 1px;
-
-    color:
-        rgba(255, 255, 255, 0.70);
-
+    color: rgba(255, 255, 255, 0.70);
     white-space: nowrap;
 }
 
@@ -627,14 +531,9 @@ body {
 
 .login-socials {
     width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-
     margin-bottom: 6px;
 }
 
@@ -642,38 +541,21 @@ body {
 .social-btn {
     min-width: 0px;
     height: 46px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 6px;
-
-    padding:
-        0px 8px;
-
+    padding: 0px 8px;
     font-family: var(--ff-ui);
     font-size: 11px;
     font-weight: 600;
-
     letter-spacing: 0.4px;
-
-    color:
-        rgba(255, 255, 255, 0.96);
-
-    background:
-        rgba(255, 255, 255, 0.13);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.30);
-
+    color: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.30);
     border-radius: 12px;
-
     text-decoration: none;
-
-    box-shadow:
-        inset 0px 1px 0px rgba(255, 255, 255, 0.07);
-
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.07);
     transition:
         background 200ms ease,
         border-color 200ms ease,
@@ -683,29 +565,19 @@ body {
 
 
 .social-btn img {
-    width: 18px;
-    height: 18px;
-
+    width: 28px;
+    height: 28px;
     object-fit: contain;
-
     flex-shrink: 0;
 }
 
 
 .social-btn:hover {
-    background:
-        rgba(255, 255, 255, 0.22);
-
-    border-color:
-        rgba(255, 255, 255, 0.50);
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0px 8px 22px rgba(0, 0, 0, 0.18);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.50);
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.18);
 }
-
 
 /* ================================================
    SIGN UP TEXT
@@ -713,38 +585,27 @@ body {
 
 .login-signup-text {
     margin-top: 3px;
-
     text-align: center;
-
     font-family: var(--ff-ui);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 400;
-
     line-height: 150%;
-
-    color:
-        rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.82);
 }
 
 
 .login-signup-text a {
     margin-left: 3px;
-
     font-weight: 700;
-
     color: var(--tan);
-
     text-decoration: none;
-
     transition:
         color 200ms ease,
         opacity 200ms ease;
 }
 
-
 .login-signup-text a:hover {
     color: #ffffff;
-
     opacity: 1;
 }
 
@@ -755,41 +616,21 @@ body {
 
 .login-guest {
     position: relative;
-
     width: 100%;
     min-height: 48px;
-
     display: grid;
-
-    grid-template-columns:
-        auto 1fr auto;
-
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-
     gap: 11px;
-
     margin-top: 4px;
-
-    padding:
-        11px 16px;
-
+    padding: 11px 16px;
     overflow: hidden;
-
-    color:
-        rgba(255, 255, 255, 0.90);
-
+    color: rgba(255, 255, 255, 0.90);
     text-align: left;
-
     text-decoration: none;
-
-    background:
-        rgba(255, 255, 255, 0.10);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.27);
-
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.27);
     border-radius: 14px;
-
     transition:
         background 200ms ease,
         border-color 200ms ease,
@@ -801,61 +642,40 @@ body {
 /* Shimmer */
 .login-guest::before {
     content: "";
-
     position: absolute;
-
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-
     background:
         linear-gradient(105deg,
             transparent 20%,
             rgba(255, 255, 255, 0.10) 50%,
             transparent 80%);
-
-    transform:
-        translateX(-120%);
-
-    transition:
-        transform 600ms ease;
-
+    transform: translateX(-120%);
+    transition: transform 600ms ease;
     pointer-events: none;
 }
 
-
 .login-guest:hover::before {
-    transform:
-        translateX(120%);
+    transform: translateX(120%);
 }
 
 
 .login-guest:hover {
-    background:
-        rgba(255, 255, 255, 0.17);
+    background: rgba(255, 255, 255, 0.17);
 
-    border-color:
-        rgba(255, 255, 255, 0.48);
-
-    transform:
-        translateY(-1px);
-
-    box-shadow:
-        0px 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.48);
+    transform: translateY(-1px);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
 }
-
 
 /* Guest icon */
 .guest-icon {
     position: relative;
-
     z-index: 2;
-
     flex-shrink: 0;
-
     font-size: 12px;
-
     color: var(--tan);
 }
 
