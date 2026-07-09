@@ -59,13 +59,10 @@
 .terms-label {
   display: flex;
   align-items: flex-start;
-
   gap: 8px;
-
   cursor: pointer;
-
   font-family: var(--ff-ui);
-  font-size: 10.88px;
+  font-size: 14px;
   font-weight: 300;
 
   color:
