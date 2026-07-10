@@ -29,7 +29,11 @@ html {
 }
 
 body {
-  background: #ffffff;
+  background-color: var(--cream);
+  background-image: url('../images/linen-beige.png');
+  background-repeat: repeat;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--deep);
   font-family: var(--ff-ui);
   overflow-x: hidden;
@@ -202,7 +206,9 @@ body {
   position: relative;
   z-index: 20;
   margin-top: -50px;
-  background: #ffffff;
+  background-color: var(--cream);
+  background-image: url('../images/linen-beige.png');
+  background-repeat: repeat;
   border-radius: 50% 50% 0 0 / 60px 60px 0 0;
   padding-top: 40px;
 }
