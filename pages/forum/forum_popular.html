@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORUM | Lang & Co.</title>
+  <title>Popular Threads | Lang & Co.</title>
   <link rel="stylesheet" href="../../public/css/header.css" />
   <link rel="stylesheet" href="../../public/css/index.css" />
   <link rel="stylesheet" href="../../public/css/shared-include.css" />
@@ -36,24 +36,21 @@
       </a>
     </div>
 
-  </section>
+    </section>
 
   <div class="wave">
     <div class="forum-title">
-      <h1>DISCUSSION FORUM</h1>
+      <h1>POPULAR THREADS</h1>
     </div>
-
     <div class="topics-section">
       <div class="topic-search-row">
         <!-- Create thread button -->
-        <a href="Create_thread.html" class="create-thread-btn">+ CREATE THREADS</a>
+        <a href="Create_thread.html" class="create-thread-btn">+ CREATE</a>
 
         <!-- Search bar for searching thread's name -->
         <form class="search-form" action="/search" method="GET">
           <input type="text" name="q" class="search-input" placeholder="">
-          <button type="submit" class="search-btn" aria-label="Search">
-            <img src="Image/search_icon.png" alt="Search" class="Search-icon">
-          </button>
+          <button type="submit" class="search-btn" aria-label="Search"></button>
         </form>
       </div>
 
@@ -64,14 +61,15 @@
         <button class="topics-block"> Topic 3</button>
         <button class="topics-block"> Topic 4</button>
       </div>
-
     </div>
-    <!-- Popular thread list -->
+
+    <!-- Full popular thread list -->
     <div class="thread-section">
       <div class="thread-section-header">
         <h2 class="section-label">Popular Threads</h2>
-        <a href="forum_popular.html" class="more-link">More →</a>
+        <a href="forum_recent.html" class="section-tab-link">Recent Threads</a>
       </div>
+
       <div class="thread-list" id="popularThreadList">
         <a href="thread_content.html" class="thread-card-link">
           <article class="thread-card">
@@ -95,37 +93,43 @@
             </div>
           </article>
         </a>
+        <a href="thread_content.html" class="thread-card-link">
+          <article class="thread-card">
+            <h3 class="thread-card__title">Thread Title</h3>
+            <p class="thread-card__brief">Brief Content</p>
+            <div class="thread-card__meta">
+              <span class="meta-author">AUTHOR</span>
+              <span class="meta-topic">TOPIC</span>
+              <span class="meta-comments">No. Comments</span>
+            </div>
+          </article>
+        </a>
+        <a href="thread_content.html" class="thread-card-link">
+          <article class="thread-card">
+            <h3 class="thread-card__title">Thread Title</h3>
+            <p class="thread-card__brief">Brief Content</p>
+            <div class="thread-card__meta">
+              <span class="meta-author">AUTHOR</span>
+              <span class="meta-topic">TOPIC</span>
+              <span class="meta-comments">No. Comments</span>
+            </div>
+          </article>
+        </a>
       </div>
 
-      <!-- Recent thread list -->
-      <div class="thread-section-header">
-        <h2 class="section-label">Recent Threads</h2>
-        <a href="forum_recent.html" class="more-link">More →</a>
-      </div>
-      <div class="thread-list" id="recentThreadList">
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
-      </div>
+      <!-- Pagination -->
+      <nav class="pagination" aria-label="Popular threads pagination">
+        <a href="#" class="page-link active" aria-current="page">1</a>
+        <a href="#" class="page-link">2</a>
+        <a href="#" class="page-link">3</a>
+        <a href="#" class="page-link">4</a>
+        <a href="#" class="page-link">5</a>
+        <span class="page-ellipsis">…</span>
+        <a href="#" class="page-link">6</a>
+        <a href="#" class="page-link">7</a>
+        <a href="#" class="page-link page-next">Next</a>
+        <a href="#" class="page-link page-last">Last</a>
+      </nav>
     </div>
   </div>
 

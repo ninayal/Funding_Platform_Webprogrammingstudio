@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Thread | Lang & Co.</title>
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+  <link rel="stylesheet" href="../../public/css/forum.css" />
+</head>
+
+<body>
+
+  <!-- Header and navigation -->
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <iframe src="../shared/header.html#nav-forum" title="Header" class="shared-include shared-header" loading="eager"
+      scrolling="no"></iframe>
+
+    <div class="hero__title">
+      <span class="script">Làng &amp; Co.</span>
+      <span class="serif">Vietnamese Traditional Crafts</span>
+    </div>
+
+    <!-- CTA Buttons below hero title -->
+    <div class="hero__cta">
+      <a class="hero__cta-primary" href="../shared/register.html">
+        Explore the Collection →
+      </a>
+      <a class="hero__cta-ghost" href="../shared/login.html">
+        Already have an account? Sign In →
+      </a>
+    </div>
+
+  </section>
+
+  <div class="wave">
+
+    <div class="forum-title">
+      <h1>DISCUSSION FORUM</h1>
+    </div>
+
+    <div class="create-thread-header">
+      <span class="create-thread-label">Create Thread</span>
+      <a href="forum.html" class="more-link back-to-forum">Back to Forum</a>
+    </div>
+
+    <form class="create-thread-form" id="createThreadForm" action="#" method="POST">
+
+      <input type="text" name="title" class="create-thread-title-input" placeholder="Title" required>
+
+      <div class="create-thread-topic-row">
+        <button type="button" class="topic-add-btn" id="addTopicBtn">+ Topic</button>
+        <div class="create-thread-topics" id="topicList"></div>
+      </div>
+
+      <textarea name="content" class="create-thread-content" placeholder="Content" required></textarea>
+
+      <div class="create-thread-actions">
+        <button type="button" class="draft-btn" id="saveDraftBtn">Save Draft</button>
+        <button type="submit" class="post-btn">Post</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
+
+  <script src="../../public/js/create_thread.js" defer></script>
+
+</body>
+
+</html>
