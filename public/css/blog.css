@@ -886,47 +886,6 @@ button {
 }
 
 /* -----------------------------
-   FOOTER
------------------------------- */
-.site-footer {
-  min-height: 280px;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 10px;
-  padding: 50px 24px;
-  background: var(--darkred);
-  color: var(--cream);
-  text-align: center;
-}
-
-.footer-brand {
-  font-family: var(--ff-script);
-  font-size: 40px;
-  font-style: italic;
-}
-
-.site-footer p {
-  margin: 0;
-  font-family: var(--ff-body);
-  font-size: 18px;
-  opacity: .8;
-}
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-  margin-top: 14px;
-}
-
-.footer-links a {
-  font-size: 9px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-/* -----------------------------
    ARTICLE DETAIL OVERLAYS
 ------------------------------ */
 .article-overlay,

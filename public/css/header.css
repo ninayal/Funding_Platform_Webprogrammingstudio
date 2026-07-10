@@ -1,19 +1,20 @@
 /* ================================================
    Lang & Co. — header.css
    Topbar + Navigation bar
+   Units: px and % only
    ================================================ */
 
 /* ================================================
    TOPBAR
    ================================================ */
 .topbar {
-  background: var(--red);
+  background: var(--darkred);
   text-align: center;
-  padding: .45rem 1rem;
+  padding: 7px 16px;
   font-family: var(--ff-ui);
-  font-size: .65rem;
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: .22em;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--cream);
 }
@@ -23,65 +24,80 @@
    ================================================ */
 .nav {
   position: absolute;
-  top: 2.8rem;
+  top: 32px;
   left: 0;
   right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 3rem;
+  padding: 0 48px;
 }
 
-.nav__logo img {
-  margin-top: 0%;
-  margin-bottom: 6%;
-  height: 180px; 
+.nav__pill {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 14px 36px;
+  border-radius: 99px;
+  background: rgba(1, 1, 0, .38);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(254, 249, 225, .2);
 }
 
 .nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--ff-script);
-  font-size: 1.5rem;
+  font-size: 22px;
   font-weight: 700;
   font-style: italic;
   color: var(--cream);
   text-decoration: none;
   text-shadow: 0 1px 8px rgba(84, 51, 16, .4);
   line-height: 1;
+  flex-shrink: 0;
+}
+
+.nav__logo img {
+  height: 130px;
+  width: auto;
+  margin: 0;
 }
 
 .nav__logo small {
   display: block;
   font-family: var(--ff-ui);
-  font-size: .55rem;
+  font-size: 9px;
   font-weight: 300;
-  letter-spacing: .3em;
+  letter-spacing: 3px;
   text-transform: uppercase;
   font-style: normal;
   opacity: .8;
-  margin-top: .1rem;
+  margin-top: 2px;
 }
 
 .nav__links {
-  margin-top: 0%;
-  margin-bottom: 4%;
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  gap: 34px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav__links a {
   font-family: var(--ff-ui);
-  font-size: 19px;
-  font-weight: 400;
-  letter-spacing: .12em;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(254, 249, 225, .9);
+  color: rgba(254, 249, 225, .85);
   text-decoration: none;
-  text-shadow: 0 1px 4px rgba(84, 51, 16, .5);
-  transition: color .2s;
-  flex-wrap: wrap;
+  transition: color .3s cubic-bezier(.4, 0, .2, 1);
 }
+
 /* Remove blue focus box after mouse click */
 .nav__links a:focus {
   outline: none;
@@ -91,14 +107,14 @@
 .nav__links a:hover,
 .nav__links a.active,
 .nav__links a:target {
-  color: var(--darkred);
+  color: var(--cream);
 }
 
 .nav--light {
   position: relative;
   top: auto;
   background: var(--cream);
-  padding: 1rem 3rem;
+  padding: 16px 48px;
   border-bottom: 1px solid rgba(175, 143, 111, .2);
 }
 
@@ -118,3 +134,35 @@
   color: var(--red);
 }
 
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 700px) {
+  .nav {
+    top: 20px;
+    padding: 0 16px;
+  }
+
+  .nav__pill {
+    padding: 8px 18px;
+    max-width: 60%;
+    overflow-x: auto;
+  }
+
+  .nav__logo img {
+    height: 44px;
+  }
+
+  .nav__logo {
+    font-size: 16px;
+  }
+
+  .nav__links {
+    gap: 14px;
+  }
+
+  .nav__links a {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}

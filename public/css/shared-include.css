@@ -13,7 +13,7 @@
 }
 
 .shared-footer {
-   max-height: 48px;
+  height: 500px;
 }
 
 /* Allow iframe content to render transparently over hero background */
@@ -23,6 +23,11 @@ iframe.shared-header {
   background: transparent !important;
 }
 
+@media (max-width: 900px) {
+  .shared-footer { height: 660px; }
+}
+
 @media (max-width: 640px) {
   .shared-header { min-height: 160px; }
+  .shared-footer { height: 780px; }
 }
