@@ -645,7 +645,7 @@ body {
   position: relative;
   z-index: 1;
   display: block;
-  color: var(--red);
+  color: var(--cream);
   font-size: 38px;
   margin-bottom: 18px;
 }
@@ -653,6 +653,7 @@ body {
 .impact-banner .section-kicker {
   position: relative;
   z-index: 1;
+  color: var(--cream)
 }
 
 .impact-banner h2 {
@@ -661,13 +662,13 @@ body {
   font-family: var(--ff-script);
   font-weight: 400;
   font-size: 46px;
-  color: var(--deep);
+  color: var(--cream);
   margin-bottom: 18px;
   line-height: 1.15;
 }
 
 .impact-banner h2 em {
-  color: var(--red);
+  color: var(--tan);
   font-style: italic;
   font-weight: 100;
 }
