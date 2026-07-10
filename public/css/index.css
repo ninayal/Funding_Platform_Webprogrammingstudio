@@ -1,7 +1,6 @@
 /* ================================================
    Lang & Co. — Main Stylesheet
    Vietnamese Traditional Crafts
-   Units: px and % only
    ================================================ */
 :root {
   --cream: #FEF9E1;
@@ -532,16 +531,15 @@ body {
 }
 
 /* ================================================
-   SHOP BY CRAFT — staggered cards
+   SHOP BY CRAFT — masonry cards
    ================================================ */
 .categories {
   padding: 0 0 24px;
 }
 
 .categories__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
+  column-count: 4;
+  column-gap: 22px;
   width: 94%;
   max-width: 1180px;
   margin: 0 auto;
@@ -549,26 +547,26 @@ body {
 
 .category-card {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  overflow: hidden;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 34px;
   text-decoration: none;
-  background: #fffdf3;
-  border: 1px solid rgba(175, 143, 111, .3);
-  transition: border-color .3s cubic-bezier(.4, 0, .2, 1);
-}
-
-.category-card:hover {
-  border-color: var(--red);
 }
 
 .category-card__photo {
   display: block;
-  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
 }
+
+.category-card:nth-child(8n+1) .category-card__photo { aspect-ratio: 3 / 4; }
+.category-card:nth-child(8n+2) .category-card__photo { aspect-ratio: 3 / 5.4; }
+.category-card:nth-child(8n+3) .category-card__photo { aspect-ratio: 4 / 3.2; }
+.category-card:nth-child(8n+4) .category-card__photo { aspect-ratio: 3 / 4.6; }
+.category-card:nth-child(8n+5) .category-card__photo { aspect-ratio: 3 / 3.6; }
+.category-card:nth-child(8n+6) .category-card__photo { aspect-ratio: 3 / 4.8; }
+.category-card:nth-child(8n+7) .category-card__photo { aspect-ratio: 4 / 3; }
+.category-card:nth-child(8n+8) .category-card__photo { aspect-ratio: 3 / 4.2; }
 
 .category-card img {
   width: 100%;
@@ -579,18 +577,18 @@ body {
 }
 
 .category-card:hover img {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 
 .category-card__label {
   display: flex;
   flex-direction: column;
-  padding: 16px 18px 18px;
+  padding: 14px 0 0;
 }
 
 .category-card__vn {
   font-family: var(--ff-script);
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.1;
   color: var(--deep);
 }
@@ -599,7 +597,7 @@ body {
   font-family: var(--ff-ui);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--sand);
   margin-top: 3px;
@@ -1531,7 +1529,59 @@ body {
    ================================================ */
 @media (max-width: 900px) {
   .categories__grid {
+    column-count: 2;
+  }
+
+  .featured__grid,
+  .journal-preview__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .community-split {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .story,
+  .process {
+    flex-direction: column;
+  }
+
+  .story__media,
+  .process__media {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .faq {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .hero__title .script {
+    font-size: 100px;
+  }
+
+  .hero__title .serif {
+    font-size: 22px;
+  }
+
+  .section-head h2 {
+    font-size: 42px;
+  }
+
+  .editorial__body {
+    flex-basis: 50%;
+    padding: 48px 32px;
+  }
+}
+/* ================================================
+   RESPONSIVE — TABLET
+   ================================================ */
+@media (max-width: 900px) {
+  .categories__grid {
+    column-count: 2;
   }
 
   .featured__grid,
@@ -1641,8 +1691,12 @@ body {
   }
 
   .categories__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    column-count: 2;
+    column-gap: 14px;
+  }
+
+  .category-card__photo {
+    aspect-ratio: 3 / 4 !important;
   }
 
   .quicknav {
