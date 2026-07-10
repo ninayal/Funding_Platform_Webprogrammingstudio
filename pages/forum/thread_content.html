@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thread | Lang & Co.</title>
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+  <link rel="stylesheet" href="../../public/css/forum.css" />
+</head>
+
+<body>
+
+  <!-- Header and navigation -->
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <iframe src="../shared/header.html#nav-forum" title="Header" class="shared-include shared-header" loading="eager"
+      scrolling="no"></iframe>
+
+    <div class="hero__title">
+      <span class="script">Làng &amp; Co.</span>
+      <span class="serif">Vietnamese Traditional Crafts</span>
+    </div>
+
+    <!-- CTA Buttons below hero title -->
+    <div class="hero__cta">
+      <a class="hero__cta-primary" href="../shared/register.html">
+        Explore the Collection →
+      </a>
+      <a class="hero__cta-ghost" href="../shared/login.html">
+        Already have an account? Sign In →
+      </a>
+    </div>
+
+  </section>
+
+  <div class="wave">
+
+    <div class="forum-title">
+      <h1>DISCUSSION FORUM</h1>
+    </div>
+
+    <div class="thread-content-wrap">
+
+      <h1 class="thread-content-title">Thread Title</h1>
+
+      <div class="thread-content-tags">
+        <span class="thread-tag thread-tag--topic">Topic</span>
+        <span class="thread-tag thread-tag--comments" id="commentCount">No. comment</span>
+        <a href="forum.html" class="more-link back-to-forum">Back to Forum</a>
+      </div>
+
+      <!-- Full thread content -->
+      <div class="thread-content-box">
+        <p>CONTENT THREAD</p>
+      </div>
+
+      <!-- Comment list -->
+      <div class="comment-list" id="commentList">
+        <div class="comment-item" data-id="1">
+          <div class="comment-item__body">
+            <span class="comment-item__author">AUTHOR</span>
+            <p class="comment-item__text">COMMENT</p>
+          </div>
+          <button type="button" class="comment-item__edit">Edit</button>
+        </div>
+        <div class="comment-item" data-id="2">
+          <div class="comment-item__body">
+            <span class="comment-item__author">AUTHOR</span>
+            <p class="comment-item__text">COMMENT</p>
+          </div>
+          <button type="button" class="comment-item__edit">Edit</button>
+        </div>
+        <div class="comment-item" data-id="3">
+          <div class="comment-item__body">
+            <span class="comment-item__author">AUTHOR</span>
+            <p class="comment-item__text">COMMENT</p>
+          </div>
+          <button type="button" class="comment-item__edit">Edit</button>
+        </div>
+        <div class="comment-item" data-id="4">
+          <div class="comment-item__body">
+            <span class="comment-item__author">AUTHOR</span>
+            <p class="comment-item__text">COMMENT</p>
+          </div>
+          <button type="button" class="comment-item__edit">Edit</button>
+        </div>
+        <div class="comment-item" data-id="5">
+          <div class="comment-item__body">
+            <span class="comment-item__author">AUTHOR</span>
+            <p class="comment-item__text">COMMENT</p>
+          </div>
+          <button type="button" class="comment-item__edit">Edit</button>
+        </div>
+      </div>
+
+      <!-- Comment as user: form to add a new comment or save edits to an existing one -->
+      <form class="comment-form" id="commentForm">
+        <input type="hidden" name="edit_id" id="commentEditId" value="">
+        <label class="comment-form__attach" title="Attach a file">
+          <input type="file" name="attachment">
+          &#128206;
+        </label>
+        <textarea class="comment-form__input" name="comment" id="commentInput" rows="1"
+          placeholder="Comment as user..." required></textarea>
+        <button type="submit" class="comment-form__send" id="commentSubmit">Send</button>
+      </form>
+
+    </div>
+  </div>
+
+  <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
+
+  <script src="../../public/js/thread_content.js" defer></script>
+
+</body>
+
+</html>
