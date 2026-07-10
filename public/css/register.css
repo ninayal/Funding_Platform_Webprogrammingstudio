@@ -1,117 +1,184 @@
-/* ================================================
-   Lang & Co. — register.css
-   ================================================ */
-
 /* Wider glass panel to fit more fields */
 .login-glass--wide {
   flex: 0 0 45%;
   max-width: 45%;
   min-width: 420px;
-  padding: 2.2rem 2.8rem;
+
+  padding: 35.2px 44.8px;
+
   overflow-y: auto;
   overflow-x: hidden;
 }
 
+
 /* 2-column grid for name + email/gender rows */
 .form-row-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .75rem;
+
+  grid-template-columns:
+    calc(50% - 6px) calc(50% - 6px);
+
+  gap: 12px;
 }
+
 
 /* Select dropdown — glass style matching .form-input */
 .form-select {
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+
   background-repeat: no-repeat;
-  background-position: right 1.2rem center;
-  padding-right: 2.5rem;
+
+  background-position:
+    right 19.2px center;
+
+  padding-right: 40px;
+
   cursor: pointer;
 }
 
+
 .form-select option {
-  color: #333;
-  background: white;
+  color: #333333;
+  background: #ffffff;
 }
 
-/* Terms checkbox row */
+
+/* ================================================
+   TERMS CHECKBOX ROW
+   ================================================ */
+
 .form-terms {
-  margin-bottom: .2rem;
+  margin-bottom: 3.2px;
 }
+
 
 .terms-label {
   display: flex;
   align-items: flex-start;
-  gap: .5rem;
+  gap: 8px;
   cursor: pointer;
   font-family: var(--ff-ui);
-  font-size: .68rem;
+  font-size: 18px;
   font-weight: 300;
-  color: rgba(255, 255, 255, .6);
-  line-height: 1.5;
+
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  line-height: 150%;
 }
+
 
 .terms-label input[type="checkbox"] {
   width: 14px;
   height: 14px;
+
   flex-shrink: 0;
-  margin-top: .15rem;
+
+  margin-top: 2.4px;
+
   accent-color: var(--red);
+
   cursor: pointer;
 }
 
+
 .terms-label span a {
-  color: rgba(255, 255, 255, .85);
+  color:
+    rgba(255, 255, 255, 0.85);
+
   font-weight: 500;
+
   text-decoration: underline;
+
   text-underline-offset: 2px;
 }
 
+
 .terms-label span a:hover {
-  opacity: .75;
+  opacity: 0.75;
 }
 
-/* HTML5 validation visual feedback */
+
 .form-input:invalid:not(:placeholder-shown) {
-  border-color: rgba(231, 76, 60, .7);
+  border-color:
+    rgba(231, 76, 60, 0.7);
 }
+
 
 .form-input:valid:not(:placeholder-shown) {
-  border-color: rgba(46, 204, 113, .5);
+  border-color:
+    rgba(46, 204, 113, 0.5);
 }
 
-/* Adjust left brand panel to 55% since glass is wider */
+
+/* ================================================
+   LEFT BRAND PANEL
+   ================================================ */
+
 .login-brand {
   flex: 0 0 55% !important;
   max-width: 55% !important;
 }
+
+
+/* ================================================
+   DIVIDER
+   ================================================ */
+
 .login-divider {
-  gap: .75rem; /* đổi từ 100px → .75rem */
+  gap: 12px;
 }
+
+
+/* ================================================
+   REGISTER BACKGROUND
+   ================================================ */
+
 .login-page__bg {
-  background-image: url('../../public/images/registerbackground.png');
+  background-image:
+    url('../../public/images/registerbackground.png');
+
   background-size: cover;
   background-position: center;
 }
 
-/* Responsive */
+
+/* ================================================
+   RESPONSIVE — TABLET
+   ================================================ */
+
 @media (max-width: 900px) {
+
   .login-glass--wide {
     flex: 0 0 50%;
     max-width: 50%;
   }
+
 }
 
+
+/* ================================================
+   RESPONSIVE — MOBILE
+   ================================================ */
+
 @media (max-width: 768px) {
+
   .login-glass--wide {
     width: 100%;
     max-width: 100%;
-    min-width: unset;
-    padding: 2rem 1.5rem;
+    min-width: 0px;
+
+    padding:
+      32px 24px;
   }
 
+
   .form-row-2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
+
 }
