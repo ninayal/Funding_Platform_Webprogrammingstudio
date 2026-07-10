@@ -29,7 +29,7 @@ html {
 body {
   margin: 0;
   color: var(--deep);
-  background: var(--cream);
+  background: var(--brown);
   font-family: var(--ff-ui);
   -webkit-font-smoothing: antialiased;
 }
@@ -157,12 +157,15 @@ input {
 }
 
 .utility-panel {
+  position: relative;
+  z-index: 20;
   background: rgba(254, 249, 225, 0.86);
   border: 1px solid rgba(116, 81, 45, 0.15);
   box-shadow: 0 14px 42px rgba(116, 81, 45, 0.1);
   backdrop-filter: blur(12px);
   border-radius: 26px;
   padding: 22px;
+  overflow: visible;
 }
 
 .utility-top {
@@ -224,7 +227,7 @@ input {
 .btn {
   min-height: 46px;
   border-radius: 999px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--darkred);
   padding: 0 17px;
   display: inline-flex;
   align-items: center;
@@ -321,6 +324,7 @@ input {
 .sort-menu {
   position: relative;
   flex: 0 0 auto;
+  z-index: 100;
 }
 
 .sort-menu summary {
@@ -372,7 +376,7 @@ input {
 
 .sort-options {
   position: absolute;
-  z-index: 12;
+  z-index: 1000;
   right: 0;
   top: calc(100% + 8px);
   width: 220px;
@@ -656,6 +660,62 @@ input {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.55;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.rating .stars {
+  color: var(--red);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.rating .rating-count {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.size-row {
+  margin-top: 12px;
+}
+
+.size-count {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 7px;
+}
+
+.size-select {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 38px 0 14px;
+  background: var(--white);
+  color: var(--deep);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2374512D' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px;
+  transition: 0.2s ease;
+}
+
+.size-select:focus {
+  border-color: rgba(163, 29, 29, 0.62);
+  box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
 }
 
 .collections-section {

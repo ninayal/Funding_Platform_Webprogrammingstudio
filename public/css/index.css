@@ -1661,6 +1661,25 @@ body {
   .impact-banner__text {
     font-size: 16px;
   }
+/* ── Toggle button ── */
+.theme-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
+  transition: background .3s;
+}
 
   .hero__title .script {
     font-size: 64px;
