@@ -3,27 +3,65 @@
    Topbar + Navigation bar
    Units: px and % only
    ================================================ */
-    html,
-    body {
-      background: transparent;
-    }
 
-    body {
-      margin: 0;
-    }
 /* ================================================
    TOPBAR
    ================================================ */
+.topbar-dismiss-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .topbar {
+  position: relative;
   background: var(--darkred);
   text-align: center;
-  padding: 7px 16px;
+  padding: 7px 44px;
   font-family: var(--ff-ui);
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--cream);
+}
+
+.topbar__text {
+  margin: 0;
+}
+
+.topbar__text a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.topbar__close {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--cream);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.topbar__close:hover {
+  opacity: .7;
+}
+
+.topbar-dismiss-input:checked ~ .topbar {
+  display: none;
 }
 
 /* ================================================
@@ -120,7 +158,7 @@
 .nav--light {
   position: relative;
   top: auto;
-  background: var(--cream);
+  background: transparent;
   padding: 16px 48px;
   border-bottom: 1px solid rgba(175, 143, 111, .2);
 }
@@ -139,6 +177,98 @@
 .nav--light .nav__links a.active,
 .nav--light .nav__links a:target {
   color: var(--red);
+}
+
+/* ================================================
+   ICON CLUSTER — account / wishlist / bag
+   sits at the right of the nav, links pages together
+   ================================================ */
+.nav__icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+  margin-left: 24px;
+}
+
+.nav__icon-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--deep);
+  text-decoration: none;
+  transition: opacity .2s;
+}
+
+.nav__icon-btn:hover {
+  opacity: .75;
+}
+
+.nav__icon-btn:focus {
+  outline: none;
+}
+
+.nav__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(254, 249, 225, .16);
+  border: 1px solid rgba(254, 249, 225, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-ui);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--cream);
+}
+
+.nav__badge-dot {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 1.5px solid var(--deep);
+}
+
+.nav__badge-count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 3px;
+  border-radius: 99px;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nav--light .nav__icon-btn {
+  color: var(--deep);
+}
+
+.nav--light .nav__avatar {
+  background: var(--tan);
+  border-color: var(--sand);
+  color: var(--deep);
+}
+
+.nav--light .nav__badge-dot {
+  border-color: var(--cream);
 }
 
 /* ================================================
@@ -171,5 +301,21 @@
   .nav__links a {
     font-size: 10px;
     white-space: nowrap;
+  }
+
+  .nav__icons {
+    gap: 10px;
+    margin-left: 10px;
+  }
+
+  .nav__icon-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  .nav__avatar {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
   }
 }
