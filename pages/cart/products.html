@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Làng & Co. — Shop All</title>
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+
+  <!-- Shop-specific styles -->
+  <link rel="stylesheet" href="../../public/css/products.css" />
+</head>
+
+<body>
+
+  <!-- ================================================
+       HEADER — light/compact variant, no hero banner
+       ================================================ -->
+  <iframe
+    src="../shared/header_shoppingcart.html#nav-shop"
+    title="Header"
+    class="shared-include shared-header shared-header--light"
+    loading="eager"
+    scrolling="no"
+  ></iframe>
+
+  <!-- CSS-only category filter state -->
+  <input class="state-control" type="radio" name="category" id="filter-all" checked />
+  <input class="state-control" type="radio" name="category" id="filter-ceramics" />
+  <input class="state-control" type="radio" name="category" id="filter-lacquer" />
+  <input class="state-control" type="radio" name="category" id="filter-textile" />
+  <input class="state-control" type="radio" name="category" id="filter-bamboo" />
+  <input class="state-control" type="radio" name="category" id="filter-wood" />
+  <input class="state-control" type="radio" name="category" id="filter-incense" />
+
+  <!-- CSS-only sort state -->
+  <input class="state-control" type="radio" name="sort" id="sort-featured" checked />
+  <input class="state-control" type="radio" name="sort" id="sort-low" />
+  <input class="state-control" type="radio" name="sort" id="sort-high" />
+  <input class="state-control" type="radio" name="sort" id="sort-name" />
+
+  <div class="shop-wrap">
+
+    <!-- ================================================
+         BREADCRUMB
+         ================================================ -->
+    <nav class="breadcrumb container" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a>
+      <span aria-hidden="true">•</span>
+      <span aria-current="page">Shop All</span>
+    </nav>
+
+    <!-- ================================================
+         PAGE HEADER
+         ================================================ -->
+    <div class="shop-header container">
+      <h1>Shop All</h1>
+      <p class="shop-header__sub">Unlock the story behind every weave, glaze and carving.</p>
+    </div>
+
+    <!-- ================================================
+         CATEGORY TABS
+         ================================================ -->
+    <nav class="category-tabs container" aria-label="Shop by category">
+      <label class="tab" for="filter-all">All</label>
+      <label class="tab" for="filter-ceramics">Ceramics</label>
+      <label class="tab" for="filter-lacquer">Lacquer</label>
+      <label class="tab" for="filter-textile">Textiles &amp; Silk</label>
+      <label class="tab" for="filter-bamboo">Bamboo &amp; Rattan</label>
+      <label class="tab" for="filter-wood">Wood</label>
+      <label class="tab" for="filter-incense">Incense</label>
+    </nav>
+
+    <!-- ================================================
+         SHOP SHELL — sidebar + grid
+         ================================================ -->
+    <div class="shop-shell container">
+
+      <!-- ============== SIDEBAR FILTERS ============== -->
+      <aside class="shop-sidebar" aria-label="Filters">
+
+        <details class="filter-group" open>
+          <summary>Price</summary>
+          <div class="filter-options">
+            <label><input type="checkbox" /> Under $25</label>
+            <label><input type="checkbox" /> $25 – $50</label>
+            <label><input type="checkbox" /> $50 – $100</label>
+            <label><input type="checkbox" /> $100 &amp; over</label>
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Craft Village</summary>
+          <div class="filter-options">
+            <label><input type="checkbox" /> Bát Tràng · Hanoi</label>
+            <label><input type="checkbox" /> Vạn Phúc · Hà Đông</label>
+            <label><input type="checkbox" /> Hạ Thái · Hà Nội</label>
+            <label><input type="checkbox" /> Phú Vinh · Hà Nội</label>
+            <label><input type="checkbox" /> Đồng Kỵ · Bắc Ninh</label>
+            <label><input type="checkbox" /> Non Nước · Đà Nẵng</label>
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Material</summary>
+          <div class="filter-options">
+            <label><input type="checkbox" /> Ceramic</label>
+            <label><input type="checkbox" /> Silk</label>
+            <label><input type="checkbox" /> Lacquer</label>
+            <label><input type="checkbox" /> Bamboo &amp; Rattan</label>
+            <label><input type="checkbox" /> Wood</label>
+            <label><input type="checkbox" /> Sandalwood</label>
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Availability</summary>
+          <div class="filter-options">
+            <label><input type="checkbox" /> In stock</label>
+            <label><input type="checkbox" /> Low stock</label>
+          </div>
+        </details>
+
+        <details class="filter-group">
+          <summary>Rating</summary>
+          <div class="filter-options">
+            <label><input type="checkbox" /> ★★★★ &amp; up</label>
+            <label><input type="checkbox" /> ★★★★★ only</label>
+          </div>
+        </details>
+      </aside>
+
+      <!-- ============== GRID + TOOLBAR ============== -->
+      <div class="shop-content">
+
+        <div class="shop-toolbar">
+          <p class="results-count">
+            <span class="meta-all">8 results</span>
+            <span class="meta-ceramics">2 results</span>
+            <span class="meta-lacquer">1 result</span>
+            <span class="meta-textile">2 results</span>
+            <span class="meta-bamboo">1 result</span>
+            <span class="meta-wood">1 result</span>
+            <span class="meta-incense">1 result</span>
+          </p>
+
+          <details class="sort-menu">
+            <summary aria-label="Choose product order">
+              Sort by
+              <span class="sort-current sort-current-featured">Best Sellers</span>
+              <span class="sort-current sort-current-low">Price: Low to high</span>
+              <span class="sort-current sort-current-high">Price: High to low</span>
+              <span class="sort-current sort-current-name">Name: A–Z</span>
+            </summary>
+            <div class="sort-options" role="group" aria-label="Sort products">
+              <label for="sort-featured">Best Sellers</label>
+              <label for="sort-low">Price: Low to high</label>
+              <label for="sort-high">Price: High to low</label>
+              <label for="sort-name">Name: A–Z</label>
+            </div>
+          </details>
+        </div>
+
+        <!-- ============== PRODUCT GRID ============== -->
+        <section class="shop-grid" aria-label="All products">
+
+          <!-- Product 1 -->
+          <article class="shop-card product-1 ceramics">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=600&q=80"
+                alt="Hand-painted blue lotus ceramic vase" />
+              <button type="button" class="wishlist-btn" aria-label="Save Hand-Painted Blue Lotus Vase to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Hand-Painted Blue Lotus Vase to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Bát Tràng</p>
+              <h3 class="shop-card__title"><a href="#">Hand-Painted Blue Lotus Vase</a></h3>
+              <p class="shop-card__price">$68.00</p>
+              <p class="shop-card__rating">★★★★★<span>(48)</span></p>
+              <p class="shop-card__tag">Bestseller</p>
+              <p class="shop-card__variant">2 Sizes</p>
+            </div>
+          </article>
+
+          <!-- Product 2 -->
+          <article class="shop-card product-2 ceramics">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80"
+                alt="Ash glaze ceramic tea cup set" />
+              <button type="button" class="wishlist-btn" aria-label="Save Ash Glaze Tea Cup Set to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Ash Glaze Tea Cup Set to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Bát Tràng</p>
+              <h3 class="shop-card__title"><a href="#">Ash Glaze Tea Cup Set (4-Piece)</a></h3>
+              <p class="shop-card__price">$54.00</p>
+              <p class="shop-card__rating">★★★★★<span>(63)</span></p>
+              <p class="shop-card__tag">&nbsp;</p>
+              <p class="shop-card__variant">Set of 4</p>
+            </div>
+          </article>
+
+          <!-- Product 3 -->
+          <article class="shop-card product-3 lacquer">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80"
+                alt="Vermilion lacquer tray" />
+              <button type="button" class="wishlist-btn" aria-label="Save Vermilion Lacquer Tray to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Vermilion Lacquer Tray to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Hạ Thái</p>
+              <h3 class="shop-card__title"><a href="#">Vermilion Lacquer Tray</a></h3>
+              <p class="shop-card__price">$56.00</p>
+              <p class="shop-card__rating">★★★★★<span>(31)</span></p>
+              <p class="shop-card__tag">New</p>
+              <p class="shop-card__variant">1 Size</p>
+            </div>
+          </article>
+
+          <!-- Product 4 -->
+          <article class="shop-card product-4 textile">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=600&q=80"
+                alt="Hand-woven silk scarf with traditional pattern" />
+              <button type="button" class="wishlist-btn" aria-label="Save Hand-Woven Silk Scarf to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Hand-Woven Silk Scarf to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Vạn Phúc</p>
+              <h3 class="shop-card__title"><a href="#">Hand-Woven Silk Scarf</a></h3>
+              <p class="shop-card__price">$45.00 <span class="shop-card__price-was">$52.00</span></p>
+              <p class="shop-card__rating">★★★★★<span>(87)</span></p>
+              <p class="shop-card__tag">Sale</p>
+              <p class="shop-card__variant">3 Colors</p>
+            </div>
+          </article>
+
+          <!-- Product 5 -->
+          <article class="shop-card product-5 textile">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1600166898405-da9535204843?auto=format&fit=crop&w=600&q=80"
+                alt="Hand-embroidered cotton table runner" />
+              <button type="button" class="wishlist-btn" aria-label="Save Embroidered Table Runner to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Embroidered Table Runner to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Hà Đông</p>
+              <h3 class="shop-card__title"><a href="#">Embroidered Table Runner</a></h3>
+              <p class="shop-card__price">$34.00</p>
+              <p class="shop-card__rating">★★★★★<span>(12)</span></p>
+              <p class="shop-card__tag">&nbsp;</p>
+              <p class="shop-card__variant">2 Lengths</p>
+            </div>
+          </article>
+
+          <!-- Product 6 -->
+          <article class="shop-card product-6 bamboo">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1622560481156-01ac1991703c?auto=format&fit=crop&w=600&q=80"
+                alt="Woven bamboo storage basket set" />
+              <button type="button" class="wishlist-btn" aria-label="Save Woven Bamboo Basket Set to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Woven Bamboo Basket Set to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Phú Vinh</p>
+              <h3 class="shop-card__title"><a href="#">Woven Bamboo Basket Set (3-Piece)</a></h3>
+              <p class="shop-card__price">$38.00</p>
+              <p class="shop-card__rating">★★★★☆<span>(24)</span></p>
+              <p class="shop-card__tag">&nbsp;</p>
+              <p class="shop-card__variant">Set of 3</p>
+            </div>
+          </article>
+
+          <!-- Product 7 -->
+          <article class="shop-card product-7 wood">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1617373503279-45cd3f6e26ec?auto=format&fit=crop&w=600&q=80"
+                alt="Carved rosewood elephant figurine" />
+              <button type="button" class="wishlist-btn" aria-label="Save Carved Rosewood Elephant Figurine to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Carved Rosewood Elephant Figurine to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Đồng Kỵ</p>
+              <h3 class="shop-card__title"><a href="#">Carved Rosewood Elephant Figurine</a></h3>
+              <p class="shop-card__price">$120.00</p>
+              <p class="shop-card__rating">★★★★★<span>(19)</span></p>
+              <p class="shop-card__tag">Only 3 left</p>
+              <p class="shop-card__variant">1 Size</p>
+            </div>
+          </article>
+
+          <!-- Product 8 -->
+          <article class="shop-card product-8 incense">
+            <div class="shop-card__media">
+              <img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=600&q=80"
+                alt="Sandalwood incense bundle with holder" />
+              <button type="button" class="wishlist-btn" aria-label="Save Sandalwood Incense Bundle to wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+              </button>
+              <a href="#" class="quickadd-btn" aria-label="Quick add Sandalwood Incense Bundle to cart">+</a>
+            </div>
+            <div class="shop-card__body">
+              <p class="shop-card__maker">Non Nước</p>
+              <h3 class="shop-card__title"><a href="#">Sandalwood Incense Bundle</a></h3>
+              <p class="shop-card__price">$16.00</p>
+              <p class="shop-card__rating">★★★★☆<span>(19)</span></p>
+              <p class="shop-card__tag">&nbsp;</p>
+              <p class="shop-card__variant">1 Size</p>
+            </div>
+          </article>
+
+        </section>
+
+        <p class="empty-state">No pieces match this filter yet. Try another category.</p>
+
+        <!-- ============== PAGINATION ============== -->
+        <nav class="pagination" aria-label="Pagination">
+          <p class="pagination__info">Showing 8 of 8 &nbsp;|&nbsp; <a href="#">View all</a></p>
+          <ul class="pagination__pages">
+            <li><a href="#" class="is-current" aria-current="page">1</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- ================================================
+         RELATED CATEGORIES
+         ================================================ -->
+    <section class="related-categories container">
+      <h2>Related Categories</h2>
+      <div class="tag-cloud">
+        <a href="#">Ceramics <span>2</span></a>
+        <a href="#">Textiles &amp; Silk <span>2</span></a>
+        <a href="#">Lacquerware <span>1</span></a>
+        <a href="#">Woodcraft <span>1</span></a>
+        <a href="#">Bamboo &amp; Rattan <span>1</span></a>
+        <a href="#">Incense &amp; Home <span>1</span></a>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SEO COPY
+         ================================================ -->
+    <section class="shop-seo container">
+      <h2>Vietnamese Craft, Curated</h2>
+      <p>Discover Làng &amp; Co.'s collection of handmade pieces from craft villages across Việt Nam — from
+        Bát Tràng ceramics and Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving, Phú Vinh bamboo
+        weaving, and sandalwood incense. Every piece is made by hand, sourced directly from the artisans who
+        made it, and shipped worldwide with care.</p>
+    </section>
+
+  </div>
+
+  <!-- ================================================
+       FOOTER
+       ================================================ -->
+  <iframe
+    src="../shared/footer.html"
+    title="Footer"
+    class="shared-include shared-footer"
+    loading="lazy"
+    scrolling="no"
+  ></iframe>
+
+</body>
+</html>

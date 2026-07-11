@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Làng & Co. — Checkout</title>
+
+  <!-- Shared styles — same order as index.html -->
+  <link rel="stylesheet" href="../../public/css/index.css" />
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+
+  <!-- Checkout-specific styles -->
+  <link rel="stylesheet" href="../../public/css/checkout.css" />
+</head>
+
+<body>
+
+  <!-- ================================================
+       HERO — same structure/classes as index.html
+       ================================================ -->
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <iframe
+      src="../shared/header.html#nav-shop"
+      title="Header"
+      class="shared-include shared-header"
+      loading="eager"
+      scrolling="no"
+    ></iframe>
+
+    <div class="hero__title">
+      <a class="hero__kicker" href="cart.html">
+        Step 2 of 3 · Delivery &amp; Payment
+        <span class="hero__kicker-arrow">→</span>
+      </a>
+      <span class="script">Checkout</span>
+      <span class="serif">Almost there — just a few details.</span>
+    </div>
+
+    <!-- CTA Buttons below hero title -->
+    <div class="hero__cta">
+      <a class="hero__cta-primary" href="#payment-section">
+        Jump to Payment →
+      </a>
+      <a class="hero__cta-ghost" href="cart.html">
+        ← Back to Your Bag
+      </a>
+    </div>
+
+  </section>
+
+  <div class="wave">
+    <div class="below">
+      <p class="below__headline"></p>
+    </div>
+
+    <!-- ================================================
+         MAIN
+         ================================================ -->
+    <main class="checkout-page">
+
+      <!-- CSS-only shipping-method state (kept outside .checkout-shell
+           so the sibling selector can drive the live total below) -->
+      <input class="state-control" type="radio" name="shipping" id="ship-standard" checked />
+      <input class="state-control" type="radio" name="shipping" id="ship-express" />
+
+      <div class="checkout-shell">
+
+        <!-- ============== CHECKOUT FORM ============== -->
+        <form class="checkout-form" id="checkout-form-id" action="order_confirmation.html" method="get" novalidate>
+
+          <ol class="checkout-progress" aria-label="Checkout progress">
+            <li class="is-done"><span>1</span> Bag</li>
+            <li class="is-current"><span>2</span> Delivery &amp; Payment</li>
+            <li><span>3</span> Confirmation</li>
+          </ol>
+
+          <!-- ---- Contact ---- -->
+          <fieldset class="checkout-fieldset">
+            <legend>Contact</legend>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <label class="checkbox-row">
+              <input type="checkbox" name="newsletter" />
+              <span>Email me with news, offers and craft stories</span>
+            </label>
+          </fieldset>
+
+          <!-- ---- Delivery Address ---- -->
+          <fieldset class="checkout-fieldset">
+            <legend>Delivery Address</legend>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="first_name">First name</label>
+                <input type="text" id="first_name" name="first_name" placeholder="First name" required autocomplete="given-name" />
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last name</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Last name" required autocomplete="family-name" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address1">Address</label>
+              <input type="text" id="address1" name="address1" placeholder="Street address" required autocomplete="address-line1" />
+            </div>
+
+            <div class="form-group">
+              <label for="address2">Apartment, suite, etc. <span class="optional">(optional)</span></label>
+              <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit" autocomplete="address-line2" />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="City" required autocomplete="address-level2" />
+              </div>
+              <div class="form-group">
+                <label for="state">State / Province</label>
+                <input type="text" id="state" name="state" placeholder="State or province" autocomplete="address-level1" />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="postal_code">Postal code</label>
+                <input type="text" id="postal_code" name="postal_code" placeholder="Postal code" required autocomplete="postal-code" />
+              </div>
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country" required autocomplete="country">
+                  <option value="" disabled selected>Select country</option>
+                  <option value="vn">Vietnam</option>
+                  <option value="au">Australia</option>
+                  <option value="us">United States</option>
+                  <option value="gb">United Kingdom</option>
+                  <option value="ca">Canada</option>
+                  <option value="jp">Japan</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="For delivery updates" required autocomplete="tel" />
+            </div>
+          </fieldset>
+
+          <!-- ---- Shipping Method ---- -->
+          <fieldset class="checkout-fieldset">
+            <legend>Shipping Method</legend>
+
+            <div class="shipping-options">
+              <label class="shipping-option" for="ship-standard">
+                <span class="shipping-option__name">Standard Shipping</span>
+                <span class="shipping-option__meta">5–7 business days</span>
+                <span class="shipping-option__price">Free</span>
+              </label>
+              <label class="shipping-option" for="ship-express">
+                <span class="shipping-option__name">Express Shipping</span>
+                <span class="shipping-option__meta">2–3 business days</span>
+                <span class="shipping-option__price">$12.00</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- ---- Payment ---- -->
+          <fieldset class="checkout-fieldset" id="payment-section">
+            <legend>Payment</legend>
+            <p class="secure-note">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1.5" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+              Your payment details are encrypted and processed securely.
+            </p>
+
+            <div class="form-group">
+              <label for="card_name">Name on card</label>
+              <input type="text" id="card_name" name="card_name" placeholder="Full name as shown on card" required autocomplete="cc-name" />
+            </div>
+
+            <div class="form-group">
+              <label for="card_number">Card number</label>
+              <input type="text" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" required
+                inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="card_expiry">Expiry date</label>
+                <input type="text" id="card_expiry" name="card_expiry" placeholder="MM / YY" required
+                  pattern="(0[1-9]|1[0-2])\s?\/\s?[0-9]{2}" autocomplete="cc-exp" />
+              </div>
+              <div class="form-group">
+                <label for="card_cvv">Security code</label>
+                <input type="text" id="card_cvv" name="card_cvv" placeholder="CVV" required
+                  inputmode="numeric" pattern="[0-9]{3,4}" autocomplete="cc-csc" maxlength="4" />
+              </div>
+            </div>
+
+            <label class="checkbox-row">
+              <input type="checkbox" name="billing_same" checked />
+              <span>Billing address is the same as delivery address</span>
+            </label>
+          </fieldset>
+
+          <!-- ---- Gift note ---- -->
+          <fieldset class="checkout-fieldset">
+            <legend>Gift Note <span class="optional">(optional)</span></legend>
+            <div class="form-group">
+              <textarea id="gift_note" name="gift_note" rows="3"
+                placeholder="Add a personal message — we'll include it on a hand-stamped card, free of charge."></textarea>
+            </div>
+          </fieldset>
+
+        </form>
+
+        <!-- ============== ORDER SUMMARY ============== -->
+        <aside class="checkout-summary" aria-label="Order summary">
+          <div class="summary-card">
+            <div class="summary-card__head">
+              <h2>Order Summary</h2>
+              <a href="cart.html" class="edit-cart-link">Edit bag</a>
+            </div>
+
+            <ul class="mini-cart-list">
+              <li class="mini-cart-row">
+                <span class="mini-cart-row__media">
+                  <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=200&q=80"
+                    alt="Hand-painted blue lotus ceramic vase" />
+                  <span class="mini-cart-row__qty">1</span>
+                </span>
+                <span class="mini-cart-row__name">Hand-Painted Blue Lotus Vase</span>
+                <span class="mini-cart-row__price">$68.00</span>
+              </li>
+              <li class="mini-cart-row">
+                <span class="mini-cart-row__media">
+                  <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=200&q=80"
+                    alt="Hand-woven silk scarf" />
+                  <span class="mini-cart-row__qty">2</span>
+                </span>
+                <span class="mini-cart-row__name">Hand-Woven Silk Scarf</span>
+                <span class="mini-cart-row__price">$90.00</span>
+              </li>
+              <li class="mini-cart-row">
+                <span class="mini-cart-row__media">
+                  <img src="https://images.unsplash.com/photo-1617373503279-45cd3f6e26ec?auto=format&fit=crop&w=200&q=80"
+                    alt="Carved rosewood elephant figurine" />
+                  <span class="mini-cart-row__qty">1</span>
+                </span>
+                <span class="mini-cart-row__name">Carved Rosewood Elephant Figurine</span>
+                <span class="mini-cart-row__price">$120.00</span>
+              </li>
+              <li class="mini-cart-row">
+                <span class="mini-cart-row__media">
+                  <img src="https://images.unsplash.com/photo-1622560481156-01ac1991703c?auto=format&fit=crop&w=200&q=80"
+                    alt="Woven bamboo storage basket set" />
+                  <span class="mini-cart-row__qty">1</span>
+                </span>
+                <span class="mini-cart-row__name">Woven Bamboo Basket Set</span>
+                <span class="mini-cart-row__price">$38.00</span>
+              </li>
+            </ul>
+
+            <form class="promo-row" action="#" method="get">
+              <label class="visually-hidden" for="promo">Gift card or promo code</label>
+              <input type="text" id="promo" name="promo" placeholder="Gift card or promo code" />
+              <button type="submit">Apply</button>
+            </form>
+
+            <dl class="summary-lines">
+              <div>
+                <dt>Subtotal</dt>
+                <dd>$271.00</dd>
+              </div>
+              <div>
+                <dt>Shipping</dt>
+                <dd class="shipping-cost shipping-cost--standard">Free</dd>
+                <dd class="shipping-cost shipping-cost--express">$12.00</dd>
+              </div>
+              <div>
+                <dt>Estimated tax</dt>
+                <dd>$0.00</dd>
+              </div>
+            </dl>
+
+            <div class="summary-total">
+              <span>Total</span>
+              <span class="summary-total__amount">
+                <span class="grand-total grand-total--standard">$271.00</span>
+                <span class="grand-total grand-total--express">$283.00</span>
+                <small>USD</small>
+              </span>
+            </div>
+
+            <button type="submit" form="checkout-form-id" class="place-order-btn">Place Order <span>→</span></button>
+
+            <p class="summary-fine">By placing your order, you agree to our <a href="#">Terms of Service</a> and
+              <a href="#">Privacy Policy</a>.</p>
+
+            <div class="pay-icons" aria-label="Accepted payment methods">
+              <span>Visa</span><span>Mastercard</span><span>AMEX</span><span>PayPal</span>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ================================================
+       FOOTER — same structure/classes as index.html
+       ================================================ -->
+  <iframe
+    src="../shared/footer.html"
+    title="Footer"
+    class="shared-include shared-footer"
+    loading="lazy"
+    scrolling="no"
+  ></iframe>
+
+</body>
+</html>

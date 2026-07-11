@@ -1,0 +1,25 @@
+/* ================================================
+   Lang & Co. — header_shoppingcart.css
+   Compact/non-hero nav variant (extends .nav--light
+   already defined in header.css)
+   ================================================ */
+
+html, body {
+  background: url('../images/linen-beige.png');
+  margin: 0;
+}
+
+.nav--light .nav__logo img {
+  height: 46px;
+}
+
+.nav--light .nav__pill {
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  padding: 0;
+}
+
+.nav--light .nav__links a {
+  color: var(--brown);
+}
