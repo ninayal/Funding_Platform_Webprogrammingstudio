@@ -22,8 +22,8 @@
       scrolling="no"></iframe>
 
     <div class="hero__title">
-      <span class="script">Làng &amp; Co.</span>
-      <span class="serif">Vietnamese Traditional Crafts</span>
+      <span class="script">Làng &amp; Community</span>
+      <span class="serif">Keeping the Craft Village Spirit Alive, Together</span>
     </div>
 
     <!-- CTA Buttons below hero title -->
@@ -39,93 +39,157 @@
   </section>
 
   <div class="wave">
-    <div class="forum-title">
-      <h1>DISCUSSION FORUM</h1>
-    </div>
 
     <div class="topics-section">
       <div class="topic-search-row">
         <!-- Create thread button -->
-        <a href="Create_thread.html" class="create-thread-btn">+ CREATE THREADS</a>
+        <a href="Create_thread.html" class="create-thread-btn">+ CREATE</a>
 
         <!-- Search bar for searching thread's name -->
         <form class="search-form" action="/search" method="GET">
-          <input type="text" name="q" class="search-input" placeholder="">
-          <button type="submit" class="search-btn" aria-label="Search">
-            <img src="Image/search_icon.png" alt="Search" class="Search-icon">
-          </button>
+          <input type="text" name="q" class="search-input" placeholder="Search threads...">
+          <button type="submit" class="search-btn" aria-label="Search"></button>
         </form>
       </div>
 
       <!-- Topic Selection Block -->
       <div class="topics-block">
-        <button class="topics-block"> Topic 1</button>
-        <button class="topics-block"> Topic 2</button>
-        <button class="topics-block"> Topic 3</button>
-        <button class="topics-block"> Topic 4</button>
+        <button class="topics-block">Decoration</button>
+        <button class="topics-block">Tips &amp; Tricks</button>
+        <button class="topics-block">Q&amp;A</button>
+        <button class="topics-block">Tags</button>
       </div>
-
     </div>
-    <!-- Popular thread list -->
-    <div class="thread-section">
-      <div class="thread-section-header">
-        <h2 class="section-label">Popular Threads</h2>
-        <a href="forum_popular.html" class="more-link">More →</a>
-      </div>
-      <div class="thread-list" id="popularThreadList">
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
+
+    <!-- Forum body: thread list + sidebar -->
+    <div class="forum-layout">
+      <div class="forum-main">
+
+        <!-- Sort tabs + filter -->
+        <div class="sort-filter-row">
+          <div class="sort-tabs">
+            <button class="sort-tab is-active">Hot</button>
+            <button class="sort-tab">Recent</button>
+            <button class="sort-tab">Most Likes</button>
+          </div>
+          <button type="button" class="sort-filter-btn">Sort / Filter</button>
+        </div>
+
+        <!-- Thread list -->
+        <div class="thread-list" id="threadList">
+          <a href="thread_content.html" class="thread-card-link">
+            <article class="thread-card thread-card--row thread-card--pinned">
+              <div class="thread-card__avatar">AD</div>
+              <div class="thread-card__main">
+                <h3 class="thread-card__title">Community Regulation <span class="pinned-badge">Pinned</span></h3>
+                <div class="thread-card__meta">
+                  <span class="thread-tag">Tag</span>
+                  <span class="meta-author">by Author</span>
+                  <span class="meta-date">Date</span>
+                </div>
+              </div>
+              <div class="thread-card__stats">
+                <span class="stat-pill">Votes</span>
+                <span class="stat-pill">Comm</span>
+                <span class="stat-pill">Views</span>
+              </div>
+            </article>
+          </a>
+
+          <a href="thread_content.html" class="thread-card-link">
+            <article class="thread-card thread-card--row">
+              <div class="thread-card__avatar">AV</div>
+              <div class="thread-card__main">
+                <h3 class="thread-card__title">Thread Title</h3>
+                <div class="thread-card__meta">
+                  <span class="thread-tag">Tag</span>
+                  <span class="meta-author">by Author</span>
+                  <span class="meta-date">Date</span>
+                </div>
+              </div>
+              <div class="thread-card__stats">
+                <span class="stat-pill">Votes</span>
+                <span class="stat-pill">Comm</span>
+                <span class="stat-pill">Views</span>
+              </div>
+            </article>
+          </a>
+
+          <a href="thread_content.html" class="thread-card-link">
+            <article class="thread-card thread-card--row">
+              <div class="thread-card__avatar">AV</div>
+              <div class="thread-card__main">
+                <h3 class="thread-card__title">Thread Title</h3>
+                <div class="thread-card__meta">
+                  <span class="thread-tag">Tag</span>
+                  <span class="meta-author">by Author</span>
+                  <span class="meta-date">Date</span>
+                </div>
+              </div>
+              <div class="thread-card__stats">
+                <span class="stat-pill">Votes</span>
+                <span class="stat-pill">Comm</span>
+                <span class="stat-pill">Views</span>
+              </div>
+            </article>
+          </a>
+
+          <a href="thread_content.html" class="thread-card-link">
+            <article class="thread-card thread-card--row">
+              <div class="thread-card__avatar">AV</div>
+              <div class="thread-card__main">
+                <h3 class="thread-card__title">Thread Title</h3>
+                <div class="thread-card__meta">
+                  <span class="thread-tag">Tag</span>
+                  <span class="meta-author">by Author</span>
+                  <span class="meta-date">Date</span>
+                </div>
+              </div>
+              <div class="thread-card__stats">
+                <span class="stat-pill">Votes</span>
+                <span class="stat-pill">Comm</span>
+                <span class="stat-pill">Views</span>
+              </div>
+            </article>
+          </a>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="pagination" aria-label="Forum pagination">
+          <a href="#" class="page-link active" aria-current="page">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <a href="#" class="page-link">4</a>
+          <a href="#" class="page-link">5</a>
+          <span class="page-ellipsis">…</span>
+          <a href="#" class="page-link">6</a>
+          <a href="#" class="page-link">7</a>
+          <a href="#" class="page-link page-next">Next</a>
+          <a href="#" class="page-link page-last">Last</a>
+        </nav>
       </div>
 
-      <!-- Recent thread list -->
-      <div class="thread-section-header">
-        <h2 class="section-label">Recent Threads</h2>
-        <a href="forum_recent.html" class="more-link">More →</a>
-      </div>
-      <div class="thread-list" id="recentThreadList">
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
-        <a href="thread_content.html" class="thread-card-link">
-          <article class="thread-card">
-            <h3 class="thread-card__title">Thread Title</h3>
-            <p class="thread-card__brief">Brief Content</p>
-            <div class="thread-card__meta">
-              <span class="meta-author">AUTHOR</span>
-              <span class="meta-topic">TOPIC</span>
-              <span class="meta-comments">No. Comments</span>
-            </div>
-          </article>
-        </a>
-      </div>
+      <!-- Sidebar -->
+      <aside class="forum-sidebar">
+        <div class="sidebar-box">
+          <h3 class="sidebar-box__title">Hot Topics</h3>
+          <div class="sidebar-topics">
+            <button type="button" class="sidebar-topic-pill">Topics</button>
+            <button type="button" class="sidebar-topic-pill">Topics</button>
+            <button type="button" class="sidebar-topic-pill">Topics</button>
+            <button type="button" class="sidebar-topic-pill">Topics</button>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3 class="sidebar-box__title">User Ranking</h3>
+          <div class="sidebar-ranking">
+            <div class="ranking-avatar">AV</div>
+            <div class="ranking-avatar">AV</div>
+            <div class="ranking-avatar">AV</div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 
