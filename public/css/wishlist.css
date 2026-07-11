@@ -442,10 +442,41 @@ input {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 30px 22px;
 }
-
 .product-card {
   min-width: 0;
   position: relative;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(116, 81, 45, .16);
+
+  border-radius:
+    20px;
+
+  /* EXACT SAME GLASS LOGIC AS BLOG */
+  background:
+    rgba(255, 255, 255, .26);
+
+  box-shadow:
+    0 16px 38px
+    rgba(116, 81, 45, .10);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(163, 29, 29, .28);
+
+  box-shadow:
+    0 22px 48px
+    rgba(116, 81, 45, .14);
 }
 
 /* CSS-only hardcoded sorting for the six current products */
@@ -479,11 +510,22 @@ input {
 
 .product-media {
   position: relative;
+
   aspect-ratio: 4 / 5;
+
   overflow: hidden;
-  border-radius: var(--radius);
+
+  border-radius:
+    var(--radius)
+    var(--radius)
+    0
+    0;
+
   background: var(--tan);
-  box-shadow: 0 1px 0 rgba(1, 1, 0, 0.06);
+
+  box-shadow:
+    0 1px 0
+    rgba(1, 1, 0, .06);
 }
 
 .product-media::after {
@@ -621,7 +663,11 @@ input {
 }
 
 .product-info {
-  padding: 15px 3px 0;
+  padding:
+    18px 20px 20px;
+
+  background:
+    transparent;
 }
 
 .maker {
@@ -696,21 +742,46 @@ input {
 .size-select {
   width: 100%;
   height: 46px;
-  border: 1px solid var(--line);
+
+  border:
+    1px solid
+    rgba(116, 81, 45, .20);
+
   border-radius: 12px;
-  padding: 0 38px 0 14px;
-  background: var(--white);
-  color: var(--deep);
+
+  padding:
+    0 38px
+    0 14px;
+
+  /* translucent instead of solid white */
+  background-color:
+    rgba(255, 255, 255, .32);
+
+  color:
+    var(--deep);
+
   font-size: 13px;
+
   outline: none;
+
   cursor: pointer;
+
   appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2374512D' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 12px;
-  transition: 0.2s ease;
+
+  -webkit-appearance:
+    none;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2374512D' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  background-repeat:
+    no-repeat;
+
+  background-position:
+    right 14px center;
+
+  background-size:
+    12px;
 }
 
 .size-select:focus {
