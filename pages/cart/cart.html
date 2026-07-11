@@ -65,18 +65,41 @@
     <main class="cart-page">
     <div class="cart-shell">
 
+      <!-- CSS-only cart sort state -->
+      <input class="state-control" type="radio" name="cart-sort" id="cart-sort-default" checked />
+      <input class="state-control" type="radio" name="cart-sort" id="cart-sort-title" />
+      <input class="state-control" type="radio" name="cart-sort" id="cart-sort-qty" />
+      <input class="state-control" type="radio" name="cart-sort" id="cart-sort-price" />
+
       <!-- ============== CART ITEMS ============== -->
       <section class="cart-items" aria-label="Items in your cart">
 
         <div class="cart-items__head">
           <h2>In your bag <span class="cart-count">(4 items)</span></h2>
-          <a href="products.html" class="continue-link">Continue shopping</a>
+          <div class="cart-items__actions">
+            <details class="cart-sort-menu">
+              <summary aria-label="Choose item order">
+                Sort by
+                <span class="sort-current sort-current-default">Order Added</span>
+                <span class="sort-current sort-current-title">Product Title</span>
+                <span class="sort-current sort-current-qty">Quantity</span>
+                <span class="sort-current sort-current-price">Price</span>
+              </summary>
+              <div class="cart-sort-options" role="group" aria-label="Sort cart items">
+                <label for="cart-sort-default">Order Added</label>
+                <label for="cart-sort-title">Product Title (A–Z)</label>
+                <label for="cart-sort-qty">Quantity (High to Low)</label>
+                <label for="cart-sort-price">Price (Low to High)</label>
+              </div>
+            </details>
+            <a href="products.html" class="continue-link">Continue shopping</a>
+          </div>
         </div>
 
         <ul class="cart-list">
 
           <!-- Item 1 -->
-          <li class="cart-row">
+          <li class="cart-row item-1">
             <a href="products.html" class="cart-row__media">
               <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=500&q=80"
                 alt="Hand-painted blue lotus ceramic vase" />
@@ -103,7 +126,7 @@
           </li>
 
           <!-- Item 2 -->
-          <li class="cart-row">
+          <li class="cart-row item-2">
             <a href="products.html" class="cart-row__media">
               <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=500&q=80"
                 alt="Hand-woven silk scarf with traditional pattern" />
@@ -130,7 +153,7 @@
           </li>
 
           <!-- Item 3 -->
-          <li class="cart-row">
+          <li class="cart-row item-3">
             <a href="products.html" class="cart-row__media">
               <img src="https://images.unsplash.com/photo-1617373503279-45cd3f6e26ec?auto=format&fit=crop&w=500&q=80"
                 alt="Carved rosewood elephant figurine" />
@@ -156,7 +179,7 @@
           </li>
 
           <!-- Item 4 -->
-          <li class="cart-row">
+          <li class="cart-row item-4">
             <a href="products.html" class="cart-row__media">
               <img src="https://images.unsplash.com/photo-1622560481156-01ac1991703c?auto=format&fit=crop&w=500&q=80"
                 alt="Woven bamboo storage basket set" />
