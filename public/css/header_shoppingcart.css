@@ -1,25 +1,110 @@
-/* ================================================
-   Lang & Co. — header_shoppingcart.css
-   Compact/non-hero nav variant (extends .nav--light
-   already defined in header.css)
-   ================================================ */
-
 html, body {
   background: url('../images/linen-beige.png');
   margin: 0;
 }
 
-.nav--light .nav__logo img {
-  height: 46px;
+.nav--light {
+  background: url('../images/linen-beige.png');
 }
 
-.nav--light .nav__pill {
-  background: transparent;
-  backdrop-filter: none;
+.nav--light .nav__logo img {
+  height: 100px;
+}
+
+/* ---- three-column centered layout ---- */
+.nav--light.nav--centered {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav--centered .nav__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: start;
+}
+
+.nav--centered .nav__logo--center {
+  justify-self: center;
+}
+
+.nav--centered .nav__icons {
+  justify-self: end;
+  margin-left: 0;
+}
+
+/* ---- icon buttons that are <button>/<label> instead of <a> ---- */
+.nav__icon-btn.menu-btn,
+.nav__left button.nav__icon-btn {
   border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ---- hamburger dropdown menu (CSS-only, no JS) ---- */
+.menu-toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(175, 143, 111, .25);
+  box-shadow: 0 16px 30px rgba(1, 1, 0, .08);
+  transition: max-height .3s cubic-bezier(.4, 0, .2, 1);
+  z-index: 60;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  margin: 0;
   padding: 0;
 }
 
-.nav--light .nav__links a {
+.mobile-menu a {
+  display: block;
+  padding: 15px 48px;
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: var(--brown);
+  text-decoration: none;
+  border-top: 1px solid rgba(175, 143, 111, .15);
+}
+
+.mobile-menu a:hover {
+  color: var(--red);
+}
+
+.menu-toggle-input:checked ~ .mobile-menu {
+  max-height: 320px;
+}
+
+@media (max-width: 700px) {
+  .nav--light .nav__logo img {
+    height: 38px;
+  }
+
+  .nav--centered .nav__left {
+    gap: 10px;
+  }
+
+  .mobile-menu a {
+    padding: 14px 24px;
+  }
 }

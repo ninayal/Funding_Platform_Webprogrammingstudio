@@ -9,13 +9,58 @@
 </head>
 
 <body>
-  <div class="topbar">New Collection Available Now</div>
-  <nav class="nav nav--light">
-    <a class="nav__logo" href="../../index.html" target="_top">
+  <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+  <div class="topbar">
+    <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
+      <a href="../cart/products.html" target="_top">Shop Now</a>
+    </p>
+    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
+  </div>
+  <nav class="nav nav--light nav--centered">
+
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+
+    <div class="nav__left">
+      <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </label>
+      <button type="button" class="nav__icon-btn" aria-label="Search">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.8-3.8" />
+        </svg>
+      </button>
+    </div>
+
+    <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
       <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
     </a>
-    <div class="nav__pill">
-      <ul class="nav__links">
+
+    <div class="nav__icons">
+      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.6" />
+          <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+        </svg>
+      </a>
+      <a class="nav__icon-btn" href="../wishlist/wishlists.html" target="_top" aria-label="Wishlist, 6 saved pieces">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+        </svg>
+      </a>
+      <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" />
+          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+        </svg>
+        <span class="nav__badge-count">4</span>
+      </a>
+    </div>
+
+    <div class="mobile-menu">
+      <ul>
         <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
         <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
         <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
@@ -24,24 +69,6 @@
       </ul>
     </div>
 
-    <div class="nav__icons">
-      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account">
-        <span class="nav__avatar">JD</span>
-      </a>
-      <a class="nav__icon-btn" href="../wishlist/wishlists.html" target="_top" aria-label="Wishlist, 6 saved pieces">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-        </svg>
-        <span class="nav__badge-dot"></span>
-      </a>
-      <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" />
-          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-        </svg>
-        <span class="nav__badge-count">4</span>
-      </a>
-    </div>
   </nav>
 </body>
 
