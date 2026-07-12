@@ -28,548 +28,548 @@
       <span class="script">Wishlists</span>
       <span class="serif">Desires, dreams and timeless crafts.</span>
     </div>
-    </section>
-    <div class="wave">
-      <div class="below">
-        <p class="below__headline">
-        </p>
-      </div>
+  </section>
+  <div class="wave">
+    <div class="below">
+      <p class="below__headline">
+      </p>
+    </div>
 
 
-      <main class="wishlist-page">
-        <!-- CSS-only category state -->
-        <input class="state-control" type="radio" name="category" id="filter-all" checked />
-        <input class="state-control" type="radio" name="category" id="filter-ceramics" />
-        <input class="state-control" type="radio" name="category" id="filter-lacquer" />
-        <input class="state-control" type="radio" name="category" id="filter-textile" />
-        <input class="state-control" type="radio" name="category" id="filter-bamboo" />
-        <input class="state-control" type="radio" name="category" id="filter-wood" />
+    <main class="wishlist-page">
+      <!-- CSS-only category state -->
+      <input class="state-control" type="radio" name="category" id="filter-all" checked />
+      <input class="state-control" type="radio" name="category" id="filter-ceramics" />
+      <input class="state-control" type="radio" name="category" id="filter-lacquer" />
+      <input class="state-control" type="radio" name="category" id="filter-textile" />
+      <input class="state-control" type="radio" name="category" id="filter-bamboo" />
+      <input class="state-control" type="radio" name="category" id="filter-wood" />
 
-        <!-- CSS-only hardcoded sort state -->
-        <input class="state-control" type="radio" name="sort" id="sort-curated" checked />
-        <input class="state-control" type="radio" name="sort" id="sort-low" />
-        <input class="state-control" type="radio" name="sort" id="sort-high" />
-        <input class="state-control" type="radio" name="sort" id="sort-name" />
+      <!-- CSS-only hardcoded sort state -->
+      <input class="state-control" type="radio" name="sort" id="sort-curated" checked />
+      <input class="state-control" type="radio" name="sort" id="sort-low" />
+      <input class="state-control" type="radio" name="sort" id="sort-high" />
+      <input class="state-control" type="radio" name="sort" id="sort-name" />
 
-        <div class="wishlist-shell">
-          <section class="utility-panel" aria-label="Wishlist tools">
-            <div class="utility-top">
-              <!-- Visual search prototype. The reset button clears the field, but text filtering needs JavaScript or a backend. -->
-              <form class="search-box" action="#" method="get" role="search" aria-label="Search saved pieces">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                  <circle cx="11" cy="11" r="7"></circle>
-                  <path d="m20 20-3.8-3.8"></path>
+      <div class="wishlist-shell">
+        <section class="utility-panel" aria-label="Wishlist tools">
+          <div class="utility-top">
+            <!-- Visual search prototype. The reset button clears the field, but text filtering needs JavaScript or a backend. -->
+            <form class="search-box" action="#" method="get" role="search" aria-label="Search saved pieces">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-3.8-3.8"></path>
+              </svg>
+              <input id="searchInput" name="q" type="search"
+                placeholder="Search by piece, craft village, or material..." autocomplete="off" />
+              <button class="clear-search" type="reset" aria-label="Clear search">×</button>
+            </form>
+
+            <div class="utility-actions">
+              <!-- Hardcoded HTML share action -->
+              <a class="btn"
+                href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Wishlist&amp;body=Take%20a%20look%20at%20my%20saved%20craft%20pieces."
+                aria-label="Share wishlist by email">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  aria-hidden="true">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
                 </svg>
-                <input id="searchInput" name="q" type="search"
-                  placeholder="Search by piece, craft village, or material..." autocomplete="off" />
-                <button class="clear-search" type="reset" aria-label="Clear search">×</button>
-              </form>
-
-              <div class="utility-actions">
-                <!-- Hardcoded HTML share action -->
-                <a class="btn"
-                  href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Wishlist&amp;body=Take%20a%20look%20at%20my%20saved%20craft%20pieces."
-                  aria-label="Share wishlist by email">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                    aria-hidden="true">
-                    <circle cx="18" cy="5" r="3"></circle>
-                    <circle cx="6" cy="12" r="3"></circle>
-                    <circle cx="18" cy="19" r="3"></circle>
-                    <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
-                  </svg>
-                  Share
-                </a>
-
-                <a class="btn btn-primary" href="#new-collection-modal">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                    aria-hidden="true">
-                    <path d="M12 5v14M5 12h14"></path>
-                  </svg>
-                  New collection
-                </a>
-              </div>
-            </div>
-
-            <div class="filter-row">
-              <div class="category-chips" role="group" aria-label="Filter by product category">
-                <label class="chip" for="filter-all">All <span>6</span></label>
-                <label class="chip" for="filter-ceramics">Ceramics <span>2</span></label>
-                <label class="chip" for="filter-lacquer">Lacquer <span>1</span></label>
-                <label class="chip" for="filter-textile">Textiles &amp; silk <span>1</span></label>
-                <label class="chip" for="filter-bamboo">Rattan &amp; bamboo <span>1</span></label>
-                <label class="chip" for="filter-wood">Wood <span>1</span></label>
-              </div>
-
-              <details class="sort-menu">
-                <summary aria-label="Choose product order">
-                  <span class="sort-current sort-current-curated">Sort: Curated</span>
-                  <span class="sort-current sort-current-low">Price: Low to high</span>
-                  <span class="sort-current sort-current-high">Price: High to low</span>
-                  <span class="sort-current sort-current-name">Name: A–Z</span>
-                </summary>
-                <div class="sort-options" role="group" aria-label="Sort saved pieces">
-                  <label for="sort-curated">Curated</label>
-                  <label for="sort-low">Price: Low to high</label>
-                  <label for="sort-high">Price: High to low</label>
-                  <label for="sort-name">Name: A–Z</label>
-                </div>
-              </details>
-            </div>
-          </section>
-
-          <div class="section-heading">
-            <h2>Saved <em>pieces</em></h2>
-            <div class="result-meta">6 pieces saved</div>
-          </div>
-
-          <section class="product-grid" aria-label="Saved products">
-            <!-- Product 1 -->
-            <input class="remove-toggle" id="remove-1" type="checkbox" />
-            <article class="product-card product-1 ceramics">
-              <input class="bag-toggle" id="bag-1" type="checkbox" />
-              <input class="move-toggle" id="move-1" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Handcrafted blue ceramic vase" />
-                <span class="product-badge">Ceramics</span>
-
-                <label class="heart-btn" for="remove-1" aria-label="Remove Hand-painted Blue Lotus Vase from wishlist"
-                  title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-1">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-1" title="Save to a collection"
-                    aria-label="Save Hand-painted Blue Lotus Vase to a collection">＋</label>
-                </div>
-              </div>
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
-            <!-- Product 2 -->
-            <input class="remove-toggle" id="remove-2" type="checkbox" />
-            <article class="product-card product-2 ceramics">
-              <input class="bag-toggle" id="bag-2" type="checkbox" />
-              <input class="move-toggle" id="move-2" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Handcrafted ceramic tea cup" />
-                <span class="product-badge">Ceramics</span>
-
-                <label class="heart-btn" for="remove-2" aria-label="Remove Ash Glaze Tea Cup from wishlist"
-                  title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-2">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-2" title="Save to a collection"
-                    aria-label="Save Ash Glaze Tea Cup to a collection">＋</label>
-                </div>
-              </div>
-
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
-            <!-- Product 3 -->
-            <input class="remove-toggle" id="remove-3" type="checkbox" />
-            <article class="product-card product-3 lacquer">
-              <input class="bag-toggle" id="bag-3" type="checkbox" />
-              <input class="move-toggle" id="move-3" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Handcrafted decorative lacquer tray" />
-                <span class="product-badge">Lacquer</span>
-
-                <label class="heart-btn" for="remove-3" aria-label="Remove Vermilion Lacquer Tray from wishlist"
-                  title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-3">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-3" title="Save to a collection"
-                    aria-label="Save Vermilion Lacquer Tray to a collection">＋</label>
-                </div>
-              </div>
-
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
-            <!-- Product 4 -->
-            <input class="remove-toggle" id="remove-4" type="checkbox" />
-            <article class="product-card product-4 textile">
-              <input class="bag-toggle" id="bag-4" type="checkbox" />
-              <input class="move-toggle" id="move-4" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Handcrafted multicolored silk scarf" />
-                <span class="product-badge">Textiles &amp; silk</span>
-
-                <label class="heart-btn" for="remove-4" aria-label="Remove Five-Color Cloud Silk Scarf from wishlist"
-                  title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-4">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-4" title="Save to a collection"
-                    aria-label="Save Five-Color Cloud Silk Scarf to a collection">＋</label>
-                </div>
-              </div>
-
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
-            <!-- Product 5 -->
-            <input class="remove-toggle" id="remove-5" type="checkbox" />
-            <article class="product-card product-5 bamboo">
-              <input class="bag-toggle" id="bag-5" type="checkbox" />
-              <input class="move-toggle" id="move-5" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Handwoven rattan craft piece" />
-                <span class="product-badge">Rattan &amp; bamboo</span>
-
-                <label class="heart-btn" for="remove-5" aria-label="Remove Fox-Eye Woven Rattan Basket from wishlist"
-                  title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-5">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-5" title="Save to a collection"
-                    aria-label="Save Fox-Eye Woven Rattan Basket to a collection">＋</label>
-                </div>
-              </div>
-
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-
-            <!-- Product 6 -->
-            <input class="remove-toggle" id="remove-6" type="checkbox" />
-            <article class="product-card product-6 wood">
-              <input class="bag-toggle" id="bag-6" type="checkbox" />
-              <input class="move-toggle" id="move-6" type="checkbox" />
-
-              <div class="product-media">
-                <img
-                  src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                  alt="Decorative handcrafted wooden box" />
-                <span class="product-badge">Wood</span>
-
-                <label class="heart-btn" for="remove-6"
-                  aria-label="Remove Crescent Moon Mother-of-Pearl Box from wishlist" title="Remove from wishlist">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
-                    stroke-width="1.5" aria-hidden="true">
-                    <path
-                      d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                  </svg>
-                </label>
-
-                <div class="quick-actions">
-                  <label class="bag-action" for="bag-6">
-                    <span class="add-text">Add to bag</span>
-                    <span class="added-text">Added</span>
-                  </label>
-                  <label class="move-action" for="move-6" title="Save to a collection"
-                    aria-label="Save Crescent Moon Mother-of-Pearl Box to a collection">＋</label>
-                </div>
-              </div>
-
-              <div class="product-info">
-                <div class="maker">Bát Tràng · Hanoi</div>
-                <div class="product-line">
-                  <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
-                </div>
-                <div class="price">₫2,100,000</div>
-                <div class="rating">
-                  <span class="stars" aria-hidden="true">★★★★★</span>
-                  <span class="rating-count">(48)</span>
-                </div>
-                <div class="size-row">
-                  <span class="size-count">2 Sizes</span>
-                  <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
-                    <option value="">Select a size (2)</option>
-                    <option value="s">Small — 18cm</option>
-                    <option value="m">Medium — 26cm</option>
-                  </select>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          <section class="collections-section" aria-label="Wishlist collections">
-            <div class="collections-title">
-              <h2>Your <em>collections</em></h2>
-              <p>
-                Group saved pieces by occasion, space, or idea instead of keeping everything
-                in one long list.
-              </p>
-            </div>
-
-            <div class="collection-grid">
-              <a class="collection-card collection-card-home" href="#collection-home">
-                <span>
-                  <small>Home ritual</small>
-                  <strong>A Quiet Corner</strong>
-                  <span class="count">3 saved pieces</span>
-                </span>
+                Share
               </a>
 
-              <a class="collection-card collection-card-tea" href="#collection-tea">
-                <span>
-                  <small>Tea &amp; table</small>
-                  <strong>Weekend Tea Table</strong>
-                  <span class="count">2 saved pieces</span>
-                </span>
-              </a>
-
-              <a class="collection-card collection-card-gifts" href="#collection-gifts">
-                <span>
-                  <small>Gift ideas</small>
-                  <strong>Gifts with a Vietnamese Soul</strong>
-                  <span class="count">1 saved piece</span>
-                </span>
+              <a class="btn btn-primary" href="#new-collection-modal">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                New collection
               </a>
             </div>
-          </section>
-        </div>
-      </main>
-
-      <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-        scrolling="no"></iframe>
-
-      <!-- CSS :target modal: bag status -->
-      <section id="bag-status" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bagTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close bag status">×</a>
-          <p class="modal-kicker">Bag</p>
-          <h3 id="bagTitle">Your bag is currently empty</h3>
-          <p>
-            “Add to bag” buttons below use CSS-only visual state. They do not create a persistent cart.
-          </p>
-          <div class="modal-actions">
-            <a class="btn btn-primary" href="#">Continue browsing</a>
           </div>
-        </div>
-      </section>
 
-      <!-- CSS :target modal: create collection prototype -->
-      <section id="new-collection-modal" class="modal-backdrop" role="dialog" aria-modal="true"
-        aria-labelledby="newCollectionTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close new collection dialog">×</a>
-          <p class="modal-kicker">Collections</p>
-          <h3 id="newCollectionTitle">Create a new collection</h3>
-          <p>
-            Enter a name below. In this HTML-and-CSS-only version, the create action is a hardcoded prototype.
-          </p>
-          <label class="field-label" for="collectionName">Collection name</label>
-          <input id="collectionName" type="text" placeholder="For example: Lunar New Year Gifts" maxlength="48" />
-          <div class="modal-actions">
-            <a class="btn" href="#">Cancel</a>
-            <a class="btn btn-primary" href="#collection-created">Create</a>
+          <div class="filter-row">
+            <div class="category-chips" role="group" aria-label="Filter by product category">
+              <label class="chip" for="filter-all">All <span>6</span></label>
+              <label class="chip" for="filter-ceramics">Ceramics <span>2</span></label>
+              <label class="chip" for="filter-lacquer">Lacquer <span>1</span></label>
+              <label class="chip" for="filter-textile">Textiles &amp; silk <span>1</span></label>
+              <label class="chip" for="filter-bamboo">Rattan &amp; bamboo <span>1</span></label>
+              <label class="chip" for="filter-wood">Wood <span>1</span></label>
+            </div>
+
+            <details class="sort-menu">
+              <summary aria-label="Choose product order">
+                <span class="sort-current sort-current-curated">Sort: Curated</span>
+                <span class="sort-current sort-current-low">Price: Low to high</span>
+                <span class="sort-current sort-current-high">Price: High to low</span>
+                <span class="sort-current sort-current-name">Name: A–Z</span>
+              </summary>
+              <div class="sort-options" role="group" aria-label="Sort saved pieces">
+                <label for="sort-curated">Curated</label>
+                <label for="sort-low">Price: Low to high</label>
+                <label for="sort-high">Price: High to low</label>
+                <label for="sort-name">Name: A–Z</label>
+              </div>
+            </details>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Hardcoded creation confirmation -->
-      <section id="collection-created" class="modal-backdrop" role="dialog" aria-modal="true"
-        aria-labelledby="createdTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close confirmation">×</a>
-          <p class="modal-kicker">Prototype state</p>
-          <h3 id="createdTitle">Collection created</h3>
-          <p>
-            This is a hardcoded confirmation. HTML and CSS alone cannot read the entered name and generate a new
-            collection
-            card.
-          </p>
-          <div class="modal-actions">
-            <a class="btn btn-primary" href="#">Done</a>
+        <div class="section-heading">
+          <h2>Saved <em>pieces</em></h2>
+          <div class="result-meta">6 pieces saved</div>
+        </div>
+
+        <section class="product-grid" aria-label="Saved products">
+          <!-- Product 1 -->
+          <input class="remove-toggle" id="remove-1" type="checkbox" />
+          <article class="product-card product-1 ceramics">
+            <input class="bag-toggle" id="bag-1" type="checkbox" />
+            <input class="move-toggle" id="move-1" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Handcrafted blue ceramic vase" />
+              <span class="product-badge">Ceramics</span>
+
+              <label class="heart-btn" for="remove-1" aria-label="Remove Hand-painted Blue Lotus Vase from wishlist"
+                title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-1">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-1" title="Save to a collection"
+                  aria-label="Save Hand-painted Blue Lotus Vase to a collection">＋</label>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 2 -->
+          <input class="remove-toggle" id="remove-2" type="checkbox" />
+          <article class="product-card product-2 ceramics">
+            <input class="bag-toggle" id="bag-2" type="checkbox" />
+            <input class="move-toggle" id="move-2" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Handcrafted ceramic tea cup" />
+              <span class="product-badge">Ceramics</span>
+
+              <label class="heart-btn" for="remove-2" aria-label="Remove Ash Glaze Tea Cup from wishlist"
+                title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-2">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-2" title="Save to a collection"
+                  aria-label="Save Ash Glaze Tea Cup to a collection">＋</label>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 3 -->
+          <input class="remove-toggle" id="remove-3" type="checkbox" />
+          <article class="product-card product-3 lacquer">
+            <input class="bag-toggle" id="bag-3" type="checkbox" />
+            <input class="move-toggle" id="move-3" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Handcrafted decorative lacquer tray" />
+              <span class="product-badge">Lacquer</span>
+
+              <label class="heart-btn" for="remove-3" aria-label="Remove Vermilion Lacquer Tray from wishlist"
+                title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-3">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-3" title="Save to a collection"
+                  aria-label="Save Vermilion Lacquer Tray to a collection">＋</label>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 4 -->
+          <input class="remove-toggle" id="remove-4" type="checkbox" />
+          <article class="product-card product-4 textile">
+            <input class="bag-toggle" id="bag-4" type="checkbox" />
+            <input class="move-toggle" id="move-4" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Handcrafted multicolored silk scarf" />
+              <span class="product-badge">Textiles &amp; silk</span>
+
+              <label class="heart-btn" for="remove-4" aria-label="Remove Five-Color Cloud Silk Scarf from wishlist"
+                title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-4">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-4" title="Save to a collection"
+                  aria-label="Save Five-Color Cloud Silk Scarf to a collection">＋</label>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 5 -->
+          <input class="remove-toggle" id="remove-5" type="checkbox" />
+          <article class="product-card product-5 bamboo">
+            <input class="bag-toggle" id="bag-5" type="checkbox" />
+            <input class="move-toggle" id="move-5" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Handwoven rattan craft piece" />
+              <span class="product-badge">Rattan &amp; bamboo</span>
+
+              <label class="heart-btn" for="remove-5" aria-label="Remove Fox-Eye Woven Rattan Basket from wishlist"
+                title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-5">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-5" title="Save to a collection"
+                  aria-label="Save Fox-Eye Woven Rattan Basket to a collection">＋</label>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 6 -->
+          <input class="remove-toggle" id="remove-6" type="checkbox" />
+          <article class="product-card product-6 wood">
+            <input class="bag-toggle" id="bag-6" type="checkbox" />
+            <input class="move-toggle" id="move-6" type="checkbox" />
+
+            <div class="product-media">
+              <img
+                src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                alt="Decorative handcrafted wooden box" />
+              <span class="product-badge">Wood</span>
+
+              <label class="heart-btn" for="remove-6"
+                aria-label="Remove Crescent Moon Mother-of-Pearl Box from wishlist" title="Remove from wishlist">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                  stroke-width="1.5" aria-hidden="true">
+                  <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                </svg>
+              </label>
+
+              <div class="quick-actions">
+                <label class="bag-action" for="bag-6">
+                  <span class="add-text">Add to bag</span>
+                  <span class="added-text">Added</span>
+                </label>
+                <label class="move-action" for="move-6" title="Save to a collection"
+                  aria-label="Save Crescent Moon Mother-of-Pearl Box to a collection">＋</label>
+              </div>
+            </div>
+
+            <div class="product-info">
+              <div class="maker">Bát Tràng · Hanoi</div>
+              <div class="product-line">
+                <h3 class="product-name">Hand-painted Blue Lotus Vase</h3>
+              </div>
+              <div class="price">₫2,100,000</div>
+              <div class="rating">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span class="rating-count">(48)</span>
+              </div>
+              <div class="size-row">
+                <span class="size-count">2 Sizes</span>
+                <select class="size-select" aria-label="Select a size for Hand-painted Blue Lotus Vase">
+                  <option value="">Select a size (2)</option>
+                  <option value="s">Small — 18cm</option>
+                  <option value="m">Medium — 26cm</option>
+                </select>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="collections-section" aria-label="Wishlist collections">
+          <div class="collections-title">
+            <h2>Your <em>collections</em></h2>
+            <p>
+              Group saved pieces by occasion, space, or idea instead of keeping everything
+              in one long list.
+            </p>
           </div>
-        </div>
-      </section>
 
-      <!-- Hardcoded collection detail modals -->
-      <section id="collection-home" class="modal-backdrop" role="dialog" aria-modal="true"
-        aria-labelledby="homeCollectionTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close collection">×</a>
-          <p class="modal-kicker">Home ritual · 3 pieces</p>
-          <h3 id="homeCollectionTitle">A Quiet Corner</h3>
-          <ul class="modal-list">
-            <li>Hand-painted Blue Lotus Vase</li>
-            <li>Vermilion Lacquer Tray</li>
-            <li>Crescent Moon Mother-of-Pearl Box</li>
-          </ul>
-        </div>
-      </section>
+          <div class="collection-grid">
+            <a class="collection-card collection-card-home" href="#collection-home">
+              <span>
+                <small>Home ritual</small>
+                <strong>A Quiet Corner</strong>
+                <span class="count">3 saved pieces</span>
+              </span>
+            </a>
 
-      <section id="collection-tea" class="modal-backdrop" role="dialog" aria-modal="true"
-        aria-labelledby="teaCollectionTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close collection">×</a>
-          <p class="modal-kicker">Tea &amp; table · 2 pieces</p>
-          <h3 id="teaCollectionTitle">Weekend Tea Table</h3>
-          <ul class="modal-list">
-            <li>Ash Glaze Tea Cup</li>
-            <li>Vermilion Lacquer Tray</li>
-          </ul>
-        </div>
-      </section>
+            <a class="collection-card collection-card-tea" href="#collection-tea">
+              <span>
+                <small>Tea &amp; table</small>
+                <strong>Weekend Tea Table</strong>
+                <span class="count">2 saved pieces</span>
+              </span>
+            </a>
 
-      <section id="collection-gifts" class="modal-backdrop" role="dialog" aria-modal="true"
-        aria-labelledby="giftCollectionTitle">
-        <div class="modal">
-          <a class="modal-close" href="#" aria-label="Close collection">×</a>
-          <p class="modal-kicker">Gift ideas · 1 piece</p>
-          <h3 id="giftCollectionTitle">Gifts with a Vietnamese Soul</h3>
-          <ul class="modal-list">
-            <li>Five-Color Cloud Silk Scarf</li>
-          </ul>
+            <a class="collection-card collection-card-gifts" href="#collection-gifts">
+              <span>
+                <small>Gift ideas</small>
+                <strong>Gifts with a Vietnamese Soul</strong>
+                <span class="count">1 saved piece</span>
+              </span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+      scrolling="no"></iframe>
+
+    <!-- CSS :target modal: bag status -->
+    <section id="bag-status" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bagTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close bag status">×</a>
+        <p class="modal-kicker">Bag</p>
+        <h3 id="bagTitle">Your bag is currently empty</h3>
+        <p>
+          “Add to bag” buttons below use CSS-only visual state. They do not create a persistent cart.
+        </p>
+        <div class="modal-actions">
+          <a class="btn btn-primary" href="#">Continue browsing</a>
         </div>
-      </section>
+      </div>
+    </section>
+
+    <!-- CSS :target modal: create collection prototype -->
+    <section id="new-collection-modal" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="newCollectionTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close new collection dialog">×</a>
+        <p class="modal-kicker">Collections</p>
+        <h3 id="newCollectionTitle">Create a new collection</h3>
+        <p>
+          Enter a name below. In this HTML-and-CSS-only version, the create action is a hardcoded prototype.
+        </p>
+        <label class="field-label" for="collectionName">Collection name</label>
+        <input id="collectionName" type="text" placeholder="For example: Lunar New Year Gifts" maxlength="48" />
+        <div class="modal-actions">
+          <a class="btn" href="#">Cancel</a>
+          <a class="btn btn-primary" href="#collection-created">Create</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hardcoded creation confirmation -->
+    <section id="collection-created" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="createdTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close confirmation">×</a>
+        <p class="modal-kicker">Prototype state</p>
+        <h3 id="createdTitle">Collection created</h3>
+        <p>
+          This is a hardcoded confirmation. HTML and CSS alone cannot read the entered name and generate a new
+          collection
+          card.
+        </p>
+        <div class="modal-actions">
+          <a class="btn btn-primary" href="#">Done</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hardcoded collection detail modals -->
+    <section id="collection-home" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="homeCollectionTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close collection">×</a>
+        <p class="modal-kicker">Home ritual · 3 pieces</p>
+        <h3 id="homeCollectionTitle">A Quiet Corner</h3>
+        <ul class="modal-list">
+          <li>Hand-painted Blue Lotus Vase</li>
+          <li>Vermilion Lacquer Tray</li>
+          <li>Crescent Moon Mother-of-Pearl Box</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="collection-tea" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="teaCollectionTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close collection">×</a>
+        <p class="modal-kicker">Tea &amp; table · 2 pieces</p>
+        <h3 id="teaCollectionTitle">Weekend Tea Table</h3>
+        <ul class="modal-list">
+          <li>Ash Glaze Tea Cup</li>
+          <li>Vermilion Lacquer Tray</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="collection-gifts" class="modal-backdrop" role="dialog" aria-modal="true"
+      aria-labelledby="giftCollectionTitle">
+      <div class="modal">
+        <a class="modal-close" href="#" aria-label="Close collection">×</a>
+        <p class="modal-kicker">Gift ideas · 1 piece</p>
+        <h3 id="giftCollectionTitle">Gifts with a Vietnamese Soul</h3>
+        <ul class="modal-list">
+          <li>Five-Color Cloud Silk Scarf</li>
+        </ul>
+      </div>
+    </section>
 </body>
 
 </html>

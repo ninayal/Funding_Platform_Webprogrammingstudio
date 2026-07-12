@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="../../public/css/login.css" />
   <link rel="stylesheet" href="../../public/css/register.css" />
 </head>
+
 <body>
 
   <main class="login-page">
@@ -46,29 +48,13 @@
         <div class="form-row-2">
           <div class="form-group">
             <label class="form-label" for="firstname">First Name</label>
-            <input
-              class="form-input"
-              type="text"
-              id="firstname"
-              name="firstname"
-              placeholder="First name"
-              required
-              minlength="2"
-              autocomplete="given-name"
-            />
+            <input class="form-input" type="text" id="firstname" name="firstname" placeholder="First name" required
+              minlength="2" autocomplete="given-name" />
           </div>
           <div class="form-group">
             <label class="form-label" for="lastname">Last Name</label>
-            <input
-              class="form-input"
-              type="text"
-              id="lastname"
-              name="lastname"
-              placeholder="Last name"
-              required
-              minlength="2"
-              autocomplete="family-name"
-            />
+            <input class="form-input" type="text" id="lastname" name="lastname" placeholder="Last name" required
+              minlength="2" autocomplete="family-name" />
           </div>
         </div>
 
@@ -76,26 +62,13 @@
         <div class="form-row-2">
           <div class="form-group">
             <label class="form-label" for="email">E-mail</label>
-            <input
-              class="form-input"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="abc@gmail.com"
-              required
-              pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"
-              title="Please enter a valid email e.g. abc@gmail.com"
-              autocomplete="email"
-            />
+            <input class="form-input" type="email" id="email" name="email" placeholder="abc@gmail.com" required
+              pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}" title="Please enter a valid email e.g. abc@gmail.com"
+              autocomplete="email" />
           </div>
           <div class="form-group">
             <label class="form-label" for="gender">Gender</label>
-            <select
-              class="form-input form-select"
-              id="gender"
-              name="gender"
-              required
-            >
+            <select class="form-input form-select" id="gender" name="gender" required>
               <option value="" disabled selected>Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -108,33 +81,17 @@
         <!-- Password -->
         <div class="form-group">
           <label class="form-label" for="password">Password</label>
-          <input
-            class="form-input"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="············"
-            required
-            minlength="8"
-            pattern="(?=.*[A-Z])(?=.*[0-9\W]).{8,}"
+          <input class="form-input" type="password" id="password" name="password" placeholder="············" required
+            minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9\W]).{8,}"
             title='Must be 8+ chars with at least one uppercase letter and one number or special character.'
-            autocomplete="new-password"
-          />
+            autocomplete="new-password" />
         </div>
 
         <!-- Confirm Password -->
         <div class="form-group">
           <label class="form-label" for="confirm_password">Confirm Password</label>
-          <input
-            class="form-input"
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            placeholder="············"
-            required
-            minlength="8"
-            autocomplete="new-password"
-          />
+          <input class="form-input" type="password" id="confirm_password" name="confirm_password"
+            placeholder="············" required minlength="8" autocomplete="new-password" />
           <a class="form-forgot" href="forgot_password.html">Forgot password?</a>
         </div>
 
@@ -202,4 +159,5 @@
   </main>
 
 </body>
+
 </html>
