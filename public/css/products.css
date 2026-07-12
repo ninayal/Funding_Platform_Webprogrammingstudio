@@ -1,31 +1,28 @@
-/* ================================================
-   Lang & Co. — products.css
-   Shop All (MECCA-style: no hero, sidebar + grid)
-   Units: px and % only
-   ================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --cream:   #FEF9E1;
-  --tan:     #E5D0AC;
-  --sand:    #AF8F6F;
-  --brown:   #74512D;
-  --deep:    #010100;
-  --red:     #A31D1D;
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
   --darkred: #6D2323;
 
   --ff-script: 'Playfair Display', serif;
-  --ff-body:   'Cormorant Garamond', serif;
-  --ff-ui:     'DM Sans', sans-serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
 
-  --white:  #fffdf5;
-  --muted:  #786a5d;
-  --line:   rgba(116, 81, 45, 0.16);
+  --white: #fffdf5;
+  --muted: #786a5d;
+  --line: rgba(116, 81, 45, 0.16);
   --shadow: 0 18px 50px rgba(73, 40, 22, 0.10);
   --radius: 14px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   background: url('../images/linen-beige.png');
@@ -42,9 +39,8 @@ body {
   pointer-events: none;
 }
 
-/* compact header — no hero on this page */
 .shared-header--light {
-  min-height: 118px;
+  min-height: 150px;
 }
 
 .shop-wrap {
@@ -53,19 +49,19 @@ body {
 
 .container {
   width: 94%;
-  max-width: 1180px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
 /* ================================================
-   BREADCRUMB
+   BREADCRUMB letting user know where they are ^^
    ================================================ */
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--muted);
   margin-bottom: 18px;
@@ -83,150 +79,6 @@ body {
 .breadcrumb span[aria-current] {
   color: var(--deep);
   font-weight: 600;
-}
-
-/* ================================================
-   HIGHLIGHT STRIP — horizontal promo tiles
-   ================================================ */
-.shop-highlights {
-  position: relative;
-  margin-bottom: 40px;
-}
-
-.shop-highlights__track {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  padding-bottom: 2px;
-}
-
-.shop-highlights__track::-webkit-scrollbar {
-  display: none;
-}
-
-.highlight-tile {
-  flex: 0 0 240px;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.highlight-tile--feature {
-  flex: 0 0 420px;
-}
-
-.highlight-tile__media {
-  position: relative;
-  display: block;
-  aspect-ratio: 4 / 3;
-  border-radius: 4px;
-  overflow: hidden;
-  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
-}
-
-.highlight-tile--feature .highlight-tile__media {
-  aspect-ratio: 16 / 11;
-}
-
-.highlight-tile__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
-}
-
-.highlight-tile:hover .highlight-tile__media img {
-  transform: scale(1.05);
-}
-
-.highlight-tile__overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 30px;
-  background: linear-gradient(100deg, rgba(1, 1, 0, .58) 0%, rgba(1, 1, 0, .18) 62%, transparent 100%);
-}
-
-.highlight-tile__heading {
-  font-family: var(--ff-script);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 26px;
-  line-height: 1.15;
-  color: var(--cream);
-  margin-bottom: 10px;
-}
-
-.highlight-tile__desc {
-  font-family: var(--ff-body);
-  font-size: 15px;
-  line-height: 1.4;
-  color: rgba(254, 249, 225, .88);
-  max-width: 220px;
-  margin-bottom: 14px;
-}
-
-.highlight-tile__cta {
-  font-family: var(--ff-ui);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  color: var(--cream);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  width: fit-content;
-}
-
-.highlight-tile__label {
-  font-family: var(--ff-ui);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--deep);
-}
-
-label.highlight-tile {
-  cursor: pointer;
-}
-
-.highlight-nav {
-  position: absolute;
-  top: 34%;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--white);
-  box-shadow: var(--shadow);
-  color: var(--deep);
-  font-size: 17px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 5;
-}
-
-.highlight-nav--prev {
-  left: -14px;
-}
-
-.highlight-nav--next {
-  right: -14px;
-}
-
-.highlight-nav:hover {
-  background: var(--tan);
 }
 
 /* ================================================
@@ -259,7 +111,7 @@ label.highlight-tile {
 }
 
 /* ================================================
-   CATEGORY TABS — flat text row
+   CATEGORY TABS
    ================================================ */
 .category-tabs {
   display: flex;
@@ -272,7 +124,7 @@ label.highlight-tile {
 
 .tab {
   font-family: var(--ff-ui);
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--muted);
   cursor: pointer;
@@ -287,7 +139,7 @@ label.highlight-tile {
 }
 
 /* ================================================
-   SHOP SHELL — sidebar + content
+   SHOP SHELL -sidebar & content
    ================================================ */
 .shop-shell {
   display: grid;
@@ -296,7 +148,6 @@ label.highlight-tile {
   align-items: start;
 }
 
-/* ---- sidebar ---- */
 .shop-sidebar {
   position: sticky;
   top: 24px;
@@ -314,7 +165,7 @@ label.highlight-tile {
   align-items: center;
   justify-content: space-between;
   font-family: var(--ff-ui);
-  font-size: 13.5px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--deep);
 }
@@ -326,7 +177,7 @@ label.highlight-tile {
 .filter-group summary::after {
   content: '+';
   font-family: var(--ff-script);
-  font-size: 18px;
+  font-size: 25px;
   color: var(--sand);
 }
 
@@ -346,8 +197,8 @@ label.highlight-tile {
   align-items: center;
   gap: 9px;
   font-family: var(--ff-ui);
-  font-size: 13px;
-  color: var(--brown);
+  font-size: 18px;
+  color: var(--deep);
   cursor: pointer;
 }
 
@@ -359,7 +210,6 @@ label.highlight-tile {
   flex-shrink: 0;
 }
 
-/* ---- toolbar ---- */
 .shop-toolbar {
   display: flex;
   align-items: center;
@@ -371,13 +221,18 @@ label.highlight-tile {
 
 .results-count {
   font-family: var(--ff-ui);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--muted);
 }
 
-.results-count span { display: none; }
-.results-count .meta-all { display: inline; }
+.results-count span {
+  display: none;
+}
+
+.results-count .meta-all {
+  display: inline;
+}
 
 .sort-menu {
   position: relative;
@@ -390,7 +245,7 @@ label.highlight-tile {
   align-items: center;
   gap: 6px;
   font-family: var(--ff-ui);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--deep);
 }
@@ -406,7 +261,9 @@ label.highlight-tile {
   margin-left: 2px;
 }
 
-.sort-current { display: none; }
+.sort-current {
+  display: none;
+}
 
 .sort-options {
   position: absolute;
@@ -425,7 +282,7 @@ label.highlight-tile {
 
 .sort-options label {
   font-family: var(--ff-ui);
-  font-size: 12.5px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--brown);
   padding: 9px 12px;
@@ -439,7 +296,7 @@ label.highlight-tile {
 }
 
 /* ================================================
-   PRODUCT GRID — MECCA-style cards
+   PRODUCT GRID 
    ================================================ */
 .shop-grid {
   display: grid;
@@ -737,130 +594,321 @@ label.highlight-tile {
 
 /* ================================================
    CSS-ONLY CATEGORY FILTER
-   (radios are direct children of <body>, siblings
-   of .shop-wrap — selectors reach in from there)
    ================================================ */
-#filter-ceramics:checked ~ .shop-wrap .shop-card:not(.ceramics),
-#filter-lacquer:checked  ~ .shop-wrap .shop-card:not(.lacquer),
-#filter-textile:checked  ~ .shop-wrap .shop-card:not(.textile),
-#filter-bamboo:checked   ~ .shop-wrap .shop-card:not(.bamboo),
-#filter-wood:checked     ~ .shop-wrap .shop-card:not(.wood),
-#filter-incense:checked  ~ .shop-wrap .shop-card:not(.incense) {
+#filter-ceramics:checked~.shop-wrap .shop-card:not(.ceramics),
+#filter-lacquer:checked~.shop-wrap .shop-card:not(.lacquer),
+#filter-textile:checked~.shop-wrap .shop-card:not(.textile),
+#filter-bamboo:checked~.shop-wrap .shop-card:not(.bamboo),
+#filter-wood:checked~.shop-wrap .shop-card:not(.wood),
+#filter-incense:checked~.shop-wrap .shop-card:not(.incense) {
   display: none;
 }
 
-#filter-all:checked      ~ .shop-wrap label.tab[for="filter-all"],
-#filter-ceramics:checked ~ .shop-wrap label.tab[for="filter-ceramics"],
-#filter-lacquer:checked  ~ .shop-wrap label.tab[for="filter-lacquer"],
-#filter-textile:checked  ~ .shop-wrap label.tab[for="filter-textile"],
-#filter-bamboo:checked   ~ .shop-wrap label.tab[for="filter-bamboo"],
-#filter-wood:checked     ~ .shop-wrap label.tab[for="filter-wood"],
-#filter-incense:checked  ~ .shop-wrap label.tab[for="filter-incense"] {
+#filter-all:checked~.shop-wrap label.tab[for="filter-all"],
+#filter-ceramics:checked~.shop-wrap label.tab[for="filter-ceramics"],
+#filter-lacquer:checked~.shop-wrap label.tab[for="filter-lacquer"],
+#filter-textile:checked~.shop-wrap label.tab[for="filter-textile"],
+#filter-bamboo:checked~.shop-wrap label.tab[for="filter-bamboo"],
+#filter-wood:checked~.shop-wrap label.tab[for="filter-wood"],
+#filter-incense:checked~.shop-wrap label.tab[for="filter-incense"] {
   color: var(--deep);
   border-bottom-color: var(--red);
 }
 
-#filter-ceramics:checked ~ .shop-wrap .results-count .meta-all,
-#filter-lacquer:checked  ~ .shop-wrap .results-count .meta-all,
-#filter-textile:checked  ~ .shop-wrap .results-count .meta-all,
-#filter-bamboo:checked   ~ .shop-wrap .results-count .meta-all,
-#filter-wood:checked     ~ .shop-wrap .results-count .meta-all,
-#filter-incense:checked  ~ .shop-wrap .results-count .meta-all {
+#filter-ceramics:checked~.shop-wrap .results-count .meta-all,
+#filter-lacquer:checked~.shop-wrap .results-count .meta-all,
+#filter-textile:checked~.shop-wrap .results-count .meta-all,
+#filter-bamboo:checked~.shop-wrap .results-count .meta-all,
+#filter-wood:checked~.shop-wrap .results-count .meta-all,
+#filter-incense:checked~.shop-wrap .results-count .meta-all {
   display: none;
 }
 
-#filter-ceramics:checked ~ .shop-wrap .results-count .meta-ceramics { display: inline; }
-#filter-lacquer:checked  ~ .shop-wrap .results-count .meta-lacquer  { display: inline; }
-#filter-textile:checked  ~ .shop-wrap .results-count .meta-textile  { display: inline; }
-#filter-bamboo:checked   ~ .shop-wrap .results-count .meta-bamboo   { display: inline; }
-#filter-wood:checked     ~ .shop-wrap .results-count .meta-wood     { display: inline; }
-#filter-incense:checked  ~ .shop-wrap .results-count .meta-incense  { display: inline; }
+#filter-ceramics:checked~.shop-wrap .results-count .meta-ceramics {
+  display: inline;
+}
+
+#filter-lacquer:checked~.shop-wrap .results-count .meta-lacquer {
+  display: inline;
+}
+
+#filter-textile:checked~.shop-wrap .results-count .meta-textile {
+  display: inline;
+}
+
+#filter-bamboo:checked~.shop-wrap .results-count .meta-bamboo {
+  display: inline;
+}
+
+#filter-wood:checked~.shop-wrap .results-count .meta-wood {
+  display: inline;
+}
+
+#filter-incense:checked~.shop-wrap .results-count .meta-incense {
+  display: inline;
+}
 
 /* ================================================
    CSS-ONLY SORT
    ================================================ */
-#sort-featured:checked ~ .shop-wrap .sort-current-featured,
-#sort-low:checked      ~ .shop-wrap .sort-current-low,
-#sort-high:checked     ~ .shop-wrap .sort-current-high,
-#sort-name:checked     ~ .shop-wrap .sort-current-name {
+#sort-featured:checked~.shop-wrap .sort-current-featured,
+#sort-low:checked~.shop-wrap .sort-current-low,
+#sort-high:checked~.shop-wrap .sort-current-high,
+#sort-name:checked~.shop-wrap .sort-current-name {
   display: inline;
 }
 
-#sort-featured:checked ~ .shop-wrap label[for="sort-featured"],
-#sort-low:checked      ~ .shop-wrap label[for="sort-low"],
-#sort-high:checked     ~ .shop-wrap label[for="sort-high"],
-#sort-name:checked     ~ .shop-wrap label[for="sort-name"] {
+#sort-featured:checked~.shop-wrap label[for="sort-featured"],
+#sort-low:checked~.shop-wrap label[for="sort-low"],
+#sort-high:checked~.shop-wrap label[for="sort-high"],
+#sort-name:checked~.shop-wrap label[for="sort-name"] {
   background: var(--tan);
   color: var(--deep);
 }
 
 /* Best Sellers (default DOM order) */
-#sort-featured:checked ~ .shop-wrap .product-1 { order: 1; }
-#sort-featured:checked ~ .shop-wrap .product-2 { order: 2; }
-#sort-featured:checked ~ .shop-wrap .product-3 { order: 3; }
-#sort-featured:checked ~ .shop-wrap .product-4 { order: 4; }
-#sort-featured:checked ~ .shop-wrap .product-5 { order: 5; }
-#sort-featured:checked ~ .shop-wrap .product-6 { order: 6; }
-#sort-featured:checked ~ .shop-wrap .product-7 { order: 7; }
-#sort-featured:checked ~ .shop-wrap .product-8 { order: 8; }
-#sort-featured:checked ~ .shop-wrap .product-9 { order: 9; }
-#sort-featured:checked ~ .shop-wrap .product-10 { order: 10; }
-#sort-featured:checked ~ .shop-wrap .product-11 { order: 11; }
-#sort-featured:checked ~ .shop-wrap .product-12 { order: 12; }
-#sort-featured:checked ~ .shop-wrap .product-13 { order: 13; }
-#sort-featured:checked ~ .shop-wrap .product-14 { order: 14; }
-#sort-featured:checked ~ .shop-wrap .product-15 { order: 15; }
+#sort-featured:checked~.shop-wrap .product-1 {
+  order: 1;
+}
+
+#sort-featured:checked~.shop-wrap .product-2 {
+  order: 2;
+}
+
+#sort-featured:checked~.shop-wrap .product-3 {
+  order: 3;
+}
+
+#sort-featured:checked~.shop-wrap .product-4 {
+  order: 4;
+}
+
+#sort-featured:checked~.shop-wrap .product-5 {
+  order: 5;
+}
+
+#sort-featured:checked~.shop-wrap .product-6 {
+  order: 6;
+}
+
+#sort-featured:checked~.shop-wrap .product-7 {
+  order: 7;
+}
+
+#sort-featured:checked~.shop-wrap .product-8 {
+  order: 8;
+}
+
+#sort-featured:checked~.shop-wrap .product-9 {
+  order: 9;
+}
+
+#sort-featured:checked~.shop-wrap .product-10 {
+  order: 10;
+}
+
+#sort-featured:checked~.shop-wrap .product-11 {
+  order: 11;
+}
+
+#sort-featured:checked~.shop-wrap .product-12 {
+  order: 12;
+}
+
+#sort-featured:checked~.shop-wrap .product-13 {
+  order: 13;
+}
+
+#sort-featured:checked~.shop-wrap .product-14 {
+  order: 14;
+}
+
+#sort-featured:checked~.shop-wrap .product-15 {
+  order: 15;
+}
 
 /* Price: low to high */
-#sort-low:checked ~ .shop-wrap .product-8 { order: 1; }
-#sort-low:checked ~ .shop-wrap .product-14 { order: 2; }
-#sort-low:checked ~ .shop-wrap .product-15 { order: 3; }
-#sort-low:checked ~ .shop-wrap .product-13 { order: 4; }
-#sort-low:checked ~ .shop-wrap .product-10 { order: 5; }
-#sort-low:checked ~ .shop-wrap .product-5 { order: 6; }
-#sort-low:checked ~ .shop-wrap .product-6 { order: 7; }
-#sort-low:checked ~ .shop-wrap .product-4 { order: 8; }
-#sort-low:checked ~ .shop-wrap .product-9 { order: 9; }
-#sort-low:checked ~ .shop-wrap .product-2 { order: 10; }
-#sort-low:checked ~ .shop-wrap .product-3 { order: 11; }
-#sort-low:checked ~ .shop-wrap .product-1 { order: 12; }
-#sort-low:checked ~ .shop-wrap .product-11 { order: 13; }
-#sort-low:checked ~ .shop-wrap .product-12 { order: 14; }
-#sort-low:checked ~ .shop-wrap .product-7 { order: 15; }
+#sort-low:checked~.shop-wrap .product-8 {
+  order: 1;
+}
+
+#sort-low:checked~.shop-wrap .product-14 {
+  order: 2;
+}
+
+#sort-low:checked~.shop-wrap .product-15 {
+  order: 3;
+}
+
+#sort-low:checked~.shop-wrap .product-13 {
+  order: 4;
+}
+
+#sort-low:checked~.shop-wrap .product-10 {
+  order: 5;
+}
+
+#sort-low:checked~.shop-wrap .product-5 {
+  order: 6;
+}
+
+#sort-low:checked~.shop-wrap .product-6 {
+  order: 7;
+}
+
+#sort-low:checked~.shop-wrap .product-4 {
+  order: 8;
+}
+
+#sort-low:checked~.shop-wrap .product-9 {
+  order: 9;
+}
+
+#sort-low:checked~.shop-wrap .product-2 {
+  order: 10;
+}
+
+#sort-low:checked~.shop-wrap .product-3 {
+  order: 11;
+}
+
+#sort-low:checked~.shop-wrap .product-1 {
+  order: 12;
+}
+
+#sort-low:checked~.shop-wrap .product-11 {
+  order: 13;
+}
+
+#sort-low:checked~.shop-wrap .product-12 {
+  order: 14;
+}
+
+#sort-low:checked~.shop-wrap .product-7 {
+  order: 15;
+}
 
 /* Price: high to low */
-#sort-high:checked ~ .shop-wrap .product-7 { order: 1; }
-#sort-high:checked ~ .shop-wrap .product-12 { order: 2; }
-#sort-high:checked ~ .shop-wrap .product-11 { order: 3; }
-#sort-high:checked ~ .shop-wrap .product-1 { order: 4; }
-#sort-high:checked ~ .shop-wrap .product-3 { order: 5; }
-#sort-high:checked ~ .shop-wrap .product-2 { order: 6; }
-#sort-high:checked ~ .shop-wrap .product-9 { order: 7; }
-#sort-high:checked ~ .shop-wrap .product-4 { order: 8; }
-#sort-high:checked ~ .shop-wrap .product-6 { order: 9; }
-#sort-high:checked ~ .shop-wrap .product-5 { order: 10; }
-#sort-high:checked ~ .shop-wrap .product-10 { order: 11; }
-#sort-high:checked ~ .shop-wrap .product-13 { order: 12; }
-#sort-high:checked ~ .shop-wrap .product-15 { order: 13; }
-#sort-high:checked ~ .shop-wrap .product-14 { order: 14; }
-#sort-high:checked ~ .shop-wrap .product-8 { order: 15; }
+#sort-high:checked~.shop-wrap .product-7 {
+  order: 1;
+}
+
+#sort-high:checked~.shop-wrap .product-12 {
+  order: 2;
+}
+
+#sort-high:checked~.shop-wrap .product-11 {
+  order: 3;
+}
+
+#sort-high:checked~.shop-wrap .product-1 {
+  order: 4;
+}
+
+#sort-high:checked~.shop-wrap .product-3 {
+  order: 5;
+}
+
+#sort-high:checked~.shop-wrap .product-2 {
+  order: 6;
+}
+
+#sort-high:checked~.shop-wrap .product-9 {
+  order: 7;
+}
+
+#sort-high:checked~.shop-wrap .product-4 {
+  order: 8;
+}
+
+#sort-high:checked~.shop-wrap .product-6 {
+  order: 9;
+}
+
+#sort-high:checked~.shop-wrap .product-5 {
+  order: 10;
+}
+
+#sort-high:checked~.shop-wrap .product-10 {
+  order: 11;
+}
+
+#sort-high:checked~.shop-wrap .product-13 {
+  order: 12;
+}
+
+#sort-high:checked~.shop-wrap .product-15 {
+  order: 13;
+}
+
+#sort-high:checked~.shop-wrap .product-14 {
+  order: 14;
+}
+
+#sort-high:checked~.shop-wrap .product-8 {
+  order: 15;
+}
 
 /* Name: A–Z */
-#sort-name:checked ~ .shop-wrap .product-2 { order: 1; }
-#sort-name:checked ~ .shop-wrap .product-13 { order: 2; }
-#sort-name:checked ~ .shop-wrap .product-11 { order: 3; }
-#sort-name:checked ~ .shop-wrap .product-7 { order: 4; }
-#sort-name:checked ~ .shop-wrap .product-9 { order: 5; }
-#sort-name:checked ~ .shop-wrap .product-5 { order: 6; }
-#sort-name:checked ~ .shop-wrap .product-14 { order: 7; }
-#sort-name:checked ~ .shop-wrap .product-1 { order: 8; }
-#sort-name:checked ~ .shop-wrap .product-4 { order: 9; }
-#sort-name:checked ~ .shop-wrap .product-15 { order: 10; }
-#sort-name:checked ~ .shop-wrap .product-8 { order: 11; }
-#sort-name:checked ~ .shop-wrap .product-12 { order: 12; }
-#sort-name:checked ~ .shop-wrap .product-10 { order: 13; }
-#sort-name:checked ~ .shop-wrap .product-3 { order: 14; }
-#sort-name:checked ~ .shop-wrap .product-6 { order: 15; }
+#sort-name:checked~.shop-wrap .product-2 {
+  order: 1;
+}
+
+#sort-name:checked~.shop-wrap .product-13 {
+  order: 2;
+}
+
+#sort-name:checked~.shop-wrap .product-11 {
+  order: 3;
+}
+
+#sort-name:checked~.shop-wrap .product-7 {
+  order: 4;
+}
+
+#sort-name:checked~.shop-wrap .product-9 {
+  order: 5;
+}
+
+#sort-name:checked~.shop-wrap .product-5 {
+  order: 6;
+}
+
+#sort-name:checked~.shop-wrap .product-14 {
+  order: 7;
+}
+
+#sort-name:checked~.shop-wrap .product-1 {
+  order: 8;
+}
+
+#sort-name:checked~.shop-wrap .product-4 {
+  order: 9;
+}
+
+#sort-name:checked~.shop-wrap .product-15 {
+  order: 10;
+}
+
+#sort-name:checked~.shop-wrap .product-8 {
+  order: 11;
+}
+
+#sort-name:checked~.shop-wrap .product-12 {
+  order: 12;
+}
+
+#sort-name:checked~.shop-wrap .product-10 {
+  order: 13;
+}
+
+#sort-name:checked~.shop-wrap .product-3 {
+  order: 14;
+}
+
+#sort-name:checked~.shop-wrap .product-6 {
+  order: 15;
+}
 
 /* ================================================
    RESPONSIVE — TABLET

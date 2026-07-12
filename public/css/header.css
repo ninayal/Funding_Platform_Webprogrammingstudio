@@ -1,12 +1,3 @@
-/* ================================================
-   Lang & Co. — header.css
-   Topbar + Navigation bar
-   Units: px and % only
-   ================================================ */
-
-/* ================================================
-   TOPBAR
-   ================================================ */
 .topbar-dismiss-input {
   position: absolute;
   width: 1px;
@@ -60,7 +51,7 @@
   opacity: .7;
 }
 
-.topbar-dismiss-input:checked ~ .topbar {
+.topbar-dismiss-input:checked~.topbar {
   display: none;
 }
 
@@ -181,7 +172,6 @@
 
 /* ================================================
    ICON CLUSTER — account / wishlist / bag
-   sits at the right of the nav, links pages together
    ================================================ */
 .nav__icons {
   display: flex;

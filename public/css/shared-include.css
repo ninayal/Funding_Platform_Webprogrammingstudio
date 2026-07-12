@@ -23,10 +23,17 @@ iframe.shared-header {
 }
 
 @media (max-width: 900px) {
-  .shared-footer { height: 560px; }
+  .shared-footer {
+    height: 560px;
+  }
 }
 
 @media (max-width: 640px) {
-  .shared-header { min-height: 160px; }
-  .shared-footer { height: 640px; }
+  .shared-header {
+    min-height: 160px;
+  }
+
+  .shared-footer {
+    height: 640px;
+  }
 }

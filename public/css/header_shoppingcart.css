@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   background: url('../images/linen-beige.png');
   margin: 0;
 }
@@ -8,7 +9,7 @@ html, body {
 }
 
 .nav--light .nav__logo img {
-  height: 100px;
+  height: 90px;
 }
 
 /* ---- three-column centered layout ---- */
@@ -36,7 +37,6 @@ html, body {
   margin-left: 0;
 }
 
-/* ---- icon buttons that are <button>/<label> instead of <a> ---- */
 .nav__icon-btn.menu-btn,
 .nav__left button.nav__icon-btn {
   border: none;
@@ -45,7 +45,6 @@ html, body {
   cursor: pointer;
 }
 
-/* ---- hamburger dropdown menu (CSS-only, no JS) ---- */
 .menu-toggle-input {
   position: absolute;
   width: 1px;
@@ -91,7 +90,7 @@ html, body {
   color: var(--red);
 }
 
-.menu-toggle-input:checked ~ .mobile-menu {
+.menu-toggle-input:checked~.mobile-menu {
   max-height: 320px;
 }
 

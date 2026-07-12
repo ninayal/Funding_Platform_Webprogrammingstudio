@@ -1,31 +1,28 @@
-/* ================================================
-   Lang & Co. — checkout.css
-   Checkout / Delivery & Payment page
-   Units: px and % only
-   ================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --cream:   #FEF9E1;
-  --tan:     #E5D0AC;
-  --sand:    #AF8F6F;
-  --brown:   #74512D;
-  --deep:    #010100;
-  --red:     #A31D1D;
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
   --darkred: #6D2323;
 
   --ff-script: 'Playfair Display', serif;
-  --ff-body:   'Cormorant Garamond', serif;
-  --ff-ui:     'DM Sans', sans-serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
 
-  --white:  #fffdf5;
-  --muted:  #786a5d;
-  --line:   rgba(116, 81, 45, 0.16);
+  --white: #fffdf5;
+  --muted: #786a5d;
+  --line: rgba(116, 81, 45, 0.16);
   --shadow: 0 18px 50px rgba(73, 40, 22, 0.10);
   --radius: 14px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   background: url('../images/linen-beige.png');
@@ -275,8 +272,8 @@ body {
   color: var(--deep);
 }
 
-#ship-standard:checked ~ .checkout-shell label[for="ship-standard"],
-#ship-express:checked  ~ .checkout-shell label[for="ship-express"] {
+#ship-standard:checked~.checkout-shell label[for="ship-standard"],
+#ship-express:checked~.checkout-shell label[for="ship-express"] {
   border-color: var(--red);
   background: var(--tan);
 }
@@ -464,11 +461,21 @@ body {
 
 /* shipping cost swap — driven by the shipping radios,
    which live as siblings of .checkout-shell above */
-.shipping-cost { display: none; }
-.shipping-cost--standard { display: inline; }
+.shipping-cost {
+  display: none;
+}
 
-#ship-express:checked ~ .checkout-shell .shipping-cost--standard { display: none; }
-#ship-express:checked ~ .checkout-shell .shipping-cost--express  { display: inline; }
+.shipping-cost--standard {
+  display: inline;
+}
+
+#ship-express:checked~.checkout-shell .shipping-cost--standard {
+  display: none;
+}
+
+#ship-express:checked~.checkout-shell .shipping-cost--express {
+  display: inline;
+}
 
 .summary-total {
   display: flex;
@@ -495,11 +502,21 @@ body {
 }
 
 /* grand total swap — same pattern as shipping cost */
-.grand-total { display: none; }
-.grand-total--standard { display: inline; }
+.grand-total {
+  display: none;
+}
 
-#ship-express:checked ~ .checkout-shell .grand-total--standard { display: none; }
-#ship-express:checked ~ .checkout-shell .grand-total--express  { display: inline; }
+.grand-total--standard {
+  display: inline;
+}
+
+#ship-express:checked~.checkout-shell .grand-total--standard {
+  display: none;
+}
+
+#ship-express:checked~.checkout-shell .grand-total--express {
+  display: inline;
+}
 
 .place-order-btn {
   display: flex;

@@ -1,10 +1,12 @@
-/* ================================================
-   Lang & Co. — footer.css
-   Units: px and % only
-   ================================================ */
+html,
+body {
+  background: #6D2323;
+  height: 100%;
+}
 
-html, body { background: #6D2323; height: 100%; }
-body { margin: 0; }
+body {
+  margin: 0;
+}
 
 .site-footer {
   position: relative;
@@ -14,7 +16,7 @@ body { margin: 0; }
   padding: 36px 40px 0;
 }
 
-/* ── TOP: logo mark + tagline + form / link columns ── */
+
 .site-footer__top {
   display: flex;
   gap: 56px;
