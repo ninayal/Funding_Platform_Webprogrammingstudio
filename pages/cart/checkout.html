@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#A31D1D" />
   <title>Làng & Co. — Checkout</title>
-
-  <!-- Shared styles — same order as index.html -->
   <link rel="stylesheet" href="../../public/css/index.css" />
   <link rel="stylesheet" href="../../public/css/header.css" />
   <link rel="stylesheet" href="../../public/css/shared-include.css" />
@@ -17,21 +15,12 @@
 </head>
 
 <body>
-
-  <!-- ================================================
-       HERO — same structure/classes as index.html
-       ================================================ -->
   <section class="hero">
 
     <div class="hero__bg"></div>
 
-    <iframe
-      src="../shared/header.html#nav-shop"
-      title="Header"
-      class="shared-include shared-header"
-      loading="eager"
-      scrolling="no"
-    ></iframe>
+    <iframe src="../shared/header.html#nav-shop" title="Header" class="shared-include shared-header" loading="eager"
+      scrolling="no"></iframe>
 
     <div class="hero__title">
       <a class="hero__kicker" href="cart.html">
@@ -100,22 +89,26 @@
             <div class="form-row-2">
               <div class="form-group">
                 <label for="first_name">First name</label>
-                <input type="text" id="first_name" name="first_name" placeholder="First name" required autocomplete="given-name" />
+                <input type="text" id="first_name" name="first_name" placeholder="First name" required
+                  autocomplete="given-name" />
               </div>
               <div class="form-group">
                 <label for="last_name">Last name</label>
-                <input type="text" id="last_name" name="last_name" placeholder="Last name" required autocomplete="family-name" />
+                <input type="text" id="last_name" name="last_name" placeholder="Last name" required
+                  autocomplete="family-name" />
               </div>
             </div>
 
             <div class="form-group">
               <label for="address1">Address</label>
-              <input type="text" id="address1" name="address1" placeholder="Street address" required autocomplete="address-line1" />
+              <input type="text" id="address1" name="address1" placeholder="Street address" required
+                autocomplete="address-line1" />
             </div>
 
             <div class="form-group">
               <label for="address2">Apartment, suite, etc. <span class="optional">(optional)</span></label>
-              <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit" autocomplete="address-line2" />
+              <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit"
+                autocomplete="address-line2" />
             </div>
 
             <div class="form-row-2">
@@ -125,14 +118,16 @@
               </div>
               <div class="form-group">
                 <label for="state">State / Province</label>
-                <input type="text" id="state" name="state" placeholder="State or province" autocomplete="address-level1" />
+                <input type="text" id="state" name="state" placeholder="State or province"
+                  autocomplete="address-level1" />
               </div>
             </div>
 
             <div class="form-row-2">
               <div class="form-group">
                 <label for="postal_code">Postal code</label>
-                <input type="text" id="postal_code" name="postal_code" placeholder="Postal code" required autocomplete="postal-code" />
+                <input type="text" id="postal_code" name="postal_code" placeholder="Postal code" required
+                  autocomplete="postal-code" />
               </div>
               <div class="form-group">
                 <label for="country">Country</label>
@@ -151,7 +146,8 @@
 
             <div class="form-group">
               <label for="phone">Phone number</label>
-              <input type="tel" id="phone" name="phone" placeholder="For delivery updates" required autocomplete="tel" />
+              <input type="tel" id="phone" name="phone" placeholder="For delivery updates" required
+                autocomplete="tel" />
             </div>
           </fieldset>
 
@@ -177,13 +173,18 @@
           <fieldset class="checkout-fieldset" id="payment-section">
             <legend>Payment</legend>
             <p class="secure-note">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="1.5" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                aria-hidden="true">
+                <rect x="4" y="10" width="16" height="10" rx="1.5" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
               Your payment details are encrypted and processed securely.
             </p>
 
             <div class="form-group">
               <label for="card_name">Name on card</label>
-              <input type="text" id="card_name" name="card_name" placeholder="Full name as shown on card" required autocomplete="cc-name" />
+              <input type="text" id="card_name" name="card_name" placeholder="Full name as shown on card" required
+                autocomplete="cc-name" />
             </div>
 
             <div class="form-group">
@@ -200,8 +201,8 @@
               </div>
               <div class="form-group">
                 <label for="card_cvv">Security code</label>
-                <input type="text" id="card_cvv" name="card_cvv" placeholder="CVV" required
-                  inputmode="numeric" pattern="[0-9]{3,4}" autocomplete="cc-csc" maxlength="4" />
+                <input type="text" id="card_cvv" name="card_cvv" placeholder="CVV" required inputmode="numeric"
+                  pattern="[0-9]{3,4}" autocomplete="cc-csc" maxlength="4" />
               </div>
             </div>
 
@@ -233,7 +234,8 @@
             <ul class="mini-cart-list">
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=200&q=80"
+                  <img
+                    src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=200&q=80"
                     alt="Hand-painted blue lotus ceramic vase" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
@@ -242,7 +244,8 @@
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=200&q=80"
+                  <img
+                    src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=200&q=80"
                     alt="Hand-woven silk scarf" />
                   <span class="mini-cart-row__qty">2</span>
                 </span>
@@ -251,7 +254,8 @@
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="https://images.unsplash.com/photo-1617373503279-45cd3f6e26ec?auto=format&fit=crop&w=200&q=80"
+                  <img
+                    src="https://images.unsplash.com/photo-1617373503279-45cd3f6e26ec?auto=format&fit=crop&w=200&q=80"
                     alt="Carved rosewood elephant figurine" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
@@ -260,7 +264,8 @@
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="https://images.unsplash.com/photo-1622560481156-01ac1991703c?auto=format&fit=crop&w=200&q=80"
+                  <img
+                    src="https://images.unsplash.com/photo-1622560481156-01ac1991703c?auto=format&fit=crop&w=200&q=80"
                     alt="Woven bamboo storage basket set" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
@@ -303,7 +308,8 @@
             <button type="submit" form="checkout-form-id" class="place-order-btn">Place Order <span>→</span></button>
 
             <p class="summary-fine">By placing your order, you agree to our <a href="#">Terms of Service</a> and
-              <a href="#">Privacy Policy</a>.</p>
+              <a href="#">Privacy Policy</a>.
+            </p>
 
             <div class="pay-icons" aria-label="Accepted payment methods">
               <span>Visa</span><span>Mastercard</span><span>AMEX</span><span>PayPal</span>
@@ -317,15 +323,11 @@
   </div>
 
   <!-- ================================================
-       FOOTER — same structure/classes as index.html
+       FOOTER 
        ================================================ -->
-  <iframe
-    src="../shared/footer.html"
-    title="Footer"
-    class="shared-include shared-footer"
-    loading="lazy"
-    scrolling="no"
-  ></iframe>
+  <iframe src="../shared/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
 
 </body>
+
 </html>
