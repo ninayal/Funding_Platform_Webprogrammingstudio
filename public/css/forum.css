@@ -33,6 +33,12 @@ body {
   font-family: var(--ff-ui);
 }
 
+/* Contain child bottom margins (e.g. .create-thread-form) so the linen
+   .wave background never gets cut short before the footer */
+.wave {
+  display: flow-root;
+}
+
 /* -----------------------------
    HERO EYEBROW (sub-pages, e.g. forum_popular.html)
 ------------------------------ */
@@ -1332,6 +1338,13 @@ a.back-to-forum {
   text-transform: uppercase;
   cursor: pointer;
   transition: background .18s ease, color .18s ease;
+}
+
+a.draft-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .draft-btn:hover {
