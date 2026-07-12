@@ -41,317 +41,166 @@
 
   <div class="wave">
 
-    <a href="forum.html" class="more-link back-to-forum">&larr; Back to Forum</a>
+    <!-- New Posts / Your Posts / Bookmarked + search -->
+    <nav class="forum-toolbar">
+      <a href="new_post.html" class="forum-toolbar__tab">New Posts</a>
+      <a href="#" class="forum-toolbar__tab">Your Posts</a>
+      <a href="#" class="forum-toolbar__tab">Bookmarked</a>
+      <button type="button" class="forum-toolbar__search" aria-label="Search"></button>
+    </nav>
+
+    <div class="forum-breadcrumb">
+      <a href="forum.html">Forum</a> <span>&gt;</span>
+      <a href="new_post.html">Topics</a> <span>&gt;</span>
+    </div>
+
+    <div class="forum-container">
+      <h1 class="thread-content-title">Thread Title</h1>
+    </div>
 
     <!-- Thread body + sidebar -->
     <div class="thread-layout">
       <div class="thread-main">
 
-        <div class="thread-content-wrap">
+        <!-- Pagination -->
+        <nav class="pagination" aria-label="Thread pagination">
+          <a href="#" class="page-link active" aria-current="page">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <span class="page-ellipsis">…</span>
+          <a href="#" class="page-link">10</a>
+          <a href="#" class="page-link page-next">Next</a>
+          <a href="#" class="page-link page-last">Last</a>
+        </nav>
 
-          <!-- Title / author + edit / date -->
-          <div class="thread-header">
-            <div class="thread-header__main">
-              <h1 class="thread-content-title">Thread Title</h1>
-              <span class="thread-content-author">by Author</span>
+        <!-- Numbered post list -->
+        <div class="post-list" id="postList">
+
+          <article class="forum-post" id="post-1">
+            <div class="forum-post__sidebar">
+              <div class="forum-post__avatar">AV</div>
+              <span class="forum-post__username">User's Name</span>
+              <span class="forum-post__rank">Member</span>
             </div>
-            <div class="thread-header__meta">
-              <button type="button" class="thread-header__edit">Edit</button>
-              <span class="thread-header__date">Date</span>
-            </div>
-          </div>
-
-          <!-- Full thread content -->
-          <div class="thread-content-box">
-            <p>CONTENT THREAD</p>
-          </div>
-
-          <!-- Share / Like / Copy link -->
-          <div class="thread-engage-row">
-            <button type="button" class="engage-btn" data-action="share" aria-label="Share thread">
-              <img src="../../public/images/forum_icon/shared.png" alt="">
-            </button>
-            <button type="button" class="engage-btn" data-action="like" aria-label="Like thread">
-              <img src="../../public/images/forum_icon/heart.png" alt="">
-            </button>
-            <button type="button" class="engage-btn" data-action="copy-link" aria-label="Copy thread link">
-              <img src="../../public/images/forum_icon/link.png" alt="">
-            </button>
-          </div>
-
-          <hr class="thread-divider">
-
-          <!-- Views / Shared / Comments -->
-          <div class="thread-stats-row">
-            <span class="thread-stat-pill" id="viewCount">Views</span>
-            <span class="thread-stat-pill" id="sharedCount">Shared</span>
-            <span class="thread-stat-pill" id="commentCount">Comm</span>
-          </div>
-
-          <hr class="thread-divider">
-
-          <!-- Post a new top-level comment -->
-          <form class="comment-composer" id="newCommentForm">
-            <div class="comment-item__avatar">YOU</div>
-            <div class="comment-form">
-              <textarea class="comment-form__input" name="content" rows="1" placeholder="Write a comment..."></textarea>
-              <label class="comment-form__attach" aria-label="Attach file">📎
-                <input type="file">
-              </label>
-              <button type="submit" class="comment-form__send" aria-label="Post comment">
-                Comment
-              </button>
-            </div>
-          </form>
-
-          <!-- Comment list -->
-          <div class="comment-list" id="commentList">
-
-            <!-- Comment with no replies -->
-            <div class="comment-item" data-id="1">
-              <div class="comment-item__avatar">AV</div>
-              <div class="comment-item__body">
-                <input type="checkbox" id="reply-toggle-1" class="reply-toggle" hidden>
-                <span class="comment-item__author">User's Name</span>
-                <p class="comment-item__text">Comment</p>
-                <div class="comment-item__actions">
-                  <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                    <img src="../../public/images/forum_icon/heart.png" alt="">
-                  </button>
-                  <label for="reply-toggle-1" class="comment-action" aria-label="Reply to comment">
-                    <img src="../../public/images/forum_icon/Reply.png" alt="">
-                  </label>
-                  <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
+            <div class="forum-post__body">
+              <div class="forum-post__header">
+                <span class="forum-post__date">Date</span>
+                <div class="forum-post__header-actions">
+                  <button type="button" class="engage-btn" data-action="share" aria-label="Share post">
                     <img src="../../public/images/forum_icon/shared.png" alt="">
                   </button>
-                </div>
-                <div class="comment-item__reply-form">
-                  <div class="comment-form">
-                    <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                    <label class="comment-form__attach" aria-label="Attach file">📎
-                      <input type="file">
-                    </label>
-                    <label for="reply-toggle-1" class="comment-form__cancel">Cancel</label>
-                    <button type="button" class="comment-form__send">Comment</button>
-                  </div>
+                  <button type="button" class="forum-post__bookmark" aria-label="Bookmark post">
+                    <img src="../../public/images/forum_icon/bookmark.png" alt="">
+                  </button>
+                  <span class="forum-post__index">#1</span>
                 </div>
               </div>
-              <button type="button" class="comment-item__edit">Edit</button>
+              <div class="forum-post__content">
+                <p>THREAD CONTENT</p>
+              </div>
+              <div class="forum-post__footer">
+                <button type="button" class="vote-btn" data-action="upvote" aria-label="Upvote">
+                  <img src="../../public/images/forum_icon/like.png" alt="">
+                </button>
+                <button type="button" class="vote-btn vote-btn--down" data-action="downvote" aria-label="Downvote">
+                  <img src="../../public/images/forum_icon/dislike.png" alt="">
+                </button>
+                <a href="#newCommentForm" class="forum-post__reply-btn">
+                  <img src="../../public/images/forum_icon/Reply.png" alt="">
+                  Reply
+                </a>
+              </div>
             </div>
+          </article>
 
-            <!-- Comment with a nested reply thread -->
-            <div class="comment-item" data-id="2">
-              <div class="comment-item__avatar">AV</div>
-              <div class="comment-item__body">
-                <input type="checkbox" id="reply-toggle-2" class="reply-toggle" hidden>
-                <span class="comment-item__author">User's Name</span>
-                <p class="comment-item__text">Comment</p>
-                <div class="comment-item__actions">
-                  <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                    <img src="../../public/images/forum_icon/heart.png" alt="">
-                  </button>
-                  <label for="reply-toggle-2" class="comment-action" aria-label="Reply to comment">
-                    <img src="../../public/images/forum_icon/Reply.png" alt="">
-                  </label>
-                  <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
+          <article class="forum-post" id="post-2">
+            <div class="forum-post__sidebar">
+              <div class="forum-post__avatar">AV</div>
+              <span class="forum-post__username">User's Name</span>
+              <span class="forum-post__rank">Member</span>
+            </div>
+            <div class="forum-post__body">
+              <div class="forum-post__header">
+                <span class="forum-post__date">Date</span>
+                <div class="forum-post__header-actions">
+                  <button type="button" class="engage-btn" data-action="share" aria-label="Share post">
                     <img src="../../public/images/forum_icon/shared.png" alt="">
                   </button>
-                </div>
-                <div class="comment-item__reply-form">
-                  <div class="comment-form">
-                    <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                    <label class="comment-form__attach" aria-label="Attach file">📎
-                      <input type="file">
-                    </label>
-                    <label for="reply-toggle-2" class="comment-form__cancel">Cancel</label>
-                    <button type="button" class="comment-form__send">Comment</button>
-                  </div>
-                </div>
-
-                <div class="comment-item__replies">
-
-                  <div class="comment-item comment-item--reply" data-id="2-1">
-                    <div class="comment-item__avatar">AV</div>
-                    <div class="comment-item__body">
-                      <input type="checkbox" id="reply-toggle-2-1" class="reply-toggle" hidden>
-                      <span class="comment-item__author">User's Name</span>
-                      <p class="comment-item__text">Comment</p>
-                      <div class="comment-item__actions">
-                        <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                          <img src="../../public/images/forum_icon/heart.png" alt="">
-                        </button>
-                        <label for="reply-toggle-2-1" class="comment-action" aria-label="Reply to comment">
-                          <img src="../../public/images/forum_icon/Reply.png" alt="">
-                        </label>
-                        <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
-                          <img src="../../public/images/forum_icon/shared.png" alt="">
-                        </button>
-                      </div>
-                      <div class="comment-item__reply-form">
-                        <div class="comment-form">
-                          <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                          <label class="comment-form__attach" aria-label="Attach file">📎
-                            <input type="file">
-                          </label>
-                          <label for="reply-toggle-2-1" class="comment-form__cancel">Cancel</label>
-                          <button type="button" class="comment-form__send">Comment</button>
-                        </div>
-                      </div>
-
-                      <div class="comment-item__replies">
-
-                        <div class="comment-item comment-item--reply" data-id="2-1-1">
-                          <div class="comment-item__avatar">AV</div>
-                          <div class="comment-item__body">
-                            <input type="checkbox" id="reply-toggle-2-1-1" class="reply-toggle" hidden>
-                            <span class="comment-item__author">User's Name</span>
-                            <p class="comment-item__text">Comment</p>
-                            <div class="comment-item__actions">
-                              <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                                <img src="../../public/images/forum_icon/heart.png" alt="">
-                              </button>
-                              <label for="reply-toggle-2-1-1" class="comment-action" aria-label="Reply to comment">
-                                <img src="../../public/images/forum_icon/Reply.png" alt="">
-                              </label>
-                              <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
-                                <img src="../../public/images/forum_icon/shared.png" alt="">
-                              </button>
-                            </div>
-                            <div class="comment-item__reply-form">
-                              <div class="comment-form">
-                                <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                                <label class="comment-form__attach" aria-label="Attach file">📎
-                                  <input type="file">
-                                </label>
-                                <label for="reply-toggle-2-1-1" class="comment-form__cancel">Cancel</label>
-                                <button type="button" class="comment-form__send">Comment</button>
-                              </div>
-                            </div>
-
-                            <div class="comment-item__replies">
-                              <div class="comment-item comment-item--reply" data-id="2-1-1-1">
-                                <div class="comment-item__avatar">AV</div>
-                                <div class="comment-item__body">
-                                  <input type="checkbox" id="reply-toggle-2-1-1-1" class="reply-toggle" hidden>
-                                  <span class="comment-item__author">User's Name</span>
-                                  <p class="comment-item__text">Comment</p>
-                                  <div class="comment-item__actions">
-                                    <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                                      <img src="../../public/images/forum_icon/heart.png" alt="">
-                                    </button>
-                                    <label for="reply-toggle-2-1-1-1" class="comment-action" aria-label="Reply to comment">
-                                      <img src="../../public/images/forum_icon/Reply.png" alt="">
-                                    </label>
-                                    <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
-                                      <img src="../../public/images/forum_icon/shared.png" alt="">
-                                    </button>
-                                  </div>
-                                  <div class="comment-item__reply-form">
-                                    <div class="comment-form">
-                                      <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                                      <label class="comment-form__attach" aria-label="Attach file">📎
-                                        <input type="file">
-                                      </label>
-                                      <label for="reply-toggle-2-1-1-1" class="comment-form__cancel">Cancel</label>
-                                      <button type="button" class="comment-form__send">Comment</button>
-                                    </div>
-                                  </div>
-                                </div>
-                                <button type="button" class="comment-item__edit">Edit</button>
-                              </div>
-                            </div>
-
-                          </div>
-                          <button type="button" class="comment-item__edit">Edit</button>
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <button type="button" class="comment-item__edit">Edit</button>
-                  </div>
-
-                  <!-- Sibling reply, same level as 2-1 -->
-                  <div class="comment-item comment-item--reply" data-id="2-2">
-                    <div class="comment-item__avatar">AV</div>
-                    <div class="comment-item__body">
-                      <input type="checkbox" id="reply-toggle-2-2" class="reply-toggle" hidden>
-                      <span class="comment-item__author">User's Name</span>
-                      <p class="comment-item__text">Comment</p>
-                      <div class="comment-item__actions">
-                        <button type="button" class="comment-action" data-action="like" aria-label="Like comment">
-                          <img src="../../public/images/forum_icon/heart.png" alt="">
-                        </button>
-                        <label for="reply-toggle-2-2" class="comment-action" aria-label="Reply to comment">
-                          <img src="../../public/images/forum_icon/Reply.png" alt="">
-                        </label>
-                        <button type="button" class="comment-action" data-action="share" aria-label="Share comment">
-                          <img src="../../public/images/forum_icon/shared.png" alt="">
-                        </button>
-                      </div>
-                      <div class="comment-item__reply-form">
-                        <div class="comment-form">
-                          <textarea class="comment-form__input" rows="1" placeholder="Reply to User's Name"></textarea>
-                          <label class="comment-form__attach" aria-label="Attach file">📎
-                            <input type="file">
-                          </label>
-                          <label for="reply-toggle-2-2" class="comment-form__cancel">Cancel</label>
-                          <button type="button" class="comment-form__send">Comment</button>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="button" class="comment-item__edit">Edit</button>
-                  </div>
-
+                  <button type="button" class="forum-post__bookmark" aria-label="Bookmark post">
+                    <img src="../../public/images/forum_icon/bookmark.png" alt="">
+                  </button>
+                  <span class="forum-post__index">#2</span>
                 </div>
               </div>
-              <button type="button" class="comment-item__edit">Edit</button>
+              <div class="forum-post__content">
+                <p>THREAD CONTENT</p>
+              </div>
+              <div class="forum-post__footer">
+                <button type="button" class="vote-btn" data-action="upvote" aria-label="Upvote">
+                  <img src="../../public/images/forum_icon/like.png" alt="">
+                </button>
+                <button type="button" class="vote-btn vote-btn--down" data-action="downvote" aria-label="Downvote">
+                  <img src="../../public/images/forum_icon/dislike.png" alt="">
+                </button>
+                <a href="#newCommentForm" class="forum-post__reply-btn">
+                  <img src="../../public/images/forum_icon/Reply.png" alt="">
+                  Reply
+                </a>
+              </div>
             </div>
+          </article>
 
-          </div>
         </div>
+
+        <!-- Pagination -->
+        <nav class="pagination" aria-label="Thread pagination">
+          <a href="#" class="page-link active" aria-current="page">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <span class="page-ellipsis">…</span>
+          <a href="#" class="page-link">10</a>
+          <a href="#" class="page-link page-next">Next</a>
+          <a href="#" class="page-link page-last">Last</a>
+        </nav>
+
+        <!-- Post a reply -->
+        <form class="comment-composer" id="newCommentForm">
+          <div class="comment-composer__avatar">YOU</div>
+          <div class="comment-form">
+            <textarea class="comment-form__input" name="content" rows="1" placeholder="Write a reply..."></textarea>
+            <label class="comment-form__attach" aria-label="Attach file">
+              <img src="../../public/images/forum_icon/attach.png" alt="">
+              <input type="file">
+            </label>
+            <button type="submit" class="comment-form__send" aria-label="Post reply">
+              Post Reply
+            </button>
+          </div>
+        </form>
       </div>
 
       <!-- Sidebar -->
       <aside class="forum-sidebar">
         <div class="sidebar-box">
-          <h3 class="sidebar-box__title">Hot Topics</h3>
-          <div class="sidebar-topics">
-            <button type="button" class="sidebar-topic-pill">Topics</button>
-            <button type="button" class="sidebar-topic-pill">Topics</button>
-            <button type="button" class="sidebar-topic-pill">Topics</button>
-            <button type="button" class="sidebar-topic-pill">Topics</button>
-          </div>
-        </div>
-
-        <div class="sidebar-box">
-          <h3 class="sidebar-box__title">User Ranking</h3>
-          <div class="sidebar-ranking">
-            <div class="ranking-item">
-              <span class="ranking-rank">1</span>
-              <div class="ranking-avatar">AV</div>
-              <div class="ranking-info">
-                <span class="ranking-name">Username</span>
-                <span class="ranking-points">Points</span>
-              </div>
+          <h3 class="sidebar-box__title">Thread Statistics</h3>
+          <dl class="forum-stats-list">
+            <div class="forum-stats-row">
+              <dt>Created</dt>
+              <dd>User's Name, Date</dd>
             </div>
-            <div class="ranking-item">
-              <span class="ranking-rank">2</span>
-              <div class="ranking-avatar">AV</div>
-              <div class="ranking-info">
-                <span class="ranking-name">Username</span>
-                <span class="ranking-points">Points</span>
-              </div>
+            <div class="forum-stats-row">
+              <dt>Lastest reply</dt>
+              <dd>User's Name, Date</dd>
             </div>
-            <div class="ranking-item">
-              <span class="ranking-rank">3</span>
-              <div class="ranking-avatar">AV</div>
-              <div class="ranking-info">
-                <span class="ranking-name">Username</span>
-                <span class="ranking-points">Points</span>
-              </div>
+            <div class="forum-stats-row">
+              <dt>Replies</dt>
+              <dd>10</dd>
             </div>
-          </div>
+            <div class="forum-stats-row">
+              <dt>Views</dt>
+              <dd>20</dd>
+            </div>
+          </dl>
         </div>
       </aside>
     </div>
