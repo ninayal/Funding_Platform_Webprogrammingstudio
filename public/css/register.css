@@ -140,7 +140,7 @@
 
 .login-page__bg {
   background-image:
-    url('../../public/images/registerbackground.png');
+    url('../../public/images/background_login_register/registerbackground.png');
 
   background-size: cover;
   background-position: center;
