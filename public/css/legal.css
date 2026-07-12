@@ -27,10 +27,7 @@ body {
     margin: 0;
     min-height: 100vh;
     color: var(--legal-deep);
-    background:
-        radial-gradient(circle at 8% 8%, rgba(229, 208, 172, 0.8), transparent 32%),
-        radial-gradient(circle at 92% 90%, rgba(175, 143, 111, 0.28), transparent 34%),
-        var(--legal-cream);
+    background: url('../images/linen-beige.png');
     font-family: "DM Sans", Arial, sans-serif;
     line-height: 1.75;
 }
