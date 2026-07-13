@@ -14,13 +14,14 @@
 
 .shared-footer {
   height: 420px;
+  
 }
 
-.shared-include,
 .shared-header,
 iframe.shared-header {
   background: transparent !important;
 }
+
 
 @media (max-width: 900px) {
   .shared-footer {
