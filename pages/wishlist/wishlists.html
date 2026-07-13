@@ -16,113 +16,115 @@
 </head>
 
 <body>
-  <section class="hero">
+  <iframe src="../global/header_shoppingcart.html#nav-wishlist" title="Header"
+    class="shared-include shared-header shared-header--light" loading="eager" scrolling="no"></iframe>
 
-    <div class="hero__bg"></div>
+  <main class="wishlist-page">
+    <nav class="breadcrumb container" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a>
+      <span aria-hidden="true">•</span>
+      <span aria-current="page">Wishlists</span>
+    </nav>
 
-    <iframe src="../global/header.html#nav-wishlist" title="Header" class="shared-include shared-header" loading="eager"
-      scrolling="no"></iframe>
-
-    <div class="hero__title">
-      <p class="eyebrow">Your Curated Collection of Heritage</p>
-      <span class="script">Wishlists</span>
-      <span class="serif">Desires, dreams and timeless crafts.</span>
-    </div>
-  </section>
-  <div class="wave">
-    <div class="below">
-      <p class="below__headline">
-      </p>
+    <div class="wishlist-header container">
+      <h1>Wishlists</h1>
+      <p class="wishlist-header__sub">Desires, dreams and timeless crafts.</p>
     </div>
 
+    <!-- CSS-only category state -->
+    <input class="state-control" type="radio" name="category" id="filter-all" checked />
+    <input class="state-control" type="radio" name="category" id="filter-ceramics" />
+    <input class="state-control" type="radio" name="category" id="filter-lacquer" />
+    <input class="state-control" type="radio" name="category" id="filter-textile" />
+    <input class="state-control" type="radio" name="category" id="filter-bamboo" />
+    <input class="state-control" type="radio" name="category" id="filter-wood" />
 
-    <main class="wishlist-page">
-      <!-- CSS-only category state -->
-      <input class="state-control" type="radio" name="category" id="filter-all" checked />
-      <input class="state-control" type="radio" name="category" id="filter-ceramics" />
-      <input class="state-control" type="radio" name="category" id="filter-lacquer" />
-      <input class="state-control" type="radio" name="category" id="filter-textile" />
-      <input class="state-control" type="radio" name="category" id="filter-bamboo" />
-      <input class="state-control" type="radio" name="category" id="filter-wood" />
+    <!-- CSS-only hardcoded sort state -->
+    <input class="state-control" type="radio" name="sort" id="sort-curated" checked />
+    <input class="state-control" type="radio" name="sort" id="sort-low" />
+    <input class="state-control" type="radio" name="sort" id="sort-high" />
+    <input class="state-control" type="radio" name="sort" id="sort-name" />
 
-      <!-- CSS-only hardcoded sort state -->
-      <input class="state-control" type="radio" name="sort" id="sort-curated" checked />
-      <input class="state-control" type="radio" name="sort" id="sort-low" />
-      <input class="state-control" type="radio" name="sort" id="sort-high" />
-      <input class="state-control" type="radio" name="sort" id="sort-name" />
+    <nav class="category-tabs container" aria-label="Wishlist by category">
+      <label class="tab" for="filter-all">All</label>
+      <label class="tab" for="filter-ceramics">Ceramics</label>
+      <label class="tab" for="filter-lacquer">Lacquer</label>
+      <label class="tab" for="filter-textile">Textiles &amp; Silk</label>
+      <label class="tab" for="filter-bamboo">Bamboo &amp; Rattan</label>
+      <label class="tab" for="filter-wood">Wood</label>
+    </nav>
 
-      <div class="wishlist-shell">
-        <section class="utility-panel" aria-label="Wishlist tools">
-          <div class="utility-top">
-            <!-- Visual search prototype. The reset button clears the field, but text filtering needs JavaScript or a backend. -->
-            <form class="search-box" action="#" method="get" role="search" aria-label="Search saved pieces">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                <circle cx="11" cy="11" r="7"></circle>
-                <path d="m20 20-3.8-3.8"></path>
-              </svg>
-              <input id="searchInput" name="q" type="search"
-                placeholder="Search by piece, craft village, or material..." autocomplete="off" />
-              <button class="clear-search" type="reset" aria-label="Clear search">×</button>
-            </form>
+    <div class="wishlist-shell">
 
-            <div class="utility-actions">
-              <!-- Hardcoded HTML share action -->
-              <a class="btn"
-                href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Wishlist&amp;body=Take%20a%20look%20at%20my%20saved%20craft%20pieces."
-                aria-label="Share wishlist by email">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                  aria-hidden="true">
-                  <circle cx="18" cy="5" r="3"></circle>
-                  <circle cx="6" cy="12" r="3"></circle>
-                  <circle cx="18" cy="19" r="3"></circle>
-                  <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
-                </svg>
-                Share
-              </a>
+      <!-- ================================================
+           TOOLBAR — search + share + new collection + sort
+           Replaces the old glass utility-panel card
+           ================================================ -->
+      <div class="wishlist-toolbar">
+        <!-- Visual search prototype. The reset button clears the field, but text filtering needs JavaScript or a backend. -->
+        <form class="search-box search-box--slim" action="#" method="get" role="search" aria-label="Search saved pieces">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.8-3.8"></path>
+          </svg>
+          <input id="searchInput" name="q" type="search"
+            placeholder="Search by piece, craft village, or material..." autocomplete="off" />
+          <button class="clear-search" type="reset" aria-label="Clear search">×</button>
+        </form>
 
-              <a class="btn btn-primary" href="#new-collection-modal">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                  aria-hidden="true">
-                  <path d="M12 5v14M5 12h14"></path>
-                </svg>
-                New collection
-              </a>
+        <div class="wishlist-toolbar__actions">
+          <!-- Hardcoded HTML share action -->
+          <a class="btn"
+            href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Wishlist&amp;body=Take%20a%20look%20at%20my%20saved%20craft%20pieces."
+            aria-label="Share wishlist by email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              aria-hidden="true">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
+            </svg>
+            Share
+          </a>
+
+          <a class="btn btn-primary" href="#new-collection-modal">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              aria-hidden="true">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            New collection
+          </a>
+
+          <details class="sort-menu">
+            <summary aria-label="Choose product order">
+              <span class="sort-current sort-current-curated">Sort: Curated</span>
+              <span class="sort-current sort-current-low">Price: Low to high</span>
+              <span class="sort-current sort-current-high">Price: High to low</span>
+              <span class="sort-current sort-current-name">Name: A–Z</span>
+            </summary>
+            <div class="sort-options" role="group" aria-label="Sort saved pieces">
+              <label for="sort-curated">Curated</label>
+              <label for="sort-low">Price: Low to high</label>
+              <label for="sort-high">Price: High to low</label>
+              <label for="sort-name">Name: A–Z</label>
             </div>
-          </div>
-
-          <div class="filter-row">
-            <div class="category-chips" role="group" aria-label="Filter by product category">
-              <label class="chip" for="filter-all">All <span>6</span></label>
-              <label class="chip" for="filter-ceramics">Ceramics <span>2</span></label>
-              <label class="chip" for="filter-lacquer">Lacquer <span>1</span></label>
-              <label class="chip" for="filter-textile">Textiles &amp; silk <span>1</span></label>
-              <label class="chip" for="filter-bamboo">Rattan &amp; bamboo <span>1</span></label>
-              <label class="chip" for="filter-wood">Wood <span>1</span></label>
-            </div>
-
-            <details class="sort-menu">
-              <summary aria-label="Choose product order">
-                <span class="sort-current sort-current-curated">Sort: Curated</span>
-                <span class="sort-current sort-current-low">Price: Low to high</span>
-                <span class="sort-current sort-current-high">Price: High to low</span>
-                <span class="sort-current sort-current-name">Name: A–Z</span>
-              </summary>
-              <div class="sort-options" role="group" aria-label="Sort saved pieces">
-                <label for="sort-curated">Curated</label>
-                <label for="sort-low">Price: Low to high</label>
-                <label for="sort-high">Price: High to low</label>
-                <label for="sort-name">Name: A–Z</label>
-              </div>
-            </details>
-          </div>
-        </section>
-
-        <div class="section-heading">
-          <h2>Saved <em>pieces</em></h2>
-          <div class="result-meta">6 pieces saved</div>
+          </details>
         </div>
+      </div>
 
-        <section class="product-grid" aria-label="Saved products">
+      <div class="section-heading">
+        <h2>Saved <em>pieces</em></h2>
+        <div class="result-meta">
+          <span class="meta-all">6 pieces saved</span>
+          <span class="meta-ceramics">2 pieces saved</span>
+          <span class="meta-lacquer">1 piece saved</span>
+          <span class="meta-textile">1 piece saved</span>
+          <span class="meta-bamboo">1 piece saved</span>
+          <span class="meta-wood">1 piece saved</span>
+        </div>
+      </div>
+
+      <section class="product-grid" aria-label="Saved products">
           <!-- Product 1 -->
           <input class="remove-toggle" id="remove-1" type="checkbox" />
           <article class="product-card product-1 ceramics">
@@ -474,7 +476,7 @@
           </div>
         </section>
       </div>
-    </main>
+  </main>
 
     <!-- CSS :target modal: bag status -->
     <section id="bag-status" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="bagTitle">
