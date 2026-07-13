@@ -1,0 +1,648 @@
+/* ================================================
+   PRODUCT DETAIL PAGE
+   Reuses tokens & .shop-card / .shop-grid from products.css
+   ================================================ */
+
+.pd-wrap {
+  padding: 18px 0 24px;
+}
+
+/* ================================================
+   PRODUCT MAIN — thumbs | media | detail
+   ================================================ */
+.pd-main {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 420px;
+  gap: 28px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+/* ---- thumbnails ---- */
+.pd-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pd-thumb {
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  transition: border-color .2s;
+}
+
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pd-thumb.is-active,
+.pd-thumb:hover {
+  border-color: var(--red);
+}
+
+/* ---- main media ---- */
+.pd-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  box-shadow: var(--shadow);
+}
+
+.pd-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pd-media__tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--red);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* ---- detail panel ---- */
+.pd-detail__maker {
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin: 0 0 8px;
+}
+
+.pd-detail__title {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.15;
+  color: var(--deep);
+  margin: 0 0 12px;
+}
+
+.pd-detail__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 14px;
+}
+
+.pd-detail__rating:hover {
+  color: var(--red);
+}
+
+.pd-stars {
+  color: var(--red);
+  letter-spacing: 1px;
+  font-size: 15px;
+}
+
+.pd-stars--lg {
+  font-size: 26px;
+  margin: 6px 0;
+}
+
+.pd-detail__price {
+  font-family: var(--ff-ui);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--deep);
+  margin: 0 0 14px;
+}
+
+.pd-detail__desc {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--brown);
+  margin: 0 0 22px;
+  max-width: 46ch;
+}
+
+.pd-option {
+  margin-bottom: 20px;
+}
+
+.pd-option__label {
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--deep);
+  margin: 0 0 10px;
+}
+
+/* size selector — CSS-only active state */
+.pd-size-options {
+  display: flex;
+  gap: 10px;
+}
+
+.pd-size-btn {
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brown);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+
+.pd-size-btn:hover {
+  border-color: var(--sand);
+}
+
+#size-sm:checked~.pd-wrap .pd-size-btn[for="size-sm"],
+#size-lg:checked~.pd-wrap .pd-size-btn[for="size-lg"] {
+  border-color: var(--deep);
+  background: var(--deep);
+  color: var(--cream);
+}
+
+.pd-qty {
+  width: 84px;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--deep);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: var(--white);
+}
+
+.pd-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.pd-add-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--deep);
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  transition: background .2s;
+}
+
+.pd-add-btn:hover {
+  background: var(--red);
+}
+
+.pd-wish-btn {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--deep);
+  cursor: pointer;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+
+.pd-wish-btn:hover {
+  color: var(--red);
+  border-color: var(--red);
+  transform: scale(1.05);
+}
+
+.pd-meta {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pd-meta li {
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  color: var(--muted);
+  padding-left: 18px;
+  position: relative;
+}
+
+.pd-meta li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--sand);
+  font-weight: 700;
+}
+
+/* ---- signature: maker's note ---- */
+.pd-maker-note {
+  position: relative;
+  margin: 0;
+  padding: 22px 22px 20px 78px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.pd-maker-note__seal {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 50%;
+  border: 1.5px dashed var(--sand);
+  font-family: var(--ff-ui);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: var(--darkred);
+  line-height: 1.1;
+}
+
+.pd-maker-note p {
+  font-family: var(--ff-body);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--deep);
+  margin: 0 0 8px;
+}
+
+.pd-maker-note cite {
+  font-family: var(--ff-ui);
+  font-style: normal;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ================================================
+   TABS — Description / Additional Info / Review
+   CSS-only, active layer driven by radio inputs
+   ================================================ */
+.pd-tabs-section {
+  margin-top: 56px;
+}
+
+.pd-tabs {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+
+.pd-tab-btn {
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+
+.pd-tab-btn:hover {
+  color: var(--deep);
+}
+
+.pd-panel {
+  display: none;
+}
+
+#tab-description:checked~.pd-wrap .pd-tab-btn[for="tab-description"],
+#tab-info:checked~.pd-wrap .pd-tab-btn[for="tab-info"],
+#tab-review:checked~.pd-wrap .pd-tab-btn[for="tab-review"] {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+#tab-description:checked~.pd-wrap .pd-panel--description,
+#tab-info:checked~.pd-wrap .pd-panel--info,
+#tab-review:checked~.pd-wrap .pd-panel--review {
+  display: block;
+}
+
+.pd-panel--description p {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--brown);
+  max-width: 780px;
+  margin: 0 0 16px;
+}
+
+.pd-spec-table {
+  width: 100%;
+  max-width: 780px;
+  border-collapse: collapse;
+}
+
+.pd-spec-table tr {
+  border-bottom: 1px solid var(--line);
+}
+
+.pd-spec-table th,
+.pd-spec-table td {
+  text-align: left;
+  padding: 14px 10px;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+}
+
+.pd-spec-table th {
+  width: 220px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.pd-spec-table td {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ---- review summary (inside tab) ---- */
+.pd-rating-summary {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  max-width: 780px;
+}
+
+.pd-rating-summary__score {
+  text-align: center;
+  padding: 20px;
+  border-right: 1px solid var(--line);
+}
+
+.pd-rating-summary__number {
+  font-family: var(--ff-script);
+  font-weight: 600;
+  font-size: 44px;
+  color: var(--deep);
+  margin: 0;
+}
+
+.pd-rating-summary__count {
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.pd-rating-summary__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pd-bar-row {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-ui);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.pd-bar {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--tan);
+  overflow: hidden;
+}
+
+.pd-bar__fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 4px;
+}
+
+/* ================================================
+   REVIEW LIST — always visible
+   ================================================ */
+.pd-reviews {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.pd-reviews__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.pd-reviews__head h2 {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--deep);
+  margin: 0;
+}
+
+.pd-reviews__sort {
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.pd-reviews__sort strong {
+  color: var(--deep);
+}
+
+.pd-review-card {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pd-review-card__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.pd-review-card__user {
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep);
+  margin: 0;
+}
+
+.pd-review-card__date {
+  font-family: var(--ff-ui);
+  font-size: 12.5px;
+  color: var(--muted);
+  margin: 0 0 0 auto;
+}
+
+.pd-review-card__comment {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--brown);
+  max-width: 780px;
+  margin: 0 0 14px;
+}
+
+.pd-review-card__media {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.pd-review-card__thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.pd-review-card__feedback {
+  width: 140px;
+  height: 110px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ================================================
+   RELATED PRODUCTS
+   ================================================ */
+.pd-related {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.pd-related h2 {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--deep);
+  margin: 0 0 24px;
+}
+
+.pd-related__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 960px) {
+  .pd-main {
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-areas:
+      "thumbs media"
+      "detail detail";
+  }
+
+  .pd-thumbs {
+    grid-area: thumbs;
+  }
+
+  .pd-media {
+    grid-area: media;
+  }
+
+  .pd-detail {
+    grid-area: detail;
+    margin-top: 28px;
+  }
+
+  .pd-rating-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-rating-summary__score {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pd-main {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+
+  .pd-related__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pd-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .pd-tab-btn {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 460px) {
+  .pd-related__grid {
+    grid-template-columns: 1fr;
+  }
+}
