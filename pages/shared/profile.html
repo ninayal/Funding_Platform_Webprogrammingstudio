@@ -3,254 +3,589 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#A31D1D" />
-  <title>Làng & Co. — Your Account</title>
-  <!-- Shared styles -->
-  <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/index.css" />
 
-  <!-- Account-specific styles -->
-  <link rel="stylesheet" href="../../public/css/profile.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>User Profile | Làng & Co.</title>
+
+  <link
+    rel="stylesheet"
+    href="../../public/css/index.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../../public/css/shared-include.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../../public/css/profile.css"
+  />
 </head>
 
 <body>
-  <section class="hero">
 
-    <div class="hero__bg"></div>
+  <iframe
+    src="../global/header_shoppingcart.html"
+    title="Header"
+    class="shared-include profile-header"
+    loading="eager"
+    scrolling="no"
+  ></iframe>
 
-      <iframe src="../global/header_shoppingcart.html#nav-shop" title="Header"
-    class="shared-include shared-header shared-header--light" loading="eager" scrolling="no"></iframe>
+  <main class="profile-page">
 
-    <div class="hero__title">
-      <p class="eyebrow">Your Curated Collection of Heritage</p>
-      <span class="script">Your Account</span>
-      <span class="serif">Manage your profile, payments and addresses.</span>
-    </div>
-  </section>
+    <input
+      class="profile-state"
+      type="radio"
+      name="profile-tab"
+      id="tab-user"
+      checked
+    />
 
-  <div class="wave">
-    <div class="below">
-      <p class="below__headline"></p>
-    </div>
+    <input
+      class="profile-state"
+      type="radio"
+      name="profile-tab"
+      id="tab-favorites"
+    />
 
-  <!-- ===== Profile Page ===== -->
-  <section class="profile-page">
+    <input
+      class="profile-state"
+      type="radio"
+      name="profile-tab"
+      id="tab-watchlist"
+    />
 
-    <!-- CSS-only tab controllers (must stay before .account for ~ sibling selectors to work) -->
-    <input type="radio" name="profile-tab" id="tab-profile" class="account-tab-radio" checked>
-    <input type="radio" name="profile-tab" id="tab-bank" class="account-tab-radio">
-    <input type="radio" name="profile-tab" id="tab-addresses" class="account-tab-radio">
+    <input
+      class="profile-state"
+      type="radio"
+      name="profile-tab"
+      id="tab-settings"
+    />
 
-    <div class="account">
+    <input
+      class="profile-state"
+      type="radio"
+      name="profile-tab"
+      id="tab-notifications"
+    />
 
-      <!-- ===== Sidebar ===== -->
-      <aside class="account__sidebar">
-        <div class="account__header">
-          <h1 class="account__title">Your Account</h1>
-          <p class="account__subtitle">Alex John, Email: alexjohn@gmail.com</p>
+    <section class="profile-shell">
+
+      <aside class="profile-sidebar">
+
+        <div class="profile-sidebar__heading">
+
+          <p class="profile-kicker">
+            Account
+          </p>
+
+          <h1>
+            User Profile
+          </h1>
+
         </div>
 
-        <nav class="account__nav">
-          <label for="tab-profile" class="account__item">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="4"></circle>
-                <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+        <nav class="profile-nav">
+
+          <label
+            class="profile-nav__item"
+            for="tab-user"
+          >
+
+            <span class="profile-nav__icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="3.6" />
+                <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
               </svg>
             </span>
-            Profile
+
+            <span>
+              User info
+            </span>
+
           </label>
 
-          <label for="tab-bank" class="account__item">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                <line x1="2" y1="10" x2="22" y2="10"></line>
+          <label
+            class="profile-nav__item"
+            for="tab-favorites"
+          >
+
+            <span class="profile-nav__icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" />
               </svg>
             </span>
-            Bank &amp; Card
+
+            <span>
+              Favorites
+            </span>
+
           </label>
 
-          <label for="tab-addresses" class="account__item">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 21s-7-6.5-7-11a7 7 0 1 1 14 0c0 4.5-7 11-7 11z"></path>
-                <circle cx="12" cy="10" r="2.5"></circle>
+          <label
+            class="profile-nav__item"
+            for="tab-watchlist"
+          >
+
+            <span class="profile-nav__icon">
+              <svg viewBox="0 0 24 24">
+                <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 3Z" />
               </svg>
             </span>
-            Addresses
+
+            <span>
+              Watchlist
+            </span>
+
           </label>
 
-          <div class="account__divider"></div>
+          <label
+            class="profile-nav__item"
+            for="tab-settings"
+          >
 
-          <a href="./logout.html" class="account__item account__item--plain">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                <polyline points="10 17 15 12 10 7"></polyline>
-                <line x1="15" y1="12" x2="3" y2="12"></line>
+            <span class="profile-nav__icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 15.3A3.3 3.3 0 1 0 12 8.7a3.3 3.3 0 0 0 0 6.6Z" />
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
               </svg>
             </span>
-            Log out
-          </a>
 
-          <a href="./delete-account.html" class="account__item account__item--plain account__item--danger">
-            <span class="account__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-                <path d="M10 11v6"></path>
-                <path d="M14 11v6"></path>
-                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            <span>
+              Settings
+            </span>
+
+          </label>
+
+          <label
+            class="profile-nav__item"
+            for="tab-notifications"
+          >
+
+            <span class="profile-nav__icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" />
+                <path d="M10 21h4" />
               </svg>
             </span>
-            Delete Account
-          </a>
+
+            <span>
+              Notifications
+            </span>
+
+          </label>
+
         </nav>
+
+        <a
+          class="profile-logout"
+          href="login.html"
+        >
+
+          <svg viewBox="0 0 24 24">
+            <path d="M10 17l5-5-5-5" />
+            <path d="M15 12H3" />
+            <path d="M21 19V5a2 2 0 0 0-2-2h-5" />
+          </svg>
+
+          <span>
+            Log out
+          </span>
+
+        </a>
+
       </aside>
 
-      <!-- ===== Content ===== -->
-      <main class="account__content">
+      <section class="profile-content">
 
-        <!-- ---------- Profile panel ---------- -->
-        <section class="panel panel--profile">
-          <div class="profile">
+        <div class="profile-panel profile-panel--user">
 
-            <div class="profile__form">
-              <div class="field">
-                <label class="field__label">Username</label>
-                <p class="field__static">khoi241174</p>
-              </div>
+          <div class="profile-hero">
 
-              <div class="field">
-                <label class="field__label" for="name">Name</label>
-                <input class="field__input" type="text" id="name" value="Cảnh Khoii">
-              </div>
+            <div class="profile-avatar-wrap">
 
-              <div class="field">
-                <label class="field__label">Email</label>
-                <p class="field__static">
-                  tu***********@gmail.com
-                  <a href="#" class="link">Change</a>
-                </p>
-              </div>
+              <img
+                class="profile-avatar"
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=90"
+                alt="User avatar"
+              />
 
-              <div class="field">
-                <label class="field__label">Phone Number</label>
-                <p class="field__static">
-                  *********07
-                  <a href="#" class="link">Change</a>
-                </p>
-              </div>
-
-              <div class="field">
-                <label class="field__label">Gender</label>
-                <div class="radio-group">
-                  <label class="radio-option">
-                    <input type="radio" name="gender">
-                    Male
-                  </label>
-                  <label class="radio-option">
-                    <input type="radio" name="gender">
-                    Female
-                  </label>
-                  <label class="radio-option">
-                    <input type="radio" name="gender">
-                    Other
-                  </label>
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="field__label">Date of birth</label>
-                <p class="field__static">
-                  **/**/1999
-                  <a href="#" class="link">Change</a>
-                </p>
-              </div>
-
-              <button type="button" class="btn btn--primary">Save</button>
-            </div>
-
-            <div class="profile__avatar">
-              <img class="avatar" src="../../public/img/avatar-placeholder.jpg" alt="Profile picture">
-              <button type="button" class="btn btn--outline">Select Image</button>
-              <p class="profile__hint">File size: maximum 1 MB</p>
-              <p class="profile__hint">File extension: .JPEG, .PNG</p>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- ---------- Bank & Card panel ---------- -->
-        <section class="panel panel--bank">
-
-          <div class="panel-block">
-            <div class="panel-block__header">
-              <h2 class="panel-block__title">Credit / Debit Card</h2>
-              <button type="button" class="btn btn--primary btn--icon">
-                <span aria-hidden="true">+</span> Add New Card
+              <button
+                class="avatar-edit"
+                type="button"
+                aria-label="Edit profile image"
+              >
+                ✎
               </button>
+
             </div>
-            <div class="panel-block__divider"></div>
-            <p class="empty-state">You don't have cards yet.</p>
+
+            <div>
+
+              <p class="profile-kicker">
+                Member profile
+              </p>
+
+              <h2>
+                Sara Tancredi
+              </h2>
+
+              <p>
+                New York, USA
+              </p>
+
+            </div>
+
           </div>
 
-          <div class="panel-block">
-            <div class="panel-block__header">
-              <h2 class="panel-block__title">My Bank Accounts</h2>
-              <button type="button" class="btn btn--primary btn--icon">
-                <span aria-hidden="true">+</span> Add New Bank Account
-              </button>
+          <form
+            class="profile-form"
+            action="#"
+            method="post"
+          >
+
+            <div class="profile-grid">
+
+              <label class="profile-field">
+
+                <span>
+                  First Name
+                </span>
+
+                <input
+                  type="text"
+                  name="firstName"
+                  value="Sara"
+                />
+
+              </label>
+
+              <label class="profile-field">
+
+                <span>
+                  Last Name
+                </span>
+
+                <input
+                  type="text"
+                  name="lastName"
+                  value="Tancredi"
+                />
+
+              </label>
+
+              <label class="profile-field">
+
+                <span>
+                  Email Address
+                </span>
+
+                <input
+                  type="email"
+                  name="email"
+                  value="sara.tancredi@gmail.com"
+                />
+
+              </label>
+
+              <label class="profile-field">
+
+                <span>
+                  Phone Number
+                </span>
+
+                <input
+                  type="tel"
+                  name="phone"
+                  value="(+98) 9123728167"
+                />
+
+              </label>
+
+              <label class="profile-field">
+
+                <span>
+                  Location
+                </span>
+
+                <input
+                  type="text"
+                  name="location"
+                  value="New York, USA"
+                />
+
+              </label>
+
+              <label class="profile-field">
+
+                <span>
+                  Postal Code
+                </span>
+
+                <input
+                  type="text"
+                  name="postalCode"
+                  value="23728167"
+                />
+
+              </label>
+
             </div>
-            <div class="panel-block__divider"></div>
-            <p class="empty-state">You don't have bank accounts yet.</p>
+
+            <button
+              class="profile-save"
+              type="submit"
+            >
+              Save Changes
+            </button>
+
+          </form>
+
+        </div>
+
+        <div class="profile-panel profile-panel--favorites">
+
+          <div class="panel-heading">
+
+            <p class="profile-kicker">
+              Saved taste
+            </p>
+
+            <h2>
+              Favorite Pieces
+            </h2>
+
+            <p>
+              A quick hardcoded overview of the items this user loves most.
+            </p>
+
           </div>
 
-        </section>
+          <div class="mini-card-grid">
 
-        <!-- ---------- Addresses panel ---------- -->
-        <section class="panel panel--addresses">
+            <article class="mini-card">
 
-          <div class="panel-block">
-            <div class="panel-block__header">
-              <h2 class="panel-block__title">My Addresses</h2>
-              <button type="button" class="btn btn--primary btn--icon">
-                <span aria-hidden="true">+</span> Add Address
-              </button>
-            </div>
-            <div class="panel-block__divider"></div>
+              <img
+                src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=88"
+                alt="Ceramic vase"
+              />
 
-            <h3 class="address-list__title">Address</h3>
+              <div>
+                <span>
+                  Bát Tràng · Hanoi
+                </span>
 
-            <ul class="address-list">
-              <li class="address-card">
-                <div class="address-card__top">
-                  <p class="address-card__name">đại gia cần thơ <span class="address-card__phone">(+84) 0123456789</span></p>
-                  <a href="#" class="link">Edit</a>
-                </div>
-                <p class="address-card__lines">
-                  Số 410, Duong 30/4, Khom 1<br>
-                  Phường Vĩnh Châu, Thành phố Cần Thơ
+                <h3>
+                  Hand-painted Blue Lotus Vase
+                </h3>
+
+                <p>
+                  ₫2,100,000
                 </p>
-                <span class="tag tag--default">Default</span>
-              </li>  
-            </ul>
+              </div>
+
+            </article>
+
+            <article class="mini-card">
+
+              <img
+                src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=88"
+                alt="Tea set"
+              />
+
+              <div>
+                <span>
+                  Chu Đậu · Hải Dương
+                </span>
+
+                <h3>
+                  Ash Glaze Tea Cup
+                </h3>
+
+                <p>
+                  ₫680,000
+                </p>
+              </div>
+
+            </article>
+
           </div>
 
-        </section>
+        </div>
 
-      </main>
-    </div>
-  </section>
+        <div class="profile-panel profile-panel--watchlist">
 
-  </div>
+          <div class="panel-heading">
 
-  <!--Footer-->
-  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
+            <p class="profile-kicker">
+              Tracking
+            </p>
+
+            <h2>
+              Watchlist
+            </h2>
+
+            <p>
+              Pieces the user may return to later.
+            </p>
+
+          </div>
+
+          <div class="watchlist-list">
+
+            <div>
+              <strong>
+                Vermilion Lacquer Tray
+              </strong>
+
+              <span>
+                Price watched · Lacquer
+              </span>
+            </div>
+
+            <div>
+              <strong>
+                Phú Vinh Bamboo Basket
+              </strong>
+
+              <span>
+                Restock watched · Rattan & Bamboo
+              </span>
+            </div>
+
+            <div>
+              <strong>
+                Vạn Phúc Silk Scarf
+              </strong>
+
+              <span>
+                Wishlist watched · Textiles & Silk
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="profile-panel profile-panel--settings">
+
+          <div class="panel-heading">
+
+            <p class="profile-kicker">
+              Preferences
+            </p>
+
+            <h2>
+              Account Settings
+            </h2>
+
+            <p>
+              Static frontend controls for the later account system.
+            </p>
+
+          </div>
+
+          <div class="setting-list">
+
+            <label>
+              <span>
+                Email updates
+              </span>
+
+              <input
+                type="checkbox"
+                checked
+              />
+            </label>
+
+            <label>
+              <span>
+                Order notifications
+              </span>
+
+              <input
+                type="checkbox"
+                checked
+              />
+            </label>
+
+            <label>
+              <span>
+                Community replies
+              </span>
+
+              <input type="checkbox" />
+            </label>
+
+          </div>
+
+        </div>
+
+        <div class="profile-panel profile-panel--notifications">
+
+          <div class="panel-heading">
+
+            <p class="profile-kicker">
+              Activity
+            </p>
+
+            <h2>
+              Notifications
+            </h2>
+
+            <p>
+              Hardcoded examples of profile activity.
+            </p>
+
+          </div>
+
+          <div class="notification-list">
+
+            <div>
+              <span>
+                New
+              </span>
+
+              <p>
+                Your saved ceramic vase is still available.
+              </p>
+            </div>
+
+            <div>
+              <span>
+                Order
+              </span>
+
+              <p>
+                Your latest order is being prepared by the workshop.
+              </p>
+            </div>
+
+            <div>
+              <span>
+                Forum
+              </span>
+
+              <p>
+                Someone replied to your question about lacquer care.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
 
 </body>
 
