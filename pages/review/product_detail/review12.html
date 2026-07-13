@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Hand-Painted Blue Lotus Vase — Làng &amp; Co.</title>
+  <link rel="stylesheet" href="../../../public/css/index.css" />
+  <link rel="stylesheet" href="../../../public/css/header.css" />
+  <link rel="stylesheet" href="../../../public/css/shared-include.css" />
+
+  <!-- Shop-specific styles (reused for related-products grid) -->
+  <link rel="stylesheet" href="../../../public/css/products.css" />
+  <!-- Product-detail-specific styles -->
+  <link rel="stylesheet" href="../../../public/css/product-detail.css" />
+</head>
+
+<body>
+  <iframe src="../../global/header_shoppingcart.html#nav-shop" title="Header"
+    class="shared-include shared-header shared-header--light" loading="eager" scrolling="no"></iframe>
+
+  <!-- CSS-only size-selector state -->
+  <input class="state-control" type="radio" name="pdsize" id="size-sm" />
+  <input class="state-control" type="radio" name="pdsize" id="size-lg" checked />
+
+  <!-- CSS-only info-tab state -->
+  <input class="state-control" type="radio" name="pdtab" id="tab-description" checked />
+  <input class="state-control" type="radio" name="pdtab" id="tab-info" />
+  <input class="state-control" type="radio" name="pdtab" id="tab-review" />
+
+  <div class="pd-wrap">
+
+    <!-- ================================================
+         BREADCRUMB
+         ================================================ -->
+    <nav class="breadcrumb container" aria-label="Breadcrumb">
+      <a href="../../../index.html">Home</a>
+      <span aria-hidden="true">•</span>
+      <a href="../../cart/products.html">Shop All</a>
+      <span aria-hidden="true">•</span>
+      <span aria-current="page">Hand-Painted Blue Lotus Vase</span>
+    </nav>
+
+    <!-- ================================================
+         PRODUCT MAIN — gallery + detail
+         ================================================ -->
+    <section class="pd-main container" aria-label="Product">
+
+      <!-- ---- thumbnails ---- -->
+      <div class="pd-thumbs">
+        <label class="pd-thumb is-active">
+          <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=200&q=80"
+            alt="Blue lotus vase, front view" />
+        </label>
+        <label class="pd-thumb">
+          <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=200&q=80"
+            alt="Blue lotus vase, glaze detail" />
+        </label>
+        <label class="pd-thumb">
+          <img src="https://images.unsplash.com/photo-1610701804803-9137f8db6a94?auto=format&fit=crop&w=200&q=80"
+            alt="Blue lotus vase, side profile" />
+        </label>
+        <label class="pd-thumb">
+          <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=200&q=80"
+            alt="Blue lotus vase, styled on shelf" />
+        </label>
+      </div>
+
+      <!-- ---- main image ---- -->
+      <div class="pd-media">
+        <p class="pd-media__tag">Bestseller</p>
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&q=80"
+          alt="Hand-painted blue lotus ceramic vase" />
+      </div>
+
+      <!-- ---- detail panel ---- -->
+      <div class="pd-detail">
+        <p class="pd-detail__maker">Bát Tràng · Hanoi</p>
+        <h1 class="pd-detail__title">Hand-Painted Blue Lotus Vase</h1>
+
+        <a href="#tab-review" class="pd-detail__rating">
+          <span class="pd-stars">★★★★★</span>
+          <span>4.9 (48 reviews)</span>
+        </a>
+
+        <p class="pd-detail__price">$68.00</p>
+        <p class="pd-detail__desc">Cobalt lotus blossoms, brushed by hand across a milk-white glaze —
+          a single potter's morning of work, in a shape thrown the same way Bát Tràng has thrown it for
+          generations.</p>
+
+        <div class="pd-option">
+          <p class="pd-option__label">Size</p>
+          <div class="pd-size-options">
+            <label class="pd-size-btn" for="size-sm">18 cm</label>
+            <label class="pd-size-btn" for="size-lg">26 cm</label>
+          </div>
+        </div>
+
+        <div class="pd-option">
+          <p class="pd-option__label">Quantity</p>
+          <input class="pd-qty" type="number" min="1" value="1" aria-label="Quantity" />
+        </div>
+
+        <div class="pd-actions">
+          <a href="../../cart/cart.html" class="pd-add-btn">Add to Cart</a>
+          <button type="button" class="pd-wish-btn" aria-label="Save Hand-Painted Blue Lotus Vase to wishlist">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path
+                d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+            </svg>
+          </button>
+        </div>
+
+        <ul class="pd-meta">
+          <li>Free shipping on orders over $75</li>
+          <li>Hand-thrown to order — ships in 3–5 days</li>
+          <li>Wrapped in reused linen &amp; rice paper</li>
+        </ul>
+
+        <blockquote class="pd-maker-note">
+          <span class="pd-maker-note__seal">Bát Tràng</span>
+          <p>“Every lotus is painted freehand — no two vases carry the exact same bloom.”</p>
+          <cite>— Cô Hạnh, potter, 30 years at the wheel</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ================================================
+         INFO TABS — Description / Additional Info / Review
+         ================================================ -->
+    <section class="pd-tabs-section container" aria-label="Product information">
+      <nav class="pd-tabs" aria-label="Product detail tabs">
+        <label class="pd-tab-btn" for="tab-description">Description</label>
+        <label class="pd-tab-btn" for="tab-info">Additional Info</label>
+        <label class="pd-tab-btn" for="tab-review">Review</label>
+      </nav>
+
+      <!-- Description panel -->
+      <div class="pd-panel pd-panel--description">
+        <p>The blue lotus is the oldest motif taught in Bát Tràng's kilns — a single flower drawn in
+          cobalt oxide beneath a clear glaze, fired at 1,280°C until the blue sinks into the clay itself.
+          This vase is thrown on a manual wheel, left to dry for two days, then hand-painted by one of
+          three sisters who learned the pattern from their mother.</p>
+        <p>No stencils, no transfers: look closely and you'll find the small, human variations — a petal
+          drawn slightly fuller, a stem that curves its own way — that mark it as made by hand rather
+          than by machine.</p>
+      </div>
+
+      <!-- Additional Info panel -->
+      <div class="pd-panel pd-panel--info">
+        <table class="pd-spec-table">
+          <tbody>
+            <tr>
+              <th>Material</th>
+              <td>Stoneware ceramic, cobalt underglaze</td>
+            </tr>
+            <tr>
+              <th>Craft village</th>
+              <td>Bát Tràng, Gia Lâm, Hanoi</td>
+            </tr>
+            <tr>
+              <th>Dimensions — 18 cm</th>
+              <td>18 cm H × 11 cm ⌀, 0.6 kg</td>
+            </tr>
+            <tr>
+              <th>Dimensions — 26 cm</th>
+              <td>26 cm H × 15 cm ⌀, 1.1 kg</td>
+            </tr>
+            <tr>
+              <th>Care</th>
+              <td>Hand wash only; not microwave or dishwasher safe</td>
+            </tr>
+            <tr>
+              <th>Origin</th>
+              <td>Handmade in Việt Nam</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Review summary panel -->
+      <div class="pd-panel pd-panel--review">
+        <div class="pd-rating-summary">
+          <div class="pd-rating-summary__score">
+            <p class="pd-rating-summary__number">4.9</p>
+            <p class="pd-stars pd-stars--lg">★★★★★</p>
+            <p class="pd-rating-summary__count">Based on 48 reviews</p>
+          </div>
+          <div class="pd-rating-summary__bars">
+            <div class="pd-bar-row"><span>5 star</span>
+              <div class="pd-bar">
+                <div class="pd-bar__fill" style="width:79%"></div>
+              </div><span>38</span>
+            </div>
+            <div class="pd-bar-row"><span>4 star</span>
+              <div class="pd-bar">
+                <div class="pd-bar__fill" style="width:15%"></div>
+              </div><span>7</span>
+            </div>
+            <div class="pd-bar-row"><span>3 star</span>
+              <div class="pd-bar">
+                <div class="pd-bar__fill" style="width:4%"></div>
+              </div><span>2</span>
+            </div>
+            <div class="pd-bar-row"><span>2 star</span>
+              <div class="pd-bar">
+                <div class="pd-bar__fill" style="width:2%"></div>
+              </div><span>1</span>
+            </div>
+            <div class="pd-bar-row"><span>1 star</span>
+              <div class="pd-bar">
+                <div class="pd-bar__fill" style="width:0%"></div>
+              </div><span>0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         REVIEW LIST — always visible, independent of tabs
+         ================================================ -->
+    <section class="pd-reviews container" aria-label="Customer reviews">
+      <div class="pd-reviews__head">
+        <h2>Customer Reviews</h2>
+        <p class="pd-reviews__sort">Sort by <strong>Most Recent</strong></p>
+      </div>
+
+      <article class="pd-review-card">
+        <div class="pd-review-card__top">
+          <p class="pd-review-card__user">Mai T.</p>
+          <p class="pd-stars">★★★★★</p>
+          <p class="pd-review-card__date">June 2026</p>
+        </div>
+        <p class="pd-review-card__comment">Exactly as pictured — the cobalt glaze is even more vivid in
+          person, and it arrived wrapped so carefully nothing shifted in transit.</p>
+        <div class="pd-review-card__media">
+          <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=90&q=80"
+            alt="Product thumbnail from Mai T.'s review" class="pd-review-card__thumb" />
+          <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=400&q=80"
+            alt="Customer photo of the vase on a shelf" class="pd-review-card__feedback" />
+        </div>
+      </article>
+
+      <article class="pd-review-card">
+        <div class="pd-review-card__top">
+          <p class="pd-review-card__user">Linh Phạm</p>
+          <p class="pd-stars">★★★★★</p>
+          <p class="pd-review-card__date">May 2026</p>
+        </div>
+        <p class="pd-review-card__comment">Bought this as a housewarming gift and my sister loved it —
+          the brushwork on the lotus petals is genuinely stunning up close.</p>
+      </article>
+
+      <article class="pd-review-card">
+        <div class="pd-review-card__top">
+          <p class="pd-review-card__user">James R.</p>
+          <p class="pd-stars">★★★★☆</p>
+          <p class="pd-review-card__date">May 2026</p>
+        </div>
+        <p class="pd-review-card__comment">Gorgeous vase and clearly handmade — a touch smaller than I
+          pictured, so worth checking the dimensions in Additional Info first.</p>
+      </article>
+    </section>
+
+    <!-- ================================================
+         RELATED PRODUCTS
+         ================================================ -->
+    <section class="pd-related container" aria-label="You may also like">
+      <h2>You May Also Like</h2>
+      <div class="shop-grid pd-related__grid">
+
+        <article class="shop-card">
+          <div class="shop-card__media">
+            <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80"
+              alt="Ash glaze ceramic tea cup set" />
+            <a href="../../cart/cart.html" class="quickadd-btn" aria-label="Quick add Ash Glaze Tea Cup Set to cart">+</a>
+          </div>
+          <div class="shop-card__body">
+            <p class="shop-card__maker">Bát Tràng</p>
+            <h3 class="shop-card__title"><a href="../product_detail/review2.html">Ash Glaze Tea Cup Set (4-Piece)</a></h3>
+            <p class="shop-card__price">$54.00</p>
+            <p class="shop-card__rating">★★★★★<span>(63)</span></p>
+          </div>
+        </article>
+
+        <article class="shop-card">
+          <div class="shop-card__media">
+            <img src="https://images.unsplash.com/photo-1610701804803-9137f8db6a94?auto=format&fit=crop&w=600&q=80"
+              alt="Celadon glazed ceramic rice bowl set" />
+            <a href="../../cart/cart.html" class="quickadd-btn" aria-label="Quick add Celadon Rice Bowl Set to cart">+</a>
+          </div>
+          <div class="shop-card__body">
+            <p class="shop-card__maker">Bát Tràng</p>
+            <h3 class="shop-card__title"><a href="../product_detail/review9.html">Celadon Rice Bowl Set (4-Piece)</a></h3>
+            <p class="shop-card__price">$46.00</p>
+            <p class="shop-card__rating">★★★★★<span>(27)</span></p>
+          </div>
+        </article>
+
+        <article class="shop-card">
+          <div class="shop-card__media">
+            <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=600&q=80"
+              alt="Handmade terracotta planter pot" />
+            <a href="../../cart/cart.html" class="quickadd-btn" aria-label="Quick add Terracotta Planter Pot to cart">+</a>
+          </div>
+          <div class="shop-card__body">
+            <p class="shop-card__maker">Bát Tràng</p>
+            <h3 class="shop-card__title"><a href="../product_detail/review10.html">Terracotta Planter Pot</a></h3>
+            <p class="shop-card__price">$32.00</p>
+            <p class="shop-card__rating">★★★★☆<span>(15)</span></p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================================================
+       FOOTER
+       ================================================ -->
+  <iframe src="../../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
+
+</body>
+
+</html>
