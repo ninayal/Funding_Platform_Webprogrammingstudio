@@ -138,7 +138,7 @@ body {
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(254, 249, 225, .85);
+  color: #fef9e1d9;
   text-decoration: none;
   transition: color .3s cubic-bezier(.4, 0, .2, 1);
 }
@@ -152,7 +152,7 @@ body {
 .nav__links a:hover,
 .nav__links a.active,
 .nav__links a:target {
-  color: var(--cream);
+  color: wheat;
 }
 
 .nav--light {
