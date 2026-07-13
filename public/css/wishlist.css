@@ -66,6 +66,12 @@ input {
   padding: 18px 0 92px;
 }
 
+.container {
+  width: 94%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -153,7 +159,8 @@ input {
 }
 
 .wishlist-shell {
-  width: min(1240px, calc(100% - 48px));
+  width: 94%;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0;
   position: relative;
@@ -1091,7 +1098,7 @@ input {
   }
 
   .wishlist-shell {
-    width: min(100% - 24px, 1240px);
+    width: 94%;
   }
 
   .breadcrumb {
@@ -1182,17 +1189,13 @@ input {
   letter-spacing: .24em;
   text-transform: uppercase;
 }
+
 .shared-header--light {
   min-height: 150px;
 }
-.container {
-  width: 94%;
-  max-width: 1600px;
-  margin: 0 auto;
-}
-.container {
-  width: 94%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 32px;
+
+.wishlist-header h1,
+.wishlist-header__sub {
+  margin-top: 0;
+  margin-bottom: 0;
 }
