@@ -234,7 +234,7 @@ a {
 
 
 .gift-hero .eyebrow {
-    color: var(--cream);
+    color: #6d2323;
 
     opacity: .8;
 }
@@ -515,9 +515,7 @@ a {
 
 .flow-section--tint {
     background:
-        linear-gradient(180deg,
-            rgba(229, 208, 172, .22),
-            rgba(229, 208, 172, .10));
+        #fef9e1
 }
 
 
@@ -2103,9 +2101,7 @@ a {
         96px 0;
 
     background:
-        linear-gradient(180deg,
-            rgba(229, 208, 172, .18),
-            rgba(229, 208, 172, .08));
+        #fef9e1;
 }
 
 
