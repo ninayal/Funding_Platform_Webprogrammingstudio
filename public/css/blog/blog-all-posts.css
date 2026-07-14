@@ -1,0 +1,183 @@
+/* -----------------------------
+   ALL POSTED STORIES
+------------------------------ */
+.all-posts-section {
+  padding-top: 8px;
+}
+
+.all-heading {
+  margin-bottom: 30px;
+}
+
+/* Desktop: exactly 3 cards per row */
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  border-top: 0;
+}
+
+/* Each post becomes one vertical editorial card */
+.post-row {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(116, 81, 45, .16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .26);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+
+.post-row:hover {
+  transform: translateY(-4px);
+  border-color: rgba(163, 29, 29, .28);
+  box-shadow: 0 22px 48px rgba(116, 81, 45, .14);
+}
+
+/* Full-width card image */
+.row-thumb {
+  display: block;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--tan);
+}
+
+.row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .55s ease;
+}
+
+.post-row:hover .row-thumb img {
+  transform: scale(1.04);
+}
+
+/* Card content */
+.row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 68px;
+}
+
+.row-main h3 {
+  margin: 15px 0 10px;
+  font-family: var(--ff-script);
+  font-size: 28px;
+  line-height: 1.06;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+
+.row-main h3 a {
+  text-decoration: none;
+}
+
+.row-main>p {
+  width: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.row-author {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 20px;
+  color: var(--brown);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Floating action button at the lower-right of each card */
+.row-arrow {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(254, 249, 225, .94);
+  color: var(--red);
+  text-decoration: none;
+  transition: .2s ease;
+}
+
+.row-arrow:hover {
+  background: var(--red);
+  color: var(--cream);
+  border-color: var(--red);
+}
+
+.owner-badge {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: var(--darkred);
+  color: var(--cream);
+  font-size: 8px;
+}
+
+.owner-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.owner-actions a,
+.owner-actions label {
+  cursor: pointer;
+  color: var(--red);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* CSS-only delete: hides the example own post until reload */
+#delete-own-post:checked~.blog-shell .own-post {
+  display: none;
+}
+
+/* Hardcoded newly-created post state */
+.created-post {
+  display: none;
+}
+
+/* Normal cards are flex, so the created card must reappear as flex */
+#post-created:target~.blog-shell .created-post {
+  display: flex;
+}
+
+.placeholder-thumb {
+  display: grid;
+  place-items: center;
+  background: var(--tan);
+  color: var(--brown);
+}
+
+.placeholder-thumb span {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-size: 30px;
+}
+

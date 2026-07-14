@@ -1,0 +1,78 @@
+:root {
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
+  --darkred: #6D2323;
+
+  --ff-script: 'Playfair Display', serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
+
+  --paper: var(--cream);
+  --surface: rgba(254, 249, 225, 0.88);
+  --ink: var(--deep);
+  --muted: #7e6952;
+  --line: rgba(116, 81, 45, 0.22);
+  --white: #fffdf3;
+  --shadow: 0 24px 70px rgba(109, 35, 35, 0.15);
+  --shadow-soft: 0 16px 38px rgba(116, 81, 45, 0.10);
+  --radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--ff-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+body:has(.article-overlay:target),
+body:has(.form-overlay:target) {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+.state-input,
+.delete-toggle,
+.state-target {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
