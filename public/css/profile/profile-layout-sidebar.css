@@ -1,0 +1,115 @@
+.profile-shell {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 680px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .24);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.profile-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 42px 28px 30px;
+  border-right: 1px solid var(--line);
+  background: rgba(254, 249, 225, .58);
+}
+
+.profile-sidebar__heading {
+  margin-bottom: 38px;
+}
+
+.profile-kicker {
+  margin: 0 0 9px;
+  color: var(--red);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.profile-sidebar h1 {
+  margin: 0;
+  font-family: var(--ff-script);
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.profile-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.profile-nav__item {
+  position: relative;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 14px;
+  border-radius: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.profile-nav__item::after {
+  content: "";
+  position: absolute;
+  right: -29px;
+  width: 3px;
+  height: 34px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.profile-nav__item:hover {
+  background: rgba(255, 255, 255, .38);
+  color: var(--brown);
+}
+
+.profile-nav__icon {
+  width: 26px;
+  height: 26px;
+  color: currentColor;
+}
+
+.profile-nav__icon svg,
+.profile-logout svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.profile-nav__item span:last-child {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.profile-logout {
+  margin-top: auto;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--red);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.profile-logout svg {
+  width: 22px;
+  height: 22px;
+}
+

@@ -1,0 +1,68 @@
+:root {
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
+  --darkred: #6D2323;
+  --ff-script: "Playfair Display", serif;
+  --ff-body: "Cormorant Garamond", serif;
+  --ff-ui: "DM Sans", sans-serif;
+  --line: rgba(116, 81, 45, .18);
+  --muted: #7E6952;
+  --shadow: 0 24px 70px rgba(109, 35, 35, .13);
+  --shadow-soft: 0 16px 38px rgba(116, 81, 45, .10);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--deep);
+  background: url("../../public/images/linen-beige.png");
+  font-family: var(--ff-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.profile-header {
+  display: block;
+  width: 100%;
+  height: 170px;
+  border: 0;
+  background: transparent;
+}
+
+.profile-page {
+  min-height: calc(100vh - 170px);
+  padding: 34px 0 86px;
+}
+
+.profile-state {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
