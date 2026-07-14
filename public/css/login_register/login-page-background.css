@@ -24,26 +24,15 @@
 
 .login-page__bg {
     position: fixed;
-
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-
     z-index: 0;
-
-    background-image:
-        linear-gradient(90deg,
-            rgba(7, 5, 3, 0.22) 0%,
-            rgba(7, 5, 3, 0.14) 38%,
-            rgba(7, 5, 3, 0.38) 64%,
-            rgba(7, 5, 3, 0.72) 100%),
-        url('../../public/images/background_login_register/loginbackground.png');
-
+    background-image: url('/public/images/background_login_register/loginbackground.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
     background-color: #0a0a0a;
 }
 
@@ -68,5 +57,3 @@
 
     pointer-events: none;
 }
-
-
