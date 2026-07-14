@@ -25,7 +25,7 @@
 }
 
 body {
-  background: url('../images/linen-beige.png');
+  background: url('../../images/linen-beige.png');
   color: var(--deep);
   font-family: var(--ff-ui);
   -webkit-font-smoothing: antialiased;
