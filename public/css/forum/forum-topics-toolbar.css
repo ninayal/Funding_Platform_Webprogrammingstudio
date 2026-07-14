@@ -1,0 +1,68 @@
+/* -----------------------------
+   TOPICS TOOLBAR
+------------------------------ */
+.topics-section {
+  width: min(1100px, calc(100% - 48px));
+  margin: 18px auto 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.topic-search-row {
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  flex: 1 1 320px;
+  max-width: 560px;
+  min-height: 44px;
+  padding: 0 8px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .5);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+}
+
+.search-input::placeholder {
+  color: #99816b;
+}
+
+.search-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--darkred) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FEF9E1' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cline x1='20' y1='20' x2='15.6' y2='15.6'/%3E%3C/svg%3E") center / 16px no-repeat;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.search-btn:hover {
+  background-color: var(--red);
+}
+
+/* Missing asset (Image/search_icon.png) — icon is drawn on .search-btn instead */
+.search-btn .Search-icon {
+  display: none;
+}
+

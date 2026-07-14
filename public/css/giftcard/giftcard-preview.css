@@ -1,0 +1,263 @@
+/* ================================================
+   PREVIEW
+   ================================================ */
+
+.mini-preview {
+    position: sticky;
+
+    top: 82px;
+}
+
+
+.gift-preview {
+    position: relative;
+
+    min-height: 430px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 30px;
+
+    border-radius: 28px;
+
+    color:
+        var(--cream);
+
+    box-shadow:
+        0 30px 80px rgba(109,
+            35,
+            35,
+            .24);
+
+    transition:
+        background .25s ease;
+}
+
+
+/* DEFAULT / LOTUS */
+.gift-preview {
+    background:
+        linear-gradient(145deg,
+            #A31D1D,
+            #6D2323);
+}
+
+
+/* BÁT TRÀNG */
+#design-battrang:checked~main .gift-preview {
+    background:
+        linear-gradient(145deg,
+            #5A7CA0,
+            #233A55);
+}
+
+
+/* VẠN PHÚC */
+#design-vanphuc:checked~main .gift-preview {
+    background:
+        linear-gradient(145deg,
+            #D3AB7C,
+            #81563C);
+}
+
+
+/* HẠ THÁI */
+#design-hathai:checked~main .gift-preview {
+    background:
+        linear-gradient(145deg,
+            #21140F,
+            #6D2323);
+}
+
+
+/* HỘI AN */
+#design-hoian:checked~main .gift-preview {
+    background:
+        linear-gradient(145deg,
+            #C66B2B,
+            #6D2323);
+}
+
+
+/* PHÚ VINH */
+#design-phuvinh:checked~main .gift-preview {
+    background:
+        linear-gradient(145deg,
+            #7A8250,
+            #34442D);
+}
+
+
+.gift-preview::before {
+    content: "✦";
+
+    position: absolute;
+
+    right: 18px;
+
+    top: 12px;
+
+    color:
+        rgba(254,
+            249,
+            225,
+            .20);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 140px;
+}
+
+
+.gift-preview__top,
+.gift-preview__center,
+.gift-preview__bottom {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.gift-preview__top,
+.gift-preview__bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+}
+
+
+.gift-preview__top span {
+    font-family:
+        var(--ff-script);
+
+    font-size: 27px;
+
+    font-style: italic;
+}
+
+
+.gift-preview__top small,
+.gift-preview__bottom {
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+
+    opacity: .8;
+}
+
+
+.gift-preview__center {
+    display: grid;
+
+    gap: 9px;
+}
+
+
+.gift-preview__center p {
+    margin: 0;
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 19px;
+
+    font-style: italic;
+
+    opacity: .84;
+}
+
+
+.gift-preview__center strong {
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(46px,
+            6vw,
+            72px);
+
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+
+.gift-preview__center span {
+    font-family:
+        var(--ff-body);
+
+    font-size: 18px;
+}
+
+
+.gift-preview__bottom {
+    padding-top: 18px;
+
+    border-top:
+        1px solid rgba(254,
+            249,
+            225,
+            .28);
+}
+
+
+/* ================================================
+   CSS-ONLY PREVIEW DESIGN NAME
+   ================================================ */
+
+.preview-name {
+    display: none;
+}
+
+
+/* LOTUS */
+#design-lotus:checked~main .preview-name--lotus {
+    display: inline;
+}
+
+
+/* BÁT TRÀNG */
+#design-battrang:checked~main .preview-name--battrang {
+    display: inline;
+}
+
+
+/* VẠN PHÚC */
+#design-vanphuc:checked~main .preview-name--vanphuc {
+    display: inline;
+}
+
+
+/* HẠ THÁI */
+#design-hathai:checked~main .preview-name--hathai {
+    display: inline;
+}
+
+
+/* HỘI AN */
+#design-hoian:checked~main .preview-name--hoian {
+    display: inline;
+}
+
+
+/* PHÚ VINH */
+#design-phuvinh:checked~main .preview-name--phuvinh {
+    display: inline;
+}
+
+

@@ -1,0 +1,50 @@
+/* -----------------------------
+   THREAD CARD
+------------------------------ */
+.thread-card {
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .26);
+  box-shadow: var(--shadow-soft);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.thread-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(163, 29, 29, .3);
+  box-shadow: 0 20px 44px rgba(116, 81, 45, .16);
+}
+
+.thread-card__title {
+  margin: 0 0 8px;
+  font-family: var(--ff-script);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.thread-card__brief {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.thread-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--brown);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.thread-card__meta .meta-topic {
+  color: var(--red);
+}
+

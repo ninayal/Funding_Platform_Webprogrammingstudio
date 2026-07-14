@@ -1,0 +1,38 @@
+/* ================================================
+   SHARED IFRAME
+   ================================================ */
+
+.shared-include {
+    display: block;
+
+    width: 100%;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+}
+
+
+.shared-header {
+    min-height: 240px;
+}
+
+
+.shared-footer {
+    height: 48px;
+}
+
+
+.gift-header {
+    position: relative;
+
+    z-index: 20;
+}
+
+
+.gift-footer {
+    height: 48px;
+}
+
+

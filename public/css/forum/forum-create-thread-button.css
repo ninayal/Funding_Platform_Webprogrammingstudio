@@ -1,0 +1,37 @@
+/* -----------------------------
+   CREATE THREAD BUTTON
+------------------------------ */
+.create-thread {
+  margin-top: 18px;
+}
+
+.create-thread-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--darkred);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.create-thread-btn:hover {
+  background: var(--red);
+  transform: translateY(-1px);
+}
+
+/* Second create-threads button lower on the page */
+.thread-section + .create-thread {
+  width: min(1100px, calc(100% - 48px));
+  margin: 40px auto 60px;
+  text-align: center;
+}
+

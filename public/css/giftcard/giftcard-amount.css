@@ -1,0 +1,232 @@
+/* ================================================
+   STEP 4 — AMOUNT
+   ================================================ */
+
+.amount-panel {
+    width:
+        min(980px,
+            100%);
+
+    margin:
+        48px auto 0;
+
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 26px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .42);
+
+    box-shadow:
+        var(--shadow-soft);
+}
+
+
+.amount-builder {
+    display: grid;
+
+    grid-template-columns:
+        minmax(190px, .52fr) minmax(360px, 1.48fr);
+
+    gap: 22px;
+
+    align-items: stretch;
+}
+
+
+.amount-field {
+    display: grid;
+
+    gap: 11px;
+}
+
+
+.amount-field>span {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 31px;
+}
+
+
+.amount-field input {
+    width: 100%;
+
+    height: 120px;
+
+    padding:
+        0 24px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+
+    outline: 0;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .74);
+
+    color:
+        var(--deep);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 43px;
+}
+
+
+.amount-field input:focus {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0 0 0 4px rgba(163,
+            29,
+            29,
+            .07);
+}
+
+
+.amount-field small {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 15px;
+
+    font-style: italic;
+
+    line-height: 1.4;
+}
+
+
+.amount-field--quantity input {
+    text-align: center;
+}
+
+
+.amount-field--quantity small {
+    text-align: center;
+}
+
+
+.currency-input {
+    position: relative;
+}
+
+
+.currency-input>span {
+    position: absolute;
+
+    left: 24px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 42px;
+}
+
+
+.currency-input input {
+    padding-left: 62px;
+}
+
+
+.amount-total {
+    width: 100%;
+
+    margin:
+        26px 0 0;
+
+    padding:
+        24px 0 0;
+
+    display: flex;
+
+    align-items: end;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+
+.amount-total>div {
+    display: grid;
+
+    gap: 5px;
+}
+
+
+.amount-total span {
+    color:
+        var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: .1em;
+
+    text-transform: uppercase;
+}
+
+
+.amount-total small {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 15px;
+
+    font-style: italic;
+}
+
+
+.amount-total strong {
+    color:
+        var(--darkred);
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(25px,
+            3vw,
+            40px);
+
+    font-weight: 500;
+
+    text-align: right;
+}
+
+

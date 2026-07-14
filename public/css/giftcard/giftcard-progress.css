@@ -1,0 +1,68 @@
+/* ================================================
+   PROGRESS
+   ================================================ */
+
+.flow-progress {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 30;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    border-bottom:
+        1px solid var(--line);
+
+    background:
+        rgba(254,
+            249,
+            225,
+            .93);
+
+    backdrop-filter:
+        blur(14px);
+}
+
+
+.flow-progress a {
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border-right:
+        1px solid var(--line);
+
+    color: var(--muted);
+
+    text-decoration: none;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: .08em;
+
+    text-transform: uppercase;
+}
+
+
+.flow-progress a:last-child {
+    border-right: 0;
+}
+
+
+.flow-progress span {
+    opacity: .75;
+}
+
+

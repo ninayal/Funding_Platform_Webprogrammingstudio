@@ -1,0 +1,215 @@
+/* ================================================
+   TABLET
+   ================================================ */
+
+@media (max-width: 980px) {
+
+    .flow-progress {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+
+    .choice-grid--three,
+    .design-grid {
+        grid-template-columns:
+            repeat(2,
+                minmax(0, 1fr));
+    }
+
+
+    .choice-grid--three {
+        grid-template-rows: none;
+    }
+
+
+    .delivery-card {
+        grid-row: auto;
+
+        grid-template-rows:
+            auto auto 1fr;
+    }
+
+
+    .details-layout,
+    .redeem-panel,
+    .gift-view-card {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .mini-preview {
+        position: static;
+
+        width:
+            min(620px,
+                100%);
+
+        margin:
+            0 auto;
+    }
+
+
+    .gift-view-card__main {
+        border-right: 0;
+
+        border-bottom:
+            1px solid var(--line);
+    }
+
+}
+
+
+/* ================================================
+   MOBILE
+   ================================================ */
+
+@media (max-width: 720px) {
+
+    .section-shell {
+        width:
+            min(100% - 28px,
+                1240px);
+    }
+
+
+    .flow-progress a {
+        font-size: 8px;
+    }
+
+
+    .flow-progress span {
+        display: none;
+    }
+
+
+    .choice-grid--two,
+    .choice-grid--three,
+    .design-grid,
+    .amount-builder {
+        grid-template-columns:
+            1fr;
+
+        grid-template-rows:
+            none;
+    }
+
+
+    .choice-card {
+        grid-row: auto;
+
+        grid-template-rows:
+            auto auto auto auto;
+
+        min-height: 330px;
+    }
+
+
+    .delivery-card {
+        grid-row: auto;
+
+        grid-template-rows:
+            auto auto auto;
+    }
+
+
+    .amount-panel {
+        padding: 22px;
+    }
+
+
+    .amount-field input {
+        height: 98px;
+    }
+
+
+    .amount-total {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .amount-total strong {
+        text-align: left;
+    }
+
+
+    .form-grid--two {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .review-card>div {
+        grid-template-columns:
+            1fr;
+
+        gap: 5px;
+
+        align-items: start;
+
+        padding:
+            16px 18px;
+    }
+
+
+    .review-card strong {
+        text-align: left;
+    }
+
+}
+
+
+/* ================================================
+   SMALL MOBILE
+   ================================================ */
+
+@media (max-width: 520px) {
+
+    .gift-hero {
+        min-height: 700px;
+    }
+
+
+    .gift-hero__copy {
+        font-size: 18px;
+    }
+
+
+    .hero-actions {
+        display: grid;
+    }
+
+
+    .flow-section {
+        padding:
+            76px 0;
+    }
+
+
+    .choice-card,
+    .delivery-card {
+        min-height: 300px;
+    }
+
+
+    .details-form,
+    .redeem-panel {
+        padding: 22px;
+    }
+
+
+    .gift-preview {
+        min-height: 380px;
+
+        padding: 24px;
+    }
+
+
+    .review-card {
+        border-radius: 18px;
+    }
+
+}

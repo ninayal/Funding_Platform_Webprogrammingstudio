@@ -1,0 +1,41 @@
+/* -----------------------------
+   HERO EYEBROW (sub-pages, e.g. forum_popular.html)
+------------------------------ */
+.hero__title .eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: .8;
+}
+
+/* -----------------------------
+   PAGE TITLE
+------------------------------ */
+.forum-title {
+  padding: 46px 24px 8px;
+  text-align: center;
+}
+
+.forum-title h1 {
+  margin: 0;
+  font-family: var(--ff-script);
+  font-size: clamp(38px, 6vw, 64px);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  color: var(--red);
+}
+
+.section-label {
+  margin: 0;
+  font-family: var(--ff-script);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+}
+

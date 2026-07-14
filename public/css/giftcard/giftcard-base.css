@@ -1,0 +1,41 @@
+:root {
+    --cream: #FEF9E1;
+    --tan: #E5D0AC;
+    --sand: #AF8F6F;
+    --brown: #74512D;
+    --deep: #010100;
+    --red: #A31D1D;
+    --darkred: #6D2323;
+
+    --ff-script:
+        "Playfair Display",
+        serif;
+
+    --ff-body:
+        "Cormorant Garamond",
+        serif;
+
+    --ff-ui:
+        "DM Sans",
+        sans-serif;
+
+    --ink:
+        var(--deep);
+
+    --muted:
+        #7E6952;
+
+    --line:
+        rgba(116, 81, 45, .20);
+
+    --surface:
+        rgba(255, 255, 255, .28);
+
+    --shadow:
+        0 24px 70px rgba(109, 35, 35, .14);
+
+    --shadow-soft:
+        0 16px 38px rgba(116, 81, 45, .10);
+}
+
+

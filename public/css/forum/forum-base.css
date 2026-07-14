@@ -1,0 +1,41 @@
+/* ================================================
+   Lang & Co. — Forum Stylesheet
+   Vietnamese Traditional Crafts
+   ================================================ */
+:root {
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
+  --darkred: #6D2323;
+
+  --ff-script: 'Playfair Display', serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-ui: 'DM Sans', sans-serif;
+
+  --paper: var(--cream);
+  --surface: rgba(254, 249, 225, 0.88);
+  --ink: var(--deep);
+  --muted: #7e6952;
+  --line: rgba(116, 81, 45, 0.22);
+  --white: #fffdf3;
+  --shadow: 0 24px 70px rgba(109, 35, 35, 0.15);
+  --shadow-soft: 0 16px 38px rgba(116, 81, 45, 0.10);
+  --radius: 20px;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff-ui);
+}
+
+/* Contain child bottom margins (e.g. .create-thread-form) so the linen
+   .wave background never gets cut short before the footer */
+.wave {
+  display: flow-root;
+}
+

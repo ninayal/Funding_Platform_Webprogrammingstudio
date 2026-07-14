@@ -1,0 +1,178 @@
+/* ================================================
+   HERO
+   ================================================ */
+
+.gift-hero {
+    position: relative;
+
+    min-height: 84vh;
+
+    overflow: hidden;
+
+    display: grid;
+
+    place-items: center;
+
+    color: var(--cream);
+
+    text-align: center;
+}
+
+
+.gift-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(254, 249, 225, .02) 0%,
+            rgba(254, 249, 225, .04) 45%,
+            rgba(116, 81, 45, .22) 100%
+        ),
+        url("../images/background.gif");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+.gift-hero__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(254, 249, 225, .02) 0%,
+            rgba(116, 81, 45, .04) 48%,
+            rgba(116, 81, 45, .12) 100%
+        );
+    pointer-events: none;
+}
+
+
+.gift-hero__content {
+    position: relative;
+
+    z-index: 3;
+
+    width:
+        min(940px,
+            calc(100% - 44px));
+
+    padding:
+        20px 24px 100px;
+}
+
+
+.eyebrow,
+.section-kicker {
+    margin:
+        0 0 14px;
+
+    color: var(--red);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: .24em;
+
+    text-transform: uppercase;
+}
+
+
+.gift-hero .eyebrow {
+    color: #6d2323;
+
+    opacity: .8;
+}
+
+
+.gift-hero h1 {
+    margin: 0;
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(58px,
+            7.8vw,
+            108px);
+
+    font-weight: 500;
+
+    line-height: .91;
+
+    letter-spacing: -.045em;
+    color: #a31d1d;
+}
+
+
+.gift-hero h1 em {
+    display: block;
+
+    color: #a31d1d;
+
+    font-weight: 500;
+}
+
+
+.gift-hero__copy {
+    width:
+        min(690px,
+            100%);
+
+    margin:
+        24px auto 0;
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 22px;
+
+    line-height: 1.52;
+
+    opacity: .92;
+}
+
+
+.hero-actions {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+.gift-hero__curve {
+    position: absolute;
+
+    z-index: 4;
+
+    left: 50%;
+
+    bottom: -82px;
+
+    width: 126%;
+
+    height: 160px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50% 50% 0 0 / 78% 78% 0 0;
+
+    background:
+        var(--cream);
+}
+
+

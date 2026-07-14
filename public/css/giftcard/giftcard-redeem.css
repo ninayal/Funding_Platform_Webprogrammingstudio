@@ -1,0 +1,104 @@
+/* ================================================
+   VIEW EXISTING GIFT
+   ================================================ */
+
+.redeem-section {
+    padding:
+        96px 0;
+
+    background:
+        #fef9e1;
+}
+
+
+.redeem-panel {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) minmax(300px, .8fr);
+
+    gap: 44px;
+
+    align-items: center;
+
+    padding: 46px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .34);
+
+    box-shadow:
+        var(--shadow-soft);
+}
+
+
+.redeem-panel h2 {
+    margin: 0;
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(40px,
+            5vw,
+            62px);
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -.04em;
+}
+
+
+.redeem-panel h2 em {
+    color:
+        var(--red);
+
+    font-weight: 500;
+}
+
+
+.redeem-panel p:last-child {
+    margin:
+        16px 0 0;
+
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 18px;
+
+    line-height: 1.5;
+}
+
+
+.redeem-form {
+    display: grid;
+
+    gap: 12px;
+}
+
+
+.redeem-note {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 14px;
+
+    line-height: 1.45;
+}
+
+

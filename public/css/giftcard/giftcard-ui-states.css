@@ -1,0 +1,24 @@
+/* ================================================
+   HIDDEN CSS UI STATES
+   ================================================ */
+
+.ui-state {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 1px;
+    height: 1px;
+
+    margin: 0;
+    padding: 0;
+
+    opacity: 0;
+
+    clip-path: inset(50%);
+
+    pointer-events: none;
+}
+
+
