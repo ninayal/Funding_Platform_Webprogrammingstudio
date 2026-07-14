@@ -24,7 +24,7 @@ html {
 }
 
 body {
-  background: url('../../public/images/linen-beige.png');
+  background: url('../../images/linen-beige.png');
   color: var(--deep);
   font-family: var(--ff-ui);
   overflow-x: hidden;
