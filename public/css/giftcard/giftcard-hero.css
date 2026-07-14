@@ -30,7 +30,7 @@
             rgba(254, 249, 225, .04) 45%,
             rgba(116, 81, 45, .22) 100%
         ),
-        url("../images/background.gif");
+        url("../../images/background.gif");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
