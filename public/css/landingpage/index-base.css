@@ -1,0 +1,32 @@
+:root {
+  --cream: #FEF9E1;
+  --tan: #E5D0AC;
+  --sand: #AF8F6F;
+  --brown: #74512D;
+  --deep: #010100;
+  --red: #A31D1D;
+  --darkred: #6D2323;
+  --ff-script: 'Times New Roman', Times, serif;
+  --ff-body: Arial, Helvetica, sans-serif;
+  --ff-ui: Arial, Helvetica, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: url('../images/linen-beige.png');
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  overflow-x: hidden;
+}
+

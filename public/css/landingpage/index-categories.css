@@ -1,0 +1,125 @@
+/* SHOP BY CRAFT — masonry cards */
+.categories {
+  padding: 0 0 24px;
+}
+
+.categories__grid {
+  column-count: 4;
+  column-gap: 22px;
+  width: 94%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.category-card {
+  position: relative;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 34px;
+  text-decoration: none;
+}
+
+.category-card__photo {
+  display: block;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+}
+
+.category-card:nth-child(8n+1) .category-card__photo {
+  aspect-ratio: 3 / 4;
+}
+
+.category-card:nth-child(8n+2) .category-card__photo {
+  aspect-ratio: 3 / 5.4;
+}
+
+.category-card:nth-child(8n+3) .category-card__photo {
+  aspect-ratio: 4 / 3.2;
+}
+
+.category-card:nth-child(8n+4) .category-card__photo {
+  aspect-ratio: 3 / 4.6;
+}
+
+.category-card:nth-child(8n+5) .category-card__photo {
+  aspect-ratio: 3 / 3.6;
+}
+
+.category-card:nth-child(8n+6) .category-card__photo {
+  aspect-ratio: 3 / 4.8;
+}
+
+.category-card:nth-child(8n+7) .category-card__photo {
+  aspect-ratio: 4 / 3;
+}
+
+.category-card:nth-child(8n+8) .category-card__photo {
+  aspect-ratio: 3 / 4.2;
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.category-card:hover img {
+  transform: scale(1.04);
+}
+
+.category-card__label {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 0 0;
+}
+
+.category-card__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.category-card__vn {
+  font-family: var(--ff-script);
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--deep);
+}
+
+.category-card__arrow {
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  color: var(--red);
+  text-decoration: none;
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.category-card:hover .category-card__arrow {
+  transform: translateX(4px);
+}
+
+.category-card__en {
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-top: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+/* MARQUEE */
+.marquee {
+  overflow: hidden;
+  background: var(--deep);
+  padding: 16px 0;
+  margin-bottom: 64px;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 26s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__track span {
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--tan);
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+.marquee__track i {
+  font-style: normal;
+  display: inline-block;
+  color: var(--red);
+  animation: blink-cursor 1s step-start infinite;
+}
+
+@keyframes blink-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+

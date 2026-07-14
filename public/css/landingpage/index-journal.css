@@ -1,0 +1,90 @@
+/* ================================================
+   JOURNAL PREVIEW — bento
+   ================================================ */
+.journal-preview {
+  padding: 100px 0 16px;
+}
+
+.journal-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  width: 94%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.journal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fffdf3;
+  border: 1px solid rgba(175, 143, 111, .3);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.journal-card:hover {
+  border-color: var(--red);
+}
+
+.journal-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+.journal-card__body {
+  padding: 18px 20px 20px;
+}
+
+.journal-card--feature .journal-card__body {
+  padding: 22px 24px 24px;
+}
+
+.journal-card__tag {
+  display: inline-block;
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.journal-card__body h3 {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--deep);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.journal-card--feature .journal-card__body h3 {
+  font-size: 26px;
+}
+
+.journal-card__body p {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  color: #7e6952;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.journal-card__meta {
+  display: block;
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--brown);
+  text-transform: uppercase;
+}
+

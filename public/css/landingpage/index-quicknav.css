@@ -1,0 +1,68 @@
+/* QUICK NAV — uneven tile sizes */
+.quicknav {
+  display: flex;
+  gap: 16px;
+  width: 94%;
+  max-width: 1180px;
+  margin: 0 auto 72px;
+}
+
+.quicknav__tile {
+  position: relative;
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  isolation: isolate;
+}
+
+.quicknav__tile--wide {
+  flex: 1 1 58%;
+  aspect-ratio: 5 / 4;
+}
+
+.quicknav__stack {
+  flex: 1 1 42%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.quicknav__stack .quicknav__tile {
+  flex: 1;
+  aspect-ratio: 5 / 2;
+}
+
+.quicknav__tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.quicknav__tile:hover img {
+  transform: scale(1.06);
+}
+
+.quicknav__label {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  background: rgba(1, 1, 0, .4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(254, 249, 225, .35);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
