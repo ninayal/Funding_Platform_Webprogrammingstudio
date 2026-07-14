@@ -1,0 +1,33 @@
+/* ================================================
+   RESPONSIVE — TABLET
+   ================================================ */
+@media (max-width: 960px) {
+  .checkout-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    order: -1;
+  }
+
+  .summary-card {
+    position: static;
+  }
+}
+
+/* ================================================
+   RESPONSIVE — MOBILE
+   ================================================ */
+@media (max-width: 640px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-progress {
+    font-size: 10.5px;
+  }
+
+  .checkout-progress li:not(:last-child)::after {
+    width: 14px;
+  }
+}

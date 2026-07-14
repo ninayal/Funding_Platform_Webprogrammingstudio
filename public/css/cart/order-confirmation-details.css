@@ -1,0 +1,163 @@
+/* ================================================
+   ORDER DETAILS
+   ================================================ */
+.confirm-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.confirm-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+}
+
+.confirm-card h2 {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-size: 19px;
+  margin-bottom: 18px;
+}
+
+.confirm-items {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.confirm-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.confirm-item:last-child {
+  border-bottom: none;
+}
+
+.confirm-item__media {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+}
+
+.confirm-item__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.confirm-item__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.confirm-item__name {
+  font-family: var(--ff-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.confirm-item__meta {
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.confirm-item__price {
+  font-family: var(--ff-ui);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--deep);
+  white-space: nowrap;
+}
+
+.confirm-totals {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.confirm-totals div {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-family: var(--ff-ui);
+  font-size: 13.5px;
+}
+
+.confirm-totals dt {
+  color: var(--muted);
+}
+
+.confirm-totals dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--deep);
+}
+
+.confirm-totals__grand {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.confirm-totals__grand dt,
+.confirm-totals__grand dd {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.confirm-totals__grand small {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.confirm-card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.confirm-address {
+  font-family: var(--ff-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+.confirm-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  background: var(--tan);
+}
+
+.confirm-note svg {
+  flex-shrink: 0;
+  color: var(--darkred);
+  margin-top: 2px;
+}
+
+.confirm-note p {
+  font-family: var(--ff-body);
+  font-size: 17px;
+  color: var(--brown);
+  line-height: 1.5;
+}
+

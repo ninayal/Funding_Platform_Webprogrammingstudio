@@ -1,0 +1,12 @@
+/* ================================================
+   EMPTY STATE
+   ================================================ */
+.empty-state {
+  display: none;
+  text-align: center;
+  font-family: var(--ff-body);
+  font-size: 19px;
+  color: var(--muted);
+  padding: 60px 0;
+}
+

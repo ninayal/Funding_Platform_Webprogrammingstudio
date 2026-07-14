@@ -1,0 +1,117 @@
+/* ================================================
+   SUCCESS CARD
+   ================================================ */
+.confirm-summary {
+  text-align: center;
+  padding: 44px 32px 40px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
+}
+
+.confirm-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--tan);
+  color: var(--darkred);
+}
+
+.confirm-summary h1 {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(30px, 4vw, 38px);
+  margin-bottom: 12px;
+}
+
+.confirm-lede {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  color: var(--brown);
+  max-width: 460px;
+  margin: 0 auto 28px;
+  line-height: 1.5;
+}
+
+.confirm-lede strong {
+  color: var(--deep);
+}
+
+.confirm-meta {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+
+.confirm-meta__label {
+  font-family: var(--ff-ui);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 4px;
+}
+
+.confirm-meta__value {
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.confirm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 99px;
+  font-family: var(--ff-ui);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .25s, color .25s, transform .25s;
+}
+
+.confirm-btn--primary {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.confirm-btn--primary:hover {
+  background: var(--darkred);
+  transform: translateY(-1px);
+}
+
+.confirm-btn--ghost {
+  background: transparent;
+  color: var(--deep);
+  border: 1px solid var(--deep);
+}
+
+.confirm-btn--ghost:hover {
+  background: var(--deep);
+  color: var(--cream);
+}
+

@@ -1,0 +1,262 @@
+/* ================================================
+   CSS-ONLY SORT
+   ================================================ */
+#sort-featured:checked~.shop-wrap .sort-current-featured,
+#sort-low:checked~.shop-wrap .sort-current-low,
+#sort-high:checked~.shop-wrap .sort-current-high,
+#sort-name:checked~.shop-wrap .sort-current-name {
+  display: inline;
+}
+
+#sort-featured:checked~.shop-wrap label[for="sort-featured"],
+#sort-low:checked~.shop-wrap label[for="sort-low"],
+#sort-high:checked~.shop-wrap label[for="sort-high"],
+#sort-name:checked~.shop-wrap label[for="sort-name"] {
+  background: var(--tan);
+  color: var(--deep);
+}
+
+/* Best Sellers (default DOM order) */
+#sort-featured:checked~.shop-wrap .product-1 {
+  order: 1;
+}
+
+#sort-featured:checked~.shop-wrap .product-2 {
+  order: 2;
+}
+
+#sort-featured:checked~.shop-wrap .product-3 {
+  order: 3;
+}
+
+#sort-featured:checked~.shop-wrap .product-4 {
+  order: 4;
+}
+
+#sort-featured:checked~.shop-wrap .product-5 {
+  order: 5;
+}
+
+#sort-featured:checked~.shop-wrap .product-6 {
+  order: 6;
+}
+
+#sort-featured:checked~.shop-wrap .product-7 {
+  order: 7;
+}
+
+#sort-featured:checked~.shop-wrap .product-8 {
+  order: 8;
+}
+
+#sort-featured:checked~.shop-wrap .product-9 {
+  order: 9;
+}
+
+#sort-featured:checked~.shop-wrap .product-10 {
+  order: 10;
+}
+
+#sort-featured:checked~.shop-wrap .product-11 {
+  order: 11;
+}
+
+#sort-featured:checked~.shop-wrap .product-12 {
+  order: 12;
+}
+
+#sort-featured:checked~.shop-wrap .product-13 {
+  order: 13;
+}
+
+#sort-featured:checked~.shop-wrap .product-14 {
+  order: 14;
+}
+
+#sort-featured:checked~.shop-wrap .product-15 {
+  order: 15;
+}
+
+/* Price: low to high */
+#sort-low:checked~.shop-wrap .product-8 {
+  order: 1;
+}
+
+#sort-low:checked~.shop-wrap .product-14 {
+  order: 2;
+}
+
+#sort-low:checked~.shop-wrap .product-15 {
+  order: 3;
+}
+
+#sort-low:checked~.shop-wrap .product-13 {
+  order: 4;
+}
+
+#sort-low:checked~.shop-wrap .product-10 {
+  order: 5;
+}
+
+#sort-low:checked~.shop-wrap .product-5 {
+  order: 6;
+}
+
+#sort-low:checked~.shop-wrap .product-6 {
+  order: 7;
+}
+
+#sort-low:checked~.shop-wrap .product-4 {
+  order: 8;
+}
+
+#sort-low:checked~.shop-wrap .product-9 {
+  order: 9;
+}
+
+#sort-low:checked~.shop-wrap .product-2 {
+  order: 10;
+}
+
+#sort-low:checked~.shop-wrap .product-3 {
+  order: 11;
+}
+
+#sort-low:checked~.shop-wrap .product-1 {
+  order: 12;
+}
+
+#sort-low:checked~.shop-wrap .product-11 {
+  order: 13;
+}
+
+#sort-low:checked~.shop-wrap .product-12 {
+  order: 14;
+}
+
+#sort-low:checked~.shop-wrap .product-7 {
+  order: 15;
+}
+
+/* Price: high to low */
+#sort-high:checked~.shop-wrap .product-7 {
+  order: 1;
+}
+
+#sort-high:checked~.shop-wrap .product-12 {
+  order: 2;
+}
+
+#sort-high:checked~.shop-wrap .product-11 {
+  order: 3;
+}
+
+#sort-high:checked~.shop-wrap .product-1 {
+  order: 4;
+}
+
+#sort-high:checked~.shop-wrap .product-3 {
+  order: 5;
+}
+
+#sort-high:checked~.shop-wrap .product-2 {
+  order: 6;
+}
+
+#sort-high:checked~.shop-wrap .product-9 {
+  order: 7;
+}
+
+#sort-high:checked~.shop-wrap .product-4 {
+  order: 8;
+}
+
+#sort-high:checked~.shop-wrap .product-6 {
+  order: 9;
+}
+
+#sort-high:checked~.shop-wrap .product-5 {
+  order: 10;
+}
+
+#sort-high:checked~.shop-wrap .product-10 {
+  order: 11;
+}
+
+#sort-high:checked~.shop-wrap .product-13 {
+  order: 12;
+}
+
+#sort-high:checked~.shop-wrap .product-15 {
+  order: 13;
+}
+
+#sort-high:checked~.shop-wrap .product-14 {
+  order: 14;
+}
+
+#sort-high:checked~.shop-wrap .product-8 {
+  order: 15;
+}
+
+/* Name: A–Z */
+#sort-name:checked~.shop-wrap .product-2 {
+  order: 1;
+}
+
+#sort-name:checked~.shop-wrap .product-13 {
+  order: 2;
+}
+
+#sort-name:checked~.shop-wrap .product-11 {
+  order: 3;
+}
+
+#sort-name:checked~.shop-wrap .product-7 {
+  order: 4;
+}
+
+#sort-name:checked~.shop-wrap .product-9 {
+  order: 5;
+}
+
+#sort-name:checked~.shop-wrap .product-5 {
+  order: 6;
+}
+
+#sort-name:checked~.shop-wrap .product-14 {
+  order: 7;
+}
+
+#sort-name:checked~.shop-wrap .product-1 {
+  order: 8;
+}
+
+#sort-name:checked~.shop-wrap .product-4 {
+  order: 9;
+}
+
+#sort-name:checked~.shop-wrap .product-15 {
+  order: 10;
+}
+
+#sort-name:checked~.shop-wrap .product-8 {
+  order: 11;
+}
+
+#sort-name:checked~.shop-wrap .product-12 {
+  order: 12;
+}
+
+#sort-name:checked~.shop-wrap .product-10 {
+  order: 13;
+}
+
+#sort-name:checked~.shop-wrap .product-3 {
+  order: 14;
+}
+
+#sort-name:checked~.shop-wrap .product-6 {
+  order: 15;
+}
+

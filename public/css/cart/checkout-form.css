@@ -1,0 +1,159 @@
+/* ================================================
+   FORM
+   ================================================ */
+.checkout-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 36px;
+}
+
+.checkout-fieldset legend {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--deep);
+  padding: 0 0 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  width: 100%;
+}
+
+.optional {
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: none;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  color: var(--brown);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  color: var(--deep);
+  background: var(--white);
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: var(--ff-body);
+  font-size: 16px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--muted);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--sand);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  color: var(--brown);
+  cursor: pointer;
+}
+
+.checkbox-row input {
+  margin-top: 2px;
+  accent-color: var(--red);
+  flex-shrink: 0;
+}
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.secure-note svg {
+  color: var(--sand);
+  flex-shrink: 0;
+}
+
+/* ---- Shipping options ---- */
+.shipping-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shipping-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.shipping-option:hover {
+  border-color: var(--sand);
+}
+
+.shipping-option__name {
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.shipping-option__meta {
+  flex: 1;
+  font-family: var(--ff-ui);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.shipping-option__price {
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+#ship-standard:checked~.checkout-shell label[for="ship-standard"],
+#ship-express:checked~.checkout-shell label[for="ship-express"] {
+  border-color: var(--red);
+  background: var(--tan);
+}
+

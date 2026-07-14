@@ -1,0 +1,56 @@
+/* ================================================
+   CSS-ONLY CATEGORY FILTER
+   ================================================ */
+#filter-ceramics:checked~.shop-wrap .shop-card:not(.ceramics),
+#filter-lacquer:checked~.shop-wrap .shop-card:not(.lacquer),
+#filter-textile:checked~.shop-wrap .shop-card:not(.textile),
+#filter-bamboo:checked~.shop-wrap .shop-card:not(.bamboo),
+#filter-wood:checked~.shop-wrap .shop-card:not(.wood),
+#filter-incense:checked~.shop-wrap .shop-card:not(.incense) {
+  display: none;
+}
+
+#filter-all:checked~.shop-wrap label.tab[for="filter-all"],
+#filter-ceramics:checked~.shop-wrap label.tab[for="filter-ceramics"],
+#filter-lacquer:checked~.shop-wrap label.tab[for="filter-lacquer"],
+#filter-textile:checked~.shop-wrap label.tab[for="filter-textile"],
+#filter-bamboo:checked~.shop-wrap label.tab[for="filter-bamboo"],
+#filter-wood:checked~.shop-wrap label.tab[for="filter-wood"],
+#filter-incense:checked~.shop-wrap label.tab[for="filter-incense"] {
+  color: var(--deep);
+  border-bottom-color: var(--red);
+}
+
+#filter-ceramics:checked~.shop-wrap .results-count .meta-all,
+#filter-lacquer:checked~.shop-wrap .results-count .meta-all,
+#filter-textile:checked~.shop-wrap .results-count .meta-all,
+#filter-bamboo:checked~.shop-wrap .results-count .meta-all,
+#filter-wood:checked~.shop-wrap .results-count .meta-all,
+#filter-incense:checked~.shop-wrap .results-count .meta-all {
+  display: none;
+}
+
+#filter-ceramics:checked~.shop-wrap .results-count .meta-ceramics {
+  display: inline;
+}
+
+#filter-lacquer:checked~.shop-wrap .results-count .meta-lacquer {
+  display: inline;
+}
+
+#filter-textile:checked~.shop-wrap .results-count .meta-textile {
+  display: inline;
+}
+
+#filter-bamboo:checked~.shop-wrap .results-count .meta-bamboo {
+  display: inline;
+}
+
+#filter-wood:checked~.shop-wrap .results-count .meta-wood {
+  display: inline;
+}
+
+#filter-incense:checked~.shop-wrap .results-count .meta-incense {
+  display: inline;
+}
+

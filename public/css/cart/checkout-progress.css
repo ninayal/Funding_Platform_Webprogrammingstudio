@@ -1,0 +1,57 @@
+/* ================================================
+   PROGRESS STEPS
+   ================================================ */
+.checkout-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 34px;
+  padding: 0;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.checkout-progress li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkout-progress li:not(:last-child)::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--line);
+  margin-left: 10px;
+}
+
+.checkout-progress span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.checkout-progress li.is-done span {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--cream);
+}
+
+.checkout-progress li.is-current {
+  color: var(--deep);
+}
+
+.checkout-progress li.is-current span {
+  border-color: var(--deep);
+  color: var(--deep);
+  font-weight: 700;
+}
+

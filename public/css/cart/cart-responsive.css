@@ -1,0 +1,58 @@
+/* ================================================
+   RESPONSIVE — TABLET
+   ================================================ */
+@media (max-width: 960px) {
+  .cart-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    position: static;
+  }
+
+  .also-like__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================================================
+   RESPONSIVE — MOBILE
+   ================================================ */
+@media (max-width: 640px) {
+  .cart-banner {
+    padding: 36px 20px 26px;
+  }
+
+  .cart-steps {
+    gap: 8px;
+    font-size: 9.5px;
+  }
+
+  .cart-row {
+    grid-template-columns: 84px 1fr;
+    row-gap: 10px;
+  }
+
+  .cart-row__media {
+    width: 84px;
+    height: 104px;
+  }
+
+  .cart-row__price {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .cart-items__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .also-like__track {
+    grid-template-columns: 1fr;
+  }
+}

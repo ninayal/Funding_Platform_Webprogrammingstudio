@@ -1,0 +1,19 @@
+/* ================================================
+   PAGE / SHELL
+   (hero + wave/below come from index.css — reused
+   as-is, same as index.html and wishlists.html)
+   ================================================ */
+.cart-page {
+  padding: 8px 0 24px;
+}
+
+.cart-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 48px;
+  width: 94%;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items: start;
+}
+

@@ -1,0 +1,157 @@
+/* ================================================
+   PRODUCT GRID 
+   ================================================ */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px 28px;
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  margin-bottom: 12px;
+}
+
+.shop-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.shop-card:hover .shop-card__media img {
+  transform: scale(1.05);
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 253, 245, .9);
+  color: var(--deep);
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.wishlist-btn:hover {
+  transform: scale(1.08);
+  color: var(--red);
+}
+
+.quickadd-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--cream);
+  font-size: 17px;
+  line-height: 1;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+
+.quickadd-btn:hover {
+  background: var(--red);
+  transform: scale(1.08);
+}
+
+.shop-card__body p {
+  margin: 0;
+}
+
+.shop-card__maker {
+  font-family: var(--ff-ui);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 6px;
+}
+
+.shop-card__title {
+  font-family: var(--ff-ui);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.shop-card__title a {
+  color: var(--deep);
+  text-decoration: none;
+}
+
+.shop-card__title a:hover {
+  color: var(--red);
+}
+
+.shop-card__price {
+  font-family: var(--ff-ui);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep);
+  margin-bottom: 6px;
+}
+
+.shop-card__price-was {
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-left: 6px;
+  font-size: 13px;
+}
+
+.shop-card__rating {
+  font-size: 13px;
+  color: var(--red);
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.shop-card__rating span {
+  font-family: var(--ff-ui);
+  color: var(--sand);
+  letter-spacing: normal;
+  margin-left: 3px;
+}
+
+.shop-card__tag {
+  font-family: var(--ff-ui);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--red);
+  min-height: 14px;
+  margin-bottom: 2px;
+}
+
+.shop-card__variant {
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  color: var(--muted);
+}
+

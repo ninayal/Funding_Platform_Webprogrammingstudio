@@ -1,0 +1,198 @@
+
+.promo-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.promo-row input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  color: var(--deep);
+  background: transparent;
+}
+
+.promo-row input::placeholder {
+  color: var(--muted);
+}
+
+.promo-row input:focus {
+  outline: none;
+  border-color: var(--sand);
+}
+
+.promo-row button {
+  border: 1px solid var(--deep);
+  background: transparent;
+  color: var(--deep);
+  border-radius: 8px;
+  padding: 0 18px;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.promo-row button:hover {
+  background: var(--deep);
+  color: var(--cream);
+}
+
+.summary-lines {
+  margin: 0 0 16px;
+}
+
+.summary-lines div {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-family: var(--ff-ui);
+  font-size: 14px;
+}
+
+.summary-lines dt {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.summary-lines dd {
+  color: var(--deep);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* shipping cost swap — driven by the shipping radios,
+   which live as siblings of .checkout-shell above */
+.shipping-cost {
+  display: none;
+}
+
+.shipping-cost--standard {
+  display: inline;
+}
+
+#ship-express:checked~.checkout-shell .shipping-cost--standard {
+  display: none;
+}
+
+#ship-express:checked~.checkout-shell .shipping-cost--express {
+  display: inline;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  margin-bottom: 20px;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep);
+}
+
+.summary-total__amount {
+  font-size: 20px;
+}
+
+.summary-total__amount small {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+/* grand total swap — same pattern as shipping cost */
+.grand-total {
+  display: none;
+}
+
+.grand-total--standard {
+  display: inline;
+}
+
+#ship-express:checked~.checkout-shell .grand-total--standard {
+  display: none;
+}
+
+#ship-express:checked~.checkout-shell .grand-total--express {
+  display: inline;
+}
+
+.place-order-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 99px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .25s, transform .25s;
+}
+
+.place-order-btn:hover {
+  background: var(--darkred);
+  transform: translateY(-1px);
+}
+
+.place-order-btn span {
+  transition: transform .25s;
+}
+
+.place-order-btn:hover span {
+  transform: translateX(3px);
+}
+
+.summary-fine {
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 14px;
+}
+
+.summary-fine a {
+  color: var(--brown);
+}
+
+.pay-icons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.pay-icons span {
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 4px 9px;
+}
+
