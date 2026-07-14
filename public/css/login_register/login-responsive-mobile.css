@@ -1,0 +1,162 @@
+/* ================================================
+   MOBILE
+   ================================================ */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        height: auto;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    .login-page {
+        width: 100%;
+
+        min-height: 100%;
+        height: auto;
+
+        flex-direction: column;
+
+        overflow: visible;
+    }
+
+
+    .login-page__bg {
+        position: fixed;
+
+        background-position: center;
+    }
+
+
+    .login-page__bg::after {
+        background:
+            linear-gradient(180deg,
+                rgba(7, 5, 3, 0.18) 0%,
+                rgba(7, 5, 3, 0.34) 30%,
+                rgba(7, 5, 3, 0.72) 62%,
+                rgba(7, 5, 3, 0.90) 100%);
+    }
+
+
+    /* Left section */
+    .login-brand {
+        flex: none;
+
+        width: 100%;
+        max-width: 100%;
+
+        min-height: 360px;
+        height: auto;
+
+        padding:
+            40px 24px 35px 24px;
+
+        justify-content: flex-end;
+    }
+
+
+    .login-brand__title {
+        max-width: 100%;
+
+        margin-bottom: 16px;
+
+        font-size: 44px;
+
+        line-height: 102%;
+    }
+
+
+    .login-brand__sub {
+        max-width: 360px;
+
+        margin-bottom: 0px;
+
+        font-size: 16px;
+    }
+
+
+    /* Right panel */
+    .login-glass {
+        flex: none;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0px;
+
+        height: auto;
+        min-height: 0px;
+
+        padding:
+            34px 24px 42px 24px;
+
+        border-left: none;
+
+        border-top:
+            1px solid rgba(255, 255, 255, 0.25);
+
+        background:
+            linear-gradient(180deg,
+                rgba(48, 32, 25, 0.94) 0%,
+                rgba(19, 13, 10, 0.98) 100%);
+    }
+
+
+    .login-glass__logo {
+        margin-bottom: 24px;
+    }
+
+
+    .login-glass__logo img {
+        height: 42px;
+    }
+
+
+    .logo-name {
+        font-size: 27px;
+    }
+
+
+    .login-glass__title {
+        margin-bottom: 22px;
+
+        font-size: 32px;
+    }
+
+
+    .form-input {
+        height: 50px;
+    }
+
+
+    .login-btn {
+        height: 50px;
+    }
+
+
+    .login-socials {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+    }
+
+
+    .social-btn {
+        height: 48px;
+
+        font-size: 12px;
+    }
+
+
+    .login-divider {
+        margin:
+            15px 0px;
+    }
+
+}
+
+

@@ -1,0 +1,151 @@
+/* ================================================
+   GUEST BUTTON
+   ================================================ */
+
+.login-guest {
+    position: relative;
+    width: 100%;
+    min-height: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 11px;
+    margin-top: 4px;
+    padding: 11px 16px;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.90);
+    text-align: left;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.27);
+    border-radius: 14px;
+    transition:
+        background 200ms ease,
+        border-color 200ms ease,
+        transform 200ms ease,
+        box-shadow 200ms ease;
+}
+
+
+/* Shimmer */
+.login-guest::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background:
+        linear-gradient(105deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.10) 50%,
+            transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 600ms ease;
+    pointer-events: none;
+}
+
+.login-guest:hover::before {
+    transform: translateX(120%);
+}
+
+
+.login-guest:hover {
+    background: rgba(255, 255, 255, 0.17);
+
+    border-color: rgba(255, 255, 255, 0.48);
+    transform: translateY(-1px);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Guest icon */
+.guest-icon {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--tan);
+}
+
+
+/* Guest text */
+.guest-text {
+    position: relative;
+
+    z-index: 2;
+
+    font-family: var(--ff-body);
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 500;
+
+    line-height: 135%;
+
+    color:
+        rgba(255, 255, 255, 0.88);
+
+    transition:
+        color 200ms ease;
+}
+
+
+.login-guest:hover .guest-text {
+    color: #ffffff;
+}
+
+
+/* Guest arrow */
+.guest-arrow {
+    position: relative;
+
+    z-index: 2;
+
+    flex-shrink: 0;
+
+    font-size: 16px;
+
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    transition:
+        transform 200ms ease,
+        color 200ms ease;
+}
+
+
+.login-guest:hover .guest-arrow {
+    transform:
+        translateX(4px);
+
+    color: #ffffff;
+}
+
+
+/* ================================================
+   FOCUS ACCESSIBILITY
+   ================================================ */
+
+.login-btn:focus-visible,
+.social-btn:focus-visible,
+.login-guest:focus-visible,
+.form-forgot:focus-visible,
+.login-signup-text a:focus-visible {
+    outline:
+        2px solid var(--tan);
+
+    outline-offset: 3px;
+}
+
+
+/* Remove browser blue box after mouse click */
+.login-btn:focus:not(:focus-visible),
+.social-btn:focus:not(:focus-visible),
+.login-guest:focus:not(:focus-visible),
+.form-forgot:focus:not(:focus-visible),
+.login-signup-text a:focus:not(:focus-visible) {
+    outline: none;
+
+    box-shadow: none;
+}
+
+

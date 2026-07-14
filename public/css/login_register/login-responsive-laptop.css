@@ -1,0 +1,123 @@
+/* ================================================
+   LARGE LAPTOP
+   ================================================ */
+
+@media (max-width: 1200px) {
+
+    .login-brand {
+        flex-basis: 58%;
+
+        width: 58%;
+        max-width: 58%;
+
+        padding:
+            40px 35px 7% 4%;
+    }
+
+
+    .login-brand__title {
+        font-size: 58px;
+
+        max-width: 520px;
+    }
+
+
+    .login-brand__sub {
+        font-size: 17px;
+    }
+
+
+    .login-glass {
+        flex-basis: 42%;
+
+        width: 42%;
+        max-width: 42%;
+
+        min-width: 390px;
+
+        padding:
+            36px 32px;
+    }
+
+}
+
+
+/* ================================================
+   TABLET / SMALL LAPTOP
+   ================================================ */
+
+@media (max-width: 950px) {
+
+    html,
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    .login-page {
+        min-height: 100%;
+
+        height: auto;
+    }
+
+
+    .login-brand {
+        flex-basis: 52%;
+
+        width: 52%;
+        max-width: 52%;
+
+        min-height: 760px;
+
+        padding:
+            35px 25px 8% 4%;
+    }
+
+
+    .login-brand__title {
+        font-size: 48px;
+
+        max-width: 430px;
+    }
+
+
+    .login-brand__sub {
+        font-size: 16px;
+    }
+
+
+    .login-glass {
+        flex-basis: 48%;
+
+        width: 48%;
+        max-width: 48%;
+
+        min-width: 360px;
+        min-height: 760px;
+
+        padding:
+            32px 26px;
+    }
+
+
+    .login-glass__title {
+        font-size: 32px;
+    }
+
+
+    .login-socials {
+        gap: 7px;
+    }
+
+
+    .social-btn {
+        font-size: 10px;
+
+        padding:
+            0px 5px;
+    }
+
+}
+
+
