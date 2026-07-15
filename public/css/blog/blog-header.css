@@ -91,3 +91,99 @@
   border-radius: 999px;
 }
 
+.container {
+  width: 94%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.wishlist-page {
+  position: relative;
+  padding: 0 0 92px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-ui);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--red);
+}
+
+.breadcrumb span[aria-current] {
+  color: var(--deep);
+  font-weight: 600;
+}
+
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+
+.tab {
+  font-family: var(--ff-ui);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .2s;
+}
+
+.tab:hover {
+  color: var(--deep);
+}
+
+#filter-all:checked~.category-tabs label.tab[for="filter-all"],
+#filter-mission:checked~.category-tabs label.tab[for="filter-mission"],
+#filter-donation:checked~.category-tabs label.tab[for="filter-donation"],
+#filter-places:checked~.category-tabs label.tab[for="filter-places"],
+#filter-guide:checked~.category-tabs label.tab[for="filter-guide"] {
+  color: var(--deep);
+  border-bottom-color: var(--red);
+}
+
+.wishlist-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.wishlist-header h1 {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(38px, 5vw, 54px);
+  line-height: 1;
+  color: var(--deep);
+}
+
+.wishlist-header__sub {
+  font-family: var(--ff-body);
+  font-size: 19px;
+  color: var(--brown);
+  max-width: 340px;
+  text-align: right;
+}

@@ -7,7 +7,7 @@
 }
 
 .shared-header {
-  min-height: 240px;
+  min-height: 170px;
   position: relative;
   z-index: 2;
 }
