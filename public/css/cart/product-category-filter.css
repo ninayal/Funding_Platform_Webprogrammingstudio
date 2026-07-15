@@ -54,3 +54,18 @@
   display: inline;
 }
 
+#filter-painting:checked ~ .shop-wrap .shop-grid .shop-card {
+  display: none;
+}
+
+#filter-painting:checked ~ .shop-wrap .shop-grid .shop-card.painting {
+  display: block;
+}
+
+#filter-stone:checked ~ .shop-wrap .shop-grid .shop-card {
+  display: none;
+}
+
+#filter-stone:checked ~ .shop-wrap .shop-grid .shop-card.stone {
+  display: block;
+}
