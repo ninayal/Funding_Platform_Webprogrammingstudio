@@ -13,83 +13,96 @@
 </head>
 
 <body>
+    <iframe src="../global/header_shoppingcart.html#nav-blog" title="Header"
+        class="shared-include shared-header shared-header--light" loading="eager" scrolling="no"></iframe>
 
-    <!-- Header and navigation -->
-    <section class="hero">
+    <main class="wishlist-page">
+        <nav class="breadcrumb container" aria-label="Breadcrumb">
+            <a href="../../index.html">Home</a>
+            <span aria-hidden="true">•</span>
+            <span aria-current="page">Journal</span>
+        </nav>
 
-        <div class="hero__bg"></div>
-
-        <iframe src="../global/header.html#nav-blog" title="Header" class="shared-include shared-header" loading="eager"
-            scrolling="no"></iframe>
-
-        <div class="hero__title">
-            <p class="eyebrow">Stories from a living heritage</p>
-            <span class="script">The Làng Journal</span>
-            <span class="serif">Stories, thoughs and ideas.</span>
-        </div>
-    </section>
-    <div class="wave">
-        <div class="below">
-            <p class="below__headline">
-
-            </p>
+        <div class="wishlist-header container">
+            <h1>Journal</h1>
+            <p class="wishlist-header__sub">Stories, thoughts and ideas.</p>
         </div>
 
-
-        <!-- CSS-only filter states -->
         <input class="state-input" type="radio" name="post-filter" id="filter-all" checked />
         <input class="state-input" type="radio" name="post-filter" id="filter-mission" />
         <input class="state-input" type="radio" name="post-filter" id="filter-donation" />
         <input class="state-input" type="radio" name="post-filter" id="filter-places" />
         <input class="state-input" type="radio" name="post-filter" id="filter-guide" />
 
+        <!-- CSS-only hardcoded sort state -->
+        <input class="state-input" type="radio" name="sort" id="sort-curated" checked />
+        <input class="state-input" type="radio" name="sort" id="sort-low" />
+        <input class="state-input" type="radio" name="sort" id="sort-high" />
+        <input class="state-input" type="radio" name="sort" id="sort-name" />
+
         <!-- CSS-only deletion state for the example owner-managed post -->
         <input class="delete-toggle" type="checkbox" id="delete-own-post" />
 
-        <main class="blog-shell">
-            <!-- Blog controls -->
-            <section class="blog-tools" aria-label="Blog tools">
-                <div class="tools-main-row">
-                    <!-- Search is a prototype only: CSS cannot inspect arbitrary typed text -->
-                    <label class="search-box" aria-label="Search blog posts">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                            aria-hidden="true">
-                            <circle cx="11" cy="11" r="7"></circle>
-                            <path d="m20 20-3.8-3.8"></path>
+        <nav class="category-tabs container" aria-label="Journal categories">
+            <label class="tab" for="filter-all">All</label>
+            <label class="tab" for="filter-mission">Mission</label>
+            <label class="tab" for="filter-donation">Donation</label>
+            <label class="tab" for="filter-places">Places</label>
+            <label class="tab" for="filter-guide">Guide</label>
+        </nav>
+
+        <div class="wishlist-shell">
+            <div class="wishlist-toolbar">
+                <form class="search-box search-box--slim" action="#" method="get" role="search"
+                    aria-label="Search blog posts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="m20 20-3.8-3.8"></path>
+                    </svg>
+                    <input id="searchInput" name="q" type="search"
+                        placeholder="Search title, author, date, tag, or story text..." autocomplete="off" />
+                    <button class="clear-search" type="reset" aria-label="Clear search">×</button>
+                </form>
+
+                <div class="wishlist-toolbar__actions">
+                    <a class="btn"
+                        href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Journal&body=Explore%20stories%20from%20L%C3%A0ng%20%26%20Co.%20about%20Vietnamese%20craft%20and%20heritage.">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" aria-hidden="true">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
                         </svg>
-                        <input type="search" placeholder="Search title, author, date, tag, or story text..." />
-                    </label>
+                        Share Journal
+                    </a>
 
-                    <div class="tool-actions">
-                        <a class="btn"
-                            href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Journal&body=Explore%20stories%20from%20L%C3%A0ng%20%26%20Co.%20about%20Vietnamese%20craft%20and%20heritage.">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                aria-hidden="true">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <path d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"></path>
-                            </svg>
-                            Share Journal
-                        </a>
-                        <a class="btn btn-primary" href="#create-post">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                aria-hidden="true">
-                                <path d="M12 5v14M5 12h14"></path>
-                            </svg>
-                            Create Post
-                        </a>
-                    </div>
-                </div>
+                    <a class="btn btn-primary" href="#create-post">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" aria-hidden="true">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                        Create Post
+                    </a>
 
-                <div class="filter-row" aria-label="Filter posts by category">
-                    <label for="filter-all">All Stories <span>8</span></label>
-                    <label for="filter-mission">Mission <span>1</span></label>
-                    <label for="filter-donation">Donation <span>1</span></label>
-                    <label for="filter-places">Places <span>1</span></label>
-                    <label for="filter-guide">Guide <span>5</span></label>
+                    <details class="sort-menu">
+                        <summary aria-label="Choose story order">
+                            <span class="sort-current sort-current-curated">Sort: Curated</span>
+                            <span class="sort-current sort-current-low">Price: Low to high</span>
+                            <span class="sort-current sort-current-high">Price: High to low</span>
+                            <span class="sort-current sort-current-name">Name: A–Z</span>
+                        </summary>
+                        <div class="sort-options" role="group" aria-label="Sort stories">
+                            <label for="sort-curated">Curated</label>
+                            <label for="sort-low">Price: Low to high</label>
+                            <label for="sort-high">Price: High to low</label>
+                            <label for="sort-name">Name: A–Z</label>
+                        </div>
+                    </details>
                 </div>
-            </section>
+            </div>
+
+
 
             <!-- 1. Biggest post: Developer mission -->
             <section class="lead-story-section" aria-labelledby="lead-story-heading">
@@ -366,518 +379,519 @@
                     </article>
                 </div>
             </section>
-        </main>
+        </div>
+    </main>
 
-        <!-- ======================================================
+    <!-- ======================================================
        DETAILED ARTICLE VIEWS — CSS :target overlays
        Each detailed view includes full content + comments.
        ====================================================== -->
 
-        <section id="post-developer-mission" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet">
-                <a class="close-button" href="#journal" aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Mission</span><time datetime="2026-07-06">July 6,
-                            2026</time></div>
-                    <h2>Our Developer Mission: Building Digital Bridges to Living Craft</h2>
-                    <p class="article-deck">A platform can flatten culture into inventory, or it can preserve context.
-                        We
-                        are choosing the second path, one product decision at a time.</p>
-                    <div class="article-author"><span class="author-avatar">LC</span>
-                        <div><strong>Làng &amp; Co. Development Team</strong><span>Product · Engineering ·
-                                Research</span>
+    <section id="post-developer-mission" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet">
+            <a class="close-button" href="#journal" aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Mission</span><time datetime="2026-07-06">July 6,
+                        2026</time></div>
+                <h2>Our Developer Mission: Building Digital Bridges to Living Craft</h2>
+                <p class="article-deck">A platform can flatten culture into inventory, or it can preserve context.
+                    We
+                    are choosing the second path, one product decision at a time.</p>
+                <div class="article-author"><span class="author-avatar">LC</span>
+                    <div><strong>Làng &amp; Co. Development Team</strong><span>Product · Engineering ·
+                            Research</span>
+                    </div>
+                </div>
+            </header>
+
+            <figure class="article-hero-image">
+                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90"
+                    alt="A development team collaborating around a table" />
+                <figcaption>Building the platform begins with a question: what information should never disappear
+                    when a
+                    craft object moves online?</figcaption>
+            </figure>
+
+            <div class="article-content">
+                <p class="dropcap">Làng &amp; Co. began with a simple frustration: beautifully made objects were
+                    often
+                    presented online without the knowledge that made them meaningful. A vase became a decorative
+                    SKU. A
+                    woven surface became a trend. A village name became a marketing adjective.</p>
+                <h3>We are building for context, not just conversion</h3>
+                <p>Our development mission is to make provenance part of the product architecture. That means the
+                    maker,
+                    place, material, process, and uncertainty around a claim are treated as first-class information
+                    rather than optional copy at the bottom of a page.</p>
+                <blockquote>Technology should help a craft object carry more of its story forward, not strip that
+                    story
+                    away for the sake of a cleaner card layout.</blockquote>
+                <p>In practical terms, we are designing structured fields for maker identity, craft village,
+                    material,
+                    process notes, care guidance, and source references. We are also resisting the temptation to
+                    fill
+                    empty fields with confident assumptions. When we do not know, the platform should be able to say
+                    so.
+                </p>
+                <h3>A marketplace is also an editorial system</h3>
+                <p>The journal, forum, wishlist, and shop are not separate ideas. Together they form a context
+                    system. A
+                    customer may first encounter a technique through a story, ask a question in the forum, save an
+                    object for later, and only then decide to buy. That slower path is intentional.</p>
+                <p>We measure success not only by completed orders, but by whether people leave with a clearer
+                    understanding of how an object was made and why its differences matter.</p>
+                <h3>What comes next</h3>
+                <p>Our next technical priorities are stronger provenance records, accessible maker profiles, safer
+                    moderation tools, and better ways for artisans to update their own information without losing
+                    editorial support. The mission is not to digitise craft for its own sake. It is to build
+                    infrastructure that helps living craft remain visible, legible, and economically viable.</p>
+            </div>
+
+            <section class="comments-section" aria-labelledby="developer-comments">
+                <div class="comments-heading">
+                    <h3 id="developer-comments">Comments <span>3</span></h3>
+                </div>
+                <article class="comment">
+                    <div class="comment-avatar">MN</div>
+                    <div>
+                        <div class="comment-meta"><strong>Mai Nguyễn</strong><time datetime="2026-07-06">July 6,
+                                2026</time></div>
+                        <p>I appreciate the distinction between documenting uncertainty and filling gaps with
+                            marketing
+                            language. That is a real design decision.</p>
+                    </div>
+                </article>
+                <article class="comment">
+                    <div class="comment-avatar">TK</div>
+                    <div>
+                        <div class="comment-meta"><strong>Trung Kiên</strong><time datetime="2026-07-06">July 6,
+                                2026</time></div>
+                        <p>Would love to see maker-controlled profile updates combined with visible editorial review
+                            history.</p>
+                    </div>
+                </article>
+                <article class="comment">
+                    <div class="comment-avatar">AV</div>
+                    <div>
+                        <div class="comment-meta"><strong>An Vy</strong><time datetime="2026-07-07">July 7,
+                                2026</time>
                         </div>
+                        <p>The slower customer journey makes sense for objects that carry real process and place.
+                        </p>
                     </div>
-                </header>
+                </article>
+                <form class="comment-form" action="/api/posts/developer-mission/comments" method="post">
+                    <label for="developer-comment">Join the conversation</label>
+                    <textarea id="developer-comment" name="content" rows="4" placeholder="Write a thoughtful comment..."
+                        required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            </section>
+        </article>
+    </section>
 
-                <figure class="article-hero-image">
-                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=90"
-                        alt="A development team collaborating around a table" />
-                    <figcaption>Building the platform begins with a question: what information should never disappear
-                        when a
-                        craft object moves online?</figcaption>
-                </figure>
-
-                <div class="article-content">
-                    <p class="dropcap">Làng &amp; Co. began with a simple frustration: beautifully made objects were
-                        often
-                        presented online without the knowledge that made them meaningful. A vase became a decorative
-                        SKU. A
-                        woven surface became a trend. A village name became a marketing adjective.</p>
-                    <h3>We are building for context, not just conversion</h3>
-                    <p>Our development mission is to make provenance part of the product architecture. That means the
-                        maker,
-                        place, material, process, and uncertainty around a claim are treated as first-class information
-                        rather than optional copy at the bottom of a page.</p>
-                    <blockquote>Technology should help a craft object carry more of its story forward, not strip that
-                        story
-                        away for the sake of a cleaner card layout.</blockquote>
-                    <p>In practical terms, we are designing structured fields for maker identity, craft village,
-                        material,
-                        process notes, care guidance, and source references. We are also resisting the temptation to
-                        fill
-                        empty fields with confident assumptions. When we do not know, the platform should be able to say
-                        so.
-                    </p>
-                    <h3>A marketplace is also an editorial system</h3>
-                    <p>The journal, forum, wishlist, and shop are not separate ideas. Together they form a context
-                        system. A
-                        customer may first encounter a technique through a story, ask a question in the forum, save an
-                        object for later, and only then decide to buy. That slower path is intentional.</p>
-                    <p>We measure success not only by completed orders, but by whether people leave with a clearer
-                        understanding of how an object was made and why its differences matter.</p>
-                    <h3>What comes next</h3>
-                    <p>Our next technical priorities are stronger provenance records, accessible maker profiles, safer
-                        moderation tools, and better ways for artisans to update their own information without losing
-                        editorial support. The mission is not to digitise craft for its own sake. It is to build
-                        infrastructure that helps living craft remain visible, legible, and economically viable.</p>
+    <section id="post-bat-trang" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article">
+            <a class="close-button" href="#journal" aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-06-28">June 28,
+                        2026</time></div>
+                <h2>Bát Tràng Beyond Blue and White</h2>
+                <p class="article-deck">A village is not a style preset. It is a living network of kilns, families,
+                    experiments, failures, and changing markets.</p>
+                <div class="article-author"><span class="author-avatar">MA</span>
+                    <div><strong>Mai An</strong><span>Field editor</span></div>
                 </div>
-
-                <section class="comments-section" aria-labelledby="developer-comments">
-                    <div class="comments-heading">
-                        <h3 id="developer-comments">Comments <span>3</span></h3>
-                    </div>
-                    <article class="comment">
-                        <div class="comment-avatar">MN</div>
-                        <div>
-                            <div class="comment-meta"><strong>Mai Nguyễn</strong><time datetime="2026-07-06">July 6,
-                                    2026</time></div>
-                            <p>I appreciate the distinction between documenting uncertainty and filling gaps with
-                                marketing
-                                language. That is a real design decision.</p>
-                        </div>
-                    </article>
-                    <article class="comment">
-                        <div class="comment-avatar">TK</div>
-                        <div>
-                            <div class="comment-meta"><strong>Trung Kiên</strong><time datetime="2026-07-06">July 6,
-                                    2026</time></div>
-                            <p>Would love to see maker-controlled profile updates combined with visible editorial review
-                                history.</p>
-                        </div>
-                    </article>
-                    <article class="comment">
-                        <div class="comment-avatar">AV</div>
-                        <div>
-                            <div class="comment-meta"><strong>An Vy</strong><time datetime="2026-07-07">July 7,
-                                    2026</time>
-                            </div>
-                            <p>The slower customer journey makes sense for objects that carry real process and place.
-                            </p>
-                        </div>
-                    </article>
-                    <form class="comment-form" action="/api/posts/developer-mission/comments" method="post">
-                        <label for="developer-comment">Join the conversation</label>
-                        <textarea id="developer-comment" name="content" rows="4"
-                            placeholder="Write a thoughtful comment..." required></textarea>
-                        <button type="submit">Post Comment</button>
-                    </form>
-                </section>
-            </article>
-        </section>
-
-        <section id="post-bat-trang" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article">
-                <a class="close-button" href="#journal" aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-06-28">June 28,
-                            2026</time></div>
-                    <h2>Bát Tràng Beyond Blue and White</h2>
-                    <p class="article-deck">A village is not a style preset. It is a living network of kilns, families,
-                        experiments, failures, and changing markets.</p>
-                    <div class="article-author"><span class="author-avatar">MA</span>
-                        <div><strong>Mai An</strong><span>Field editor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=1800&q=90"
-                        alt="Ceramic vessels in a workshop" />
-                    <figcaption>Variation is not a defect when material, glaze, and firing are allowed to remain
-                        visible.
-                    </figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">Bát Tràng is often reduced to a familiar visual shorthand. But the village
-                        contains
-                        many different workshops, firing practices, family histories, and contemporary directions.</p>
-                    <p>Walking from one kiln to another reveals a much wider vocabulary: ash glazes, carved surfaces,
-                        revived forms, experimental firing, commissioned tableware, and objects made for everyday
-                        domestic
-                        use.</p>
-                    <h3>Looking beyond the motif</h3>
-                    <p>To understand a piece, ask not only what it depicts, but who made it, which body of clay was
-                        used,
-                        how the glaze behaves, and what kind of firing produced the surface.</p>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=1800&q=90"
+                    alt="Ceramic vessels in a workshop" />
+                <figcaption>Variation is not a defect when material, glaze, and firing are allowed to remain
+                    visible.
+                </figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">Bát Tràng is often reduced to a familiar visual shorthand. But the village
+                    contains
+                    many different workshops, firing practices, family histories, and contemporary directions.</p>
+                <p>Walking from one kiln to another reveals a much wider vocabulary: ash glazes, carved surfaces,
+                    revived forms, experimental firing, commissioned tableware, and objects made for everyday
+                    domestic
+                    use.</p>
+                <h3>Looking beyond the motif</h3>
+                <p>To understand a piece, ask not only what it depicts, but who made it, which body of clay was
+                    used,
+                    how the glaze behaves, and what kind of firing produced the surface.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>1</span></h3>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>1</span></h3>
+                <article class="comment">
+                    <div class="comment-avatar">PL</div>
+                    <div>
+                        <div class="comment-meta"><strong>Phương Linh</strong><time datetime="2026-06-29">June 29,
+                                2026</time></div>
+                        <p>This is exactly why village names should not be treated as a single aesthetic category.
+                        </p>
                     </div>
-                    <article class="comment">
-                        <div class="comment-avatar">PL</div>
-                        <div>
-                            <div class="comment-meta"><strong>Phương Linh</strong><time datetime="2026-06-29">June 29,
-                                    2026</time></div>
-                            <p>This is exactly why village names should not be treated as a single aesthetic category.
-                            </p>
-                        </div>
-                    </article>
-                    <form class="comment-form" action="/api/posts/bat-trang/comments" method="post"><label
-                            for="bat-trang-comment">Join the conversation</label><textarea id="bat-trang-comment"
-                            name="content" rows="4" placeholder="Write a thoughtful comment..."
-                            required></textarea><button type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
+                </article>
+                <form class="comment-form" action="/api/posts/bat-trang/comments" method="post"><label
+                        for="bat-trang-comment">Join the conversation</label><textarea id="bat-trang-comment"
+                        name="content" rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
 
-        <section id="post-lacquer-artist" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-06-19">June 19,
-                            2026</time></div>
-                    <h2>The Patience of a Lacquer Artist</h2>
-                    <p class="article-deck">A conversation about waiting, polishing, and the discipline of surfaces that
-                        cannot be rushed.</p>
-                    <div class="article-author"><span class="author-avatar">MK</span>
-                        <div><strong>Minh Khôi</strong><span>Contributor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1800&q=90"
-                        alt="Artist hands working on a detailed surface" />
-                    <figcaption>The visible finish is only the final trace of repeated hidden stages.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">The artist speaks most often about time. Layers are applied, left alone, returned
-                        to,
-                        polished, reconsidered, and sometimes removed.</p>
-                    <p>What appears smooth is not simple. It is the result of many decisions that disappear into the
-                        finished surface.</p>
+    <section id="post-lacquer-artist" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-06-19">June 19,
+                        2026</time></div>
+                <h2>The Patience of a Lacquer Artist</h2>
+                <p class="article-deck">A conversation about waiting, polishing, and the discipline of surfaces that
+                    cannot be rushed.</p>
+                <div class="article-author"><span class="author-avatar">MK</span>
+                    <div><strong>Minh Khôi</strong><span>Contributor</span></div>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/lacquer-artist/comments" method="post"><label
-                            for="lacquer-comment">Join the conversation</label><textarea id="lacquer-comment"
-                            name="content" rows="4" placeholder="Write a thoughtful comment..."
-                            required></textarea><button type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
-
-        <section id="post-hoi-an" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Places</span><time datetime="2026-06-11">June 11,
-                            2026</time></div>
-                    <h2>A Slow Morning in Hội An</h2>
-                    <p class="article-deck">Before the crowds arrive, work resumes at a scale that is easier to miss
-                        later
-                        in the day.</p>
-                    <div class="article-author"><span class="author-avatar">LT</span>
-                        <div><strong>Linh Trần</strong><span>Travel editor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1800&q=90"
-                        alt="Historic Vietnamese street" />
-                    <figcaption>The old town before opening hours.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">At first light, Hội An is less a backdrop and more a working town. Shutters lift.
-                        Deliveries arrive. Tea appears at small tables.</p>
-                    <p>The morning offers a useful reminder: heritage places continue to contain ordinary routines, not
-                        only
-                        visitor experiences.</p>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1800&q=90"
+                    alt="Artist hands working on a detailed surface" />
+                <figcaption>The visible finish is only the final trace of repeated hidden stages.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">The artist speaks most often about time. Layers are applied, left alone, returned
+                    to,
+                    polished, reconsidered, and sometimes removed.</p>
+                <p>What appears smooth is not simple. It is the result of many decisions that disappear into the
+                    finished surface.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/hoi-an/comments" method="post"><label
-                            for="hoian-comment">Join the conversation</label><textarea id="hoian-comment" name="content"
-                            rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
-                            type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
+                <form class="comment-form" action="/api/posts/lacquer-artist/comments" method="post"><label
+                        for="lacquer-comment">Join the conversation</label><textarea id="lacquer-comment" name="content"
+                        rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
 
-        <section id="post-care-guide" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-30">May 30,
-                            2026</time></div>
-                    <h2>How to Live with Handmade Ceramics</h2>
-                    <p class="article-deck">Care is less about perfection than understanding material behaviour.</p>
-                    <div class="article-author"><span class="author-avatar">TH</span>
-                        <div><strong>Thu Hà</strong><span>Care editor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1800&q=90"
-                        alt="Ceramic cup" />
-                    <figcaption>Daily use is part of the life of an object.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">Start with the maker's guidance whenever it is available. Different clay bodies,
-                        glazes, decorations, and firing temperatures behave differently.</p>
-                    <p>Avoid sudden thermal shock, store pieces where rims are not forced against hard edges, and do not
-                        assume every handmade surface is dishwasher-safe.</p>
+    <section id="post-hoi-an" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Places</span><time datetime="2026-06-11">June 11,
+                        2026</time></div>
+                <h2>A Slow Morning in Hội An</h2>
+                <p class="article-deck">Before the crowds arrive, work resumes at a scale that is easier to miss
+                    later
+                    in the day.</p>
+                <div class="article-author"><span class="author-avatar">LT</span>
+                    <div><strong>Linh Trần</strong><span>Travel editor</span></div>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/care-guide/comments" method="post"><label
-                            for="care-comment">Join the conversation</label><textarea id="care-comment" name="content"
-                            rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
-                            type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
-
-        <section id="post-provenance" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-22">May 22,
-                            2026</time></div>
-                    <h2>Why Provenance Belongs on the Product Page</h2>
-                    <p class="article-deck">The information around an object should be designed with the same care as
-                        the
-                        purchase path.</p>
-                    <div class="article-author"><span class="author-avatar">LR</span>
-                        <div><strong>Làng &amp; Co. Research Team</strong><span>Research</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=90"
-                        alt="Team reviewing research" />
-                    <figcaption>Claims need traceable sources and visible uncertainty.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">A product page should do more than persuade. It should tell a reader what is
-                        known,
-                        how it is known, and which details remain uncertain.</p>
-                    <p>That requires structured provenance, editorial review, and a refusal to turn every gap into a
-                        confident origin story.</p>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1800&q=90"
+                    alt="Historic Vietnamese street" />
+                <figcaption>The old town before opening hours.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">At first light, Hội An is less a backdrop and more a working town. Shutters lift.
+                    Deliveries arrive. Tea appears at small tables.</p>
+                <p>The morning offers a useful reminder: heritage places continue to contain ordinary routines, not
+                    only
+                    visitor experiences.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/provenance/comments" method="post"><label
-                            for="provenance-comment">Join the conversation</label><textarea id="provenance-comment"
-                            name="content" rows="4" placeholder="Write a thoughtful comment..."
-                            required></textarea><button type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
+                <form class="comment-form" action="/api/posts/hoi-an/comments" method="post"><label
+                        for="hoian-comment">Join the conversation</label><textarea id="hoian-comment" name="content"
+                        rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
 
-        <section id="post-silk" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-14">May 14,
-                            2026</time></div>
-                    <h2>Silk, Light, and the Memory of Touch</h2>
-                    <p class="article-deck">Textile knowledge is carried through fibre, tension, dye, weather, and hand.
-                    </p>
-                    <div class="article-author"><span class="author-avatar">NV</span>
-                        <div><strong>Ngọc Vy</strong><span>Textile contributor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=1800&q=90"
-                        alt="Folded textiles" />
-                    <figcaption>Cloth changes with light, movement, and use.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">A woven surface is never only visual. Its character comes from how fibres resist,
-                        bend, catch light, and respond to the body.</p>
-                    <p>Learning to read silk means paying attention to density, weave, finishing, dye, and the
-                        differences
-                        that become more visible through use.</p>
+    <section id="post-care-guide" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-30">May 30,
+                        2026</time></div>
+                <h2>How to Live with Handmade Ceramics</h2>
+                <p class="article-deck">Care is less about perfection than understanding material behaviour.</p>
+                <div class="article-author"><span class="author-avatar">TH</span>
+                    <div><strong>Thu Hà</strong><span>Care editor</span></div>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/silk/comments" method="post"><label
-                            for="silk-comment">Join the conversation</label><textarea id="silk-comment" name="content"
-                            rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
-                            type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
-
-        <section id="post-community" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Donation</span><time datetime="2026-05-02">May 2,
-                            2026</time><span class="owner-badge">Your post</span></div>
-                    <h2>What a Craft Community Needs from a Platform</h2>
-                    <p class="article-deck">Visibility is useful only when it arrives with context, control, and
-                        practical
-                        value.</p>
-                    <div class="article-author"><span class="author-avatar">HB</span>
-                        <div><strong>Huy Ba</strong><span>Community contributor</span></div>
-                    </div>
-                </header>
-                <figure class="article-hero-image"><img
-                        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=90"
-                        alt="Community gathering" />
-                    <figcaption>Platform design begins by listening to the people expected to use it.</figcaption>
-                </figure>
-                <div class="article-content">
-                    <p class="dropcap">In conversations with makers, the same concerns return: pricing pressure, loss of
-                        context, copied images, and the burden of maintaining another digital profile.</p>
-                    <p>A useful platform should reduce those burdens rather than move them around. That means clear
-                        ownership controls, realistic moderation, transparent fees, and editorial support that does not
-                        erase the maker's voice.</p>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1800&q=90"
+                    alt="Ceramic cup" />
+                <figcaption>Daily use is part of the life of an object.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">Start with the maker's guidance whenever it is available. Different clay bodies,
+                    glazes, decorations, and firing temperatures behave differently.</p>
+                <p>Avoid sudden thermal shock, store pieces where rims are not forced against hard edges, and do not
+                    assume every handmade surface is dishwasher-safe.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                    <form class="comment-form" action="/api/posts/community/comments" method="post"><label
-                            for="community-comment">Join the conversation</label><textarea id="community-comment"
-                            name="content" rows="4" placeholder="Write a thoughtful comment..."
-                            required></textarea><button type="submit">Post Comment</button></form>
-                </section>
-            </article>
-        </section>
+                <form class="comment-form" action="/api/posts/care-guide/comments" method="post"><label
+                        for="care-comment">Join the conversation</label><textarea id="care-comment" name="content"
+                        rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
 
-        <section id="post-created-detail" class="article-overlay" aria-label="Detailed article view">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
-            <article class="article-sheet compact-article"><a class="close-button" href="#journal"
-                    aria-label="Close article">×</a>
-                <header class="article-header">
-                    <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-07-06">July 6,
-                            2026</time><span class="owner-badge">Your post</span></div>
-                    <h2>A Newly Published Story</h2>
-                    <p class="article-deck">This is a hardcoded CSS-only state used to preserve the create-post
-                        interaction
-                        without JavaScript.</p>
-                    <div class="article-author"><span class="author-avatar">CU</span>
-                        <div><strong>Current user</strong><span>Author</span></div>
-                    </div>
-                </header>
-                <div class="article-content">
-                    <p class="dropcap">In a real MongoDB-backed build, this page would render the exact title, author,
-                        date,
-                        tags, main text content, image content, and comments stored for the newly created post.</p>
+    <section id="post-provenance" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-22">May 22,
+                        2026</time></div>
+                <h2>Why Provenance Belongs on the Product Page</h2>
+                <p class="article-deck">The information around an object should be designed with the same care as
+                    the
+                    purchase path.</p>
+                <div class="article-author"><span class="author-avatar">LR</span>
+                    <div><strong>Làng &amp; Co. Research Team</strong><span>Research</span></div>
                 </div>
-                <section class="comments-section">
-                    <div class="comments-heading">
-                        <h3>Comments <span>0</span></h3>
-                    </div>
-                </section>
-            </article>
-        </section>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=90"
+                    alt="Team reviewing research" />
+                <figcaption>Claims need traceable sources and visible uncertainty.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">A product page should do more than persuade. It should tell a reader what is
+                    known,
+                    how it is known, and which details remain uncertain.</p>
+                <p>That requires structured provenance, editorial review, and a refusal to turn every gap into a
+                    confident origin story.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
+                </div>
+                <form class="comment-form" action="/api/posts/provenance/comments" method="post"><label
+                        for="provenance-comment">Join the conversation</label><textarea id="provenance-comment"
+                        name="content" rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
 
-        <!-- ======================================================
+    <section id="post-silk" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-05-14">May 14,
+                        2026</time></div>
+                <h2>Silk, Light, and the Memory of Touch</h2>
+                <p class="article-deck">Textile knowledge is carried through fibre, tension, dye, weather, and hand.
+                </p>
+                <div class="article-author"><span class="author-avatar">NV</span>
+                    <div><strong>Ngọc Vy</strong><span>Textile contributor</span></div>
+                </div>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=1800&q=90"
+                    alt="Folded textiles" />
+                <figcaption>Cloth changes with light, movement, and use.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">A woven surface is never only visual. Its character comes from how fibres resist,
+                    bend, catch light, and respond to the body.</p>
+                <p>Learning to read silk means paying attention to density, weave, finishing, dye, and the
+                    differences
+                    that become more visible through use.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
+                </div>
+                <form class="comment-form" action="/api/posts/silk/comments" method="post"><label
+                        for="silk-comment">Join the conversation</label><textarea id="silk-comment" name="content"
+                        rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
+
+    <section id="post-community" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Donation</span><time datetime="2026-05-02">May 2,
+                        2026</time><span class="owner-badge">Your post</span></div>
+                <h2>What a Craft Community Needs from a Platform</h2>
+                <p class="article-deck">Visibility is useful only when it arrives with context, control, and
+                    practical
+                    value.</p>
+                <div class="article-author"><span class="author-avatar">HB</span>
+                    <div><strong>Huy Ba</strong><span>Community contributor</span></div>
+                </div>
+            </header>
+            <figure class="article-hero-image"><img
+                    src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1800&q=90"
+                    alt="Community gathering" />
+                <figcaption>Platform design begins by listening to the people expected to use it.</figcaption>
+            </figure>
+            <div class="article-content">
+                <p class="dropcap">In conversations with makers, the same concerns return: pricing pressure, loss of
+                    context, copied images, and the burden of maintaining another digital profile.</p>
+                <p>A useful platform should reduce those burdens rather than move them around. That means clear
+                    ownership controls, realistic moderation, transparent fees, and editorial support that does not
+                    erase the maker's voice.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
+                </div>
+                <form class="comment-form" action="/api/posts/community/comments" method="post"><label
+                        for="community-comment">Join the conversation</label><textarea id="community-comment"
+                        name="content" rows="4" placeholder="Write a thoughtful comment..." required></textarea><button
+                        type="submit">Post Comment</button></form>
+            </section>
+        </article>
+    </section>
+
+    <section id="post-created-detail" class="article-overlay" aria-label="Detailed article view">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close article"></a>
+        <article class="article-sheet compact-article"><a class="close-button" href="#journal"
+                aria-label="Close article">×</a>
+            <header class="article-header">
+                <div class="post-meta-line"><span class="tag">Guide</span><time datetime="2026-07-06">July 6,
+                        2026</time><span class="owner-badge">Your post</span></div>
+                <h2>A Newly Published Story</h2>
+                <p class="article-deck">This is a hardcoded CSS-only state used to preserve the create-post
+                    interaction
+                    without JavaScript.</p>
+                <div class="article-author"><span class="author-avatar">CU</span>
+                    <div><strong>Current user</strong><span>Author</span></div>
+                </div>
+            </header>
+            <div class="article-content">
+                <p class="dropcap">In a real MongoDB-backed build, this page would render the exact title, author,
+                    date,
+                    tags, main text content, image content, and comments stored for the newly created post.</p>
+            </div>
+            <section class="comments-section">
+                <div class="comments-heading">
+                    <h3>Comments <span>0</span></h3>
+                </div>
+            </section>
+        </article>
+    </section>
+
+    <!-- ======================================================
        CREATE / EDIT UI
        ====================================================== -->
 
-        <section id="create-post" class="form-overlay" aria-label="Create a new blog post">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close create post form"></a>
-            <div class="form-sheet">
-                <a class="close-button" href="#journal" aria-label="Close form">×</a>
-                <div class="form-heading">
-                    <p class="section-kicker">New journal entry</p>
-                    <h2>Create a blog post</h2>
-                    <p>All required blog components are represented below. The field names are prepared for a
-                        MongoDB-backed
-                        API.</p>
-                </div>
-
-                <form class="post-form" action="/api/posts" method="post">
-                    <div class="form-grid two-col">
-                        <label>Title<input type="text" name="title" placeholder="Post title" required /></label>
-                        <label>Author<input type="text" name="author" placeholder="Author name" required /></label>
-                    </div>
-                    <div class="form-grid two-col">
-                        <label>Date added<input type="date" name="dateAdded" required /></label>
-                        <label>Tags or categories<input type="text" name="categories"
-                                placeholder="Mission, Donation, Places, Guide" required /></label>
-                    </div>
-                    <label>Image content / URL<input type="url" name="imageUrl"
-                            placeholder="https://example.com/image.jpg" required /></label>
-                    <label>Main text content<textarea name="content" rows="10"
-                            placeholder="Write the full post content..." required></textarea></label>
-                    <div class="form-note"><strong>MongoDB note:</strong> a secure server must validate, sanitise,
-                        authorise, and write these values to MongoDB. HTML/CSS alone cannot do that.</div>
-                    <div class="form-actions">
-                        <a class="btn" href="#journal">Cancel</a>
-                        <!-- Static CSS-only demo state. Replace with actual form submission when backend exists. -->
-                        <a class="btn btn-primary" href="#post-created">Publish Post</a>
-                    </div>
-                </form>
+    <section id="create-post" class="form-overlay" aria-label="Create a new blog post">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close create post form"></a>
+        <div class="form-sheet">
+            <a class="close-button" href="#journal" aria-label="Close form">×</a>
+            <div class="form-heading">
+                <p class="section-kicker">New journal entry</p>
+                <h2>Create a blog post</h2>
+                <p>All required blog components are represented below. The field names are prepared for a
+                    MongoDB-backed
+                    API.</p>
             </div>
-        </section>
 
-        <section id="edit-own-post" class="form-overlay" aria-label="Edit your blog post">
-            <a class="overlay-backdrop" href="#journal" aria-label="Close edit post form"></a>
-            <div class="form-sheet">
-                <a class="close-button" href="#journal" aria-label="Close form">×</a>
-                <div class="form-heading">
-                    <p class="section-kicker">Owner controls</p>
-                    <h2>Edit your post</h2>
-                    <p>This hardcoded form represents editing an authenticated user's own post.</p>
+            <form class="post-form" action="/api/posts" method="post">
+                <div class="form-grid two-col">
+                    <label>Title<input type="text" name="title" placeholder="Post title" required /></label>
+                    <label>Author<input type="text" name="author" placeholder="Author name" required /></label>
                 </div>
+                <div class="form-grid two-col">
+                    <label>Date added<input type="date" name="dateAdded" required /></label>
+                    <label>Tags or categories<input type="text" name="categories"
+                            placeholder="Mission, Donation, Places, Guide" required /></label>
+                </div>
+                <label>Image content / URL<input type="url" name="imageUrl" placeholder="https://example.com/image.jpg"
+                        required /></label>
+                <label>Main text content<textarea name="content" rows="10" placeholder="Write the full post content..."
+                        required></textarea></label>
+                <div class="form-note"><strong>MongoDB note:</strong> a secure server must validate, sanitise,
+                    authorise, and write these values to MongoDB. HTML/CSS alone cannot do that.</div>
+                <div class="form-actions">
+                    <a class="btn" href="#journal">Cancel</a>
+                    <!-- Static CSS-only demo state. Replace with actual form submission when backend exists. -->
+                    <a class="btn btn-primary" href="#post-created">Publish Post</a>
+                </div>
+            </form>
+        </div>
+    </section>
 
-                <form class="post-form" action="/api/posts/community?_method=PUT" method="post">
-                    <div class="form-grid two-col">
-                        <label>Title<input type="text" name="title" value="What a Craft Community Needs from a Platform"
-                                required /></label>
-                        <label>Author<input type="text" name="author" value="Huy Ba" required /></label>
-                    </div>
-                    <div class="form-grid two-col">
-                        <label>Date added<input type="date" name="dateAdded" value="2026-05-02" required /></label>
-                        <label>Tags or categories<input type="text" name="categories" value="Donation, Community"
-                                required /></label>
-                    </div>
-                    <label>Image content / URL<input type="url" name="imageUrl"
-                            value="https://images.unsplash.com/photo-1529156069898-49953e39b3ac" required /></label>
-                    <label>Main text content<textarea name="content" rows="9"
-                            required>In conversations with makers, the same concerns return: pricing pressure, loss of context, copied images, and the burden of maintaining another digital profile.</textarea></label>
-                    <div class="form-actions"><a class="btn" href="#journal">Cancel</a><a class="btn btn-primary"
-                            href="#post-updated">Save Changes</a></div>
-                </form>
+    <section id="edit-own-post" class="form-overlay" aria-label="Edit your blog post">
+        <a class="overlay-backdrop" href="#journal" aria-label="Close edit post form"></a>
+        <div class="form-sheet">
+            <a class="close-button" href="#journal" aria-label="Close form">×</a>
+            <div class="form-heading">
+                <p class="section-kicker">Owner controls</p>
+                <h2>Edit your post</h2>
+                <p>This hardcoded form represents editing an authenticated user's own post.</p>
             </div>
-        </section>
+
+            <form class="post-form" action="/api/posts/community?_method=PUT" method="post">
+                <div class="form-grid two-col">
+                    <label>Title<input type="text" name="title" value="What a Craft Community Needs from a Platform"
+                            required /></label>
+                    <label>Author<input type="text" name="author" value="Huy Ba" required /></label>
+                </div>
+                <div class="form-grid two-col">
+                    <label>Date added<input type="date" name="dateAdded" value="2026-05-02" required /></label>
+                    <label>Tags or categories<input type="text" name="categories" value="Donation, Community"
+                            required /></label>
+                </div>
+                <label>Image content / URL<input type="url" name="imageUrl"
+                        value="https://images.unsplash.com/photo-1529156069898-49953e39b3ac" required /></label>
+                <label>Main text content<textarea name="content" rows="9"
+                        required>In conversations with makers, the same concerns return: pricing pressure, loss of context, copied images, and the burden of maintaining another digital profile.</textarea></label>
+                <div class="form-actions"><a class="btn" href="#journal">Cancel</a><a class="btn btn-primary"
+                        href="#post-updated">Save Changes</a></div>
+            </form>
+        </div>
+    </section>
 
 
 
 
 
-        <!--CHƯA HIỂU CÁI NÀY LÀ CÁI GÌ KHANG ƠI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-        <div class="state-toast created-toast" role="status">Post published in static demo state. MongoDB persistence
-            requires the server API.</div>
-        <div class="state-toast updated-toast" role="status">Post updated in static demo state. MongoDB persistence
-            requires
-            the server API.</div>
-        <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <!--CHƯA HIỂU CÁI NÀY LÀ CÁI GÌ KHANG ƠI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <div class="state-toast created-toast" role="status">Post published in static demo state. MongoDB persistence
+        requires the server API.</div>
+    <div class="state-toast updated-toast" role="status">Post updated in static demo state. MongoDB persistence
+        requires
+        the server API.</div>
+    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
 
-        <!-- ================================================
+    <!-- ================================================
        FOOTER 
        ================================================ -->
-        <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-            scrolling="no"></iframe>
+    <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+        scrolling="no"></iframe>
 
 </body>
 
