@@ -133,7 +133,10 @@
 }
 
 .forum-post__content {
+  max-width: 100%;
   margin-bottom: 18px;
+  overflow-wrap: break-word;
+  word-break: break-word;
   font-family: var(--ff-body);
   font-size: 17px;
   line-height: 1.7;
@@ -142,6 +145,22 @@
 
 .forum-post__content p {
   margin: 0;
+}
+
+.forum-post__content ol,
+.forum-post__content ul {
+  max-width: 100%;
+  margin: 0;
+  padding-left: 40px;
+}
+
+.forum-post__content li {
+  max-width: 100%;
+}
+
+.forum-post__content img {
+  max-width: 100%;
+  height: auto;
 }
 
 .forum-post__footer {
