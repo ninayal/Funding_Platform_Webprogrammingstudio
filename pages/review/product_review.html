@@ -1,719 +1,708 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Reviews | Làng &amp; Co.</title>
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css"/>
-  <link rel="stylesheet" href="../../public/css/review/product_review.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Reviews | Làng &amp; Co.</title>
+    <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
+    <link rel="stylesheet" href="../../public/css/review/product_review.css" />
 </head>
+
 <body>
-  <main class="product-review">
-    <!-- Star filter controls -->
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-all" checked />
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-5" />
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-4" />
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-3" />
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-2" />
-    <input class="review-filter-control" type="radio" name="review-filter" id="filter-1" />
+    <main class="product-review">
+        <!-- Star filter controls -->
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-all" checked />
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-5" />
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-4" />
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-3" />
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-2" />
+        <input class="review-filter-control" type="radio" name="review-filter" id="filter-1" />
 
-    <!-- Page controls: 5 reviews per page -->
-    <input class="review-page-control" type="radio" name="review-page" id="review-page-1" checked />
-    <input class="review-page-control" type="radio" name="review-page" id="review-page-2" />
-    <input class="review-page-control" type="radio" name="review-page" id="review-page-3" />
-    <input class="review-page-control" type="radio" name="review-page" id="review-page-4" />
-    <input class="review-page-control" type="radio" name="review-page" id="review-page-5" />
+        <!-- Page controls: 5 reviews per page -->
+        <input class="review-page-control" type="radio" name="review-page" id="review-page-1" checked />
+        <input class="review-page-control" type="radio" name="review-page" id="review-page-2" />
+        <input class="review-page-control" type="radio" name="review-page" id="review-page-3" />
+        <input class="review-page-control" type="radio" name="review-page" id="review-page-4" />
+        <input class="review-page-control" type="radio" name="review-page" id="review-page-5" />
 
-  <!-- ================================================
+        <!-- ================================================
        REVIEW HERO
        ================================================ -->
-  <section class="pr-hero" aria-label="Product rating and review form">
+        <section class="pr-hero" aria-label="Product rating and review form">
 
-    <div class="pr-hero__intro">
-      <p class="pr-hero__kicker">Product Rating</p>
-      <h2 class="pr-hero__title">Loved by collectors of handmade craft.</h2>
-      <p class="pr-hero__desc">
-        Share your experience with this piece and help others understand its quality,
-        glaze, finish and handmade details.
-      </p>
-    </div>
-
-    <div class="pr-hero__grid">
-
-      <!-- left summary -->
-      <div class="pr-score-card">
-
-        <div class="pr-score-card__top">
-          <p class="pr-score-card__number">3.8</p>
-            <p class="pr-score-card__stars">★★★★☆</p>
-            <p class="pr-score-card__count">Based on 25 reviews</p>
-        </div>
-
-        <div class="pr-breakdown__row">
-            <span class="pr-breakdown__label">5★</span>
-
-            <span class="pr-breakdown__bar">
-                <span class="pr-breakdown__fill pr-breakdown__fill--5"></span>
-            </span>
-
-            <span class="pr-breakdown__value">9</span>
+            <div class="pr-hero__intro">
+                <p class="pr-hero__kicker">Product Rating</p>
+                <h2 class="pr-hero__title">Loved by collectors of handmade craft.</h2>
+                <p class="pr-hero__desc">
+                    Share your experience with this piece and help others understand its quality,
+                    glaze, finish and handmade details.
+                </p>
             </div>
 
-            <div class="pr-breakdown__row">
-            <span class="pr-breakdown__label">4★</span>
+            <div class="pr-hero__grid">
 
-            <span class="pr-breakdown__bar">
-                <span class="pr-breakdown__fill pr-breakdown__fill--4"></span>
-            </span>
+                <!-- left summary -->
+                <div class="pr-score-card">
 
-            <span class="pr-breakdown__value">7</span>
+                    <div class="pr-score-card__top">
+                        <p class="pr-score-card__number">3.8</p>
+                        <p class="pr-score-card__stars">★★★★☆</p>
+                        <p class="pr-score-card__count">Based on 25 reviews</p>
+                    </div>
+
+                    <div class="pr-breakdown__row">
+                        <span class="pr-breakdown__label">5★</span>
+
+                        <span class="pr-breakdown__bar">
+                            <span class="pr-breakdown__fill pr-breakdown__fill--5"></span>
+                        </span>
+
+                        <span class="pr-breakdown__value">9</span>
+                    </div>
+
+                    <div class="pr-breakdown__row">
+                        <span class="pr-breakdown__label">4★</span>
+
+                        <span class="pr-breakdown__bar">
+                            <span class="pr-breakdown__fill pr-breakdown__fill--4"></span>
+                        </span>
+
+                        <span class="pr-breakdown__value">7</span>
+                    </div>
+
+                    <div class="pr-breakdown__row">
+                        <span class="pr-breakdown__label">3★</span>
+
+                        <span class="pr-breakdown__bar">
+                            <span class="pr-breakdown__fill pr-breakdown__fill--3"></span>
+                        </span>
+
+                        <span class="pr-breakdown__value">5</span>
+                    </div>
+
+                    <div class="pr-breakdown__row">
+                        <span class="pr-breakdown__label">2★</span>
+
+                        <span class="pr-breakdown__bar">
+                            <span class="pr-breakdown__fill pr-breakdown__fill--2"></span>
+                        </span>
+
+                        <span class="pr-breakdown__value">3</span>
+                    </div>
+
+                    <div class="pr-breakdown__row">
+                        <span class="pr-breakdown__label">1★</span>
+
+                        <span class="pr-breakdown__bar">
+                            <span class="pr-breakdown__fill pr-breakdown__fill--1"></span>
+                        </span>
+
+                        <span class="pr-breakdown__value">1</span>
+                    </div>
+
+                </div>
+
+
+                <!-- right form -->
+                <form class="pr-form" action="#" method="POST">
+
+                    <div class="pr-form__head">
+                        <h3>Write a review</h3>
+                        <p>Tell us what stood out to you.</p>
+                    </div>
+
+                    <div class="pr-form__rating" aria-label="Rating">
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
+
+                    <div class="pr-form__row">
+                        <input class="pr-input" type="text" name="name" placeholder="Your name" />
+                    </div>
+
+                    <div class="pr-form__row">
+                        <textarea class="pr-textarea" name="review"
+                            placeholder="Share your experience with this product..."></textarea>
+                    </div>
+
+                    <button class="pr-submit" type="submit">
+                        Submit Review
+                    </button>
+
+                </form>
+
             </div>
 
-            <div class="pr-breakdown__row">
-            <span class="pr-breakdown__label">3★</span>
-
-            <span class="pr-breakdown__bar">
-                <span class="pr-breakdown__fill pr-breakdown__fill--3"></span>
-            </span>
-
-            <span class="pr-breakdown__value">5</span>
-            </div>
-
-            <div class="pr-breakdown__row">
-            <span class="pr-breakdown__label">2★</span>
-
-            <span class="pr-breakdown__bar">
-                <span class="pr-breakdown__fill pr-breakdown__fill--2"></span>
-            </span>
-
-            <span class="pr-breakdown__value">3</span>
-            </div>
-
-            <div class="pr-breakdown__row">
-            <span class="pr-breakdown__label">1★</span>
-
-            <span class="pr-breakdown__bar">
-                <span class="pr-breakdown__fill pr-breakdown__fill--1"></span>
-            </span>
-
-            <span class="pr-breakdown__value">1</span>
-            </div>
-
-      </div>
+        </section>
 
 
-      <!-- right form -->
-      <form class="pr-form" action="#" method="POST">
-
-        <div class="pr-form__head">
-          <h3>Write a review</h3>
-          <p>Tell us what stood out to you.</p>
-        </div>
-
-        <div class="pr-form__rating" aria-label="Rating">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-        </div>
-
-        <div class="pr-form__row">
-          <input
-            class="pr-input"
-            type="text"
-            name="name"
-            placeholder="Your name"
-          />
-        </div>
-
-        <div class="pr-form__row">
-          <textarea
-            class="pr-textarea"
-            name="review"
-            placeholder="Share your experience with this product..."
-          ></textarea>
-        </div>
-
-        <button class="pr-submit" type="submit">
-          Submit Review
-        </button>
-
-      </form>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================================================
+        <!-- ================================================
        RECENT REVIEWS
        ================================================ -->
-  <section class="pr-list" aria-label="Customer reviews">
+        <section class="pr-list" aria-label="Customer reviews">
 
-    <div class="pr-list__head">
-      <div>
-        <p class="pr-list__kicker">Customer Voices</p>
-        <h2>Recent Reviews</h2>
-      </div>
+            <div class="pr-list__head">
+                <div>
+                    <p class="pr-list__kicker">Customer Voices</p>
+                    <h2>Recent Reviews</h2>
+                </div>
 
-      <div class="pr-sort">
-        <span class="pr-sort__label">Sort by star</span>
+                <div class="pr-sort">
+                    <span class="pr-sort__label">Sort by star</span>
 
-        <div class="pr-sort__chips">
-            <label class="pr-sort__chip" for="filter-all">All</label>
-            <label class="pr-sort__chip" for="filter-5">5★</label>
-            <label class="pr-sort__chip" for="filter-4">4★</label>
-            <label class="pr-sort__chip" for="filter-3">3★</label>
-            <label class="pr-sort__chip" for="filter-2">2★</label>
-            <label class="pr-sort__chip" for="filter-1">1★</label>
-        </div>
-      </div>
-    </div>
-    <div class="pr-cards">
-
-    <!-- ================= PAGE 1 ================= -->
-    <div class="pr-page pr-page--1">
-
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">M</div>
-            <div>
-                <p class="pr-card__user">Mai T.</p>
-                <p class="pr-card__date">June 2026</p>
+                    <div class="pr-sort__chips">
+                        <label class="pr-sort__chip" for="filter-all">All</label>
+                        <label class="pr-sort__chip" for="filter-5">5★</label>
+                        <label class="pr-sort__chip" for="filter-4">4★</label>
+                        <label class="pr-sort__chip" for="filter-3">3★</label>
+                        <label class="pr-sort__chip" for="filter-2">2★</label>
+                        <label class="pr-sort__chip" for="filter-1">1★</label>
+                    </div>
+                </div>
             </div>
+            <div class="pr-cards">
+
+                <!-- ================= PAGE 1 ================= -->
+                <div class="pr-page pr-page--1">
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">M</div>
+                                <div>
+                                    <p class="pr-card__user">Mai T.</p>
+                                    <p class="pr-card__date">June 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Beautiful glaze and careful packaging</h3>
+                        <p class="pr-card__comment">
+                            Exactly as pictured — the cobalt glaze is even more vivid in person,
+                            and it arrived wrapped so carefully nothing shifted in transit.
+                        </p>
+                        <div class="pr-card__media">
+                            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=90&q=80"
+                                alt="Product thumbnail from Mai T.'s review" class="pr-card__thumb" />
+                            <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=400&q=80"
+                                alt="Customer photo of the vase on a shelf" class="pr-card__photo" />
+                        </div>
+                    </article>
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">L</div>
+                                <div>
+                                    <p class="pr-card__user">Linh Phạm</p>
+                                    <p class="pr-card__date">May 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">A meaningful housewarming gift</h3>
+                        <p class="pr-card__comment">
+                            Bought this as a housewarming gift and my sister loved it —
+                            the brushwork on the lotus petals is genuinely stunning up close.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">A</div>
+                                <div>
+                                    <p class="pr-card__user">An Nguyễn</p>
+                                    <p class="pr-card__date">April 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Looks handcrafted, not mass-produced</h3>
+                        <p class="pr-card__comment">
+                            I love the small differences in the painted lotus details. It feels
+                            personal and handmade, which is exactly why I bought it.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">H</div>
+                                <div>
+                                    <p class="pr-card__user">Hannah K.</p>
+                                    <p class="pr-card__date">April 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Elegant and simple</h3>
+                        <p class="pr-card__comment">
+                            The vase fits beautifully on my shelf. The color is soft but still
+                            noticeable, and the handmade texture gives it character.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">J</div>
+                                <div>
+                                    <p class="pr-card__user">James R.</p>
+                                    <p class="pr-card__date">May 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Lovely handmade feel</h3>
+                        <p class="pr-card__comment">
+                            Gorgeous vase and clearly handmade — a touch smaller than I pictured,
+                            so worth checking the dimensions in Additional Info first.
+                        </p>
+                    </article>
+
+                </div>
+
+
+                <!-- ================= PAGE 2 ================= -->
+                <div class="pr-page pr-page--2">
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">T</div>
+                                <div>
+                                    <p class="pr-card__user">Thảo Vũ</p>
+                                    <p class="pr-card__date">March 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Very pretty, but color is slightly lighter</h3>
+                        <p class="pr-card__comment">
+                            The quality is good and the shape is beautiful. The blue tone is a bit
+                            lighter than I expected, but it still looks refined.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">P</div>
+                                <div>
+                                    <p class="pr-card__user">Peter L.</p>
+                                    <p class="pr-card__date">March 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Good quality ceramic</h3>
+                        <p class="pr-card__comment">
+                            The vase feels sturdy and the surface finish is smooth. Shipping was
+                            safe, although the box was larger than necessary.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">C</div>
+                                <div>
+                                    <p class="pr-card__user">Chloe N.</p>
+                                    <p class="pr-card__date">March 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Subtle and tasteful</h3>
+                        <p class="pr-card__comment">
+                            It has a quiet beauty. I expected the lotus detail to be stronger,
+                            but the subtle finish actually works well in my room.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="3">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">N</div>
+                                <div>
+                                    <p class="pr-card__user">Nhi Trần</p>
+                                    <p class="pr-card__date">February 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Nice piece, but smaller than expected</h3>
+                        <p class="pr-card__comment">
+                            The design is beautiful, but I should have checked the size more
+                            carefully. It works better as a small accent piece.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="3">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">D</div>
+                                <div>
+                                    <p class="pr-card__user">Daniel M.</p>
+                                    <p class="pr-card__date">February 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Beautiful but not perfect</h3>
+                        <p class="pr-card__comment">
+                            I like the handmade look, but the glaze on one side was slightly uneven.
+                            It still looks nice, just not as polished as I expected.
+                        </p>
+                    </article>
+
+                </div>
+
+
+                <!-- ================= PAGE 3 ================= -->
+                <div class="pr-page pr-page--3">
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">Q</div>
+                                <div>
+                                    <p class="pr-card__user">Quỳnh Lê</p>
+                                    <p class="pr-card__date">February 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Perfect for my entry table</h3>
+                        <p class="pr-card__comment">
+                            The vase adds a gentle traditional touch without looking too decorative.
+                            It feels simple, elegant and meaningful.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">R</div>
+                                <div>
+                                    <p class="pr-card__user">Rachel S.</p>
+                                    <p class="pr-card__date">February 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">The handmade detail is beautiful</h3>
+                        <p class="pr-card__comment">
+                            I bought it because I wanted something that felt connected to Vietnamese
+                            craft. The hand-painted lotus detail is my favorite part.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">B</div>
+                                <div>
+                                    <p class="pr-card__user">Bảo Minh</p>
+                                    <p class="pr-card__date">January 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Good gift option</h3>
+                        <p class="pr-card__comment">
+                            I gave this to my aunt and she liked it. The packaging felt careful
+                            and the product looked premium enough for gifting.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="3">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">E</div>
+                                <div>
+                                    <p class="pr-card__user">Emma J.</p>
+                                    <p class="pr-card__date">January 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Nice, but color varied from photo</h3>
+                        <p class="pr-card__comment">
+                            The vase is nice, but the blue looked slightly different from what I saw
+                            online. It still works with my decor.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="2">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">K</div>
+                                <div>
+                                    <p class="pr-card__user">Khánh B.</p>
+                                    <p class="pr-card__date">January 2026</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★☆☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Packaging was good, but size disappointed me</h3>
+                        <p class="pr-card__comment">
+                            The product was protected well, but the vase looked larger in the photos.
+                            The size options should be shown more clearly.
+                        </p>
+                    </article>
+
+                </div>
+
+
+                <!-- ================= PAGE 4 ================= -->
+                <div class="pr-page pr-page--4">
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">V</div>
+                                <div>
+                                    <p class="pr-card__user">Vy Hoàng</p>
+                                    <p class="pr-card__date">December 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Simple, calm and meaningful</h3>
+                        <p class="pr-card__comment">
+                            I like that it does not feel overly decorated. The shape is calm and
+                            the lotus detail makes it special.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">O</div>
+                                <div>
+                                    <p class="pr-card__user">Olivia P.</p>
+                                    <p class="pr-card__date">December 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">Better than expected</h3>
+                        <p class="pr-card__comment">
+                            The photos are pretty, but the actual piece feels warmer and more
+                            personal in real life.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">G</div>
+                                <div>
+                                    <p class="pr-card__user">Gia Hân</p>
+                                    <p class="pr-card__date">December 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Nice handmade texture</h3>
+                        <p class="pr-card__comment">
+                            The texture makes it look authentic. I only wish there were more photos
+                            showing scale next to common objects.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="3">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">Y</div>
+                                <div>
+                                    <p class="pr-card__user">Yến Nhi</p>
+                                    <p class="pr-card__date">November 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Good product, delayed delivery</h3>
+                        <p class="pr-card__comment">
+                            The vase itself is good, but delivery took longer than I thought.
+                            The tracking updates could be clearer.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="2">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">W</div>
+                                <div>
+                                    <p class="pr-card__user">William T.</p>
+                                    <p class="pr-card__date">November 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★☆☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Expected stronger colors</h3>
+                        <p class="pr-card__comment">
+                            I expected the cobalt blue to stand out more. The craftsmanship is good,
+                            but the color felt too soft for my taste.
+                        </p>
+                    </article>
+
+                </div>
+
+
+                <!-- ================= PAGE 5 ================= -->
+                <div class="pr-page pr-page--5">
+
+                    <article class="pr-card" data-star="5">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">S</div>
+                                <div>
+                                    <p class="pr-card__user">Sophia M.</p>
+                                    <p class="pr-card__date">October 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★★</p>
+                        </div>
+                        <h3 class="pr-card__title">A beautiful cultural piece</h3>
+                        <p class="pr-card__comment">
+                            I bought it because I wanted something with cultural meaning. It feels
+                            respectful, well-made and elegant.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="4">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">I</div>
+                                <div>
+                                    <p class="pr-card__user">Iris C.</p>
+                                    <p class="pr-card__date">October 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★★☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Good finish overall</h3>
+                        <p class="pr-card__comment">
+                            The finish is smooth and the piece feels solid. I would buy again,
+                            especially if there are more patterns.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="3">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">F</div>
+                                <div>
+                                    <p class="pr-card__user">Felix R.</p>
+                                    <p class="pr-card__date">September 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★★☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Decent, but not my style</h3>
+                        <p class="pr-card__comment">
+                            The quality is fine, but the overall style is softer than I expected.
+                            It may suit a minimal room better than mine.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="2">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">U</div>
+                                <div>
+                                    <p class="pr-card__user">Uyên Đỗ</p>
+                                    <p class="pr-card__date">September 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★★☆☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Nice idea, but too small</h3>
+                        <p class="pr-card__comment">
+                            I liked the story behind the product, but the actual size felt smaller
+                            than what I imagined from the photos.
+                        </p>
+                    </article>
+
+                    <article class="pr-card" data-star="1">
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar">S</div>
+                                <div>
+                                    <p class="pr-card__user">Sarah W.</p>
+                                    <p class="pr-card__date">September 2025</p>
+                                </div>
+                            </div>
+                            <p class="pr-card__stars">★☆☆☆☆</p>
+                        </div>
+                        <h3 class="pr-card__title">Arrived later than expected</h3>
+                        <p class="pr-card__comment">
+                            The vase itself is pretty, but the delivery took longer than I expected.
+                            I would have liked clearer shipping updates.
+                        </p>
+                    </article>
+
+                </div>
+
             </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Beautiful glaze and careful packaging</h3>
-        <p class="pr-card__comment">
-            Exactly as pictured — the cobalt glaze is even more vivid in person,
-            and it arrived wrapped so carefully nothing shifted in transit.
-        </p>
-        <div class="pr-card__media">
-            <img
-            src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=90&q=80"
-            alt="Product thumbnail from Mai T.'s review"
-            class="pr-card__thumb"
-            />
-            <img
-            src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=400&q=80"
-            alt="Customer photo of the vase on a shelf"
-            class="pr-card__photo"
-            />
-        </div>
-        </article>
+            <nav class="pr-pagination" aria-label="Review pagination">
+                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--disabled">
+                    ‹
+                </label>
+                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--2" for="review-page-1">
+                    ‹
+                </label>
+                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--3" for="review-page-2">
+                    ‹
+                </label>
 
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">L</div>
-            <div>
-                <p class="pr-card__user">Linh Phạm</p>
-                <p class="pr-card__date">May 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">A meaningful housewarming gift</h3>
-        <p class="pr-card__comment">
-            Bought this as a housewarming gift and my sister loved it —
-            the brushwork on the lotus petals is genuinely stunning up close.
-        </p>
-        </article>
+                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--4" for="review-page-3">
+                    ‹
+                </label>
 
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">A</div>
-            <div>
-                <p class="pr-card__user">An Nguyễn</p>
-                <p class="pr-card__date">April 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Looks handcrafted, not mass-produced</h3>
-        <p class="pr-card__comment">
-            I love the small differences in the painted lotus details. It feels
-            personal and handmade, which is exactly why I bought it.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">H</div>
-            <div>
-                <p class="pr-card__user">Hannah K.</p>
-                <p class="pr-card__date">April 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Elegant and simple</h3>
-        <p class="pr-card__comment">
-            The vase fits beautifully on my shelf. The color is soft but still
-            noticeable, and the handmade texture gives it character.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">J</div>
-            <div>
-                <p class="pr-card__user">James R.</p>
-                <p class="pr-card__date">May 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Lovely handmade feel</h3>
-        <p class="pr-card__comment">
-            Gorgeous vase and clearly handmade — a touch smaller than I pictured,
-            so worth checking the dimensions in Additional Info first.
-        </p>
-        </article>
-
-    </div>
+                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--5" for="review-page-4">
+                    ‹
+                </label>
 
 
-    <!-- ================= PAGE 2 ================= -->
-    <div class="pr-page pr-page--2">
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">T</div>
-            <div>
-                <p class="pr-card__user">Thảo Vũ</p>
-                <p class="pr-card__date">March 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Very pretty, but color is slightly lighter</h3>
-        <p class="pr-card__comment">
-            The quality is good and the shape is beautiful. The blue tone is a bit
-            lighter than I expected, but it still looks refined.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">P</div>
-            <div>
-                <p class="pr-card__user">Peter L.</p>
-                <p class="pr-card__date">March 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Good quality ceramic</h3>
-        <p class="pr-card__comment">
-            The vase feels sturdy and the surface finish is smooth. Shipping was
-            safe, although the box was larger than necessary.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">C</div>
-            <div>
-                <p class="pr-card__user">Chloe N.</p>
-                <p class="pr-card__date">March 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Subtle and tasteful</h3>
-        <p class="pr-card__comment">
-            It has a quiet beauty. I expected the lotus detail to be stronger,
-            but the subtle finish actually works well in my room.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="3">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">N</div>
-            <div>
-                <p class="pr-card__user">Nhi Trần</p>
-                <p class="pr-card__date">February 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Nice piece, but smaller than expected</h3>
-        <p class="pr-card__comment">
-            The design is beautiful, but I should have checked the size more
-            carefully. It works better as a small accent piece.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="3">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">D</div>
-            <div>
-                <p class="pr-card__user">Daniel M.</p>
-                <p class="pr-card__date">February 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Beautiful but not perfect</h3>
-        <p class="pr-card__comment">
-            I like the handmade look, but the glaze on one side was slightly uneven.
-            It still looks nice, just not as polished as I expected.
-        </p>
-        </article>
-
-    </div>
+                <label class="pr-page-btn" for="review-page-1">1</label>
+                <label class="pr-page-btn" for="review-page-2">2</label>
+                <label class="pr-page-btn" for="review-page-3">3</label>
+                <label class="pr-page-btn" for="review-page-4">4</label>
+                <label class="pr-page-btn" for="review-page-5">5</label>
 
 
-    <!-- ================= PAGE 3 ================= -->
-    <div class="pr-page pr-page--3">
+                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--1" for="review-page-2">
+                    ›
+                </label>
 
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">Q</div>
-            <div>
-                <p class="pr-card__user">Quỳnh Lê</p>
-                <p class="pr-card__date">February 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Perfect for my entry table</h3>
-        <p class="pr-card__comment">
-            The vase adds a gentle traditional touch without looking too decorative.
-            It feels simple, elegant and meaningful.
-        </p>
-        </article>
+                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--2" for="review-page-3">
+                    ›
+                </label>
 
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">R</div>
-            <div>
-                <p class="pr-card__user">Rachel S.</p>
-                <p class="pr-card__date">February 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">The handmade detail is beautiful</h3>
-        <p class="pr-card__comment">
-            I bought it because I wanted something that felt connected to Vietnamese
-            craft. The hand-painted lotus detail is my favorite part.
-        </p>
-        </article>
+                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--3" for="review-page-4">
+                    ›
+                </label>
 
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">B</div>
-            <div>
-                <p class="pr-card__user">Bảo Minh</p>
-                <p class="pr-card__date">January 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Good gift option</h3>
-        <p class="pr-card__comment">
-            I gave this to my aunt and she liked it. The packaging felt careful
-            and the product looked premium enough for gifting.
-        </p>
-        </article>
+                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--4" for="review-page-5">
+                    ›
+                </label>
 
-        <article class="pr-card" data-star="3">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">E</div>
-            <div>
-                <p class="pr-card__user">Emma J.</p>
-                <p class="pr-card__date">January 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Nice, but color varied from photo</h3>
-        <p class="pr-card__comment">
-            The vase is nice, but the blue looked slightly different from what I saw
-            online. It still works with my decor.
-        </p>
-        </article>
+                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--disabled">
+                    ›
+                </label>
 
-        <article class="pr-card" data-star="2">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">K</div>
-            <div>
-                <p class="pr-card__user">Khánh B.</p>
-                <p class="pr-card__date">January 2026</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★☆☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Packaging was good, but size disappointed me</h3>
-        <p class="pr-card__comment">
-            The product was protected well, but the vase looked larger in the photos.
-            The size options should be shown more clearly.
-        </p>
-        </article>
+            </nav>
+        </section>
 
-    </div>
-
-
-    <!-- ================= PAGE 4 ================= -->
-    <div class="pr-page pr-page--4">
-
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">V</div>
-            <div>
-                <p class="pr-card__user">Vy Hoàng</p>
-                <p class="pr-card__date">December 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Simple, calm and meaningful</h3>
-        <p class="pr-card__comment">
-            I like that it does not feel overly decorated. The shape is calm and
-            the lotus detail makes it special.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">O</div>
-            <div>
-                <p class="pr-card__user">Olivia P.</p>
-                <p class="pr-card__date">December 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">Better than expected</h3>
-        <p class="pr-card__comment">
-            The photos are pretty, but the actual piece feels warmer and more
-            personal in real life.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">G</div>
-            <div>
-                <p class="pr-card__user">Gia Hân</p>
-                <p class="pr-card__date">December 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Nice handmade texture</h3>
-        <p class="pr-card__comment">
-            The texture makes it look authentic. I only wish there were more photos
-            showing scale next to common objects.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="3">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">Y</div>
-            <div>
-                <p class="pr-card__user">Yến Nhi</p>
-                <p class="pr-card__date">November 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Good product, delayed delivery</h3>
-        <p class="pr-card__comment">
-            The vase itself is good, but delivery took longer than I thought.
-            The tracking updates could be clearer.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="2">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">W</div>
-            <div>
-                <p class="pr-card__user">William T.</p>
-                <p class="pr-card__date">November 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★☆☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Expected stronger colors</h3>
-        <p class="pr-card__comment">
-            I expected the cobalt blue to stand out more. The craftsmanship is good,
-            but the color felt too soft for my taste.
-        </p>
-        </article>
-
-    </div>
-
-
-    <!-- ================= PAGE 5 ================= -->
-    <div class="pr-page pr-page--5">
-
-        <article class="pr-card" data-star="5">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">S</div>
-            <div>
-                <p class="pr-card__user">Sophia M.</p>
-                <p class="pr-card__date">October 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★★</p>
-        </div>
-        <h3 class="pr-card__title">A beautiful cultural piece</h3>
-        <p class="pr-card__comment">
-            I bought it because I wanted something with cultural meaning. It feels
-            respectful, well-made and elegant.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="4">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">I</div>
-            <div>
-                <p class="pr-card__user">Iris C.</p>
-                <p class="pr-card__date">October 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★★☆</p>
-        </div>
-        <h3 class="pr-card__title">Good finish overall</h3>
-        <p class="pr-card__comment">
-            The finish is smooth and the piece feels solid. I would buy again,
-            especially if there are more patterns.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="3">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">F</div>
-            <div>
-                <p class="pr-card__user">Felix R.</p>
-                <p class="pr-card__date">September 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★★☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Decent, but not my style</h3>
-        <p class="pr-card__comment">
-            The quality is fine, but the overall style is softer than I expected.
-            It may suit a minimal room better than mine.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="2">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">U</div>
-            <div>
-                <p class="pr-card__user">Uyên Đỗ</p>
-                <p class="pr-card__date">September 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★★☆☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Nice idea, but too small</h3>
-        <p class="pr-card__comment">
-            I liked the story behind the product, but the actual size felt smaller
-            than what I imagined from the photos.
-        </p>
-        </article>
-
-        <article class="pr-card" data-star="1">
-        <div class="pr-card__top">
-            <div class="pr-card__identity">
-            <div class="pr-card__avatar">S</div>
-            <div>
-                <p class="pr-card__user">Sarah W.</p>
-                <p class="pr-card__date">September 2025</p>
-            </div>
-            </div>
-            <p class="pr-card__stars">★☆☆☆☆</p>
-        </div>
-        <h3 class="pr-card__title">Arrived later than expected</h3>
-        <p class="pr-card__comment">
-            The vase itself is pretty, but the delivery took longer than I expected.
-            I would have liked clearer shipping updates.
-        </p>
-        </article>
-
-    </div>
-
-    </div>
-    <nav class="pr-pagination" aria-label="Review pagination">
-        <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--disabled">
-            ‹
-        </label>
-        <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--2" for="review-page-1">
-            ‹
-        </label>
-        <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--3" for="review-page-2">
-            ‹
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--4" for="review-page-3">
-            ‹
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--5" for="review-page-4">
-            ‹
-        </label>
-
-
-        <label class="pr-page-btn" for="review-page-1">1</label>
-        <label class="pr-page-btn" for="review-page-2">2</label>
-        <label class="pr-page-btn" for="review-page-3">3</label>
-        <label class="pr-page-btn" for="review-page-4">4</label>
-        <label class="pr-page-btn" for="review-page-5">5</label>
-
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--1" for="review-page-2">
-            ›
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--2" for="review-page-3">
-            ›
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--3" for="review-page-4">
-            ›
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--4" for="review-page-5">
-            ›
-        </label>
-
-        <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--disabled">
-            ›
-        </label>
-
-        </nav>
-  </section>
-
-</main>
+    </main>
 </body>
+
 </html>
