@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>User Profile | Làng & Co.</title>
@@ -16,19 +15,19 @@
 
 <body>
 
-  <iframe src="../global/header_shoppingcart.html" title="Header" class="shared-include profile-header" loading="eager"
-    scrolling="no"></iframe>
+  <iframe
+    src="../global/header_shoppingcart.html"
+    title="Header"
+    class="shared-include profile-header"
+    loading="eager"
+    scrolling="no"
+  ></iframe>
 
   <main class="profile-page">
 
     <input class="profile-state" type="radio" name="profile-tab" id="tab-user" checked />
-
-    <input class="profile-state" type="radio" name="profile-tab" id="tab-favorites" />
-
-    <input class="profile-state" type="radio" name="profile-tab" id="tab-watchlist" />
-
+    <input class="profile-state" type="radio" name="profile-tab" id="tab-orders" />
     <input class="profile-state" type="radio" name="profile-tab" id="tab-settings" />
-
     <input class="profile-state" type="radio" name="profile-tab" id="tab-notifications" />
 
     <section class="profile-shell">
@@ -36,108 +35,77 @@
       <aside class="profile-sidebar">
 
         <div class="profile-sidebar__heading">
-
-          <p class="profile-kicker">
-            Account
+          <p class="profile-kicker">Account</p>
+          <h1>My Atelier</h1>
+          <p class="profile-sidebar__sub">
+            Manage your profile, follow your orders, and stay close to every handmade piece you bring home.
           </p>
-
-          <h1>
-            User Profile
-          </h1>
-
         </div>
 
         <nav class="profile-nav">
 
           <label class="profile-nav__item" for="tab-user">
-
             <span class="profile-nav__icon">
               <svg viewBox="0 0 24 24">
                 <circle cx="12" cy="8" r="3.6" />
                 <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
               </svg>
             </span>
-
-            <span>
-              User info
-            </span>
-
+            <span>User Info</span>
           </label>
 
-          <label class="profile-nav__item" for="tab-favorites">
-
+          <label class="profile-nav__item" for="tab-orders">
             <span class="profile-nav__icon">
               <svg viewBox="0 0 24 24">
-                <path
-                  d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.9-8.6a5.5 5.5 0 0 0-.1-7.8Z" />
+                <path d="M3 7h15l2 9H5L3 7Z" />
+                <path d="M7 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <circle cx="9" cy="20" r="1.2" />
+                <circle cx="17" cy="20" r="1.2" />
               </svg>
             </span>
-
-            <span>
-              Favorites
-            </span>
-
-          </label>
-
-          <label class="profile-nav__item" for="tab-watchlist">
-
-            <span class="profile-nav__icon">
-              <svg viewBox="0 0 24 24">
-                <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 3Z" />
-              </svg>
-            </span>
-
-            <span>
-              Watchlist
-            </span>
-
+            <span>Order Tracking</span>
           </label>
 
           <label class="profile-nav__item" for="tab-settings">
-
             <span class="profile-nav__icon">
               <svg viewBox="0 0 24 24">
                 <path d="M12 15.3A3.3 3.3 0 1 0 12 8.7a3.3 3.3 0 0 0 0 6.6Z" />
-                <path
-                  d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
               </svg>
             </span>
-
-            <span>
-              Settings
-            </span>
-
+            <span>Settings</span>
           </label>
 
           <label class="profile-nav__item" for="tab-notifications">
-
             <span class="profile-nav__icon">
               <svg viewBox="0 0 24 24">
                 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" />
                 <path d="M10 21h4" />
               </svg>
             </span>
-
-            <span>
-              Notifications
-            </span>
-
+            <span>Notifications</span>
           </label>
 
         </nav>
 
-        <a class="profile-logout" href="login.html">
+        <div class="profile-sidebar__meta">
+          <div>
+            <strong>Member Since</strong>
+            <span>May 2024</span>
+          </div>
+          <div>
+            <strong>Tier</strong>
+            <span>Craft Collector</span>
+          </div>
+        </div>
 
+        <a class="profile-logout" href="login.html">
           <svg viewBox="0 0 24 24">
             <path d="M10 17l5-5-5-5" />
             <path d="M15 12H3" />
             <path d="M21 19V5a2 2 0 0 0-2-2h-5" />
           </svg>
-
-          <span>
-            Log out
-          </span>
-
+          <span>Log out</span>
         </a>
 
       </aside>
@@ -147,35 +115,46 @@
         <div class="profile-panel profile-panel--user">
 
           <div class="profile-hero">
-
             <div class="profile-avatar-wrap">
-
-              <img class="profile-avatar"
+              <img
+                class="profile-avatar"
                 src="/public/images/profile.png"
-                alt="User avatar" />
-
-              <button class="avatar-edit" type="button" aria-label="Edit profile image">
-                ✎
-              </button>
-
+                alt="User avatar"
+              />
+              <button class="avatar-edit" type="button" aria-label="Edit profile image">✎</button>
             </div>
 
-            <div>
+            <div class="profile-hero__content">
+              <p class="profile-kicker">Member profile</p>
+              <h2>Nguyễn Thị Doraemon</h2>
+              <p>Tokyo, Japan</p>
 
-              <p class="profile-kicker">
-                Member profile
-              </p>
-
-              <h2>
-                Nguyễn Thị Doraemon
-              </h2>
-
-              <p>
-                Tokyo, Japan
-              </p>
-
+              <div class="profile-badges">
+                <span>Verified account</span>
+                <span>Collector tier</span>
+                <span>3 active orders</span>
+              </div>
             </div>
+          </div>
 
+          <div class="profile-stats">
+            <article class="profile-stat-card">
+              <span class="profile-stat-card__label">Orders placed</span>
+              <strong>18</strong>
+              <small>Across ceramics, textiles, and lacquerware</small>
+            </article>
+
+            <article class="profile-stat-card">
+              <span class="profile-stat-card__label">In transit</span>
+              <strong>03</strong>
+              <small>Two international, one domestic delivery</small>
+            </article>
+
+            <article class="profile-stat-card">
+              <span class="profile-stat-card__label">Support requests</span>
+              <strong>01</strong>
+              <small>Your latest shipping inquiry is being reviewed</small>
+            </article>
           </div>
 
           <form class="profile-form" action="#" method="post">
@@ -183,299 +162,326 @@
             <div class="profile-grid">
 
               <label class="profile-field">
-
-                <span>
-                  First Name
-                </span>
-
+                <span>First Name</span>
                 <input type="text" name="firstName" value="Doraemon" />
-
               </label>
 
               <label class="profile-field">
-
-                <span>
-                  Last Name
-                </span>
-
+                <span>Last Name</span>
                 <input type="text" name="lastName" value="Nguyễn Thị" />
-
               </label>
 
               <label class="profile-field">
-
-                <span>
-                  Email Address
-                </span>
-
+                <span>Email Address</span>
                 <input type="email" name="email" value="nguyenthidoraemon@gmail.com" />
-
               </label>
 
               <label class="profile-field">
-
-                <span>
-                  Phone Number
-                </span>
-
-                <input type="tel" name="phone" value="(+98) 9123728167" />
-
+                <span>Phone Number</span>
+                <input type="tel" name="phone" value="(+81) 9123728167" />
               </label>
 
               <label class="profile-field">
-
-                <span>
-                  Location
-                </span>
-
+                <span>Location</span>
                 <input type="text" name="location" value="Tokyo, Japan" />
-
               </label>
 
               <label class="profile-field">
-
-                <span>
-                  Postal Code
-                </span>
-
+                <span>Postal Code</span>
                 <input type="text" name="postalCode" value="23728167" />
+              </label>
 
+              <label class="profile-field profile-field--full">
+                <span>Address</span>
+                <input type="text" name="address" value="12-8 Shibuya Craft Street, Tokyo" />
+              </label>
+
+              <label class="profile-field profile-field--full">
+                <span>About</span>
+                <textarea name="about" rows="5">A collector of handmade pieces with a love for Vietnamese craft villages, blue-and-white ceramics, and meaningful objects that tell a story.</textarea>
               </label>
 
             </div>
 
-            <button class="profile-save" type="submit">
-              Save Changes
-            </button>
+            <button class="profile-save" type="submit">Save Changes</button>
 
           </form>
 
         </div>
 
-        <div class="profile-panel profile-panel--favorites">
+
+        <div class="profile-panel profile-panel--orders">
 
           <div class="panel-heading">
-
-            <p class="profile-kicker">
-              Saved taste
-            </p>
-
-            <h2>
-              Favorite Pieces
-            </h2>
-
+            <p class="profile-kicker">Tracking</p>
+            <h2>Order Status</h2>
             <p>
-              A quick hardcoded overview of the items this user loves most.
+              Follow each order from confirmation to delivery, with a clear timeline and a quick overview of your active purchases.
             </p>
+          </div>
+
+          <div class="order-summary-grid">
+
+            <article class="order-summary-card">
+              <span>Preparing</span>
+              <strong>01</strong>
+              <p>Your order is being packed by the workshop.</p>
+            </article>
+
+            <article class="order-summary-card">
+              <span>In transit</span>
+              <strong>02</strong>
+              <p>On the way to your delivery address.</p>
+            </article>
+
+            <article class="order-summary-card">
+              <span>Delivered</span>
+              <strong>15</strong>
+              <p>Successfully received and completed.</p>
+            </article>
 
           </div>
 
-          <div class="mini-card-grid">
+          <div class="order-card-list">
 
-            <article class="mini-card">
-
-              <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&q=88"
-                alt="Ceramic vase" />
-
-              <div>
-                <span>
-                  Bát Tràng · Hanoi
-                </span>
-
-                <h3>
-                  Hand-painted Blue Lotus Vase
-                </h3>
-
-                <p>
-                  ₫2,100,000
-                </p>
+            <article class="order-card">
+              <div class="order-card__head">
+                <div>
+                  <p class="order-card__eyebrow">Order #LC-240518</p>
+                  <h3>Bát Tràng Blue Lotus Vase</h3>
+                </div>
+                <span class="status-pill status-pill--transit">In Transit</span>
               </div>
 
+              <div class="order-card__meta">
+                <span>Placed on 18 May 2026</span>
+                <span>Estimated arrival: 23 May 2026</span>
+                <span>Total: ₫2,100,000</span>
+              </div>
+
+              <div class="order-progress">
+                <div class="order-progress__bar">
+                  <span style="width: 76%;"></span>
+                </div>
+                <div class="order-progress__steps">
+                  <span class="is-done">Confirmed</span>
+                  <span class="is-done">Packed</span>
+                  <span class="is-active">In Transit</span>
+                  <span>Delivered</span>
+                </div>
+              </div>
+
+              <div class="order-timeline">
+                <div class="order-timeline__item is-done">
+                  <strong>Order confirmed</strong>
+                  <p>Your payment has been received successfully.</p>
+                </div>
+
+                <div class="order-timeline__item is-done">
+                  <strong>Packed by workshop</strong>
+                  <p>The artisan studio finished preparing your ceramic vase.</p>
+                </div>
+
+                <div class="order-timeline__item is-active">
+                  <strong>Shipping in progress</strong>
+                  <p>The parcel is currently moving through the courier network.</p>
+                </div>
+
+                <div class="order-timeline__item">
+                  <strong>Ready for delivery</strong>
+                  <p>This step will update once the order reaches your local address hub.</p>
+                </div>
+              </div>
+
+              <div class="order-card__actions">
+                <a href="#" class="order-action">Track shipment</a>
+                <a href="#" class="order-action order-action--ghost">View invoice</a>
+              </div>
             </article>
 
-            <article class="mini-card">
 
-              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=88"
-                alt="Tea set" />
-
-              <div>
-                <span>
-                  Chu Đậu · Hải Dương
-                </span>
-
-                <h3>
-                  Ash Glaze Tea Cup
-                </h3>
-
-                <p>
-                  ₫680,000
-                </p>
+            <article class="order-card">
+              <div class="order-card__head">
+                <div>
+                  <p class="order-card__eyebrow">Order #LC-240503</p>
+                  <h3>Vạn Phúc Silk Scarf</h3>
+                </div>
+                <span class="status-pill status-pill--preparing">Preparing</span>
               </div>
 
+              <div class="order-card__meta">
+                <span>Placed on 03 May 2026</span>
+                <span>Estimated arrival: 10 May 2026</span>
+                <span>Total: ₫1,250,000</span>
+              </div>
+
+              <div class="order-progress">
+                <div class="order-progress__bar">
+                  <span style="width: 38%;"></span>
+                </div>
+                <div class="order-progress__steps">
+                  <span class="is-done">Confirmed</span>
+                  <span class="is-active">Packed</span>
+                  <span>In Transit</span>
+                  <span>Delivered</span>
+                </div>
+              </div>
+
+              <div class="order-timeline">
+                <div class="order-timeline__item is-done">
+                  <strong>Order confirmed</strong>
+                  <p>Your order has been approved and scheduled for preparation.</p>
+                </div>
+
+                <div class="order-timeline__item is-active">
+                  <strong>Preparing order</strong>
+                  <p>The scarf is being packed carefully for international delivery.</p>
+                </div>
+
+                <div class="order-timeline__item">
+                  <strong>Shipment dispatch</strong>
+                  <p>Courier details will appear here once the package is handed over.</p>
+                </div>
+
+                <div class="order-timeline__item">
+                  <strong>Final delivery</strong>
+                  <p>You will receive a notification once the item is out for delivery.</p>
+                </div>
+              </div>
+
+              <div class="order-card__actions">
+                <a href="#" class="order-action">Order details</a>
+                <a href="#" class="order-action order-action--ghost">Contact support</a>
+              </div>
             </article>
 
           </div>
 
         </div>
 
-        <div class="profile-panel profile-panel--watchlist">
-
-          <div class="panel-heading">
-
-            <p class="profile-kicker">
-              Tracking
-            </p>
-
-            <h2>
-              Watchlist
-            </h2>
-
-            <p>
-              Pieces the user may return to later.
-            </p>
-
-          </div>
-
-          <div class="watchlist-list">
-
-            <div>
-              <strong>
-                Vermilion Lacquer Tray
-              </strong>
-
-              <span>
-                Price watched · Lacquer
-              </span>
-            </div>
-
-            <div>
-              <strong>
-                Phú Vinh Bamboo Basket
-              </strong>
-
-              <span>
-                Restock watched · Rattan & Bamboo
-              </span>
-            </div>
-
-            <div>
-              <strong>
-                Vạn Phúc Silk Scarf
-              </strong>
-
-              <span>
-                Wishlist watched · Textiles & Silk
-              </span>
-            </div>
-
-          </div>
-
-        </div>
 
         <div class="profile-panel profile-panel--settings">
 
           <div class="panel-heading">
-
-            <p class="profile-kicker">
-              Preferences
-            </p>
-
-            <h2>
-              Account Settings
-            </h2>
-
+            <p class="profile-kicker">Preferences</p>
+            <h2>Account Settings</h2>
             <p>
-              Static frontend controls for the later account system.
+              Customize how Làng &amp; Co. reaches you, how your orders are updated, and how your account feels day to day.
             </p>
-
           </div>
 
-          <div class="setting-list">
+          <div class="setting-group">
+            <h3>Communication</h3>
 
-            <label>
-              <span>
-                Email updates
-              </span>
+            <div class="setting-list">
+              <label>
+                <span>Email updates</span>
+                <input type="checkbox" checked />
+              </label>
 
-              <input type="checkbox" checked />
-            </label>
+              <label>
+                <span>Order notifications</span>
+                <input type="checkbox" checked />
+              </label>
 
-            <label>
-              <span>
-                Order notifications
-              </span>
+              <label>
+                <span>Community replies</span>
+                <input type="checkbox" />
+              </label>
 
-              <input type="checkbox" checked />
-            </label>
+              <label>
+                <span>Promotions and new collections</span>
+                <input type="checkbox" checked />
+              </label>
+            </div>
+          </div>
 
-            <label>
-              <span>
-                Community replies
-              </span>
+          <div class="setting-group">
+            <h3>Account Preferences</h3>
 
-              <input type="checkbox" />
-            </label>
+            <div class="setting-list">
+              <label>
+                <span>Save shipping information</span>
+                <input type="checkbox" checked />
+              </label>
 
+              <label>
+                <span>Default to international shipping</span>
+                <input type="checkbox" />
+              </label>
+
+              <label>
+                <span>Receive product care guides</span>
+                <input type="checkbox" checked />
+              </label>
+            </div>
           </div>
 
         </div>
+
 
         <div class="profile-panel profile-panel--notifications">
 
           <div class="panel-heading">
-
-            <p class="profile-kicker">
-              Activity
-            </p>
-
-            <h2>
-              Notifications
-            </h2>
-
+            <p class="profile-kicker">Activity</p>
+            <h2>Notifications</h2>
             <p>
-              Hardcoded examples of profile activity.
+              Important updates from your account, orders, and the wider Làng &amp; Co. community.
             </p>
-
           </div>
 
           <div class="notification-list">
 
-            <div>
-              <span>
-                New
-              </span>
-
-              <p>
-                Your saved ceramic vase is still available.
-              </p>
+            <div class="notification-card">
+              <span class="notification-chip">Order</span>
+              <div>
+                <strong>Your Bát Tràng Blue Lotus Vase is now in transit.</strong>
+                <p>Updated 2 hours ago · Track your shipment from the Order Tracking tab.</p>
+              </div>
             </div>
 
-            <div>
-              <span>
-                Order
-              </span>
-
-              <p>
-                Your latest order is being prepared by the workshop.
-              </p>
+            <div class="notification-card">
+              <span class="notification-chip">New</span>
+              <div>
+                <strong>A new collection from Hội An artisans is now available.</strong>
+                <p>Explore recently added lantern-inspired handcrafted pieces.</p>
+              </div>
             </div>
 
-            <div>
-              <span>
-                Forum
-              </span>
-              <p>
-                Someone replied to your question about lacquer care.
-              </p>
+            <div class="notification-card">
+              <span class="notification-chip">Forum</span>
+              <div>
+                <strong>Someone replied to your discussion about lacquer care.</strong>
+                <p>Open the forum to continue the conversation with the community.</p>
+              </div>
             </div>
+
+            <div class="notification-card">
+              <span class="notification-chip">Support</span>
+              <div>
+                <strong>Your support request has been received.</strong>
+                <p>We usually respond within one business day.</p>
+              </div>
+            </div>
+
           </div>
+
         </div>
+
       </section>
+
     </section>
+
   </main>
-  <!--Footer-->
-  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
+
+  <iframe
+    src="../global/footer.html"
+    title="Footer"
+    class="shared-include shared-footer"
+    loading="lazy"
+    scrolling="no"
+  ></iframe>
+
 </body>
 
 </html>

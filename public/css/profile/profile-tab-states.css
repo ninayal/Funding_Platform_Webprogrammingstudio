@@ -1,8 +1,13 @@
 .profile-content {
   position: relative;
-  min-height: 680px;
-  padding: 54px 70px;
-  background: rgba(254, 249, 225, .36);
+  min-height: 860px;
+  padding: 68px 78px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(254, 249, 225, .46),
+      rgba(255, 255, 255, .16)
+    );
 }
 
 .profile-panel {
@@ -10,25 +15,22 @@
 }
 
 #tab-user:checked ~ .profile-shell label[for="tab-user"],
-#tab-favorites:checked ~ .profile-shell label[for="tab-favorites"],
-#tab-watchlist:checked ~ .profile-shell label[for="tab-watchlist"],
+#tab-orders:checked ~ .profile-shell label[for="tab-orders"],
 #tab-settings:checked ~ .profile-shell label[for="tab-settings"],
 #tab-notifications:checked ~ .profile-shell label[for="tab-notifications"] {
   color: var(--deep);
-  background: rgba(255, 255, 255, .52);
+  background: rgba(255, 255, 255, .6);
 }
 
 #tab-user:checked ~ .profile-shell label[for="tab-user"]::after,
-#tab-favorites:checked ~ .profile-shell label[for="tab-favorites"]::after,
-#tab-watchlist:checked ~ .profile-shell label[for="tab-watchlist"]::after,
+#tab-orders:checked ~ .profile-shell label[for="tab-orders"]::after,
 #tab-settings:checked ~ .profile-shell label[for="tab-settings"]::after,
 #tab-notifications:checked ~ .profile-shell label[for="tab-notifications"]::after {
   background: var(--red);
 }
 
 #tab-user:checked ~ .profile-shell .profile-panel--user,
-#tab-favorites:checked ~ .profile-shell .profile-panel--favorites,
-#tab-watchlist:checked ~ .profile-shell .profile-panel--watchlist,
+#tab-orders:checked ~ .profile-shell .profile-panel--orders,
 #tab-settings:checked ~ .profile-shell .profile-panel--settings,
 #tab-notifications:checked ~ .profile-shell .profile-panel--notifications {
   display: block;
