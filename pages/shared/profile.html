@@ -13,15 +13,10 @@
   <link rel="stylesheet" href="../../public/css/profile/profile.css" />
 </head>
 
-<body>
+<body class="is-admin">
 
-  <iframe
-    src="../global/header_shoppingcart.html"
-    title="Header"
-    class="shared-include profile-header"
-    loading="eager"
-    scrolling="no"
-  ></iframe>
+  <iframe src="../global/header_shoppingcart.html" title="Header" class="shared-include profile-header" loading="eager"
+    scrolling="no"></iframe>
 
   <main class="profile-page">
 
@@ -70,7 +65,8 @@
             <span class="profile-nav__icon">
               <svg viewBox="0 0 24 24">
                 <path d="M12 15.3A3.3 3.3 0 1 0 12 8.7a3.3 3.3 0 0 0 0 6.6Z" />
-                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+                <path
+                  d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
               </svg>
             </span>
             <span>Settings</span>
@@ -99,6 +95,17 @@
           </div>
         </div>
 
+
+        <a class="profile-admin-link admin-only" href="admin.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4Z" />
+            <path d="M9.5 12.2l1.7 1.7 3.5-4" />
+          </svg>
+          <span>
+            Admin Dashboard
+          </span>
+        </a>
+
         <a class="profile-logout" href="login.html">
           <svg viewBox="0 0 24 24">
             <path d="M10 17l5-5-5-5" />
@@ -116,11 +123,7 @@
 
           <div class="profile-hero">
             <div class="profile-avatar-wrap">
-              <img
-                class="profile-avatar"
-                src="/public/images/profile.png"
-                alt="User avatar"
-              />
+              <img class="profile-avatar" src="/public/images/profile.png" alt="User avatar" />
               <button class="avatar-edit" type="button" aria-label="Edit profile image">✎</button>
             </div>
 
@@ -198,7 +201,8 @@
 
               <label class="profile-field profile-field--full">
                 <span>About</span>
-                <textarea name="about" rows="5">A collector of handmade pieces with a love for Vietnamese craft villages, blue-and-white ceramics, and meaningful objects that tell a story.</textarea>
+                <textarea name="about"
+                  rows="5">A collector of handmade pieces with a love for Vietnamese craft villages, blue-and-white ceramics, and meaningful objects that tell a story.</textarea>
               </label>
 
             </div>
@@ -216,7 +220,8 @@
             <p class="profile-kicker">Tracking</p>
             <h2>Order Status</h2>
             <p>
-              Follow each order from confirmation to delivery, with a clear timeline and a quick overview of your active purchases.
+              Follow each order from confirmation to delivery, with a clear timeline and a quick overview of your active
+              purchases.
             </p>
           </div>
 
@@ -366,7 +371,8 @@
             <p class="profile-kicker">Preferences</p>
             <h2>Account Settings</h2>
             <p>
-              Customize how Làng &amp; Co. reaches you, how your orders are updated, and how your account feels day to day.
+              Customize how Làng &amp; Co. reaches you, how your orders are updated, and how your account feels day to
+              day.
             </p>
           </div>
 
@@ -474,13 +480,8 @@
 
   </main>
 
-  <iframe
-    src="../global/footer.html"
-    title="Footer"
-    class="shared-include shared-footer"
-    loading="lazy"
-    scrolling="no"
-  ></iframe>
+  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
 
 </body>
 
