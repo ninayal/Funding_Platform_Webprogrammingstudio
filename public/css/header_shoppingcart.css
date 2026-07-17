@@ -57,11 +57,13 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
+  width: 240px;
   max-height: 0;
   overflow: hidden;
   background: var(--cream);
-  border-bottom: 1px solid rgba(175, 143, 111, .25);
+  border: 1px solid rgba(175, 143, 111, .25);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
   box-shadow: 0 16px 30px rgba(1, 1, 0, .08);
   transition: max-height .3s cubic-bezier(.4, 0, .2, 1);
   z-index: 60;
@@ -75,7 +77,7 @@ body {
 
 .mobile-menu a {
   display: block;
-  padding: 15px 48px;
+  padding: 14px 22px;
   font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 600;
