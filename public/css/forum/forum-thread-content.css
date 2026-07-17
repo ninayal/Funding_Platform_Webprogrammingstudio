@@ -8,7 +8,7 @@
   grid-template-columns: minmax(0, 1fr) 280px;
   align-items: start;
   gap: 28px;
-  width: min(1100px, calc(100% - 48px));
+  width: min(1600px, calc(100% - 48px));
   margin: 18px auto 0;
   padding-bottom: 92px;
 }

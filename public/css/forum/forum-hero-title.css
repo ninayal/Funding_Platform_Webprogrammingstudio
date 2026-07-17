@@ -1,7 +1,7 @@
 /* -----------------------------
-   HERO EYEBROW (sub-pages, e.g. forum_popular.html)
+   PAGE HEADING EYEBROW
 ------------------------------ */
-.hero__title .eyebrow {
+.eyebrow {
   margin: 0 0 10px;
   font-family: var(--ff-ui);
   font-size: 13px;
@@ -28,6 +28,15 @@
   font-weight: 500;
   letter-spacing: -.02em;
   color: var(--red);
+}
+
+.forum-title__sub {
+  margin: 6px 0 0;
+  font-family: var(--ff-body);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: .5px;
 }
 
 .section-label {

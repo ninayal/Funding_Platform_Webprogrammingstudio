@@ -28,14 +28,31 @@
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: url('../../images/linen-beige.png');
   color: var(--ink);
   font-family: var(--ff-ui);
 }
 
 /* Contain child bottom margins (e.g. .create-thread-form) so the linen
-   .wave background never gets cut short before the footer */
+   .wave background never gets cut short before the footer.
+   Resets position/margin/border-radius/overflow/z-index because this
+   class name also exists in landingpage/index-wave.css (homepage hero
+   transition) which forum pages load for shared tokens — without the
+   reset, that unrelated rule leaks in and curves/clips this container. */
 .wave {
   display: flow-root;
+  position: static;
+  z-index: auto;
+  margin-top: 0;
+  padding-top: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.container {
+  width: 94%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0;
 }
 
