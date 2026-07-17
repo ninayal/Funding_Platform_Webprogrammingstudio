@@ -3,7 +3,7 @@
 A static front-end website for **Làng & Co.**, a curated marketplace where Vietnamese craftsmanship — ceramics, silk, paintings, wood carving, incense, and more — finds a home in the modern world.
 
 > **Assignment 01 — Static Front End** · Web Programming Studio · RMIT University
-> Students: s4220184 · s4186655
+> Students: s4208144 · s4203654 · s4220184 · s4124826
 
 ## Overview
 
@@ -11,10 +11,6 @@ The site is built entirely with **HTML5 and CSS3** — no JavaScript, no build t
 
 To view the site, open `index.html` in a browser, or serve the folder locally:
 
-```bash
-python -m http.server 8000
-# then visit http://localhost:8000
-```
 
 ## Pages
 
@@ -49,8 +45,18 @@ python -m http.server 8000
     ├── css/                    # Modular CSS, grouped per feature
     │   ├── landingpage/        # index-*.css (hero, categories, faq, ...)
     │   ├── cart/               # cart-, checkout-, product-*.css
-    │   ├── forum/  blog/  giftcard/  login_register/ ...
-    │   └── header.css, footer.css, admin.css, legal.css, ...
+    │   ├── forum/  
+    │   ├── blog/  
+    │   ├── giftcard/  
+    │   ├── login_register/
+    │   └── header.css
+    │   ├── footer.css
+    │   ├── admin.css
+    │   ├── legal.css
+    │   ├── sitemap.css
+    │   ├── forgot_password.css
+    │   ├── header_shoppingcart.css
+    │   ├── shared-included.css
     └── images/                 # Logo, landing photos, product photos, icons
 ```
 
@@ -64,4 +70,4 @@ python -m http.server 8000
 
 ## Branch
 
-- `Assignment01-Static_Front_End_web` — static front-end deliverable (this code)
+- `Assignment01-Static_Front_End_web` — main
