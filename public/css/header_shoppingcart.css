@@ -57,10 +57,10 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 240px;
+  width: 300px;
   max-height: 0;
   overflow: hidden;
-  background: var(--cream);
+  background: url('../images/linen-beige.png');
   border: 1px solid rgba(175, 143, 111, .25);
   border-top: none;
   border-radius: 0 0 10px 10px;
