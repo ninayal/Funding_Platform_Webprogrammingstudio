@@ -23,6 +23,15 @@ iframe.shared-header {
 }
 
 
+.shoppingcart-header {
+  display: block;
+  width: 100%;
+  height: 430px;
+  min-height: 430px;
+  border: 0;
+}
+
+
 @media (max-width: 900px) {
   .shared-footer {
     height: 560px;
