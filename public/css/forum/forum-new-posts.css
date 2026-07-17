@@ -11,11 +11,6 @@
   margin: 18px auto 0;
 }
 
-.thread-card__title .thread-tag {
-  margin-right: 4px;
-  font-size: 11px;
-}
-
 .thread-card__title-link {
   color: var(--ink);
   text-decoration: none;

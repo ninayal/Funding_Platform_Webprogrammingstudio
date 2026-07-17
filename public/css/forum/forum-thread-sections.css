@@ -1,51 +1,6 @@
 /* -----------------------------
    THREAD SECTIONS
 ------------------------------ */
-.thread-section {
-  width: min(1600px, calc(100% - 48px));
-  margin: 44px auto 0;
-  padding-bottom: 92px;
-}
-
-.thread-section-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.thread-section-header:not(:first-child) {
-  margin-top: 36px;
-}
-
-.more-link {
-  color: var(--red);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  transition: transform .2s ease;
-}
-
-.more-link:hover {
-  transform: translateX(3px);
-}
-
-.section-tab-link {
-  color: var(--muted);
-  text-decoration: none;
-  font-family: var(--ff-body);
-  font-size: 15px;
-  font-style: italic;
-  transition: color .2s ease;
-}
-
-.section-tab-link:hover {
-  color: var(--red);
-}
-
 .thread-list {
   display: flex;
   flex-direction: column;
