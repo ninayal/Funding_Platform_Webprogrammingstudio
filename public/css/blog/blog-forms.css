@@ -13,7 +13,7 @@
 .form-heading h2 {
   margin: 0 0 10px;
   font-family: var(--ff-script);
-  font-size: clamp(38px, 5vw, 58px);
+  font-size: 58px;
   font-weight: 500;
   line-height: 1;
 }

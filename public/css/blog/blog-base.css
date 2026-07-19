@@ -62,9 +62,9 @@ button {
   border: 0;
 }
 
-.state-input,
-.delete-toggle,
-.state-target {
+.blog-state-input,
+.blog-delete-toggle,
+.blog-state-target {
   position: absolute;
   width: 1px;
   height: 1px;

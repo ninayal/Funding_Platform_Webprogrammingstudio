@@ -164,7 +164,7 @@
 }
 
 /* Normal cards are flex, so the created card must reappear as flex */
-#post-created:target~.blog-shell .created-post {
+body:has(#post-created:target) .created-post {
   display: flex;
 }
 
