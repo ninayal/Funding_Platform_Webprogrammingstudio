@@ -23,14 +23,6 @@
   color: var(--ink);
 }
 
-.thread-card__brief {
-  margin: 0 0 18px;
-  color: var(--muted);
-  font-family: var(--ff-body);
-  font-size: 16px;
-  line-height: 1.5;
-}
-
 .thread-card__meta {
   display: flex;
   flex-wrap: wrap;
@@ -42,9 +34,5 @@
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;
-}
-
-.thread-card__meta .meta-topic {
-  color: var(--red);
 }
 

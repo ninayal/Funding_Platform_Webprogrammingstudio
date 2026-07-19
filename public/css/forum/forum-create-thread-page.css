@@ -1,21 +1,6 @@
 /* -----------------------------
    CREATE THREAD PAGE
 ------------------------------ */
-.create-thread-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: min(900px, calc(100% - 48px));
-  margin: 0 auto 20px;
-}
-
-.create-thread-label {
-  font-family: var(--ff-ui);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--brown);
-}
-
 .create-thread-form {
   display: flex;
   flex-direction: column;

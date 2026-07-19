@@ -1,10 +1,6 @@
 /* -----------------------------
    CREATE THREAD BUTTON
 ------------------------------ */
-.create-thread {
-  margin-top: 18px;
-}
-
 .create-thread-btn {
   display: inline-flex;
   align-items: center;
@@ -26,12 +22,5 @@
 .create-thread-btn:hover {
   background: var(--red);
   transform: translateY(-1px);
-}
-
-/* Second create-threads button lower on the page */
-.thread-section + .create-thread {
-  width: min(1100px, calc(100% - 48px));
-  margin: 40px auto 60px;
-  text-align: center;
 }
 

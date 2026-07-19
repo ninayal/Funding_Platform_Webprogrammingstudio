@@ -2,7 +2,7 @@
    LAYOUT UTILITY
 ------------------------------ */
 .forum-container {
-  width: min(1100px, calc(100% - 48px));
+  width: min(1600px, calc(100% - 48px));
   margin: 0 auto;
 }
 
@@ -14,7 +14,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  width: min(1100px, calc(100% - 48px));
+  width: min(1600px, calc(100% - 48px));
   margin: 28px auto 0;
   padding: 10px 10px 10px 22px;
   border: 1px solid var(--line);
@@ -66,18 +66,16 @@
    BREADCRUMB
 ------------------------------ */
 .forum-breadcrumb {
-  width: min(1100px, calc(100% - 48px));
-  margin: 18px auto 0;
+  width: min(1600px, calc(100% - 48px));
+  margin: 0 auto 22px;
   color: var(--muted);
   font-family: var(--ff-ui);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .forum-breadcrumb a {
-  color: var(--brown);
+  color: var(--muted);
   text-decoration: none;
 }
 
@@ -90,3 +88,34 @@
   opacity: .6;
 }
 
+.forum-breadcrumb span[aria-current] {
+  color: var(--deep);
+  font-weight: 600;
+  opacity: 1;
+}
+
+.wishlist-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.wishlist-header h1 {
+  font-family: var(--ff-script);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(38px, 5vw, 54px);
+  line-height: 1;
+  color: var(--deep);
+}
+
+.wishlist-header__sub {
+  font-family: var(--ff-body);
+  font-size: 19px;
+  color: var(--brown);
+  max-width: 340px;
+  text-align: right;
+}

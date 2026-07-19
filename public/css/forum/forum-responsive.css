@@ -2,20 +2,6 @@
    RESPONSIVE
 ------------------------------ */
 @media (max-width: 640px) {
-  .topics-section {
-    padding: 18px;
-    border-radius: 20px;
-  }
-
-  .topic-search-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-form {
-    max-width: none;
-  }
-
   .thread-card {
     padding: 20px;
   }

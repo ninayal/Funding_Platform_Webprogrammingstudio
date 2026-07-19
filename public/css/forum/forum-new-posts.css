@@ -7,13 +7,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  width: min(1100px, calc(100% - 48px));
+  width: min(1600px, calc(100% - 48px));
   margin: 18px auto 0;
-}
-
-.thread-card__title .thread-tag {
-  margin-right: 4px;
-  font-size: 11px;
 }
 
 .thread-card__title-link {
