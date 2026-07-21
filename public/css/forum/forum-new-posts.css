@@ -35,14 +35,26 @@
 
 .thread-card__latest-reply {
   display: flex;
-  flex: none;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   color: var(--muted);
   font-family: var(--ff-ui);
   font-size: 11px;
   letter-spacing: .04em;
   text-transform: uppercase;
+}
+
+.latest-reply-date {
+  flex: none;
+}
+
+.latest-reply-user {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .thread-card__avatar--sm {
