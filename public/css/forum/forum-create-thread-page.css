@@ -19,7 +19,7 @@
   outline: 0;
   background: var(--white);
   color: var(--ink);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 18px;
   text-align: center;
 }
@@ -50,7 +50,7 @@
   border-radius: 999px;
   background: var(--white);
   color: var(--brown);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-style: italic;
   font-size: 14px;
   cursor: pointer;
@@ -71,7 +71,7 @@
   outline: 0;
   background: var(--white);
   color: var(--ink);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 14px;
 }
 
@@ -85,7 +85,7 @@
   border-radius: 999px;
   background: var(--white);
   color: var(--brown);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-style: italic;
   font-size: 11px;
 }
@@ -122,7 +122,7 @@
   background: rgba(255, 255, 255, .4);
   box-shadow: var(--shadow-soft);
   color: var(--ink);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 17px;
   text-align: center;
 }

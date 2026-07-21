@@ -66,7 +66,7 @@
   padding-top: 0;
   border-top: 0;
   color: var(--muted);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 14px;
   font-weight: 400;
   letter-spacing: normal;
@@ -120,7 +120,7 @@
 
 .sidebar-box__title {
   margin: 0 0 16px;
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-size: 18px;
   font-style: italic;
   font-weight: 500;

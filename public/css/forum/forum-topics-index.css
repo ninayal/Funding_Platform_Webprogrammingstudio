@@ -3,7 +3,7 @@
 ------------------------------ */
 .forum-section-heading {
   margin: 0 0 18px;
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-size: 22px;
   font-style: italic;
   font-weight: 500;
@@ -12,7 +12,7 @@
 
 .forum-section-title {
   margin: 0;
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-size: clamp(28px, 4.4vw, 38px);
   font-style: italic;
   font-weight: 500;
@@ -67,7 +67,7 @@
 
 .topic-card__title {
   margin: 0 0 6px;
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-size: 22px;
   font-weight: 500;
   color: var(--ink);
@@ -92,7 +92,7 @@
 }
 
 .topic-card__latest-title {
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-style: italic;
   font-size: 15px;
   color: var(--ink);
@@ -100,7 +100,7 @@
 
 .topic-card__latest-date {
   color: var(--muted);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 13px;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .post-mini__title {
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-style: italic;
   font-size: 14px;
   color: var(--ink);

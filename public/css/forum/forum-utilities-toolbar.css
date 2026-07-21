@@ -104,7 +104,7 @@
 }
 
 .wishlist-header h1 {
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-weight: 500;
   font-style: italic;
   font-size: clamp(38px, 5vw, 54px);

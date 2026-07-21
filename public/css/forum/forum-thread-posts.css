@@ -137,7 +137,7 @@
   margin-bottom: 18px;
   overflow-wrap: break-word;
   word-break: break-word;
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 17px;
   line-height: 1.7;
   color: var(--ink);
