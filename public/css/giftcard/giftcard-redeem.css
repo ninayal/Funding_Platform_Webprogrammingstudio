@@ -6,8 +6,9 @@
     padding:
         96px 0;
 
-    background:
-        #fef9e1;
+    background: url('../../images/linen-beige.png');
+    background-repeat: repeat;
+    margin: 0;
 }
 
 
