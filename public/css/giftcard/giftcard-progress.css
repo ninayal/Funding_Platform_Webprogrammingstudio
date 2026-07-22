@@ -17,11 +17,9 @@
     border-bottom:
         1px solid var(--line);
 
-    background:
-        rgba(254,
-            249,
-            225,
-            .93);
+    background: url('../../images/linen-beige.png');
+    background-repeat: repeat;
+    margin: 0;
 
     backdrop-filter:
         blur(14px);
