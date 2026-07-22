@@ -11,7 +11,7 @@
 .summary-card h2 {
   font-family: var(--ff-script);
   font-weight: 500;
-  font-size: var(--text-xl);
+  font-size: 35px;
   margin-bottom: 20px;
 }
 
