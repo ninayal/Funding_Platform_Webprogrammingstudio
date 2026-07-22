@@ -3,6 +3,14 @@
    Used inside iframe
    ================================================ */
 
+:root {
+  --ff-display: 'Playfair Display', serif;
+  --ff-body: 'DM Sans', sans-serif;
+
+  /* Keep old review variables working */
+  --ff-script: var(--ff-display);
+  --ff-ui: var(--ff-body);
+}
 *,
 *::before,
 *::after {
@@ -846,4 +854,41 @@ body {
   height: 38px;
 
   font-size: 15px;
+}
+/* ================================================
+   FONT ALIGNMENT — MAX 2 FONTS ONLY
+   DM Sans + Playfair Display
+   ================================================ */
+
+.pr-hero__title,
+.pr-list__head h2 {
+  font-family: var(--ff-display);
+}
+
+.pr-hero__kicker,
+.pr-score-card__number,
+.pr-score-card__stars,
+.pr-score-card__count,
+.pr-breakdown__label,
+.pr-breakdown__value,
+.pr-form__head h3,
+.pr-form__head p,
+.pr-input,
+.pr-textarea,
+.pr-submit,
+.pr-list__kicker,
+.pr-sort__label,
+.pr-sort__chip,
+.pr-card__avatar,
+.pr-card__user,
+.pr-card__date,
+.pr-card__stars,
+.pr-card__title,
+.pr-page-btn {
+  font-family: var(--ff-body);
+}
+
+.pr-hero__desc,
+.pr-card__comment {
+  font-family: var(--ff-body);
 }

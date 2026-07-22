@@ -2,7 +2,13 @@
    PRODUCT DETAIL PAGE
    Reuses tokens & .shop-card / .shop-grid from products.css
    ================================================ */
+:root {
+  --ff-display: 'Playfair Display', serif;
+  --ff-body: 'DM Sans', sans-serif;
 
+  --ff-script: var(--ff-display);
+  --ff-ui: var(--ff-body);
+}
 .pd-wrap {
   padding: 18px 0 24px;
 }
@@ -594,4 +600,39 @@
   border: 0;
   outline: 0;
   background: transparent;
+}
+/* ================================================
+   PRODUCT DETAIL FONT ALIGNMENT — MAX 2 FONTS ONLY
+   DM Sans + Playfair Display
+   ================================================ */
+
+.pd-detail__title,
+.pd-related h2,
+.pd-story h3,
+.pd-maker-note p {
+  font-family: var(--ff-display);
+}
+
+.pd-detail__maker,
+.pd-detail__rating,
+.pd-detail__price,
+.pd-option__label,
+.pd-size-btn,
+.pd-qty,
+.pd-add-btn,
+.pd-wish-btn,
+.pd-meta li,
+.pd-maker-note__seal,
+.pd-maker-note cite,
+.pd-tab-btn,
+.pd-spec-table th,
+.pd-spec-table td {
+  font-family: var(--ff-body);
+}
+
+.breadcrumb,
+.pd-detail__desc,
+.pd-panel--description p,
+.pd-story p {
+  font-family: var(--ff-body);
 }
