@@ -3,7 +3,7 @@
    ================================================ */
 #filter-ceramics:checked~.shop-wrap .shop-card:not(.ceramics),
 #filter-lacquer:checked~.shop-wrap .shop-card:not(.lacquer),
-#filter-brocade:checked~.shop-wrap .shop-card:not(.textile),
+#filter-brocade:checked~.shop-wrap .shop-card:not(.brocade),
 #filter-bamboo:checked~.shop-wrap .shop-card:not(.bamboo),
 #filter-wood:checked~.shop-wrap .shop-card:not(.wood),
 #filter-incense:checked~.shop-wrap .shop-card:not(.incense) {
@@ -12,37 +12,43 @@
 
 #filter-all:checked~.shop-wrap label.tab[for="filter-all"],
 #filter-ceramics:checked~.shop-wrap label.tab[for="filter-ceramics"],
+#filter-painting:checked~.shop-wrap label.tab[for="filter-painting"],
 #filter-lacquer:checked~.shop-wrap label.tab[for="filter-lacquer"],
-#filter-brocade:checked ~ .shop-wrap label.tab[for="filter-brocade"],
+#filter-brocade:checked~.shop-wrap label.tab[for="filter-brocade"],
 #filter-bamboo:checked~.shop-wrap label.tab[for="filter-bamboo"],
 #filter-wood:checked~.shop-wrap label.tab[for="filter-wood"],
+#filter-stone:checked~.shop-wrap label.tab[for="filter-stone"],
+#filter-waterpuppet:checked~.shop-wrap label.tab[for="filter-waterpuppet"],
 #filter-incense:checked~.shop-wrap label.tab[for="filter-incense"] {
   color: var(--deep);
   border-bottom-color: var(--red);
 }
 
 #filter-ceramics:checked~.shop-wrap .results-count .meta-all,
+#filter-painting:checked~.shop-wrap .results-count .meta-all,
 #filter-lacquer:checked~.shop-wrap .results-count .meta-all,
 #filter-brocade:checked ~ .shop-wrap .results-count .meta-all,
 #filter-bamboo:checked~.shop-wrap .results-count .meta-all,
 #filter-wood:checked~.shop-wrap .results-count .meta-all,
+#filter-stone:checked~.shop-wrap .results-count .meta-all,
+#filter-waterpuppet:checked~.shop-wrap .results-count .meta-all,
 #filter-incense:checked~.shop-wrap .results-count .meta-all {
   display: none;
+}
+
+#filter-brocade:checked~.shop-wrap .results-count .meta-brocade {
+  display: inline;
 }
 
 #filter-ceramics:checked~.shop-wrap .results-count .meta-ceramics {
   display: inline;
 }
 
+#filter-painting:checked~.shop-wrap .results-count .meta-painting {
+  display: inline;
+}
+
 #filter-lacquer:checked~.shop-wrap .results-count .meta-lacquer {
-  display: inline;
-}
-
-#filter-brocade:checked ~ .products-grid .shop-card {
-  display: inline;
-}
-
-#filter-brocade:checked ~ .products-grid .shop-card.brocade {
   display: inline;
 }
 
@@ -55,6 +61,10 @@
 }
 
 #filter-incense:checked~.shop-wrap .results-count .meta-incense {
+  display: inline;
+}
+
+#filter-waterpuppet:checked~.shop-wrap .results-count .meta-waterpuppet {
   display: inline;
 }
 
@@ -72,4 +82,13 @@
 
 #filter-stone:checked ~ .shop-wrap .shop-grid .shop-card.stone {
   display: block;
+}
+
+
+#filter-waterpuppet:checked~.shop-wrap .shop-grid .shop-card {
+  display: none;
+}
+
+#filter-waterpuppet:checked~.shop-wrap .shop-grid .shop-card.waterpuppet {
+  display: flex;
 }
