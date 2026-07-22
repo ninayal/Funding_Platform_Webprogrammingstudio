@@ -58,10 +58,6 @@ iframe {
     padding: 20px 20px 18px 70px;
   }
 
-  .product-review-frame {
-    height: 1580px;
-  }
-
 
   /* iframe review page */
   .pr-hero__grid {
@@ -194,9 +190,6 @@ iframe {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .product-review-frame {
-    height: 2020px;
-  }
 
 
   /* iframe review page */
@@ -459,9 +452,6 @@ iframe {
     grid-template-columns: 1fr;
   }
 
-  .product-review-frame {
-    height: 2440px;
-  }
 
 
   /* iframe review page */
@@ -718,9 +708,7 @@ iframe {
     font-size: 25px;
   }
 
-  .product-review-frame {
-    height: 2680px;
-  }
+
 
 
   /* iframe review page */
@@ -804,9 +792,7 @@ iframe {
     font-size: 13px;
   }
 
-  .product-review-frame {
-    height: 2840px;
-  }
+
 
   .pr-hero__title {
     font-size: 25px;
@@ -823,4 +809,270 @@ iframe {
     padding-bottom: 4px;
   }
 
+}
+
+/* ================================================
+   FINAL REVIEW RESPONSIVE PATCH
+   Fix laptop cutting + mobile width balance
+   Put this at the VERY END of review_responsive.css
+   ================================================ */
+
+
+/* ---------- Parent iframe height ---------- */
+
+.product-review-frame {
+  display: block;
+  width: 100%;
+  height: 1760px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+/* tablet */
+@media (max-width: 960px) {
+  .product-review-frame {
+    height: 1880px;
+  }
+}
+
+/* mobile */
+@media (max-width: 700px) {
+  .product-review-frame {
+    height: 2100px;
+  }
+}
+
+/* small mobile */
+@media (max-width: 480px) {
+  .product-review-frame {
+    height: 2180px;
+  }
+}
+
+/* extra small mobile */
+@media (max-width: 380px) {
+  .product-review-frame {
+    height: 2240px;
+  }
+}
+
+
+/* ---------- Iframe inner width safety ---------- */
+
+.product-review,
+.pr-hero,
+.pr-list,
+.pr-cards,
+.pr-page,
+.pr-card {
+  max-width: 100%;
+}
+
+.product-review {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* ---------- Desktop / laptop compact cards ---------- */
+
+@media (min-width: 701px) {
+  .pr-card {
+    min-height: 136px;
+    padding: 16px 20px;
+  }
+
+  .pr-card__comment {
+    max-width: 720px;
+  }
+
+  .pr-pagination {
+    margin-top: 24px;
+    margin-bottom: 34px;
+  }
+}
+
+
+/* ---------- Mobile review layout ---------- */
+
+@media (max-width: 700px) {
+  .product-review {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .pr-hero {
+    margin-bottom: 28px;
+  }
+
+  .pr-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-score-card,
+  .pr-form,
+  .pr-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .pr-list__head {
+    display: block;
+  }
+
+  .pr-sort {
+    align-items: flex-start;
+    margin-top: 18px;
+  }
+
+  .pr-sort__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pr-sort__chip {
+    min-width: 44px;
+    height: 32px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+
+  .pr-page {
+    gap: 12px;
+  }
+
+  .pr-card {
+    display: block;
+    min-height: 0;
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .pr-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .pr-card__identity {
+    max-width: none;
+    gap: 9px;
+  }
+
+  .pr-card__avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .pr-card__user {
+    font-size: 13px;
+    line-height: 1.15;
+  }
+
+  .pr-card__date {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+
+  .pr-card__stars {
+    display: block;
+    margin: 8px 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .pr-card__title {
+    font-size: 15px;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .pr-card__comment {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 1.42;
+    margin-bottom: 8px;
+  }
+
+  .pr-card__media {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pr-card__thumb {
+    width: 38px;
+    height: 38px;
+  }
+
+  .pr-card__photo {
+    width: 92px;
+    height: 66px;
+  }
+
+  .pr-pagination {
+    width: fit-content;
+    max-width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+    margin: 20px auto 28px;
+    padding: 8px;
+  }
+
+  .pr-page-btn {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+}
+
+
+/* ---------- Very small mobile ---------- */
+
+@media (max-width: 480px) {
+  .pr-card {
+    padding: 13px 14px;
+  }
+
+  .pr-card__comment {
+    font-size: 12.5px;
+  }
+
+  .pr-form {
+    padding: 18px 16px;
+  }
+
+  .pr-textarea {
+    min-height: 108px;
+  }
+}
+/* ================================================
+   FINAL MOBILE IFRAME HEIGHT TUNING
+   Fix slight mobile cut on 412px screens
+   ================================================ */
+
+@media (max-width: 700px) {
+  .product-review-frame {
+    height: 2180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-review-frame {
+    height: 2360px;
+  }
+}
+
+@media (max-width: 380px) {
+  .product-review-frame {
+    height: 2420px;
+  }
 }
