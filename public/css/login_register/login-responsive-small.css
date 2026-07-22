@@ -1,93 +1,154 @@
-/* ================================================
-   SMALL MOBILE
-   ================================================ */
-
 @media (max-width: 480px) {
+  .login-brand {
+    min-height: 290px;
+    padding:
+      max(24px, env(safe-area-inset-top))
+      18px
+      24px;
+  }
 
-    .login-brand {
-        min-height: 330px;
+  .login-brand__title {
+    margin-bottom: 12px;
+    font-size: 36px;
+    line-height: 1.02;
+    letter-spacing: -.8px;
+  }
 
-        padding:
-            30px 20px 28px 20px;
-    }
+  .login-brand__sub {
+    max-width: 330px;
+    font-size: 14px;
+  }
 
+  .login-glass,
+  .login-glass--wide {
+    padding:
+      26px
+      16px
+      calc(30px + env(safe-area-inset-bottom));
+  }
 
-    .login-brand__title {
-        font-size: 38px;
+  .login-glass__logo {
+    margin-bottom: 18px;
+  }
 
-        letter-spacing: -1px;
-    }
+  .login-glass__logo img {
+    height: 36px;
+  }
 
+  .logo-name {
+    font-size: 24px;
+  }
 
-    .login-brand__sub {
-        font-size: 15px;
-    }
+  .logo-sub {
+    max-width: 180px;
+    font-size: 7px;
+    letter-spacing: .8px;
+  }
 
+  .login-glass__title {
+    margin-bottom: 18px;
+    font-size: 28px;
+  }
 
-    .login-glass {
-        padding:
-            30px 18px 36px 18px;
-    }
+  .login-form {
+    gap: 13px;
+  }
 
+  .form-label {
+    font-size: 13px;
+  }
 
-    .login-glass__logo {
-        gap: 10px;
+  .form-input,
+  .form-select {
+    height: 48px;
+    min-height: 48px;
+    padding: 0 15px;
+    font-size: 16px;
+  }
 
-        margin-bottom: 22px;
-    }
+  .form-forgot {
+    font-size: 13px;
+  }
 
+  .terms-label {
+    font-size: 12px;
+  }
 
-    .login-glass__logo img {
-        height: 38px;
-    }
+  .login-btn {
+    height: 48px;
+    min-height: 48px;
+    font-size: 15px;
+  }
 
+  .login-divider {
+    margin: 14px 0;
+  }
 
-    .logo-name {
-        font-size: 24px;
-    }
+  .social-btn {
+    height: 46px;
+    min-height: 46px;
+    font-size: 12px;
+  }
 
+  .login-signup-text {
+    font-size: 13px;
+  }
 
-    .logo-sub {
-        font-size: 8px;
+  .guest-text {
+    font-size: 13px;
+  }
+}
 
-        letter-spacing: 1px;
-    }
+@media (max-width: 380px) {
+  .login-brand {
+    min-height: 270px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 
+  .login-brand__title {
+    font-size: 32px;
+  }
 
-    .login-glass__title {
-        font-size: 29px;
-    }
+  .login-brand__sub {
+    font-size: 13px;
+  }
 
+  .login-glass,
+  .login-glass--wide {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 
-    .form-label {
-        font-size: 11px;
-    }
+  .login-glass__logo {
+    gap: 8px;
+  }
 
+  .login-glass__logo img {
+    height: 33px;
+  }
 
-    .form-input {
-        height: 48px;
+  .logo-name {
+    font-size: 22px;
+  }
 
-        padding:
-            0px 17px;
+  .logo-sub {
+    max-width: 150px;
+    font-size: 6.5px;
+  }
 
-        font-size: 13px;
-    }
+  .login-glass__title {
+    font-size: 26px;
+  }
 
+  .terms-label {
+    font-size: 11px;
+  }
 
-    .login-btn {
-        height: 48px;
-
-        font-size: 13px;
-    }
-
-
-    .guest-text {
-        font-size: 14px;
-    }
-
-
-    .login-signup-text {
-        font-size: 12px;
-    }
-
+  .login-guest {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }
