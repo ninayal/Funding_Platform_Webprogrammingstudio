@@ -61,7 +61,7 @@
   position: relative;
   z-index: 2;
   width: min(1240px, calc(100% - 48px));
-  margin: -86px auto 0;
+  margin: 24px auto 0;
   display: grid;
   grid-template-columns: 270px minmax(0, 1fr);
   gap: 28px;
@@ -92,7 +92,7 @@
 .admin__title {
   margin: 0;
   color: var(--admin-accent-strong);
-  font-family: var(--ff-script);
+  font-family: var(--ff-ui);
   font-size: clamp(1.7rem, 2.6vw, 2.1rem);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -188,7 +188,7 @@
 .panel-head__title {
   margin: 0;
   color: var(--admin-text);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -235,7 +235,7 @@
 }
 
 .admin-stat__value {
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--admin-text);
@@ -460,7 +460,7 @@
 @media (max-width: 980px) {
   .admin {
     grid-template-columns: 1fr;
-    margin-top: -72px;
+    margin-top: 24px;
   }
 
   .admin__sidebar {
@@ -475,7 +475,7 @@
 @media (max-width: 640px) {
   .admin {
     width: min(100% - 24px, 1240px);
-    margin-top: -64px;
+    margin-top: 20px;
   }
 
   .admin__content {
