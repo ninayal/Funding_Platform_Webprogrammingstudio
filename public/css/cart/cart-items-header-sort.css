@@ -1,6 +1,3 @@
-/* ================================================
-   CART ITEMS
-   ================================================ */
 .cart-items__head {
   display: flex;
   align-items: baseline;
@@ -14,20 +11,20 @@
 .cart-items__head h2 {
   font-family: var(--ff-script);
   font-weight: 500;
-  font-size: 26px;
+  font-size: var(--text-xl);
   color: var(--deep);
 }
 
 .cart-count {
   font-family: var(--ff-ui);
-  font-size: 14px;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--muted);
 }
 
 .continue-link {
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 600;
   letter-spacing: .5px;
   color: var(--red);
@@ -59,7 +56,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--deep);
   border: 1px solid var(--line);
@@ -99,7 +96,7 @@
 
 .cart-sort-options label {
   font-family: var(--ff-ui);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--brown);
   padding: 9px 12px;

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 :root {
   --cream: #FEF9E1;
@@ -8,10 +8,21 @@
   --deep: #010100;
   --red: #A31D1D;
   --darkred: #6D2323;
+  --ff-display: 'Playfair Display', serif;
+  --ff-body: 'DM Sans', sans-serif;
 
-  --ff-script: 'Playfair Display', serif;
-  --ff-body: 'Cormorant Garamond', serif;
-  --ff-ui: 'DM Sans', sans-serif;
+  /* Legacy aliases retained so the separate component files keep working. */
+  --ff-script: var(--ff-display);
+  --ff-ui: var(--ff-body);
+
+  /* Consistent type scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-page: 48px;
 
   --white: #fffdf5;
   --muted: #786a5d;
@@ -27,7 +38,9 @@
 body {
   background: url('../images/linen-beige.png');
   color: var(--deep);
-  font-family: var(--ff-ui);
+  font-family: var(--ff-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
