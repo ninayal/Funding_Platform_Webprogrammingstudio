@@ -85,7 +85,7 @@
   border-radius: 50%;
   background: var(--deep);
   color: var(--cream);
-  font-size: 10px;
+  font-size: var(--text-sm);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@
 .mini-cart-row__name {
   flex: 1;
   font-family: var(--ff-ui);
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--deep);
   line-height: 1.35;
@@ -103,7 +103,7 @@
 
 .mini-cart-row__price {
   font-family: var(--ff-ui);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--deep);
   white-space: nowrap;
