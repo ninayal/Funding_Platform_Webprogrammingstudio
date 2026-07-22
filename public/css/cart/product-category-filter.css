@@ -92,3 +92,11 @@
 #filter-waterpuppet:checked~.shop-wrap .shop-grid .shop-card.waterpuppet {
   display: flex;
 }
+
+#filter-bamboo:checked~.shop-wrap .empty-state {
+  display: block;
+}
+
+#filter-bamboo:checked~.shop-wrap .pagination {
+  display: none;
+}

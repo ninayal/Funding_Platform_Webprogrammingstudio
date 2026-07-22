@@ -28,7 +28,8 @@
   list-style: none;
 }
 
-.pagination__pages a {
+.pagination__pages a
+.pagination__pages span {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +43,8 @@
   text-decoration: none;
 }
 
-.pagination__pages a.is-current {
+.pagination__pages a.is-current,
+.pagination__pages span.is-current {
   background: var(--deep);
   color: var(--cream);
 }

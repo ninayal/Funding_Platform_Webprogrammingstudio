@@ -53,13 +53,15 @@
 
       <!-- CSS-only shipping-method state (kept outside .checkout-shell
            so the sibling selector can drive the live total below) -->
-      <input class="state-control" type="radio" name="shipping" id="ship-standard" checked />
-      <input class="state-control" type="radio" name="shipping" id="ship-express" />
+      <input class="state-control" type="radio" name="shipping" id="ship-standard" value="standard"
+        form="checkout-form-id" checked />
+      <input class="state-control" type="radio" name="shipping" id="ship-express" value="express"
+        form="checkout-form-id" />
 
       <div class="checkout-shell">
 
         <!-- ============== CHECKOUT FORM ============== -->
-        <form class="checkout-form" id="checkout-form-id" action="order_confirmation.html" method="get" novalidate>
+        <form class="checkout-form" id="checkout-form-id" action="order_confirmation.html" method="get">
 
           <ol class="checkout-progress" aria-label="Checkout progress">
             <li class="is-done"><span>1</span> Bag</li>
@@ -72,7 +74,8 @@
             <legend>Contact</legend>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+              <input type="email" id="email" name="email" placeholder="you@example.com" required maxlength="100"
+                autocomplete="email" />
             </div>
             <label class="checkbox-row">
               <input type="checkbox" name="newsletter" />
@@ -87,19 +90,20 @@
             <div class="form-row-2">
               <div class="form-group">
                 <label for="first_name">First name</label>
-                <input type="text" id="first_name" name="first_name" placeholder="First name" required
-                  autocomplete="given-name" />
+                <input type="text" id="first_name" name="first_name" placeholder="First name" required minlength="2"
+                  maxlength="50" pattern=".*\S.*" title="Please enter your first name." autocomplete="given-name" />
               </div>
               <div class="form-group">
                 <label for="last_name">Last name</label>
-                <input type="text" id="last_name" name="last_name" placeholder="Last name" required
-                  autocomplete="family-name" />
+                <input type="text" id="last_name" name="last_name" placeholder="Last name" required minlength="2"
+                  maxlength="50" pattern=".*\S.*" title="Please enter your last name." autocomplete="family-name" />
               </div>
             </div>
 
             <div class="form-group">
               <label for="address1">Address</label>
-              <input type="text" id="address1" name="address1" placeholder="Street address" required
+              <input type="text" id="address1" name="address1" placeholder="Street address" required minlength="5"
+                maxlength="120" pattern=".*\S.*" title="Please enter a valid street address."
                 autocomplete="address-line1" />
             </div>
 
@@ -112,11 +116,13 @@
             <div class="form-row-2">
               <div class="form-group">
                 <label for="city">City</label>
-                <input type="text" id="city" name="city" placeholder="City" required autocomplete="address-level2" />
+                <input type="text" id="city" name="city" placeholder="City" required minlength="2" maxlength="60"
+                  pattern=".*\S.*" title="Please enter your city." autocomplete="address-level2" />
               </div>
               <div class="form-group">
                 <label for="state">State / Province</label>
-                <input type="text" id="state" name="state" placeholder="State or province"
+                <input type="text" id="state" name="state" placeholder="State or province" required minlength="2"
+                  maxlength="60" pattern=".*\S.*" title="Please enter your state or province."
                   autocomplete="address-level1" />
               </div>
             </div>
@@ -124,8 +130,9 @@
             <div class="form-row-2">
               <div class="form-group">
                 <label for="postal_code">Postal code</label>
-                <input type="text" id="postal_code" name="postal_code" placeholder="Postal code" required
-                  autocomplete="postal-code" />
+                <input type="text" id="postal_code" name="postal_code" placeholder="Postal code" required minlength="3"
+                  maxlength="12" pattern="[A-Za-z0-9][A-Za-z0-9\s-]{2,11}"
+                  title="Use letters, numbers, spaces, or hyphens." autocomplete="postal-code" />
               </div>
               <div class="form-group">
                 <label for="country">Country</label>
@@ -144,7 +151,8 @@
 
             <div class="form-group">
               <label for="phone">Phone number</label>
-              <input type="tel" id="phone" name="phone" placeholder="For delivery updates" required
+              <input type="tel" id="phone" name="phone" placeholder="For delivery updates" required minlength="7"
+                maxlength="20" pattern="\+?[0-9][0-9\s().-]{6,19}" title="Enter a valid phone number."
                 autocomplete="tel" />
             </div>
           </fieldset>
@@ -182,25 +190,29 @@
             <div class="form-group">
               <label for="card_name">Name on card</label>
               <input type="text" id="card_name" name="card_name" placeholder="Full name as shown on card" required
+                minlength="2" maxlength="80" pattern=".*\S.*" title="Please enter the name shown on the card."
                 autocomplete="cc-name" />
             </div>
 
             <div class="form-group">
               <label for="card_number">Card number</label>
               <input type="text" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" required
-                inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" />
+                inputmode="numeric" pattern="(?:[0-9]{4} ){3}[0-9]{4}|[0-9]{16}"
+                title="Enter a 16-digit card number, with or without spaces." autocomplete="cc-number" maxlength="19" />
             </div>
 
             <div class="form-row-2">
               <div class="form-group">
                 <label for="card_expiry">Expiry date</label>
                 <input type="text" id="card_expiry" name="card_expiry" placeholder="MM / YY" required
-                  pattern="(0[1-9]|1[0-2])\s?\/\s?[0-9]{2}" autocomplete="cc-exp" />
+                  inputmode="numeric" pattern="(0[1-9]|1[0-2])\s?/\s?[0-9]{2}"
+                  title="Enter the expiry date in MM / YY format." autocomplete="cc-exp" maxlength="7" />
               </div>
               <div class="form-group">
                 <label for="card_cvv">Security code</label>
                 <input type="text" id="card_cvv" name="card_cvv" placeholder="CVV" required inputmode="numeric"
-                  pattern="[0-9]{3,4}" autocomplete="cc-csc" maxlength="4" />
+                  pattern="[0-9]{3,4}" title="Enter the 3 or 4-digit security code." autocomplete="cc-csc"
+                  maxlength="4" />
               </div>
             </div>
 
@@ -214,6 +226,7 @@
           <fieldset class="checkout-fieldset">
             <legend>Gift Note <span class="optional">(optional)</span></legend>
             <div class="form-group">
+              <label for="gift_note">Personal message</label>
               <textarea id="gift_note" name="gift_note" rows="3"
                 placeholder="Add a personal message — we'll include it on a hand-stamped card, free of charge."></textarea>
             </div>
@@ -233,35 +246,37 @@
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
                   <img src="/public/images/shopping_items/ceramic/ceramic1.png"
-                    alt="Hand-painted blue lotus ceramic vase" />
+                    alt="Cream ceramic mug sculpted with a face and pink bow" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
-                <span class="mini-cart-row__name">Hand-Painted Blue Lotus Vase</span>
+                <span class="mini-cart-row__name">Sculpted Face Ceramic Mug</span>
                 <span class="mini-cart-row__price">$68.00</span>
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="/public/images/shopping_items/brocade/brocade1.png" alt="Hand-woven silk scarf" />
+                  <img src="/public/images/shopping_items/brocade/brocade2.png"
+                    alt="Colorful handmade horse figurine covered in traditional brocade patterns" />
                   <span class="mini-cart-row__qty">2</span>
                 </span>
-                <span class="mini-cart-row__name">Hand-Woven Silk Scarf</span>
+                <span class="mini-cart-row__name">Handmade Brocade Horse Figurine</span>
                 <span class="mini-cart-row__price">$90.00</span>
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="/public/images/shopping_items/brocade/brocade2.png"
-                    alt="Carved rosewood elephant figurine" />
+                  <img src="/public/images/shopping_items/painting/painting_1.png"
+                    alt="Framed Vietnamese folk painting of a child holding a large carp" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
-                <span class="mini-cart-row__name">Carved Rosewood Elephant Figurine</span>
+                <span class="mini-cart-row__name">Vietnamese Folk Painting — Child with Carp</span>
                 <span class="mini-cart-row__price">$120.00</span>
               </li>
               <li class="mini-cart-row">
                 <span class="mini-cart-row__media">
-                  <img src="/public/images/shopping_items/bamboo/bamboo1.png" alt="Woven bamboo storage basket set" />
+                  <img src="/public/images/shopping_items/incense/incense2.png"
+                    alt="Natural brown incense cones presented in a metal gift tin with a ceramic holder" />
                   <span class="mini-cart-row__qty">1</span>
                 </span>
-                <span class="mini-cart-row__name">Woven Bamboo Basket Set</span>
+                <span class="mini-cart-row__name">Natural Incense Cone Gift Set</span>
                 <span class="mini-cart-row__price">$38.00</span>
               </li>
             </ul>
@@ -275,7 +290,7 @@
             <dl class="summary-lines">
               <div>
                 <dt>Subtotal</dt>
-                <dd>$271.00</dd>
+                <dd>$316.00</dd>
               </div>
               <div>
                 <dt>Shipping</dt>
@@ -291,16 +306,16 @@
             <div class="summary-total">
               <span>Total</span>
               <span class="summary-total__amount">
-                <span class="grand-total grand-total--standard">$271.00</span>
-                <span class="grand-total grand-total--express">$283.00</span>
+                <span class="grand-total grand-total--standard">$316.00</span>
+                <span class="grand-total grand-total--express">$328.00</span>
                 <small>USD</small>
               </span>
             </div>
 
             <button type="submit" form="checkout-form-id" class="place-order-btn">Place Order <span>→</span></button>
 
-            <p class="summary-fine">By placing your order, you agree to our <a href="#">Terms of Service</a> and
-              <a href="#">Privacy Policy</a>.
+            <p class="summary-fine">By placing your order, you agree to our <a href="/pages/global/terms-of-service.html">Terms of Service</a> and
+              <a href="/pages/global/privacy-policy.html">Privacy Policy</a>.
             </p>
 
             <div class="pay-icons" aria-label="Accepted payment methods">

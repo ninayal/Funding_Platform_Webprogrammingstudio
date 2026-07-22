@@ -24,19 +24,20 @@
   gap: 10px 26px;
 }
 
-.tag-cloud a {
+.tag-cloud label {
   font-family: var(--ff-script);
   font-weight: 500;
   font-size: 28px;
   color: var(--deep);
-  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s ease;
 }
 
-.tag-cloud a:hover {
+.tag-cloud label:hover {
   color: var(--red);
 }
 
-.tag-cloud a span {
+.tag-cloud label span {
   font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 600;
