@@ -1,0 +1,131 @@
+@media (max-width: 1000px) {
+    .blog-article-header h1 {
+        font-size: 62px;
+    }
+
+    .blog-related-stories__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .blog-related-card:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 700px) {
+    .blog-detail-container,
+    .blog-article-width,
+    .blog-article-content,
+    .blog-article-hero {
+        width: calc(100% - 32px);
+    }
+
+    .blog-article-header h1 {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .blog-article-summary {
+        font-size: 22px;
+    }
+
+    .blog-article-hero img,
+    .blog-article-content .blog-article-inline-image img {
+        aspect-ratio: 4 / 3;
+    }
+
+    .blog-article-content p {
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .blog-article-introduction {
+        font-size: 22px !important;
+    }
+
+    .blog-article-content h2 {
+        margin-top: 48px;
+        font-size: 36px;
+    }
+
+    .blog-article-content blockquote {
+        padding-left: 20px;
+        font-size: 29px;
+    }
+
+    .blog-article-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .blog-article-tags {
+        justify-content: flex-start;
+    }
+
+    .blog-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .blog-section-heading h2 {
+        font-size: 46px;
+    }
+
+    .blog-related-stories__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-related-card:last-child {
+        grid-column: auto;
+    }
+
+    .blog-comment-form__row {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-article-content .blog-article-inline-image {
+        margin: 38px auto;
+    }
+}
+
+@media (max-width: 460px) {
+    .blog-detail-container,
+    .blog-article-width,
+    .blog-article-content,
+    .blog-article-hero {
+        width: calc(100% - 24px);
+    }
+
+    .blog-detail-page {
+        padding-top: 14px;
+    }
+
+    .blog-article-header h1 {
+        font-size: 40px;
+    }
+
+    .blog-article-summary {
+        font-size: 20px;
+    }
+
+    .blog-article-content h2 {
+        font-size: 32px;
+    }
+
+    .blog-related-card__image {
+        height: 210px;
+    }
+
+    .blog-comment-form {
+        padding: 20px;
+    }
+
+    .blog-comment {
+        grid-template-columns: 36px 1fr;
+    }
+
+    .blog-comment__avatar {
+        width: 36px;
+        height: 36px;
+    }
+}

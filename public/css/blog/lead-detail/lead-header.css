@@ -1,0 +1,111 @@
+/* Article heading */
+
+.blog-article-header {
+    max-width: 900px;
+    margin-bottom: 42px;
+}
+
+.blog-article-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.blog-article-category {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    color: var(--red);
+    background: rgba(163, 29, 29, 0.09);
+}
+
+.blog-article-header h1 {
+    max-width: 900px;
+    margin: 22px 0 20px;
+    color: var(--deep);
+    font-family: var(--ff-heading);
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -3px;
+}
+
+.blog-article-summary {
+    max-width: 850px;
+    margin: 0;
+    color: var(--brown);
+    font-family: var(--ff-body);
+    font-size: 27px;
+    line-height: 1.45;
+}
+
+/* Author */
+
+.blog-article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.blog-article-author__avatar {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--cream);
+    background: var(--brown);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.blog-article-author__information {
+    display: grid;
+    gap: 3px;
+}
+
+.blog-article-author__information strong {
+    font-size: 12px;
+}
+
+.blog-article-author__information span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* Hero image */
+
+.blog-article-hero {
+    width: calc(100% - 48px);
+    max-width: 900px;
+    margin: 40px auto 54px;
+}
+
+.blog-article-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.blog-article-hero figcaption {
+    margin: 10px 0 0;
+    padding: 0;
+    color: var(--muted);
+    font-family: var(--ff-body);
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.5;
+}
