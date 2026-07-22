@@ -3,7 +3,7 @@
    ================================================ */
 #filter-ceramics:checked~.shop-wrap .shop-card:not(.ceramics),
 #filter-lacquer:checked~.shop-wrap .shop-card:not(.lacquer),
-#filter-textile:checked~.shop-wrap .shop-card:not(.textile),
+#filter-brocade:checked~.shop-wrap .shop-card:not(.textile),
 #filter-bamboo:checked~.shop-wrap .shop-card:not(.bamboo),
 #filter-wood:checked~.shop-wrap .shop-card:not(.wood),
 #filter-incense:checked~.shop-wrap .shop-card:not(.incense) {
@@ -13,7 +13,7 @@
 #filter-all:checked~.shop-wrap label.tab[for="filter-all"],
 #filter-ceramics:checked~.shop-wrap label.tab[for="filter-ceramics"],
 #filter-lacquer:checked~.shop-wrap label.tab[for="filter-lacquer"],
-#filter-textile:checked~.shop-wrap label.tab[for="filter-textile"],
+#filter-brocade:checked ~ .shop-wrap label.tab[for="filter-brocade"],
 #filter-bamboo:checked~.shop-wrap label.tab[for="filter-bamboo"],
 #filter-wood:checked~.shop-wrap label.tab[for="filter-wood"],
 #filter-incense:checked~.shop-wrap label.tab[for="filter-incense"] {
@@ -23,7 +23,7 @@
 
 #filter-ceramics:checked~.shop-wrap .results-count .meta-all,
 #filter-lacquer:checked~.shop-wrap .results-count .meta-all,
-#filter-textile:checked~.shop-wrap .results-count .meta-all,
+#filter-brocade:checked ~ .shop-wrap .results-count .meta-all,
 #filter-bamboo:checked~.shop-wrap .results-count .meta-all,
 #filter-wood:checked~.shop-wrap .results-count .meta-all,
 #filter-incense:checked~.shop-wrap .results-count .meta-all {
@@ -38,7 +38,11 @@
   display: inline;
 }
 
-#filter-textile:checked~.shop-wrap .results-count .meta-textile {
+#filter-brocade:checked ~ .products-grid .shop-card {
+  display: inline;
+}
+
+#filter-brocade:checked ~ .products-grid .shop-card.brocade {
   display: inline;
 }
 
