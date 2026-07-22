@@ -1,0 +1,86 @@
+.my-posts-account {
+    position: sticky;
+    top: 24px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.38);
+    box-shadow: 0 16px 38px rgba(73, 40, 22, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+.my-posts-account__identity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.my-posts-account__avatar {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid rgba(109, 35, 35, 0.18);
+    border-radius: 50%;
+    color: var(--cream);
+    background: var(--brown);
+    box-shadow: 0 10px 24px rgba(73, 40, 22, 0.16);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.my-posts-account h2 {
+    margin: 0 0 4px;
+    font-family: var(--ff-script);
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.my-posts-account__identity p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.my-posts-account__bio {
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.my-posts-account__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.my-posts-account__stats > div {
+    min-height: 82px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 13px;
+    border: 1px solid rgba(116, 81, 45, 0.14);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.34);
+}
+
+.my-posts-account__stats strong {
+    color: var(--darkred);
+    font-family: var(--ff-script);
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.my-posts-account__stats span {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}

@@ -1,0 +1,69 @@
+.my-posts-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 44px;
+}
+
+.my-posts-header__copy {
+    max-width: 850px;
+}
+
+.my-posts-kicker {
+    margin: 0 0 10px;
+    color: var(--red);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.my-posts-header h1 {
+    margin: 0;
+    color: var(--deep);
+    font-family: var(--ff-script);
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.my-posts-header__copy > p:last-child {
+    max-width: 720px;
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.my-posts-create {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 0 0 auto;
+    padding: 0 18px;
+    border: 1px solid var(--red);
+    border-radius: 999px;
+    color: var(--cream);
+    background: var(--red);
+    box-shadow: 0 12px 26px rgba(109, 35, 35, 0.18);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform 180ms ease, background 180ms ease;
+}
+
+.my-posts-create svg {
+    width: 16px;
+    height: 16px;
+}
+
+.my-posts-create:hover {
+    transform: translateY(-2px);
+    background: var(--darkred);
+}
