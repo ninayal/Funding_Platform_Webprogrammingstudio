@@ -9,14 +9,16 @@
 
 
 .flow-section--paper {
-    background:
-        var(--cream);
+    background: url('../../images/linen-beige.png');
+    background-repeat: repeat;
+    margin: 0;
 }
 
 
 .flow-section--tint {
-    background:
-        #fef9e1
+    background: url('../../images/linen-beige.png');
+    background-repeat: repeat;
+    margin: 0;
 }
 
 

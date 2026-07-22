@@ -139,6 +139,7 @@
     border-radius:
         50% 50% 0 0 / 78% 78% 0 0;
 
-    background:
-        var(--cream);
+    background: url('../../images/linen-beige.png');
+    background-repeat: repeat;
+    margin: 0;
 }
