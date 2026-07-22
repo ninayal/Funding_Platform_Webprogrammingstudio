@@ -1,0 +1,142 @@
+/* Shared section headings */
+
+.blog-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.blog-section-kicker {
+    margin: 0 0 10px;
+    color: var(--red);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.blog-section-heading h2 {
+    margin: 0;
+    font-family: var(--ff-heading);
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.blog-section-heading h2 em {
+    color: var(--red);
+    font-weight: 500;
+}
+
+.blog-section-heading>a {
+    color: var(--red);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Related stories */
+
+.blog-related-stories {
+    margin-top: 86px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+}
+
+.blog-related-stories__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.blog-related-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(116, 81, 45, 0.16);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.26);
+    box-shadow: var(--shadow-soft);
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.blog-related-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 22px 48px rgba(116, 81, 45, 0.14);
+}
+
+.blog-related-card__image {
+    display: block;
+    height: 225px;
+    overflow: hidden;
+    background: var(--tan);
+}
+
+.blog-related-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 500ms ease;
+}
+
+.blog-related-card:hover .blog-related-card__image img {
+    transform: scale(1.04);
+}
+
+.blog-related-card__content {
+    padding: 22px;
+}
+
+.blog-related-card h3 {
+    margin: 15px 0 10px;
+    font-family: var(--ff-heading);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.08;
+}
+
+.blog-related-card h3 a {
+    text-decoration: none;
+}
+
+.blog-related-card h3 a:hover {
+    color: var(--red);
+}
+
+.blog-related-card__content>p {
+    margin: 0 0 20px;
+    color: var(--muted);
+    font-family: var(--ff-body);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.blog-related-card__link {
+    color: var(--red);
+    text-decoration: none;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Back to Journal */
+
+.blog-detail-return {
+    margin-top: 46px;
+}
+
+.blog-detail-return a {
+    color: var(--red);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
