@@ -128,38 +128,3 @@
   font-weight: 500;
   color: var(--ink);
 }
-
-@media (max-width: 900px) {
-  .forum-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .forum-sidebar {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .sidebar-box {
-    flex: 1 1 260px;
-  }
-}
-
-@media (max-width: 640px) {
-  .thread-card--row {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .thread-card__stats {
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: 4px;
-  }
-
-  .stat-pill {
-    width: auto;
-    min-width: 84px;
-  }
-}
-

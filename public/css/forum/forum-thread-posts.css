@@ -229,16 +229,3 @@
   color: var(--darkred);
 }
 
-@media (max-width: 640px) {
-  .forum-post {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .forum-post__sidebar {
-    flex-direction: row;
-    width: auto;
-    text-align: left;
-  }
-}
-

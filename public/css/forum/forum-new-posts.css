@@ -63,16 +63,3 @@
   font-size: 11px;
 }
 
-@media (max-width: 640px) {
-  .topic-card {
-    flex-wrap: wrap;
-    padding: 20px;
-  }
-
-  .thread-card__latest-reply {
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 8px;
-  }
-}
-

@@ -1,13 +1,145 @@
 /* -----------------------------
    RESPONSIVE
+   All forum responsive rules live here (loaded last, after every
+   other forum-*.css import) so breakpoints stay in one place.
+------------------------------ */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* -----------------------------
+   TABLET / SMALL LAPTOP
+   1040px and below
+------------------------------ */
+@media (max-width: 1040px) {
+  .forum-container,
+  .forum-toolbar,
+  .forum-breadcrumb,
+  .forum-layout,
+  .thread-layout {
+    width: calc(100% - 32px);
+  }
+
+  .thread-card--row {
+    grid-template-columns: 46px minmax(0, 1fr) 96px 170px;
+    gap: 14px;
+  }
+
+  .wishlist-header {
+    gap: 16px;
+  }
+
+  .wishlist-header__sub {
+    max-width: 280px;
+  }
+}
+
+/* -----------------------------
+   SIDEBAR COLLAPSE
+   900px and below
+------------------------------ */
+@media (max-width: 900px) {
+  .forum-layout,
+  .thread-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .forum-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-box {
+    flex: 1 1 260px;
+  }
+}
+
+/* -----------------------------
+   MOBILE / TABLET
+   640px and below
 ------------------------------ */
 @media (max-width: 640px) {
+  .forum-container,
+  .forum-toolbar,
+  .forum-breadcrumb,
+  .forum-layout,
+  .thread-layout {
+    width: calc(100% - 24px);
+  }
+
+  .wishlist-header {
+    display: block;
+  }
+
+  .wishlist-header__sub {
+    max-width: none;
+    margin-top: 8px;
+    text-align: left;
+  }
+
+  .forum-toolbar {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .forum-toolbar__tab {
+    padding: 9px 14px;
+    font-size: 11px;
+  }
+
+  .forum-toolbar__search {
+    margin-left: 0;
+  }
+
+  .topics-block {
+    padding-right: 0;
+  }
+
+  div.topics-block::after {
+    display: none;
+  }
+
   .thread-card {
     padding: 20px;
   }
 
   .thread-card__meta {
     gap: 10px 16px;
+  }
+
+  .thread-card--row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .thread-card__stats {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 4px;
+  }
+
+  .stat-pill {
+    width: auto;
+    min-width: 84px;
+  }
+
+  .topic-card {
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .thread-card__latest-reply {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
   }
 
   .comment-form {
@@ -26,6 +158,22 @@
     margin-left: auto;
   }
 
+  .forum-post {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .forum-post__sidebar {
+    flex-direction: row;
+    width: auto;
+    text-align: left;
+  }
+
+  .forum-post__header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   .create-thread-content {
     padding: 22px;
   }
@@ -37,5 +185,60 @@
   .create-thread-actions .draft-btn,
   .create-thread-actions .post-btn {
     flex: 1;
+  }
+}
+
+/* -----------------------------
+   SMALL MOBILE
+   480px and below
+------------------------------ */
+@media (max-width: 480px) {
+  .forum-title {
+    padding: 32px 16px 6px;
+  }
+
+  .wishlist-header h1 {
+    font-size: 32px;
+  }
+
+  .wishlist-header__sub {
+    font-size: 16px;
+  }
+
+  .forum-toolbar__tab {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .thread-content-title {
+    font-size: 26px;
+  }
+
+  .forum-post__content {
+    font-size: 15px;
+  }
+
+  .forum-post__sidebar {
+    gap: 10px;
+  }
+}
+
+/* -----------------------------
+   EXTRA SMALL MOBILE
+   380px and below
+------------------------------ */
+@media (max-width: 380px) {
+  .thread-card__title {
+    font-size: 20px;
+  }
+
+  .stat-pill {
+    min-width: 72px;
+    font-size: 9px;
+  }
+
+  .forum-post__avatar {
+    width: 46px;
+    height: 46px;
   }
 }

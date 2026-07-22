@@ -59,12 +59,6 @@
   opacity: 1;
 }
 
-@media (max-width: 900px) {
-  .thread-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* New top-level comment composer (avatar + comment-form) */
 .comment-composer {
   display: flex;
