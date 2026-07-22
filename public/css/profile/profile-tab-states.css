@@ -2,12 +2,7 @@
   position: relative;
   min-height: 860px;
   padding: 68px 78px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(254, 249, 225, .46),
-      rgba(255, 255, 255, .16)
-    );
+  background: url("/public/images/linen-beige.png")
 }
 
 .profile-panel {

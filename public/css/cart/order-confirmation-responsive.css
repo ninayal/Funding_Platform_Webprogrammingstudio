@@ -1,25 +1,150 @@
-/* ================================================
-   RESPONSIVE
-   ================================================ */
-@media (max-width: 640px) {
-  .confirm-summary {
-    padding: 32px 20px 30px;
+/* Laptop */
+@media (max-width: 1280px) {
+  .confirm-shell {
+    width: 92%;
+    max-width: 1120px;
+  }
+}
+
+/* Small laptop / large tablet */
+@media (max-width: 1024px) {
+  .confirm-shell {
+    width: 92%;
   }
 
-  .confirm-meta {
-    gap: 24px;
+  .confirm-card-row {
+    gap: 20px;
   }
+}
 
-  .confirm-card {
-    padding: 22px 20px;
+/* Tablet */
+@media (max-width: 768px) {
+  .confirm-shell {
+    width: 94%;
   }
 
   .confirm-card-row {
     grid-template-columns: 1fr;
   }
 
+  .confirm-meta {
+    gap: 24px;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .confirm-page {
+    padding-bottom: 24px;
+  }
+
+  .confirm-shell {
+    width: 94%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .confirm-summary,
+  .confirm-card,
+  .confirm-note {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .confirm-summary {
+    padding: 24px 18px;
+  }
+
+  .confirm-summary h1 {
+    font-size: 28px;
+    overflow-wrap: anywhere;
+  }
+
+  .confirm-lede {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .confirm-meta {
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 0;
+  }
+
   .confirm-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .confirm-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .confirm-card {
+    padding: 22px 16px;
+  }
+
+  .confirm-card-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .confirm-item {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .confirm-item__media {
+    width: 56px;
+    height: 56px;
+  }
+
+  .confirm-item__name,
+  .confirm-item__meta,
+  .confirm-address,
+  .confirm-note p {
+    overflow-wrap: anywhere;
+  }
+
+  .confirm-note {
+    padding: 18px 16px;
+  }
+}
+
+/* Small phone */
+@media (max-width: 390px) {
+  .confirm-shell {
+    width: 95%;
+  }
+
+  .confirm-summary,
+  .confirm-card {
+    padding: 20px 12px;
+  }
+
+  .confirm-summary h1 {
+    font-size: 26px;
+  }
+
+  .confirm-item {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .confirm-item__media {
+    width: 52px;
+    height: 52px;
+  }
+
+  .confirm-item__price {
+    grid-column: 2;
   }
 }

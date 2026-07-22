@@ -1,12 +1,11 @@
-/* ================================================
-   SUCCESS CARD
-   ================================================ */
 .confirm-summary {
+  position: relative;
+  width: 100%;
   text-align: center;
-  padding: 44px 32px 40px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  padding: 28px 26px;
   box-shadow: var(--shadow);
   margin-bottom: 32px;
 }
@@ -23,59 +22,74 @@
   color: var(--darkred);
 }
 
+.confirm-check svg {
+  width: 30px;
+  height: 30px;
+}
+
 .confirm-summary h1 {
   font-family: var(--ff-script);
   font-weight: 500;
-  font-style: italic;
-  font-size: clamp(30px, 4vw, 38px);
-  margin-bottom: 12px;
+  font-style: normal;
+  font-size: 40px;
+  line-height: 1.2;
+  color: var(--deep);
+  margin: 0 0 14px;
 }
 
 .confirm-lede {
-  font-family: var(--ff-body);
-  font-size: 18px;
-  color: var(--brown);
+  width: 100%;
   max-width: 460px;
-  margin: 0 auto 28px;
+  margin: 0 auto 24px;
+  font-family: var(--ff-ui);
+  font-size: 16px;
   line-height: 1.5;
+  color: var(--deep);
 }
 
 .confirm-lede strong {
   color: var(--deep);
+  font-weight: 700;
 }
 
 .confirm-meta {
   display: flex;
   justify-content: center;
   gap: 40px;
-  flex-wrap: wrap;
-  padding: 22px 0;
+  width: 100%;
+  padding: 20px 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+}
+
+.confirm-meta > div {
+  min-width: 0;
 }
 
 .confirm-meta__label {
   font-family: var(--ff-ui);
-  font-size: 10.5px;
+  font-size: var(--text-xs);
   font-weight: 700;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--sand);
-  margin-bottom: 4px;
+  color: var(--muted);
+  margin-bottom: 5px;
 }
 
 .confirm-meta__value {
   font-family: var(--ff-ui);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--deep);
+  overflow-wrap: anywhere;
 }
 
 .confirm-actions {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
+  width: 100%;
   flex-wrap: wrap;
 }
 
@@ -83,24 +97,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
+  min-height: 48px;
+  padding: 16px 24px;
   border-radius: 99px;
   font-family: var(--ff-ui);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   font-weight: 700;
-  letter-spacing: .8px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;
+  cursor: pointer;
   transition: background .25s, color .25s, transform .25s;
 }
 
 .confirm-btn--primary {
   background: var(--red);
   color: var(--cream);
+  border: 1px solid var(--red);
 }
 
 .confirm-btn--primary:hover {
   background: var(--darkred);
+  border-color: var(--darkred);
   transform: translateY(-1px);
 }
 
@@ -113,5 +131,67 @@
 .confirm-btn--ghost:hover {
   background: var(--deep);
   color: var(--cream);
+  transform: translateY(-1px);
 }
 
+@media (max-width: 600px) {
+  .confirm-summary {
+    padding: 24px 18px;
+    margin-bottom: 24px;
+  }
+
+  .confirm-check {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+  }
+
+  .confirm-check svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .confirm-summary h1 {
+    font-size: var(--text-xl);
+  }
+
+  .confirm-lede {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .confirm-meta {
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 0;
+    margin-bottom: 20px;
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .confirm-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .confirm-summary {
+    padding: 22px 14px;
+  }
+
+  .confirm-summary h1 {
+    font-size: 22px;
+  }
+
+  .confirm-lede,
+  .confirm-meta__value {
+    font-size: 15px;
+  }
+
+  .confirm-btn {
+    padding: 14px 18px;
+  }
+}
