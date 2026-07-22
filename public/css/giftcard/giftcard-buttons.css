@@ -70,23 +70,8 @@
 
 
 .btn-ghost {
-    border-color:
-        rgba(254,
-            249,
-            225,
-            .48);
-
-    background:
-        rgba(254,
-            249,
-            225,
-            .08);
-
-    color:
-        var(--cream);
-
-    backdrop-filter:
-        blur(9px);
+  background: #01010052;
+  color: #FEF9E1;
 }
 
 

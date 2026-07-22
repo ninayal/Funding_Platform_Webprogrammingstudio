@@ -115,12 +115,7 @@
   width: 100%;
   min-height: calc(100vh - 180px);
   padding: 0;
-  background:
-    linear-gradient(
-      rgba(254, 249, 225, .9),
-      rgba(254, 249, 225, .9)
-    ),
-    url("/public/images/linen-beige.png");
+  background: url('../../images/linen-beige.png');
 }
 
 .profile-shell {
@@ -132,7 +127,7 @@
   grid-template-columns: 360px minmax(0, 1fr);
   border: 0;
   border-radius: 0;
-  background: transparent;
+  background: url('../../images/linen-beige.png');
   box-shadow: none;
   overflow: visible;
 }
@@ -141,24 +136,14 @@
   min-height: calc(100vh - 180px);
   padding: 58px 38px 44px;
   border-right: 1px solid var(--line);
-  background:
-    linear-gradient(
-      180deg,
-      rgba(254, 249, 225, .94),
-      rgba(229, 208, 172, .62)
-    );
+  background: url('../../images/linen-beige.png');
+
 }
 
 .profile-content {
   min-height: calc(100vh - 180px);
   padding: 72px 7vw 96px;
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(163, 29, 29, .07),
-      transparent 34%
-    ),
-    rgba(255, 255, 255, .22);
+  background: url('../../images/linen-beige.png');
 }
 
 .profile-panel {
