@@ -756,3 +756,37 @@ body {
     gap: 12px;
   }
 }
+
+
+.hero__cta-primary {
+  border-color: #A31D1D;
+  background: #A31D1D;
+  color: #FEF9E1;
+}
+
+.hero__cta-primary:hover {
+  border-color: #6D2323;
+  background: #6D2323;
+  color: #FEF9E1;
+  transform: translateY(-2px);
+}
+
+.hero__cta-primary:active {
+  border-color: #4f1818;
+  background: #4f1818;
+  color: #FEF9E1;
+  transform: translateY(0);
+}
+
+.hero__cta-primary:focus,
+.hero__cta-primary:focus-visible {
+  outline: none;
+  border-color: #6D2323;
+  background: #A31D1D;
+  color: #FEF9E1;
+  box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.18);
+}
+
+.hero__cta-primary:visited {
+  color: #FEF9E1;
+}
