@@ -18,8 +18,8 @@
 }
 
 .thread-content-title {
-  margin: 0 0 18px;
-  font-family: var(--ff-script);
+  margin: 22px 0 18px;
+  font-family: var(--ff-ui);
   font-size: clamp(28px, 4.4vw, 42px);
   font-style: italic;
   font-weight: 500;
@@ -114,7 +114,7 @@
   resize: none;
   background: transparent;
   color: var(--ink);
-  font-family: var(--ff-body);
+  font-family: var(--ff-ui);
   font-size: 16px;
   line-height: 1.4;
 }
