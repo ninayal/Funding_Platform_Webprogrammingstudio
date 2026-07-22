@@ -1,16 +1,3 @@
-/* ================================================
-   ORDER SUMMARY
-   ================================================ */
-.summary-card {
-  position: sticky;
-  top: 24px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 28px 26px;
-  box-shadow: var(--shadow);
-}
-
 .summary-card__head {
   display: flex;
   align-items: baseline;
@@ -20,9 +7,7 @@
 }
 
 .summary-card__head h2 {
-  font-family: var(--ff-script);
-  font-weight: 500;
-  font-size: 21px;
+  margin: 0;
 }
 
 .edit-cart-link {
@@ -70,38 +55,42 @@
 }
 
 .mini-cart-row__media img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .mini-cart-row__qty {
   position: absolute;
   top: -6px;
   right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   background: var(--deep);
   color: var(--cream);
+  font-family: var(--ff-ui);
   font-size: var(--text-sm);
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .mini-cart-row__name {
   flex: 1;
+  min-width: 0;
   font-family: var(--ff-ui);
   font-size: 15px;
   font-weight: 600;
-  color: var(--deep);
   line-height: 1.35;
+  color: var(--deep);
+  overflow-wrap: anywhere;
 }
 
 .mini-cart-row__price {
+  flex-shrink: 0;
   font-family: var(--ff-ui);
   font-size: 16px;
   font-weight: 700;

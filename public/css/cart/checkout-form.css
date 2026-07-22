@@ -1,9 +1,5 @@
-/* ================================================
-   CHECKOUT FORM — FIXED FORMAT + ARIAL
-   ================================================ */
-
 .checkout-form {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
 }
 
 .checkout-fieldset {
@@ -22,7 +18,7 @@
   margin: 0 0 28px;
   border-bottom: 1px solid rgba(116, 81, 45, .22);
   color: var(--deep);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 28px;
   font-weight: 800;
   line-height: 1.1;
@@ -41,7 +37,7 @@
 
 .optional {
   color: var(--muted);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: .02em;
@@ -56,7 +52,7 @@
   display: block;
   margin-bottom: 9px;
   color: var(--brown);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -74,7 +70,7 @@
   padding: 0 18px;
   background: rgba(255, 255, 255, .94);
   color: var(--deep);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 16px;
   font-weight: 500;
   outline: none;
@@ -113,7 +109,7 @@
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: rgba(120, 106, 93, .68);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-weight: 400;
 }
 
@@ -150,7 +146,7 @@
   border-radius: 16px;
   background: rgba(255, 255, 255, .56);
   color: var(--brown);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
@@ -176,7 +172,7 @@
   border-radius: 15px;
   background: rgba(163, 29, 29, .06);
   color: var(--brown);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 700;
 }
@@ -235,7 +231,7 @@
 .shipping-option__name {
   display: block;
   color: var(--deep);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 15px;
   font-weight: 800;
 }
@@ -244,14 +240,14 @@
   display: block;
   margin-top: 5px;
   color: var(--muted);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 500;
 }
 
 .shipping-option__price {
   color: var(--deep);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--ff-ui);
   font-size: 15px;
   font-weight: 800;
   white-space: nowrap;

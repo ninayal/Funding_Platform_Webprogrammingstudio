@@ -143,21 +143,23 @@
 }
 
 /* Product Title, A–Z:
-   Carved Rosewood Elephant Figurine, Hand-Painted Blue Lotus Vase,
-   Hand-Woven Silk Scarf, Woven Bamboo Basket Set */
-#cart-sort-title:checked~.cart-items .item-3 {
+   Handmade Brocade Horse Figurine,
+   Natural Incense Cone Gift Set,
+   Sculpted Face Ceramic Mug,
+   Vietnamese Folk Painting — Child with Carp */
+#cart-sort-title:checked~.cart-items .item-2 {
   order: 1;
 }
 
-#cart-sort-title:checked~.cart-items .item-1 {
+#cart-sort-title:checked~.cart-items .item-4 {
   order: 2;
 }
 
-#cart-sort-title:checked~.cart-items .item-2 {
+#cart-sort-title:checked~.cart-items .item-1 {
   order: 3;
 }
 
-#cart-sort-title:checked~.cart-items .item-4 {
+#cart-sort-title:checked~.cart-items .item-3 {
   order: 4;
 }
 

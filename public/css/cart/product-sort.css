@@ -1,6 +1,3 @@
-/* ================================================
-   CSS-ONLY SORT
-   ================================================ */
 #sort-featured:checked~.shop-wrap .sort-current-featured,
 #sort-low:checked~.shop-wrap .sort-current-low,
 #sort-high:checked~.shop-wrap .sort-current-high,
@@ -200,7 +197,7 @@
 }
 
 /* Name: A–Z */
-#sort-name:checked~.shop-wrap .product-2 {
+#sort-name:checked~.shop-wrap .product-15 {
   order: 1;
 }
 
@@ -208,15 +205,15 @@
   order: 2;
 }
 
-#sort-name:checked~.shop-wrap .product-11 {
+#sort-name:checked~.shop-wrap .product-14 {
   order: 3;
 }
 
-#sort-name:checked~.shop-wrap .product-7 {
+#sort-name:checked~.shop-wrap .product-4 {
   order: 4;
 }
 
-#sort-name:checked~.shop-wrap .product-9 {
+#sort-name:checked~.shop-wrap .product-2 {
   order: 5;
 }
 
@@ -224,23 +221,23 @@
   order: 6;
 }
 
-#sort-name:checked~.shop-wrap .product-14 {
+#sort-name:checked~.shop-wrap .product-10 {
   order: 7;
 }
 
-#sort-name:checked~.shop-wrap .product-1 {
+#sort-name:checked~.shop-wrap .product-6 {
   order: 8;
 }
 
-#sort-name:checked~.shop-wrap .product-4 {
+#sort-name:checked~.shop-wrap .product-9 {
   order: 9;
 }
 
-#sort-name:checked~.shop-wrap .product-15 {
+#sort-name:checked~.shop-wrap .product-1 {
   order: 10;
 }
 
-#sort-name:checked~.shop-wrap .product-8 {
+#sort-name:checked~.shop-wrap .product-3 {
   order: 11;
 }
 
@@ -248,15 +245,14 @@
   order: 12;
 }
 
-#sort-name:checked~.shop-wrap .product-10 {
+#sort-name:checked~.shop-wrap .product-11 {
   order: 13;
 }
 
-#sort-name:checked~.shop-wrap .product-3 {
+#sort-name:checked~.shop-wrap .product-7 {
   order: 14;
 }
 
-#sort-name:checked~.shop-wrap .product-6 {
+#sort-name:checked~.shop-wrap .product-8 {
   order: 15;
 }
-
