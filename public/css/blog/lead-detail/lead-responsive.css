@@ -13,11 +13,17 @@
 }
 
 @media (max-width: 700px) {
+
     .blog-detail-container,
     .blog-article-width,
     .blog-article-content,
     .blog-article-hero {
         width: calc(100% - 32px);
+    }
+
+    .blog-detail-breadcrumb {
+        margin-bottom: 12px;
+        font-size: 14px;
     }
 
     .blog-article-header h1 {
@@ -89,6 +95,7 @@
 }
 
 @media (max-width: 460px) {
+
     .blog-detail-container,
     .blog-article-width,
     .blog-article-content,
@@ -98,6 +105,10 @@
 
     .blog-detail-page {
         padding-top: 14px;
+    }
+
+    .blog-detail-breadcrumb {
+        font-size: 13px;
     }
 
     .blog-article-header h1 {

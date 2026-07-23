@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
 :root {
   --cream: #FEF9E1;
   --tan: #E5D0AC;
@@ -7,9 +9,14 @@
   --red: #A31D1D;
   --darkred: #6D2323;
 
-  --ff-script: 'Playfair Display', serif;
-  --ff-body: 'Cormorant Garamond', serif;
-  --ff-ui: 'DM Sans', sans-serif;
+  /* Only two font families are used on the Blog page */
+  --ff-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --ff-sans: 'DM Sans', Arial, Helvetica, sans-serif;
+
+  /* Compatibility aliases for the existing Blog CSS files */
+  --ff-script: var(--ff-serif);
+  --ff-body: var(--ff-serif);
+  --ff-ui: var(--ff-sans);
 
   --paper: var(--cream);
   --surface: rgba(254, 249, 225, 0.88);
@@ -34,7 +41,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: url('../../images/linen-beige.png');
-  font-family: var(--ff-ui);
+  font-family: var(--ff-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -54,7 +61,8 @@ img {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
