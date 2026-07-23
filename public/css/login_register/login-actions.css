@@ -85,59 +85,7 @@
 }
 
 
-/* ================================================
-   SOCIAL BUTTONS
-   ================================================ */
 
-.login-socials {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 6px;
-}
-
-
-.social-btn {
-    min-width: 0px;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0px 8px;
-    font-family: var(--ff-ui);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    color: rgba(255, 255, 255, 0.96);
-    background: rgba(255, 255, 255, 0.13);
-    border: 1px solid rgba(255, 255, 255, 0.30);
-    border-radius: 12px;
-    text-decoration: none;
-    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.07);
-    transition:
-        background 200ms ease,
-        border-color 200ms ease,
-        transform 200ms ease,
-        box-shadow 200ms ease;
-}
-
-
-.social-btn img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
-
-.social-btn:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: rgba(255, 255, 255, 0.50);
-    transform: translateY(-2px);
-    box-shadow: 0px 8px 22px rgba(0, 0, 0, 0.18);
-}
 
 /* ================================================
    SIGN UP TEXT

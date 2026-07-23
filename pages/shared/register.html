@@ -58,6 +58,17 @@
           </div>
         </div>
 
+
+        <!-- Username -->
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+
+          <input class="form-input" type="text" id="username" name="username" placeholder="Choose a unique username"
+            required minlength="3" maxlength="30" pattern="[A-Za-z0-9._-]{3,30}"
+            title="Username must be 3–30 characters and may contain letters, numbers, dots, underscores, or hyphens."
+            autocomplete="username" />
+        </div>
+
         <!-- Row 2: Email + Gender -->
         <div class="form-row-2">
           <div class="form-group">
@@ -78,13 +89,26 @@
           </div>
         </div>
 
+        <!-- Short Description -->
+        <div class="form-group">
+          <label class="form-label" for="description">
+            Short Description
+          </label>
+
+          <textarea class="form-input form-textarea" id="description" name="description" rows="3" maxlength="200"
+            placeholder="Tell us briefly about yourself" required></textarea>
+        </div>
+
         <!-- Password -->
         <div class="form-group">
           <label class="form-label" for="password">Password</label>
           <input class="form-input" type="password" id="password" name="password" placeholder="············" required
             minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9\W]).{8,}"
             title='Must be 8+ chars with at least one uppercase letter and one number or special character.'
-            autocomplete="new-password" />
+            autocomplete="new-password" aria-describedby="password-help" />
+          <small class="form-help" id="password-help">
+            Use at least 8 characters, including one uppercase letter and one number or special character.
+          </small>
         </div>
 
         <!-- Confirm Password -->
@@ -92,13 +116,12 @@
           <label class="form-label" for="confirm_password">Confirm Password</label>
           <input class="form-input" type="password" id="confirm_password" name="confirm_password"
             placeholder="············" required minlength="8" autocomplete="new-password" />
-          <a class="form-forgot" href="forgot_password.html">Forgot password?</a>
         </div>
 
         <!-- Terms -->
         <div class="form-terms">
           <label class="terms-label">
-            <input type="checkbox" id="terms" name="terms" required />
+            <input type="checkbox" id="terms" name="terms" required autocomplete="off" />
             <span>I agree to the <a href="../../pages/global/terms-of-service.html">Terms of Service</a> and <a
                 href="../../pages/global/privacy-policy.html">Privacy Policy</a></span>
           </label>
@@ -107,34 +130,6 @@
         <button class="login-btn" type="submit">Create Account</button>
 
       </form>
-
-      <!-- Divider — identical to login -->
-      <div class="login-divider">
-        <span class="login-divider__line"></span>
-        <span class="login-divider__text">Or</span>
-        <span class="login-divider__line"></span>
-      </div>
-
-      <!-- Social buttons — identical to login -->
-      <div class="login-socials">
-        <a class="social-btn" href="#">
-          <img src="../../public/images/social_icon/facebook.png" alt="Facebook" />
-          Facebook
-        </a>
-        <a class="social-btn" href="#">
-          <img src="../../public/images/social_icon/instagram.png" alt="Instagram" />
-          Instagram
-        </a>
-        <a class="social-btn" href="#">
-          <img src="../../public/images/social_icon/twitter.png" alt="X" />
-          X
-        </a>
-      </div>
-
-      <div class="login-divider">
-        <span class="login-divider__line"></span>
-        <span class="login-divider__line"></span>
-      </div>
 
       <!-- Sign in link — mirrors login's "Sign Up" -->
       <p class="login-signup-text">

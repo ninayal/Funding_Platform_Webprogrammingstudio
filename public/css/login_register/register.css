@@ -14,6 +14,13 @@
   gap: 12px;
 }
 
+.form-textarea {
+  min-height: 88px;
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
 .form-select {
   appearance: none;
   -webkit-appearance: none;
@@ -82,6 +89,15 @@
   background-image: url('/public/images/background_login_register/registerbackground.png');
   background-size: cover;
   background-position: center;
+}
+
+.form-help {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.68);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 @media (max-width: 900px) {

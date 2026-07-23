@@ -30,3 +30,10 @@
 #tab-notifications:checked ~ .profile-shell .profile-panel--notifications {
   display: block;
 }
+#tab-user:focus-visible ~ .profile-shell label[for="tab-user"],
+#tab-orders:focus-visible ~ .profile-shell label[for="tab-orders"],
+#tab-settings:focus-visible ~ .profile-shell label[for="tab-settings"],
+#tab-notifications:focus-visible ~ .profile-shell label[for="tab-notifications"] {
+  outline: 3px solid rgba(163, 29, 29, 0.45);
+  outline-offset: 3px;
+}

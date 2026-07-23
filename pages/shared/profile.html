@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
   <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="/public/css/header_shoppingcart.css"
+  <link rel="stylesheet" href="/public/css/header_shoppingcart.css" />
   <link rel="stylesheet" href="../../public/css/shared-include.css" />
   <link rel="stylesheet" href="../../public/css/profile/profile.css" />
 </head>
@@ -51,7 +51,8 @@
     </a>
 
     <div class="nav__icons">
-      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
+      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="View account profile"
+        aria-current="page">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
           aria-hidden="true">
           <circle cx="12" cy="8" r="3.6" />
@@ -185,7 +186,7 @@
 
           <div class="profile-hero">
             <div class="profile-avatar-wrap">
-              <img class="profile-avatar" src="/public/images/profile.png" alt="User avatar" />
+              <img class="profile-avatar" src="/public/images/profile.png" alt="Profile photo of Nguyễn Thị Doraemon" />
               <button class="avatar-edit" type="button" aria-label="Edit profile image">✎</button>
             </div>
 
@@ -222,33 +223,41 @@
             </article>
           </div>
 
-          <form class="profile-form" action="#" method="post">
+          <form class="profile-form" method="post">
 
             <div class="profile-grid">
 
+
               <label class="profile-field">
                 <span>First Name</span>
-                <input type="text" name="firstName" value="Doraemon" />
+                <input type="text" name="firstName" value="Doraemon" autocomplete="given-name" minlength="2"
+                  maxlength="50" required />
               </label>
 
               <label class="profile-field">
                 <span>Last Name</span>
-                <input type="text" name="lastName" value="Nguyễn Thị" />
+                <input type="text" name="lastName" value="Nguyễn Thị" autocomplete="family-name" minlength="2"
+                  maxlength="50" required />
               </label>
 
               <label class="profile-field">
                 <span>Email Address</span>
-                <input type="email" name="email" value="nguyenthidoraemon@gmail.com" />
+                <input type="email" name="email" value="nguyenthidoraemon@gmail.com" autocomplete="email"
+                  maxlength="254" required />
               </label>
 
               <label class="profile-field">
                 <span>Phone Number</span>
-                <input type="tel" name="phone" value="(+81) 9123728167" />
+                <input type="tel" name="phone" value="(+81) 9123728167" autocomplete="tel" inputmode="tel" minlength="7"
+                  maxlength="20" pattern="[0-9+() -]{7,20}"
+                  title="Enter a valid phone number using numbers, spaces, parentheses, plus signs or hyphens."
+                  required />
               </label>
 
               <label class="profile-field">
                 <span>Location</span>
-                <input type="text" name="location" value="Tokyo, Japan" />
+                <input type="text" name="location" value="Tokyo, Japan" autocomplete="address-level2" minlength="2"
+                  maxlength="100" required />
               </label>
 
               <label class="profile-field">
@@ -263,11 +272,39 @@
 
               <label class="profile-field profile-field--full">
                 <span>About</span>
-                <textarea name="about"
-                  rows="5">A collector of handmade pieces with a love for Vietnamese craft villages, blue-and-white ceramics, and meaningful objects that tell a story.</textarea>
-              </label>
-
+                <textarea name="about" rows="5"
+                  maxlength="500">A collector of handmade pieces with a love for Vietnamese craft villages, blue-and-white ceramics, and meaningful objects that tell a story.</textarea>
             </div>
+
+            <fieldset class="profile-password-group">
+              <legend>Change Password</legend>
+
+              <div class="profile-grid">
+                <label class="profile-field">
+                  <span>Current Password</span>
+                  <input type="password" name="newPassword" autocomplete="new-password" minlength="8" maxlength="128"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}"
+                    title="Use at least 8 characters, including uppercase, lowercase, number and symbol."
+                    aria-describedby="profile-password-help" />
+                </label>
+
+                <label class="profile-field">
+                  <span>New Password</span>
+                  <input type="password" name="newPassword" autocomplete="new-password" minlength="8"
+                    aria-describedby="profile-password-help" />
+                </label>
+
+                <label class="profile-field profile-field--full">
+                  <span>Confirm New Password</span>
+                  <input type="password" name="confirmNewPassword" autocomplete="new-password" minlength="8"
+                    maxlength="128" />
+                </label>
+              </div>
+
+              <p id="profile-password-help" class="profile-field-help">
+                Use at least 8 characters with uppercase, lowercase, number and symbol.
+              </p>
+            </fieldset>
 
             <button class="profile-save" type="submit">Save Changes</button>
 
@@ -328,7 +365,7 @@
 
               <div class="order-progress">
                 <div class="order-progress__bar">
-                  <span style="width: 76%;"></span>
+                  <span class="order-progress__fill order-progress__fill--76"></span>
                 </div>
                 <div class="order-progress__steps">
                   <span class="is-done">Confirmed</span>
@@ -362,7 +399,7 @@
 
               <div class="order-card__actions">
                 <a href="#" class="order-action">Track shipment</a>
-                <a href="#" class="order-action order-action--ghost">View invoice</a>
+                <a href="/pages/cart/order_confirmation.html" class="order-action order-action--ghost">View invoice</a>
               </div>
             </article>
 
@@ -384,7 +421,7 @@
 
               <div class="order-progress">
                 <div class="order-progress__bar">
-                  <span style="width: 38%;"></span>
+                  <span class="order-progress__fill order-progress__fill--38"></span>
                 </div>
                 <div class="order-progress__steps">
                   <span class="is-done">Confirmed</span>
@@ -417,8 +454,8 @@
               </div>
 
               <div class="order-card__actions">
-                <a href="#" class="order-action">Order details</a>
-                <a href="#" class="order-action order-action--ghost">Contact support</a>
+                <a href="/pages/cart/order_confirmation.html" class="order-action">Order details</a>
+                <a href="mailto:ninayal198@gmail.com" class="order-action order-action--ghost">Contact support</a>
               </div>
             </article>
 
@@ -428,62 +465,87 @@
 
 
         <div class="profile-panel profile-panel--settings">
+          <form class="settings-form" method="post">
 
-          <div class="panel-heading">
-            <p class="profile-kicker">Preferences</p>
-            <h2>Account Settings</h2>
-            <p>
-              Customize how Làng &amp; Co. reaches you, how your orders are updated, and how your account feels day to
-              day.
-            </p>
-          </div>
-
-          <div class="setting-group">
-            <h3>Communication</h3>
-
-            <div class="setting-list">
-              <label>
-                <span>Email updates</span>
-                <input type="checkbox" checked />
-              </label>
-
-              <label>
-                <span>Order notifications</span>
-                <input type="checkbox" checked />
-              </label>
-
-              <label>
-                <span>Community replies</span>
-                <input type="checkbox" />
-              </label>
-
-              <label>
-                <span>Promotions and new collections</span>
-                <input type="checkbox" checked />
-              </label>
+            <div class="panel-heading">
+              <p class="profile-kicker">Preferences</p>
+              <h2>Account Settings</h2>
+              <p>
+                Customize how Làng &amp; Co. reaches you, how your orders are updated, and how your account feels day to
+                day.
+              </p>
             </div>
-          </div>
 
-          <div class="setting-group">
-            <h3>Account Preferences</h3>
+            <fieldset class="setting-group">
+              <legend>Communication</legend>
 
-            <div class="setting-list">
-              <label>
-                <span>Save shipping information</span>
-                <input type="checkbox" checked />
+              <div class="setting-list">
+                <label>
+                  <span>Email updates</span>
+                  <input type="checkbox" name="emailUpdates" checked />
+                </label>
+
+                <label>
+                  <span>Order notifications</span>
+                  <input type="checkbox" name="orderNotifications" checked />
+                </label>
+
+                <label>
+                  <span>Community replies</span>
+                  <input type="checkbox" name="communityReplies" />
+                </label>
+
+                <label>
+                  <span>Promotions and new collections</span>
+                  <input type="checkbox" name="promotionalUpdates" checked />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="setting-group">
+              <legend>Account Preferences</legend>
+
+              <div class="setting-list">
+                <label>
+                  <span>Save shipping information</span>
+                  <input type="checkbox" name="saveShippingInformation" checked />
+                </label>
+
+                <label>
+                  <span>Default to international shipping</span>
+                  <input type="checkbox" name="internationalShippingDefault" />
+                </label>
+
+                <label>
+                  <span>Receive product care guides</span>
+                  <input type="checkbox" name="productCareGuides" checked />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="account-danger-zone">
+              <legend>Danger Zone</legend>
+
+              <p class="account-danger-zone__warning">
+                Deactivating your account will restrict access to your profile, orders,
+                wishlist, and community content.
+              </p>
+
+              <label class="account-danger-zone__confirm">
+                <input type="checkbox" name="confirmAccountDeactivation" />
+                <span>I understand that this action affects my account access.</span>
               </label>
 
-              <label>
-                <span>Default to international shipping</span>
-                <input type="checkbox" />
-              </label>
+              <button class="account-deactivate" type="button">
+                Deactivate Account
+              </button>
+            </fieldset>
 
-              <label>
-                <span>Receive product care guides</span>
-                <input type="checkbox" checked />
-              </label>
-            </div>
-          </div>
+            <button class="profile-save" type="submit">
+              Save Preferences
+            </button>
+
+          </form>
 
         </div>
 
