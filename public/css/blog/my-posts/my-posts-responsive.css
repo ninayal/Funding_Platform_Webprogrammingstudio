@@ -40,6 +40,12 @@
         width: calc(100% - 32px);
     }
 
+    .my-posts-breadcrumb {
+        width: calc(100% - 32px);
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
     .my-posts-header h1 {
         font-size: 48px;
     }
@@ -72,11 +78,13 @@
     }
 
     .my-posts-page {
-        padding-top: 10px;
+        margin-top: -46px;
+        padding-top: 14px;
     }
 
     .my-posts-breadcrumb {
-        margin-bottom: 20px;
+        width: calc(100% - 24px);
+        margin-bottom: 12px;
         font-size: 13px;
     }
 

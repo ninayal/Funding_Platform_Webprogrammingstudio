@@ -6,9 +6,21 @@
 @import url("./post-edit-delete.css");
 @import url("./post-edit-responsive.css");
 
+/* Two-font system only:
+   Serif: Playfair Display
+   Sans-serif: DM Sans */
 :root {
-    --post-serif: Georgia, "Times New Roman", serif;
-    --post-sans: Arial, Helvetica, sans-serif;
+    --post-serif: var(--ff-serif,
+            "Playfair Display",
+            Georgia,
+            "Times New Roman",
+            serif);
+
+    --post-sans: var(--ff-sans,
+            "DM Sans",
+            Arial,
+            Helvetica,
+            sans-serif);
 
     --ff-script: var(--post-serif);
     --ff-body: var(--post-serif);

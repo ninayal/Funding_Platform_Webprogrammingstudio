@@ -1,6 +1,13 @@
 .my-posts-page {
+    position: relative;
+    z-index: 2;
     min-height: 100vh;
-    padding: 14px 0 96px;
+
+    /* The shared header iframe is taller than its visible divider.
+       Pull the page into the unused transparent iframe area without
+       clipping the header line. */
+    margin-top: -46px;
+    padding: 18px 0 96px;
     background: transparent;
 }
 
@@ -10,16 +17,19 @@
     margin-left: auto;
 }
 
+/* Breadcrumb matches the Blog home page */
 .my-posts-breadcrumb {
+    width: calc(100% - 48px);
+    max-width: 1600px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 0 auto 24px;
+    margin: 0 auto 18px;
     color: var(--muted);
     font-family: var(--my-posts-sans);
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1.4;
 }
 

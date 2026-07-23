@@ -1,6 +1,13 @@
 .post-edit-page {
+    position: relative;
+    z-index: 2;
     min-height: 100vh;
-    padding: 12px 0 92px;
+
+    /* Use the same positioning strategy as My Posts:
+       retain the complete iframe and move the page into its unused
+       transparent space, so the header divider is not clipped. */
+    margin-top: -46px;
+    padding: 18px 0 92px;
 }
 
 .post-edit-container {
@@ -9,15 +16,34 @@
     margin-left: auto;
 }
 
+/* Breadcrumb matches the Blog home page */
+.post-edit-breadcrumb {
+    width: calc(100% - 48px);
+    max-width: 1600px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 auto 18px;
+    color: var(--muted);
+    font-family: var(--post-sans);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+}
 
 .post-edit-breadcrumb a {
     color: var(--muted);
-    font-weight: 400;
+    font-weight: 500;
     text-decoration: none;
 }
 
 .post-edit-breadcrumb a:hover {
     color: var(--red);
+}
+
+.post-edit-breadcrumb span[aria-hidden="true"] {
+    color: var(--sand);
 }
 
 .post-edit-breadcrumb span[aria-current="page"] {
@@ -66,56 +92,4 @@
 
 .post-edit-return a:hover {
     text-decoration: underline;
-}
-
-/* ================================================
-   HEADER + BREADCRUMB POSITION
-================================================ */
-
-body>.shared-header {
-    display: block;
-    width: 100%;
-    height: 138px;
-    margin: 0;
-    border: 0;
-}
-
-.post-edit-page {
-    padding-top: 0;
-}
-
-.post-edit-breadcrumb {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 9px;
-
-    margin-top: 0;
-    margin-bottom: 26px;
-    padding-top: 12px;
-
-    color: var(--muted);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.45;
-}
-
-.post-edit-breadcrumb a {
-    color: var(--muted);
-    font-weight: 400;
-    text-decoration: none;
-}
-
-.post-edit-breadcrumb a:hover {
-    color: var(--red);
-}
-
-.post-edit-breadcrumb span[aria-hidden="true"] {
-    color: var(--sand);
-}
-
-.post-edit-breadcrumb span[aria-current="page"] {
-    color: var(--deep);
-    font-weight: 600;
 }

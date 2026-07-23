@@ -38,12 +38,14 @@
     }
 
     .post-edit-page {
-        padding-top: 10px;
+        margin-top: -46px;
+        padding-top: 14px;
     }
 
     .post-edit-breadcrumb {
-        margin-bottom: 18px;
-        font-size: 11px;
+        width: calc(100% - 32px);
+        margin-bottom: 12px;
+        font-size: 14px;
     }
 
     .post-edit-header h1 {
@@ -67,6 +69,11 @@
 @media (max-width: 480px) {
     .post-edit-container {
         width: calc(100% - 24px);
+    }
+
+    .post-edit-breadcrumb {
+        width: calc(100% - 24px);
+        font-size: 13px;
     }
 
     .post-edit-header h1 {
@@ -111,17 +118,5 @@
     .post-edit-toast {
         right: 12px;
         bottom: 12px;
-    }
-}
-
-@media (max-width: 700px) {
-    body>.shared-header {
-        height: 126px;
-    }
-
-    .post-edit-breadcrumb {
-        padding-top: 10px;
-        margin-bottom: 22px;
-        font-size: 13px;
     }
 }
