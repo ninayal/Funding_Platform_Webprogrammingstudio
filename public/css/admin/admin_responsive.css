@@ -1,16 +1,6 @@
-/* =========================================================
-   Admin Responsive
-   Load AFTER admin.css and page-level shared CSS
-   ========================================================= */
-
-
-/* =========================================================
-   GLOBAL SAFETY
-   ========================================================= */
-
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .admin-page,
@@ -497,7 +487,7 @@ body {
   }
 
   .admin-table td:nth-child(1)::before {
-    content: "UserID";
+    content: "User ID";
   }
 
   .admin-table td:nth-child(2)::before {

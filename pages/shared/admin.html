@@ -19,7 +19,7 @@
 
 <body>
 
- <!-- HEADER -->
+  <!-- HEADER -->
 
   <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
   <div class="topbar">
@@ -89,180 +89,185 @@
     </div>
   </div>
 
-    <!-- Admin Page -->
-    <section class="admin-page">
+  <!-- Admin Page -->
+  <section class="admin-page">
 
-      <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
-      <input type="radio" name="admin-tab" id="admin-tab-dashboard" class="admin-tab-radio">
-      <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio">
-      <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" checked>
-      <input type="radio" name="admin-tab" id="admin-tab-settings" class="admin-tab-radio">
+    <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
+    <input type="radio" name="admin-tab" id="admin-tab-dashboard" class="admin-tab-radio" aria-label="Dashboard tab">
+    <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab">
+    <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab" checked>
+    <input type="radio" name="admin-tab" id="admin-tab-settings" class="admin-tab-radio" aria-label="Settings tab">
 
-      <div class="admin">
+    <div class="admin">
 
-        <!-- Sidebar -->
-        <aside class="admin__sidebar">
-          <div class="admin__header">
-            <h1 class="admin__title">Admin</h1>
+      <!-- Sidebar -->
+      <aside class="admin__sidebar">
+        <div class="admin__header">
+          <h1 class="admin__title">Admin</h1>
+        </div>
+
+        <nav class="admin__nav" aria-label="Admin sections">
+          <label for="admin-tab-dashboard" class="admin__item">
+            <span class="admin__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+                <line x1="8" y1="20" x2="16" y2="20"></line>
+                <line x1="12" y1="16" x2="12" y2="20"></line>
+              </svg>
+            </span>
+            Dashboard
+          </label>
+
+          <label for="admin-tab-products" class="admin__item">
+            <span class="admin__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"></path>
+                <path d="M3 8l9 5 9-5"></path>
+                <line x1="12" y1="13" x2="12" y2="22"></line>
+              </svg>
+            </span>
+            Products
+          </label>
+
+          <label for="admin-tab-users" class="admin__item">
+            <span class="admin__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="8" r="3.4"></circle>
+                <path d="M2.6 20c.9-3.6 3.6-5.6 6.4-5.6s5.5 2 6.4 5.6"></path>
+                <circle cx="17.5" cy="8.6" r="2.6"></circle>
+                <path d="M15.8 14.7c2.3.3 4.1 2 4.8 4.7"></path>
+              </svg>
+            </span>
+            Users
+          </label>
+
+          <label for="admin-tab-settings" class="admin__item">
+            <span class="admin__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3.2"></circle>
+                <path
+                  d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.5-2-3.4-2.4.7a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.4 2.3a7.6 7.6 0 0 0-2.6 1.5l-2.4-.7-2 3.4 2 1.5a7.7 7.7 0 0 0 0 3l-2 1.5 2 3.4 2.4-.7c.75.65 1.63 1.16 2.6 1.5L10 22h4l.4-2.3a7.6 7.6 0 0 0 2.6-1.5l2.4.7 2-3.4-2-1.5Z">
+                </path>
+              </svg>
+            </span>
+            Settings
+          </label>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="admin__content">
+
+        <!-- Dashboard panel -->
+        <section class="panel panel--dashboard">
+          <div class="panel-head">
+            <h2 class="panel-head__title">Dashboard</h2>
+          </div>
+          <p class="empty-state">Dashboard overview coming soon.</p>
+        </section>
+
+        <!-- Products panel -->
+        <section class="panel panel--products">
+          <div class="panel-head">
+            <h2 class="panel-head__title">Products</h2>
+          </div>
+          <p class="empty-state">Product management coming soon.</p>
+        </section>
+
+        <!-- Users panel -->
+        <section class="panel panel--users">
+          <div class="panel-head">
+            <h2 class="panel-head__title">Users Management</h2>
           </div>
 
-          <nav class="admin__nav">
-            <label for="admin-tab-dashboard" class="admin__item">
-              <span class="admin__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="12" rx="2"></rect>
-                  <line x1="8" y1="20" x2="16" y2="20"></line>
-                  <line x1="12" y1="16" x2="12" y2="20"></line>
-                </svg>
-              </span>
-              Dashboard
+          <!-- Stats -->
+          <div class="admin-stats">
+            <div class="admin-stat">
+              <span class="admin-stat__label">Total Users</span>
+              <span class="admin-stat__value">3</span>
+            </div>
+            <div class="admin-stat">
+              <span class="admin-stat__label">Active Users</span>
+              <span class="admin-stat__value admin-stat__value--active">2</span>
+            </div>
+            <div class="admin-stat">
+              <span class="admin-stat__label">Blocked Users</span>
+              <span class="admin-stat__value admin-stat__value--blocked">1</span>
+            </div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="admin-toolbar">
+            <label class="admin-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" name="userSearch" placeholder="Find by email" aria-label="Search users by email"
+                autocomplete="off" />
             </label>
+            <button type="button" class="btn btn--outline" aria-label="Filter user accounts">Filter</button>
+          </div>
 
-            <label for="admin-tab-products" class="admin__item">
-              <span class="admin__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"></path>
-                  <path d="M3 8l9 5 9-5"></path>
-                  <line x1="12" y1="13" x2="12" y2="22"></line>
-                </svg>
-              </span>
-              Products
-            </label>
+          <!-- Table -->
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <caption class="sr-only">User accounts and account status</caption>
+              <thead>
+                <tr>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Join Date</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="admin-table__id">minhvu123</td>
+                  <td>minhvu12@gmail.com</td>
+                  <td><time datetime="2026-07-13">13/07/2026</time></td>
+                  <td><span class="tag tag--active">Active</span></td>
+                  <td><button type="button" class="btn btn--danger btn--small"
+                      aria-label="Block user minhvu123">Block</button></td>
+                </tr>
+                <tr>
+                  <td class="admin-table__id">alex123</td>
+                  <td>alex12@gmail.com</td>
+                  <td><time datetime="2026-07-01">01/07/2026</time></td>
+                  <td><span class="tag tag--active">Active</span></td>
+                  <td><button type="button" class="btn btn--danger btn--small"
+                      aria-label="Block user alex123">Block</button></td>
+                </tr>
+                <tr>
+                  <td class="admin-table__id">david123</td>
+                  <td>david12@gmail.com</td>
+                  <td><time datetime="2026-07-02">02/07/2026</time></td>
+                  <td><span class="tag tag--blocked">Blocked</span></td>
+                  <td><button type="button" class="btn btn--success btn--small"
+                      aria-label="Unblock user david123">Unblock</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-            <label for="admin-tab-users" class="admin__item">
-              <span class="admin__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <circle cx="9" cy="8" r="3.4"></circle>
-                  <path d="M2.6 20c.9-3.6 3.6-5.6 6.4-5.6s5.5 2 6.4 5.6"></path>
-                  <circle cx="17.5" cy="8.6" r="2.6"></circle>
-                  <path d="M15.8 14.7c2.3.3 4.1 2 4.8 4.7"></path>
-                </svg>
-              </span>
-              Users
-            </label>
+        <!-- Settings panel -->
+        <section class="panel panel--settings">
+          <div class="panel-head">
+            <h2 class="panel-head__title">Settings</h2>
+          </div>
+          <p class="empty-state">Admin settings coming soon.</p>
+        </section>
 
-            <label for="admin-tab-settings" class="admin__item">
-              <span class="admin__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3.2"></circle>
-                  <path
-                    d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.5-2-3.4-2.4.7a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.4 2.3a7.6 7.6 0 0 0-2.6 1.5l-2.4-.7-2 3.4 2 1.5a7.7 7.7 0 0 0 0 3l-2 1.5 2 3.4 2.4-.7c.75.65 1.63 1.16 2.6 1.5L10 22h4l.4-2.3a7.6 7.6 0 0 0 2.6-1.5l2.4.7 2-3.4-2-1.5Z">
-                  </path>
-                </svg>
-              </span>
-              Settings
-            </label>
-          </nav>
-        </aside>
-
-        <!-- Content -->
-        <main class="admin__content">
-
-          <!-- Dashboard panel -->
-          <section class="panel panel--dashboard">
-            <div class="panel-head">
-              <h2 class="panel-head__title">Dashboard</h2>
-            </div>
-            <p class="empty-state">Dashboard overview coming soon.</p>
-          </section>
-
-          <!-- Products panel -->
-          <section class="panel panel--products">
-            <div class="panel-head">
-              <h2 class="panel-head__title">Products</h2>
-            </div>
-            <p class="empty-state">Product management coming soon.</p>
-          </section>
-
-          <!-- Users panel -->
-          <section class="panel panel--users">
-            <div class="panel-head">
-              <h2 class="panel-head__title">Users Management</h2>
-            </div>
-
-            <!-- Stats -->
-            <div class="admin-stats">
-              <div class="admin-stat">
-                <span class="admin-stat__label">Total Users</span>
-                <span class="admin-stat__value">3</span>
-              </div>
-              <div class="admin-stat">
-                <span class="admin-stat__label">Active Users</span>
-                <span class="admin-stat__value admin-stat__value--active">2</span>
-              </div>
-              <div class="admin-stat">
-                <span class="admin-stat__label">Block Users</span>
-                <span class="admin-stat__value admin-stat__value--blocked">1</span>
-              </div>
-            </div>
-
-            <!-- Toolbar -->
-            <div class="admin-toolbar">
-              <label class="admin-search">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="7"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="search" placeholder="Find by Email">
-              </label>
-              <button type="button" class="btn btn--outline">Filter</button>
-            </div>
-
-            <!-- Table -->
-            <div class="admin-table-wrap">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>UserID</th>
-                    <th>Email</th>
-                    <th>Join Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="admin-table__id">minhvu123</td>
-                    <td>minhvu12@gmail.com</td>
-                    <td>13/07/2026</td>
-                    <td><span class="tag tag--active">Active</span></td>
-                    <td><button type="button" class="btn btn--danger btn--small">Block</button></td>
-                  </tr>
-                  <tr>
-                    <td class="admin-table__id">alex123</td>
-                    <td>alex12@gmail.com</td>
-                    <td>01/07/2026</td>
-                    <td><span class="tag tag--active">Active</span></td>
-                    <td><button type="button" class="btn btn--danger btn--small">Block</button></td>
-                  </tr>
-                  <tr>
-                    <td class="admin-table__id">david123</td>
-                    <td>david12@gmail.com</td>
-                    <td>02/07/2026</td>
-                    <td><span class="tag tag--blocked">Blocked</span></td>
-                    <td><button type="button" class="btn btn--success btn--small">Unblock</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Settings panel -->
-          <section class="panel panel--settings">
-            <div class="panel-head">
-              <h2 class="panel-head__title">Settings</h2>
-            </div>
-            <p class="empty-state">Admin settings coming soon.</p>
-          </section>
-
-        </main>
-      </div>
-    </section>
+      </main>
+    </div>
+  </section>
 
   <!--  Footer  -->
   <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"

@@ -1,9 +1,3 @@
-/* =========================================================
-   Admin Page
-   Sidebar + content dashboard, visual language aligned to the
-   rest of the site: cream surfaces, red accents, warm shadows.
-   ========================================================= */
-
 :root {
   --admin-accent: #A31D1D;
   --admin-accent-strong: #6D2323;
@@ -22,6 +16,19 @@
   --admin-text-muted: #6f6358;
   --admin-shadow: 0 18px 50px rgba(73, 40, 22, 0.12);
   --admin-radius: 26px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .admin-hero {
@@ -53,6 +60,7 @@
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
@@ -144,20 +152,20 @@
   height: 19px;
 }
 
-#admin-tab-dashboard:checked ~ .admin .admin__sidebar label[for="admin-tab-dashboard"],
-#admin-tab-products:checked ~ .admin .admin__sidebar label[for="admin-tab-products"],
-#admin-tab-users:checked ~ .admin .admin__sidebar label[for="admin-tab-users"],
-#admin-tab-settings:checked ~ .admin .admin__sidebar label[for="admin-tab-settings"] {
+#admin-tab-dashboard:checked~.admin .admin__sidebar label[for="admin-tab-dashboard"],
+#admin-tab-products:checked~.admin .admin__sidebar label[for="admin-tab-products"],
+#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"],
+#admin-tab-settings:checked~.admin .admin__sidebar label[for="admin-tab-settings"] {
   background: var(--admin-accent-soft);
   border-color: rgba(163, 29, 29, 0.18);
   color: var(--admin-accent-strong);
   box-shadow: inset 0 0 0 1px rgba(163, 29, 29, 0.04);
 }
 
-#admin-tab-dashboard:checked ~ .admin .admin__sidebar label[for="admin-tab-dashboard"] .admin__icon,
-#admin-tab-products:checked ~ .admin .admin__sidebar label[for="admin-tab-products"] .admin__icon,
-#admin-tab-users:checked ~ .admin .admin__sidebar label[for="admin-tab-users"] .admin__icon,
-#admin-tab-settings:checked ~ .admin .admin__sidebar label[for="admin-tab-settings"] .admin__icon {
+#admin-tab-dashboard:checked~.admin .admin__sidebar label[for="admin-tab-dashboard"] .admin__icon,
+#admin-tab-products:checked~.admin .admin__sidebar label[for="admin-tab-products"] .admin__icon,
+#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"] .admin__icon,
+#admin-tab-settings:checked~.admin .admin__sidebar label[for="admin-tab-settings"] .admin__icon {
   background: var(--admin-accent);
   color: #ffffff;
   transform: translateX(1px);
@@ -174,10 +182,10 @@
   animation: adminPanelIn 0.22s ease-out;
 }
 
-#admin-tab-dashboard:checked ~ .admin .admin__content .panel--dashboard,
-#admin-tab-products:checked ~ .admin .admin__content .panel--products,
-#admin-tab-users:checked ~ .admin .admin__content .panel--users,
-#admin-tab-settings:checked ~ .admin .admin__content .panel--settings {
+#admin-tab-dashboard:checked~.admin .admin__content .panel--dashboard,
+#admin-tab-products:checked~.admin .admin__content .panel--products,
+#admin-tab-users:checked~.admin .admin__content .panel--users,
+#admin-tab-settings:checked~.admin .admin__content .panel--settings {
   display: block;
 }
 
@@ -442,6 +450,28 @@
   background: var(--admin-accent-soft);
 }
 
+#admin-tab-dashboard:focus-visible~.admin .admin__sidebar label[for="admin-tab-dashboard"],
+#admin-tab-products:focus-visible~.admin .admin__sidebar label[for="admin-tab-products"],
+#admin-tab-users:focus-visible~.admin .admin__sidebar label[for="admin-tab-users"],
+#admin-tab-settings:focus-visible~.admin .admin__sidebar label[for="admin-tab-settings"],
+.btn:focus-visible,
+.admin-search:focus-within,
+.forum-breadcrumb a:focus-visible {
+  outline: 3px solid rgba(163, 29, 29, 0.38);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .panel,
+  .admin__item,
+  .admin__icon,
+  .btn {
+    animation: none;
+    transition: none;
+  }
+}
+
 @keyframes adminPanelIn {
   from {
     opacity: 0;
@@ -451,47 +481,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* ================================================
-   RESPONSIVE
-   ================================================ */
-@media (max-width: 980px) {
-  .admin {
-    grid-template-columns: 1fr;
-    margin-top: 24px;
-  }
-
-  .admin__sidebar {
-    position: static;
-  }
-
-  .admin-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .admin {
-    width: min(100% - 24px, 1240px);
-    margin-top: 20px;
-  }
-
-  .admin__content {
-    padding: 22px;
-  }
-
-  .admin-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .admin-table-wrap {
-    overflow-x: auto;
-  }
-
-  .admin-table {
-    min-width: 640px;
   }
 }
