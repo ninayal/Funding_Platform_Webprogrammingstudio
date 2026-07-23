@@ -214,7 +214,7 @@ body {
   margin-bottom: 18px;
 }
 
-.pr-form__head h3 {
+.pr-form__head h2 {
   margin: 0 0 6px;
   font-family: var(--ff-ui);
   font-size: 28px;
@@ -228,16 +228,97 @@ body {
   color: var(--muted);
 }
 
-.pr-form__rating {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 18px;
+/* ================================================
+   REVIEW RATING INPUT
+   ================================================ */
+
+.pr-rating-fieldset {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
 }
 
-.pr-form__rating span {
+
+.pr-field-label {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  line-height: 18px;
+
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+}
+
+
+.pr-form__rating {
+  display: inline-flex;
+
+  flex-direction: row-reverse;
+
+  justify-content: flex-end;
+
+  gap: 6px;
+}
+
+
+.pr-rating-input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  margin: 0;
+  padding: 0;
+
+  opacity: 0;
+
+  clip-path: inset(50%);
+}
+
+
+.pr-rating-label {
+  color: rgba(116, 81, 45, 0.28);
+
+  font-family: var(--ff-body);
+
+  font-size: 34px;
+
+  line-height: 38px;
+
+  cursor: pointer;
+
+  transition: none;
+}
+
+
+.pr-rating-label:hover,
+.pr-rating-label:hover ~ .pr-rating-label,
+.pr-rating-input:checked ~ .pr-rating-label {
   color: var(--red);
-  font-size: 30px;
-  line-height: 1;
+}
+
+
+.pr-rating-label:hover {
+  transform: translateY(-2px);
+}
+
+
+.pr-rating-input:focus-visible + .pr-rating-label {
+  outline: 3px solid var(--red);
+
+  outline-offset: 3px;
+
+  border-radius: 4px;
 }
 
 .pr-form__row {
@@ -254,7 +335,7 @@ body {
   font-family: var(--ff-ui);
   font-size: 15px;
   outline: none;
-  transition: border-color .2s, box-shadow .2s, background .2s;
+  transition: none;
 }
 
 .pr-input {
@@ -297,7 +378,7 @@ body {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background .2s, transform .2s;
+  transition: none;
 }
 
 .pr-submit:hover {
@@ -376,11 +457,11 @@ body {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.58);
   font-family: var(--ff-ui);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--deep);
   cursor: pointer;
-  transition: background .2s, color .2s, border-color .2s;
+  transition: none;
 }
 
 .pr-sort__chip:hover {
@@ -612,10 +693,7 @@ body {
 
   cursor: pointer;
 
-  transition:
-    background .2s,
-    color .2s,
-    transform .2s;
+  transition: none;
 }
 
 .pr-page-btn:hover {
@@ -777,7 +855,8 @@ body {
 }
 
 .pr-card__date {
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .pr-card__stars {
@@ -871,7 +950,7 @@ body {
 .pr-score-card__count,
 .pr-breakdown__label,
 .pr-breakdown__value,
-.pr-form__head h3,
+.pr-form__head h2,
 .pr-form__head p,
 .pr-input,
 .pr-textarea,
@@ -891,4 +970,596 @@ body {
 .pr-hero__desc,
 .pr-card__comment {
   font-family: var(--ff-body);
+}
+/* ================================================
+   STATIC REVIEW SUBMISSION STATUS
+   ================================================ */
+
+.pr-form__status {
+  display: none;
+
+  margin: 16px 0 0;
+
+  padding: 12px 14px;
+
+  border: 1px solid rgba(163, 29, 29, 0.24);
+
+  border-radius: 10px;
+
+  background: rgba(163, 29, 29, 0.07);
+
+  color: var(--darkred);
+
+  font-family: var(--ff-body);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  line-height: 20px;
+}
+
+
+.pr-form__status:target {
+  display: block;
+}
+/* ================================================
+   KEYBOARD FOCUS — REVIEW FILTERS
+   ================================================ */
+
+#filter-all:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-all"],
+
+#filter-5:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-5"],
+
+#filter-4:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-4"],
+
+#filter-3:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-3"],
+
+#filter-2:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-2"],
+
+#filter-1:focus-visible ~ .pr-list
+.pr-sort__chip[for="filter-1"] {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+
+/* ================================================
+   KEYBOARD FOCUS — REVIEW PAGINATION
+   ================================================ */
+
+#review-page-1:focus-visible ~ .pr-list
+.pr-page-btn[for="review-page-1"],
+
+#review-page-2:focus-visible ~ .pr-list
+.pr-page-btn[for="review-page-2"],
+
+#review-page-3:focus-visible ~ .pr-list
+.pr-page-btn[for="review-page-3"],
+
+#review-page-4:focus-visible ~ .pr-list
+.pr-page-btn[for="review-page-4"],
+
+#review-page-5:focus-visible ~ .pr-list
+.pr-page-btn[for="review-page-5"] {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ================================================
+   REVIEW IMAGE UPLOAD
+   ================================================ */
+
+.pr-file-input {
+  width: 100%;
+
+  min-height: 48px;
+
+  padding: 6px;
+
+  border: 1px solid rgba(175, 143, 111, 0.24);
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+
+.pr-file-input::file-selector-button {
+  min-height: 36px;
+
+  margin-right: 12px;
+
+  padding: 0 16px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background: var(--deep);
+
+  color: var(--cream);
+
+  font-family: var(--ff-body);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+.pr-file-input:hover::file-selector-button {
+  background: var(--red);
+}
+
+
+.pr-file-input:focus-visible {
+  outline: 3px solid var(--red);
+
+  outline-offset: 3px;
+}
+
+
+.pr-file-note {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--muted);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  line-height: 18px;
+}
+/* ================================================
+   OWN REVIEW — STATIC EDIT AND DELETE
+   ================================================ */
+
+.review-delete-control {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+}
+
+
+.pr-card__owner-tools {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+
+.pr-card__owner-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 28px;
+
+  padding: 0 10px;
+
+  border: 1px solid rgba(163, 29, 29, 0.24);
+
+  border-radius: 999px;
+
+  background: rgba(163, 29, 29, 0.07);
+
+  color: var(--darkred);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+  line-height: 16px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+
+.pr-card__owner-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+.pr-card__owner-action {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+
+  padding: 0 11px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+
+.pr-card__owner-action:hover {
+  border-color: var(--red);
+
+  color: var(--red);
+}
+
+
+.pr-card__owner-action--delete {
+  color: var(--darkred);
+}
+
+
+.pr-delete-status {
+  display: none;
+
+  margin: 0 0 14px;
+
+  padding: 12px 14px;
+
+  border: 1px solid rgba(163, 29, 29, 0.24);
+
+  border-radius: 10px;
+
+  background: rgba(163, 29, 29, 0.07);
+
+  color: var(--darkred);
+
+  font-family: var(--ff-body);
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+#delete-own-review:checked ~ .pr-list .pr-card--own {
+  display: none !important;
+}
+
+
+#delete-own-review:checked ~ .pr-list .pr-delete-status {
+  display: block;
+}
+
+
+#delete-own-review:focus-visible ~ .pr-list
+.pr-card__owner-action--delete {
+  outline: 3px solid var(--red);
+
+  outline-offset: 3px;
+}
+
+
+@media (max-width: 700px) {
+
+  .pr-card__owner-tools {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+}
+/* ================================================
+   REVIEW DISPLAY MODES
+   ================================================ */
+
+.review-view-control {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0%;
+}
+
+
+.pr-view {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-bottom: 6px;
+}
+
+
+.pr-view__label {
+  color: var(--muted);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+
+.pr-view__options {
+  display: flex;
+
+  gap: 8px;
+}
+
+
+.pr-view__option {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  padding: 0 12px;
+
+  border: 1px solid rgba(175, 143, 111, 0.22);
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.58);
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+.pr-view__option:hover {
+  border-color: var(--red);
+
+  color: var(--red);
+}
+
+
+#review-view-preview:checked ~ .pr-list
+.pr-view__option[for="review-view-preview"],
+
+#review-view-full:checked ~ .pr-list
+.pr-view__option[for="review-view-full"] {
+  border-color: var(--deep);
+
+  background: var(--deep);
+
+  color: var(--cream);
+}
+
+
+/* Preview mode: display a shortened review */
+#review-view-preview:checked ~ .pr-list
+.pr-card__comment {
+  max-height: 42px;
+
+  overflow: hidden;
+}
+
+
+/* Preview mode: keep thumbnail but hide large photo */
+#review-view-preview:checked ~ .pr-list
+.pr-card__photo {
+  display: none;
+}
+
+
+/* Full review mode */
+#review-view-full:checked ~ .pr-list
+.pr-card__comment {
+  max-height: none;
+
+  overflow: visible;
+}
+
+
+#review-view-full:checked ~ .pr-list
+.pr-card__photo {
+  display: block;
+}
+
+
+/* Keyboard focus */
+#review-view-preview:focus-visible ~ .pr-list
+.pr-view__option[for="review-view-preview"],
+
+#review-view-full:focus-visible ~ .pr-list
+.pr-view__option[for="review-view-full"] {
+  outline: 3px solid var(--red);
+
+  outline-offset: 3px;
+}
+/* ================================================
+   REVIEW SEARCH
+   ================================================ */
+
+.pr-search {
+  width: 100%;
+}
+
+
+.pr-search__label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--muted);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+
+  text-align: right;
+
+  text-transform: uppercase;
+}
+
+
+.pr-search__controls {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+
+.pr-search__select,
+.pr-search__input {
+  min-height: 38px;
+
+  padding: 0 12px;
+
+  border: 1px solid rgba(175, 143, 111, 0.24);
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+
+  font-size: 13px;
+}
+
+
+.pr-search__input {
+  width: 240px;
+
+  max-width: 100%;
+}
+
+
+.pr-search__button {
+  min-height: 38px;
+
+  padding: 0 16px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background: var(--deep);
+
+  color: var(--cream);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+.pr-search__button:hover {
+  background: var(--red);
+}
+
+
+.pr-search__select:focus-visible,
+.pr-search__input:focus-visible,
+.pr-search__button:focus-visible {
+  outline: 3px solid var(--red);
+
+  outline-offset: 3px;
+}
+
+
+.pr-search__note {
+  display: block;
+
+  margin-top: 6px;
+
+  color: var(--muted);
+
+  font-family: var(--ff-body);
+
+  font-size: 12px;
+
+  line-height: 16px;
+
+  text-align: right;
+}
+
+
+@media (max-width: 700px) {
+
+  .pr-search__label,
+  .pr-search__note {
+    text-align: left;
+  }
+
+
+  .pr-search__controls {
+    justify-content: flex-start;
+  }
+
+
+  .pr-search__select,
+  .pr-search__input,
+  .pr-search__button {
+    width: 100%;
+  }
+
 }
