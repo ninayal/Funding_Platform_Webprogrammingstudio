@@ -7,7 +7,7 @@
         grid-template-columns: 220px minmax(0, 1fr);
     }
 
-    .my-post-card h3 {
+    .my-post-card h2 {
         font-size: 28px;
     }
 }
@@ -26,11 +26,11 @@
         grid-template-columns: 1fr;
     }
 
-    .my-posts-account {
+    .author-panel {
         position: static;
     }
 
-    .my-posts-account__stats {
+    .author-statistics {
         grid-template-columns: repeat(4, 1fr);
     }
 }
@@ -40,16 +40,17 @@
         width: calc(100% - 32px);
     }
 
+    .my-posts-breadcrumb {
+        width: calc(100% - 32px);
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
     .my-posts-header h1 {
         font-size: 48px;
     }
 
-    .my-posts-toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .my-posts-account__stats {
+    .author-statistics {
         grid-template-columns: 1fr 1fr;
     }
 
@@ -59,14 +60,14 @@
 
     .my-post-card__image {
         height: 240px;
+        min-height: 0;
     }
 
     .my-post-card__image img {
         min-height: 0;
     }
 
-    .my-post-card__status,
-    .my-post-action--danger {
+    .post-status {
         margin-left: 0;
     }
 }
@@ -77,14 +78,21 @@
     }
 
     .my-posts-page {
-        padding-top: 16px;
+        margin-top: -46px;
+        padding-top: 14px;
+    }
+
+    .my-posts-breadcrumb {
+        width: calc(100% - 24px);
+        margin-bottom: 12px;
+        font-size: 13px;
     }
 
     .my-posts-header h1 {
         font-size: 40px;
     }
 
-    .my-posts-header__copy>p:last-child {
+    .my-posts-subtitle {
         font-size: 14px;
     }
 
@@ -98,11 +106,11 @@
         width: 100%;
     }
 
-    .my-post-card__body {
+    .my-post-card__content {
         padding: 21px;
     }
 
-    .my-post-card h3 {
+    .my-post-card h2 {
         font-size: 27px;
     }
 
@@ -111,7 +119,7 @@
         flex-direction: column;
     }
 
-    .my-post-action {
+    .post-action {
         width: 100%;
     }
 }

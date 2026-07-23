@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap");
 
 :root {
     --cream: #fef9e1;
@@ -12,9 +12,14 @@
     --muted: #7e6952;
     --line: rgba(116, 81, 45, 0.2);
 
-    --ff-heading: "Playfair Display", serif;
-    --ff-body: "Cormorant Garamond", serif;
-    --ff-ui: "DM Sans", sans-serif;
+    /* Only two font families */
+    --ff-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --ff-sans: "DM Sans", Arial, Helvetica, sans-serif;
+
+    /* Existing CSS aliases */
+    --ff-heading: var(--ff-serif);
+    --ff-body: var(--ff-serif);
+    --ff-ui: var(--ff-sans);
 
     --shadow-soft:
         0 16px 38px rgba(116, 81, 45, 0.1);
@@ -49,6 +54,7 @@ a {
 
 button,
 input,
-textarea {
+textarea,
+select {
     font: inherit;
 }

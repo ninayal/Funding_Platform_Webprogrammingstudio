@@ -13,19 +13,25 @@
     <link rel="stylesheet" href="../../public/css/header.css" />
     <link rel="stylesheet" href="../../public/css/shared-include.css" />
 
-    <!-- My Posts styles: this one file imports every smaller CSS file -->
+    <!-- My Posts styles -->
     <link rel="stylesheet" href="../../public/css/blog/my-posts/my-posts.css" />
 </head>
 
 <body>
 
-    <!-- Shared Blog header -->
+    <!-- ================================================
+         GLOBAL HEADER
+    ================================================ -->
     <iframe src="../global/header_shoppingcart.html#nav-blog" title="Làng & Co. Header"
         class="shared-include shared-header shared-header--light" loading="eager" scrolling="no">
     </iframe>
 
+    <!-- ================================================
+         MY BLOG POSTS PAGE
+    ================================================ -->
     <main class="my-posts-page">
 
+        <!-- Breadcrumb -->
         <nav class="my-posts-breadcrumb my-posts-container" aria-label="Breadcrumb">
             <a href="../../index.html">Home</a>
             <span aria-hidden="true">•</span>
@@ -34,185 +40,241 @@
             <span aria-current="page">My Posts</span>
         </nav>
 
+        <!-- Page heading -->
         <header class="my-posts-header my-posts-container">
-            <div class="my-posts-header__copy">
-                <p class="my-posts-kicker">Author workspace</p>
+
+            <div>
+                <p class="my-posts-kicker">Blog account</p>
+
                 <h1>My Blog Posts</h1>
-                <p>
-                    Manage your published stories, continue unfinished drafts,
-                    and review posts that are no longer visible in the Journal.
+
+                <p class="my-posts-subtitle">
+                    Review your published stories, drafts, and archived posts
+                    in one place.
                 </p>
             </div>
 
-            <a class="my-posts-create" href="./blog.html#create-post">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                    <path d="M12 5v14M5 12h14"></path>
-                </svg>
-                Create Post
+            <a class="my-posts-create-button" href="./blog.html#create-post">
+                <span aria-hidden="true">＋</span>
+                Create New Post
             </a>
+
         </header>
 
-        <!-- CSS-only status filters -->
-        <input class="my-posts-state" type="radio" name="my-post-status" id="my-status-all" checked />
-        <input class="my-posts-state" type="radio" name="my-post-status" id="my-status-published" />
-        <input class="my-posts-state" type="radio" name="my-post-status" id="my-status-draft" />
-        <input class="my-posts-state" type="radio" name="my-post-status" id="my-status-archived" />
+        <!-- ================================================
+             CSS-ONLY FILTER STATES
+        ================================================ -->
+        <input class="my-posts-filter-input" type="radio" name="post-status" id="status-all" checked />
+
+        <input class="my-posts-filter-input" type="radio" name="post-status" id="status-published" />
+
+        <input class="my-posts-filter-input" type="radio" name="post-status" id="status-draft" />
+
+        <input class="my-posts-filter-input" type="radio" name="post-status" id="status-archived" />
 
         <div class="my-posts-layout my-posts-container">
 
-            <aside class="my-posts-account" aria-label="Blog author account summary">
-                <div class="my-posts-account__identity">
-                    <div class="my-posts-account__avatar" aria-hidden="true">HB</div>
+            <!-- ================================================
+                 BLOG ACCOUNT SUMMARY
+            ================================================ -->
+            <aside class="author-panel">
+
+                <div class="author-profile">
+
+                    <div class="author-profile__avatar" aria-hidden="true">
+                        HB
+                    </div>
 
                     <div>
                         <h2>Huy Ba</h2>
                         <p>Community contributor</p>
                     </div>
+
                 </div>
 
-                <p class="my-posts-account__bio">
-                    Writing about Vietnamese craft, cultural context, community
-                    support, and responsible digital storytelling.
+                <p class="author-profile__bio">
+                    Writing about Vietnamese traditional crafts, cultural
+                    preservation, community support, and responsible digital
+                    platforms.
                 </p>
 
-                <div class="my-posts-account__stats">
-                    <div>
+                <div class="author-statistics">
+
+                    <div class="author-stat">
                         <strong>4</strong>
                         <span>Total posts</span>
                     </div>
 
-                    <div>
+                    <div class="author-stat">
                         <strong>2</strong>
                         <span>Published</span>
                     </div>
 
-                    <div>
+                    <div class="author-stat">
                         <strong>1</strong>
                         <span>Draft</span>
                     </div>
 
-                    <div>
+                    <div class="author-stat">
                         <strong>1</strong>
                         <span>Archived</span>
                     </div>
+
                 </div>
+
             </aside>
 
-            <section class="my-posts-content" aria-labelledby="my-posts-list-heading">
+            <!-- ================================================
+                 POSTS AREA
+            ================================================ -->
+            <section class="my-posts-content">
 
-                <div class="my-posts-toolbar">
-                    <div>
-                        <p class="my-posts-kicker">Your writing</p>
-                        <h2 id="my-posts-list-heading">Post library</h2>
-                    </div>
-
-                    <nav class="my-posts-filters" aria-label="Filter your posts by status">
-                        <label for="my-status-all">All</label>
-                        <label for="my-status-published">Published</label>
-                        <label for="my-status-draft">Drafts</label>
-                        <label for="my-status-archived">Archived</label>
-                    </nav>
-                </div>
+                <nav class="my-posts-filters" aria-label="Filter posts by status">
+                    <label for="status-all">All Posts</label>
+                    <label for="status-published">Published</label>
+                    <label for="status-draft">Drafts</label>
+                    <label for="status-archived">Archived</label>
+                </nav>
 
                 <div class="my-posts-list">
 
-                    <!-- Published post 1 -->
-                    <article class="my-post-card my-post-card--published">
-                        <a class="my-post-card__image" href="./blog.html#post-community">
+                    <!-- ========================================
+                         POST 1 — PUBLISHED
+                    ========================================= -->
+                    <article class="my-post-card post-published">
+
+                        <div class="my-post-card__image">
                             <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
                                 alt="Community members gathering outdoors" />
-                        </a>
+                        </div>
 
-                        <div class="my-post-card__body">
+                        <div class="my-post-card__content">
+
                             <div class="my-post-card__meta">
-                                <span class="my-post-card__category">Donation</span>
-                                <time datetime="2026-05-02">May 2, 2026</time>
-                                <span class="my-post-card__status my-post-card__status--published">Published</span>
+                                <span class="post-category">Donation</span>
+
+                                <time datetime="2026-05-02">
+                                    May 2, 2026
+                                </time>
+
+                                <span class="post-status post-status--published">
+                                    Published
+                                </span>
                             </div>
 
-                            <h3>
-                                <a href="./blog.html#post-community">
-                                    What a Craft Community Needs from a Platform
-                                </a>
-                            </h3>
+                            <h2>
+                                What a Craft Community Needs from a Platform
+                            </h2>
 
                             <p>
                                 Notes from conversations with makers about
-                                visibility, pricing, cultural context, and useful
-                                community support.
+                                visibility, pricing, cultural context, and the
+                                difference between exposure and useful support.
                             </p>
 
-                            <div class="my-post-card__metrics">
+                            <div class="my-post-card__information">
                                 <span>6 min read</span>
                                 <span>12 comments</span>
                                 <span>84 views</span>
                             </div>
 
                             <div class="my-post-card__actions">
-                                <a class="my-post-action my-post-action--primary" href="./blog.html#post-community">View
-                                    Post</a>
-                                <a class="my-post-action" href="./blog.html#edit-own-post">Edit</a>
-                                <button class="my-post-action my-post-action--danger" type="button">Delete</button>
+                                <button class="post-action post-action--primary" type="button">
+                                    View Post
+                                </button>
+
+                                <button class="post-action" type="button">
+                                    Edit
+                                </button>
                             </div>
+
                         </div>
+
                     </article>
 
-                    <!-- Published post 2 -->
-                    <article class="my-post-card my-post-card--published">
-                        <a class="my-post-card__image" href="./blog_lead_story.html">
-                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                                alt="Development team discussing a digital project" />
-                        </a>
+                    <!-- ========================================
+                         POST 2 — PUBLISHED
+                    ========================================= -->
+                    <article class="my-post-card post-published">
 
-                        <div class="my-post-card__body">
+                        <div class="my-post-card__image">
+                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
+                                alt="Development team discussing a project" />
+                        </div>
+
+                        <div class="my-post-card__content">
+
                             <div class="my-post-card__meta">
-                                <span class="my-post-card__category">Mission</span>
-                                <time datetime="2026-07-06">July 6, 2026</time>
-                                <span class="my-post-card__status my-post-card__status--published">Published</span>
+                                <span class="post-category">Mission</span>
+
+                                <time datetime="2026-07-06">
+                                    July 6, 2026
+                                </time>
+
+                                <span class="post-status post-status--published">
+                                    Published
+                                </span>
                             </div>
 
-                            <h3>
-                                <a href="./blog_lead_story.html">
-                                    Our Developer Mission: Building Digital Bridges to Living Craft
-                                </a>
-                            </h3>
+                            <h2>
+                                Our Developer Mission: Building Digital Bridges
+                                to Living Craft
+                            </h2>
 
                             <p>
-                                Why product decisions begin with maker identity,
-                                provenance, cultural knowledge, and responsible
-                                digital commerce.
+                                Why our development decisions begin with maker
+                                identity, provenance, cultural knowledge, and
+                                responsible digital commerce.
                             </p>
 
-                            <div class="my-post-card__metrics">
+                            <div class="my-post-card__information">
                                 <span>8 min read</span>
                                 <span>3 comments</span>
                                 <span>126 views</span>
                             </div>
 
                             <div class="my-post-card__actions">
-                                <a class="my-post-action my-post-action--primary" href="./blog_lead_story.html">View
-                                    Post</a>
-                                <a class="my-post-action" href="./blog.html#edit-own-post">Edit</a>
-                                <button class="my-post-action my-post-action--danger" type="button">Delete</button>
+                                <button class="post-action post-action--primary" type="button">
+                                    View Post
+                                </button>
+
+                                <button class="post-action" type="button">
+                                    Edit
+                                </button>
                             </div>
+
                         </div>
+
                     </article>
 
-                    <!-- Draft post -->
-                    <article class="my-post-card my-post-card--draft">
+                    <!-- ========================================
+                         POST 3 — DRAFT
+                    ========================================= -->
+                    <article class="my-post-card post-draft">
+
                         <div class="my-post-card__image">
                             <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
                                 alt="Traditional ceramic vessels in a workshop" />
                         </div>
 
-                        <div class="my-post-card__body">
+                        <div class="my-post-card__content">
+
                             <div class="my-post-card__meta">
-                                <span class="my-post-card__category">Guide</span>
-                                <time datetime="2026-07-18">Edited July 18, 2026</time>
-                                <span class="my-post-card__status my-post-card__status--draft">Draft</span>
+                                <span class="post-category">Guide</span>
+
+                                <time datetime="2026-07-18">
+                                    Last edited July 18, 2026
+                                </time>
+
+                                <span class="post-status post-status--draft">
+                                    Draft
+                                </span>
                             </div>
 
-                            <h3>Understanding Glaze, Fire, and Handmade Variation</h3>
+                            <h2>
+                                Understanding Glaze, Fire, and Handmade
+                                Variation
+                            </h2>
 
                             <p>
                                 An unfinished guide explaining why handmade
@@ -220,73 +282,101 @@
                                 should not automatically be treated as defects.
                             </p>
 
-                            <div class="my-post-progress">
-                                <div class="my-post-progress__header">
+                            <div class="draft-progress">
+                                <div class="draft-progress__heading">
                                     <span>Draft completion</span>
                                     <strong>65%</strong>
                                 </div>
 
-                                <div class="my-post-progress__track">
+                                <div class="draft-progress__track">
                                     <span style="width: 65%;"></span>
                                 </div>
                             </div>
 
                             <div class="my-post-card__actions">
-                                <a class="my-post-action my-post-action--primary"
-                                    href="./blog.html#edit-own-post">Continue Editing</a>
-                                <a class="my-post-action" href="./blog.html#post-created-detail">Preview</a>
-                                <button class="my-post-action my-post-action--danger" type="button">Delete
-                                    Draft</button>
+                                <button class="post-action post-action--primary" type="button">
+                                    Continue Editing
+                                </button>
+
+                                <button class="post-action" type="button">
+                                    Preview
+                                </button>
                             </div>
+
                         </div>
+
                     </article>
 
-                    <!-- Archived post -->
-                    <article class="my-post-card my-post-card--archived">
+                    <!-- ========================================
+                         POST 4 — ARCHIVED
+                    ========================================= -->
+                    <article class="my-post-card post-archived">
+
                         <div class="my-post-card__image">
                             <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                                alt="Folded textile and traditional fabric" />
+                                alt="Traditional textile and folded fabric" />
                         </div>
 
-                        <div class="my-post-card__body">
+                        <div class="my-post-card__content">
+
                             <div class="my-post-card__meta">
-                                <span class="my-post-card__category">Places</span>
-                                <time datetime="2026-03-14">March 14, 2026</time>
-                                <span class="my-post-card__status my-post-card__status--archived">Archived</span>
+                                <span class="post-category">Places</span>
+
+                                <time datetime="2026-03-14">
+                                    March 14, 2026
+                                </time>
+
+                                <span class="post-status post-status--archived">
+                                    Archived
+                                </span>
                             </div>
 
-                            <h3>Notes from a Traditional Textile Workshop</h3>
+                            <h2>
+                                Notes from a Traditional Textile Workshop
+                            </h2>
 
                             <p>
-                                Field notes about fibres, natural dyes, handwoven
-                                surfaces, and the daily work behind traditional
-                                textile production.
+                                An earlier field note about fibres, natural
+                                dyes, handwoven surfaces, and the daily work
+                                behind traditional textile production.
                             </p>
 
-                            <div class="my-post-card__metrics">
+                            <div class="my-post-card__information">
                                 <span>Archived July 1, 2026</span>
                                 <span>41 previous views</span>
                             </div>
 
                             <div class="my-post-card__actions">
-                                <button class="my-post-action my-post-action--primary" type="button">Restore
-                                    Post</button>
-                                <a class="my-post-action" href="./blog.html#edit-own-post">Edit</a>
-                                <button class="my-post-action my-post-action--danger" type="button">Delete
-                                    Permanently</button>
+                                <button class="post-action post-action--primary" type="button">
+                                    Restore Post
+                                </button>
+
+                                <button class="post-action" type="button">
+                                    Edit
+                                </button>
                             </div>
+
                         </div>
+
                     </article>
 
                 </div>
+
             </section>
+
         </div>
 
         <div class="my-posts-return my-posts-container">
-            <a href="./blog.html">← Back to Journal</a>
+            <a href="./blog.html">
+                ← Return to Journal
+            </a>
         </div>
+
     </main>
 
+    <!-- ================================================
+         FOOTER
+    ================================================ -->
     <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
         scrolling="no">
     </iframe>

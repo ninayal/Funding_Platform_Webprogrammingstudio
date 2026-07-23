@@ -1,4 +1,4 @@
-.my-posts-account {
+.author-panel {
     position: sticky;
     top: 24px;
     padding: 26px;
@@ -9,13 +9,13 @@
     backdrop-filter: blur(4px);
 }
 
-.my-posts-account__identity {
+.author-profile {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.my-posts-account__avatar {
+.author-profile__avatar {
     width: 62px;
     height: 62px;
     display: grid;
@@ -26,39 +26,44 @@
     color: var(--cream);
     background: var(--brown);
     box-shadow: 0 10px 24px rgba(73, 40, 22, 0.16);
+    font-family: var(--my-posts-sans);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
-.my-posts-account h2 {
+.author-profile h2 {
     margin: 0 0 4px;
-    font-family: var(--ff-script);
+    font-family: var(--my-posts-serif);
     font-size: 28px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
-.my-posts-account__identity p {
+.author-profile p {
     margin: 0;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 11px;
+    font-weight: 400;
 }
 
-.my-posts-account__bio {
+.author-profile__bio {
     margin: 22px 0 0;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 13px;
+    font-weight: 400;
     line-height: 1.65;
 }
 
-.my-posts-account__stats {
+.author-statistics {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 24px;
 }
 
-.my-posts-account__stats > div {
+.author-stat {
     min-height: 82px;
     display: flex;
     flex-direction: column;
@@ -69,16 +74,17 @@
     background: rgba(255, 255, 255, 0.34);
 }
 
-.my-posts-account__stats strong {
+.author-stat strong {
     color: var(--darkred);
-    font-family: var(--ff-script);
+    font-family: var(--my-posts-serif);
     font-size: 28px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
-.my-posts-account__stats span {
+.author-stat span {
     margin-top: 4px;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 1px;

@@ -1,4 +1,4 @@
-.my-posts-state {
+.my-posts-filter-input {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -6,29 +6,14 @@
     pointer-events: none;
 }
 
-.my-posts-toolbar {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 22px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--line);
-}
-
-.my-posts-toolbar h2 {
-    margin: 0;
-    font-family: var(--ff-script);
-    font-size: 40px;
-    font-weight: 500;
-    line-height: 1;
-}
-
 .my-posts-filters {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
 }
 
 .my-posts-filters label {
@@ -42,11 +27,15 @@
     color: var(--brown);
     background: rgba(255, 255, 255, 0.34);
     cursor: pointer;
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+    transition:
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
 }
 
 .my-posts-filters label:hover {
@@ -54,17 +43,17 @@
     color: var(--red);
 }
 
-#my-status-all:checked ~ .my-posts-layout label[for="my-status-all"],
-#my-status-published:checked ~ .my-posts-layout label[for="my-status-published"],
-#my-status-draft:checked ~ .my-posts-layout label[for="my-status-draft"],
-#my-status-archived:checked ~ .my-posts-layout label[for="my-status-archived"] {
+#status-all:checked~.my-posts-layout .my-posts-filters label[for="status-all"],
+#status-published:checked~.my-posts-layout .my-posts-filters label[for="status-published"],
+#status-draft:checked~.my-posts-layout .my-posts-filters label[for="status-draft"],
+#status-archived:checked~.my-posts-layout .my-posts-filters label[for="status-archived"] {
     border-color: var(--darkred);
     color: var(--cream);
     background: var(--darkred);
 }
 
-#my-status-published:checked ~ .my-posts-layout .my-post-card:not(.my-post-card--published),
-#my-status-draft:checked ~ .my-posts-layout .my-post-card:not(.my-post-card--draft),
-#my-status-archived:checked ~ .my-posts-layout .my-post-card:not(.my-post-card--archived) {
+#status-published:checked~.my-posts-layout .my-post-card:not(.post-published),
+#status-draft:checked~.my-posts-layout .my-post-card:not(.post-draft),
+#status-archived:checked~.my-posts-layout .my-post-card:not(.post-archived) {
     display: none;
 }

@@ -10,8 +10,6 @@
 
   <title>Làng & Co. — Impact Gifts</title>
 
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../public/css/header.css" />
   <link rel="stylesheet" href="../../public/css/shared-include.css" />
   <link rel="stylesheet" href="../../public/css/giftcard/giftcard.css" />
 </head>
@@ -19,32 +17,112 @@
 
 <body>
 
-  <!-- GIFT TYPE STATE -->
-  <input class="ui-state" type="radio" name="gift-type" id="gift-lang" checked />
+<!-- GIFT TYPE STATE -->
+<input
+  class="ui-state"
+  type="radio"
+  name="giftType"
+  id="gift-lang"
+  value="lang-impact"
+  form="gift-card-form"
+  checked
+/>
 
-  <input class="ui-state" type="radio" name="gift-type" id="gift-honour" />
+<input
+  class="ui-state"
+  type="radio"
+  name="giftType"
+  id="gift-honour"
+  value="donation-in-honour"
+  form="gift-card-form"
+/>
 
 
-  <!-- DELIVERY STATE -->
-  <input class="ui-state" type="radio" name="delivery-type" id="delivery-digital" checked />
+<!-- DELIVERY STATE -->
+<input
+  class="ui-state"
+  type="radio"
+  name="deliveryType"
+  id="delivery-digital"
+  value="digital"
+  form="gift-card-form"
+  checked
+/>
 
-  <input class="ui-state" type="radio" name="delivery-type" id="delivery-printable" />
+<input
+  class="ui-state"
+  type="radio"
+  name="deliveryType"
+  id="delivery-printable"
+  value="printable"
+  form="gift-card-form"
+/>
 
-  <input class="ui-state" type="radio" name="delivery-type" id="delivery-physical" />
+<input
+  class="ui-state"
+  type="radio"
+  name="deliveryType"
+  id="delivery-physical"
+  value="physical"
+  form="gift-card-form"
+/>
 
 
-  <!-- DESIGN STATE -->
-  <input class="ui-state" type="radio" name="design-type" id="design-lotus" checked />
+<!-- DESIGN STATE -->
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-lotus"
+  value="ho-tay-lotus"
+  form="gift-card-form"
+  checked
+/>
 
-  <input class="ui-state" type="radio" name="design-type" id="design-battrang" />
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-battrang"
+  value="bat-trang-blue"
+  form="gift-card-form"
+/>
 
-  <input class="ui-state" type="radio" name="design-type" id="design-vanphuc" />
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-vanphuc"
+  value="van-phuc-silk"
+  form="gift-card-form"
+/>
 
-  <input class="ui-state" type="radio" name="design-type" id="design-hathai" />
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-hathai"
+  value="ha-thai-lacquer"
+  form="gift-card-form"
+/>
 
-  <input class="ui-state" type="radio" name="design-type" id="design-hoian" />
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-hoian"
+  value="hoi-an-glow"
+  form="gift-card-form"
+/>
 
-  <input class="ui-state" type="radio" name="design-type" id="design-phuvinh" />
+<input
+  class="ui-state"
+  type="radio"
+  name="designType"
+  id="design-phuvinh"
+  value="phu-vinh-bamboo"
+  form="gift-card-form"
+/>
 
 
 
@@ -63,26 +141,16 @@
 
     <div class="gift-hero__content">
 
-      <p class="eyebrow">
-        Impact gifts by Làng &amp; Co.
-      </p>
-
-
       <h1>
         Give a gift.
         <em>Let it carry meaning.</em>
       </h1>
-
-
-      
-
 
       <div class="hero-actions">
 
         <a class="btn btn-primary" href="#gift-type">
           Give a Gift
         </a>
-
 
         <a class="btn btn-ghost" href="#redeem">
           View My Gift
@@ -95,12 +163,16 @@
 
     <div class="gift-hero__curve" aria-hidden="true"></div>
 
-  </section>
+    </section>
 
-
-
-
-  <main>
+    <main>
+   
+    <form
+    id="gift-card-form"
+    class="gift-card-form"
+    action="#review"
+    method="get"
+  >
 
     <!-- ====================================================
          STEP 1 — GIFT TYPE
@@ -481,7 +553,7 @@
 
 
           <p>
-            There are no fixed presets. Enter any positive VND
+            There are no fixed presets. Enter any positive USD
             amount that fits the giving moment.
           </p>
 
@@ -501,7 +573,16 @@
               </span>
 
 
-              <input type="number" name="quantity" min="1" step="1" value="1" inputmode="numeric" />
+              <input
+                type="number"
+                id="gift-quantity"
+                name="quantity"
+                min="1"
+                step="1"
+                value="1"
+                inputmode="numeric"
+                required
+              />
 
 
               <small>
@@ -516,26 +597,35 @@
             <label class="amount-field amount-field--wide">
 
               <span>
-                Amount per card (VND)
+                Amount per card (USD)
               </span>
 
 
               <div class="currency-input">
 
                 <span>
-                  ₫
+                  $
                 </span>
 
 
-                <input type="number" name="amountPerCard" min="1000" step="1000" placeholder="Enter any amount"
-                  inputmode="numeric" />
+                <input
+                  type="number"
+                  id="gift-amount"
+                  name="amountPerCard"
+                  min="5"
+                  step="1"
+                  value="50"
+                  placeholder="Enter any amount"
+                  inputmode="decimal"
+                  required
+                />
 
               </div>
 
 
               <small>
                 Enter any positive amount.
-                Example: 250000 = ₫250,000.
+                Example: 50 = $50.00.
               </small>
 
             </label>
@@ -548,7 +638,6 @@
           <div class="amount-total">
 
             <div>
-
               <span>
                 Gift total
               </span>
@@ -556,12 +645,10 @@
               <small>
                 Quantity × amount per card
               </small>
-
             </div>
 
-
             <strong>
-              Calculated at review
+              $50.00
             </strong>
 
           </div>
@@ -623,7 +710,7 @@
           <!-- ==============================================
                FORM
                ============================================== -->
-          <form class="details-form" action="#review" method="get">
+          <div class="details-form">
 
             <!-- ============================================
                  COMMON FIELDS
@@ -640,7 +727,18 @@
                   </span>
 
 
-                  <input type="text" name="recipientName" placeholder="Minh" />
+                  <input
+                    type="text"
+                    id="recipient-name"
+                    name="recipientName"
+                    value="Minh"
+                    placeholder="Minh"
+                    minlength="2"
+                    maxlength="60"
+                    pattern=".*\S.*"
+                    title="Enter the recipient's name."
+                    required
+                  />
 
                 </label>
 
@@ -653,7 +751,19 @@
                   </span>
 
 
-                  <input type="text" name="senderName" placeholder="Huy" />
+                  <input
+                    type="text"
+                    id="sender-name"
+                    name="senderName"
+                    value="Huy"
+                    placeholder="Huy"
+                    minlength="2"
+                    maxlength="60"
+                    pattern=".*\S.*"
+                    title="Enter your name."
+                    autocomplete="name"
+                    required
+                  />
 
                 </label>
 
@@ -668,8 +778,75 @@
                 </span>
 
 
-                <textarea name="message" rows="6" maxlength="280"
-                  placeholder="Wishing you a meaningful celebration."></textarea>
+                <textarea
+                  id="gift-message"
+                  name="message"
+                  rows="6"
+                  minlength="5"
+                  maxlength="280"
+                  placeholder="Write a personal message."
+                  required
+                >Wishing you a meaningful birthday.</textarea>
+
+              </label>
+
+            </div>
+            <!-- ============================================
+                DONATION IN HONOUR — CAUSE SELECTION
+                Only visible when Donation in Honour is selected
+                ============================================ -->
+            <div class="conditional-fields honour-fields">
+
+              <p class="conditional-title">
+                Donation cause
+              </p>
+
+              <label class="field">
+
+                <span>
+                  Choose a cause
+                </span>
+
+                <select
+                  id="cause-category"
+                  name="causeCategory"
+                >
+                  <option value="craft-preservation">
+                    Vietnamese Craft Preservation
+                  </option>
+
+                  <option value="education">
+                    Education and Learning Access
+                  </option>
+
+                  <option value="community-support">
+                    Community and Family Support
+                  </option>
+
+                  <option value="environment">
+                    Environmental Protection
+                  </option>
+
+                  <option value="artisan-support">
+                    Artisan Livelihood Support
+                  </option>
+                </select>
+
+              </label>
+
+              <label class="field">
+
+                <span>
+                  Cause note
+                </span>
+
+                <textarea
+                  id="cause-note"
+                  name="causeNote"
+                  rows="4"
+                  maxlength="180"
+                  placeholder="Optional note about why this cause matters."
+                ></textarea>
 
               </label>
 
@@ -927,7 +1104,7 @@
 
             </div>
 
-          </form>
+          </div>
 
 
 
@@ -961,13 +1138,12 @@
 
 
                 <strong>
-                  ₫500,000
+                  $50.00
                 </strong>
 
 
                 <span>
-                  A meaningful gift with impact directed
-                  through Làng &amp; Co.
+                  Wishing you a meaningful birthday.
                 </span>
 
               </div>
@@ -1022,15 +1198,16 @@
 
         <div class="section-next">
 
-          <a class="btn btn-primary" href="#review">
+          <button class="btn btn-primary" type="submit">
             Review Your Gift
-          </a>
+          </button>
 
         </div>
 
       </div>
 
     </section>
+    </form>
 
 
 
@@ -1056,8 +1233,8 @@
 
 
           <p>
-            Review the configuration below, then continue
-            to your Wishlists page.
+            Review your gift configuration, then add it
+            to your shopping cart.
           </p>
 
         </div>
@@ -1161,6 +1338,47 @@
 
             </div>
 
+            <!-- RECIPIENT -->
+            <div>
+
+              <span>
+                Recipient
+              </span>
+
+              <strong>
+                Minh
+              </strong>
+
+            </div>
+
+
+            <!-- SENDER -->
+            <div>
+
+              <span>
+                From
+              </span>
+
+              <strong>
+                Huy
+              </strong>
+
+            </div>
+
+
+            <!-- PERSONAL MESSAGE -->
+            <div class="review-card__message">
+
+              <span>
+                Message
+              </span>
+
+              <strong>
+                Wishing you a meaningful birthday.
+              </strong>
+
+            </div>
+
 
 
             <!-- QUANTITY -->
@@ -1186,7 +1404,7 @@
               </span>
 
               <strong>
-                ₫500,000
+                $50.00
               </strong>
 
             </div>
@@ -1201,7 +1419,7 @@
               </span>
 
               <strong>
-                ₫500,000
+                $50.00
               </strong>
 
             </div>
@@ -1216,13 +1434,12 @@
           <div class="review-actions">
 
             <p>
-              Continue to Wishlists to keep this gift with
-              your saved items before the later checkout flow.
+              Add this gift to your cart so you can review it
+              alongside your other items before checkout.
             </p>
 
-
             <a class="btn btn-cream" href="../cart/cart.html">
-              Add Gift to Shopping Carts
+              Add Gift to Cart
             </a>
 
           </div>
@@ -1266,7 +1483,11 @@
 
 
 
-          <div class="redeem-form">
+          <form
+            class="redeem-form"
+            action="#gift-view-demo"
+            method="get"
+          >
 
             <label class="field">
 
@@ -1275,15 +1496,25 @@
               </span>
 
 
-              <input type="text" name="giftCode" placeholder="LANG-XXXX-XXXX" />
+              <input
+                type="text"
+                id="gift-code"
+                name="giftCode"
+                placeholder="LANG-DEMO-2026"
+                pattern="LANG-[A-Z0-9]{4}-[A-Z0-9]{4}"
+                maxlength="14"
+                title="Enter a gift code in the format LANG-XXXX-XXXX."
+                autocomplete="off"
+                required
+              />
 
             </label>
 
 
 
-            <a class="btn btn-primary" href="#gift-view-demo">
+            <button class="btn btn-primary" type="submit">
               View My Gift
-            </a>
+            </button>
 
 
 
@@ -1292,7 +1523,7 @@
               They do not control the final allocation.
             </small>
 
-          </div>
+          </form>
 
         </div>
 
@@ -1345,7 +1576,7 @@
 
 
             <h3>
-              ₫500,000
+              $50.00
             </h3>
 
 

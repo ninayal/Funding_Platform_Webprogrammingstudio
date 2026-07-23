@@ -118,16 +118,6 @@
 
         <input class="blog-state-input" type="radio" name="post-filter" id="filter-guide" />
 
-        <!-- ================================================
-             CSS-ONLY SORT STATES
-        ================================================ -->
-        <input class="blog-state-input" type="radio" name="sort" id="sort-featured" checked />
-
-        <input class="blog-state-input" type="radio" name="sort" id="sort-newest" />
-
-        <input class="blog-state-input" type="radio" name="sort" id="sort-oldest" />
-
-        <input class="blog-state-input" type="radio" name="sort" id="sort-title" />
 
         <!-- CSS-only delete state -->
         <input class="blog-delete-toggle" type="checkbox" id="delete-own-post" />
@@ -167,23 +157,21 @@
             ================================================ -->
             <div class="blog-toolbar">
 
+                <form class="blog-search" action="#" method="get" role="search" aria-label="Search blog posts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="m20 20-3.8-3.8"></path>
+                    </svg>
+
+                    <input id="blog-search-input" name="q" type="search"
+                        placeholder="Search title, author, date, tag, or story text..." autocomplete="off" />
+
+                    <button class="blog-search__clear" type="reset" aria-label="Clear blog search">
+                        ×
+                    </button>
+                </form>
+
                 <div class="blog-toolbar__left">
-
-                    <form class="blog-search" action="#" method="get" role="search" aria-label="Search blog posts">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                            aria-hidden="true">
-                            <circle cx="11" cy="11" r="7"></circle>
-                            <path d="m20 20-3.8-3.8"></path>
-                        </svg>
-
-                        <input id="blog-search-input" name="q" type="search"
-                            placeholder="Search title, author, date, tag, or story text..." autocomplete="off" />
-
-                        <button class="blog-search__clear" type="reset" aria-label="Clear blog search">
-                            ×
-                        </button>
-                    </form>
-
                     <a class="blog-account-link" href="./my_posts.html" aria-label="Open My Blog Posts">
                         <span class="blog-account-link__avatar" aria-hidden="true">
                             HB
@@ -785,16 +773,6 @@
                             <span class="row-author">
                                 Huy Ba
                             </span>
-
-                            <div class="owner-actions">
-                                <a href="#edit-own-post">
-                                    Edit
-                                </a>
-
-                                <label for="delete-own-post">
-                                    Delete
-                                </label>
-                            </div>
                         </div>
 
                         <a class="row-arrow" href="#post-community"
@@ -1752,11 +1730,6 @@
 
                 <h2>A Newly Published Story</h2>
 
-                <p class="article-deck">
-                    This is a hardcoded CSS-only state used to demonstrate the
-                    create-post interaction without JavaScript or a backend.
-                </p>
-
                 <div class="article-author">
                     <span class="author-avatar">CU</span>
 
@@ -1810,69 +1783,69 @@
                 </p>
             </div>
 
-            <form class="post-form" action="#" method="get">
+            <form class="post-form" action="#post-created" method="get">
 
-                <div class="form-grid two-col">
-
-                    <label>
-                        Title
-
-                        <input type="text" name="title" placeholder="Post title" required />
-                    </label>
-
-                    <label>
-                        Author
-
-                        <input type="text" name="author" placeholder="Author name" required />
-                    </label>
-
-                </div>
-
-                <div class="form-grid two-col">
-
-                    <label>
-                        Date added
-
-                        <input type="date" name="dateAdded" required />
-                    </label>
-
-                    <label>
-                        Tags or categories
-
-                        <input type="text" name="categories" placeholder="Mission, Donation, Places, Guide" required />
-                    </label>
-
-                </div>
+            <div class="form-grid two-col">
 
                 <label>
-                    Image URL
+                    Title
 
-                    <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg" required />
+                    <input type="text" name="title" placeholder="Post title" required />
                 </label>
 
                 <label>
-                    Main text content
+                    Author
 
-                    <textarea name="content" rows="10" placeholder="Write the full post content..." required></textarea>
+                    <input type="text" name="author" placeholder="Author name" required />
                 </label>
 
-                <div class="form-note">
-                    <strong>Static prototype:</strong>
-                    HTML and CSS cannot save the submitted data. A backend and
-                    database would be required for permanent post creation.
-                </div>
+            </div>
 
-                <div class="form-actions">
+            <div class="form-grid two-col">
 
-                    <a class="blog-button" href="#journal">
-                        Cancel
-                    </a>
+                <label>
+                    Date added
 
-                    <a class="blog-button blog-button--primary" href="#post-created">
-                        Publish Post
-                    </a>
+                    <input type="date" name="dateAdded" required />
+                </label>
 
-                </div>
+                <label>
+                    Tags or categories
+
+                    <input type="text" name="categories" placeholder="Mission, Donation, Places, Guide" required />
+                </label>
+
+            </div>
+
+            <label>
+                Image URL
+
+                <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg" required />
+            </label>
+
+            <label>
+                Main text content
+
+                <textarea name="content" rows="10" placeholder="Write the full post content..." required></textarea>
+            </label>
+
+            <div class="form-note">
+                <strong>Static prototype:</strong>
+                HTML and CSS cannot save the submitted data. A backend and
+                database would be required for permanent post creation.
+            </div>
+
+            <div class="form-actions">
+
+                <a class="blog-button" href="#journal">
+                    Cancel
+                </a>
+
+                <button class="blog-button blog-button--primary" type="submit">
+                    Publish Post
+                </button>
+
+            </div>
             </form>
         </div>
     </section>
@@ -1902,65 +1875,65 @@
                 </p>
             </div>
 
-            <form class="post-form" action="#" method="get">
+            <form class="post-form" action="#post-updated" method="get"></form>
 
-                <div class="form-grid two-col">
-
-                    <label>
-                        Title
-
-                        <input type="text" name="title" value="What a Craft Community Needs from a Platform" required />
-                    </label>
-
-                    <label>
-                        Author
-
-                        <input type="text" name="author" value="Huy Ba" required />
-                    </label>
-
-                </div>
-
-                <div class="form-grid two-col">
-
-                    <label>
-                        Date added
-
-                        <input type="date" name="dateAdded" value="2026-05-02" required />
-                    </label>
-
-                    <label>
-                        Tags or categories
-
-                        <input type="text" name="categories" value="Donation, Community" required />
-                    </label>
-
-                </div>
+            <div class="form-grid two-col">
 
                 <label>
-                    Image URL
+                    Title
 
-                    <input type="url" name="imageUrl"
-                        value="https://images.unsplash.com/photo-1529156069898-49953e39b3ac" required />
+                    <input type="text" name="title" value="What a Craft Community Needs from a Platform" required />
                 </label>
 
                 <label>
-                    Main text content
+                    Author
 
-                    <textarea name="content" rows="9"
-                        required>In conversations with makers, the same concerns return: pricing pressure, loss of context, copied images, and the burden of maintaining another digital profile.</textarea>
+                    <input type="text" name="author" value="Huy Ba" required />
                 </label>
 
-                <div class="form-actions">
+            </div>
 
-                    <a class="blog-button" href="#journal">
-                        Cancel
-                    </a>
+            <div class="form-grid two-col">
 
-                    <a class="blog-button blog-button--primary" href="#post-updated">
-                        Save Changes
-                    </a>
+                <label>
+                    Date added
 
-                </div>
+                    <input type="date" name="dateAdded" value="2026-05-02" required />
+                </label>
+
+                <label>
+                    Tags or categories
+
+                    <input type="text" name="categories" value="Donation, Community" required />
+                </label>
+
+            </div>
+
+            <label>
+                Image URL
+
+                <input type="url" name="imageUrl" value="https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
+                    required />
+            </label>
+
+            <label>
+                Main text content
+
+                <textarea name="content" rows="9"
+                    required>In conversations with makers, the same concerns return: pricing pressure, loss of context, copied images, and the burden of maintaining another digital profile.</textarea>
+            </label>
+
+            <div class="form-actions">
+
+                <a class="blog-button" href="#journal">
+                    Cancel
+                </a>
+
+                <button class="blog-button blog-button--primary" type="submit">
+                    Save Changes
+                </button>
+
+            </div>
             </form>
         </div>
     </section>

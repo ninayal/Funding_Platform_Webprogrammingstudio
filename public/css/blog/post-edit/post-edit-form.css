@@ -1,0 +1,198 @@
+.post-edit-form {
+    padding: 30px;
+}
+
+.post-edit-section {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.post-edit-section + .post-edit-section {
+    margin-top: 34px;
+    padding-top: 34px;
+    border-top: 1px solid var(--line);
+}
+
+.post-edit-section legend {
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 0;
+    color: var(--darkred);
+    font-family: var(--post-serif);
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.post-edit-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.post-edit-grid + .post-edit-grid,
+.post-edit-grid + label,
+.post-edit-section > label + label {
+    margin-top: 16px;
+}
+
+.post-edit-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.post-edit-form label {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    color: var(--brown);
+    font-family: var(--post-sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Form values use normal weight. */
+.post-edit-form input,
+.post-edit-form select,
+.post-edit-form textarea {
+    width: 100%;
+    border: 1px solid rgba(116, 81, 45, 0.22);
+    border-radius: 13px;
+    outline: none;
+    color: var(--deep);
+    background: rgba(255, 255, 255, 0.58);
+    font-family: var(--post-sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+    text-transform: none;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background 180ms ease;
+}
+
+.post-edit-form input,
+.post-edit-form select {
+    height: 48px;
+    padding: 0 14px;
+}
+
+.post-edit-form textarea {
+    min-height: 110px;
+    padding: 13px 14px;
+    resize: vertical;
+}
+
+.post-edit-form input:focus,
+.post-edit-form select:focus,
+.post-edit-form textarea:focus {
+    border-color: rgba(163, 29, 29, 0.58);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
+}
+
+.post-edit-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+}
+
+.post-edit-button {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 17px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--brown);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--post-sans);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+}
+
+.post-edit-button:hover {
+    transform: translateY(-1px);
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.post-edit-button--secondary {
+    border-color: rgba(116, 81, 45, 0.38);
+    color: var(--darkred);
+    background: rgba(229, 208, 172, 0.3);
+}
+
+.post-edit-button--primary {
+    border-color: var(--red);
+    color: var(--cream);
+    background: var(--red);
+}
+
+.post-edit-button--primary:hover {
+    border-color: var(--darkred);
+    color: var(--cream);
+    background: var(--darkred);
+}
+
+.post-edit-state-target {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.post-edit-toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1100;
+    max-width: min(390px, calc(100% - 32px));
+    padding: 15px 18px;
+    border: 1px solid rgba(116, 81, 45, 0.2);
+    border-radius: 14px;
+    color: var(--deep);
+    background: rgba(254, 249, 225, 0.98);
+    box-shadow: 0 20px 52px rgba(73, 40, 22, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    font-family: var(--post-sans);
+    font-size: 12px;
+    font-weight: 400;
+    transition:
+        opacity 180ms ease,
+        visibility 180ms ease,
+        transform 180ms ease;
+}
+
+.post-edit-toast a {
+    margin-left: 6px;
+    color: var(--red);
+}
+
+#post-saved:target ~ .post-edit-toast--saved,
+#draft-saved:target ~ .post-edit-toast--draft,
+#post-deleted:target ~ .post-edit-toast--deleted {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

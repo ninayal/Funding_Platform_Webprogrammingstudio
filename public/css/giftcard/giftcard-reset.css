@@ -8,28 +8,18 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
-
     scroll-padding-top: 74px;
 }
 
-
 body {
     margin: 0;
-
     background: var(--cream);
-
     color: var(--ink);
-
-    font-family:
-        var(--ff-ui);
-
-    -webkit-font-smoothing:
-        antialiased;
+    font-family: var(--ff-ui);
+    -webkit-font-smoothing: antialiased;
 }
-
 
 button,
 input,
@@ -38,9 +28,10 @@ select {
     font: inherit;
 }
 
+button {
+    border: 0;
+}
 
 a {
     color: inherit;
 }
-
-

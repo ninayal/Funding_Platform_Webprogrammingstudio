@@ -104,6 +104,14 @@
     display: grid;
 }
 
+/* ================================================
+   SHOW DONATION IN HONOUR FIELDS
+   ================================================ */
+
+#gift-honour:checked~main .honour-fields {
+    display: grid;
+}
+
 
 /* ================================================
    FORM GRID
@@ -140,11 +148,13 @@
     color:
         var(--brown);
 
-    font-size: 9px;
+    font-size: 12px;
 
     font-weight: 600;
 
-    letter-spacing: .09em;
+    line-height: 1.35;
+
+    letter-spacing: .07em;
 
     text-transform: uppercase;
 }
@@ -174,7 +184,7 @@
     padding:
         13px 14px;
 
-    font-size: 12px;
+    font-size: 14px;
 }
 
 
