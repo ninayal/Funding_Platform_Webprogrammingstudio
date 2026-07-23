@@ -83,7 +83,7 @@
             225,
             .68);
 
-    font-size: 9px;
+    font-size: 12px;
 
     font-weight: 600;
 
@@ -258,9 +258,29 @@
         var(--ff-ui) !important;
 
     font-size:
-        10px !important;
+        12px !important;
 
     letter-spacing: .05em;
+}
+
+/* ================================================
+   REVIEW PERSONAL MESSAGE
+   ================================================ */
+
+.review-card__message {
+    align-items: start !important;
+
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+
+.review-card__message strong {
+    max-width: 430px;
+
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
 }
 
 

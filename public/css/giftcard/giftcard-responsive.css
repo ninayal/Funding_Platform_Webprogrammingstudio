@@ -74,7 +74,7 @@ video {
   }
 
   .gift-hero h1 {
-    font-size: clamp(54px, 8vw, 92px);
+  font-size: clamp(50px, 7vw, 78px);
   }
 
   .section-heading h2 {
@@ -147,8 +147,8 @@ video {
   }
 
   .gift-hero h1 {
-    font-size: clamp(50px, 9vw, 82px);
-    line-height: .95;
+  font-size: clamp(46px, 8vw, 70px);
+  line-height: .98;
   }
 
   .gift-hero__copy {
@@ -285,13 +285,14 @@ video {
   }
 
   .gift-hero .eyebrow {
-    font-size: 10px;
-    letter-spacing: .1em;
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: .08em;
   }
 
   .gift-hero h1 {
-    font-size: clamp(45px, 13vw, 70px);
-    line-height: .94;
+  font-size: clamp(40px, 11vw, 58px);
+  line-height: .98;
   }
 
   .gift-hero__copy {
@@ -447,7 +448,7 @@ video {
   .field input,
   .field textarea,
   .field select {
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .conditional-fields {
@@ -721,7 +722,9 @@ video {
   }
 
   .review-card span {
-    font-size: 8px;
+    font-size: 11px;
+    line-height: 1.35;
+    letter-spacing: .07em;
   }
 
   .review-card strong {
@@ -820,7 +823,8 @@ video {
   .btn {
     padding-left: 16px;
     padding-right: 16px;
-    font-size: 9px;
+    font-size: 11px;
+    line-height: 1.3;
   }
 
 }
