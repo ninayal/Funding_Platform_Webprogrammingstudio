@@ -6,13 +6,14 @@
     margin-bottom: 44px;
 }
 
-.my-posts-header__copy {
+.my-posts-header>div {
     max-width: 850px;
 }
 
 .my-posts-kicker {
     margin: 0 0 10px;
     color: var(--red);
+    font-family: var(--my-posts-sans);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -22,22 +23,24 @@
 .my-posts-header h1 {
     margin: 0;
     color: var(--deep);
-    font-family: var(--ff-script);
+    font-family: var(--my-posts-serif);
     font-size: 72px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1;
     letter-spacing: -2px;
 }
 
-.my-posts-header__copy > p:last-child {
+.my-posts-subtitle {
     max-width: 720px;
     margin: 18px 0 0;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 15px;
+    font-weight: 400;
     line-height: 1.7;
 }
 
-.my-posts-create {
+.my-posts-create-button {
     min-height: 46px;
     display: inline-flex;
     align-items: center;
@@ -50,20 +53,23 @@
     color: var(--cream);
     background: var(--red);
     box-shadow: 0 12px 26px rgba(109, 35, 35, 0.18);
+    font-family: var(--my-posts-sans);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
     text-decoration: none;
     text-transform: uppercase;
-    transition: transform 180ms ease, background 180ms ease;
+    transition:
+        transform 180ms ease,
+        background 180ms ease;
 }
 
-.my-posts-create svg {
-    width: 16px;
-    height: 16px;
+.my-posts-create-button span {
+    font-size: 16px;
+    line-height: 1;
 }
 
-.my-posts-create:hover {
+.my-posts-create-button:hover {
     transform: translateY(-2px);
     background: var(--darkred);
 }

@@ -12,7 +12,9 @@
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.38);
     box-shadow: 0 16px 38px rgba(73, 40, 22, 0.1);
-    transition: transform 200ms ease, box-shadow 200ms ease;
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease;
 }
 
 .my-post-card:hover {
@@ -27,6 +29,7 @@
 }
 
 .my-post-card__image img {
+    display: block;
     width: 100%;
     height: 100%;
     min-height: 290px;
@@ -38,15 +41,15 @@
     transform: scale(1.03);
 }
 
-.my-post-card--draft .my-post-card__image img {
+.post-draft .my-post-card__image img {
     filter: saturate(0.72);
 }
 
-.my-post-card--archived .my-post-card__image img {
+.post-archived .my-post-card__image img {
     filter: grayscale(0.45) saturate(0.5);
 }
 
-.my-post-card__body {
+.my-post-card__content {
     min-width: 0;
     padding: 25px 27px;
 }
@@ -57,20 +60,21 @@
     flex-wrap: wrap;
     gap: 9px;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.my-post-card__category {
+.post-category {
     padding: 6px 9px;
     border-radius: 999px;
     color: var(--red);
     background: rgba(163, 29, 29, 0.08);
 }
 
-.my-post-card__status {
+.post-status {
     margin-left: auto;
     padding: 6px 9px;
     border-radius: 999px;
@@ -79,92 +83,88 @@
     letter-spacing: 1px;
 }
 
-.my-post-card__status--published {
+.post-status--published {
     color: #3f704d;
     background: rgba(63, 112, 77, 0.1);
 }
 
-.my-post-card__status--draft {
+.post-status--draft {
     color: #9b641a;
     background: rgba(155, 100, 26, 0.11);
 }
 
-.my-post-card__status--archived {
+.post-status--archived {
     color: #746b62;
     background: rgba(116, 107, 98, 0.12);
 }
 
-.my-post-card h3 {
+.my-post-card h2 {
     margin: 18px 0 11px;
-    font-family: var(--ff-script);
+    color: var(--deep);
+    font-family: var(--my-posts-serif);
     font-size: 32px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.12;
 }
 
-.my-post-card h3 a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.my-post-card h3 a:hover {
-    color: var(--red);
-}
-
-.my-post-card__body>p {
+.my-post-card__content>p {
     margin: 0;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 13px;
+    font-weight: 400;
     line-height: 1.7;
 }
 
-.my-post-card__metrics {
+.my-post-card__information {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 14px;
     margin-top: 19px;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.my-post-card__metrics span:not(:last-child)::after {
+.my-post-card__information span:not(:last-child)::after {
     content: "•";
     margin-left: 14px;
     color: var(--sand);
 }
 
-.my-post-progress {
+.draft-progress {
     margin-top: 20px;
 }
 
-.my-post-progress__header {
+.draft-progress__heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
     color: var(--muted);
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.my-post-progress__header strong {
+.draft-progress__heading strong {
     color: #9b641a;
 }
 
-.my-post-progress__track {
+.draft-progress__track {
     height: 7px;
     overflow: hidden;
     border-radius: 999px;
     background: rgba(116, 81, 45, 0.12);
 }
 
-.my-post-progress__track span {
+.draft-progress__track span {
     display: block;
     height: 100%;
     border-radius: inherit;
@@ -181,7 +181,7 @@
     border-top: 1px solid var(--line);
 }
 
-.my-post-action {
+.post-action {
     min-height: 37px;
     display: inline-flex;
     align-items: center;
@@ -191,39 +191,31 @@
     border-radius: 999px;
     color: var(--brown);
     background: transparent;
-    cursor: pointer;
-    font-family: inherit;
+    cursor: default;
+    font-family: var(--my-posts-sans);
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 1px;
-    text-decoration: none;
     text-transform: uppercase;
-    transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+    transition:
+        color 180ms ease,
+        background 180ms ease,
+        border-color 180ms ease;
 }
 
-.my-post-action:hover {
+.post-action:hover {
     border-color: var(--red);
     color: var(--red);
 }
 
-.my-post-action--primary {
+.post-action--primary {
     border-color: var(--darkred);
     color: var(--cream);
     background: var(--darkred);
 }
 
-.my-post-action--primary:hover {
+.post-action--primary:hover {
     border-color: var(--red);
-    color: var(--cream);
-    background: var(--red);
-}
-
-.my-post-action--danger {
-    margin-left: auto;
-    color: var(--red);
-}
-
-.my-post-action--danger:hover {
     color: var(--cream);
     background: var(--red);
 }

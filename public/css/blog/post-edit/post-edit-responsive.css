@@ -1,0 +1,127 @@
+@media (max-width: 1050px) {
+    .post-edit-layout {
+        grid-template-columns: minmax(0, 1fr) 320px;
+    }
+
+    .post-edit-header h1 {
+        font-size: 60px;
+    }
+
+    .post-edit-preview h2 {
+        font-size: 27px;
+    }
+}
+
+@media (max-width: 850px) {
+    .post-edit-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .post-edit-header h1 {
+        font-size: 54px;
+    }
+
+    .post-edit-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-sidebar {
+        position: static;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .post-edit-container {
+        width: calc(100% - 32px);
+    }
+
+    .post-edit-page {
+        padding-top: 10px;
+    }
+
+    .post-edit-breadcrumb {
+        margin-bottom: 18px;
+        font-size: 11px;
+    }
+
+    .post-edit-header h1 {
+        font-size: 46px;
+    }
+
+    .post-edit-grid--two {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-panel__heading,
+    .post-edit-form {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-edit-container {
+        width: calc(100% - 24px);
+    }
+
+    .post-edit-header h1 {
+        font-size: 39px;
+    }
+
+    .post-edit-header__copy>p:last-child {
+        font-size: 14px;
+    }
+
+    .post-edit-panel__heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .post-edit-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .post-edit-button {
+        width: 100%;
+    }
+
+    .post-edit-preview__statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .post-delete-dialog {
+        padding: 34px 22px 24px;
+    }
+
+    .post-delete-dialog h2 {
+        font-size: 35px;
+    }
+
+    .post-delete-dialog__actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .post-edit-toast {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+
+@media (max-width: 700px) {
+    body>.shared-header {
+        height: 126px;
+    }
+
+    .post-edit-breadcrumb {
+        padding-top: 10px;
+        margin-bottom: 22px;
+        font-size: 13px;
+    }
+}

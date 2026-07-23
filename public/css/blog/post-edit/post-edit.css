@@ -1,0 +1,22 @@
+@import url("../blog-base.css");
+@import url("./post-edit-layout.css");
+@import url("./post-edit-header.css");
+@import url("./post-edit-form.css");
+@import url("./post-edit-preview.css");
+@import url("./post-edit-delete.css");
+@import url("./post-edit-responsive.css");
+
+:root {
+    --post-serif: Georgia, "Times New Roman", serif;
+    --post-sans: Arial, Helvetica, sans-serif;
+
+    --ff-script: var(--post-serif);
+    --ff-body: var(--post-serif);
+    --ff-ui: var(--post-sans);
+}
+
+.post-edit-page,
+.post-delete-overlay,
+.post-edit-toast {
+    font-family: var(--post-sans);
+}

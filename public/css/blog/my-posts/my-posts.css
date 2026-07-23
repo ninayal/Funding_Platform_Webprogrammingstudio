@@ -5,3 +5,18 @@
 @import url("./my-posts-filters.css");
 @import url("./my-posts-cards.css");
 @import url("./my-posts-responsive.css");
+
+/* Only two typography systems are used on this page:
+   one serif stack and one sans-serif stack. */
+:root {
+    --my-posts-serif: Georgia, "Times New Roman", serif;
+    --my-posts-sans: Arial, Helvetica, sans-serif;
+
+    --ff-script: var(--my-posts-serif);
+    --ff-body: var(--my-posts-serif);
+    --ff-ui: var(--my-posts-sans);
+}
+
+.my-posts-page {
+    font-family: var(--my-posts-sans);
+}
