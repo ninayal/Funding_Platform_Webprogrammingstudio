@@ -1,0 +1,270 @@
+.pr-card__media {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.pr-card__thumb {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.pr-card__photo {
+  width: 150px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ================================================
+   REVIEW PAGINATION — HARD-CODED 5 PAGES
+   5 comments per page
+   ================================================ */
+
+.pr-page {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Page 1 */
+
+#review-page-1:checked ~ .pr-list .pr-page--1 {
+  display: flex;
+}
+
+/* Page 2 */
+
+#review-page-2:checked ~ .pr-list .pr-page--2 {
+  display: flex;
+}
+
+/* Page 3 */
+
+#review-page-3:checked ~ .pr-list .pr-page--3 {
+  display: flex;
+}
+
+/* Page 4 */
+
+#review-page-4:checked ~ .pr-list .pr-page--4 {
+  display: flex;
+}
+
+/* Page 5 */
+
+#review-page-5:checked ~ .pr-list .pr-page--5 {
+  display: flex;
+}
+
+#filter-5:checked ~ .pr-list .pr-page,
+#filter-4:checked ~ .pr-list .pr-page,
+#filter-3:checked ~ .pr-list .pr-page,
+#filter-2:checked ~ .pr-list .pr-page,
+#filter-1:checked ~ .pr-list .pr-page {
+  display: contents;
+}
+
+#filter-5:checked ~ .pr-list .pr-card,
+#filter-4:checked ~ .pr-list .pr-card,
+#filter-3:checked ~ .pr-list .pr-card,
+#filter-2:checked ~ .pr-list .pr-card,
+#filter-1:checked ~ .pr-list .pr-card {
+  display: none;
+}
+
+#filter-5:checked ~ .pr-list .pr-card[data-star="5"],
+#filter-4:checked ~ .pr-list .pr-card[data-star="4"],
+#filter-3:checked ~ .pr-list .pr-card[data-star="3"],
+#filter-2:checked ~ .pr-list .pr-card[data-star="2"],
+#filter-1:checked ~ .pr-list .pr-card[data-star="1"] {
+  display: block;
+}
+
+/* Hide pagination while filtering by star */
+
+#filter-5:checked ~ .pr-list .pr-pagination,
+#filter-4:checked ~ .pr-list .pr-pagination,
+#filter-3:checked ~ .pr-list .pr-pagination,
+#filter-2:checked ~ .pr-list .pr-pagination,
+#filter-1:checked ~ .pr-list .pr-pagination {
+  display: none;
+}
+
+/* ================================================
+   PAGINATION UI
+   ================================================ */
+
+.pr-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 34px;
+  margin-bottom: 70px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.pr-page-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: var(--ff-ui);
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(1, 1, 0, 0.42);
+  cursor: pointer;
+  transition: none;
+}
+
+.pr-page-btn:hover {
+  color: var(--red);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+#review-page-1:checked ~ .pr-list .pr-page-btn[for="review-page-1"],
+#review-page-2:checked ~ .pr-list .pr-page-btn[for="review-page-2"],
+#review-page-3:checked ~ .pr-list .pr-page-btn[for="review-page-3"],
+#review-page-4:checked ~ .pr-list .pr-page-btn[for="review-page-4"],
+#review-page-5:checked ~ .pr-list .pr-page-btn[for="review-page-5"] {
+  background: var(--red);
+  color: var(--cream);
+}
+
+/* Arrow visibility */
+
+.pr-prev,
+.pr-next {
+  display: none;
+}
+
+/* Previous arrows */
+
+#review-page-1:checked ~ .pr-list .pr-prev--disabled {
+  display: inline-flex;
+  opacity: .35;
+  pointer-events: none;
+}
+
+#review-page-2:checked ~ .pr-list .pr-prev--2,
+#review-page-3:checked ~ .pr-list .pr-prev--3,
+#review-page-4:checked ~ .pr-list .pr-prev--4,
+#review-page-5:checked ~ .pr-list .pr-prev--5 {
+  display: inline-flex;
+}
+
+/* Next arrows */
+
+#review-page-1:checked ~ .pr-list .pr-next--1,
+#review-page-2:checked ~ .pr-list .pr-next--2,
+#review-page-3:checked ~ .pr-list .pr-next--3,
+#review-page-4:checked ~ .pr-list .pr-next--4 {
+  display: inline-flex;
+}
+
+#review-page-5:checked ~ .pr-list .pr-next--disabled {
+  display: inline-flex;
+  opacity: .35;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+
+  .pr-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .pr-hero__title {
+    font-size: 34px;
+  }
+
+  .pr-form {
+    padding: 22px 20px 24px;
+  }
+
+  .pr-score-card {
+    padding: 22px 18px;
+  }
+
+  .pr-list__head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pr-sort {
+    align-items: flex-start;
+  }
+
+  .pr-card {
+    padding: 20px 18px;
+  }
+
+  .pr-card__top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pr-card__media {
+    flex-wrap: wrap;
+  }
+
+}
+
+/* ================================================
+   COMPACT REVIEW CARDS
+   Make 5 comments fit better per page
+   ================================================ */
+
+.pr-list {
+  padding-top: 8px;
+}
+
+.pr-list__head {
+  margin-bottom: 18px;
+}
+
+.pr-cards {
+  gap: 10px;
+}
+
+.pr-page {
+  gap: 10px;
+}
+
+.pr-card {
+  min-height: 118px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 18px;
+  row-gap: 6px;
+  align-items: start;
+}
+
+.pr-card__top {
+  grid-column: 1 / 2;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.pr-card__identity {
+  gap: 9px;
+}
+
+.pr-card__avatar {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+}
