@@ -102,7 +102,7 @@
   color: var(--darkred);
   letter-spacing: 3px;
   text-shadow: 0 1px 8px rgba(84, 51, 16, .5);
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .hero__cta {
