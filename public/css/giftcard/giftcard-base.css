@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+
 :root {
     --cream: #FEF9E1;
     --tan: #E5D0AC;
@@ -12,23 +15,17 @@
    ================================================ */
 
     --ff-serif:
-        "Playfair Display",
-        Georgia,
-        "Times New Roman",
-        serif;
+        'Playfair Display', serif;
 
     --ff-sans:
-        "DM Sans",
-        Arial,
-        Helvetica,
-        sans-serif;
+        'DM Sans', sans-serif;
 
     /* Compatibility aliases for existing Gift Card CSS */
     --ff-script:
         var(--ff-serif);
 
     --ff-body:
-        var(--ff-serif);
+        var(--ff-sans);
 
     --ff-ui:
         var(--ff-sans);
