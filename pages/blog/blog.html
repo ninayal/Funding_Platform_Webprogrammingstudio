@@ -79,7 +79,7 @@
                 <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
                 <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
                 <li><a id="nav-forum" href="../forum/forum.html" target="_top">Forum</a></li>
-                <li><a id="nav-wishlist" href="../review/product_detail/review1.html" target="_top">Reviews</a></li>
+                <li><a id="nav-wishlist" href="../giftcard/giftcard.html" target="_top">Giftcards</a></li>
             </ul>
         </div>
     </nav>
@@ -1785,67 +1785,67 @@
 
             <form class="post-form" action="#post-created" method="get">
 
-            <div class="form-grid two-col">
+                <div class="form-grid two-col">
+
+                    <label>
+                        Title
+
+                        <input type="text" name="title" placeholder="Post title" required />
+                    </label>
+
+                    <label>
+                        Author
+
+                        <input type="text" name="author" placeholder="Author name" required />
+                    </label>
+
+                </div>
+
+                <div class="form-grid two-col">
+
+                    <label>
+                        Date added
+
+                        <input type="date" name="dateAdded" required />
+                    </label>
+
+                    <label>
+                        Tags or categories
+
+                        <input type="text" name="categories" placeholder="Mission, Donation, Places, Guide" required />
+                    </label>
+
+                </div>
 
                 <label>
-                    Title
+                    Image URL
 
-                    <input type="text" name="title" placeholder="Post title" required />
+                    <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg" required />
                 </label>
 
                 <label>
-                    Author
+                    Main text content
 
-                    <input type="text" name="author" placeholder="Author name" required />
+                    <textarea name="content" rows="10" placeholder="Write the full post content..." required></textarea>
                 </label>
 
-            </div>
+                <div class="form-note">
+                    <strong>Static prototype:</strong>
+                    HTML and CSS cannot save the submitted data. A backend and
+                    database would be required for permanent post creation.
+                </div>
 
-            <div class="form-grid two-col">
+                <div class="form-actions">
 
-                <label>
-                    Date added
+                    <a class="blog-button" href="#journal">
+                        Cancel
+                    </a>
 
-                    <input type="date" name="dateAdded" required />
-                </label>
+                    <button class="blog-button blog-button--primary" type="submit">
+                        Publish Post
+                    </button>
 
-                <label>
-                    Tags or categories
-
-                    <input type="text" name="categories" placeholder="Mission, Donation, Places, Guide" required />
-                </label>
-
-            </div>
-
-            <label>
-                Image URL
-
-                <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg" required />
-            </label>
-
-            <label>
-                Main text content
-
-                <textarea name="content" rows="10" placeholder="Write the full post content..." required></textarea>
-            </label>
-
-            <div class="form-note">
-                <strong>Static prototype:</strong>
-                HTML and CSS cannot save the submitted data. A backend and
-                database would be required for permanent post creation.
-            </div>
-
-            <div class="form-actions">
-
-                <a class="blog-button" href="#journal">
-                    Cancel
-                </a>
-
-                <button class="blog-button blog-button--primary" type="submit">
-                    Publish Post
-                </button>
-
-            </div>
+                </div>
             </form>
         </div>
     </section>
