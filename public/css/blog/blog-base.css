@@ -10,7 +10,7 @@
   --darkred: #6D2323;
 
   /* Only two font families are used on the Blog page */
-  --ff-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --ff-serif: 'Playfair Display', serif;
   --ff-sans: 'DM Sans', Arial, Helvetica, sans-serif;
 
   /* Compatibility aliases for the existing Blog CSS files */
