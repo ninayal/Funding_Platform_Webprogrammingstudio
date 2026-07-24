@@ -1,1428 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <meta name="theme-color" content="#A31D1D" />
-
-  <title>Làng & Co. — Impact Gifts</title>
-
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/giftcard/giftcard.css" />
-</head>
-
-
-<body>
-
-  <!-- GIFT TYPE STATE -->
-  <input class="ui-state" type="radio" name="giftType" id="gift-lang" value="lang-impact" form="gift-card-form"
-    checked />
-  <input class="ui-state" type="radio" name="giftType" id="gift-honour" value="donation-in-honour"
-    form="gift-card-form" />
-
-
-  <!-- DELIVERY STATE -->
-  <input class="ui-state" type="radio" name="deliveryType" id="delivery-digital" value="digital" form="gift-card-form"
-    checked />
-  <input class="ui-state" type="radio" name="deliveryType" id="delivery-printable" value="printable"
-    form="gift-card-form" />
-  <input class="ui-state" type="radio" name="deliveryType" id="delivery-physical" value="physical"
-    form="gift-card-form" />
-
-
-  <!-- DESIGN STATE -->
-  <input class="ui-state" type="radio" name="designType" id="design-lotus" value="ho-tay-lotus" form="gift-card-form"
-    checked />
-  <input class="ui-state" type="radio" name="designType" id="design-battrang" value="bat-trang-blue"
-    form="gift-card-form" />
-  <input class="ui-state" type="radio" name="designType" id="design-vanphuc" value="van-phuc-silk"
-    form="gift-card-form" />
-  <input class="ui-state" type="radio" name="designType" id="design-hathai" value="ha-thai-lacquer"
-    form="gift-card-form" />
-  <input class="ui-state" type="radio" name="designType" id="design-hoian" value="hoi-an-glow" form="gift-card-form" />
-  <input class="ui-state" type="radio" name="designType" id="design-phuvinh" value="phu-vinh-bamboo"
-    form="gift-card-form" />
-
-
-
-  <!-- ======================================================
-       HERO
-       ====================================================== -->
-  <section class="gift-hero" id="start">
-
-    <div class="gift-hero__bg" aria-hidden="true"></div>
-
-
-    <!-- SHARED GLOBAL HEADER -->
-    <iframe src="../global/header.html" title="Làng & Co. Header" class="shared-include shared-header gift-header"
-      loading="eager" scrolling="no"></iframe>
-
-
-    <div class="gift-hero__content">
-      <h1>
-        Give a gift.
-        <em>Let it carry meaning.</em>
-      </h1>
-
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#gift-type">
-          Give a Gift
-        </a>
-        <a class="btn btn-ghost" href="#redeem">
-          View My Gift
-        </a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#A31D1D" />
+    <title>Làng & Co. — Impact Gifts</title>
+    <link rel="stylesheet" href="../../public/css/shared-include.css" />
+    <link rel="stylesheet" href="../../public/css/giftcard/giftcard.css" />
+  </head>
+  <body>
+    <!-- GIFT TYPE STATE -->
+    <input class="ui-state" type="radio" name="giftType" id="gift-lang" value="lang-impact" form="gift-card-form" checked />
+    <input class="ui-state" type="radio" name="giftType" id="gift-honour" value="donation-in-honour" form="gift-card-form" />
+    <!-- DELIVERY STATE -->
+    <input class="ui-state" type="radio" name="deliveryType" id="delivery-digital" value="digital" form="gift-card-form" checked />
+    <input class="ui-state" type="radio" name="deliveryType" id="delivery-printable" value="printable" form="gift-card-form" />
+    <input class="ui-state" type="radio" name="deliveryType" id="delivery-physical" value="physical" form="gift-card-form" />
+    <!-- DESIGN STATE -->
+    <input class="ui-state" type="radio" name="designType" id="design-lotus" value="ho-tay-lotus" form="gift-card-form" checked />
+    <input class="ui-state" type="radio" name="designType" id="design-battrang" value="bat-trang-blue" form="gift-card-form" />
+    <input class="ui-state" type="radio" name="designType" id="design-vanphuc" value="van-phuc-silk" form="gift-card-form" />
+    <input class="ui-state" type="radio" name="designType" id="design-hathai" value="ha-thai-lacquer" form="gift-card-form" />
+    <input class="ui-state" type="radio" name="designType" id="design-hoian" value="hoi-an-glow" form="gift-card-form" />
+    <input class="ui-state" type="radio" name="designType" id="design-phuvinh" value="phu-vinh-bamboo" form="gift-card-form" />
+    <!-- ======================================================
+           HERO
+           ====================================================== -->
+    <section class="gift-hero" id="start">
+      <div class="gift-hero__bg" aria-hidden="true"></div>
+      <!-- SHARED GLOBAL HEADER -->
+      <iframe src="../global/header.html" title="Làng & Co. Header" class="shared-include shared-header gift-header" loading="eager" scrolling="no"></iframe>
+      <div class="gift-hero__content">
+        <h1>
+          Give a gift.
+          <em>Let it carry meaning.</em>
+        </h1>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#gift-type">Give a Gift</a>
+          <a class="btn btn-ghost" href="#redeem">View My Gift</a>
+        </div>
       </div>
-    </div>
-
-    <div class="gift-hero__curve" aria-hidden="true"></div>
-  </section>
-
-  <main>
-
-    <form id="gift-card-form" class="gift-card-form" action="#review" method="get">
-
-      <!-- ====================================================
-         STEP 1 — GIFT TYPE
-         ==================================================== -->
-      <section class="flow-section flow-section--paper" id="gift-type">
-        <div class="section-shell">
-          <div class="section-heading">
-            <p class="section-kicker">
-              01 · Choose a type
-            </p>
-
-            <h2>
-              What kind of
-              <em>giving moment</em>
-              are you creating?
-            </h2>
-
-            <p>
-              Start with the intention. Choose the giving experience
-              that best matches the moment.
-            </p>
-
-          </div>
-
-          <!-- ================================================
-             GIFT TYPE CARDS
-             Both cards share the same vertical row structure
-             ================================================ -->
-          <div class="choice-grid choice-grid--two">
-
-            <!-- OPTION A -->
-            <label class="choice-card" for="gift-lang">
-              <span class="choice-card__index">
-                A
-              </span>
-
-              <span class="choice-card__title">
-                Làng Impact Gift
-              </span>
-
-              <span class="choice-card__copy">
-                Create a meaningful gift while Làng &amp; Co.
-                directs the contribution across verified organizations,
-                approved individuals, and priority causes.
-              </span>
-
-              <span class="choice-card__action">
-                Choose this option →
-              </span>
-            </label>
-
-            <!-- OPTION B -->
-            <label class="choice-card" for="gift-honour">
-              <span class="choice-card__index">
-                B
-              </span>
-
-              <span class="choice-card__title">
-                Donation in Honour
-              </span>
-
-              <span class="choice-card__copy">
-                Choose a specific cause yourself, make the donation
-                in someone special's honour, and send them a
-                meaningful note.
-              </span>
-
-              <span class="choice-card__action">
-                Choose this option →
-              </span>
-            </label>
-          </div>
-
-
-
-          <div class="section-next">
-            <a class="btn btn-primary" href="#delivery-type">
-              Continue to Delivery
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================
-         STEP 2 — DELIVERY TYPE
-         ==================================================== -->
-      <section class="flow-section flow-section--tint" id="delivery-type">
-        <div class="section-shell">
-          <div class="section-heading section-heading--center">
-            <p class="section-kicker">
-              02 · Choose delivery
-            </p>
-
-            <h2>
-              How should the gift
-              <em>reach them?</em>
-            </h2>
-
-            <p>
-              Choose a delivery format. The Personalize section
-              will automatically show only the relevant fields.
-            </p>
-          </div>
-
-          <!-- ================================================
-             DELIVERY CARDS
-             ================================================ -->
-          <div class="choice-grid choice-grid--three">
-            <!-- DIGITAL -->
-            <label class="delivery-card" for="delivery-digital">
-              <span class="delivery-card__icon">
-                ✉
-              </span>
-
-              <span class="delivery-card__title">
-                Digital eCard
-              </span>
-
-              <span class="delivery-card__copy">
-                Email delivery immediately or on a scheduled date.
-              </span>
-            </label>
-
-            <!-- PRINTABLE -->
-            <label class="delivery-card" for="delivery-printable">
-              <span class="delivery-card__icon">
-                ⌑
-              </span>
-
-              <span class="delivery-card__title">
-                Printable
-              </span>
-
-              <span class="delivery-card__copy">
-                Download a print-ready card and prepare it at home.
-              </span>
-            </label>
-
-            <!-- PHYSICAL -->
-            <label class="delivery-card" for="delivery-physical">
-              <span class="delivery-card__icon">
-                ✦
-              </span>
-
-              <span class="delivery-card__title">
-                Physical Card
-              </span>
-
-              <span class="delivery-card__copy">
-                A real card prepared for delivery to the recipient.
-              </span>
-            </label>
-          </div>
-
-          <div class="section-next">
-            <a class="btn btn-primary" href="#design">
-              Continue to Design
-            </a>
-          </div>
-        </div>
-      </section>
-
-
-
-      <!-- ====================================================
-         STEP 3 — DESIGN
-         ==================================================== -->
-      <section class="flow-section flow-section--paper" id="design">
-
-        <div class="section-shell">
-
-          <div class="section-heading">
-
-            <p class="section-kicker">
-              03 · Choose a design
-            </p>
-
-
-            <h2>
-              Choose a card with a
-              <em>Vietnamese soul.</em>
-            </h2>
-
-
-            <p>
-              The collection draws from Vietnamese craft villages,
-              materials, landscapes, and living traditions.
-            </p>
-
-          </div>
-
-
-
-          <div class="design-grid">
-
-            <!-- HỒ TÂY -->
-            <label class="design-card design-card--lotus" for="design-lotus">
-
-              <span class="design-card__label">
-                Hồ Tây Lotus
-              </span>
-
-              <span class="design-card__meta">
-                Lotus · Summer · Hanoi
-              </span>
-
-            </label>
-
-
-
-            <!-- BÁT TRÀNG -->
-            <label class="design-card design-card--ceramic" for="design-battrang">
-
-              <span class="design-card__label">
-                Bát Tràng Blue
-              </span>
-
-              <span class="design-card__meta">
-                Ceramic · Kiln · Heritage
-              </span>
-
-            </label>
-
-
-
-            <!-- VẠN PHÚC -->
-            <label class="design-card design-card--silk" for="design-vanphuc">
-
-              <span class="design-card__label">
-                Vạn Phúc Silk
-              </span>
-
-              <span class="design-card__meta">
-                Silk · Loom · Hà Đông
-              </span>
-
-            </label>
-
-
-
-            <!-- HẠ THÁI -->
-            <label class="design-card design-card--lacquer" for="design-hathai">
-
-              <span class="design-card__label">
-                Hạ Thái Lacquer
-              </span>
-
-              <span class="design-card__meta">
-                Lacquer · Layers · Patience
-              </span>
-
-            </label>
-
-
-
-            <!-- HỘI AN -->
-            <label class="design-card design-card--hoian" for="design-hoian">
-
-              <span class="design-card__label">
-                Hội An Glow
-              </span>
-
-              <span class="design-card__meta">
-                Lantern · River · Old Town
-              </span>
-
-            </label>
-
-
-
-            <!-- PHÚ VINH -->
-            <label class="design-card design-card--bamboo" for="design-phuvinh">
-
-              <span class="design-card__label">
-                Phú Vinh Bamboo
-              </span>
-
-              <span class="design-card__meta">
-                Rattan · Weave · Craft Village
-              </span>
-
-            </label>
-
-          </div>
-
-
-
-          <div class="section-next">
-
-            <a class="btn btn-primary" href="#amount">
-              Continue to Amount
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      <!-- ====================================================
-         STEP 4 — QUANTITY + AMOUNT
-         ==================================================== -->
-      <section class="flow-section flow-section--tint" id="amount">
-
-        <div class="section-shell">
-
-          <div class="section-heading section-heading--center">
-
-            <p class="section-kicker">
-              04 · Choose quantity + amount
-            </p>
-
-
-            <h2>
-              How much would you like to
-              <em>put into the gift?</em>
-            </h2>
-
-
-            <p>
-              There are no fixed presets. Enter any positive USD
-              amount that fits the giving moment.
-            </p>
-
-          </div>
-
-
-
-          <div class="amount-panel">
-
-            <div class="amount-builder">
-
-              <!-- QUANTITY -->
-              <label class="amount-field amount-field--quantity">
-
-                <span>
-                  Quantity
-                </span>
-
-
-                <input type="number" id="gift-quantity" name="quantity" min="1" step="1" value="1" inputmode="numeric"
-                  required />
-
-
-                <small>
-                  Number of gift cards.
-                </small>
-
-              </label>
-
-
-
-              <!-- AMOUNT -->
-              <label class="amount-field amount-field--wide">
-
-                <span>
-                  Amount per card (USD)
-                </span>
-
-
-                <div class="currency-input">
-
-                  <span>
-                    $
-                  </span>
-
-
-                  <input type="number" id="gift-amount" name="amountPerCard" min="5" step="1" value="50"
-                    placeholder="Enter any amount" inputmode="decimal" required />
-
-                </div>
-
-
-                <small>
-                  Enter any positive amount.
-                  Example: 50 = $50.00.
-                </small>
-
-              </label>
-
+      <div class="gift-hero__curve" aria-hidden="true"></div>
+    </section>
+    <main>
+      <form id="gift-card-form" class="gift-card-form" action="#review" method="get">
+        <!-- ====================================================
+                 STEP 1 — GIFT TYPE
+                 ==================================================== -->
+        <section class="flow-section flow-section--paper" id="gift-type">
+          <div class="section-shell">
+            <div class="section-heading">
+              <p class="section-kicker">01 · Choose a type</p>
+              <h2>
+                What kind of
+                <em>giving moment</em>
+                are you creating?
+              </h2>
+              <p>Start with the intention. Choose the giving experience that best matches the moment.</p>
             </div>
+            <!-- ================================================
+                         GIFT TYPE CARDS
+                         Both cards share the same vertical row structure
+                         ================================================ -->
+            <div class="choice-grid choice-grid--two">
+              <!-- OPTION A -->
+              <label class="choice-card" for="gift-lang">
+                <span class="choice-card__index">A</span>
+                <span class="choice-card__title">Làng Impact Gift</span>
+                <span class="choice-card__copy">Create a meaningful gift while Làng &amp; Co. directs the contribution across verified organizations, approved individuals, and priority causes.</span>
+                <span class="choice-card__action">Choose this option →</span>
+              </label>
+              <!-- OPTION B -->
+              <label class="choice-card" for="gift-honour">
+                <span class="choice-card__index">B</span>
+                <span class="choice-card__title">Donation in Honour</span>
+                <span class="choice-card__copy">Choose a specific cause yourself, make the donation in someone special's honour, and send them a meaningful note.</span>
+                <span class="choice-card__action">Choose this option →</span>
+              </label>
+            </div>
+            <div class="section-next">
+              <a class="btn btn-primary" href="#delivery-type">Continue to Delivery</a>
+            </div>
+          </div>
+        </section>
+        <!-- ====================================================
+                 STEP 2 — DELIVERY TYPE
+                 ==================================================== -->
+        <section class="flow-section flow-section--tint" id="delivery-type">
+          <div class="section-shell">
+            <div class="section-heading section-heading--center">
+              <p class="section-kicker">02 · Choose delivery</p>
+              <h2>
+                How should the gift
+                <em>reach them?</em>
+              </h2>
+              <p>Choose a delivery format. The Personalize section will automatically show only the relevant fields.</p>
+            </div>
+            <!-- ================================================
+                         DELIVERY CARDS
+                         ================================================ -->
+            <div class="choice-grid choice-grid--three">
+              <!-- DIGITAL -->
+              <label class="delivery-card" for="delivery-digital">
+                <span class="delivery-card__icon">✉</span>
+                <span class="delivery-card__title">Digital eCard</span>
+                <span class="delivery-card__copy">Email delivery immediately or on a scheduled date.</span>
+              </label>
+              <!-- PRINTABLE -->
+              <label class="delivery-card" for="delivery-printable">
+                <span class="delivery-card__icon">⌑</span>
+                <span class="delivery-card__title">Printable</span>
+                <span class="delivery-card__copy">Download a print-ready card and prepare it at home.</span>
+              </label>
+              <!-- PHYSICAL -->
+              <label class="delivery-card" for="delivery-physical">
+                <span class="delivery-card__icon">✦</span>
+                <span class="delivery-card__title">Physical Card</span>
+                <span class="delivery-card__copy">A real card prepared for delivery to the recipient.</span>
+              </label>
+            </div>
+            <div class="section-next">
+              <a class="btn btn-primary" href="#design">Continue to Design</a>
+            </div>
+          </div>
+        </section>
+        <!-- ====================================================
+                 STEP 3 — DESIGN
+                 ==================================================== -->
+        <section class="flow-section flow-section--paper" id="design">
+          <div class="section-shell">
+            <div class="section-heading">
+              <p class="section-kicker">03 · Choose a design</p>
+              <h2>
+                Choose a card with a
+                <em>Vietnamese soul.</em>
+              </h2>
+              <p>The collection draws from Vietnamese craft villages, materials, landscapes, and living traditions.</p>
+            </div>
+            <div class="design-grid">
+              <!-- HỒ TÂY -->
+              <label class="design-card design-card--lotus" for="design-lotus">
+                <span class="design-card__label">Hồ Tây Lotus</span>
+                <span class="design-card__meta">Lotus · Summer · Hanoi</span>
+              </label>
+              <!-- BÁT TRÀNG -->
+              <label class="design-card design-card--ceramic" for="design-battrang">
+                <span class="design-card__label">Bát Tràng Blue</span>
+                <span class="design-card__meta">Ceramic · Kiln · Heritage</span>
+              </label>
+              <!-- VẠN PHÚC -->
+              <label class="design-card design-card--silk" for="design-vanphuc">
+                <span class="design-card__label">Vạn Phúc Silk</span>
+                <span class="design-card__meta">Silk · Loom · Hà Đông</span>
+              </label>
+              <!-- HẠ THÁI -->
+              <label class="design-card design-card--lacquer" for="design-hathai">
+                <span class="design-card__label">Hạ Thái Lacquer</span>
+                <span class="design-card__meta">Lacquer · Layers · Patience</span>
+              </label>
+              <!-- HỘI AN -->
+              <label class="design-card design-card--hoian" for="design-hoian">
+                <span class="design-card__label">Hội An Glow</span>
+                <span class="design-card__meta">Lantern · River · Old Town</span>
+              </label>
+              <!-- PHÚ VINH -->
+              <label class="design-card design-card--bamboo" for="design-phuvinh">
+                <span class="design-card__label">Phú Vinh Bamboo</span>
+                <span class="design-card__meta">Rattan · Weave · Craft Village</span>
+              </label>
+            </div>
+            <div class="section-next">
+              <a class="btn btn-primary" href="#amount">Continue to Amount</a>
+            </div>
+          </div>
+        </section>
+        <!-- ====================================================
+                 STEP 4 — QUANTITY + AMOUNT
+                 ==================================================== -->
+        <section class="flow-section flow-section--tint" id="amount">
+          <div class="section-shell">
+            <div class="section-heading section-heading--center">
+              <p class="section-kicker">04 · Choose quantity + amount</p>
+              <h2>
+                How much would you like to
+                <em>put into the gift?</em>
+              </h2>
+              <p>There are no fixed presets. Enter any positive USD amount that fits the giving moment.</p>
+            </div>
+            <div class="amount-panel">
+              <div class="amount-builder">
+                <!-- QUANTITY -->
+                <label class="amount-field amount-field--quantity">
+                  <span>Quantity</span>
+                  <input type="number" id="gift-quantity" name="quantity" min="1" step="1" value="1" inputmode="numeric" required />
+                  <small>Number of gift cards.</small>
+                </label>
+                <!-- AMOUNT -->
+                <label class="amount-field amount-field--wide">
+                  <span>Amount per card (USD)</span>
+                  <div class="currency-input">
+                    <span>$</span>
+                    <input type="number" id="gift-amount" name="amountPerCard" min="5" step="1" value="50" placeholder="Enter any amount" inputmode="decimal" required />
+                  </div>
+                  <small>Enter any positive amount. Example: 50 = $50.00.</small>
+                </label>
+              </div>
+              <!-- STATIC FRONTEND SUMMARY -->
+              <div class="amount-total">
+                <div>
+                  <span>Gift total</span>
+                  <small>Quantity × amount per card</small>
+                </div>
+                <strong>$50.00</strong>
+              </div>
+            </div>
+            <div class="section-next">
+              <a class="btn btn-primary" href="#details">Continue to Details</a>
+            </div>
+          </div>
+        </section>
+        <!-- ====================================================
+                 STEP 5 — PERSONALIZE
+                 ==================================================== -->
+        <section class="flow-section flow-section--paper" id="details">
+          <div class="section-shell">
+            <div class="section-heading">
+              <p class="section-kicker">05 · Personalize</p>
+              <h2>
+                Make the gift feel
+                <em>like it came from you.</em>
+              </h2>
+              <p>The fields below adapt to the delivery format selected in Step 2.</p>
+            </div>
+            <div class="details-layout">
+              <!-- ==============================================
+                             FORM
+                             ============================================== -->
+              <div class="details-form">
+                <!-- ============================================
+                                 COMMON FIELDS
+                                 Always visible
+                                 ============================================ -->
+                <div class="common-fields">
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span>Recipient name</span>
+                      <input type="text" id="recipient-name" name="recipientName" value="Minh" placeholder="Minh" minlength="2" maxlength="60" pattern=".*\S.*" title="Enter the recipient's name." required />
+                    </label>
+                    <label class="field">
+                      <span>Your name</span>
+                      <input type="text" id="sender-name" name="senderName" value="Huy" placeholder="Huy" minlength="2" maxlength="60" pattern=".*\S.*" title="Enter your name." autocomplete="name" required />
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Personal message</span>
+                    <textarea id="gift-message" name="message" rows="6" minlength="5" maxlength="280" placeholder="Write a personal message." required>Wishing you a meaningful birthday.</textarea>
+                  </label>
+                </div>
+                <!-- ============================================
+                                DONATION IN HONOUR — CAUSE SELECTION
+                                Only visible when Donation in Honour is selected
+                                ============================================ -->
+                <div class="conditional-fields honour-fields">
+                  <p class="conditional-title">Donation cause</p>
+                  <label class="field">
+                    <span>Choose a cause</span>
+                    <select id="cause-category" name="causeCategory">
+                      <option value="craft-preservation">Vietnamese Craft Preservation</option>
+                      <option value="education">Education and Learning Access</option>
+                      <option value="community-support">Community and Family Support</option>
+                      <option value="environment">Environmental Protection</option>
+                      <option value="artisan-support">Artisan Livelihood Support</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Cause note</span>
+                    <textarea id="cause-note" name="causeNote" rows="4" maxlength="180" placeholder="Optional note about why this cause matters."></textarea>
+                  </label>
+                </div>
+                <!-- ============================================
+                                 DIGITAL-ONLY FIELDS
+                                 ============================================ -->
+                <div class="conditional-fields digital-fields">
+                  <p class="conditional-title">Digital delivery details</p>
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span>Recipient email</span>
+                      <input type="email" name="recipientEmail" placeholder="minh@example.com" />
+                    </label>
+                    <label class="field">
+                      <span>Email delivery</span>
+                      <select name="emailTiming">
+                        <option>Send immediately</option>
+                        <option>Schedule delivery</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Scheduled delivery date</span>
+                    <input type="date" name="emailDeliveryDate" />
+                  </label>
+                </div>
+                <!-- ============================================
+                                 PRINTABLE-ONLY FIELDS
+                                 ============================================ -->
+                <div class="conditional-fields printable-fields">
+                  <p class="conditional-title">Printable card options</p>
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span>Card format</span>
+                      <select name="printFormat">
+                        <option>Flat Card</option>
+                        <option>Folded Card</option>
+                        <option>Postcard Style</option>
+                      </select>
+                    </label>
+                    <label class="field">
+                      <span>Paper size</span>
+                      <select name="paperSize">
+                        <option>A4</option>
+                        <option>A5</option>
+                        <option>A6</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Download format</span>
+                    <select name="downloadFormat">
+                      <option>PDF — Print Ready</option>
+                    </select>
+                  </label>
+                </div>
+                <!-- ============================================
+                                 PHYSICAL-ONLY FIELDS
+                                 ============================================ -->
+                <div class="conditional-fields physical-fields">
+                  <p class="conditional-title">Physical delivery address</p>
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span>Recipient phone</span>
+                      <input type="tel" name="recipientPhone" placeholder="+84..." />
+                    </label>
+                    <label class="field">
+                      <span>Preferred delivery date</span>
+                      <input type="date" name="physicalDeliveryDate" />
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Street address</span>
+                    <input type="text" name="streetAddress" placeholder="123 Example Street" />
+                  </label>
+                  <div class="form-grid form-grid--two">
+                    <label class="field">
+                      <span>Ward / District</span>
+                      <input type="text" name="district" placeholder="District" />
+                    </label>
+                    <label class="field">
+                      <span>City / Province</span>
+                      <input type="text" name="city" placeholder="Ho Chi Minh City" />
+                    </label>
+                  </div>
+                  <label class="field">
+                    <span>Postal code</span>
+                    <input type="text" name="postalCode" placeholder="700000" />
+                  </label>
+                </div>
+              </div>
+              <!-- ==============================================
+                             STATIC CSS-ONLY PREVIEW
+                             Background changes with design selection
+                             ============================================== -->
+              <aside class="mini-preview" aria-label="Gift card preview">
+                <div class="gift-preview">
+                  <div class="gift-preview__top">
+                    <span>Làng &amp; Co.</span>
+                    <small>Impact Gift</small>
+                  </div>
+                  <div class="gift-preview__center">
+                    <p>For Minh</p>
+                    <strong>$50.00</strong>
+                    <span>Wishing you a meaningful birthday.</span>
+                  </div>
+                  <div class="gift-preview__bottom">
+                    <span>From Huy</span>
+                    <!-- CSS-ONLY DESIGN NAME -->
+                    <span class="preview-design-name">
+                      <span class="preview-name preview-name--lotus">Hồ Tây Lotus</span>
+                      <span class="preview-name preview-name--battrang">Bát Tràng Blue</span>
+                      <span class="preview-name preview-name--vanphuc">Vạn Phúc Silk</span>
+                      <span class="preview-name preview-name--hathai">Hạ Thái Lacquer</span>
+                      <span class="preview-name preview-name--hoian">Hội An Glow</span>
+                      <span class="preview-name preview-name--phuvinh">Phú Vinh Bamboo</span>
+                    </span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+            <div class="section-next">
+              <button class="btn btn-primary" type="submit">Review Your Gift</button>
+            </div>
+          </div>
+        </section>
+      </form>
+      <!-- ====================================================
+               STEP 6 — REVIEW
+               CENTERED TABLE + BUTTON BELOW
+               ==================================================== -->
+      <section class="flow-section flow-section--review" id="review">
+        <div class="section-shell">
+          <div class="section-heading section-heading--center section-heading--light">
+            <p class="section-kicker">06 · Review</p>
+            <h2>
+              Your gift is ready to
+              <em>carry intention.</em>
+            </h2>
+            <p>Review your gift configuration, then add it to your shopping cart.</p>
+          </div>
+          <div class="review-layout">
 
 
-
-            <!-- STATIC FRONTEND SUMMARY -->
-            <div class="amount-total">
-
+            <div class="review-card">
+              <!-- GIFT TYPE -->
               <div>
-                <span>
-                  Gift total
-                </span>
-
-                <small>
-                  Quantity × amount per card
-                </small>
+                <span>Gift type</span>
+                <strong class="review-choice-group">
+                  <span class="review-choice review-gift--lang">Làng Impact Gift</span>
+                  <span class="review-choice review-gift--honour">Donation in Honour</span>
+                </strong>
               </div>
-
-              <strong>
-                $50.00
-              </strong>
-
+              <!-- DELIVERY -->
+              <div>
+                <span>Delivery</span>
+                <strong class="review-choice-group">
+                  <span class="review-choice review-delivery--digital">Digital eCard</span>
+                  <span class="review-choice review-delivery--printable">Printable</span>
+                  <span class="review-choice review-delivery--physical">Physical Card</span>
+                </strong>
+              </div>
+              <!-- DESIGN -->
+              <div>
+                <span>Design</span>
+                <strong class="review-choice-group">
+                  <span class="review-choice review-design--lotus">Hồ Tây Lotus</span>
+                  <span class="review-choice review-design--battrang">Bát Tràng Blue</span>
+                  <span class="review-choice review-design--vanphuc">Vạn Phúc Silk</span>
+                  <span class="review-choice review-design--hathai">Hạ Thái Lacquer</span>
+                  <span class="review-choice review-design--hoian">Hội An Glow</span>
+                  <span class="review-choice review-design--phuvinh">Phú Vinh Bamboo</span>
+                </strong>
+              </div>
+              <!-- RECIPIENT -->
+              <div>
+                <span>Recipient</span>
+                <strong>Minh</strong>
+              </div>
+              <!-- SENDER -->
+              <div>
+                <span>From</span>
+                <strong>Huy</strong>
+              </div>
+              <!-- PERSONAL MESSAGE -->
+              <div class="review-card__message">
+                <span>Message</span>
+                <strong>Wishing you a meaningful birthday.</strong>
+              </div>
+              <!-- QUANTITY -->
+              <div>
+                <span>Quantity</span>
+                <strong>1</strong>
+              </div>
+              <!-- AMOUNT -->
+              <div>
+                <span>Amount per card</span>
+                <strong>$50.00</strong>
+              </div>
+              <!-- TOTAL -->
+              <div class="review-card__total">
+                <span>Total</span>
+                <strong>$50.00</strong>
+              </div>
             </div>
-
+        
+            <div class="review-actions">
+              <p>Add this gift to your cart so you can review it alongside your other items before checkout.</p>
+              <a class="btn btn-cream" href="../cart/cart.html">Add Gift to Cart</a>
+            </div>
           </div>
-
-
-
-          <div class="section-next">
-
-            <a class="btn btn-primary" href="#details">
-              Continue to Details
-            </a>
-
-          </div>
-
         </div>
-
       </section>
-
-
-
       <!-- ====================================================
-         STEP 5 — PERSONALIZE
-
-         CONDITIONAL UI:
-         - Digital → email fields
-         - Printable → print fields
-         - Physical → shipping fields
-         ==================================================== -->
-      <section class="flow-section flow-section--paper" id="details">
-
+               VIEW EXISTING GIFT
+               ==================================================== -->
+      <section class="redeem-section" id="redeem">
         <div class="section-shell">
-
-          <div class="section-heading">
-
-            <p class="section-kicker">
-              05 · Personalize
-            </p>
-
-
-            <h2>
-              Make the gift feel
-              <em>like it came from you.</em>
-            </h2>
-
-
-            <p>
-              The fields below adapt to the delivery format
-              selected in Step 2.
-            </p>
-
-          </div>
-
-
-
-          <div class="details-layout">
-
-            <!-- ==============================================
-               FORM
-               ============================================== -->
-            <div class="details-form">
-
-              <!-- ============================================
-                 COMMON FIELDS
-                 Always visible
-                 ============================================ -->
-              <div class="common-fields">
-
-                <div class="form-grid form-grid--two">
-
-                  <label class="field">
-
-                    <span>
-                      Recipient name
-                    </span>
-
-
-                    <input type="text" id="recipient-name" name="recipientName" value="Minh" placeholder="Minh"
-                      minlength="2" maxlength="60" pattern=".*\S.*" title="Enter the recipient's name." required />
-
-                  </label>
-
-
-
-                  <label class="field">
-
-                    <span>
-                      Your name
-                    </span>
-
-
-                    <input type="text" id="sender-name" name="senderName" value="Huy" placeholder="Huy" minlength="2"
-                      maxlength="60" pattern=".*\S.*" title="Enter your name." autocomplete="name" required />
-
-                  </label>
-
-                </div>
-
-
-
-                <label class="field">
-
-                  <span>
-                    Personal message
-                  </span>
-
-
-                  <textarea id="gift-message" name="message" rows="6" minlength="5" maxlength="280"
-                    placeholder="Write a personal message." required>Wishing you a meaningful birthday.</textarea>
-
-                </label>
-
-              </div>
-              <!-- ============================================
-                DONATION IN HONOUR — CAUSE SELECTION
-                Only visible when Donation in Honour is selected
-                ============================================ -->
-              <div class="conditional-fields honour-fields">
-
-                <p class="conditional-title">
-                  Donation cause
-                </p>
-
-                <label class="field">
-
-                  <span>
-                    Choose a cause
-                  </span>
-
-                  <select id="cause-category" name="causeCategory">
-                    <option value="craft-preservation">
-                      Vietnamese Craft Preservation
-                    </option>
-
-                    <option value="education">
-                      Education and Learning Access
-                    </option>
-
-                    <option value="community-support">
-                      Community and Family Support
-                    </option>
-
-                    <option value="environment">
-                      Environmental Protection
-                    </option>
-
-                    <option value="artisan-support">
-                      Artisan Livelihood Support
-                    </option>
-                  </select>
-
-                </label>
-
-                <label class="field">
-
-                  <span>
-                    Cause note
-                  </span>
-
-                  <textarea id="cause-note" name="causeNote" rows="4" maxlength="180"
-                    placeholder="Optional note about why this cause matters."></textarea>
-
-                </label>
-
-              </div>
-
-
-
-              <!-- ============================================
-                 DIGITAL-ONLY FIELDS
-                 ============================================ -->
-              <div class="conditional-fields digital-fields">
-
-                <p class="conditional-title">
-                  Digital delivery details
-                </p>
-
-
-                <div class="form-grid form-grid--two">
-
-                  <label class="field">
-
-                    <span>
-                      Recipient email
-                    </span>
-
-
-                    <input type="email" name="recipientEmail" placeholder="minh@example.com" />
-
-                  </label>
-
-
-
-                  <label class="field">
-
-                    <span>
-                      Email delivery
-                    </span>
-
-
-                    <select name="emailTiming">
-
-                      <option>
-                        Send immediately
-                      </option>
-
-                      <option>
-                        Schedule delivery
-                      </option>
-
-                    </select>
-
-                  </label>
-
-                </div>
-
-
-
-                <label class="field">
-
-                  <span>
-                    Scheduled delivery date
-                  </span>
-
-
-                  <input type="date" name="emailDeliveryDate" />
-
-                </label>
-
-              </div>
-
-
-
-              <!-- ============================================
-                 PRINTABLE-ONLY FIELDS
-                 ============================================ -->
-              <div class="conditional-fields printable-fields">
-
-                <p class="conditional-title">
-                  Printable card options
-                </p>
-
-
-                <div class="form-grid form-grid--two">
-
-                  <label class="field">
-
-                    <span>
-                      Card format
-                    </span>
-
-
-                    <select name="printFormat">
-
-                      <option>
-                        Flat Card
-                      </option>
-
-                      <option>
-                        Folded Card
-                      </option>
-
-                      <option>
-                        Postcard Style
-                      </option>
-
-                    </select>
-
-                  </label>
-
-
-
-                  <label class="field">
-
-                    <span>
-                      Paper size
-                    </span>
-
-
-                    <select name="paperSize">
-
-                      <option>
-                        A4
-                      </option>
-
-                      <option>
-                        A5
-                      </option>
-
-                      <option>
-                        A6
-                      </option>
-
-                    </select>
-
-                  </label>
-
-                </div>
-
-
-
-                <label class="field">
-
-                  <span>
-                    Download format
-                  </span>
-
-
-                  <select name="downloadFormat">
-
-                    <option>
-                      PDF — Print Ready
-                    </option>
-
-                  </select>
-
-                </label>
-
-              </div>
-
-
-
-              <!-- ============================================
-                 PHYSICAL-ONLY FIELDS
-                 ============================================ -->
-              <div class="conditional-fields physical-fields">
-
-                <p class="conditional-title">
-                  Physical delivery address
-                </p>
-
-
-                <div class="form-grid form-grid--two">
-
-                  <label class="field">
-
-                    <span>
-                      Recipient phone
-                    </span>
-
-
-                    <input type="tel" name="recipientPhone" placeholder="+84..." />
-
-                  </label>
-
-
-
-                  <label class="field">
-
-                    <span>
-                      Preferred delivery date
-                    </span>
-
-
-                    <input type="date" name="physicalDeliveryDate" />
-
-                  </label>
-
-                </div>
-
-
-
-                <label class="field">
-
-                  <span>
-                    Street address
-                  </span>
-
-
-                  <input type="text" name="streetAddress" placeholder="123 Example Street" />
-
-                </label>
-
-
-
-                <div class="form-grid form-grid--two">
-
-                  <label class="field">
-
-                    <span>
-                      Ward / District
-                    </span>
-
-
-                    <input type="text" name="district" placeholder="District" />
-
-                  </label>
-
-
-
-                  <label class="field">
-
-                    <span>
-                      City / Province
-                    </span>
-
-
-                    <input type="text" name="city" placeholder="Ho Chi Minh City" />
-
-                  </label>
-
-                </div>
-
-
-
-                <label class="field">
-
-                  <span>
-                    Postal code
-                  </span>
-
-
-                  <input type="text" name="postalCode" placeholder="700000" />
-
-                </label>
-
-              </div>
-
+          <div class="redeem-panel">
+            <div>
+              <p class="section-kicker">Already received an Impact Gift?</p>
+              <h2>
+                View your gift.
+                <em>Follow where its impact goes.</em>
+              </h2>
+              <p>Enter your gift code to view the sender's message, gift value, and future impact updates from Làng &amp; Co.</p>
             </div>
-
-
-
-            <!-- ==============================================
-               STATIC CSS-ONLY PREVIEW
-               Background changes with design selection
-               ============================================== -->
-            <aside class="mini-preview" aria-label="Gift card preview">
-
-              <div class="gift-preview">
-
-                <div class="gift-preview__top">
-
-                  <span>
-                    Làng &amp; Co.
-                  </span>
-
-                  <small>
-                    Impact Gift
-                  </small>
-
-                </div>
-
-
-
-                <div class="gift-preview__center">
-
-                  <p>
-                    For Minh
-                  </p>
-
-
-                  <strong>
-                    $50.00
-                  </strong>
-
-
-                  <span>
-                    Wishing you a meaningful birthday.
-                  </span>
-
-                </div>
-
-
-
-                <div class="gift-preview__bottom">
-
-                  <span>
-                    From Huy
-                  </span>
-
-
-                  <!-- CSS-ONLY DESIGN NAME -->
-                  <span class="preview-design-name">
-
-                    <span class="preview-name preview-name--lotus">
-                      Hồ Tây Lotus
-                    </span>
-
-                    <span class="preview-name preview-name--battrang">
-                      Bát Tràng Blue
-                    </span>
-
-                    <span class="preview-name preview-name--vanphuc">
-                      Vạn Phúc Silk
-                    </span>
-
-                    <span class="preview-name preview-name--hathai">
-                      Hạ Thái Lacquer
-                    </span>
-
-                    <span class="preview-name preview-name--hoian">
-                      Hội An Glow
-                    </span>
-
-                    <span class="preview-name preview-name--phuvinh">
-                      Phú Vinh Bamboo
-                    </span>
-
-                  </span>
-
-                </div>
-
-              </div>
-
-            </aside>
-
+            <form class="redeem-form" action="#gift-view-demo" method="get">
+              <label class="field">
+                <span>Impact Gift code</span>
+                <input type="text" id="gift-code" name="giftCode" placeholder="LANG-DEMO-2026" pattern="LANG-[A-Z0-9]{4}-[A-Z0-9]{4}" maxlength="14" title="Enter a gift code in the format LANG-XXXX-XXXX." autocomplete="off" required />
+              </label>
+              <button class="btn btn-primary" type="submit">View My Gift</button>
+              <small class="redeem-note">The recipient views the gift and tracks impact updates. They do not control the final allocation.</small>
+            </form>
           </div>
-
-
-
-          <div class="section-next">
-
-            <button class="btn btn-primary" type="submit">
-              Review Your Gift
-            </button>
-
-          </div>
-
         </div>
-
       </section>
-    </form>
-
-
-
-    <!-- ====================================================
-         STEP 6 — REVIEW
-         CENTERED TABLE + BUTTON BELOW
-         ==================================================== -->
-    <section class="flow-section flow-section--review" id="review">
-
-      <div class="section-shell">
-
-        <div class="section-heading section-heading--center section-heading--light">
-
-          <p class="section-kicker">
-            06 · Review
-          </p>
-
-
-          <h2>
-            Your gift is ready to
-            <em>carry intention.</em>
-          </h2>
-
-
-          <p>
-            Review your gift configuration, then add it
-            to your shopping cart.
-          </p>
-
-        </div>
-
-
-
-        <div class="review-layout">
-
-          <!-- ==============================================
-               CENTERED REVIEW TABLE
-               ============================================== -->
-          <div class="review-card">
-
-            <!-- GIFT TYPE -->
-            <div>
-
-              <span>
-                Gift type
-              </span>
-
-
-              <strong class="review-choice-group">
-
-                <span class="review-choice review-gift--lang">
-                  Làng Impact Gift
-                </span>
-
-                <span class="review-choice review-gift--honour">
-                  Donation in Honour
-                </span>
-
-              </strong>
-
-            </div>
-
-
-
-            <!-- DELIVERY -->
-            <div>
-
-              <span>
-                Delivery
-              </span>
-
-
-              <strong class="review-choice-group">
-
-                <span class="review-choice review-delivery--digital">
-                  Digital eCard
-                </span>
-
-                <span class="review-choice review-delivery--printable">
-                  Printable
-                </span>
-
-                <span class="review-choice review-delivery--physical">
-                  Physical Card
-                </span>
-
-              </strong>
-
-            </div>
-
-
-
-            <!-- DESIGN -->
-            <div>
-
-              <span>
-                Design
-              </span>
-
-
-              <strong class="review-choice-group">
-
-                <span class="review-choice review-design--lotus">
-                  Hồ Tây Lotus
-                </span>
-
-                <span class="review-choice review-design--battrang">
-                  Bát Tràng Blue
-                </span>
-
-                <span class="review-choice review-design--vanphuc">
-                  Vạn Phúc Silk
-                </span>
-
-                <span class="review-choice review-design--hathai">
-                  Hạ Thái Lacquer
-                </span>
-
-                <span class="review-choice review-design--hoian">
-                  Hội An Glow
-                </span>
-
-                <span class="review-choice review-design--phuvinh">
-                  Phú Vinh Bamboo
-                </span>
-
-              </strong>
-
-            </div>
-
-            <!-- RECIPIENT -->
-            <div>
-
-              <span>
-                Recipient
-              </span>
-
-              <strong>
-                Minh
-              </strong>
-
-            </div>
-
-
-            <!-- SENDER -->
-            <div>
-
-              <span>
-                From
-              </span>
-
-              <strong>
-                Huy
-              </strong>
-
-            </div>
-
-
-            <!-- PERSONAL MESSAGE -->
-            <div class="review-card__message">
-
-              <span>
-                Message
-              </span>
-
-              <strong>
-                Wishing you a meaningful birthday.
-              </strong>
-
-            </div>
-
-
-
-            <!-- QUANTITY -->
-            <div>
-
-              <span>
-                Quantity
-              </span>
-
-              <strong>
-                1
-              </strong>
-
-            </div>
-
-
-
-            <!-- AMOUNT -->
-            <div>
-
-              <span>
-                Amount per card
-              </span>
-
-              <strong>
-                $50.00
-              </strong>
-
-            </div>
-
-
-
-            <!-- TOTAL -->
-            <div class="review-card__total">
-
-              <span>
-                Total
-              </span>
-
-              <strong>
-                $50.00
-              </strong>
-
-            </div>
-
-          </div>
-
-
-
-          <!-- ==============================================
-               ACTION DIRECTLY UNDER TABLE
-               ============================================== -->
-          <div class="review-actions">
-
-            <p>
-              Add this gift to your cart so you can review it
-              alongside your other items before checkout.
-            </p>
-
-            <a class="btn btn-cream" href="../cart/cart.html">
-              Add Gift to Cart
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ====================================================
-         VIEW EXISTING GIFT
-         ==================================================== -->
-    <section class="redeem-section" id="redeem">
-
-      <div class="section-shell">
-
-        <div class="redeem-panel">
-
-          <div>
-
-            <p class="section-kicker">
-              Already received an Impact Gift?
-            </p>
-
-
+      <!-- ====================================================
+               GIFT VIEW
+               HIDDEN BY DEFAULT
+               ==================================================== -->
+      <section class="flow-section flow-section--paper gift-view-demo" id="gift-view-demo">
+        <div class="section-shell">
+          <div class="section-heading">
+            <p class="section-kicker">Impact Gift View</p>
             <h2>
-              View your gift.
-              <em>Follow where its impact goes.</em>
+              Your gift has a story.
+              <em>Its impact will have one too.</em>
             </h2>
-
-
-            <p>
-              Enter your gift code to view the sender's message,
-              gift value, and future impact updates from Làng &amp; Co.
-            </p>
-
+            <p>This is a frontend example of what a recipient could see after entering a valid gift code.</p>
           </div>
-
-
-
-          <form class="redeem-form" action="#gift-view-demo" method="get">
-
-            <label class="field">
-
-              <span>
-                Impact Gift code
-              </span>
-
-
-              <input type="text" id="gift-code" name="giftCode" placeholder="LANG-DEMO-2026"
-                pattern="LANG-[A-Z0-9]{4}-[A-Z0-9]{4}" maxlength="14"
-                title="Enter a gift code in the format LANG-XXXX-XXXX." autocomplete="off" required />
-
-            </label>
-
-
-
-            <button class="btn btn-primary" type="submit">
-              View My Gift
-            </button>
-
-
-
-            <small class="redeem-note">
-              The recipient views the gift and tracks impact updates.
-              They do not control the final allocation.
-            </small>
-
-          </form>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- ====================================================
-         GIFT VIEW
-         HIDDEN BY DEFAULT
-
-         Only appears when:
-         URL target = #gift-view-demo
-         ==================================================== -->
-    <section class="flow-section flow-section--paper gift-view-demo" id="gift-view-demo">
-
-      <div class="section-shell">
-
-        <div class="section-heading">
-
-          <p class="section-kicker">
-            Impact Gift View
-          </p>
-
-
-          <h2>
-            Your gift has a story.
-            <em>Its impact will have one too.</em>
-          </h2>
-
-
-          <p>
-            This is a frontend example of what a recipient
-            could see after entering a valid gift code.
-          </p>
-
-        </div>
-
-
-
-        <div class="gift-view-card">
-
-          <div class="gift-view-card__main">
-
-            <p class="gift-view-card__eyebrow">
-              Làng Impact Gift
-            </p>
-
-
-            <h3>
-              $50.00
-            </h3>
-
-
-            <p>
-              <strong>From:</strong>
-              Huy
-            </p>
-
-
-            <p>
-              <strong>For:</strong>
-              Minh
-            </p>
-
-
-            <blockquote>
-              “Wishing you a meaningful birthday.”
-            </blockquote>
-
+          <div class="gift-view-card">
+            <div class="gift-view-card__main">
+              <p class="gift-view-card__eyebrow">Làng Impact Gift</p>
+              <h3>$50.00</h3>
+              <p>
+                <strong>From:</strong>
+                Huy
+              </p>
+              <p>
+                <strong>For:</strong>
+                Minh
+              </p>
+              <blockquote>“Wishing you a meaningful birthday.”</blockquote>
+            </div>
+            <div class="gift-view-card__status">
+              <span>Impact status</span>
+              <strong>Awaiting allocation</strong>
+              <p>Làng &amp; Co. will direct this contribution to verified organizations, approved individuals, or priority causes.</p>
+            </div>
           </div>
-
-
-
-          <div class="gift-view-card__status">
-
-            <span>
-              Impact status
-            </span>
-
-
-            <strong>
-              Awaiting allocation
-            </strong>
-
-
-            <p>
-              Làng &amp; Co. will direct this contribution
-              to verified organizations, approved individuals,
-              or priority causes.
-            </p>
-
-          </div>
-
         </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- ================================================
-       FOOTER
-       ================================================ -->
-  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
-
-</body>
-
+      </section>
+    </main>
+    <!-- ================================================
+           FOOTER
+           ================================================ -->
+    <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy" scrolling="no"></iframe>
+  </body>
 </html>
