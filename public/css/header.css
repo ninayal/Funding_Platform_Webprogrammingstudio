@@ -73,7 +73,21 @@ body {
 .topbar-dismiss-input:checked ~ .topbar {
   display: none;
 }
+.nav-active-target {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
 
+#giftcard-active:target ~ .nav #nav-giftcard {
+  color: #A31D1D;
+}
+#home-active:target ~ .nav #nav-home {
+  color: #A31D1D;
+}
 /* ---------- Desktop navbar ---------- */
 
 .nav {
