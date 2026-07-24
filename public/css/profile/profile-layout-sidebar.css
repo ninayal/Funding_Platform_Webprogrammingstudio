@@ -216,3 +216,27 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* ================================================
+   PROFILE NAV ACTIVE LINE RESPONSIVE FIX
+   Desktop keeps side line.
+   Mobile changes it into a bottom underline.
+   ================================================ */
+
+@media (max-width: 1160px) {
+  .profile-nav__item::after {
+    right: auto;
+    left: 50%;
+    bottom: 8px;
+
+    width: 34px;
+    height: 3px;
+
+    transform: translateX(-50%);
+
+    border-radius: 999px;
+  }
+
+  .profile-nav__item {
+    padding-bottom: 12px;
+  }
+}

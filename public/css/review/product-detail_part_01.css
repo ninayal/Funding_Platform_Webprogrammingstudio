@@ -97,7 +97,7 @@
 .pd-detail__maker {
   font-family: var(--ff-ui);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 1000;
   letter-spacing: 1.3px;
   text-transform: uppercase;
   color: var(--sand);

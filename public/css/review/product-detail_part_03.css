@@ -58,7 +58,7 @@
 
 .pd-spec-table td {
   font-weight: 500;
-  color: var(--muted);
+  color: var(--deep);
 }
 
 @media (max-width: 700px) {
