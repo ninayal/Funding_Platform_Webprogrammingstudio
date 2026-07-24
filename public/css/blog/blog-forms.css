@@ -1,18 +1,19 @@
-/* -----------------------------
+/* ================================================
    CREATE / EDIT FORMS
------------------------------- */
+================================================ */
+
 .form-sheet {
   padding: 52px;
 }
 
 .form-heading {
-  padding-right: 50px;
   margin-bottom: 25px;
+  padding-right: 50px;
 }
 
 .form-heading h2 {
   margin: 0 0 10px;
-  font-family: var(--ff-script);
+  font-family: Georgia, "Times New Roman", serif;
   font-size: 58px;
   font-weight: 500;
   line-height: 1;
@@ -21,9 +22,13 @@
 .form-heading>p:last-child {
   margin: 0;
   color: var(--muted);
-  font-family: var(--ff-body);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
 }
+
+/* ================================================
+   FORM LAYOUT
+================================================ */
 
 .post-form {
   display: grid;
@@ -32,7 +37,7 @@
 
 .form-grid.two-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -40,28 +45,84 @@
   display: grid;
   gap: 7px;
   color: var(--brown);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 9px;
   font-weight: 600;
-  letter-spacing: .09em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
+/* ================================================
+   FORM FIELDS
+================================================ */
+
 .post-form input,
+.post-form select,
 .post-form textarea {
   margin-top: 0;
+  background-color: #ffffff8c !important;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
-  text-transform: none;
+  font-weight: 400 !important;
   letter-spacing: 0;
+  text-transform: none;
 }
+
+.post-form input:focus,
+.post-form select:focus,
+.post-form textarea:focus {
+  background-color: #ffffff8c !important;
+}
+
+.post-form input::placeholder,
+.post-form textarea::placeholder {
+  font-weight: 400;
+  opacity: 1;
+}
+
+/* ================================================
+   DATE INPUT
+================================================ */
+
+.post-form input[type="date"] {
+  color: #777 !important;
+  background-color: #ffffff8c !important;
+  font-weight: 400 !important;
+  -webkit-text-fill-color: #777 !important;
+  color-scheme: light;
+}
+
+.post-form input[type="date"]::-webkit-datetime-edit,
+.post-form input[type="date"]::-webkit-datetime-edit-month-field,
+.post-form input[type="date"]::-webkit-datetime-edit-day-field,
+.post-form input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #777;
+  font-weight: 400;
+  -webkit-text-fill-color: #777;
+}
+
+.post-form input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.65;
+}
+
+/* ================================================
+   FORM NOTE
+================================================ */
 
 .form-note {
   padding: 12px 14px;
   border-left: 3px solid var(--red);
-  background: rgba(163, 29, 29, .05);
   color: var(--muted);
+  background: rgba(163, 29, 29, 0.05);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 11px;
   line-height: 1.5;
 }
+
+/* ================================================
+   FORM ACTIONS
+================================================ */
 
 .form-actions {
   display: flex;
@@ -70,19 +131,23 @@
   padding-top: 6px;
 }
 
-/* Success toasts from CSS :target hardcoded states */
+/* ================================================
+   CSS-ONLY SUCCESS TOASTS
+================================================ */
+
 .state-toast {
   position: fixed;
-  z-index: 150;
   right: 22px;
   bottom: 22px;
-  max-width: 390px;
+  z-index: 150;
   display: none;
+  max-width: 390px;
   padding: 14px 16px;
   border-radius: 13px;
-  background: var(--darkred);
   color: var(--cream);
+  background: var(--darkred);
   box-shadow: var(--shadow);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   line-height: 1.4;
 }
@@ -91,4 +156,3 @@
 #post-updated:target~.updated-toast {
   display: block;
 }
-

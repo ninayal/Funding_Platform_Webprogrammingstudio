@@ -75,3 +75,15 @@
 .my-posts-return a:hover {
     text-decoration: underline;
 }
+
+.my-post-card__actions a.post-action,
+.my-post-card__actions a.post-action:link,
+.my-post-card__actions a.post-action:visited,
+.my-post-card__actions a.post-action:hover,
+.my-post-card__actions a.post-action:focus,
+.my-post-card__actions a.post-action:active {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    border-bottom: none !important;
+    background-image: none !important;
+}
