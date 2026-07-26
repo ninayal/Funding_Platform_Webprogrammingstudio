@@ -2,6 +2,16 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 
+// Routes
+const homeRoutes = require("./routes/homeRoutes");
+const sharedRoutes = require("./routes/sharedRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const blogRoutes = require("./routes/blogRoutes");
+const forumRoutes = require("./routes/forumRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const giftcardRoutes = require("./routes/giftcardRoutes");
+
+
 const app = express();
 const PORT = 3000;
 
@@ -25,9 +35,27 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 // Home Route
-app.get("/", (req, res) => {
-  res.render("home/index");
-});
+app.use("/", homeRoutes);
+
+//Shared Route
+app.use("/shared", sharedRoutes);
+
+// Cart Route
+app.use("/cart", cartRoutes);
+
+// Blog Route
+app.use("/blog", blogRoutes);
+
+//Forum Route
+app.use("/forum", forumRoutes);
+
+//Review Route
+app.use("/review", reviewRoutes);
+
+//Giftcard Routes
+app.use("/giftcard", giftcardRoutes);
+
+
 
 // 404 page
 app.use((req, res) => {
