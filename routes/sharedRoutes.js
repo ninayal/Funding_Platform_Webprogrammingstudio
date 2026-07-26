@@ -1,4 +1,5 @@
 const express = require("express");
+const sharedController = require("../controllers/sharedController");
 
 const router = express.Router();
 
