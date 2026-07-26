@@ -11,9 +11,15 @@ const forumRoutes = require("./routes/forumRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const giftcardRoutes = require("./routes/giftcardRoutes");
 
+//middleware
+const notFound = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 const PORT = 3000;
+
+//Config
+const sessionConfig = require("./config/sessionConfig");
 
 // EJS setup
 app.set("view engine", "ejs");
@@ -23,13 +29,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(
-  session({
-    secret: "lang-and-co-secret-key",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+//Config
+app.use(session(sessionConfig));
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -55,13 +56,8 @@ app.use("/review", reviewRoutes);
 //Giftcard Routes
 app.use("/giftcard", giftcardRoutes);
 
+// Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
-
-// 404 page
-app.use((req, res) => {
-  res.status(404).send("404 - Page not found");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+module.exports = app;
