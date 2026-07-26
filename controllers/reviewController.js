@@ -3,7 +3,7 @@ const getProductReviewPage = (req, res) => {
 };
 
 const getReviewDetailPage = (req, res) => {
-  const reviewNumber = req.params.reviewNumber;
+  const { reviewNumber } = req.params;
 
   res.render(`review/product_detail/review${reviewNumber}`);
 };

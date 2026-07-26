@@ -3,13 +3,7 @@ const path = require("path");
 const session = require("express-session");
 
 // Routes
-const homeRoutes = require("./routes/homeRoutes");
-const sharedRoutes = require("./routes/sharedRoutes");
-const cartRoutes = require("./routes/cartRoutes");
-const blogRoutes = require("./routes/blogRoutes");
-const forumRoutes = require("./routes/forumRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
-const giftcardRoutes = require("./routes/giftcardRoutes");
+const routes = require("./routes");
 
 //middleware
 const notFound = require("./middlewares/notFound");
@@ -35,26 +29,7 @@ app.use(session(sessionConfig));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 
-// Home Route
-app.use("/", homeRoutes);
-
-//Shared Route
-app.use("/shared", sharedRoutes);
-
-// Cart Route
-app.use("/cart", cartRoutes);
-
-// Blog Route
-app.use("/blog", blogRoutes);
-
-//Forum Route
-app.use("/forum", forumRoutes);
-
-//Review Route
-app.use("/review", reviewRoutes);
-
-//Giftcard Routes
-app.use("/giftcard", giftcardRoutes);
+app.use("/", routes);
 
 // Middlewares
 app.use(notFound);

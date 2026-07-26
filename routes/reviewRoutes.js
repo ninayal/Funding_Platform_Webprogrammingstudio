@@ -7,7 +7,7 @@ router.get("/product-review", reviewController.getProductReviewPage);
 
 router.get(
   "/review/:reviewNumber",
-    reviewController.getReviewByNumber
+    reviewController.getReviewDetailPage
 );
 
 module.exports = router;
