@@ -3,20 +3,15 @@ const cartController = require("../controllers/cartController");
 
 const router = express.Router();
 
-router.get("/products", (req, res) => {
-  res.render("cart/products");
-});
+router.get("/products", cartController.getProductsPage);
 
-router.get("/cart", (req, res) => {
-  res.render("cart/cart");
-});
+router.get("/cart", cartController.getCartPage);
 
-router.get("/checkout", (req, res) => {
-  res.render("cart/checkout");
-});
+router.get("/checkout", cartController.getCheckoutPage);
 
-router.get("/order-confirmation", (req, res) => {
-  res.render("cart/order_confirmation");
-});
+router.get(
+  "/order-confirmation",
+  cartController.getOrderConfirmationPage
+);
 
 module.exports = router;
