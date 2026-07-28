@@ -222,7 +222,7 @@
                             </h3>
                             <p class="shop-card__price"><%= relatedProduct.price %></p>
                             <p class="shop-card__rating">
-                                <%= createStars(relatedProduct.rating) %><span>(<%= relatedProduct.reviewCount %>)</span>
+                                <%= "★".repeat(relatedProduct.rating) + "☆".repeat(5 - relatedProduct.rating) %><span>(<%= relatedProduct.reviewCount %>)</span>
                             </p>
                         </div>
                     </article>

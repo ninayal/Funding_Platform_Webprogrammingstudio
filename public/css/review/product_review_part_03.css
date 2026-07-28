@@ -268,3 +268,18 @@
   height: 32px;
   font-size: 13px;
 }
+/* Review tab iframe container */
+.pd-panel--review {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Review page embedded inside product detail */
+.product-review-frame {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
