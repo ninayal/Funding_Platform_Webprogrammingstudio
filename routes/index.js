@@ -4,7 +4,7 @@ const homeRoutes = require("./homeRoutes");
 const sharedRoutes = require("./sharedRoutes");
 const cartRoutes = require("./cartRoutes");
 const blogRoutes = require("./blogRoutes");
-const reviewRoutes = require("./reviewRoutes");
+const reviewRoutes = require("../config/reviewRoutes");
 const giftcardRoutes = require("./giftcardRoutes");
 
 const router = express.Router();
