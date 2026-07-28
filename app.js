@@ -14,10 +14,15 @@ const PORT = 3000;
 
 //Config
 const sessionConfig = require("./config/sessionConfig");
+const footerConfig = require("./config/footerConfig");
 
 // EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+//Global view data
+app.locals.footer = footerConfig;
+app.locals.currentYear = new Date().getFullYear();
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));

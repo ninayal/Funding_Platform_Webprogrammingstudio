@@ -1,74 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="../../public/css/landingpage/index-base.css" />
-  <link rel="stylesheet" href="../../public/css/footer.css" />
-</head>
-
-<body>
-  <footer class="site-footer">
-
-    <div class="site-footer__top">
-
-      <div class="site-footer__brand">
-        <p class="site-footer__tagline">Where Tradition<br><em>Lives On</em></p>
-        <p class="site-footer__desc">Ceramics, silk, painting, woodwork, incense and more — handmade
-          across Việt Nam's craft villages and shipped to your door.</p>
-        <form class="site-footer__form" action="/newsletter" method="POST" novalidate>
-          <label class="visually-hidden" for="footer-email">Email address</label>
-          <input type="email" id="footer-email" name="email" placeholder="you@example.com" required />
-          <button type="submit">Subscribe</button>
-        </form>
-        <p class="site-footer__note">We won't flood your inbox — just stories worth reading.</p>
-      </div>
-
-      <nav class="site-footer__col" aria-label="Shop">
-        <h4>Shop</h4>
-        <a href="../../index.html" target="_top">Home</a>
-        <a href="../cart/products.html" target="_top">Shop All</a>
-        <a href="../giftcard/giftcard.html" target="_top">Gift Cards</a>
-        <a href="../review/product_detail/review1.html" target="_top">Reviews</a>
-      </nav>
-
-      <nav class="site-footer__col" aria-label="Community">
-        <h4>Community</h4>
-        <a href="../blog/blog.html" target="_top">Journal</a>
-        <a href="../forum/forum.html" target="_top">Forum</a>
-      </nav>
-
-      <nav class="site-footer__col" aria-label="Support">
-        <h4>Support</h4>
-        <a href="../../index.html#faq" target="_top">FAQ</a>
-        <a href="../shared/login.html" target="_top">Log In / Sign Up</a>
-        <a href="../shared/sitemap.html" target="_top">Sitemap</a>
-      </nav>
-
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <div class="site-footer__brand">
+      <p class="site-footer__tagline">
+        Where Tradition<br />
+        <em>Lives On</em>
+      </p>
+      <p class="site-footer__desc">
+        Ceramics, silk, painting, woodwork, incense and more — handmade
+        across Việt Nam's craft villages and shipped to your door.
+      </p>
+      <form class="site-footer__form" action="/newsletter" method="POST" novalidate>
+        <label class="visually-hidden" for="footer-email">
+          Email address
+        </label>
+        <input id="footer-email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
+          required />
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="site-footer__note">
+        We won't flood your inbox — just stories worth reading.
+      </p>
     </div>
-
-    <div class="site-footer__badges">
-      <span class="badge-item">100% Handmade</span>
-      <span class="badge-item">Natural Materials</span>
-      <span class="badge-item">Nationwide Shipping</span>
-      <span class="badge-item">Gives Back to Charity</span>
+    <% footer.navigation.forEach((section)=> { %>
+      <nav class="site-footer__col" aria-label="<%= section.title %>">
+        <h4>
+          <%= section.title %>
+        </h4>
+        <% section.links.forEach((link)=> { %>
+          <a href="<%= link.href %>">
+            <%= link.label %>
+          </a>
+          <% }); %>
+      </nav>
+      <% }); %>
+  </div>
+  <div class="site-footer__badges">
+    <% footer.badges.forEach((badge)=> { %>
+      <span class="badge-item">
+        <%= badge %>
+      </span>
+      <% }); %>
+  </div>
+  <div class="site-footer__bottom">
+    <div class="site-footer__legal">
+      <% footer.legalLinks.forEach((link)=> { %>
+        <a href="<%= link.href %>">
+          <%= link.label %>
+        </a>
+        <% }); %>
     </div>
-
-    <div class="site-footer__bottom">
-      <div class="site-footer__legal">
-        <a href="../global/privacy-policy.html" target="_top">Privacy Policy</a>
-        <a href="../global/terms-of-service.html" target="_top">Terms of Service</a>
-      </div>
-      <p class="site-footer__copy">&copy; 2026 Làng &amp; Co. — Vietnamese Traditional Crafts</p>
-      <div class="site-footer__social">
-        <a href="https://www.instagram.com/langco_198?igsh=dGVkejlrdHc5Zmtj&utm_source=qr" target="_top"
-          aria-label="Instagram">IG</a>
-        <a href="#" target="_top" aria-label="Facebook">FB</a>
-        <a href="#" target="_top" aria-label="Pinterest">PT</a>
-      </div>
+    <p class="site-footer__copy">
+      &copy; <%= currentYear %> Làng &amp; Co. — Vietnamese Traditional Crafts
+    </p>
+    <div class="site-footer__social">
+      <% footer.socialLinks.forEach((social)=> { %>
+        <a href="<%= social.href %>" aria-label="<%= social.label %>" <% if (social.external) { %>
+          target="_blank"
+          rel="noopener noreferrer"
+          <% } %>
+            >
+            <%= social.text %>
+        </a>
+        <% }); %>
     </div>
-
-  </footer>
-</body>
-
-</html>
+  </div>
+</footer>
