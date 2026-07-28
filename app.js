@@ -3,7 +3,7 @@ const path = require("path");
 const session = require("express-session");
 
 // Routes
-const routes = require("./routes");
+const routeConfig = require("./config/routeConfig");
 
 //middleware
 const notFound = require("./middlewares/notFound");
@@ -29,7 +29,7 @@ app.use(session(sessionConfig));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", routes);
+app.use("/", routeConfig);
 
 // Middlewares
 app.use(notFound);

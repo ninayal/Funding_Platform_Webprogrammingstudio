@@ -1,324 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#A31D1D" />
-  <title>Hand-Painted Blue Lotus Vase — Làng &amp; Co.</title>
-  <link rel="stylesheet" href="../../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../../public/css/header.css" />
-  <link rel="stylesheet" href="../../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../../public/css/header_shoppingcart.css" />
-
-  <!-- Shop-specific styles -->
-  <link rel="stylesheet" href="../../../public/css/cart/products.css" />
-
-  <!-- Product-detail-specific styles -->
-  <link rel="stylesheet" href="../../../public/css/review/product-detail.css" />
-  <link rel="stylesheet" href="../../../public/css/review/product_review.css" />
-  <link rel="stylesheet" href="../../../public/css/review/review_responsive.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#A31D1D" />
+    <title><%= productData.name %> — Làng &amp; Co.</title>
+    <link rel="stylesheet" href="/css/landingpage/index.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/shared-include.css" />
+    <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+    <link rel="stylesheet" href="/css/cart/products.css" />
+    <link rel="stylesheet" href="/css/review/product-detail.css" />
+    <link rel="stylesheet" href="/css/review/product_review.css" />
+    <link rel="stylesheet" href="/css/review/review_responsive.css" />
 </head>
-
 <body>
-  <!-- ================================================
-       HEADER
-       ================================================ -->
-  <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
-  <div class="topbar">
-    <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
-      <a href="/pages/cart/products.html" target="_top">Shop Now</a>
-    </p>
-    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
-  </div>
-  <nav class="nav nav--light nav--centered">
-
-    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
-
-    <div class="nav__left">
-      <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M3 6h18M3 12h18M3 18h18" />
-        </svg>
-      </label>
-      <button type="button" class="nav__icon-btn" aria-label="Search">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.8-3.8" />
-        </svg>
-      </button>
+    <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+    <div class="topbar">
+        <p class="topbar__text">
+            New Collection Available Now &nbsp;|&nbsp;
+            <a href="/cart/products" target="_top">Shop Now</a>
+        </p>
+        <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
     </div>
 
-    <a class="nav__logo nav__logo--center" href="/index.html" target="_top">
-      <img src="/public/images/logo.png" alt="Lang & Co. logo" />
-    </a>
+    <nav class="nav nav--light nav--centered">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
 
-    <div class="nav__icons">
-      <a class="nav__icon-btn" href="/pages/shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="12" cy="8" r="3.6" />
-          <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-        </svg>
-      </a>
-      <a class="nav__icon-btn" href="/pages/cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" />
-          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-        </svg>
-        <span class="nav__badge-count">4</span>
-      </a>
-    </div>
+        <div class="nav__left">
+            <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <path d="M3 6h18M3 12h18M3 18h18" />
+                </svg>
+            </label>
+            <button type="button" class="nav__icon-btn" aria-label="Search">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.8-3.8" />
+                </svg>
+            </button>
+        </div>
 
-    <div class="mobile-menu">
-      <ul>
-        <li><a id="nav-home" href="/index.html" target="_top">Home</a></li>
-        <li><a id="nav-shop" href="/pages/cart/products.html" target="_top">Shop</a></li>
-        <li><a id="nav-blog" href="/pages/blog/blog.html" target="_top">Blog</a></li>
-        <li><a id="nav-forum" href="/pages/forum/forum.html" target="_top">Forum</a></li>
-                <li><a id="nav-wishlist" href="/pages/giftcard/giftcard.html" target="_top">Giftcards</a></li>
-      </ul>
-    </div>
-  </nav>
+        <a class="nav__logo nav__logo--center" href="/" target="_top">
+            <img src="/images/logo.png" alt="Lang & Co. logo" />
+        </a>
 
-  <!-- CSS-only size-selector state -->
-  <input class="state-control" type="radio" name="pdsize" id="size-sm" />
-  <input class="state-control" type="radio" name="pdsize" id="size-lg" checked />
+        <div class="nav__icons">
+            <a class="nav__icon-btn" href="/shared/profile" target="_top" aria-label="Account — Log in or sign up">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <circle cx="12" cy="8" r="3.6" />
+                    <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+                </svg>
+            </a>
+            <a class="nav__icon-btn" href="/cart/cart" target="_top" aria-label="Shopping bag, <%= cartCountValue %> items">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                    <path d="M6 8h12l-1 13H7L6 8Z" />
+                    <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+                </svg>
+                <span class="nav__badge-count"><%= cartCountValue %></span>
+            </a>
+        </div>
 
-  <!-- CSS-only info-tab state -->
-  <input class="state-control" type="radio" name="pdtab" id="tab-description" checked />
-  <input class="state-control" type="radio" name="pdtab" id="tab-info" />
-  <input class="state-control" type="radio" name="pdtab" id="tab-review" />
-
-  <div class="pd-wrap">
-
-    <!-- ================================================
-         BREADCRUMB
-         ================================================ -->
-    <nav class="breadcrumb container" aria-label="Breadcrumb">
-      <a href="../../../index.html">Home</a>
-      <span aria-hidden="true">•</span>
-      <a href="../../cart/products.html">Shop All</a>
-      <span aria-hidden="true">•</span>
-      <span aria-current="page">Hand-Painted Blue Lotus Vase</span>
+        <div class="mobile-menu">
+            <ul>
+                <% mobileNavigation.forEach((item) => { %>
+                    <li><a id="<%= item.id %>" href="<%= item.href %>" target="_top"><%= item.label %></a></li>
+                <% }); %>
+            </ul>
+        </div>
     </nav>
 
-    <!-- ================================================
-         PRODUCT MAIN — gallery + detail
-         ================================================ -->
-    <section class="pd-main container" aria-label="Product">
+    <% productData.sizes.forEach((size) => { %>
+        <input
+            class="state-control"
+            type="radio"
+            name="pdsize"
+            id="size-<%= size.id %>"
+            <%= size.isDefault ? "checked" : "" %>
+        />
+    <% }); %>
 
-      <!-- ---- thumbnails ---- -->
-      <div class="pd-thumbs">
-        <label class="pd-thumb is-active">
-          <img src="/public/images/shopping_items/ceramic/ceramic1.png" alt="Blue lotus vase, front view" />
-        </label>
-        <label class="pd-thumb">
-          <img src="/public/images/shopping_items/ceramic/ceramic1.png" alt="Blue lotus vase, glaze detail" />
-        </label>
-        <label class="pd-thumb">
-          <img src="/public/images/shopping_items/ceramic/ceramic1.png" alt="Blue lotus vase, side profile" />
-        </label>
-        <label class="pd-thumb">
-          <img src="/public/images/shopping_items/ceramic/ceramic1.png" alt="Blue lotus vase, styled on shelf" />
-        </label>
-      </div>
+    <% tabs.forEach((tab) => { %>
+        <input
+            class="state-control"
+            type="radio"
+            name="pdtab"
+            id="tab-<%= tab.id %>"
+            <%= tab.isDefault ? "checked" : "" %>
+        />
+    <% }); %>
 
-      <!-- ---- main image ---- -->
-      <div class="pd-media">
-        <p class="pd-media__tag">Bestseller</p>
-        <img src="/public/images/shopping_items/ceramic/ceramic1.png" alt="Hand-painted blue lotus ceramic vase" />
-      </div>
+    <div class="pd-wrap">
+        <nav class="breadcrumb container" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span aria-hidden="true">•</span>
+            <a href="/cart/products">Shop All</a>
+            <span aria-hidden="true">•</span>
+            <span aria-current="page"><%= productData.name %></span>
+        </nav>
 
-      <!-- ---- detail panel ---- -->
-      <div class="pd-detail">
-        <p class="pd-detail__maker">Bát Tràng · Hanoi</p>
-        <h1 class="pd-detail__title">Hand-Painted Blue Lotus Vase</h1>
+        <section class="pd-main container" aria-label="Product">
+            <div class="pd-thumbs">
+                <% productData.thumbnails.forEach((thumbnail, index) => { %>
+                    <label class="pd-thumb<%= index === 0 ? " is-active" : "" %>">
+                        <img src="<%= thumbnail.image || productData.image %>" alt="<%= thumbnail.alt %>" />
+                    </label>
+                <% }); %>
+            </div>
 
-        <label class="pd-detail__rating" for="tab-review" title="Open customer reviews">
-          <span class="pd-stars" aria-label="Rated 3.8 out of 5 stars">
-            ★★★★☆
-          </span>
+            <div class="pd-media">
+                <% if (productData.tag) { %>
+                    <p class="pd-media__tag"><%= productData.tag %></p>
+                <% } %>
+                <img src="<%= productData.image %>" alt="<%= productData.name %>" />
+            </div>
 
-          <span>
-            3.8 (25 reviews)
-          </span>
-        </label>
+            <div class="pd-detail">
+                <p class="pd-detail__maker"><%= productData.maker %></p>
+                <h1 class="pd-detail__title"><%= productData.name %></h1>
 
-        <p class="pd-detail__price">$68.00</p>
-        <p class="pd-detail__desc">Cobalt lotus blossoms, brushed by hand across a milk-white glaze —
-          a single potter's morning of work, in a shape thrown the same way Bát Tràng has thrown it for
-          generations.</p>
+                <label class="pd-detail__rating" for="tab-review" title="Open customer reviews">
+                    <span class="pd-stars" aria-label="Rated <%= productData.rating %> out of 5 stars">
+                        <%= productStars %>
+                    </span>
+                    <span><%= productData.rating %> (<%= productData.reviewCount %> reviews)</span>
+                </label>
 
-        <div class="pd-option">
-          <p class="pd-option__label">Size</p>
-          <div class="pd-size-options">
-            <label class="pd-size-btn" for="size-sm">18 cm</label>
-            <label class="pd-size-btn" for="size-lg">26 cm</label>
-          </div>
-        </div>
+                <p class="pd-detail__price"><%= productData.price %></p>
+                <p class="pd-detail__desc"><%= productData.description %></p>
 
-        <div class="pd-option">
-          <p class="pd-option__label">Quantity</p>
-          <input class="pd-qty" type="number" min="1" value="1" aria-label="Quantity" />
-        </div>
+                <div class="pd-option">
+                    <p class="pd-option__label">Size</p>
+                    <div class="pd-size-options">
+                        <% productData.sizes.forEach((size) => { %>
+                            <label class="pd-size-btn" for="size-<%= size.id %>"><%= size.label %></label>
+                        <% }); %>
+                    </div>
+                </div>
 
-        <div class="pd-actions">
-          <a href="../../cart/cart.html" class="pd-add-btn">Add to Cart</a>
-          <button type="button" class="pd-wish-btn" aria-label="Save Hand-Painted Blue Lotus Vase to wishlist">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path
-                d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-            </svg>
-          </button>
-        </div>
+                <div class="pd-option">
+                    <p class="pd-option__label">Quantity</p>
+                    <input class="pd-qty" type="number" min="1" value="1" aria-label="Quantity" />
+                </div>
 
-        <ul class="pd-meta">
-          <li>Free shipping on orders over $75</li>
-          <li>Hand-thrown to order — ships in 3–5 days</li>
-          <li>Wrapped in reused linen &amp; rice paper</li>
-        </ul>
+                <div class="pd-actions">
+                    <a href="/cart/cart" class="pd-add-btn">Add to Cart</a>
+                    <button type="button" class="pd-wish-btn" aria-label="Save <%= productData.name %> to wishlist">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+                        </svg>
+                    </button>
+                </div>
 
-        <blockquote class="pd-maker-note">
-          <span class="pd-maker-note__seal">Bát Tràng</span>
-          <p>“Every lotus is painted freehand — no two vases carry the exact same bloom.”</p>
-          <cite>— Cô Hạnh, potter, 30 years at the wheel</cite>
-        </blockquote>
-      </div>
-    </section>
+                <ul class="pd-meta">
+                    <% productData.meta.forEach((item) => { %>
+                        <li><%= item %></li>
+                    <% }); %>
+                </ul>
 
-    <!-- ================================================
-         INFO TABS — Description / Additional Info / Review
-         ================================================ -->
-    <section class="pd-tabs-section container" aria-label="Product information">
-      <nav class="pd-tabs" aria-label="Product detail tabs">
-        <label class="pd-tab-btn" for="tab-description">Description</label>
-        <label class="pd-tab-btn" for="tab-info">Additional Info</label>
-        <label class="pd-tab-btn" for="tab-review">Review</label>
-      </nav>
+                <blockquote class="pd-maker-note">
+                    <span class="pd-maker-note__seal"><%= productData.makerNote.seal %></span>
+                    <p>“<%= productData.makerNote.quote %>”</p>
+                    <cite><%= productData.makerNote.cite %></cite>
+                </blockquote>
+            </div>
+        </section>
 
-      <!-- Description panel -->
-      <div class="pd-panel pd-panel--description">
-        <p>The blue lotus is the oldest motif taught in Bát Tràng's kilns — a single flower drawn in
-          cobalt oxide beneath a clear glaze, fired at 1,280°C until the blue sinks into the clay itself.
-          This vase is thrown on a manual wheel, left to dry for two days, then hand-painted by one of
-          three sisters who learned the pattern from their mother.</p>
-        <p>No stencils, no transfers: look closely and you'll find the small, human variations — a petal
-          drawn slightly fuller, a stem that curves its own way — that mark it as made by hand rather
-          than by machine.</p>
-      </div>
+        <section class="pd-tabs-section container" aria-label="Product information">
+            <nav class="pd-tabs" aria-label="Product detail tabs">
+                <% tabs.forEach((tab) => { %>
+                    <label class="pd-tab-btn" for="tab-<%= tab.id %>"><%= tab.label %></label>
+                <% }); %>
+            </nav>
 
-      <!-- Additional Info panel -->
-      <div class="pd-panel pd-panel--info">
-        <table class="pd-spec-table">
-          <tbody>
-            <tr>
-              <th>Material</th>
-              <td>Stoneware ceramic, cobalt underglaze</td>
-            </tr>
-            <tr>
-              <th>Craft village</th>
-              <td>Bát Tràng, Gia Lâm, Hanoi</td>
-            </tr>
-            <tr>
-              <th>Dimensions — 18 cm</th>
-              <td>18 cm H × 11 cm ⌀, 0.6 kg</td>
-            </tr>
-            <tr>
-              <th>Dimensions — 26 cm</th>
-              <td>26 cm H × 15 cm ⌀, 1.1 kg</td>
-            </tr>
-            <tr>
-              <th>Care</th>
-              <td>Hand wash only; not microwave or dishwasher safe</td>
-            </tr>
-            <tr>
-              <th>Origin</th>
-              <td>Handmade in Việt Nam</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <div class="pd-panel pd-panel--description">
+                <% productData.longDescription.forEach((paragraph) => { %>
+                    <p><%= paragraph %></p>
+                <% }); %>
+            </div>
 
-      <!-- Review panel loaded from shared iframe -->
-      <div class="pd-panel pd-panel--review">
+            <div class="pd-panel pd-panel--info">
+                <table class="pd-spec-table">
+                    <tbody>
+                        <% productData.specifications.forEach((specification) => { %>
+                            <tr>
+                                <th><%= specification.label %></th>
+                                <td><%= specification.value %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
 
-        <iframe src="../product_review.html" title="Product review section" class="product-review-frame"
-          loading="lazy"></iframe>
+            <div class="pd-panel pd-panel--review">
+                <iframe
+                    src="/review/product-review"
+                    title="Product review section"
+                    class="product-review-frame"
+                    loading="lazy"
+                ></iframe>
+            </div>
+        </section>
 
-      </div>
-    </section>
+        <section class="pd-related container" aria-label="You may also like">
+            <h2>You May Also Like</h2>
+            <div class="shop-grid pd-related__grid">
+                <% relatedProductsData.forEach((relatedProduct) => { %>
+                    <article class="shop-card">
+                        <div class="shop-card__media">
+                            <img src="<%= relatedProduct.image %>" alt="<%= relatedProduct.imageAlt %>" />
+                            <a
+                                href="/cart/cart"
+                                class="quickadd-btn"
+                                aria-label="Quick add <%= relatedProduct.name %> to cart"
+                            >+</a>
+                        </div>
+                        <div class="shop-card__body">
+                            <p class="shop-card__maker"><%= relatedProduct.maker %></p>
+                            <h3 class="shop-card__title">
+                                <a href="<%= relatedProduct.href %>"><%= relatedProduct.name %></a>
+                            </h3>
+                            <p class="shop-card__price"><%= relatedProduct.price %></p>
+                            <p class="shop-card__rating">
+                                <%= createStars(relatedProduct.rating) %><span>(<%= relatedProduct.reviewCount %>)</span>
+                            </p>
+                        </div>
+                    </article>
+                <% }); %>
+            </div>
+        </section>
+    </div>
 
-    <!-- ================================================
-         RELATED PRODUCTS
-         ================================================ -->
-    <section class="pd-related container" aria-label="You may also like">
-      <h2>You May Also Like</h2>
-      <div class="shop-grid pd-related__grid">
-
-        <article class="shop-card">
-          <div class="shop-card__media">
-            <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=600&q=80"
-              alt="Ash glaze ceramic tea cup set" />
-            <a href="../../cart/cart.html" class="quickadd-btn"
-              aria-label="Quick add Ash Glaze Tea Cup Set to cart">+</a>
-          </div>
-          <div class="shop-card__body">
-            <p class="shop-card__maker">Bát Tràng</p>
-            <h3 class="shop-card__title"><a href="../product_detail/review2.html">Ash Glaze Tea Cup Set (4-Piece)</a>
-            </h3>
-            <p class="shop-card__price">$54.00</p>
-            <p class="shop-card__rating">★★★★★<span>(63)</span></p>
-          </div>
-        </article>
-
-        <article class="shop-card">
-          <div class="shop-card__media">
-            <img
-              src="/public/images/shopping_items/stone/stone1.png"
-              alt="Celadon glazed ceramic rice bowl set"
-            />
-            <a href="../../cart/cart.html" class="quickadd-btn"
-              aria-label="Quick add Celadon Rice Bowl Set to cart">+</a>
-          </div>
-          <div class="shop-card__body">
-            <p class="shop-card__maker">Bát Tràng</p>
-            <h3 class="shop-card__title"><a href="../product_detail/review9.html">Celadon Rice Bowl Set (4-Piece)</a>
-            </h3>
-            <p class="shop-card__price">$46.00</p>
-            <p class="shop-card__rating">★★★★★<span>(27)</span></p>
-          </div>
-        </article>
-
-        <article class="shop-card">
-          <div class="shop-card__media">
-            <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=600&q=80"
-              alt="Handmade terracotta planter pot" />
-            <a href="../../cart/cart.html" class="quickadd-btn"
-              aria-label="Quick add Terracotta Planter Pot to cart">+</a>
-          </div>
-          <div class="shop-card__body">
-            <p class="shop-card__maker">Bát Tràng</p>
-            <h3 class="shop-card__title"><a href="../product_detail/review10.html">Terracotta Planter Pot</a></h3>
-            <p class="shop-card__price">$32.00</p>
-            <p class="shop-card__rating">★★★★☆<span>(15)</span></p>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-  </div>
-
-  <!-- ================================================
-       FOOTER
-       ================================================ -->
-  <iframe src="../../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
-
+    <iframe
+        src="/global/footer.html"
+        title="Footer"
+        class="shared-include shared-footer"
+        loading="lazy"
+        scrolling="no"
+    ></iframe>
 </body>
-
 </html>

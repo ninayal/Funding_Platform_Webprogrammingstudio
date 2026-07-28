@@ -1,1375 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Reviews | Làng &amp; Co.</title>
-    <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-    <link rel="stylesheet" href="../../../public/css/review/product_review.css" />
-    <link rel="stylesheet" href="../../../public/css/review/review_responsive.css" />
+    <link rel="stylesheet" href="/css/landingpage/index.css" />
+    <link rel="stylesheet" href="/css/review/product_review.css" />
+    <link rel="stylesheet" href="/css/review/review_responsive.css" />
+    <link rel="stylesheet" href="/css/review/review_interactions.css" />
+    <script src="/js/review/product_review.js" defer></script>
 </head>
-
 <body>
-    <main class="product-review">
-        <!-- Star filter controls -->
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-all" checked />
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-5" />
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-4" />
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-3" />
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-2" />
-        <input class="review-filter-control" type="radio" name="review-filter" id="filter-1" />
-        <!-- Review display mode controls -->
-        <input class="review-view-control" type="radio" name="review-view" id="review-view-preview"
-            aria-label="Preview review mode" checked />
-
-        <input class="review-view-control" type="radio" name="review-view" id="review-view-full"
-            aria-label="Full review mode" />
-
-        <!-- Page controls: 5 reviews per page -->
-        <input class="review-page-control" type="radio" name="review-page" id="review-page-1" aria-label="Review page 1"
-            checked />
-
-        <input class="review-page-control" type="radio" name="review-page" id="review-page-2"
-            aria-label="Review page 2" />
-
-        <input class="review-page-control" type="radio" name="review-page" id="review-page-3"
-            aria-label="Review page 3" />
-
-        <input class="review-page-control" type="radio" name="review-page" id="review-page-4"
-            aria-label="Review page 4" />
-
-        <input class="review-page-control" type="radio" name="review-page" id="review-page-5"
-            aria-label="Review page 5" />
-        <input class="review-delete-control" type="checkbox" id="delete-own-review" />
-
-        <!-- ================================================
-       REVIEW HERO
-       ================================================ -->
+    <main
+        class="product-review"
+        data-product-id="<%= product.id %>"
+        data-form-mode="<%= formMode %>"
+        data-editing-review-id="<%= editingReviewId %>"
+        data-page-status="<%= pageStatus %>"
+    >
         <section class="pr-hero" aria-label="Product rating and review form">
-
             <div class="pr-hero__intro">
                 <p class="pr-hero__kicker">Product Rating</p>
-                <h1 class="pr-hero__title">
-                    Loved by collectors of handmade craft.
-                </h1>
+                <h1 class="pr-hero__title">Loved by collectors of handmade craft.</h1>
                 <p class="pr-hero__desc">
                     Share your experience with this piece and help others understand its quality,
                     glaze, finish and handmade details.
                 </p>
             </div>
 
+            <% if (pageMessage) { %>
+                <p class="pr-page-message" role="status"><%= pageMessage %></p>
+            <% } %>
+
             <div class="pr-hero__grid">
-
-                <!-- left summary -->
                 <div class="pr-score-card">
-
                     <div class="pr-score-card__top">
-                        <p class="pr-score-card__number">3.8</p>
-                        <p class="pr-score-card__stars" aria-label="Rated 3.8 out of 5 stars">
-                            ★★★★☆
+                        <p class="pr-score-card__number"><%= averageRating %></p>
+                        <p
+                            class="pr-score-card__stars"
+                            aria-label="Rated <%= averageRating %> out of 5 stars"
+                        ><%= displayAverageStars %></p>
+                        <p class="pr-score-card__count">
+                            Based on <%= totalReviews %> review<%= totalReviews === 1 ? "" : "s" %>
                         </p>
-                        <p class="pr-score-card__count">Based on 25 reviews</p>
                     </div>
+
                     <div class="pr-breakdown" aria-label="Rating breakdown">
-
-                        <!-- 5 STARS -->
-                        <div class="pr-breakdown__row">
-
-                            <span class="pr-breakdown__label">
-                                5★
-                            </span>
-
-                            <span class="pr-breakdown__bar" role="progressbar" aria-label="5-star reviews"
-                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="36">
-                                <span class="pr-breakdown__fill pr-breakdown__fill--5"></span>
-                            </span>
-
-                            <span class="pr-breakdown__value">
-                                9
-                            </span>
-
-                        </div>
-
-
-                        <!-- 4 STARS -->
-                        <div class="pr-breakdown__row">
-
-                            <span class="pr-breakdown__label">
-                                4★
-                            </span>
-
-                            <span class="pr-breakdown__bar" role="progressbar" aria-label="4-star reviews"
-                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="28">
-                                <span class="pr-breakdown__fill pr-breakdown__fill--4"></span>
-                            </span>
-
-                            <span class="pr-breakdown__value">
-                                7
-                            </span>
-
-                        </div>
-
-
-                        <!-- 3 STARS -->
-                        <div class="pr-breakdown__row">
-
-                            <span class="pr-breakdown__label">
-                                3★
-                            </span>
-
-                            <span class="pr-breakdown__bar" role="progressbar" aria-label="3-star reviews"
-                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
-                                <span class="pr-breakdown__fill pr-breakdown__fill--3"></span>
-                            </span>
-
-                            <span class="pr-breakdown__value">
-                                5
-                            </span>
-
-                        </div>
-
-
-                        <!-- 2 STARS -->
-                        <div class="pr-breakdown__row">
-
-                            <span class="pr-breakdown__label">
-                                2★
-                            </span>
-
-                            <span class="pr-breakdown__bar" role="progressbar" aria-label="2-star reviews"
-                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="12">
-                                <span class="pr-breakdown__fill pr-breakdown__fill--2"></span>
-                            </span>
-
-                            <span class="pr-breakdown__value">
-                                3
-                            </span>
-
-                        </div>
-
-
-                        <!-- 1 STAR -->
-                        <div class="pr-breakdown__row">
-
-                            <span class="pr-breakdown__label">
-                                1★
-                            </span>
-
-                            <span class="pr-breakdown__bar" role="progressbar" aria-label="1-star reviews"
-                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="4">
-                                <span class="pr-breakdown__fill pr-breakdown__fill--1"></span>
-                            </span>
-
-                            <span class="pr-breakdown__value">
-                                1
-                            </span>
-
-                        </div>
-
+                        <% ratingBreakdown.forEach((item) => { %>
+                            <div class="pr-breakdown__row">
+                                <span class="pr-breakdown__label"><%= item.rating %>★</span>
+                                <span
+                                    class="pr-breakdown__bar"
+                                    role="progressbar"
+                                    aria-label="<%= item.rating %>-star reviews"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                    aria-valuenow="<%= item.percentage %>"
+                                >
+                                    <span
+                                        class="pr-breakdown__fill pr-breakdown__fill--<%= item.rating %>"
+                                        style="width: <%= item.percentage %>%"
+                                    ></span>
+                                </span>
+                                <span class="pr-breakdown__value"><%= item.count %></span>
+                            </div>
+                        <% }); %>
                     </div>
-
                 </div>
 
-
-                <!-- right form -->
-                <!--
-                    Assessment 1 static prototype:
-                    file selection is demonstrated through HTML validation.
-                    Change to POST and multipart/form-data when backend upload is implemented.
-                -->
-                <form class="pr-form" action="#review-submitted" method="get">
-                    <input type="hidden" name="productId" value="hand-painted-blue-lotus-vase" />
-
-                    <input type="hidden" name="productName" value="Hand-Painted Blue Lotus Vase" />
+                <form
+                    class="pr-form"
+                    id="review-form"
+                    action="<%= formMode === 'edit'
+                        ? `/review/reviews/${editingReviewId}/update`
+                        : '/review/reviews' %>"
+                    method="post"
+                    novalidate
+                >
+                    <input type="hidden" name="productId" value="<%= product.id %>" />
 
                     <div class="pr-form__head">
-                        <h2>Write a review</h2>
-                        <p>Tell us what stood out to you.</p>
+                        <h2><%= formMode === "edit" ? "Edit your review" : "Write a review" %></h2>
+                        <p>
+                            <%= formMode === "edit"
+                                ? "Update the fields below, then save your changes."
+                                : "Tell us what stood out to you." %>
+                        </p>
                     </div>
 
-                    <fieldset class="pr-rating-fieldset">
-
-                        <legend class="pr-field-label">
-                            Your rating
-                        </legend>
-
+                    <fieldset
+                        class="pr-rating-fieldset"
+                        aria-describedby="rating-error"
+                    >
+                        <legend class="pr-field-label">Your rating</legend>
                         <div class="pr-form__rating">
-
-                            <input class="pr-rating-input" type="radio" name="rating" id="rating-5" value="5"
-                                aria-label="5 out of 5 stars" required />
-
-                            <label class="pr-rating-label" for="rating-5" title="5 out of 5 stars">
-                                ★
-                            </label>
-
-
-                            <input class="pr-rating-input" type="radio" name="rating" id="rating-4" value="4"
-                                aria-label="4 out of 5 stars" />
-
-                            <label class="pr-rating-label" for="rating-4" title="4 out of 5 stars">
-                                ★
-                            </label>
-
-
-                            <input class="pr-rating-input" type="radio" name="rating" id="rating-3" value="3"
-                                aria-label="3 out of 5 stars" />
-
-                            <label class="pr-rating-label" for="rating-3" title="3 out of 5 stars">
-                                ★
-                            </label>
-
-
-                            <input class="pr-rating-input" type="radio" name="rating" id="rating-2" value="2"
-                                aria-label="2 out of 5 stars" />
-
-                            <label class="pr-rating-label" for="rating-2" title="2 out of 5 stars">
-                                ★
-                            </label>
-
-
-                            <input class="pr-rating-input" type="radio" name="rating" id="rating-1" value="1"
-                                aria-label="1 out of 5 stars" />
-
-                            <label class="pr-rating-label" for="rating-1" title="1 out of 5 stars">
-                                ★
-                            </label>
-
+                            <% ratingValues.forEach((rating, index) => { %>
+                                <input
+                                    class="pr-rating-input"
+                                    type="radio"
+                                    name="rating"
+                                    id="rating-<%= rating %>"
+                                    value="<%= rating %>"
+                                    aria-label="<%= rating %> out of 5 stars"
+                                    <%= Number(formValues.rating) === rating ? "checked" : "" %>
+                                    <%= index === 0 ? "required" : "" %>
+                                />
+                                <label
+                                    class="pr-rating-label"
+                                    for="rating-<%= rating %>"
+                                    title="<%= rating %> out of 5 stars"
+                                >★</label>
+                            <% }); %>
                         </div>
-
+                        <small class="pr-field-error" id="rating-error">
+                            <%= serverErrors.rating || "" %>
+                        </small>
                     </fieldset>
-                    <div class="pr-form__row">
-
-                        <label class="pr-field-label" for="review-title">
-                            Review title
-                        </label>
-
-                        <input class="pr-input" type="text" id="review-title" name="reviewTitle"
-                            placeholder="Summarize your experience" minlength="4" maxlength="80" required />
-
-                    </div>
 
                     <div class="pr-form__row">
-
-                        <label class="pr-field-label" for="review-name">
-                            Your name
-                        </label>
-
-                        <input class="pr-input" type="text" id="review-name" name="name" placeholder="Enter your name"
-                            minlength="2" maxlength="60" pattern=".*\S.*" title="Enter your name." autocomplete="name"
-                            required />
-
-                    </div>
-                    <div class="pr-form__row">
-                        <label class="pr-field-label" for="review-date">
-                            Date added
-                        </label>
-
-                        <input class="pr-input" type="date" id="review-date" name="dateAdded" value="2026-07-23"
-                            aria-describedby="review-date-note" readonly />
-
-                        <small class="pr-file-note" id="review-date-note">
-                            This date is added automatically in the static prototype.
-                        </small>
-
-                    </div>
-
-                    <div class="pr-form__row">
-
-                        <label class="pr-field-label" for="review-content">
-                            Your review
-                        </label>
-
-                        <textarea class="pr-textarea" id="review-content" name="review" rows="6" minlength="10"
-                            maxlength="600" placeholder="Share your experience with this product..."
-                            required></textarea>
-
-                    </div>
-                    <div class="pr-form__row">
-
-                        <label class="pr-field-label" for="review-image">
-                            Product image
-                        </label>
-
-                        <input class="pr-file-input" type="file" id="review-image" name="reviewImage"
-                            accept="image/png, image/jpeg, image/webp" required />
-
+                        <label class="pr-field-label" for="review-name">Your name</label>
+                        <input
+                            class="pr-input"
+                            type="text"
+                            id="review-name"
+                            value="<%= currentUser.name %>"
+                            readonly
+                        />
                         <small class="pr-file-note">
-                            Upload one JPG, PNG or WEBP image of the product.
+                            The reviewer name comes from the currently logged-in user.
                         </small>
-
                     </div>
 
-                    <button class="pr-submit" type="submit">
-                        Submit Review
-                    </button>
+                    <div class="pr-form__row">
+                        <label class="pr-field-label" for="review-title">Review title</label>
+                        <input
+                            class="pr-input"
+                            type="text"
+                            id="review-title"
+                            name="reviewTitle"
+                            value="<%= formValues.reviewTitle %>"
+                            placeholder="Summarize your experience"
+                            minlength="4"
+                            maxlength="80"
+                            autocomplete="off"
+                            aria-describedby="review-title-counter review-title-error"
+                            required
+                        />
+                        <small class="pr-character-count" id="review-title-counter">0/80</small>
+                        <small class="pr-field-error" id="review-title-error">
+                            <%= serverErrors.reviewTitle || "" %>
+                        </small>
+                    </div>
 
-                    <p class="pr-form__status" id="review-submitted" role="status">
-                        Your review has been submitted for this static demonstration.
-                    </p>
+                    <div class="pr-form__row">
+                        <label class="pr-field-label" for="review-date">Date added</label>
+                        <input
+                            class="pr-input"
+                            type="date"
+                            id="review-date"
+                            value="<%= reviewDateValue %>"
+                            readonly
+                        />
+                    </div>
 
+                    <div class="pr-form__row">
+                        <label class="pr-field-label" for="review-content">Your review</label>
+                        <textarea
+                            class="pr-textarea"
+                            id="review-content"
+                            name="review"
+                            rows="6"
+                            minlength="10"
+                            maxlength="600"
+                            placeholder="Share your experience with this product..."
+                            aria-describedby="review-content-counter review-content-error"
+                            required
+                        ><%= formValues.review %></textarea>
+                        <small class="pr-character-count" id="review-content-counter">0/600</small>
+                        <small class="pr-field-error" id="review-content-error">
+                            <%= serverErrors.review || "" %>
+                        </small>
+                    </div>
+
+                    <div class="pr-form__row">
+                        <label class="pr-field-label" for="review-image-url">
+                            Product image URL
+                        </label>
+                        <input
+                            class="pr-input"
+                            type="text"
+                            id="review-image-url"
+                            name="imageUrl"
+                            value="<%= formValues.imageUrl %>"
+                            maxlength="500"
+                            placeholder="/images/... or https://..."
+                            aria-describedby="review-image-note review-image-error"
+                        />
+                        <small class="pr-file-note" id="review-image-note">
+                            Optional. Use an http(s) URL or a local /images/ or /uploads/ path.
+                        </small>
+                        <small class="pr-field-error" id="review-image-error">
+                            <%= serverErrors.imageUrl || "" %>
+                        </small>
+                    </div>
+
+                    <div class="pr-form__actions">
+                        <button class="pr-submit" id="review-submit" type="submit">
+                            <%= formMode === "edit" ? "Save Changes" : "Submit Review" %>
+                        </button>
+
+                        <button class="pr-secondary-button" id="clear-review-draft" type="button">
+                            Clear Draft
+                        </button>
+
+                        <% if (formMode === "edit") { %>
+                            <a class="pr-secondary-button" href="/review/product-review">
+                                Cancel Edit
+                            </a>
+                        <% } %>
+                    </div>
+
+                    <p class="pr-draft-status" id="review-draft-status" role="status"></p>
                 </form>
-
             </div>
-
         </section>
 
-
-        <!-- ================================================
-       RECENT REVIEWS
-       ================================================ -->
         <section class="pr-list" id="customer-reviews" aria-label="Customer reviews">
-
             <div class="pr-list__head">
                 <div>
                     <p class="pr-list__kicker">Customer Voices</p>
                     <h2>Recent Reviews</h2>
+                    <p class="pr-results-summary" id="review-results-summary" aria-live="polite"></p>
                 </div>
 
                 <div class="pr-sort">
-                    <div class="pr-view" role="radiogroup" aria-label="Review display mode"
-                        aria-owns="review-view-preview review-view-full">
-                        <span class="pr-view__label">
-                            View mode
-                        </span>
-
-                        <div class="pr-view__options">
-
-                            <label class="pr-view__option" for="review-view-preview">
-                                Preview
-                            </label>
-
-                            <label class="pr-view__option" for="review-view-full">
-                                Full review
-                            </label>
-
-                        </div>
-                    </div>
-                    <form class="pr-search" action="#customer-reviews" method="get" role="search">
+                    <form class="pr-search" id="review-search-form" role="search">
                         <label class="pr-search__label" for="review-search-query">
                             Search reviews
                         </label>
 
                         <div class="pr-search__controls">
-
-                            <select class="pr-search__select" name="searchField"
-                                aria-label="Choose review field to search">
-                                <option value="all">All fields</option>
-                                <option value="title">Review title</option>
-                                <option value="reviewer">Reviewer name</option>
-                                <option value="date">Date added</option>
-                                <option value="description">Review description</option>
+                            <select
+                                class="pr-search__select"
+                                id="review-search-field"
+                                name="searchField"
+                                aria-label="Choose review field to search"
+                            >
+                                <% searchFields.forEach((field) => { %>
+                                    <option value="<%= field.value %>"><%= field.label %></option>
+                                <% }); %>
                             </select>
 
-                            <input class="pr-search__input" type="search" id="review-search-query" name="searchQuery"
-                                placeholder="Search reviews..." minlength="2" maxlength="80" />
+                            <input
+                                class="pr-search__input"
+                                type="search"
+                                id="review-search-query"
+                                name="searchQuery"
+                                placeholder="Search reviews..."
+                                maxlength="80"
+                            />
 
-                            <button class="pr-search__button" type="submit">
-                                Search
-                            </button>
-
+                            <button class="pr-search__button" type="submit">Search</button>
                         </div>
-
-                        <small class="pr-search__note">
-                            Search functionality will be connected during the dynamic development stage.
-                        </small>
-
                     </form>
-                    <span class="pr-sort__label">Filter by rating</span>
 
-                    <div class="pr-sort__chips">
-                        <label class="pr-sort__chip" for="filter-all">All</label>
-                        <label class="pr-sort__chip" for="filter-5">5★</label>
-                        <label class="pr-sort__chip" for="filter-4">4★</label>
-                        <label class="pr-sort__chip" for="filter-3">3★</label>
-                        <label class="pr-sort__chip" for="filter-2">2★</label>
-                        <label class="pr-sort__chip" for="filter-1">1★</label>
+                    <div class="pr-sort__group">
+                        <label class="pr-sort__label" for="review-sort">Sort reviews</label>
+                        <select class="pr-search__select" id="review-sort">
+                            <option value="newest">Newest first</option>
+                            <option value="oldest">Oldest first</option>
+                            <option value="rating-high">Highest rating</option>
+                            <option value="rating-low">Lowest rating</option>
+                            <option value="title">Title A–Z</option>
+                        </select>
+                    </div>
+
+                    <span class="pr-sort__label">Filter by rating</span>
+                    <div class="pr-sort__chips" role="group" aria-label="Filter reviews by rating">
+                        <button
+                            class="pr-sort__chip is-active"
+                            type="button"
+                            data-rating-filter="all"
+                        >All</button>
+
+                        <% ratingValues.forEach((rating) => { %>
+                            <button
+                                class="pr-sort__chip"
+                                type="button"
+                                data-rating-filter="<%= rating %>"
+                            ><%= rating %>★</button>
+                        <% }); %>
                     </div>
                 </div>
             </div>
-            <p class="pr-delete-status" role="status">
-                Your review has been removed in this static demonstration.
+
+            <div class="pr-cards" id="review-card-list">
+                <% reviews.forEach((review) => { %>
+                    <article
+                        class="pr-card<%= review.isOwn ? ' pr-card--own' : '' %>"
+                        data-review-id="<%= review.id %>"
+                        data-rating="<%= review.rating %>"
+                        data-title="<%= review.title.toLowerCase() %>"
+                        data-reviewer="<%= review.name.toLowerCase() %>"
+                        data-date="<%= review.dateAdded %>"
+                        data-description="<%= review.comment.toLowerCase() %>"
+                    >
+                        <div class="pr-card__top">
+                            <div class="pr-card__identity">
+                                <div class="pr-card__avatar" aria-hidden="true">
+                                    <%= review.avatar %>
+                                </div>
+                                <div>
+                                    <p class="pr-card__user"><%= review.name %></p>
+                                    <time class="pr-card__date" datetime="<%= review.dateValue %>">
+                                        <%= review.dateLabel %>
+                                    </time>
+                                </div>
+                            </div>
+
+                            <p
+                                class="pr-card__stars"
+                                aria-label="<%= review.rating %> out of 5 stars"
+                            ><%= review.stars %></p>
+                        </div>
+
+                        <% if (review.isOwn) { %>
+                            <div class="pr-card__owner-tools">
+                                <span class="pr-card__owner-badge">Your review</span>
+
+                                <div class="pr-card__owner-actions">
+                                    <a
+                                        class="pr-card__owner-action"
+                                        href="/review/reviews/<%= review.id %>/edit#review-form"
+                                    >Edit</a>
+
+                                    <form
+                                        class="pr-delete-form"
+                                        action="/review/reviews/<%= review.id %>/delete"
+                                        method="post"
+                                    >
+                                        <button
+                                            class="pr-card__owner-action pr-card__owner-action--delete"
+                                            type="submit"
+                                            data-delete-review
+                                        >Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        <% } %>
+
+                        <h3 class="pr-card__title"><%= review.title %></h3>
+                        <p class="pr-card__comment"><%= review.comment %></p>
+
+                        <div class="pr-card__media">
+                            <img
+                                class="pr-card__thumb"
+                                src="<%= review.displayImage %>"
+                                alt="Thumbnail of <%= product.imageAlt %>"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <img
+                                class="pr-card__photo"
+                                src="<%= review.displayImage %>"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </div>
+                    </article>
+                <% }); %>
+            </div>
+
+            <p class="pr-empty-state" id="review-empty-state" hidden>
+                No reviews match the selected search, sort and filter settings.
             </p>
 
-            <div class="pr-cards">
-
-                <!-- ================= PAGE 1 ================= -->
-                <div class="pr-page pr-page--1">
-
-                    <article class="pr-card pr-card--own" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    M
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Mai T.</p>
-                                    <time class="pr-card__date" datetime="2026-06">
-                                        June 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <div class="pr-card__owner-tools">
-
-                            <span class="pr-card__owner-badge">
-                                Your review
-                            </span>
-
-                            <div class="pr-card__owner-actions">
-
-                                <a class="pr-card__owner-action" href="#review-title">
-                                    Edit
-                                </a>
-
-                                <label class="pr-card__owner-action pr-card__owner-action--delete"
-                                    for="delete-own-review">
-                                    Delete
-                                </label>
-
-                            </div>
-
-                        </div>
-                        <h3 class="pr-card__title">Beautiful glaze and careful packaging</h3>
-                        <p class="pr-card__comment">
-                            Exactly as pictured — the cobalt glaze is even more vivid in person,
-                            and it arrived wrapped so carefully nothing shifted in transit.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    L
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Linh Phạm</p>
-                                    <time class="pr-card__date" datetime="2026-05">
-                                        May 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">A meaningful housewarming gift</h3>
-                        <p class="pr-card__comment">
-                            Bought this as a housewarming gift and my sister loved it —
-                            the brushwork on the lotus petals is genuinely stunning up close.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    A
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">An Nguyễn</p>
-                                    <time class="pr-card__date" datetime="2026-04">
-                                        April 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Looks handcrafted, not mass-produced</h3>
-                        <p class="pr-card__comment">
-                            I love the small differences in the painted lotus details. It feels
-                            personal and handmade, which is exactly why I bought it.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    H
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Hannah K.</p>
-                                    <time class="pr-card__date" datetime="2026-04">
-                                        April 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Elegant and simple</h3>
-                        <p class="pr-card__comment">
-                            The vase fits beautifully on my shelf. The color is soft but still
-                            noticeable, and the handmade texture gives it character.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    J
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">James R.</p>
-                                    <time class="pr-card__date" datetime="2026-05">
-                                        May 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Lovely handmade feel</h3>
-                        <p class="pr-card__comment">
-                            Gorgeous vase and clearly handmade — a touch smaller than I pictured,
-                            so worth checking the dimensions in Additional Info first.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                </div>
-
-
-                <!-- ================= PAGE 2 ================= -->
-                <div class="pr-page pr-page--2">
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    T
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Thảo Vũ</p>
-                                    <time class="pr-card__date" datetime="2026-03">
-                                        March 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Very pretty, but color is slightly lighter</h3>
-                        <p class="pr-card__comment">
-                            The quality is good and the shape is beautiful. The blue tone is a bit
-                            lighter than I expected, but it still looks refined.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    P
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Peter L.</p>
-                                    <time class="pr-card__date" datetime="2026-03">
-                                        March 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Good quality ceramic</h3>
-                        <p class="pr-card__comment">
-                            The vase feels sturdy and the surface finish is smooth. Shipping was
-                            safe, although the box was larger than necessary.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    C
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Chloe N.</p>
-                                    <time class="pr-card__date" datetime="2026-03">
-                                        March 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Subtle and tasteful</h3>
-                        <p class="pr-card__comment">
-                            It has a quiet beauty. I expected the lotus detail to be stronger,
-                            but the subtle finish actually works well in my room.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="3">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    N
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Nhi Trần</p>
-                                    <time class="pr-card__date" datetime="2026-02">
-                                        February 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="3 out of 5 stars">
-                                ★★★☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Nice piece, but smaller than expected</h3>
-                        <p class="pr-card__comment">
-                            The design is beautiful, but I should have checked the size more
-                            carefully. It works better as a small accent piece.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="3">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    D
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Daniel M.</p>
-                                    <time class="pr-card__date" datetime="2026-02">
-                                        February 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="3 out of 5 stars">
-                                ★★★☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Beautiful but not perfect</h3>
-                        <p class="pr-card__comment">
-                            I like the handmade look, but the glaze on one side was slightly uneven.
-                            It still looks nice, just not as polished as I expected.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                </div>
-
-
-                <!-- ================= PAGE 3 ================= -->
-                <div class="pr-page pr-page--3">
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    Q
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Quỳnh Lê</p>
-                                    <time class="pr-card__date" datetime="2026-02">
-                                        February 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Perfect for my entry table</h3>
-                        <p class="pr-card__comment">
-                            The vase adds a gentle traditional touch without looking too decorative.
-                            It feels simple, elegant and meaningful.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    R
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Rachel S.</p>
-                                    <time class="pr-card__date" datetime="2026-02">
-                                        February 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">The handmade detail is beautiful</h3>
-                        <p class="pr-card__comment">
-                            I bought it because I wanted something that felt connected to Vietnamese
-                            craft. The hand-painted lotus detail is my favorite part.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    B
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Bảo Minh</p>
-                                    <time class="pr-card__date" datetime="2026-01">
-                                        January 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Good gift option</h3>
-                        <p class="pr-card__comment">
-                            I gave this to my aunt and she liked it. The packaging felt careful
-                            and the product looked premium enough for gifting.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="3">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    E
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Emma J.</p>
-                                    <time class="pr-card__date" datetime="2026-01">
-                                        January 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="3 out of 5 stars">
-                                ★★★☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Nice, but color varied from photo</h3>
-                        <p class="pr-card__comment">
-                            The vase is nice, but the blue looked slightly different from what I saw
-                            online. It still works with my decor.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="2">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    K
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Khánh B.</p>
-                                    <time class="pr-card__date" datetime="2026-01">
-                                        January 2026
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="2 out of 5 stars">
-                                ★★☆☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Packaging was good, but size disappointed me</h3>
-                        <p class="pr-card__comment">
-                            The product was protected well, but the vase looked larger in the photos.
-                            The size options should be shown more clearly.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                </div>
-
-
-                <!-- ================= PAGE 4 ================= -->
-                <div class="pr-page pr-page--4">
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    V
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Vy Hoàng</p>
-                                    <time class="pr-card__date" datetime="2025-12">
-                                        December 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Simple, calm and meaningful</h3>
-                        <p class="pr-card__comment">
-                            I like that it does not feel overly decorated. The shape is calm and
-                            the lotus detail makes it special.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    O
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Olivia P.</p>
-                                    <time class="pr-card__date" datetime="2025-12">
-                                        December 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Better than expected</h3>
-                        <p class="pr-card__comment">
-                            The photos are pretty, but the actual piece feels warmer and more
-                            personal in real life.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    G
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Gia Hân</p>
-                                    <time class="pr-card__date" datetime="2025-12">
-                                        December 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Nice handmade texture</h3>
-                        <p class="pr-card__comment">
-                            The texture makes it look authentic. I only wish there were more photos
-                            showing scale next to common objects.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="3">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    Y
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Yến Nhi</p>
-                                    <time class="pr-card__date" datetime="2025-11">
-                                        November 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="3 out of 5 stars">
-                                ★★★☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Good product, delayed delivery</h3>
-                        <p class="pr-card__comment">
-                            The vase itself is good, but delivery took longer than I thought.
-                            The tracking updates could be clearer.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="2">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    W
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">William T.</p>
-                                    <time class="pr-card__date" datetime="2025-11">
-                                        November 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="2 out of 5 stars">
-                                ★★☆☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Expected stronger colors</h3>
-                        <p class="pr-card__comment">
-                            I expected the cobalt blue to stand out more. The craftsmanship is good,
-                            but the color felt too soft for my taste.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                </div>
-
-
-                <!-- ================= PAGE 5 ================= -->
-                <div class="pr-page pr-page--5">
-
-                    <article class="pr-card" data-star="5">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    S
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Sophia M.</p>
-                                    <time class="pr-card__date" datetime="2025-10">
-                                        October 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="5 out of 5 stars">
-                                ★★★★★
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">A beautiful cultural piece</h3>
-                        <p class="pr-card__comment">
-                            I bought it because I wanted something with cultural meaning. It feels
-                            respectful, well-made and elegant.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="4">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    I
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Iris C.</p>
-                                    <time class="pr-card__date" datetime="2025-10">
-                                        October 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="4 out of 5 stars">
-                                ★★★★☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Good finish overall</h3>
-                        <p class="pr-card__comment">
-                            The finish is smooth and the piece feels solid. I would buy again,
-                            especially if there are more patterns.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="3">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    F
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Felix R.</p>
-                                    <time class="pr-card__date" datetime="2025-09">
-                                        September 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="3 out of 5 stars">
-                                ★★★☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Decent, but not my style</h3>
-                        <p class="pr-card__comment">
-                            The quality is fine, but the overall style is softer than I expected.
-                            It may suit a minimal room better than mine.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="2">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    U
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Uyên Đỗ</p>
-                                    <time class="pr-card__date" datetime="2025-09">
-                                        September 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="2 out of 5 stars">
-                                ★★☆☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Nice idea, but too small</h3>
-                        <p class="pr-card__comment">
-                            I liked the story behind the product, but the actual size felt smaller
-                            than what I imagined from the photos.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                    <article class="pr-card" data-star="1">
-                        <div class="pr-card__top">
-                            <div class="pr-card__identity">
-                                <div class="pr-card__avatar" aria-hidden="true">
-                                    S
-                                </div>
-                                <div>
-                                    <p class="pr-card__user">Sarah W.</p>
-                                    <time class="pr-card__date" datetime="2025-09">
-                                        September 2025
-                                    </time>
-                                </div>
-                            </div>
-                            <p class="pr-card__stars" aria-label="1 out of 5 stars">
-                                ★☆☆☆☆
-                            </p>
-                        </div>
-                        <h3 class="pr-card__title">Arrived later than expected</h3>
-                        <p class="pr-card__comment">
-                            The vase itself is pretty, but the delivery took longer than I expected.
-                            I would have liked clearer shipping updates.
-                        </p>
-                        <div class="pr-card__media">
-
-                            <img class="pr-card__thumb" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="Thumbnail of the blue lotus vase in this customer review" loading="lazy"
-                                decoding="async" />
-
-                            <img class="pr-card__photo" src="../../public/images/shopping_items/ceramic/ceramic1.png"
-                                alt="" loading="lazy" decoding="async" />
-
-                        </div>
-                    </article>
-
-                </div>
-
-            </div>
-            <nav class="pr-pagination" aria-label="Review pagination">
-
-                <span class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--disabled" aria-disabled="true"
-                    aria-label="Previous review page unavailable">
-                    ‹
-                </span>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--2" for="review-page-1"
-                    aria-label="Go to review page 1">
-                    ‹
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--3" for="review-page-2"
-                    aria-label="Go to review page 2">
-                    ‹
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--4" for="review-page-3"
-                    aria-label="Go to review page 3">
-                    ‹
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-prev pr-prev--5" for="review-page-4"
-                    aria-label="Go to review page 4">
-                    ‹
-                </label>
-
-
-                <label class="pr-page-btn" for="review-page-1" aria-label="Go to review page 1">
-                    1
-                </label>
-
-                <label class="pr-page-btn" for="review-page-2" aria-label="Go to review page 2">
-                    2
-                </label>
-
-                <label class="pr-page-btn" for="review-page-3" aria-label="Go to review page 3">
-                    3
-                </label>
-
-                <label class="pr-page-btn" for="review-page-4" aria-label="Go to review page 4">
-                    4
-                </label>
-
-                <label class="pr-page-btn" for="review-page-5" aria-label="Go to review page 5">
-                    5
-                </label>
-
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--1" for="review-page-2"
-                    aria-label="Go to review page 2">
-                    ›
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--2" for="review-page-3"
-                    aria-label="Go to review page 3">
-                    ›
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--3" for="review-page-4"
-                    aria-label="Go to review page 4">
-                    ›
-                </label>
-
-                <label class="pr-page-btn pr-page-btn--arrow pr-next pr-next--4" for="review-page-5"
-                    aria-label="Go to review page 5">
-                    ›
-                </label>
-
-                <span class="pr-page-btn pr-page-btn--arrow pr-next pr-next--disabled" aria-disabled="true"
-                    aria-label="Next review page unavailable">
-                    ›
-                </span>
-
-            </nav>
+            <nav
+                class="pr-pagination"
+                id="review-pagination"
+                aria-label="Review pagination"
+            ></nav>
         </section>
-
     </main>
 </body>
-
 </html>
