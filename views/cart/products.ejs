@@ -1,636 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#A31D1D" />
-  <title>Làng & Co. — Shop All</title>
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="../../public/css/header_shoppingcart.css" />
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/cart/products.css" />
-</head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-<body>
-  <!-- ================================================
-       HEADER
-       ================================================ -->
-  <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
-  <div class="topbar">
-    <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
-      <a href="../cart/products.html" target="_top">Shop Now</a>
-    </p>
-    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
-  </div>
-  <nav class="nav nav--light nav--centered">
-    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
-    <div class="nav__left">
-      <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M3 6h18M3 12h18M3 18h18" />
-        </svg>
-      </label>
-      <button type="button" class="nav__icon-btn" aria-label="Search">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.8-3.8" />
-        </svg>
-      </button>
-    </div>
-    <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
-      <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
-    </a>
-    <div class="nav__icons">
-      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="12" cy="8" r="3.6" />
-          <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-        </svg>
-      </a>
-      <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" />
-          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-        </svg>
-        <span class="nav__badge-count">4</span>
-      </a>
-    </div>
-    <div class="mobile-menu">
-      <ul>
-        <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
-        <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
-        <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
-        <li><a id="nav-forum" href="../forum/forum.html" target="_top">Forum</a></li>
-        <li><a id="nav-wishlist" href="../giftcard/giftcard.html" target="_top">Giftcards</a></li>
-      </ul>
-    </div>
-  </nav>
+    <meta name="theme-color" content="#A31D1D" />
 
+    <title>Làng &amp; Co. — <%= pageTitle %></title>
 
-  <!-- CSS-only category filter state -->
-  <input class="state-control" type="radio" name="category" id="filter-all" checked />
-  <input class="state-control" type="radio" name="category" id="filter-ceramics" />
-  <input class="state-control" type="radio" name="category" id="filter-painting" />
-  <input class="state-control" type="radio" name="category" id="filter-brocade" />
-  <input class="state-control" type="radio" name="category" id="filter-bamboo" />
-  <input class="state-control" type="radio" name="category" id="filter-wood" />
-  <input class="state-control" type="radio" name="category" id="filter-incense" />
-  <input class="state-control" type="radio" name="category" id="filter-stone" />
-  <input class="state-control" type="radio" name="category" id="filter-waterpuppet" />
-  <!-- CSS-only sort state -->
-  <input class="state-control" type="radio" name="sort" id="sort-featured" checked />
-  <input class="state-control" type="radio" name="sort" id="sort-low" />
-  <input class="state-control" type="radio" name="sort" id="sort-high" />
-  <input class="state-control" type="radio" name="sort" id="sort-name" />
+    <link rel="stylesheet" href="/css/landingpage/index.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+    <link rel="stylesheet" href="/css/shared-include.css" />
+    <link rel="stylesheet" href="/css/cart/products.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+  </head>
 
-  <div class="shop-wrap">
+  <body>
+    <%- include("../partials/header") %>
 
-    <!-- ================================================
-         BREADCRUMB
-         ================================================ -->
-    <nav class="breadcrumb container" aria-label="Breadcrumb">
-      <a href="../../index.html">Home</a>
-      <span aria-hidden="true">•</span>
-      <span aria-current="page">Shop All</span>
-    </nav>
+    <% categories.forEach((category, index) => { %>
+      <input
+        class="state-control"
+        type="radio"
+        name="category"
+        id="filter-<%= category.id %>"
+        <%= index === 0 ? "checked" : "" %>
+      />
+    <% }); %>
 
+    <% sortOptions.forEach((option, index) => { %>
+      <input
+        class="state-control"
+        type="radio"
+        name="sort"
+        id="sort-<%= option.id %>"
+        <%= index === 0 ? "checked" : "" %>
+      />
+    <% }); %>
 
-    <!-- ================================================
-         PAGE HEADER
-         ================================================ -->
-    <div class="shop-header container">
-      <h1>Shop All</h1>
-      <p class="shop-header__sub">Unlock the story behind every weave, glaze and carving.</p>
-    </div>
+    <main class="shop-wrap">
+      <nav class="breadcrumb container" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">•</span>
+        <span aria-current="page">Shop All</span>
+      </nav>
 
-    <!-- ================================================
-         CATEGORY TABS
-         ================================================ -->
-    <nav class="category-tabs container" aria-label="Shop by category">
-      <label class="tab" for="filter-all">All</label>
-      <label class="tab" for="filter-ceramics">Ceramics</label>
-      <label class="tab" for="filter-painting">Painting</label>
-      <label class="tab" for="filter-brocade">Brocade</label>
-      <label class="tab" for="filter-bamboo">Bamboo</label>
-      <label class="tab" for="filter-wood">Wood</label>
-      <label class="tab" for="filter-incense">Incense</label>
-      <label class="tab" for="filter-stone">Fengshui Stone</label>
-      <label class="tab" for="filter-waterpuppet">Water Puppets</label>
-    </nav>
+      <header class="shop-header container">
+        <h1>Shop All</h1>
 
-    <!-- ================================================
-         SHOP SHELL — sidebar + grid
-         ================================================ -->
-    <div class="shop-shell container">
+        <p class="shop-header__sub">
+          Unlock the story behind every weave, glaze and carving.
+        </p>
+      </header>
 
-      <!-- ============== SIDEBAR FILTERS ============== -->
-      <aside class="shop-sidebar" aria-label="Filters">
+      <nav
+        class="category-tabs container"
+        aria-label="Shop by category"
+      >
+        <% categories.forEach((category) => { %>
+          <label
+            class="tab"
+            for="filter-<%= category.id %>"
+          >
+            <%= category.label %>
+          </label>
+        <% }); %>
+      </nav>
 
-        <details class="filter-group" open>
-          <summary>Price</summary>
-          <div class="filter-options">
-            <label><input type="checkbox" /> Under $25</label>
-            <label><input type="checkbox" /> $25 – $50</label>
-            <label><input type="checkbox" /> $50 – $100</label>
-            <label><input type="checkbox" /> $100 &amp; over</label>
+      <div class="shop-shell container">
+        <%- include("../partials/products/filters") %>
+
+        <div class="shop-content">
+          <div class="shop-toolbar">
+            <p class="results-count">
+              <% categories.forEach((category) => { %>
+                <span class="meta-<%= category.id %>">
+                  <%= categoryCounts[category.id] %>
+                  <%= categoryCounts[category.id] === 1 ? "result" : "results" %>
+                </span>
+              <% }); %>
+            </p>
+
+            <details class="sort-menu">
+              <summary aria-label="Choose product order">
+                Sort by
+
+                <% sortOptions.forEach((option) => { %>
+                  <span
+                    class="sort-current sort-current-<%= option.id %>"
+                  >
+                    <%= option.label %>
+                  </span>
+                <% }); %>
+              </summary>
+
+              <div
+                class="sort-options"
+                role="group"
+                aria-label="Sort products"
+              >
+                <% sortOptions.forEach((option) => { %>
+                  <label for="sort-<%= option.id %>">
+                    <%= option.label %>
+                  </label>
+                <% }); %>
+              </div>
+            </details>
           </div>
-        </details>
 
-        <details class="filter-group">
-          <summary>Craft Village</summary>
-          <div class="filter-options">
-            <label><input type="checkbox" /> Bát Tràng · Hanoi</label>
-            <label><input type="checkbox" /> Vạn Phúc · Hà Đông</label>
-            <label><input type="checkbox" /> Hạ Thái · Hà Nội</label>
-            <label><input type="checkbox" /> Phú Vinh · Hà Nội</label>
-            <label><input type="checkbox" /> Đồng Kỵ · Bắc Ninh</label>
-            <label><input type="checkbox" /> Non Nước · Đà Nẵng</label>
-          </div>
-        </details>
+          <%- include("../partials/products/product-grid") %>
 
-        <details class="filter-group">
-          <summary>Material</summary>
-          <div class="filter-options">
-            <label><input type="checkbox" /> Ceramic</label>
-            <label><input type="checkbox" /> Silk</label>
-            <label><input type="checkbox" /> Lacquer</label>
-            <label><input type="checkbox" /> Bamboo &amp; Rattan</label>
-            <label><input type="checkbox" /> Wood</label>
-            <label><input type="checkbox" /> Sandalwood</label>
-          </div>
-        </details>
-
-        <details class="filter-group">
-          <summary>Availability</summary>
-          <div class="filter-options">
-            <label><input type="checkbox" /> In stock</label>
-            <label><input type="checkbox" /> Low stock</label>
-          </div>
-        </details>
-
-        <details class="filter-group">
-          <summary>Rating</summary>
-          <div class="filter-options">
-            <label><input type="checkbox" /> ★★★★ &amp; up</label>
-            <label><input type="checkbox" /> ★★★★★ only</label>
-          </div>
-        </details>
-      </aside>
-
-      <!-- ============== GRID + TOOLBAR ============== -->
-      <div class="shop-content">
-
-        <div class="shop-toolbar">
-          <p class="results-count">
-            <span class="meta-all">15 results</span>
-            <span class="meta-ceramics">2 results</span>
-            <span class="meta-painting">2 results</span>
-            <span class="meta-brocade">2 results</span>
-            <span class="meta-bamboo">0 results</span>
-            <span class="meta-wood">3 results</span>
-            <span class="meta-incense">2 results</span>
-            <span class="meta-stone">2 results</span>
-            <span class="meta-waterpuppet">2 results</span>
+          <p class="empty-state">
+            No pieces match this filter yet. Try another category.
           </p>
 
-          <details class="sort-menu">
-            <summary aria-label="Choose product order">
-              Sort by
-              <span class="sort-current sort-current-featured">Best Sellers</span>
-              <span class="sort-current sort-current-low">Price: Low to high</span>
-              <span class="sort-current sort-current-high">Price: High to low</span>
-              <span class="sort-current sort-current-name">Name: A–Z</span>
-            </summary>
-            <div class="sort-options" role="group" aria-label="Sort products">
-              <label for="sort-featured">Best Sellers</label>
-              <label for="sort-low">Price: Low to high</label>
-              <label for="sort-high">Price: High to low</label>
-              <label for="sort-name">Name: A–Z</label>
-            </div>
-          </details>
+          <nav class="pagination" aria-label="Pagination">
+            <p class="pagination__info">
+              Showing all <%= products.length %> products
+            </p>
+
+            <ul class="pagination__pages">
+              <li>
+                <span class="is-current" aria-current="page">
+                  1
+                </span>
+              </li>
+            </ul>
+          </nav>
         </div>
-
-        <!-- ============== PRODUCT GRID ============== -->
-        <section class="shop-grid" aria-label="All products">
-
-          <!-- Product 1 -->
-          <article class="shop-card product-1 ceramics">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/ceramic/ceramic1.png"
-                alt="Cream ceramic mug sculpted with a face and pink bow" />
-              <button type="button" class="wishlist-btn" aria-label="Save Sculpted Face Ceramic Mug to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn" aria-label="Quick add Sculpted Face Ceramic Mug to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Bát Tràng</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review1.html">Sculpted Face
-                  Ceramic Mug</a></h3>
-              <p class="shop-card__price">$68.00</p>
-              <p class="shop-card__rating">★★★★★<span>(48)</span></p>
-              <p class="shop-card__tag">Bestseller</p>
-              <p class="shop-card__variant">1 Size</p>
-            </div>
-          </article>
-
-          <!-- Product 2 -->
-          <article class="shop-card product-2 ceramics">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/ceramic/ceramic2.png"
-                alt="Set of hand-painted ceramic mugs decorated with colorful ribbons, flowers, hearts and cherries" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Hand-Painted Ribbon Ceramic Mug Set to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Hand-Painted Ribbon Ceramic Mug Set to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Bát Tràng</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review2.html">Hand-Painted Ribbon
-                  Ceramic Mug Set</a></h3>
-              <p class="shop-card__price">$54.00</p>
-              <p class="shop-card__rating">★★★★★<span>(63)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">Set of 8</p>
-            </div>
-          </article>
-
-          <!-- Product 3 -->
-          <article class="shop-card product-3 brocade">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/brocade/brocade1.png"
-                alt="Stack of four folded traditional brocade blankets in white, red, green and blue" />
-              <button type="button" class="wishlist-btn" aria-label="Save Traditional Brocade Blanket Set to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Traditional Brocade Blanket Set to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Vạn Phúc</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review3.html">Brocade Blanket</a>
-              </h3>
-              <p class="shop-card__price">$56.00</p>
-              <p class="shop-card__rating">★★★★★<span>(31)</span></p>
-              <p class="shop-card__tag">New</p>
-              <p class="shop-card__variant">Set of 4</p>
-            </div>
-          </article>
-
-          <!-- Product 4 -->
-          <article class="shop-card product-4 brocade">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/brocade/brocade2.png"
-                alt="Colorful handmade horse figurine covered in traditional brocade patterns" />
-              <button type="button" class="wishlist-btn" aria-label="Save Handmade Brocade Horse Figurine to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Handmade Brocade Horse Figurine to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Vạn Phúc</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review4.html">Handmade Brocade
-                  Horse Figurine</a></h3>
-              <p class="shop-card__price">$45.00 <span class="shop-card__price-was">$52.00</span></p>
-              <p class="shop-card__rating">★★★★★<span>(87)</span></p>
-              <p class="shop-card__tag">Sale</p>
-              <p class="shop-card__variant">1 Size</p>
-            </div>
-          </article>
-
-          <!-- Product 5 -->
-          <article class="shop-card product-5 incense">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/incense/incense1.png"
-                alt="Three bundles of hand-rolled cinnamon incense sticks in paper tubes" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Hand-Rolled Cinnamon Incense Bundle to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Hand-Rolled Cinnamon Incense Bundle to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Quảng Phú Cầu</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review5.html">Hand-Rolled Cinnamon
-                  Incense Bundle</a></h3>
-              <p class="shop-card__price">$34.00</p>
-              <p class="shop-card__rating">★★★★★<span>(12)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">Set of 3 Bundles</p>
-            </div>
-          </article>
-
-          <!-- Product 6 -->
-          <article class="shop-card product-6 incense">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/incense/incense2.png"
-                alt="Natural brown incense cones presented in a metal gift tin with a ceramic holder" />
-              <button type="button" class="wishlist-btn" aria-label="Save Natural Incense Cone Gift Set to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Natural Incense Cone Gift Set to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Quảng Phú Cầu</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review6.html">Natural Incense Cone
-                  Gift Set</a></h3>
-              <p class="shop-card__price">$38.00</p>
-              <p class="shop-card__rating">★★★★☆<span>(24)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">24 Cones</p>
-            </div>
-          </article>
-
-          <!-- Product 7 -->
-          <article class="shop-card product-7 painting">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/painting/painting_1.png"
-                alt="Framed Vietnamese folk painting of a child holding a large carp" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Vietnamese Folk Painting — Child with Carp to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Vietnamese Folk Painting — Child with Carp to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đông Hồ</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review7.html">Vietnamese Folk
-                  Painting — Child with Carp</a></h3>
-              <p class="shop-card__price">$120.00</p>
-              <p class="shop-card__rating">★★★★★<span>(19)</span></p>
-              <p class="shop-card__tag">Only 3 left</p>
-              <p class="shop-card__variant">1 Framed Print</p>
-            </div>
-          </article>
-
-          <!-- Product 8 -->
-          <article class="shop-card product-8 painting">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/painting/painting_2.png"
-                alt="Framed Vietnamese painting of a mother holding her child" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Vietnamese Mother and Child Painting to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Vietnamese Mother and Child Painting to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đông Hồ</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review8.html">Vietnamese Mother
-                  and Child Painting</a></h3>
-              <p class="shop-card__price">$16.00</p>
-              <p class="shop-card__rating">★★★★☆<span>(19)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">1 Framed Print</p>
-            </div>
-          </article>
-
-          <!-- Product 9 -->
-          <article class="shop-card product-9 stone">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/stone/stone1.png"
-                alt="Polished natural stone feng shui sculpture mounted on a dark wood base" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Natural Stone Feng Shui Sculpture to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Natural Stone Feng Shui Sculpture to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Non Nước</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review9.html">Natural Stone Feng
-                  Shui Sculpture</a></h3>
-              <p class="shop-card__price">$46.00</p>
-              <p class="shop-card__rating">★★★★★<span>(27)</span></p>
-              <p class="shop-card__tag">New</p>
-              <p class="shop-card__variant">1 Piece</p>
-            </div>
-          </article>
-          <!-- Product 10 -->
-          <article class="shop-card product-10 stone">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/stone/stone2.png"
-                alt="Jade-colored lotus and mirror sculpture on a dark carved base" />
-              <button type="button" class="wishlist-btn" aria-label="Save Jade Lotus Mirror Sculpture to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn" aria-label="Quick add Jade Lotus Mirror Sculpture to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Non Nước</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review10.html">Jade Lotus Mirror
-                  Sculpture</a></h3>
-              <p class="shop-card__price">$32.00</p>
-              <p class="shop-card__rating">★★★★☆<span>(15)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">1 Piece</p>
-            </div>
-          </article>
-          <!-- Product 11 -->
-          <article class="shop-card product-11 waterpuppet">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/waterpuppet/water1.png"
-                alt="Traditional Vietnamese water puppet depicting a royal lady in a red robe" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Traditional Water Puppet — Royal Lady to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Traditional Water Puppet — Royal Lady to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đào Thục</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review11.html">Traditional Water
-                  Puppet — Royal Lady</a></h3>
-              <p class="shop-card__price">$72.00</p>
-              <p class="shop-card__rating">★★★★★<span>(22)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">1 Puppet</p>
-            </div>
-          </article>
-          <!-- Product 12 -->
-          <article class="shop-card product-12 waterpuppet">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/waterpuppet/water2.png"
-                alt="Traditional Vietnamese water puppet depicting a performer carrying a drum" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Traditional Water Puppet — Drum Performer to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Traditional Water Puppet — Drum Performer to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đào Thục</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review12.html">Traditional Water
-                  Puppet — Drum Performer</a></h3>
-              <p class="shop-card__price">$89.00</p>
-              <p class="shop-card__rating">★★★★★<span>(9)</span></p>
-              <p class="shop-card__tag">New</p>
-              <p class="shop-card__variant">1 Puppet</p>
-            </div>
-          </article>
-          <!-- Product 13 -->
-          <article class="shop-card product-13 wood">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/wood/wood1.png"
-                alt="Hand-carved wooden statue of a longevity deity holding a staff" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Carved Wooden Longevity Deity Statue to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Carved Wooden Longevity Deity Statue to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đồng Kỵ</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review13.html">Carved Wooden
-                  Longevity Deity Statue</a></h3>
-              <p class="shop-card__price">$29.00</p>
-              <p class="shop-card__rating">★★★★☆<span>(14)</span></p>
-              <p class="shop-card__tag">New</p>
-              <p class="shop-card__variant">1 Size</p>
-            </div>
-          </article>
-          <!-- Product 14 -->
-          <article class="shop-card product-14 wood">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/wood/wood2.png"
-                alt="Abstract hand-carved wooden sculpture of a seated woman" />
-              <button type="button" class="wishlist-btn"
-                aria-label="Save Hand-Carved Wooden Woman Sculpture to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Hand-Carved Wooden Woman Sculpture to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đồng Kỵ</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review14.html">Hand-Carved Wooden
-                  Woman Sculpture</a></h3>
-              <p class="shop-card__price">$22.00</p>
-              <p class="shop-card__rating">★★★★★<span>(33)</span></p>
-              <p class="shop-card__tag">&nbsp;</p>
-              <p class="shop-card__variant">1 Size</p>
-            </div>
-          </article>
-          <!-- Product 15 -->
-          <article class="shop-card product-15 wood">
-            <div class="shop-card__media">
-              <img src="/public/images/shopping_items/wood/wood3.png"
-                alt="Carved figurine of a smiling mother embracing her child" />
-              <button type="button" class="wishlist-btn" aria-label="Save Carved Mother and Child Figurine to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                  <path
-                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                </svg>
-              </button>
-              <a href="cart.html" class="quickadd-btn"
-                aria-label="Quick add Carved Mother and Child Figurine to cart">+</a>
-            </div>
-            <div class="shop-card__body">
-              <p class="shop-card__maker">Đồng Kỵ</p>
-              <h3 class="shop-card__title"><a href="../../pages/review/product_detail/review15.html">Carved Mother and
-                  Child Figurine</a></h3>
-              <p class="shop-card__price">$27.00</p>
-              <p class="shop-card__rating">★★★★☆<span>(11)</span></p>
-              <p class="shop-card__tag">New</p>
-              <p class="shop-card__variant">1 Size</p>
-            </div>
-          </article>
-
-        </section>
-
-        <p class="empty-state">No pieces match this filter yet. Try another category.</p>
-
-        <!-- ============== PAGINATION ============== -->
-        <nav class="pagination" aria-label="Pagination">
-          <p class="pagination__info">Showing all 15 products</p>
-          <ul class="pagination__pages">
-            <li>
-              <span class="is-current" aria-current="page">1</span>
-            </li>
-          </ul>
-        </nav>
-
       </div>
-    </div>
 
-    <!-- ================================================
-         SEO COPY
-         ================================================ -->
-    <section class="shop-seo container">
-      <h2>Vietnamese Craft, Curated</h2>
-      <p>Discover Làng &amp; Co.'s collection of handmade pieces from craft villages across Việt Nam — from
-        Bát Tràng ceramics and Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving, Phú Vinh bamboo
-        weaving, and sandalwood incense. Every piece is made by hand, sourced directly from the artisans who
-        made it, and shipped worldwide with care.</p>
-    </section>
+      <section class="shop-seo container">
+        <h2>Vietnamese Craft, Curated</h2>
 
-  </div>
+        <p>
+          Discover Làng &amp; Co.'s collection of handmade pieces from
+          craft villages across Việt Nam — from Bát Tràng ceramics and
+          Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving,
+          Phú Vinh bamboo weaving and sandalwood incense. Every piece is
+          made by hand, sourced directly from the artisans who made it
+          and shipped worldwide with care.
+        </p>
+      </section>
+    </main>
 
-  <!-- ================================================
-       FOOTER
-       ================================================ -->
-  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
-
-</body>
-
+    <%- include("../partials/footer") %>
+  </body>
 </html>

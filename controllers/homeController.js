@@ -1,5 +1,9 @@
+const landingModel = require("../models/landingModel");
+
 const getHomePage = (req, res) => {
-  res.render("home/index");
+  const landingPageData = landingModel.getLandingPageData();
+
+  res.render("home/index", landingPageData);
 };
 
 module.exports = {

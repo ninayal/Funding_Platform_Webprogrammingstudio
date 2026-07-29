@@ -1,0 +1,16 @@
+<aside class="shop-sidebar" aria-label="Filters">
+  <% filters.forEach((filter) => { %>
+    <details class="filter-group" <%= filter.open ? "open" : "" %>>
+      <summary><%= filter.title %></summary>
+
+      <div class="filter-options">
+        <% filter.options.forEach((option) => { %>
+          <label>
+            <input type="checkbox" />
+            <%= option %>
+          </label>
+        <% }); %>
+      </div>
+    </details>
+  <% }); %>
+</aside>
