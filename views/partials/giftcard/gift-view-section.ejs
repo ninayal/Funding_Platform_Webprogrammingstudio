@@ -1,0 +1,54 @@
+<section
+  class="
+    flow-section
+    flow-section--paper
+    gift-view-demo
+  "
+  id="gift-view-demo"
+>
+  <div class="section-shell">
+    <div class="section-heading">
+      <p class="section-kicker">Impact Gift View</p>
+
+      <h2>
+        Your gift has a story.
+        <em>Its impact will have one too.</em>
+      </h2>
+
+      <p>
+        This is a frontend example of what a recipient could
+        see after entering a valid gift code.
+      </p>
+    </div>
+
+    <div class="gift-view-card">
+      <div class="gift-view-card__main">
+        <p class="gift-view-card__eyebrow">
+          <%= giftViewDemo.giftType %>
+        </p>
+
+        <h3><%= giftViewDemo.amountDisplay %></h3>
+
+        <p>
+          <strong>From:</strong>
+          <%= giftViewDemo.senderName %>
+        </p>
+
+        <p>
+          <strong>For:</strong>
+          <%= giftViewDemo.recipientName %>
+        </p>
+
+        <blockquote>
+          “<%= giftViewDemo.message %>”
+        </blockquote>
+      </div>
+
+      <div class="gift-view-card__status">
+        <span>Impact status</span>
+        <strong><%= giftViewDemo.status %></strong>
+        <p><%= giftViewDemo.statusCopy %></p>
+      </div>
+    </div>
+  </div>
+</section>

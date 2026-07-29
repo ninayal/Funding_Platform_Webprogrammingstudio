@@ -1,0 +1,53 @@
+<section class="redeem-section" id="redeem">
+  <div class="section-shell">
+    <div class="redeem-panel">
+      <div>
+        <p class="section-kicker">
+          Already received an Impact Gift?
+        </p>
+
+        <h2>
+          View your gift.
+          <em>Follow where its impact goes.</em>
+        </h2>
+
+        <p>
+          Enter your gift code to view the sender's message,
+          gift value, and future impact updates from
+          Làng &amp; Co.
+        </p>
+      </div>
+
+      <form
+        class="redeem-form"
+        action="#gift-view-demo"
+        method="get"
+      >
+        <label class="field">
+          <span>Impact Gift code</span>
+
+          <input
+            type="text"
+            id="gift-code"
+            name="giftCode"
+            placeholder="<%= giftViewDemo.code %>"
+            pattern="LANG-[A-Z0-9]{4}-[A-Z0-9]{4}"
+            maxlength="14"
+            title="Enter a gift code in the format LANG-XXXX-XXXX."
+            autocomplete="off"
+            required
+          />
+        </label>
+
+        <button class="btn btn-primary" type="submit">
+          View My Gift
+        </button>
+
+        <small class="redeem-note">
+          The recipient views the gift and tracks impact
+          updates. They do not control the final allocation.
+        </small>
+      </form>
+    </div>
+  </div>
+</section>

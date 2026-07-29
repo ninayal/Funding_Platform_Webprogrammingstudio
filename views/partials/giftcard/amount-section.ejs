@@ -1,0 +1,82 @@
+<section
+  class="flow-section flow-section--tint"
+  id="amount"
+>
+  <div class="section-shell">
+    <div class="section-heading section-heading--center">
+      <p class="section-kicker">
+        04 · Choose quantity + amount
+      </p>
+
+      <h2>
+        How much would you like to
+        <em>put into the gift?</em>
+      </h2>
+
+      <p>
+        There are no fixed presets. Enter any positive USD
+        amount that fits the giving moment.
+      </p>
+    </div>
+
+    <div class="amount-panel">
+      <div class="amount-builder">
+        <label class="amount-field amount-field--quantity">
+          <span>Quantity</span>
+
+          <input
+            type="number"
+            id="gift-quantity"
+            name="quantity"
+            min="1"
+            step="1"
+            value="<%= defaults.quantity %>"
+            inputmode="numeric"
+            required
+          />
+
+          <small>Number of gift cards.</small>
+        </label>
+
+        <label class="amount-field amount-field--wide">
+          <span>Amount per card (USD)</span>
+
+          <span class="currency-input">
+            <span aria-hidden="true">$</span>
+
+            <input
+              type="number"
+              id="gift-amount"
+              name="amountPerCard"
+              min="5"
+              step="1"
+              value="<%= defaults.amountPerCard %>"
+              placeholder="Enter any amount"
+              inputmode="decimal"
+              required
+            />
+          </span>
+
+          <small>
+            Enter any positive amount. Example: 50 = $50.00.
+          </small>
+        </label>
+      </div>
+
+      <div class="amount-total">
+        <div>
+          <span>Gift total</span>
+          <small>Quantity × amount per card</small>
+        </div>
+
+        <strong><%= totalDisplay %></strong>
+      </div>
+    </div>
+
+    <div class="section-next">
+      <a class="btn btn-primary" href="#details">
+        Continue to Details
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+/*
+ * Integration layer for the EJS version.
+ * The old HTML page embedded its header/footer with iframes.
+ * The EJS page now uses shared partials in normal document flow.
+ */
+
+.giftcard-page {
+  min-height: 100vh;
+}
+
+.giftcard-page .gift-hero {
+  min-height: 620px;
+  padding-top: 96px;
+}
+
+.giftcard-page .gift-card-form {
+  margin: 0;
+}
+
+.giftcard-page .site-footer {
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .giftcard-page .gift-hero {
+    min-height: 540px;
+    padding-top: 72px;
+  }
+}
