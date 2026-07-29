@@ -22,6 +22,10 @@ const quickNav = {
     ],
 };
 
+//Marquee text
+const marqueeText =
+    "Heritage | Handmade | Authentic | Sustainable | Heritage | Handmade | Authentic | Sustainable |";
+
 //8 catogories
 const categories = [
     {
@@ -252,15 +256,63 @@ const journalPosts = [
     },
 ];
 
+//faq section 
+const faqItems = [
+  {
+    question: "How do I know a piece is authentic?",
+    answer:
+      "Every listing names the workshop and village it came from. We visit each workshop in person before it joins the marketplace.",
+  },
+  {
+    question: "Do you ship internationally?",
+    answer:
+      "Yes, we ship across Việt Nam and to most international destinations. Rates are calculated at checkout.",
+  },
+  {
+    question: "What if a piece arrives damaged?",
+    answer:
+      "Contact us within 7 days with a photo and we will arrange a replacement or refund.",
+  },
+  {
+    question: "Can I request a custom commission?",
+    answer:
+      "Many of our workshops accept custom orders. Contact us through the product listing and we will pass your request to the maker.",
+  },
+];
+
+//community card
+const communityCards = [
+  {
+    modifier: "forum",
+    title: "The Round Table",
+    description:
+      "Talk technique, provenance and care with fellow collectors and makers.",
+    cta: "Visit the Forum →",
+    href: "#",  //FIX THIS WHEN HAVING FORUM
+  },
+  {
+    modifier: "cart",
+    title: "Your Curated Collection",
+    description:
+      "Save the pieces that speak to you, and return whenever you are ready.",
+    cta: "Open Cart →",
+    href: "/cart/cart",
+  },
+];
+
+
 //direction
 const getLandingPageData = () => ({
     quickNav,
+    marqueeText,
     categories,
     galleryImages,
     processSteps,
     featuredProducts,
     testimonials,
     journalPosts,
+    faqItems,
+    communityCards,
 });
 
 module.exports = {
