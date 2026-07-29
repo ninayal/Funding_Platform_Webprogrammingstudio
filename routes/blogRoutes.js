@@ -1,35 +1,111 @@
 "use strict";
 
-const express = require("express");
-const blogController = require("../controllers/blogController");
+const express = require(
+  "express",
+);
 
-const router = express.Router();
+const blogController =
+  require(
+    "../controllers/blogController",
+  );
+
+const {
+  requireAuth,
+} = require(
+  "../middlewares/authMiddleware",
+);
+
+const router =
+  express.Router();
 
 /*
- * config/routeConfig.js already mounts this router at /blog.
- * Child routes below must not repeat the /blog prefix.
+ * This router is already mounted
+ * under /blog in routeConfig.js.
  */
 
-router.get("/", blogController.getBlogPage);
-router.get("/my-posts", blogController.getMyPostsPage);
+router.get(
+  "/",
+  blogController.getBlogPage,
+);
 
-/*
- * POST handlers are ready for create_post.ejs and post_edit.ejs.
- * The GET form pages can be added in the next phase.
- */
-router.post("/", blogController.createPost);
-router.post("/:id/update", blogController.updatePost);
-router.post("/:id/draft", blogController.saveDraft);
-router.post("/:id/publish", blogController.publishPost);
-router.post("/:id/delete", blogController.deletePost);
+router.get(
+  "/my-posts",
+  requireAuth,
+  blogController.getMyPostsPage,
+);
 
-router.post("/:id/comments", blogController.addComment);
+router.get(
+  "/create",
+  requireAuth,
+  blogController.getCreatePostPage,
+);
+
+router.post(
+  "/",
+  requireAuth,
+  blogController.createPost,
+);
+
+router.get(
+  "/:id/edit",
+  requireAuth,
+  blogController.getPostEditPage,
+);
+
+router.post(
+  "/:id/update",
+  requireAuth,
+  blogController.updatePost,
+);
+
+router.post(
+  "/:id/draft",
+  requireAuth,
+  blogController.saveDraft,
+);
+
+router.post(
+  "/:id/publish",
+  requireAuth,
+  blogController.publishPost,
+);
+
+router.post(
+  "/:id/delete",
+  requireAuth,
+  blogController.deletePost,
+);
+
+router.post(
+  "/:id/comments",
+  requireAuth,
+  blogController.addComment,
+);
+
+router.post(
+  "/:id/comments/:commentId/replies",
+  requireAuth,
+  blogController.addReply,
+);
+
+router.post(
+  "/:id/comments/:commentId/like",
+  requireAuth,
+  blogController.toggleCommentLike,
+);
+
 router.post(
   "/:id/comments/:commentId/delete",
+  requireAuth,
   blogController.deleteComment,
 );
 
-/* Keep this last so it does not capture /my-posts. */
-router.get("/:id", blogController.getBlogViewPage);
+/*
+ * Keep the dynamic ID route last.
+ */
+router.get(
+  "/:id",
+  blogController.getBlogViewPage,
+);
 
 module.exports = router;

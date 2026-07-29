@@ -1,16 +1,28 @@
-const sessionConfig = {
-  secret: process.env.SESSION_SECRET || "lang-and-co-secret-key",
-  resave: false,
-  saveUninitialized: false,
-};
+"use strict";
 
-module.exports = {
-  secret: process.env.SESSION_SECRET || "development-secret",
+const isProduction =
+  process.env.NODE_ENV === "production";
+
+const sessionConfig = {
+  name: "langco.sid",
+
+  secret:
+    process.env.SESSION_SECRET ||
+    "lang-and-co-development-secret-change-me",
+
   resave: false,
   saveUninitialized: false,
+
   cookie: {
-    secure: false,
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
+    sameSite: "lax",
+    secure: isProduction,
+
+    /*
+     * Keep the user logged in for seven days.
+     */
+    maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
+
+module.exports = sessionConfig;

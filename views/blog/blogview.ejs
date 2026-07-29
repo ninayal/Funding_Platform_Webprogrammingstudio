@@ -1,385 +1,716 @@
-<% const viewPost=typeof post !=="undefined" ? post : null; const viewCurrentUser=typeof currentUser !=="undefined" ?
-    currentUser : null; const viewCurrentUserId=typeof currentUserId !=="undefined" ? currentUserId : null; const
-    viewRelatedPosts=typeof relatedPosts !=="undefined" && Array.isArray(relatedPosts) ? relatedPosts : []; const
-    viewCommentErrors=typeof commentErrors !=="undefined" && commentErrors ? commentErrors : {}; const
-    viewCommentValues=typeof commentValues !=="undefined" && commentValues ? commentValues : {}; const viewNotice=typeof
-    notice !=="undefined" ? notice : "" ; %>
-    <!DOCTYPE html>
-    <html lang="en">
+<%
+  const viewPost =
+    typeof post !== "undefined"
+      ? post
+      : null;
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#A31D1D" />
+  const viewCurrentUser =
+    typeof currentUser !== "undefined"
+      ? currentUser
+      : null;
 
-        <title>
-            <%= viewPost ? viewPost.title : "Blog post" %> — Làng &amp; Co.
-        </title>
+  const viewComments =
+    typeof comments !== "undefined" &&
+    Array.isArray(comments)
+      ? comments
+      : [];
 
-        <!-- Shared styles already present in the repository -->
-        <link rel="stylesheet" href="/css/landingpage/index.css" />
-        <link rel="stylesheet" href="/css/header.css" />
-        <link rel="stylesheet" href="/css/shared-include.css" />
-        <link rel="stylesheet" href="/css/header_shoppingcart.css" />
-        <link rel="stylesheet" href="/css/footer.css" />
+  const viewRelatedPosts =
+    typeof relatedPosts !== "undefined" &&
+    Array.isArray(relatedPosts)
+      ? relatedPosts
+      : [];
 
-        <!-- Existing lead-story design, followed by dynamic-state styles -->
-        <link rel="stylesheet" href="/css/blog/lead-detail/lead-detail.css" />
-        <link rel="stylesheet" href="/css/blog/blog-dynamic.css" />
+  const viewCommentErrors =
+    typeof commentErrors !== "undefined"
+      ? commentErrors
+      : {};
 
-        <script src="/js/blog/blogview.js" defer></script>
-    </head>
+  const viewCommentValues =
+    typeof commentValues !== "undefined"
+      ? commentValues
+      : {};
 
-    <body>
-        <%- include("../partials/header", { headerVariant: "blog" }) %>
+  const viewReplyErrors =
+    typeof replyErrors !== "undefined"
+      ? replyErrors
+      : {};
 
-            <% if (!viewPost) { %>
-                <main class="blog-detail-page">
-                    <div class="blog-article-width">
-                        <h1>Blog post not found</h1>
-                        <p><a href="/blog">← Back to Journal</a></p>
-                    </div>
-                </main>
-                <% } else { %>
-                    <main class="blog-detail-page">
-                        <nav class="blog-detail-breadcrumb blog-detail-container" aria-label="Breadcrumb">
-                            <a href="/">Home</a>
-                            <span aria-hidden="true">•</span>
-                            <a href="/blog">Journal</a>
-                            <span aria-hidden="true">•</span>
-                            <span aria-current="page">
-                                <%= viewPost.title %>
-                            </span>
-                        </nav>
+  const viewReplyValues =
+    typeof replyValues !== "undefined"
+      ? replyValues
+      : {};
 
-                        <header class="blog-article-header blog-detail-container">
-                            <div class="blog-article-meta">
-                                <span class="blog-article-category">
-                                    <%= viewPost.category %>
-                                </span>
+  const viewOpenReplyId =
+    typeof openReplyId !== "undefined"
+      ? openReplyId
+      : "";
 
-                                <time datetime="<%= viewPost.publishedAt || viewPost.updatedAt %>">
-                                    <%= viewPost.displayDate %>
-                                </time>
+  const viewNotice =
+    typeof notice !== "undefined"
+      ? notice
+      : "";
+%>
 
-                                <span aria-hidden="true">•</span>
-                                <span>
-                                    <%= viewPost.readTime %> min read
-                                </span>
+<!DOCTYPE html>
+<html lang="en">
 
-                                <% if (viewPost.status==="draft" ) { %>
-                                    <span class="blog-draft-badge">Draft preview</span>
-                                    <% } %>
-                            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta name="theme-color" content="#A31D1D" />
 
-                            <h1>
-                                <%= viewPost.title %>
-                            </h1>
+  <title>
+    <%= viewPost ? viewPost.title : "Blog post" %>
+    — Làng &amp; Co.
+  </title>
 
-                            <p class="blog-article-summary">
-                                <%= viewPost.summary %>
-                            </p>
+  <% if (viewPost) { %>
+    <link rel="canonical" href="<%= viewPost.absoluteUrl %>" />
 
-                            <div class="blog-article-author">
-                                <div class="blog-article-author__avatar" aria-hidden="true">
-                                    <%= viewPost.author.initials %>
-                                </div>
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="<%= viewPost.title %>" />
+    <meta property="og:description" content="<%= viewPost.summary %>" />
+    <meta property="og:url" content="<%= viewPost.absoluteUrl %>" />
 
-                                <div class="blog-article-author__information">
-                                    <strong>
-                                        <%= viewPost.author.name %>
-                                    </strong>
-                                    <span>
-                                        <%= viewPost.author.role %>
-                                    </span>
-                                </div>
-                            </div>
-                        </header>
+    <% if (viewPost.image?.url) { %>
+      <meta property="og:image" content="<%= viewPost.image.url %>" />
+    <% } %>
 
-                        <% if (viewPost.image && viewPost.image.url) { %>
-                            <figure class="blog-article-hero blog-detail-container">
-                                <img src="<%= viewPost.image.url %>" alt="<%= viewPost.image.alt %>" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<%= viewPost.title %>" />
+    <meta name="twitter:description" content="<%= viewPost.summary %>" />
+  <% } %>
 
-                                <% if (viewPost.image.caption) { %>
-                                    <figcaption>
-                                        <%= viewPost.image.caption %>
-                                    </figcaption>
-                                    <% } %>
-                            </figure>
-                            <% } %>
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
 
-                                <article class="blog-article-content">
-                                    <% viewPost.content.forEach((block)=> { %>
-                                        <% if (block.type==="heading" ) { %>
-                                            <h2>
-                                                <%= block.text %>
-                                            </h2>
+  <link
+    rel="stylesheet"
+    href="/css/blog/lead-detail/lead-detail.css"
+  />
 
-                                            <% } else if (block.type==="quote" ) { %>
-                                                <blockquote>
-                                                    <%= block.text %>
-                                                </blockquote>
+  <link
+    rel="stylesheet"
+    href="/css/blog/blog-dynamic.css?v=20260729-10"
+  />
 
-                                                <% } else if (block.type==="image" ) { %>
-                                                    <figure class="blog-article-inline-image">
-                                                        <img src="<%= block.url %>" alt="<%= block.alt || "" %>" />
+  <script
+    src="/js/blog/blogview.js?v=20260729-10"
+    defer
+  ></script>
+</head>
 
-                                                        <% if (block.caption) { %>
-                                                            <figcaption>
-                                                                <%= block.caption %>
-                                                            </figcaption>
-                                                            <% } %>
-                                                    </figure>
+<body>
+  <%- include("../partials/header", {
+    headerVariant: "blog"
+  }) %>
 
-                                                    <% } else { %>
-                                                        <p class="<%= block.introduction
-              ? 'blog-article-introduction'
-              : ''
-            %>">
-                                                            <%= block.text %>
-                                                        </p>
-                                                        <% } %>
-                                                            <% }); %>
-                                </article>
+  <% if (!viewPost) { %>
+    <main class="blog-detail-page">
+      <div class="blog-article-width">
+        <h1>Blog post not found</h1>
+        <p>
+          <a href="/blog">← Back to Journal</a>
+        </p>
+      </div>
+    </main>
+  <% } else { %>
 
-                                <section class="blog-article-footer blog-article-width">
-                                    <div class="blog-article-share">
-                                        <span>Share this story</span>
+    <main
+      class="blog-detail-page"
+      data-blog-detail
+      data-share-title="<%= viewPost.title %>"
+      data-share-text="<%= viewPost.summary %>"
+      data-share-url="<%= viewPost.absoluteUrl %>"
+    >
+      <nav
+        class="blog-detail-breadcrumb blog-detail-container"
+        aria-label="Breadcrumb"
+      >
+        <a href="/">Home</a>
+        <span aria-hidden="true">•</span>
+        <a href="/blog">Journal</a>
+        <span aria-hidden="true">•</span>
+        <span aria-current="page">
+          <%= viewPost.title %>
+        </span>
+      </nav>
 
-                                        <div class="blog-article-share__links">
-                                            <a href="<%= viewPost.shareEmailUrl %>"
-                                                aria-label="Share this article by email">
-                                                Email
-                                            </a>
+      <header class="blog-article-header blog-detail-container">
+        <div class="blog-article-meta">
+          <span class="blog-article-category">
+            <%= viewPost.category %>
+          </span>
 
-                                            <a href="#" data-facebook-share aria-label="Share this article on Facebook">
-                                                Facebook
-                                            </a>
+          <time
+            datetime="<%= viewPost.publishedAt || viewPost.updatedAt %>"
+          >
+            <%= viewPost.displayDate %>
+          </time>
 
-                                            <a href="#" data-copy-link aria-label="Copy article link">
-                                                Copy Link
-                                            </a>
+          <span aria-hidden="true">•</span>
 
-                                            <span class="blog-copy-feedback" data-copy-feedback role="status" hidden>
-                                                Link copied
-                                            </span>
-                                        </div>
-                                    </div>
+          <span>
+            <%= viewPost.readTime %> min read
+          </span>
 
-                                    <div class="blog-article-tags">
-                                        <% viewPost.tags.forEach((tag)=> { %>
-                                            <span>
-                                                <%= tag %>
-                                            </span>
-                                            <% }); %>
-                                    </div>
-                                </section>
+          <% if (viewPost.status === "draft") { %>
+            <span class="blog-draft-badge">
+              Draft preview
+            </span>
+          <% } %>
+        </div>
 
-                                <% if (viewRelatedPosts.length> 0) { %>
-                                    <section class="blog-related-stories blog-detail-container">
-                                        <div class="blog-section-heading">
-                                            <div>
-                                                <p class="blog-section-kicker">Continue reading</p>
-                                                <h2>Related <em>stories</em></h2>
-                                            </div>
+        <h1><%= viewPost.title %></h1>
 
-                                            <a href="/blog">View all stories →</a>
-                                        </div>
+        <p class="blog-article-summary">
+          <%= viewPost.summary %>
+        </p>
 
-                                        <div class="blog-related-stories__grid">
-                                            <% viewRelatedPosts.forEach((relatedPost)=> { %>
-                                                <article class="blog-related-card">
-                                                    <a class="blog-related-card__image" href="<%= relatedPost.url %>">
-                                                        <img src="<%= relatedPost.image.listUrl || relatedPost.image.url %>"
-                                                            alt="<%= relatedPost.image.alt %>" />
-                                                    </a>
+        <div class="blog-article-author">
+          <div
+            class="blog-article-author__avatar"
+            aria-hidden="true"
+          >
+            <%= viewPost.author.initials %>
+          </div>
 
-                                                    <div class="blog-related-card__content">
-                                                        <div class="blog-article-meta">
-                                                            <span class="blog-article-category">
-                                                                <%= relatedPost.category %>
-                                                            </span>
+          <div class="blog-article-author__information">
+            <strong>
+              <%= viewPost.author.name %>
+            </strong>
 
-                                                            <time datetime="<%= relatedPost.publishedAt %>">
-                                                                <%= relatedPost.displayDate %>
-                                                            </time>
-                                                        </div>
+            <span>
+              <%= viewPost.author.role %>
+            </span>
+          </div>
+        </div>
+      </header>
 
-                                                        <h3>
-                                                            <a href="<%= relatedPost.url %>">
-                                                                <%= relatedPost.title %>
-                                                            </a>
-                                                        </h3>
+      <% if (viewPost.image?.url) { %>
+        <figure class="blog-article-hero blog-detail-container">
+          <img
+            src="<%= viewPost.image.url %>"
+            alt="<%= viewPost.image.alt %>"
+          />
 
-                                                        <p>
-                                                            <%= relatedPost.archiveSummary || relatedPost.summary %>
-                                                        </p>
+          <% if (viewPost.image.caption) { %>
+            <figcaption>
+              <%= viewPost.image.caption %>
+            </figcaption>
+          <% } %>
+        </figure>
+      <% } %>
 
-                                                        <a class="blog-related-card__link"
-                                                            href="<%= relatedPost.url %>">
-                                                            Read story →
-                                                        </a>
-                                                    </div>
-                                                </article>
-                                                <% }); %>
-                                        </div>
-                                    </section>
-                                    <% } %>
+      <article class="blog-article-content">
+        <% viewPost.content.forEach((block) => { %>
 
-                                        <section class="blog-comments blog-article-width" id="comments">
-                                            <div class="blog-section-heading">
-                                                <div>
-                                                    <p class="blog-section-kicker">Conversation</p>
+          <% if (block.type === "heading") { %>
+            <h2><%= block.text %></h2>
 
-                                                    <h2>
-                                                        Comments <em>
-                                                            <%= viewPost.commentCount %>
-                                                        </em>
-                                                    </h2>
-                                                </div>
-                                            </div>
+          <% } else if (block.type === "quote") { %>
+            <blockquote>
+              <%= block.text %>
+            </blockquote>
 
-                                            <% if (viewNotice) { %>
-                                                <p class="blog-notice" role="status">
-                                                    <%= viewNotice %>
-                                                </p>
-                                                <% } %>
+          <% } else if (block.type === "image") { %>
+            <figure class="blog-article-inline-image">
+              <img
+                src="<%= block.url %>"
+                alt="<%= block.alt || '' %>"
+              />
 
-                                                    <% if (viewPost.status==="published" ) { %>
-                                                        <form class="blog-comment-form"
-                                                            action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments"
-                                                            method="post" novalidate data-comment-form
-                                                            data-post-id="<%= viewPost.id %>">
-                                                            <div class="blog-comment-form__row">
-                                                                <label>
-                                                                    Name
+              <% if (block.caption) { %>
+                <figcaption>
+                  <%= block.caption %>
+                </figcaption>
+              <% } %>
+            </figure>
 
-                                                                    <input type="text" name="name" minlength="2"
-                                                                        maxlength="80"
-                                                                        value="<%= viewCommentValues.name || viewCurrentUser?.name || '' %>"
-                                                                        <%=viewCurrentUser ? "readonly" : "required" %>
-                                                                    aria-invalid="<%= viewCommentErrors.name ? 'true'
-                                                                        : 'false' %>"
-                                                                        data-comment-name
-                                                                        />
+          <% } else { %>
+            <p
+              class="<%= block.introduction
+                ? 'blog-article-introduction'
+                : ''
+              %>"
+            >
+              <%= block.text %>
+            </p>
+          <% } %>
 
-                                                                        <span class="blog-field-error"
-                                                                            data-error-for="name" aria-live="polite">
-                                                                            <%= viewCommentErrors.name || "" %>
-                                                                        </span>
-                                                                </label>
+        <% }); %>
+      </article>
 
-                                                                <label>
-                                                                    Email
+      <section class="blog-article-footer blog-article-width">
+        <div class="blog-article-share">
+          <span>Share this story</span>
 
-                                                                    <input type="email" name="email" maxlength="160"
-                                                                        value="<%= viewCommentValues.email || viewCurrentUser?.email || '' %>"
-                                                                        <%=viewCurrentUser ? "readonly" : "required" %>
-                                                                    aria-invalid="<%= viewCommentErrors.email ? 'true'
-                                                                        : 'false' %>"
-                                                                        data-comment-email
-                                                                        />
+          <div class="blog-article-share__links">
+            <button
+              type="button"
+              data-native-share
+            >
+              Share
+            </button>
 
-                                                                        <span class="blog-field-error"
-                                                                            data-error-for="email" aria-live="polite">
-                                                                            <%= viewCommentErrors.email || "" %>
-                                                                        </span>
-                                                                </label>
-                                                            </div>
+            <button
+              type="button"
+              data-copy-link
+            >
+              Copy Link
+            </button>
 
-                                                            <label>
-                                                                Comment
+            <a
+              href="<%= viewPost.shareEmailUrl %>"
+              aria-label="Share this article by email"
+            >
+              Email
+            </a>
+          </div>
 
-                                                                <textarea name="comment" rows="5" minlength="3"
-                                                                    maxlength="1000"
-                                                                    placeholder="Write a thoughtful comment..." required
-                                                                    aria-invalid="<%= viewCommentErrors.comment ? 'true' : 'false' %>"
-                                                                    data-comment-content><%= viewCommentValues.comment || "" %></textarea>
+          <span
+            class="blog-copy-feedback"
+            data-share-feedback
+            role="status"
+            aria-live="polite"
+            hidden
+          >
+            Link copied
+          </span>
+        </div>
 
-                                                                <span class="blog-field-error" data-error-for="comment"
-                                                                    aria-live="polite">
-                                                                    <%= viewCommentErrors.comment || "" %>
-                                                                </span>
-                                                            </label>
+        <div class="blog-article-tags">
+          <% viewPost.tags.forEach((tag) => { %>
+            <span><%= tag %></span>
+          <% }); %>
+        </div>
+      </section>
 
-                                                            <div class="blog-comment-form__status">
-                                                                <span data-comment-count>0 / 1000</span>
-                                                                <span data-comment-feedback aria-live="polite"></span>
-                                                            </div>
+      <% if (viewRelatedPosts.length > 0) { %>
+        <section class="blog-related-stories blog-detail-container">
+          <div class="blog-section-heading">
+            <div>
+              <p class="blog-section-kicker">
+                Continue reading
+              </p>
 
-                                                            <button type="submit">Post Comment</button>
+              <h2>
+                Related <em>stories</em>
+              </h2>
+            </div>
 
-                                                            <p class="blog-comment-form__note">
-                                                                Comments are stored in memory and reset when the server
-                                                                restarts.
-                                                            </p>
-                                                        </form>
-                                                        <% } else { %>
-                                                            <p class="blog-comment-form__note">
-                                                                Comments are disabled while this post is a draft.
-                                                            </p>
-                                                            <% } %>
+            <a href="/blog">
+              View all stories →
+            </a>
+          </div>
 
-                                                                <div class="blog-comment-list">
-                                                                    <% if (viewPost.comments.length===0) { %>
-                                                                        <p class="blog-empty-comments">
-                                                                            No comments yet. Start the conversation.
-                                                                        </p>
-                                                                        <% } %>
+          <div class="blog-related-stories__grid">
+            <% viewRelatedPosts.forEach((relatedPost) => { %>
+              <article class="blog-related-card">
+                <a
+                  class="blog-related-card__image"
+                  href="<%= relatedPost.url %>"
+                >
+                  <img
+                    src="<%= relatedPost.image.listUrl || relatedPost.image.url %>"
+                    alt="<%= relatedPost.image.alt %>"
+                  />
+                </a>
 
-                                                                            <% viewPost.comments.forEach((comment)=> {
-                                                                                %>
-                                                                                <article class="blog-comment"
-                                                                                    id="<%= comment.id %>">
-                                                                                    <div class="blog-comment__avatar">
-                                                                                        <%= comment.author.initials %>
-                                                                                    </div>
+                <div class="blog-related-card__content">
+                  <div class="blog-article-meta">
+                    <span class="blog-article-category">
+                      <%= relatedPost.category %>
+                    </span>
 
-                                                                                    <div class="blog-comment__content">
-                                                                                        <div class="blog-comment__meta">
-                                                                                            <strong>
-                                                                                                <%= comment.author.name
-                                                                                                    %>
-                                                                                            </strong>
+                    <time datetime="<%= relatedPost.publishedAt %>">
+                      <%= relatedPost.displayDate %>
+                    </time>
+                  </div>
 
-                                                                                            <time
-                                                                                                datetime="<%= comment.createdAt %>">
-                                                                                                <%= comment.displayDate
-                                                                                                    %>
-                                                                                            </time>
-                                                                                        </div>
+                  <h3>
+                    <a href="<%= relatedPost.url %>">
+                      <%= relatedPost.title %>
+                    </a>
+                  </h3>
 
-                                                                                        <p>
-                                                                                            <%= comment.content %>
-                                                                                        </p>
+                  <p>
+                    <%= relatedPost.archiveSummary || relatedPost.summary %>
+                  </p>
 
-                                                                                        <% if ( viewCurrentUserId && (
-                                                                                            viewCurrentUserId===comment.author.id
-                                                                                            ||
-                                                                                            viewCurrentUserId===viewPost.author.id
-                                                                                            ) ) { %>
-                                                                                            <form
-                                                                                                class="blog-comment-delete-form"
-                                                                                                action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(comment.id) %>/delete"
-                                                                                                method="post"
-                                                                                                data-delete-comment-form>
-                                                                                                <button
-                                                                                                    type="submit">Delete</button>
-                                                                                            </form>
-                                                                                            <% } %>
-                                                                                    </div>
-                                                                                </article>
-                                                                                <% }); %>
-                                                                </div>
-                                        </section>
+                  <a
+                    class="blog-related-card__link"
+                    href="<%= relatedPost.url %>"
+                  >
+                    Read story →
+                  </a>
+                </div>
+              </article>
+            <% }); %>
+          </div>
+        </section>
+      <% } %>
 
-                                        <div class="blog-detail-return blog-article-width">
-                                            <a href="/blog">← Back to Journal</a>
-                                        </div>
-                    </main>
+      <section
+        class="blog-comments blog-article-width"
+        id="comments"
+      >
+        <div class="blog-section-heading">
+          <div>
+            <p class="blog-section-kicker">
+              Conversation
+            </p>
+
+            <h2>
+              Comments
+              <em><%= viewPost.commentCount %></em>
+            </h2>
+          </div>
+        </div>
+
+        <% if (viewNotice) { %>
+          <p class="blog-notice" role="status">
+            <%= viewNotice %>
+          </p>
+        <% } %>
+
+        <% if (viewPost.status !== "published") { %>
+          <p class="blog-comment-form__note">
+            Comments are disabled while this post is a draft.
+          </p>
+
+        <% } else if (!viewCurrentUser) { %>
+          <div class="blog-login-prompt">
+            <div>
+              <strong>Join the conversation</strong>
+
+              <p>
+                Sign in or create an account to comment,
+                reply, and like.
+              </p>
+            </div>
+
+            <div class="blog-login-prompt__actions">
+              <a
+                href="/shared/login?redirect=<%= encodeURIComponent(`/blog/${viewPost.id}#comments`) %>"
+              >
+                Sign In
+              </a>
+
+              <a
+                href="/shared/register?redirect=<%= encodeURIComponent(`/blog/${viewPost.id}#comments`) %>"
+              >
+                Create Account
+              </a>
+            </div>
+          </div>
+
+        <% } else { %>
+          <form
+            class="blog-comment-form"
+            action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments"
+            method="post"
+            novalidate
+            data-comment-form
+            data-post-id="<%= viewPost.id %>"
+          >
+            <label>
+              Comment
+
+              <textarea
+                name="comment"
+                rows="5"
+                minlength="3"
+                maxlength="1000"
+                placeholder="Write a thoughtful comment..."
+                required
+                aria-invalid="<%= viewCommentErrors.comment ? 'true' : 'false' %>"
+                data-comment-content
+              ><%= viewCommentValues.comment || "" %></textarea>
+
+              <span
+                class="blog-field-error"
+                data-error-for="comment"
+                aria-live="polite"
+              >
+                <%= viewCommentErrors.comment || "" %>
+              </span>
+            </label>
+
+            <div class="blog-comment-form__status">
+              <span data-comment-count>0 / 1000</span>
+
+              <span
+                data-comment-feedback
+                aria-live="polite"
+              ></span>
+            </div>
+
+            <button type="submit">
+              Post Comment
+            </button>
+          </form>
+        <% } %>
+
+        <div class="blog-comment-list">
+          <% if (viewComments.length === 0) { %>
+            <p class="blog-empty-comments">
+              No comments yet. Start the conversation.
+            </p>
+          <% } %>
+
+          <% viewComments.forEach((comment) => { %>
+            <article
+              class="blog-comment"
+              id="comment-<%= comment.id %>"
+            >
+              <div class="blog-comment__avatar">
+                <%= comment.author.initials %>
+              </div>
+
+              <div class="blog-comment__content">
+                <div class="blog-comment__meta">
+                  <strong>
+                    <%= comment.author.name %>
+                  </strong>
+
+                  <time datetime="<%= comment.createdAt %>">
+                    <%= comment.displayDate %>
+                  </time>
+                </div>
+
+                <p class="blog-comment__text">
+                  <%= comment.content %>
+                </p>
+
+                <div class="blog-comment__actions">
+                  <% if (viewCurrentUser) { %>
+                    <form
+                      action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(comment.id) %>/like"
+                      method="post"
+                      data-like-form
+                    >
+                      <button
+                        type="submit"
+                        class="<%= comment.likedByCurrentUser
+                          ? 'is-liked'
+                          : ''
+                        %>"
+                        data-like-button
+                      >
+                        <span data-like-label>
+                          <%= comment.likedByCurrentUser
+                            ? "Liked"
+                            : "Like"
+                          %>
+                        </span>
+
+                        <span data-like-count>
+                          <%= comment.likeCount %>
+                        </span>
+                      </button>
+                    </form>
+
+                    <button
+                      type="button"
+                      class="blog-reply-toggle"
+                      aria-expanded="<%= viewOpenReplyId === comment.id ? 'true' : 'false' %>"
+                      aria-controls="reply-panel-<%= comment.id %>"
+                      data-reply-toggle
+                    >
+                      Reply
+                      <span>
+                        <%= comment.replyCount %>
+                      </span>
+                    </button>
+                  <% } else { %>
+                    <a
+                      href="/shared/login?redirect=<%= encodeURIComponent(`/blog/${viewPost.id}#comment-${comment.id}`) %>"
+                    >
+                      Like
+                      <%= comment.likeCount %>
+                    </a>
+
+                    <a
+                      href="/shared/login?redirect=<%= encodeURIComponent(`/blog/${viewPost.id}#comment-${comment.id}`) %>"
+                    >
+                      Reply
+                      <%= comment.replyCount %>
+                    </a>
+                  <% } %>
+
+                  <% if (comment.canDelete) { %>
+                    <form
+                      action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(comment.id) %>/delete"
+                      method="post"
+                      data-delete-comment-form
+                    >
+                      <button type="submit">
+                        Delete
+                      </button>
+                    </form>
+                  <% } %>
+                </div>
+
+                <div
+                  class="blog-reply-panel"
+                  id="reply-panel-<%= comment.id %>"
+                  data-reply-panel
+                  <%= viewOpenReplyId === comment.id ? "" : "hidden" %>
+                >
+                  <div class="blog-reply-list">
+                    <% if (comment.replies.length === 0) { %>
+                      <p class="blog-no-replies">
+                        No replies yet.
+                      </p>
                     <% } %>
 
-                        <%- include("../partials/footer") %>
-    </body>
+                    <% comment.replies.forEach((reply) => { %>
+                      <article
+                        class="blog-reply"
+                        id="comment-<%= reply.id %>"
+                      >
+                        <div class="blog-reply__avatar">
+                          <%= reply.author.initials %>
+                        </div>
 
-    </html>
+                        <div class="blog-reply__content">
+                          <div class="blog-comment__meta">
+                            <strong>
+                              <%= reply.author.name %>
+                            </strong>
+
+                            <time datetime="<%= reply.createdAt %>">
+                              <%= reply.displayDate %>
+                            </time>
+                          </div>
+
+                          <p class="blog-comment__text">
+                            <%= reply.content %>
+                          </p>
+
+                          <div class="blog-comment__actions">
+                            <% if (viewCurrentUser) { %>
+                              <form
+                                action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(reply.id) %>/like"
+                                method="post"
+                                data-like-form
+                              >
+                                <button
+                                  type="submit"
+                                  class="<%= reply.likedByCurrentUser
+                                    ? 'is-liked'
+                                    : ''
+                                  %>"
+                                  data-like-button
+                                >
+                                  <span data-like-label>
+                                    <%= reply.likedByCurrentUser
+                                      ? "Liked"
+                                      : "Like"
+                                    %>
+                                  </span>
+
+                                  <span data-like-count>
+                                    <%= reply.likeCount %>
+                                  </span>
+                                </button>
+                              </form>
+                            <% } %>
+
+                            <% if (reply.canDelete) { %>
+                              <form
+                                action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(reply.id) %>/delete"
+                                method="post"
+                                data-delete-comment-form
+                              >
+                                <button type="submit">
+                                  Delete
+                                </button>
+                              </form>
+                            <% } %>
+                          </div>
+                        </div>
+                      </article>
+                    <% }); %>
+                  </div>
+
+                  <% if (viewCurrentUser) { %>
+                    <form
+                      class="blog-reply-form"
+                      action="/blog/<%= encodeURIComponent(viewPost.id) %>/comments/<%= encodeURIComponent(comment.id) %>/replies"
+                      method="post"
+                      novalidate
+                      data-reply-form
+                      data-comment-id="<%= comment.id %>"
+                    >
+                      <label>
+                        Write a reply
+
+                        <textarea
+                          name="reply"
+                          rows="3"
+                          minlength="3"
+                          maxlength="1000"
+                          placeholder="Write a reply..."
+                          required
+                          aria-invalid="<%= viewReplyErrors[comment.id] ? 'true' : 'false' %>"
+                          data-reply-content
+                        ><%= viewReplyValues[comment.id] || "" %></textarea>
+
+                        <span
+                          class="blog-field-error"
+                          data-error-for="reply"
+                          aria-live="polite"
+                        >
+                          <%= viewReplyErrors[comment.id] || "" %>
+                        </span>
+                      </label>
+
+                      <div class="blog-reply-form__footer">
+                        <span data-reply-count>
+                          0 / 1000
+                        </span>
+
+                        <div>
+                          <button
+                            type="button"
+                            class="blog-reply-cancel"
+                            data-reply-cancel
+                          >
+                            Cancel
+                          </button>
+
+                          <button type="submit">
+                            Post Reply
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      </section>
+
+      <div class="blog-detail-return blog-article-width">
+        <a href="/blog">
+          ← Back to Journal
+        </a>
+      </div>
+    </main>
+  <% } %>
+
+  <%- include("../partials/footer") %>
+</body>
+
+</html>

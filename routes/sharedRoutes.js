@@ -1,30 +1,85 @@
-const express = require("express");
-const sharedController = require("../controllers/sharedController");
+"use strict";
 
-const router = express.Router();
+const express = require(
+  "express",
+);
 
-router.get("/login", (req, res) => {
-  res.render("shared/login");
-});
+const authController =
+  require(
+    "../controllers/authController",
+  );
 
-router.get("/register", (req, res) => {
-  res.render("shared/register");
-});
+const {
+  requireAuth,
+} = require(
+  "../middlewares/authMiddleware",
+);
 
-router.get("/forgot-password", (req, res) => {
-  res.render("shared/forgot_password");
-});
+const router =
+  express.Router();
 
-router.get("/profile", (req, res) => {
-  res.render("shared/profile");
-});
+router.get(
+  "/login",
+  authController.getLoginPage,
+);
 
-router.get("/admin", (req, res) => {
-  res.render("shared/admin/admin");
-});
+router.post(
+  "/login",
+  authController.login,
+);
 
-router.get("/sitemap", (req, res) => {
-  res.render("shared/sitemap");
-});
+router.get(
+  "/register",
+  authController.getRegisterPage,
+);
+
+router.post(
+  "/register",
+  authController.register,
+);
+
+router.post(
+  "/logout",
+  requireAuth,
+  authController.logout,
+);
+
+router.get(
+  "/forgot-password",
+  (req, res) => {
+    res.render(
+      "shared/forgot_password",
+    );
+  },
+);
+
+router.get(
+  "/profile",
+  requireAuth,
+  (req, res) => {
+    res.render(
+      "shared/profile",
+    );
+  },
+);
+
+router.get(
+  "/admin",
+  requireAuth,
+  (req, res) => {
+    res.render(
+      "shared/admin/admin",
+    );
+  },
+);
+
+router.get(
+  "/sitemap",
+  (req, res) => {
+    res.render(
+      "shared/sitemap",
+    );
+  },
+);
 
 module.exports = router;
