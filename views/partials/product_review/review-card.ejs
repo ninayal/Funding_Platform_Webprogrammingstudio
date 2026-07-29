@@ -1,0 +1,79 @@
+<article
+    class="pr-card<%= review.isOwn ? ' pr-card--own' : '' %>"
+    data-review-id="<%= review.id %>"
+    data-rating="<%= review.rating %>"
+    data-title="<%= review.title.toLowerCase() %>"
+    data-reviewer="<%= review.name.toLowerCase() %>"
+    data-date="<%= review.dateAdded %>"
+    data-description="<%= review.comment.toLowerCase() %>"
+>
+    <div class="pr-card__top">
+        <div class="pr-card__identity">
+            <div class="pr-card__avatar" aria-hidden="true">
+                <%= review.avatar %>
+            </div>
+
+            <div>
+                <p class="pr-card__user"><%= review.name %></p>
+
+                <time
+                    class="pr-card__date"
+                    datetime="<%= review.dateValue %>"
+                ><%= review.dateLabel %></time>
+            </div>
+        </div>
+
+        <p
+            class="pr-card__stars"
+            aria-label="<%= review.rating %> out of 5 stars"
+        ><%= review.stars %></p>
+    </div>
+
+    <% if (review.isOwn) { %>
+        <div class="pr-card__owner-tools">
+            <span class="pr-card__owner-badge">
+                Your review
+            </span>
+
+            <div class="pr-card__owner-actions">
+                <a
+                    class="pr-card__owner-action"
+                    href="/review/reviews/<%= review.id %>/edit#review-form"
+                >Edit</a>
+
+                <form
+                    class="pr-delete-form"
+                    action="/review/reviews/<%= review.id %>/delete"
+                    method="post"
+                >
+                    <button
+                        class="pr-card__owner-action pr-card__owner-action--delete"
+                        type="submit"
+                        data-delete-review
+                    >Delete</button>
+                </form>
+            </div>
+        </div>
+    <% } %>
+
+    <h3 class="pr-card__title"><%= review.title %></h3>
+    <p class="pr-card__comment"><%= review.comment %></p>
+
+    <div class="pr-card__media">
+        <img
+            class="pr-card__thumb"
+            src="<%= review.displayImage %>"
+            alt="Thumbnail of <%= product.imageAlt %>"
+            loading="lazy"
+            decoding="async"
+        />
+
+        <img
+            class="pr-card__photo"
+            src="<%= review.displayImage %>"
+            alt=""
+            loading="lazy"
+            decoding="async"
+        />
+    </div>
+</article>

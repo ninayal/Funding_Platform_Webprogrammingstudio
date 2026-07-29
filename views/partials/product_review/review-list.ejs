@@ -1,0 +1,15 @@
+<div class="pr-cards" id="review-card-list">
+    <% reviews.forEach((review) => { %>
+        <%- include("review-card", { review }) %>
+    <% }); %>
+</div>
+
+<p class="pr-empty-state" id="review-empty-state" hidden>
+    No reviews match the selected search, sort and filter settings.
+</p>
+
+<nav
+    class="pr-pagination"
+    id="review-pagination"
+    aria-label="Review pagination"
+></nav>

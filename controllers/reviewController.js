@@ -260,17 +260,47 @@ const showReviewDetailPage = (req, res, next) => {
   try {
     const reviewNumber = Number(req.params.reviewNumber);
 
-    if (!Number.isInteger(reviewNumber) || reviewNumber < 1 || reviewNumber > 15) {
-      return res.status(404).send("Product detail page not found.");
+    if (!Number.isInteger(reviewNumber) || reviewNumber !== 1) {
+      return res.status(404).send(
+        "Product detail page not found."
+      );
     }
 
-    const detailData =
-      reviewNumber === 1 ? reviewModel.getProductDetailPageData() : {};
+    const currentUser = getCurrentUser(req);
 
-    return res.render(
-      `review/product_detail/review${reviewNumber}`,
-      detailData
-    );
+    // Dữ liệu của trang chi tiết sản phẩm
+    const detailData =
+      reviewModel.getProductDetailPageData();
+
+    // Dữ liệu của feature product review
+    const reviewData =
+      reviewModel.getReviewPageData(currentUser);
+
+    return res.render("review/review", {
+      ...detailData,
+      ...reviewData,
+
+      formMode: "create",
+      editingReviewId: "",
+
+      formValues: {
+        rating: "",
+        reviewTitle: "",
+        review: "",
+        imageUrl: ""
+      },
+
+      serverErrors: {},
+
+      pageMessage:
+        getStatusMessage(req.query.status),
+
+      pageStatus:
+        req.query.status || "",
+
+      reviewDateValue:
+        new Date().toISOString().slice(0, 10)
+    });
   } catch (error) {
     return next(error);
   }

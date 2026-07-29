@@ -1,0 +1,43 @@
+<section class="pd-related container" aria-label="You may also like">
+    <h2>You May Also Like</h2>
+
+    <div class="shop-grid pd-related__grid">
+        <% relatedProductsData.forEach((relatedProduct) => { %>
+            <article class="shop-card">
+                <div class="shop-card__media">
+                    <img
+                        src="<%= relatedProduct.image %>"
+                        alt="<%= relatedProduct.imageAlt %>"
+                    />
+
+                    <a
+                        href="/cart/cart"
+                        class="quickadd-btn"
+                        aria-label="Quick add <%= relatedProduct.name %> to cart"
+                    >+</a>
+                </div>
+
+                <div class="shop-card__body">
+                    <p class="shop-card__maker">
+                        <%= relatedProduct.maker %>
+                    </p>
+
+                    <h3 class="shop-card__title">
+                        <a href="<%= relatedProduct.href %>">
+                            <%= relatedProduct.name %>
+                        </a>
+                    </h3>
+
+                    <p class="shop-card__price">
+                        <%= relatedProduct.price %>
+                    </p>
+
+                    <p class="shop-card__rating">
+                        <%= "★".repeat(relatedProduct.rating) %><%= "☆".repeat(5 - relatedProduct.rating) %>
+                        <span>(<%= relatedProduct.reviewCount %>)</span>
+                    </p>
+                </div>
+            </article>
+        <% }); %>
+    </div>
+</section>
