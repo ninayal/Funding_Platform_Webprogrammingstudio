@@ -1,154 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <meta name="theme-color" content="#A31D1D" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Làng &amp; Co. — <%= pageTitle %></title>
+  <meta name="theme-color" content="#A31D1D" />
 
-    <link rel="stylesheet" href="/css/landingpage/index.css" />
-    <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/header_shoppingcart.css" />
-    <link rel="stylesheet" href="/css/shared-include.css" />
-    <link rel="stylesheet" href="/css/cart/products.css" />
-    <link rel="stylesheet" href="/css/footer.css" />
-  </head>
+  <title>Làng &amp; Co. — <%= pageTitle %>
+  </title>
 
-  <body>
-    <%- include("../partials/header") %>
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header_v2.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/cart/products.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+</head>
 
-    <% categories.forEach((category, index) => { %>
-      <input
-        class="state-control"
-        type="radio"
-        name="category"
-        id="filter-<%= category.id %>"
-        <%= index === 0 ? "checked" : "" %>
+<body>
+  <%- include("../partials/header_v2") %>
+
+    <% categories.forEach((category, index)=> { %>
+      <input class="state-control" type="radio" name="category" id="filter-<%= category.id %>" <%=index===0 ? "checked"
+        : "" %>
       />
-    <% }); %>
+      <% }); %>
 
-    <% sortOptions.forEach((option, index) => { %>
-      <input
-        class="state-control"
-        type="radio"
-        name="sort"
-        id="sort-<%= option.id %>"
-        <%= index === 0 ? "checked" : "" %>
-      />
-    <% }); %>
+        <% sortOptions.forEach((option, index)=> { %>
+          <input class="state-control" type="radio" name="sort" id="sort-<%= option.id %>" <%=index===0 ? "checked" : ""
+            %>
+          />
+          <% }); %>
 
-    <main class="shop-wrap">
-      <nav class="breadcrumb container" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span aria-hidden="true">•</span>
-        <span aria-current="page">Shop All</span>
-      </nav>
+            <main class="shop-wrap">
+              <nav class="breadcrumb container" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span aria-hidden="true">•</span>
+                <span aria-current="page">Shop All</span>
+              </nav>
 
-      <header class="shop-header container">
-        <h1>Shop All</h1>
+              <header class="shop-header container">
+                <h1>Shop All</h1>
 
-        <p class="shop-header__sub">
-          Unlock the story behind every weave, glaze and carving.
-        </p>
-      </header>
+                <p class="shop-header__sub">
+                  Unlock the story behind every weave, glaze and carving.
+                </p>
+              </header>
 
-      <nav
-        class="category-tabs container"
-        aria-label="Shop by category"
-      >
-        <% categories.forEach((category) => { %>
-          <label
-            class="tab"
-            for="filter-<%= category.id %>"
-          >
-            <%= category.label %>
-          </label>
-        <% }); %>
-      </nav>
-
-      <div class="shop-shell container">
-        <%- include("../partials/products/filters") %>
-
-        <div class="shop-content">
-          <div class="shop-toolbar">
-            <p class="results-count">
-              <% categories.forEach((category) => { %>
-                <span class="meta-<%= category.id %>">
-                  <%= categoryCounts[category.id] %>
-                  <%= categoryCounts[category.id] === 1 ? "result" : "results" %>
-                </span>
-              <% }); %>
-            </p>
-
-            <details class="sort-menu">
-              <summary aria-label="Choose product order">
-                Sort by
-
-                <% sortOptions.forEach((option) => { %>
-                  <span
-                    class="sort-current sort-current-<%= option.id %>"
-                  >
-                    <%= option.label %>
-                  </span>
-                <% }); %>
-              </summary>
-
-              <div
-                class="sort-options"
-                role="group"
-                aria-label="Sort products"
-              >
-                <% sortOptions.forEach((option) => { %>
-                  <label for="sort-<%= option.id %>">
-                    <%= option.label %>
+              <nav class="category-tabs container" aria-label="Shop by category">
+                <% categories.forEach((category)=> { %>
+                  <label class="tab" for="filter-<%= category.id %>">
+                    <%= category.label %>
                   </label>
-                <% }); %>
+                  <% }); %>
+              </nav>
+
+              <div class="shop-shell container">
+                <%- include("../partials/products/filters") %>
+
+                  <div class="shop-content">
+                    <div class="shop-toolbar">
+                      <p class="results-count">
+                        <% categories.forEach((category)=> { %>
+                          <span class="meta-<%= category.id %>">
+                            <%= categoryCounts[category.id] %>
+                              <%= categoryCounts[category.id]===1 ? "result" : "results" %>
+                          </span>
+                          <% }); %>
+                      </p>
+
+                      <details class="sort-menu">
+                        <summary aria-label="Choose product order">
+                          Sort by
+
+                          <% sortOptions.forEach((option)=> { %>
+                            <span class="sort-current sort-current-<%= option.id %>">
+                              <%= option.label %>
+                            </span>
+                            <% }); %>
+                        </summary>
+
+                        <div class="sort-options" role="group" aria-label="Sort products">
+                          <% sortOptions.forEach((option)=> { %>
+                            <label for="sort-<%= option.id %>">
+                              <%= option.label %>
+                            </label>
+                            <% }); %>
+                        </div>
+                      </details>
+                    </div>
+
+                    <%- include("../partials/products/product-grid") %>
+
+                      <p class="empty-state">
+                        No pieces match this filter yet. Try another category.
+                      </p>
+
+                      <nav class="pagination" aria-label="Pagination">
+                        <p class="pagination__info">
+                          Showing all <%= products.length %> products
+                        </p>
+
+                        <ul class="pagination__pages">
+                          <li>
+                            <span class="is-current" aria-current="page">
+                              1
+                            </span>
+                          </li>
+                        </ul>
+                      </nav>
+                  </div>
               </div>
-            </details>
-          </div>
 
-          <%- include("../partials/products/product-grid") %>
+              <section class="shop-seo container">
+                <h2>Vietnamese Craft, Curated</h2>
 
-          <p class="empty-state">
-            No pieces match this filter yet. Try another category.
-          </p>
+                <p>
+                  Discover Làng &amp; Co.'s collection of handmade pieces from
+                  craft villages across Việt Nam — from Bát Tràng ceramics and
+                  Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving,
+                  Phú Vinh bamboo weaving and sandalwood incense. Every piece is
+                  made by hand, sourced directly from the artisans who made it
+                  and shipped worldwide with care.
+                </p>
+              </section>
+            </main>
 
-          <nav class="pagination" aria-label="Pagination">
-            <p class="pagination__info">
-              Showing all <%= products.length %> products
-            </p>
+            <%- include("../partials/footer") %>
+</body>
 
-            <ul class="pagination__pages">
-              <li>
-                <span class="is-current" aria-current="page">
-                  1
-                </span>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <section class="shop-seo container">
-        <h2>Vietnamese Craft, Curated</h2>
-
-        <p>
-          Discover Làng &amp; Co.'s collection of handmade pieces from
-          craft villages across Việt Nam — from Bát Tràng ceramics and
-          Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving,
-          Phú Vinh bamboo weaving and sandalwood incense. Every piece is
-          made by hand, sourced directly from the artisans who made it
-          and shipped worldwide with care.
-        </p>
-      </section>
-    </main>
-
-    <%- include("../partials/footer") %>
-  </body>
 </html>

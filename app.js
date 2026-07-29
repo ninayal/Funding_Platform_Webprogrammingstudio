@@ -10,7 +10,6 @@ const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
-const PORT = 3000;
 
 //Config
 const sessionConfig = require("./config/sessionConfig");

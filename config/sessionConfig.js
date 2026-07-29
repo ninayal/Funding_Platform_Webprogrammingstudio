@@ -4,4 +4,13 @@ const sessionConfig = {
   saveUninitialized: false,
 };
 
-module.exports = sessionConfig;
+module.exports = {
+  secret: process.env.SESSION_SECRET || "development-secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24,
+  },
+};
