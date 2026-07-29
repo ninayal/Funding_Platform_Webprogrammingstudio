@@ -1,232 +1,608 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-    const copyLink = document.querySelector("[data-copy-link]");
-    const copyFeedback = document.querySelector("[data-copy-feedback]");
-    const facebookLink = document.querySelector("[data-facebook-share]");
-    const commentForm = document.querySelector("[data-comment-form]");
-    const deleteForms = [
-        ...document.querySelectorAll("[data-delete-comment-form]"),
-    ];
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    const detailPage =
+      document.querySelector(
+        "[data-blog-detail]",
+      );
 
-    copyLink?.addEventListener("click", async (event) => {
-        event.preventDefault();
-
-        try {
-            await navigator.clipboard.writeText(window.location.href);
-
-            if (copyFeedback) {
-                copyFeedback.hidden = false;
-
-                window.setTimeout(() => {
-                    copyFeedback.hidden = true;
-                }, 2000);
-            }
-        } catch (error) {
-            window.prompt("Copy this link:", window.location.href);
-        }
-    });
-
-    facebookLink?.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        const shareUrl =
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-            encodeURIComponent(window.location.href);
-
-        window.open(
-            shareUrl,
-            "facebook-share",
-            "width=680,height=520,noopener,noreferrer",
-        );
-    });
-
-    deleteForms.forEach((form) => {
-        form.addEventListener("submit", (event) => {
-            const confirmed = window.confirm(
-                "Delete this comment? This action cannot be undone.",
-            );
-
-            if (!confirmed) {
-                event.preventDefault();
-            }
-        });
-    });
-
-    if (!commentForm) {
-        return;
+    if (!detailPage) {
+      return;
     }
 
-    const postId = commentForm.dataset.postId || "post";
-    const storageKey = `langco.blog.commentDraft.${postId}`;
+    const shareButton =
+      document.querySelector(
+        "[data-native-share]",
+      );
 
-    const nameInput = commentForm.querySelector("[data-comment-name]");
-    const emailInput = commentForm.querySelector("[data-comment-email]");
-    const contentInput = commentForm.querySelector("[data-comment-content]");
-    const countOutput = commentForm.querySelector("[data-comment-count]");
-    const feedbackOutput = commentForm.querySelector(
-        "[data-comment-feedback]",
-    );
+    const copyButton =
+      document.querySelector(
+        "[data-copy-link]",
+      );
 
-    const getErrorElement = (fieldName) =>
-        commentForm.querySelector(`[data-error-for="${fieldName}"]`);
+    const shareFeedback =
+      document.querySelector(
+        "[data-share-feedback]",
+      );
 
-    const setError = (input, fieldName, message) => {
-        if (!input) {
-            return;
-        }
+    const showShareFeedback = (
+      message,
+    ) => {
+      if (!shareFeedback) {
+        return;
+      }
 
-        input.setAttribute("aria-invalid", message ? "true" : "false");
+      shareFeedback.textContent =
+        message;
 
-        const errorElement = getErrorElement(fieldName);
+      shareFeedback.hidden =
+        false;
 
-        if (errorElement) {
-            errorElement.textContent = message;
-        }
-    };
+      window.clearTimeout(
+        showShareFeedback.timeoutId,
+      );
 
-    const validateName = () => {
-        if (!nameInput || nameInput.readOnly) {
-            return true;
-        }
-
-        const value = nameInput.value.trim();
-        const valid = value.length >= 2 && value.length <= 80;
-
-        setError(
-            nameInput,
-            "name",
-            valid ? "" : "Name must contain between 2 and 80 characters.",
+      showShareFeedback.timeoutId =
+        window.setTimeout(
+          () => {
+            shareFeedback.hidden =
+              true;
+          },
+          2400,
         );
-
-        return valid;
     };
 
-    const validateEmail = () => {
-        if (!emailInput || emailInput.readOnly) {
-            return true;
-        }
-
-        const value = emailInput.value.trim();
-        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-        setError(
-            emailInput,
-            "email",
-            valid ? "" : "Enter a valid email address.",
-        );
-
-        return valid;
-    };
-
-    const validateContent = () => {
-        if (!contentInput) {
-            return false;
-        }
-
-        const value = contentInput.value.trim();
-        const valid = value.length >= 3 && value.length <= 1000;
-
-        setError(
-            contentInput,
-            "comment",
-            valid
-                ? ""
-                : "Comment must contain between 3 and 1000 characters.",
-        );
-
-        if (countOutput) {
-            countOutput.textContent = `${contentInput.value.length} / 1000`;
-        }
-
-        return valid;
-    };
-
-    const saveDraft = () => {
-        const draft = {
-            name: nameInput?.readOnly ? "" : nameInput?.value || "",
-            email: emailInput?.readOnly ? "" : emailInput?.value || "",
-            comment: contentInput?.value || "",
-        };
-
-        localStorage.setItem(storageKey, JSON.stringify(draft));
-    };
-
-    const restoreDraft = () => {
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.get("comment") === "added") {
-            localStorage.removeItem(storageKey);
-            return;
-        }
-
-        const storedDraft = localStorage.getItem(storageKey);
-
-        if (!storedDraft) {
-            return;
-        }
+    const copyArticleLink =
+      async () => {
+        const url =
+          detailPage.dataset
+            .shareUrl ||
+          window.location.href;
 
         try {
-            const draft = JSON.parse(storedDraft);
+          await navigator.clipboard.writeText(
+            url,
+          );
 
-            if (nameInput && !nameInput.readOnly && !nameInput.value) {
-                nameInput.value = draft.name || "";
-            }
+          showShareFeedback(
+            "Link copied",
+          );
 
-            if (emailInput && !emailInput.readOnly && !emailInput.value) {
-                emailInput.value = draft.email || "";
-            }
-
-            if (contentInput && !contentInput.value) {
-                contentInput.value = draft.comment || "";
-            }
+          return true;
         } catch (error) {
-            localStorage.removeItem(storageKey);
+          window.prompt(
+            "Copy this link:",
+            url,
+          );
+
+          return false;
         }
-    };
+      };
 
-    nameInput?.addEventListener("input", () => {
-        validateName();
-        saveDraft();
-    });
+    shareButton?.addEventListener(
+      "click",
+      async () => {
+        const shareData = {
+          title:
+            detailPage.dataset
+              .shareTitle ||
+            document.title,
 
-    emailInput?.addEventListener("input", () => {
-        validateEmail();
-        saveDraft();
-    });
+          text:
+            detailPage.dataset
+              .shareText ||
+            "",
 
-    contentInput?.addEventListener("input", () => {
-        validateContent();
-        saveDraft();
-    });
+          url:
+            detailPage.dataset
+              .shareUrl ||
+            window.location.href,
+        };
 
-    commentForm.addEventListener("submit", (event) => {
-        const valid = [
-            validateName(),
-            validateEmail(),
-            validateContent(),
-        ].every(Boolean);
+        if (
+          typeof navigator.share ===
+          "function"
+        ) {
+          try {
+            await navigator.share(
+              shareData,
+            );
 
-        if (!valid) {
-            event.preventDefault();
-
-            if (feedbackOutput) {
-                feedbackOutput.textContent =
-                    "Correct the highlighted fields before posting.";
-            }
-
-            commentForm
-                .querySelector('[aria-invalid="true"]')
-                ?.focus();
+            showShareFeedback(
+              "Share menu opened",
+            );
 
             return;
+          } catch (error) {
+            /*
+             * AbortError means the user
+             * closed the share sheet.
+             */
+            if (
+              error.name ===
+              "AbortError"
+            ) {
+              return;
+            }
+          }
         }
 
-        if (feedbackOutput) {
-            feedbackOutput.textContent = "Submitting comment…";
-        }
-    });
+        await copyArticleLink();
+      },
+    );
 
-    restoreDraft();
-    validateContent();
-});
+    copyButton?.addEventListener(
+      "click",
+      copyArticleLink,
+    );
+
+    const validateTextArea = (
+      textarea,
+      errorElement,
+      label,
+    ) => {
+      const value =
+        textarea.value.trim();
+
+      let message = "";
+
+      if (value.length < 3) {
+        message =
+          `${label} must contain at least 3 characters.`;
+      } else if (
+        value.length > 1000
+      ) {
+        message =
+          `${label} must not exceed 1000 characters.`;
+      }
+
+      textarea.setAttribute(
+        "aria-invalid",
+        message
+          ? "true"
+          : "false",
+      );
+
+      if (errorElement) {
+        errorElement.textContent =
+          message;
+      }
+
+      return !message;
+    };
+
+    const commentForm =
+      document.querySelector(
+        "[data-comment-form]",
+      );
+
+    if (commentForm) {
+      const textarea =
+        commentForm.querySelector(
+          "[data-comment-content]",
+        );
+
+      const count =
+        commentForm.querySelector(
+          "[data-comment-count]",
+        );
+
+      const errorElement =
+        commentForm.querySelector(
+          '[data-error-for="comment"]',
+        );
+
+      const feedback =
+        commentForm.querySelector(
+          "[data-comment-feedback]",
+        );
+
+      const postId =
+        commentForm.dataset
+          .postId || "post";
+
+      const storageKey =
+        `langco.blog.commentDraft.${postId}`;
+
+      const updateComment = () => {
+        if (!textarea) {
+          return;
+        }
+
+        if (count) {
+          count.textContent =
+            `${textarea.value.length} / 1000`;
+        }
+
+        validateTextArea(
+          textarea,
+          errorElement,
+          "Comment",
+        );
+
+        localStorage.setItem(
+          storageKey,
+          textarea.value,
+        );
+      };
+
+      const query =
+        new URLSearchParams(
+          window.location.search,
+        );
+
+      if (
+        query.get("comment") ===
+        "added"
+      ) {
+        localStorage.removeItem(
+          storageKey,
+        );
+      } else {
+        const storedDraft =
+          localStorage.getItem(
+            storageKey,
+          );
+
+        if (
+          storedDraft &&
+          textarea &&
+          !textarea.value
+        ) {
+          textarea.value =
+            storedDraft;
+        }
+      }
+
+      textarea?.addEventListener(
+        "input",
+        updateComment,
+      );
+
+      commentForm.addEventListener(
+        "submit",
+        (event) => {
+          if (
+            !textarea ||
+            !validateTextArea(
+              textarea,
+              errorElement,
+              "Comment",
+            )
+          ) {
+            event.preventDefault();
+
+            if (feedback) {
+              feedback.textContent =
+                "Correct the comment before posting.";
+            }
+
+            textarea?.focus();
+
+            return;
+          }
+
+          if (feedback) {
+            feedback.textContent =
+              "Posting comment…";
+          }
+        },
+      );
+
+      updateComment();
+    }
+
+    const initialiseReplyForm = (
+      form,
+    ) => {
+      const textarea =
+        form.querySelector(
+          "[data-reply-content]",
+        );
+
+      const count =
+        form.querySelector(
+          "[data-reply-count]",
+        );
+
+      const errorElement =
+        form.querySelector(
+          '[data-error-for="reply"]',
+        );
+
+      const commentId =
+        form.dataset
+          .commentId ||
+        "comment";
+
+      const storageKey =
+        `langco.blog.replyDraft.${commentId}`;
+
+      const updateReply = () => {
+        if (!textarea) {
+          return;
+        }
+
+        if (count) {
+          count.textContent =
+            `${textarea.value.length} / 1000`;
+        }
+
+        validateTextArea(
+          textarea,
+          errorElement,
+          "Reply",
+        );
+
+        localStorage.setItem(
+          storageKey,
+          textarea.value,
+        );
+      };
+
+      const query =
+        new URLSearchParams(
+          window.location.search,
+        );
+
+      if (
+        query.get("reply") ===
+        "added"
+      ) {
+        localStorage.removeItem(
+          storageKey,
+        );
+      } else {
+        const storedDraft =
+          localStorage.getItem(
+            storageKey,
+          );
+
+        if (
+          storedDraft &&
+          textarea &&
+          !textarea.value
+        ) {
+          textarea.value =
+            storedDraft;
+        }
+      }
+
+      textarea?.addEventListener(
+        "input",
+        updateReply,
+      );
+
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (
+            !textarea ||
+            !validateTextArea(
+              textarea,
+              errorElement,
+              "Reply",
+            )
+          ) {
+            event.preventDefault();
+            textarea?.focus();
+          }
+        },
+      );
+
+      updateReply();
+    };
+
+    document
+      .querySelectorAll(
+        "[data-reply-form]",
+      )
+      .forEach(
+        initialiseReplyForm,
+      );
+
+    document
+      .querySelectorAll(
+        "[data-reply-toggle]",
+      )
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            const controls =
+              button.getAttribute(
+                "aria-controls",
+              );
+
+            const panel =
+              document.getElementById(
+                controls,
+              );
+
+            if (!panel) {
+              return;
+            }
+
+            const willOpen =
+              panel.hidden;
+
+            panel.hidden =
+              !willOpen;
+
+            button.setAttribute(
+              "aria-expanded",
+              String(willOpen),
+            );
+
+            if (willOpen) {
+              panel
+                .querySelector(
+                  "[data-reply-content]",
+                )
+                ?.focus();
+            }
+          },
+        );
+      });
+
+    document
+      .querySelectorAll(
+        "[data-reply-cancel]",
+      )
+      .forEach((button) => {
+        button.addEventListener(
+          "click",
+          () => {
+            const panel =
+              button.closest(
+                "[data-reply-panel]",
+              );
+
+            if (!panel) {
+              return;
+            }
+
+            panel.hidden = true;
+
+            const panelId =
+              panel.id;
+
+            const toggle =
+              document.querySelector(
+                `[aria-controls="${CSS.escape(
+                  panelId,
+                )}"]`,
+              );
+
+            toggle?.setAttribute(
+              "aria-expanded",
+              "false",
+            );
+          },
+        );
+      });
+
+    document
+      .querySelectorAll(
+        "[data-like-form]",
+      )
+      .forEach((form) => {
+        form.addEventListener(
+          "submit",
+          async (event) => {
+            event.preventDefault();
+
+            const button =
+              form.querySelector(
+                "[data-like-button]",
+              );
+
+            const label =
+              form.querySelector(
+                "[data-like-label]",
+              );
+
+            const count =
+              form.querySelector(
+                "[data-like-count]",
+              );
+
+            if (button) {
+              button.disabled =
+                true;
+            }
+
+            try {
+              const response =
+                await fetch(
+                  form.action,
+                  {
+                    method: "POST",
+
+                    headers: {
+                      Accept:
+                        "application/json",
+                    },
+                  },
+                );
+
+              const result =
+                await response.json();
+
+              if (
+                response.status ===
+                  401 &&
+                result.loginUrl
+              ) {
+                window.location.href =
+                  result.loginUrl;
+
+                return;
+              }
+
+              if (
+                !response.ok ||
+                !result.ok
+              ) {
+                throw new Error(
+                  result.message ||
+                    "Like could not be updated.",
+                );
+              }
+
+              button?.classList.toggle(
+                "is-liked",
+                result.liked,
+              );
+
+              if (label) {
+                label.textContent =
+                  result.liked
+                    ? "Liked"
+                    : "Like";
+              }
+
+              if (count) {
+                count.textContent =
+                  String(
+                    result.likeCount,
+                  );
+              }
+            } catch (error) {
+              window.alert(
+                error.message ||
+                  "Like could not be updated.",
+              );
+            } finally {
+              if (button) {
+                button.disabled =
+                  false;
+              }
+            }
+          },
+        );
+      });
+
+    document
+      .querySelectorAll(
+        "[data-delete-comment-form]",
+      )
+      .forEach((form) => {
+        form.addEventListener(
+          "submit",
+          (event) => {
+            const confirmed =
+              window.confirm(
+                "Delete this comment? Replies attached to a parent comment will also be deleted.",
+              );
+
+            if (!confirmed) {
+              event.preventDefault();
+            }
+          },
+        );
+      });
+  },
+);
