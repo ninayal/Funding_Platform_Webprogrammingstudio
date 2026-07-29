@@ -1,19 +1,12 @@
-html,
-body {
-  background: #6D2323;
-  height: 100%;
-}
-
-body {
-  margin: 0;
-}
 
 .site-footer {
   position: relative;
-  background: var(--darkred);
+  width: 100%;
+  background: var(--darkred, #6D2323);
   color: var(--tan);
   font-family: var(--ff-ui);
   padding: 36px 40px 0;
+  box-sizing: border-box;
 }
 
 

@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="/css/header_shoppingcart.css" />
     <link rel="stylesheet" href="/css/cart/products.css" />
     <link rel="stylesheet" href="/css/review/product-detail.css" />
-    <link rel="stylesheet" href="/css/review/product_review.css" />
     <link rel="stylesheet" href="/css/review/review_responsive.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
 </head>
 <body>
     <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
@@ -231,12 +231,6 @@
         </section>
     </div>
 
-    <iframe
-        src="/global/footer.html"
-        title="Footer"
-        class="shared-include shared-footer"
-        loading="lazy"
-        scrolling="no"
-    ></iframe>
+    <%- include("../../partials/footer") %>
 </body>
 </html>
