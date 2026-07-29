@@ -1,19 +1,115 @@
 /*
- * Integration layer for the EJS version.
- * The old HTML page embedded its header/footer with iframes.
- * The EJS page now uses shared partials in normal document flow.
+ * Gift Card EJS page integration.
+ * The hero and wave follow the same geometry as the Home page.
  */
+
+/* =====================================================
+   PAGE
+   ===================================================== */
 
 .giftcard-page {
   min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--cream);
 }
+
+/* =====================================================
+   HERO
+   Same total height as Home
+   ===================================================== */
 
 .giftcard-page .gift-hero {
-  min-height: 620px;
-  padding-top: 96px;
+  position: relative;
+
+  width: 100%;
+  height: 800px;
+  min-height: 520px;
+
+  margin: 0;
+  padding: 0;
+
+  display: block;
+  overflow: hidden;
 }
 
-.giftcard-page .gift-card-form {
+/*
+ * Header is now inside the hero.
+ * Keep it above the background and hero content.
+ */
+.giftcard-page .gift-hero > .topbar,
+.giftcard-page .gift-hero > .site-header,
+.giftcard-page .gift-hero > header,
+.giftcard-page .gift-hero > nav {
+  position: relative;
+  z-index: 20;
+}
+
+/* =====================================================
+   HERO CONTENT
+   ===================================================== */
+
+.giftcard-page .gift-hero__content {
+  position: absolute;
+  z-index: 3;
+
+  top: 50%;
+  left: 50%;
+
+  width: min(1280px, calc(100% - 48px));
+
+  margin: 0;
+  padding: 20px 0 70px;
+
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+/*
+ * Old artificial curve is no longer used.
+ * Keeping this rule also prevents an old cached partial
+ * from creating a second curve.
+ */
+.giftcard-page .gift-hero__curve {
+  display: none;
+}
+
+/* =====================================================
+   WAVE
+   Same geometry as Home .wave
+   ===================================================== */
+
+.giftcard-wave {
+  position: relative;
+  z-index: 20;
+
+  width: 100%;
+  margin-top: -90px;
+  padding-top: 40px;
+
+  background-color: var(--cream);
+  background-image: url("/images/linen-beige.png");
+  background-repeat: repeat;
+
+  border-radius:
+    50% 50% 0 0 /
+    100px 100px 0 0;
+
+  overflow: hidden;
+}
+
+/* Prevent margins from escaping the curved container. */
+.giftcard-wave::before {
+  content: "";
+  display: table;
+}
+
+/* =====================================================
+   FORM AND FOOTER INTEGRATION
+   ===================================================== */
+
+.giftcard-wave > .gift-card-form {
   margin: 0;
 }
 
@@ -21,9 +117,55 @@
   margin-top: 0;
 }
 
+/* =====================================================
+   RESPONSIVE — MATCH HOME HERO/WAVE BREAKPOINTS
+   ===================================================== */
+
+@media (max-width: 1024px) {
+  .giftcard-page .gift-hero {
+    height: 700px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .giftcard-page .gift-hero {
+    height: 620px;
+    min-height: 520px;
+    padding: 0;
+  }
+
+  .giftcard-page .gift-hero__content {
+    width: 92%;
+    padding-bottom: 54px;
+  }
+}
+
 @media (max-width: 700px) {
   .giftcard-page .gift-hero {
-    min-height: 540px;
-    padding-top: 72px;
+    height: 560px;
+    min-height: 500px;
+    padding: 0;
+  }
+
+  .giftcard-page .gift-hero__content {
+    top: 44%;
+    width: 92%;
+    padding: 0;
+  }
+
+  .giftcard-wave {
+    margin-top: -48px;
+    padding-top: 28px;
+
+    border-radius:
+      50% 50% 0 0 /
+      55px 55px 0 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .giftcard-page .gift-hero {
+    height: 540px;
   }
 }

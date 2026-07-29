@@ -5,7 +5,7 @@
 </head>
 
 <body class="giftcard-page">
-  <%- include("../partials/header_v2", {
+  <%- include("../partials/header", {
     activePage,
     cartCount
   }) %>
@@ -13,7 +13,7 @@
   <%- include("../partials/giftcard/state-controls") %>
   <%- include("../partials/giftcard/hero") %>
 
-  <main>
+  <main class="giftcard-wave">
     <form
       id="gift-card-form"
       class="gift-card-form"
