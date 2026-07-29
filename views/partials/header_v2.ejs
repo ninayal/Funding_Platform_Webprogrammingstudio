@@ -45,7 +45,7 @@
                 </li>
 
                 <li>
-                    <a href="/blog/blog" class="<%= typeof activePage !== 'undefined' && activePage === 'blog'
+                    <a href="/blog" class="<%= typeof activePage !== 'undefined' && activePage === 'blog'
               ? 'is-active'
               : '' %>">
                         Blog
@@ -59,7 +59,17 @@
                         Forum
                     </a>
                 </li>
-
+                <li>
+                    <a
+                        href="/review"
+                        class="<%= typeof activePage !== 'undefined' &&
+                            activePage === 'review'
+                                ? 'is-active'
+                                : '' %>"
+                    >
+                        Review
+                    </a>
+                </li>
                 <li>
                     <a href="/giftcard/giftcard" class="<%= typeof activePage !== 'undefined' && activePage === 'giftcard'
               ? 'is-active'

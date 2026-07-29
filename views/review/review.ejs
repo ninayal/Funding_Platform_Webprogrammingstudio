@@ -3,30 +3,19 @@
 <head>
     <%- include("../partials/review/head") %>
 </head>
-<body>
-    <%- include("../partials/review/header") %>
+
+<body class="product-detail-page">
+    <%- include("../partials/header_v2") %>
+
     <%- include("../partials/review/state-controls") %>
-    <div class="pd-wrap">
+
+    <main class="pd-wrap">
         <%- include("../partials/review/breadcrumb") %>
         <%- include("../partials/review/product-main") %>
-        <section
-            class="pd-tabs-section container"
-            aria-label="Product information"
-        >
-            <%- include("../partials/review/tab-navigation") %>
-            <%- include("../partials/review/description-panel") %>
-            <%- include("../partials/review/info-panel") %>
-            <div class="pd-panel pd-panel--review">
-                <%- include("../partials/product_review/section") %>
-            </div>
-        </section>
+        <%- include("../partials/review/product-tabs") %>
         <%- include("../partials/review/related-products") %>
-    </div>
-    <% if (
-        typeof footer !== "undefined" &&
-        typeof currentYear !== "undefined"
-    ) { %>
-        <%- include("../partials/footer") %>
-    <% } %>
+    </main>
+
+    <%- include("../partials/footer") %>
 </body>
 </html>

@@ -96,7 +96,7 @@ const relatedProducts = [
     "price": "$54.00",
     "rating": 5,
     "reviewCount": 63,
-    "href": "/review/review/2"
+    "href": "/cart/products"
   },
   {
     "name": "Celadon Rice Bowl Set (4-Piece)",
@@ -106,7 +106,7 @@ const relatedProducts = [
     "price": "$46.00",
     "rating": 5,
     "reviewCount": 27,
-    "href": "/review/review/9"
+    "href": "/cart/products"
   },
   {
     "name": "Terracotta Planter Pot",
@@ -116,7 +116,7 @@ const relatedProducts = [
     "price": "$32.00",
     "rating": 4,
     "reviewCount": 15,
-    "href": "/review/review/10"
+    "href": "/cart/products"
   }
 ];
 
@@ -180,7 +180,7 @@ const mobileNavigation = Object.freeze([
   {
     "id": "nav-blog",
     "label": "Blog",
-    "href": "/blog/blog"
+    "href": "/blog"
   },
   {
     "id": "nav-forum",
@@ -607,14 +607,31 @@ const getReviewPageData = (currentUser) => {
   };
 };
 
-const getProductDetailPageData = () => ({
-  productData: clone(productDetail),
-  relatedProductsData: clone(relatedProducts),
-  tabs: clone(tabs),
-  mobileNavigation: clone(mobileNavigation),
-  productStars: createStars(Math.round(productDetail.rating)),
-  cartCountValue: 4
-});
+const getProductDetailPageData = () => {
+  const reviewItems = getAllReviews();
+  const totalReviews = reviewItems.length;
+  const averageRating = totalReviews
+    ? reviewItems.reduce(
+        (sum, review) => sum + review.rating,
+        0
+      ) / totalReviews
+    : 0;
+
+  const dynamicProductDetail = {
+    ...clone(productDetail),
+    rating: Number(averageRating.toFixed(1)),
+    reviewCount: totalReviews
+  };
+
+  return {
+    productData: dynamicProductDetail,
+    relatedProductsData: clone(relatedProducts),
+    tabs: clone(tabs),
+    mobileNavigation: clone(mobileNavigation),
+    productStars: createStars(Math.round(averageRating)),
+    cartCountValue: 4
+  };
+};
 
 module.exports = {
   createReview,

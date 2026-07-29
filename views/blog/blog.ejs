@@ -19,9 +19,11 @@
 
         <!-- Shared styles already present in the repository -->
         <link rel="stylesheet" href="/css/landingpage/index.css" />
-        <link rel="stylesheet" href="/css/header.css" />
+
+        <!-- Chỉ sử dụng header V2 -->
+        <link rel="stylesheet" href="/css/header_v2.css" />
+
         <link rel="stylesheet" href="/css/shared-include.css" />
-        <link rel="stylesheet" href="/css/header_shoppingcart.css" />
         <link rel="stylesheet" href="/css/footer.css" />
 
         <!-- Existing Blog design, followed by the small dynamic-state patch -->
@@ -32,7 +34,9 @@
     </head>
 
     <body>
-        <%- include("../partials/header", { headerVariant: "blog" }) %>
+        <%- include("../partials/header_v2", {
+            activePage: "blog"
+        }) %>
 
             <main class="blog-page" id="journal">
                 <nav class="blog-breadcrumb blog-container" aria-label="Breadcrumb">
