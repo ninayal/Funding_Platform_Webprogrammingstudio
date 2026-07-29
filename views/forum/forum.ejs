@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Làng & Co. — Forum</title>
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/forum/forum.css" />
-  <link rel="stylesheet" href="../../public/css/header_shoppingcart.css" />
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
 </head>
 
 <body>
@@ -43,7 +43,7 @@
     </div>
 
     <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
-      <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+      <img src="/images/logo.png" alt="Lang & Co. logo" />
     </a>
 
     <div class="nav__icons">
@@ -69,7 +69,7 @@
         <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
         <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
         <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
-        <li><a id="nav-forum" href="../forum/forum.html" target="_top">Forum</a></li>
+        <li><a id="nav-forum" href="/forum" target="_top">Forum</a></li>
         <li><a id="nav-wishlist" href="/pages/giftcard/giftcard.html" target="_top">Giftcards</a></li>
       </ul>
     </div>
@@ -78,7 +78,7 @@
   <div class="wave">
 
     <div class="forum-breadcrumb">
-      <a href="../../index.html">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
       <span aria-current="page">Forum</span>
     </div>
 
@@ -89,7 +89,7 @@
 
     <!-- New Posts / Your Posts / Bookmarked + search -->
     <nav class="forum-toolbar">
-      <a href="new_post.html" class="forum-toolbar__tab">New Posts</a>
+      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
       <a href="#" class="forum-toolbar__tab">Your Posts</a>
       <a href="#" class="forum-toolbar__tab">Bookmarked</a>
       <button type="button" class="forum-toolbar__search" aria-label="Search"></button>
@@ -102,57 +102,20 @@
 
         <!-- Topic list -->
         <div class="topic-list">
-          <a href="Announcement_thread_list.html" class="topic-card">
-            <div class="topic-card__icon"><img src="../../public/images/forum_icon/annouce.png" alt=""></div>
+          <% categorySummary.forEach(cat => { %>
+          <a href="/forum/category/<%= cat.id %>" class="topic-card">
+            <div class="topic-card__icon"><img src="/images/forum_icon/<%= cat.icon %>" alt=""></div>
             <div class="topic-card__main">
-              <h3 class="topic-card__title">Announcement</h3>
-              <div class="topic-card__meta">Threads: 3 &nbsp;·&nbsp; Views: 82</div>
+              <h3 class="topic-card__title"><%= cat.label %></h3>
+              <div class="topic-card__meta">Threads: <%= cat.threadCount %> &nbsp;·&nbsp; Views: <%= cat.totalViews %></div>
               <div class="topic-card__latest">
-                <span class="topic-pill">Announcement</span>
-                <span class="topic-card__latest-title">Welcome & Introductions</span>
+                <span class="topic-pill"><%= cat.pillLabel %></span>
+                <span class="topic-card__latest-title"><%= cat.latestThread.title %></span>
               </div>
-              <div class="topic-card__latest-date">14/07/2026 - Admin</div>
+              <div class="topic-card__latest-date"><%= getLatestPost(cat.latestThread).date %> - <%= getLatestPost(cat.latestThread).author %></div>
             </div>
           </a>
-
-          <a href="Feedback_thread_list.html" class="topic-card">
-            <div class="topic-card__icon"><img src="../../public/images/forum_icon/feedback.png" alt=""></div>
-            <div class="topic-card__main">
-              <h3 class="topic-card__title">Feedback</h3>
-              <div class="topic-card__meta">Threads: 2 &nbsp;·&nbsp; Views: 57</div>
-              <div class="topic-card__latest">
-                <span class="topic-pill">Feedback</span>
-                <span class="topic-card__latest-title">Suggestion: Add a "Save for Later" button on the Shop page</span>
-              </div>
-              <div class="topic-card__latest-date">17/07/2026 - mai.tran92</div>
-            </div>
-          </a>
-
-          <a href="QA_thread_list.html" class="topic-card">
-            <div class="topic-card__icon"><img src="../../public/images/forum_icon/Question.png" alt=""></div>
-            <div class="topic-card__main">
-              <h3 class="topic-card__title">Q&amp;A</h3>
-              <div class="topic-card__meta">Threads: 2 &nbsp;·&nbsp; Views: 67</div>
-              <div class="topic-card__latest">
-                <span class="topic-pill">Q&amp;A</span>
-                <span class="topic-card__latest-title">How do I know if a product is handmade vs. machine-assisted?</span>
-              </div>
-              <div class="topic-card__latest-date">18/07/2026 - newbie_shopper</div>
-            </div>
-          </a>
-
-          <a href="Experience_thread_list.html" class="topic-card">
-            <div class="topic-card__icon"><img src="../../public/images/forum_icon/lightbulb.png" alt=""></div>
-            <div class="topic-card__main">
-              <h3 class="topic-card__title">Experience Sharing</h3>
-              <div class="topic-card__meta">Threads: 2 &nbsp;·&nbsp; Views: 59</div>
-              <div class="topic-card__latest">
-                <span class="topic-pill">Sharing</span>
-                <span class="topic-card__latest-title">My visit to the Đông Hồ painting village</span>
-              </div>
-              <div class="topic-card__latest-date">16/07/2026 - wanderlust_anh</div>
-            </div>
-          </a>
+          <% }) %>
         </div>
       </div>
 
@@ -161,44 +124,32 @@
         <div class="sidebar-box">
           <h3 class="sidebar-box__title">Trending Posts</h3>
           <div class="post-mini-list">
-            <a href="experience_donghovillage_content.html" class="post-mini">
-              <div class="post-mini__avatar">WA</div>
+            <% trendingThreads.forEach(t => { %>
+            <a href="/forum/thread/<%= t.slug %>" class="post-mini">
+              <div class="post-mini__avatar"><%= t.posts[0].initials %></div>
               <div class="post-mini__body">
-                <span class="post-mini__title">My visit to the Đông Hồ painting village</span>
-                <span class="post-mini__meta">wanderlust_anh · 16/07/2026</span>
-                <span class="post-mini__stats">Views: 33 · Replies: 1</span>
+                <span class="post-mini__title"><%= t.title %></span>
+                <span class="post-mini__meta"><%= t.posts[0].author %> · <%= t.posts[0].date %></span>
+                <span class="post-mini__stats">Views: <%= t.views %> · Replies: <%= getRepliesCount(t) %></span>
               </div>
             </a>
-            <a href="qa_handmade_verification_content.html" class="post-mini">
-              <div class="post-mini__avatar">NS</div>
-              <div class="post-mini__body">
-                <span class="post-mini__title">How do I know if a product is handmade?</span>
-                <span class="post-mini__meta">newbie_shopper · 18/07/2026</span>
-                <span class="post-mini__stats">Views: 38 · Replies: 1</span>
-              </div>
-            </a>
+            <% }) %>
           </div>
         </div>
 
         <div class="sidebar-box">
-          <h3> <a href="new_post.html" class="sidebar-box__title">Lastest Posts</h3>
+          <h3> <a href="/forum/new-posts" class="sidebar-box__title">Lastest Posts</h3>
           <div class="post-mini-list">
-            <a href="experience_bambooteaset_content.html" class="post-mini">
-              <div class="post-mini__avatar">TK</div>
+            <% latestThreads.forEach(t => { %>
+            <a href="/forum/thread/<%= t.slug %>" class="post-mini">
+              <div class="post-mini__avatar"><%= t.posts[0].initials %></div>
               <div class="post-mini__body">
-                <span class="post-mini__title">First-time order review: the bamboo tea set exceeded expectations</span>
-                <span class="post-mini__meta">teahouse_ken · 22/07/2026</span>
-                <span class="post-mini__stats">Views: 26 · Replies: 1</span>
+                <span class="post-mini__title"><%= t.title %></span>
+                <span class="post-mini__meta"><%= t.posts[0].author %> · <%= t.posts[0].date %></span>
+                <span class="post-mini__stats">Views: <%= t.views %> · Replies: <%= getRepliesCount(t) %></span>
               </div>
             </a>
-            <a href="feedback_checkout_mobile_content.html" class="post-mini">
-              <div class="post-mini__avatar">DW</div>
-              <div class="post-mini__body">
-                <span class="post-mini__title">Checkout page is a bit confusing on mobile</span>
-                <span class="post-mini__meta">davidw_collector · 20/07/2026</span>
-                <span class="post-mini__stats">Views: 22 · Replies: 1</span>
-              </div>
-            </a>
+            <% }) %>
           </div>
         </div>
 
@@ -207,11 +158,11 @@
           <dl class="forum-stats-list">
             <div class="forum-stats-row">
               <dt>Posts</dt>
-              <dd>9</dd>
+              <dd><%= totals.posts %></dd>
             </div>
             <div class="forum-stats-row">
               <dt>Views</dt>
-              <dd>265</dd>
+              <dd><%= totals.views %></dd>
             </div>
             <div class="forum-stats-row">
               <dt>Members</dt>

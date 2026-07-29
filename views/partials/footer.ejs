@@ -5,27 +5,34 @@
         Where Tradition<br />
         <em>Lives On</em>
       </p>
+
       <p class="site-footer__desc">
         Ceramics, silk, painting, woodwork, incense and more — handmade
         across Việt Nam's craft villages and shipped to your door.
       </p>
+
       <form class="site-footer__form" action="/newsletter" method="POST" novalidate>
         <label class="visually-hidden" for="footer-email">
           Email address
         </label>
+
         <input id="footer-email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
           required />
+
         <button type="submit">Subscribe</button>
       </form>
+
       <p class="site-footer__note">
         We won't flood your inbox — just stories worth reading.
       </p>
     </div>
+
     <% footer.navigation.forEach((section)=> { %>
       <nav class="site-footer__col" aria-label="<%= section.title %>">
         <h4>
           <%= section.title %>
         </h4>
+
         <% section.links.forEach((link)=> { %>
           <a href="<%= link.href %>">
             <%= link.label %>
@@ -34,6 +41,7 @@
       </nav>
       <% }); %>
   </div>
+
   <div class="site-footer__badges">
     <% footer.badges.forEach((badge)=> { %>
       <span class="badge-item">
@@ -41,6 +49,7 @@
       </span>
       <% }); %>
   </div>
+
   <div class="site-footer__bottom">
     <div class="site-footer__legal">
       <% footer.legalLinks.forEach((link)=> { %>
@@ -49,9 +58,12 @@
         </a>
         <% }); %>
     </div>
+
     <p class="site-footer__copy">
-      &copy; <%= currentYear %> Làng &amp; Co. — Vietnamese Traditional Crafts
+      &copy; <%= currentYear %>
+        Làng &amp; Co. — Vietnamese Traditional Crafts
     </p>
+
     <div class="site-footer__social">
       <% footer.socialLinks.forEach((social)=> { %>
         <a href="<%= social.href %>" aria-label="<%= social.label %>" <% if (social.external) { %>

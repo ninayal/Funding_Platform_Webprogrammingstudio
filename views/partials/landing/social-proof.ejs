@@ -1,0 +1,112 @@
+<section
+  class="testimonials"
+  aria-labelledby="testimonials-heading"
+>
+  <p
+    class="section-kicker testimonials__kicker"
+    id="testimonials-heading"
+  >
+    What Collectors Say
+  </p>
+
+  <div class="testimonials__strip">
+    <% testimonials.forEach((testimonial) => { %>
+      <blockquote class="testimonial-card">
+        <p>“<%= testimonial.quote %>”</p>
+
+        <div class="testimonial-card__author">
+          <span class="avatar">
+            <%= testimonial.initial %>
+          </span>
+
+          <div>
+            <strong><%= testimonial.name %></strong>
+            <span><%= testimonial.location %></span>
+          </div>
+        </div>
+      </blockquote>
+    <% }); %>
+  </div>
+</section>
+
+<section
+  class="journal-preview"
+  aria-labelledby="journal-heading"
+>
+  <div class="section-head">
+    <p class="section-kicker">From the Làng Journal</p>
+
+    <h2 id="journal-heading">
+      Stories Behind <em>Every Piece</em>
+    </h2>
+
+    <p class="section-sub">
+      Field notes on makers, materials and the villages that keep
+      tradition alive.
+    </p>
+  </div>
+
+  <div class="journal-preview__grid">
+    <% journalPosts.forEach((post) => { %>
+      <a
+        class="journal-card <%= post.featured ? 'journal-card--feature' : '' %>"
+        href="/blog/blog#<%= post.id %>"
+      >
+        <img
+          src="<%= post.image %>"
+          alt="<%= post.alt %>"
+          loading="lazy"
+        />
+
+        <div class="journal-card__body">
+          <span class="journal-card__tag">
+            <%= post.tag %>
+          </span>
+
+          <h3><%= post.title %></h3>
+
+          <% if (post.description) { %>
+            <p><%= post.description %></p>
+          <% } %>
+
+          <span class="journal-card__meta">
+            <%= post.author %> · <%= post.date %>
+          </span>
+        </div>
+      </a>
+    <% }); %>
+  </div>
+
+  <a class="section-more" href="/blog/blog">
+    Read the Full Journal <span>↗</span>
+  </a>
+</section>
+
+<section class="faq" id="faq">
+  <div class="faq__intro">
+    <p class="section-kicker">Good to Know</p>
+
+    <h2>Questions, <em>Answered</em></h2>
+
+    <p>
+      Cannot find what you need? We reply to every message within one
+      business day.
+    </p>
+
+    <a
+      class="text-cta"
+      href="mailto:ninayal198@gmail.com"
+    >
+      Email Us <span>→</span>
+    </a>
+  </div>
+
+  <div class="faq__list">
+    <% faqItems.forEach((item) => { %>
+      <details class="faq__item">
+        <summary><%= item.question %></summary>
+        <p><%= item.answer %></p>
+      </details>
+    <% }); %>
+  </div>
+</section>

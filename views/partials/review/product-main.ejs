@@ -1,0 +1,111 @@
+<section class="pd-main container" aria-label="Product">
+    <div class="pd-thumbs">
+        <% productData.thumbnails.forEach((thumbnail, index) => { %>
+            <label class="pd-thumb<%= index === 0 ? " is-active" : "" %>">
+                <img
+                    src="<%= thumbnail.image || productData.image %>"
+                    alt="<%= thumbnail.alt %>"
+                />
+            </label>
+        <% }); %>
+    </div>
+
+    <div class="pd-media">
+        <% if (productData.tag) { %>
+            <p class="pd-media__tag"><%= productData.tag %></p>
+        <% } %>
+
+        <img src="<%= productData.image %>" alt="<%= productData.name %>" />
+    </div>
+
+    <div class="pd-detail">
+        <p class="pd-detail__maker"><%= productData.maker %></p>
+        <h1 class="pd-detail__title"><%= productData.name %></h1>
+
+        <label
+            class="pd-detail__rating"
+            for="tab-review"
+            title="Open customer reviews"
+        >
+            <span
+                class="pd-stars"
+                aria-label="Rated <%= productData.rating %> out of 5 stars"
+            ><%= productStars %></span>
+
+            <span>
+                <%= productData.rating %>
+                (<%= productData.reviewCount %> reviews)
+            </span>
+        </label>
+
+        <p class="pd-detail__price"><%= productData.price %></p>
+        <p class="pd-detail__desc"><%= productData.description %></p>
+
+        <div class="pd-option">
+            <p class="pd-option__label">Size</p>
+
+            <div class="pd-size-options">
+                <% productData.sizes.forEach((size) => { %>
+                    <label
+                        class="pd-size-btn"
+                        for="size-<%= size.id %>"
+                    ><%= size.label %></label>
+                <% }); %>
+            </div>
+        </div>
+
+        <div class="pd-option">
+            <label class="pd-option__label" for="product-quantity">
+                Quantity
+            </label>
+
+            <input
+                class="pd-qty"
+                id="product-quantity"
+                type="number"
+                min="1"
+                value="1"
+                aria-label="Quantity"
+            />
+        </div>
+
+        <div class="pd-actions">
+            <a href="/cart/cart" class="pd-add-btn">Add to Cart</a>
+
+            <button
+                type="button"
+                class="pd-wish-btn"
+                aria-label="Save <%= productData.name %> to wishlist"
+            >
+                <svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
+                    />
+                </svg>
+            </button>
+        </div>
+
+        <ul class="pd-meta">
+            <% productData.meta.forEach((item) => { %>
+                <li><%= item %></li>
+            <% }); %>
+        </ul>
+
+        <blockquote class="pd-maker-note">
+            <span class="pd-maker-note__seal">
+                <%= productData.makerNote.seal %>
+            </span>
+
+            <p>“<%= productData.makerNote.quote %>”</p>
+            <cite><%= productData.makerNote.cite %></cite>
+        </blockquote>
+    </div>
+</section>

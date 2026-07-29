@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#A31D1D" />
+
+    <title>Our Developer Mission — Làng &amp; Co.</title>
+
+    <!-- Shared styles -->
+    <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
+    <link rel="stylesheet" href="../../public/css/header.css" />
+    <link rel="stylesheet" href="../../public/css/shared-include.css" />
+    <link rel="stylesheet" href="../../public/css/header_shoppingcart.css" />
+
+    <!-- Lead-story detail styles -->
+    <link rel="stylesheet" href="../../public/css/blog/lead-detail/lead-detail.css" />
+</head>
+
+<body>
+
+    <!-- ================================================
+       HEADER
+       ================================================ -->
+    <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+    <div class="topbar">
+        <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
+            <a href="../cart/products.html" target="_top">Shop Now</a>
+        </p>
+        <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
+    </div>
+    <nav class="nav nav--light nav--centered">
+
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+
+        <div class="nav__left">
+            <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    aria-hidden="true">
+                    <path d="M3 6h18M3 12h18M3 18h18" />
+                </svg>
+            </label>
+            <button type="button" class="nav__icon-btn" aria-label="Search">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.8-3.8" />
+                </svg>
+            </button>
+        </div>
+
+        <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
+            <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+        </a>
+
+        <div class="nav__icons">
+            <a class="nav__icon-btn" href="../shared/profile.html" target="_top"
+                aria-label="Account — Log in or sign up">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    aria-hidden="true">
+                    <circle cx="12" cy="8" r="3.6" />
+                    <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+                </svg>
+            </a>
+            <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                    aria-hidden="true">
+                    <path d="M6 8h12l-1 13H7L6 8Z" />
+                    <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+                </svg>
+                <span class="nav__badge-count">4</span>
+            </a>
+        </div>
+
+        <div class="mobile-menu">
+            <ul>
+                <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
+                <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
+                <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
+                <li><a id="nav-forum" href="/forum" target="_top">Forum</a></li>
+                <li><a id="nav-wishlist" href="../giftcard/giftcard.html" target="_top">Giftcards</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ================================================
+         LEAD STORY DETAIL PAGE
+    ================================================ -->
+    <main class="blog-detail-page">
+
+        <!-- Breadcrumb -->
+        <nav class="blog-detail-breadcrumb blog-detail-container" aria-label="Breadcrumb">
+            <a href="../../index.html">Home</a>
+
+            <span aria-hidden="true">•</span>
+
+            <a href="blog.html">Journal</a>
+
+            <span aria-hidden="true">•</span>
+
+            <span aria-current="page">
+                Our Developer Mission
+            </span>
+        </nav>
+
+        <!-- Article heading -->
+        <header class="blog-article-header blog-detail-container">
+
+            <div class="blog-article-meta">
+                <span class="blog-article-category">
+                    Mission
+                </span>
+
+                <time datetime="2026-07-06">
+                    July 6, 2026
+                </time>
+
+                <span aria-hidden="true">•</span>
+
+                <span>8 min read</span>
+            </div>
+
+            <h1>
+                Our Developer Mission: Building Digital Bridges to Living Craft
+            </h1>
+
+            <p class="blog-article-summary">
+                A platform can flatten culture into inventory, or it can
+                preserve context. We are choosing the second path, one product
+                decision at a time.
+            </p>
+
+            <div class="blog-article-author">
+
+                <div class="blog-article-author__avatar" aria-hidden="true">
+                    LC
+                </div>
+
+                <div class="blog-article-author__information">
+                    <strong>
+                        Làng &amp; Co. Development Team
+                    </strong>
+
+                    <span>
+                        Product · Engineering · Cultural stewardship
+                    </span>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- Hero image -->
+        <figure class="blog-article-hero blog-detail-container">
+
+            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&amp;fit=crop&amp;w=1800&amp;q=90"
+                alt="A development team collaborating around a table" />
+
+            <figcaption>
+                Building the platform begins with a question: what information
+                should never disappear when a craft object moves online?
+            </figcaption>
+
+        </figure>
+
+        <!-- Article body -->
+        <article class="blog-article-content">
+
+            <p class="blog-article-introduction">
+                Làng &amp; Co. began with a simple frustration: beautifully
+                made objects were often presented online without the knowledge
+                that made them meaningful.
+            </p>
+
+            <p>
+                A ceramic vase became a decorative product. A woven surface
+                became a passing trend. A craft village name became a marketing
+                label. Important information about the maker, material,
+                production process, and cultural context was often separated
+                from the object itself.
+            </p>
+
+            <h2>
+                Building for context, not only conversion
+            </h2>
+
+            <p>
+                Our development mission is to make cultural context part of the
+                platform’s structure. Information about the artisan, place of
+                origin, material, technique, and production process should not
+                be treated as optional content hidden at the bottom of a
+                product page.
+            </p>
+
+            <p>
+                These details should remain visible throughout the user
+                journey, from the first product preview to the final purchase
+                decision.
+            </p>
+
+            <blockquote>
+                Technology should help a craft object carry more of its story
+                forward, not remove that story for the sake of a simpler
+                product page.
+            </blockquote>
+
+            <p>
+                In practical terms, Làng &amp; Co. will organise information
+                into structured sections for maker identity, craft village,
+                materials, production methods, care instructions, and cultural
+                background.
+            </p>
+
+            <p>
+                When information cannot be verified, the platform should
+                communicate that uncertainty clearly instead of replacing it
+                with unsupported marketing claims.
+            </p>
+
+            <h2>
+                Connecting traditional craft and charitable giving
+            </h2>
+
+            <p>
+                Làng &amp; Co. is not designed only as an online marketplace.
+                The platform connects product discovery with charitable
+                support. Profits generated through product sales contribute to
+                donation initiatives, allowing customers to support others
+                while discovering Vietnamese traditional crafts.
+            </p>
+
+            <p>
+                The Impact Gift feature provides a more direct pathway. Users
+                can create a meaningful gift, select a supported organisation
+                or cause, choose an amount, and personalise the gift for a
+                recipient.
+            </p>
+
+            <h2>
+                A marketplace is also an editorial platform
+            </h2>
+
+            <p>
+                The Journal, Forum, Shop, Reviews, Wishlist, and Account
+                features form a connected system. A user may first discover a
+                craft technique through a Journal story, ask questions in the
+                Forum, examine related products, read customer reviews, save an
+                item, and later complete a purchase.
+            </p>
+
+            <p>
+                This journey is intentionally more informative than a standard
+                product catalogue. Traditional craft products often require
+                explanation because their value is connected to process,
+                knowledge, place, and the people who make them.
+            </p>
+
+            <!-- Inline article image -->
+            <figure class="blog-article-inline-image">
+
+                <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&amp;fit=crop&amp;w=1500&amp;q=88"
+                    alt="Team reviewing research and product information" />
+
+                <figcaption>
+                    Product design, cultural research, and technical development
+                    work together to determine how craft information should be
+                    presented.
+                </figcaption>
+
+            </figure>
+
+            <h2>
+                Designing for makers and communities
+            </h2>
+
+            <p>
+                The platform must work for artisans as well as customers.
+                Makers should have clear control over how their names, images,
+                products, and production processes are represented.
+            </p>
+
+            <p>
+                Product information should also be manageable without requiring
+                artisans to become full-time digital content creators. Editorial
+                support should strengthen the maker’s voice rather than replace
+                it.
+            </p>
+
+            <h2>What comes next</h2>
+
+            <p>
+                The final full-stack platform will use HTML, CSS, and JavaScript
+                on the client side, Node.js on the server side, and MongoDB
+                Atlas for data storage.
+            </p>
+
+            <p>
+                Future development priorities include dynamic product and Blog
+                content, authenticated user contributions, stronger provenance
+                records, moderation tools, donation tracking, and accessible
+                maker profiles.
+            </p>
+
+        </article>
+
+        <!-- Share and tags -->
+        <section class="blog-article-footer blog-article-width">
+
+            <div class="blog-article-share">
+
+                <span>Share this story</span>
+
+                <div class="blog-article-share__links">
+
+                    <a href="mailto:?subject=Our%20Developer%20Mission%20%E2%80%94%20L%C3%A0ng%20%26%20Co."
+                        aria-label="Share this article by email">
+                        Email
+                    </a>
+
+                    <a href="#" aria-label="Share this article on Facebook">
+                        Facebook
+                    </a>
+
+                    <a href="#" aria-label="Copy article link">
+                        Copy Link
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="blog-article-tags">
+                <span>Mission</span>
+                <span>Development</span>
+                <span>Vietnamese Craft</span>
+                <span>Social Impact</span>
+            </div>
+
+        </section>
+
+        <!-- Related stories -->
+        <section class="blog-related-stories blog-detail-container">
+
+            <div class="blog-section-heading">
+
+                <div>
+                    <p class="blog-section-kicker">
+                        Continue reading
+                    </p>
+
+                    <h2>
+                        Related <em>stories</em>
+                    </h2>
+                </div>
+
+                <a href="blog.html">
+                    View all stories →
+                </a>
+
+            </div>
+
+            <div class="blog-related-stories__grid">
+
+                <!-- Related story 1 -->
+                <article class="blog-related-card">
+
+                    <a class="blog-related-card__image" href="blog.html#post-bat-trang">
+                        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=900&amp;q=88"
+                            alt="Vietnamese ceramic vessels" />
+                    </a>
+
+                    <div class="blog-related-card__content">
+
+                        <div class="blog-article-meta">
+                            <span class="blog-article-category">Guide</span>
+
+                            <time datetime="2026-06-28">
+                                June 28, 2026
+                            </time>
+                        </div>
+
+                        <h3>
+                            <a href="blog.html#post-bat-trang">
+                                Bát Tràng Beyond Blue and White
+                            </a>
+                        </h3>
+
+                        <p>
+                            Explore a village where clay, fire, family knowledge,
+                            and experimentation continue to shape contemporary
+                            ceramics.
+                        </p>
+
+                        <a class="blog-related-card__link" href="blog.html#post-bat-trang">
+                            Read story →
+                        </a>
+
+                    </div>
+
+                </article>
+
+                <!-- Related story 2 -->
+                <article class="blog-related-card">
+
+                    <a class="blog-related-card__image" href="blog.html#post-lacquer-artist">
+                        <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&amp;fit=crop&amp;w=900&amp;q=88"
+                            alt="Artisan working carefully by hand" />
+                    </a>
+
+                    <div class="blog-related-card__content">
+
+                        <div class="blog-article-meta">
+                            <span class="blog-article-category">Guide</span>
+
+                            <time datetime="2026-06-19">
+                                June 19, 2026
+                            </time>
+                        </div>
+
+                        <h3>
+                            <a href="blog.html#post-lacquer-artist">
+                                The Patience of a Lacquer Artist
+                            </a>
+                        </h3>
+
+                        <p>
+                            A story about time, polishing, repetition, and the
+                            discipline behind traditional lacquer surfaces.
+                        </p>
+
+                        <a class="blog-related-card__link" href="blog.html#post-lacquer-artist">
+                            Read story →
+                        </a>
+
+                    </div>
+
+                </article>
+
+                <!-- Related story 3 -->
+                <article class="blog-related-card">
+
+                    <a class="blog-related-card__image" href="blog.html#post-community">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=900&amp;q=88"
+                            alt="Community gathering" />
+                    </a>
+
+                    <div class="blog-related-card__content">
+
+                        <div class="blog-article-meta">
+                            <span class="blog-article-category">Donation</span>
+
+                            <time datetime="2026-05-02">
+                                May 2, 2026
+                            </time>
+                        </div>
+
+                        <h3>
+                            <a href="blog.html#post-community">
+                                What a Craft Community Needs from a Platform
+                            </a>
+                        </h3>
+
+                        <p>
+                            Notes about visibility, community support, cultural
+                            context, and meaningful digital participation.
+                        </p>
+
+                        <a class="blog-related-card__link" href="blog.html#post-community">
+                            Read story →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- Comments -->
+        <section class="blog-comments blog-article-width">
+
+            <div class="blog-section-heading">
+
+                <div>
+                    <p class="blog-section-kicker">
+                        Conversation
+                    </p>
+
+                    <h2>
+                        Comments <em>3</em>
+                    </h2>
+                </div>
+
+            </div>
+
+            <!-- Static comment form -->
+            <form class="blog-comment-form" action="#" method="get">
+
+                <div class="blog-comment-form__row">
+
+                    <label>
+                        Name
+
+                        <input type="text" name="name" placeholder="Your name" />
+                    </label>
+
+                    <label>
+                        Email
+
+                        <input type="email" name="email" placeholder="you@example.com" />
+                    </label>
+
+                </div>
+
+                <label>
+                    Comment
+
+                    <textarea name="comment" rows="5" placeholder="Write a thoughtful comment..."></textarea>
+                </label>
+
+                <button type="button">
+                    Post Comment
+                </button>
+
+                <p class="blog-comment-form__note">
+                    Static prototype: comments are not saved without a backend.
+                </p>
+
+            </form>
+
+            <!-- Comment list -->
+            <div class="blog-comment-list">
+
+                <article class="blog-comment">
+
+                    <div class="blog-comment__avatar">
+                        MN
+                    </div>
+
+                    <div class="blog-comment__content">
+
+                        <div class="blog-comment__meta">
+                            <strong>Mai Nguyễn</strong>
+
+                            <time datetime="2026-07-06">
+                                July 6, 2026
+                            </time>
+                        </div>
+
+                        <p>
+                            I appreciate the distinction between documenting
+                            uncertainty and filling information gaps with
+                            marketing language.
+                        </p>
+
+                        <a href="#">Reply</a>
+
+                    </div>
+
+                </article>
+
+                <article class="blog-comment">
+
+                    <div class="blog-comment__avatar">
+                        TK
+                    </div>
+
+                    <div class="blog-comment__content">
+
+                        <div class="blog-comment__meta">
+                            <strong>Trung Kiên</strong>
+
+                            <time datetime="2026-07-06">
+                                July 6, 2026
+                            </time>
+                        </div>
+
+                        <p>
+                            Maker-controlled profiles with editorial support
+                            could help preserve accurate information.
+                        </p>
+
+                        <a href="#">Reply</a>
+
+                    </div>
+
+                </article>
+
+                <article class="blog-comment">
+
+                    <div class="blog-comment__avatar">
+                        AV
+                    </div>
+
+                    <div class="blog-comment__content">
+
+                        <div class="blog-comment__meta">
+                            <strong>An Vy</strong>
+
+                            <time datetime="2026-07-07">
+                                July 7, 2026
+                            </time>
+                        </div>
+
+                        <p>
+                            The relationship between traditional products and
+                            charitable support makes the platform more
+                            meaningful.
+                        </p>
+
+                        <a href="#">Reply</a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- Return link -->
+        <div class="blog-detail-return blog-article-width">
+            <a href="blog.html">
+                ← Back to Journal
+            </a>
+        </div>
+
+    </main>
+
+    <!-- ================================================
+         FOOTER
+    ================================================ -->
+    <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+        scrolling="no">
+    </iframe>
+
+</body>
+
+</html>
