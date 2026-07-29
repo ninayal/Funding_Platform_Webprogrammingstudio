@@ -1,3 +1,4 @@
+
 const footerConfig = {
   navigation: [
     {
@@ -12,7 +13,7 @@ const footerConfig = {
     {
       title: "Community",
       links: [
-        { label: "Journal", href: "/blog/blog" },
+        { label: "Journal", href: "/blog" },
         { label: "Forum", href: "/forum" },
       ],
     },
@@ -25,25 +26,16 @@ const footerConfig = {
       ],
     },
   ],
-
   badges: [
     "100% Handmade",
     "Natural Materials",
     "Nationwide Shipping",
     "Gives Back to Charity",
   ],
-
   legalLinks: [
-    {
-      label: "Privacy Policy",
-      href: "/shared/privacy-policy",
-    },
-    {
-      label: "Terms of Service",
-      href: "/shared/terms-of-service",
-    },
+    { label: "Privacy Policy", href: "/shared/privacy-policy" },
+    { label: "Terms of Service", href: "/shared/terms-of-service" },
   ],
-
   socialLinks: [
     {
       label: "Instagram",

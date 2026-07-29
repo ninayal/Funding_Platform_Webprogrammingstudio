@@ -23,130 +23,52 @@
   </label>
 </div>
 
-<nav class="nav" aria-label="Main navigation">
-  <!-- Logo -->
-  <a
-    class="nav__logo"
-    href="/"
-    aria-label="Làng and Company homepage"
-  >
-    <img
-      src="/images/logo.png"
-      alt="Làng & Co. logo"
-    />
-  </a>
-
-  <!-- Navigation pill -->
-  <div class="nav__pill">
-    <ul class="nav__links">
-      <li>
-        <a
-          id="nav-home"
-          href="/"
-          class="<%= typeof activePage !== 'undefined' && activePage === 'home'
-            ? 'is-active'
-            : '' %>"
-        >
-          Home
-        </a>
-      </li>
-
-      <li>
-        <a
-          id="nav-shop"
-          href="/cart/products"
-          class="<%= typeof activePage !== 'undefined' && activePage === 'shop'
-            ? 'is-active'
-            : '' %>"
-        >
-          Shop
-        </a>
-      </li>
-
-      <li>
-        <a
-          id="nav-blog"
-          href="/blog/blog"
-          class="<%= typeof activePage !== 'undefined' && activePage === 'blog'
-            ? 'is-active'
-            : '' %>"
-        >
-          Blog
-        </a>
-      </li>
-
-      <li>
-        <a
-          id="nav-forum"
-          href="/forum"
-          class="<%= typeof activePage !== 'undefined' && activePage === 'forum'
-            ? 'is-active'
-            : '' %>"
-        >
-          Forum
-        </a>
-      </li>
-
-      <li>
-        <a
-          id="nav-giftcard"
-          href="/giftcard/giftcard"
-          class="<%= typeof activePage !== 'undefined' && activePage === 'giftcard'
-            ? 'is-active'
-            : '' %>"
-        >
-          Giftcard
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Account and cart -->
-  <div class="nav__icons">
-    <a
-      class="nav__icon-btn"
-      href="/shared/profile"
-      aria-label="Account — Log in or sign up"
-    >
-      <svg
-        width="26"
-        height="26"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <circle cx="12" cy="8" r="3.6" />
-        <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-      </svg>
+<nav class="nav">
+    <a class="nav__logo" href="/">
+        <img src="/images/logo.png" alt="Lang & Co. logo" />
     </a>
 
-    <a
-      class="nav__icon-btn"
-      href="/cart/cart"
-      aria-label="Shopping cart"
-    >
-      <svg
-        width="26"
-        height="26"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M6 8h12l-1 13H7L6 8Z" />
-        <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-      </svg>
+    <div class="nav__pill">
+        <ul class="nav__links">
+            <li>
+                <a id="nav-home" href="/">Home</a>
+            </li>
 
-      <span class="nav__badge-count">
-        <%= typeof cartCount !== "undefined" ? cartCount : 4 %>
-      </span>
-    </a>
-  </div>
+            <li>
+                <a id="nav-shop" href="/products">Shop</a>
+            </li>
+
+            <li>
+                <a id="nav-blog" href="/blog">Blog</a>
+            </li>
+
+            <li>
+                <a id="nav-forum" href="/forum">Forum</a>
+            </li>
+
+            <li>
+                <a id="nav-giftcard" href="/giftcard">Giftcard</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="nav__icons">
+        <a class="nav__icon-btn" href="/profile" aria-label="Account — Log in or sign up">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                aria-hidden="true">
+                <circle cx="12" cy="8" r="3.6" />
+                <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+            </svg>
+        </a>
+
+        <a class="nav__icon-btn" href="/cart" aria-label="Shopping bag">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                aria-hidden="true">
+                <path d="M6 8h12l-1 13H7L6 8Z" />
+                <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+            </svg>
+
+            <span class="nav__badge-count">4</span>
+        </a>
+    </div>
 </nav>
