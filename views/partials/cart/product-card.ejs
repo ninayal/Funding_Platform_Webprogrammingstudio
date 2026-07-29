@@ -1,0 +1,54 @@
+<article class="shop-card" data-id="<%= product.id %>" data-name="<%= product.name.toLowerCase() %>"
+    data-category="<%= product.category %>" data-maker="<%= product.maker %>" data-material="<%= product.material %>"
+    data-price="<%= product.price %>" data-rating="<%= product.rating %>"
+    data-availability="<%= product.availability %>" data-featured-order="<%= product.featuredOrder %>">
+    <div class="shop-card__media">
+        <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
+
+        <button type="button" class="quickadd-btn" data-product-id="<%= product.id %>"
+            aria-label="Add <%= product.name %> to cart">
+            +
+        </button>
+    </div>
+
+    <div class="shop-card__body">
+        <p class="shop-card__maker">
+            <%= product.maker %>
+        </p>
+
+        <h3 class="shop-card__title">
+            <a href="/review/review/<%= product.reviewNumber %>">
+                <%= product.name %>
+            </a>
+        </h3>
+
+        <p class="shop-card__price">
+            £<%= Number(product.price).toFixed(2) %>
+
+                <% if (product.oldPrice) { %>
+                    <span class="shop-card__price-was">
+                        £<%= Number(product.oldPrice).toFixed(2) %>
+                    </span>
+                    <% } %>
+        </p>
+
+        <p class="shop-card__rating" aria-label="<%= product.rating %> out of 5 stars">
+            <%= "★" .repeat(product.rating) %>
+                <%= "☆" .repeat(5 - product.rating) %>
+
+                    <span>
+                        (<%= product.reviewCount %>)
+                    </span>
+        </p>
+
+        <% if (product.tag) { %>
+            <p class="shop-card__tag">
+                <%= product.tag %>
+            </p>
+            <% } %>
+
+                <p class="shop-card__variant">
+                    <%= product.variant %>
+                </p>
+    </div>
+</article>

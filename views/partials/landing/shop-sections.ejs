@@ -16,21 +16,18 @@
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span><%= marqueeText %></span>
-    <span><%= marqueeText %></span>
+    <span>
+      <%= marqueeText %>
+    </span>
+    <span>
+      <%= marqueeText %>
+    </span>
   </div>
 </div>
 
 <section class="quicknav" aria-label="Quick collection links">
-  <a
-    class="quicknav__tile quicknav__tile--wide"
-    href="<%= quickNav.featured.href %>"
-  >
-    <img
-      src="<%= quickNav.featured.image %>"
-      alt="<%= quickNav.featured.alt %>"
-      loading="lazy"
-    />
+  <a class="quicknav__tile quicknav__tile--wide" href="<%= quickNav.featured.href %>">
+    <img src="<%= quickNav.featured.image %>" alt="<%= quickNav.featured.alt %>" loading="lazy" />
 
     <span class="quicknav__label">
       <%= quickNav.featured.label %>
@@ -38,19 +35,15 @@
   </a>
 
   <div class="quicknav__stack">
-    <% quickNav.secondary.forEach((item) => { %>
+    <% quickNav.secondary.forEach((item)=> { %>
       <a class="quicknav__tile" href="<%= item.href %>">
-        <img
-          src="<%= item.image %>"
-          alt="<%= item.alt %>"
-          loading="lazy"
-        />
+        <img src="<%= item.image %>" alt="<%= item.alt %>" loading="lazy" />
 
         <span class="quicknav__label">
           <%= item.label %>
         </span>
       </a>
-    <% }); %>
+      <% }); %>
   </div>
 </section>
 
@@ -69,17 +62,10 @@
   </div>
 
   <div class="categories__grid">
-    <% categories.forEach((category) => { %>
-      <a
-        class="category-card"
-        href="/cart/products?category=<%= category.category %>"
-      >
+    <% categories.forEach((category)=> { %>
+      <a class="category-card" href="/cart/products?category=<%= category.category %>">
         <span class="category-card__photo">
-          <img
-            src="<%= category.image %>"
-            alt="<%= category.alt %>"
-            loading="lazy"
-          />
+          <img src="<%= category.image %>" alt="<%= category.alt %>" loading="lazy" />
         </span>
 
         <span class="category-card__label">
@@ -96,7 +82,7 @@
           </span>
         </span>
       </a>
-    <% }); %>
+      <% }); %>
   </div>
 </section>
 
@@ -117,43 +103,31 @@
   </p>
 
   <div class="featured__carousel">
-    <a
-      class="featured__nav featured__nav--prev"
-      href="#feat-1"
-      aria-label="Scroll to start"
-    >
+    <a class="featured__nav featured__nav--prev" href="#feat-1" aria-label="Scroll to start">
       ‹
     </a>
 
     <div class="featured__track">
-      <% featuredProducts.forEach((product, index) => { %>
-        <article
-          class="product-card"
-          id="feat-<%= index + 1 %>"
-        >
-          <a
-            class="product-card__media"
-            href="/review/review/<%= product.reviewNumber %>"
-          >
-            <img
-              src="<%= product.image %>"
-              alt="<%= product.alt %>"
-              loading="lazy"
-            />
+      <% featuredProducts.forEach((product, index)=> { %>
+        <article class="product-card" id="feat-<%= index + 1 %>">
+          <a class="product-card__media" href="/review/review/<%= product.reviewNumber %>">
+            <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
 
             <% if (product.badge) { %>
               <span class="product-card__badge">
                 <%= product.badge %>
               </span>
-            <% } %>
+              <% } %>
           </a>
 
           <div class="product-card__body">
-            <h3><%= product.name %></h3>
+            <h3>
+              <%= product.name %>
+            </h3>
 
             <div class="product-card__rating">
               <%= product.rating %>
-              <span>(<%= product.reviewCount %>)</span>
+                <span>(<%= product.reviewCount %>)</span>
             </div>
 
             <div class="product-card__row">
@@ -161,24 +135,16 @@
                 <%= product.price %>
               </span>
 
-              <a
-                class="product-card__add"
-                href="/cart/cart"
-                aria-label="Add <%= product.name %>"
-              >
+              <a class="product-card__add" href="/cart/cart" aria-label="Add <%= product.name %>">
                 +
               </a>
             </div>
           </div>
         </article>
-      <% }); %>
+        <% }); %>
     </div>
 
-    <a
-      class="featured__nav featured__nav--next"
-      href="#feat-<%= featuredProducts.length %>"
-      aria-label="Scroll to end"
-    >
+    <a class="featured__nav featured__nav--next" href="#feat-<%= featuredProducts.length %>" aria-label="Scroll to end">
       ›
     </a>
   </div>
