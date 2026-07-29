@@ -1,0 +1,189 @@
+<section class="below">
+  <p class="below__headline">
+    Where Craft Meets<br />
+    Living Tradition
+  </p>
+
+  <p class="below__sub">
+    A curated marketplace where Vietnamese craftsmanship — in clay, silk,
+    paint, wood and beyond — finds a home in the modern world.
+  </p>
+
+  <a class="below__btn" href="/cart/products">
+    Explore the Collection
+  </a>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span><%= marqueeText %></span>
+    <span><%= marqueeText %></span>
+  </div>
+</div>
+
+<section class="quicknav" aria-label="Quick collection links">
+  <a
+    class="quicknav__tile quicknav__tile--wide"
+    href="<%= quickNav.featured.href %>"
+  >
+    <img
+      src="<%= quickNav.featured.image %>"
+      alt="<%= quickNav.featured.alt %>"
+      loading="lazy"
+    />
+
+    <span class="quicknav__label">
+      <%= quickNav.featured.label %>
+    </span>
+  </a>
+
+  <div class="quicknav__stack">
+    <% quickNav.secondary.forEach((item) => { %>
+      <a class="quicknav__tile" href="<%= item.href %>">
+        <img
+          src="<%= item.image %>"
+          alt="<%= item.alt %>"
+          loading="lazy"
+        />
+
+        <span class="quicknav__label">
+          <%= item.label %>
+        </span>
+      </a>
+    <% }); %>
+  </div>
+</section>
+
+<section class="categories" aria-labelledby="categories-heading">
+  <div class="section-head">
+    <p class="section-kicker">Shop by Craft</p>
+
+    <h2 id="categories-heading">
+      Eight Traditions, <em>One Heritage</em>
+    </h2>
+
+    <p class="section-sub">
+      Every region of Việt Nam carries its own hands, its own patience.
+      Begin your collection with the craft that speaks to you.
+    </p>
+  </div>
+
+  <div class="categories__grid">
+    <% categories.forEach((category) => { %>
+      <a
+        class="category-card"
+        href="/cart/products?category=<%= category.category %>"
+      >
+        <span class="category-card__photo">
+          <img
+            src="<%= category.image %>"
+            alt="<%= category.alt %>"
+            loading="lazy"
+          />
+        </span>
+
+        <span class="category-card__label">
+          <span class="category-card__title-row">
+            <span class="category-card__vn">
+              <%= category.name %>
+            </span>
+
+            <span class="category-card__arrow">→</span>
+          </span>
+
+          <span class="category-card__en">
+            <%= category.vietnameseName %>
+          </span>
+        </span>
+      </a>
+    <% }); %>
+  </div>
+</section>
+
+<section class="featured" aria-labelledby="featured-heading">
+  <div class="featured__header">
+    <div>
+      <p class="section-kicker">Handpicked</p>
+      <h2 id="featured-heading">Featured Pieces</h2>
+    </div>
+
+    <a class="featured__viewall" href="/cart/products">
+      View All <span>→</span>
+    </a>
+  </div>
+
+  <p class="featured__sub">
+    A small edit of what is leaving the workshop this season.
+  </p>
+
+  <div class="featured__carousel">
+    <a
+      class="featured__nav featured__nav--prev"
+      href="#feat-1"
+      aria-label="Scroll to start"
+    >
+      ‹
+    </a>
+
+    <div class="featured__track">
+      <% featuredProducts.forEach((product, index) => { %>
+        <article
+          class="product-card"
+          id="feat-<%= index + 1 %>"
+        >
+          <a
+            class="product-card__media"
+            href="/review/review/<%= product.reviewNumber %>"
+          >
+            <img
+              src="<%= product.image %>"
+              alt="<%= product.alt %>"
+              loading="lazy"
+            />
+
+            <% if (product.badge) { %>
+              <span class="product-card__badge">
+                <%= product.badge %>
+              </span>
+            <% } %>
+          </a>
+
+          <div class="product-card__body">
+            <h3><%= product.name %></h3>
+
+            <div class="product-card__rating">
+              <%= product.rating %>
+              <span>(<%= product.reviewCount %>)</span>
+            </div>
+
+            <div class="product-card__row">
+              <span class="product-card__price">
+                <%= product.price %>
+              </span>
+
+              <a
+                class="product-card__add"
+                href="/cart/cart"
+                aria-label="Add <%= product.name %>"
+              >
+                +
+              </a>
+            </div>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+
+    <a
+      class="featured__nav featured__nav--next"
+      href="#feat-<%= featuredProducts.length %>"
+      aria-label="Scroll to end"
+    >
+      ›
+    </a>
+  </div>
+
+  <a class="section-more" href="/cart/products">
+    Shop the Full Collection <span>↗</span>
+  </a>
+</section>

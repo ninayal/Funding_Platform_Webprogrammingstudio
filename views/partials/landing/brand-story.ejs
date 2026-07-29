@@ -1,0 +1,146 @@
+<section class="impact-banner">
+  <div class="impact-banner__media">
+    <img
+      src="/images/landingpics/impact-bg.png"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+
+  <span class="impact-banner__icon" aria-hidden="true">♥</span>
+
+  <p class="section-kicker">Giving Back</p>
+
+  <h2>Every Piece <em>Gives Back</em></h2>
+
+  <p class="impact-banner__text">
+    A share of every sale goes toward verified charitable organisations and
+    craft-community causes across Việt Nam. Send an Impact Gift Card and let
+    your recipient support a cause that matters to them.
+  </p>
+
+  <a class="impact-banner__btn" href="/giftcard/giftcard">
+    Send an Impact Gift <span>→</span>
+  </a>
+</section>
+
+<section class="story">
+  <div class="story__media">
+    <img
+      class="story__main"
+      src="/images/landingpics/story-main.png"
+      alt="Artisan shaping a piece in a village workshop"
+      loading="lazy"
+    />
+
+    <img
+      class="story__detail"
+      src="/images/landingpics/story-detail.png"
+      alt="Close-up detail of hands at work"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="story__body">
+    <p class="section-kicker">Behind the Counter</p>
+
+    <h2>People, Not Just <em>Products</em></h2>
+
+    <p>
+      Làng &amp; Co. started as a notebook of names — the potter in Bát
+      Tràng, the weaver in Vạn Phúc and the woodblock painter in Đông Hồ.
+      We still list every piece with the workshop that made it.
+    </p>
+
+    <p>
+      Today that notebook spans eight traditions: clay, silk, paint,
+      incense, wood, water puppetry, bamboo and stone.
+    </p>
+
+    <p>
+      We visit before we list, pay before we ship and publish the story
+      alongside the price.
+    </p>
+
+    <a
+      class="text-cta"
+      href="/blog/blog#post-developer-mission"
+    >
+      Read Our Story <span>→</span>
+    </a>
+  </div>
+</section>
+
+<div class="story__gallery" aria-hidden="true">
+  <% galleryImages.forEach((image) => { %>
+    <img src="<%= image %>" alt="" loading="lazy" />
+  <% }); %>
+</div>
+
+<section class="process">
+  <div class="process__media">
+    <img
+      src="/images/landingpics/process.png"
+      alt="Kiln-firing ceramic pieces by hand"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="process__body">
+    <p class="section-kicker">How It Is Made</p>
+
+    <h2>From Raw Material <em>to Ready</em></h2>
+
+    <ol class="process__list">
+      <% processSteps.forEach((step) => { %>
+        <li>
+          <span class="process__num">
+            <%= step.number %>
+          </span>
+
+          <div>
+            <h3><%= step.title %></h3>
+            <p><%= step.description %></p>
+          </div>
+        </li>
+      <% }); %>
+    </ol>
+  </div>
+</section>
+
+<section class="editorial">
+  <div class="editorial__media">
+    <img
+      src="/images/landingpics/editorial-heritage.png"
+      alt="A quiet street of workshops at dawn"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="editorial__body">
+    <p class="section-kicker section-kicker--light">
+      Our Promise
+    </p>
+
+    <h2>A Living Heritage</h2>
+
+    <p class="editorial__text">
+      Every piece we list is traced back to the hands that made it.
+      We work directly with village workshops, pay fair prices at the
+      source and publish the story behind every maker.
+    </p>
+
+    <div class="editorial__cta">
+      <a
+        class="btn-outline-light"
+        href="/blog/blog#post-provenance"
+      >
+        Meet the Makers
+      </a>
+
+      <a class="btn-solid-light" href="/cart/products">
+        Shop the Collection
+      </a>
+    </div>
+  </div>
+</section>
