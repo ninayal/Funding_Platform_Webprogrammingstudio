@@ -34,10 +34,10 @@
 
       <!-- CTA Buttons below hero title -->
       <div class="hero__cta">
-        <a class="hero__cta-primary" href="/shared/register.html">
+        <a class="hero__cta-primary" href="/shared/register">
           Explore the Collection →
         </a>
-        <a class="hero__cta-ghost" href="/shared/login.html">
+        <a class="hero__cta-ghost" href="/shared/login">
           Already have an account? Sign In →
         </a>
       </div>
@@ -56,7 +56,7 @@
         in the modern world.
       </p>
 
-      <a class="below__btn" href="/cart/products.html">Explore the Collection</a>
+      <a class="below__btn" href="/cart/products">Explore the Collection</a>
 
     </div>
 
@@ -77,17 +77,17 @@
          ================================================ -->
     <section class="quicknav" aria-label="Quick collection links">
 
-      <a class="quicknav__tile quicknav__tile--wide" href="pages/cart/products.html">
+      <a class="quicknav__tile quicknav__tile--wide" href="pages/cart/products">
         <img src="/images/landingpics/quicknav-new.png" alt="Newly listed pieces" loading="lazy" />
         <span class="quicknav__label">New Arrivals</span>
       </a>
 
       <div class="quicknav__stack">
-        <a class="quicknav__tile" href="pages/cart/products.html">
+        <a class="quicknav__tile" href="pages/cart/products">
           <img src="/images/landingpics/quicknav-gifts.png" alt="Gift-ready pieces wrapped for giving" loading="lazy" />
           <span class="quicknav__label">Gift Sets</span>
         </a>
-        <a class="quicknav__tile" href="pages/cart/products.html">
+        <a class="quicknav__tile" href="pages/cart/products">
           <img src="/images/landingpics/quicknav-best.png" alt="Best-selling pieces" loading="lazy" />
           <span class="quicknav__label">Best Sellers</span>
         </a>
@@ -107,111 +107,27 @@
       </div>
 
       <div class="categories__grid">
-
-        <a class="category-card" href="pages/cart/products.html?category=ceramics">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-ceramics.png" alt="Bát Tràng ceramic vessels" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Ceramics</span>
-              <span class="category-card__arrow">→</span>
+        <% categories.forEach((category)=> { %>
+          <a class="category-card" href="/cart/products?category=<%= category.category %>">
+            <span class="category-card__photo">
+              <img src="<%= category.image %>" alt="<%= category.alt %>" loading="lazy" />
             </span>
-            <span class="category-card__en">Gốm</span>
-          </span>
-        </a>
 
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=paintings">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-paintings.png" alt="Traditional Vietnamese paintings" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Paintings</span>
-              <span class="category-card__arrow">→</span>
+            <span class="category-card__label">
+              <span class="category-card__title-row">
+                <span class="category-card__vn">
+                  <%= category.name %>
+                </span>
+
+                <span class="category-card__arrow">→</span>
+              </span>
+
+              <span class="category-card__en">
+                <%= category.vietnameseName %>
+              </span>
             </span>
-            <span class="category-card__en">Tranh</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=silk-brocade">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-silk-brocade.png" alt="Hand-woven silk and brocade" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Brocade</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Thổ Cẩm</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=incense">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-incense.png" alt="Hand-rolled incense" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Incense</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Nhang Thơm</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=wood-carving">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-wood-carving.png" alt="Carved wooden craft" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Wood Carving</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Gỗ Điêu Khắc</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=water-puppets">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-water-puppets.png" alt="Hand-carved water puppets" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Water Puppets</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Rối Nước</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=bamboo-weaving">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-bamboo-weaving.png" alt="Hand-woven bamboo homeware" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Bamboo Weaving</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Đồ Đan Tre</span>
-          </span>
-        </a>
-
-        <a class="category-card" href="pages/cart/shoppingcart.html?category=fengshui-stones">
-          <span class="category-card__photo">
-            <img src="/images/landingpics/craft-fengshui-stones.png" alt="Feng shui stones and gems" loading="lazy" />
-          </span>
-          <span class="category-card__label">
-            <span class="category-card__title-row">
-              <span class="category-card__vn">Feng Shui Stones</span>
-              <span class="category-card__arrow">→</span>
-            </span>
-            <span class="category-card__en">Đá Phong Thủy</span>
-          </span>
-        </a>
-
+          </a>
+          <% }); %>
       </div>
     </section>
 
@@ -231,7 +147,7 @@
         causes across Việt Nam. Want to give directly? Send an Impact Gift Card — Làng &amp; Co.
         directs the value to a cause, or lets your recipient choose one themselves.
       </p>
-      <a class="impact-banner__btn" href="pages/giftcard/giftcard.html">
+      <a class="impact-banner__btn" href="pages/giftcard/giftcard">
         Send an Impact Gift <span>→</span>
       </a>
     </section>
@@ -256,17 +172,14 @@
           puppetry, bamboo, and stone, each with its own hands and its own patience.</p>
         <p>We visit before we list, pay before we ship, and publish the story alongside the price.
           It's slower. We think it's worth it.</p>
-        <a class="text-cta" href="pages/blog/blog.html#post-developer-mission">Read Our Story <span>→</span></a>
+        <a class="text-cta" href="pages/blog/blog#post-developer-mission">Read Our Story <span>→</span></a>
       </div>
     </section>
 
     <div class="story__gallery" aria-hidden="true">
-      <img src="/images/landingpics/gallery-1.png" alt="" loading="lazy" />
-      <img src="/images/landingpics/gallery-2.png" alt="" loading="lazy" />
-      <img src="/images/landingpics/gallery-3.png" alt="" loading="lazy" />
-      <img src="/images/landingpics/gallery-4.png" alt="" loading="lazy" />
-      <img src="/images/landingpics/gallery-5.png" alt="" loading="lazy" />
-      <img src="/images/landingpics/gallery-6.png" alt="" loading="lazy" />
+      <% galleryImages.forEach((image)=> { %>
+        <img src="<%= image %>" alt="" loading="lazy" />
+        <% }); %>
     </div>
 
     <!-- ================================================
@@ -280,37 +193,22 @@
         <p class="section-kicker">How It's Made</p>
         <h2>From Raw Material <em>to Ready</em></h2>
         <ol class="process__list">
-          <li>
-            <span class="process__num">01</span>
-            <div>
-              <h3>Sourced by Hand</h3>
-              <p>Clay, silk cocoons, bamboo, timber, stone and natural pigments are gathered directly
-                from trusted regional suppliers ~ no middlemen.</p>
-            </div>
-          </li>
-          <li>
-            <span class="process__num">02</span>
-            <div>
-              <h3>Shaped &amp; Formed</h3>
-              <p>Every piece passes through an artisan's hands - thrown, woven, carved, painted, or
-                bound, one at a time.</p>
-            </div>
-          </li>
-          <li>
-            <span class="process__num">03</span>
-            <div>
-              <h3>Finished with Patience</h3>
-              <p>Glazing, dyeing, polishing or painting — the slowest stage, and the one that
-                can't be rushed.</p>
-            </div>
-          </li>
-          <li>
-            <span class="process__num">04</span>
-            <div>
-              <h3>Packed &amp; Sent With Care</h3>
-              <p>Wrapped by the same hands that made it, boxed, and shipped straight to your door.</p>
-            </div>
-          </li>
+          <% processSteps.forEach((step)=> { %>
+            <li>
+              <span class="process__num">
+                <%= step.number %>
+              </span>
+
+              <div>
+                <h3>
+                  <%= step.title %>
+                </h3>
+                <p>
+                  <%= step.description %>
+                </p>
+              </div>
+            </li>
+            <% }); %>
         </ol>
       </div>
     </section>
@@ -324,7 +222,7 @@
           <p class="section-kicker">Handpicked</p>
           <h2 id="featured-heading">Featured Pieces</h2>
         </div>
-        <a class="featured__viewall" href="/pages/cart/products.html">View All <span>→</span></a>
+        <a class="featured__viewall" href="/pages/cart/products">View All <span>→</span></a>
       </div>
       <p class="featured__sub">A small edit of what's leaving the workshop this season.</p>
 
@@ -332,104 +230,51 @@
         <a class="featured__nav featured__nav--prev" href="#feat-1" aria-label="Scroll to start">‹</a>
 
         <div class="featured__track">
+          <% featuredProducts.forEach((product, index)=> { %>
+            <article class="product-card" <% if (index===0) { %>
+              id="feat-1"
+              <% } else if (index===featuredProducts.length - 1) { %>
+                id="feat-6"
+                <% } %>
+                  >
+                  <a class="product-card__media" href="/review/<%= product.reviewNumber %>">
+                    <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
 
-          <article class="product-card" id="feat-1">
-            <a class="product-card__media" href="/pages/review/product_detail/review1.html">
-              <img src="/images/shopping_items/ceramic/ceramic1.png" alt="Hand-Painted Blue Lotus Vase"
-                loading="lazy" />
-              <span class="product-card__badge">Bestseller</span>
-            </a>
-            <div class="product-card__body">
-              <h3>Hand-Painted Blue Lotus Vase</h3>
-              <div class="product-card__rating">★★★★★ <span>(86)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$68.00</span>
-                <a class="product-card__add" href="/pages/cart/cart.html" aria-label="Add Đông Hồ Folk Painting">+</a>
-              </div>
-            </div>
-          </article>
+                    <% if (product.badge) { %>
+                      <span class="product-card__badge">
+                        <%= product.badge %>
+                      </span>
+                      <% } %>
+                  </a>
 
-          <article class="product-card">
-            <a class="product-card__media" href="/pages/review/product_detail/review2.html">
-              <img src="/images/shopping_items/ceramic/ceramic2.png" alt="Ash Glaze Tea Cup Set (7-Piece)"
-                loading="lazy" />
-            </a>
-            <div class="product-card__body">
-              <h3>Ash Glaze Tea Cup Set (7-Piece)</h3>
-              <div class="product-card__rating">★★★★★ <span>(243)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$54.00</span>
-                <a class="product-card__add" href="/pages/cart/cart.html"
-                  aria-label="Ash Glaze Tea Cup Set (7-Piece)">+</a>
-              </div>
-            </div>
-          </article>
+                  <div class="product-card__body">
+                    <h3>
+                      <%= product.name %>
+                    </h3>
 
-          <article class="product-card">
-            <a class="product-card__media" href="/pages/review/product_detail/review3.html">
-              <img src="/images/shopping_items/brocade/brocade1.png" alt="brocade blanket" loading="lazy" />
-            </a>
-            <div class="product-card__body">
-              <h3>Brocade Blanket</h3>
-              <div class="product-card__rating">★★★★★ <span>(198)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$56.00</span>
-                <a class="product-card__add" href="/pages/cart/cart.html" aria-label="Add brocade blanket">+</a>
-              </div>
-            </div>
-          </article>
+                    <div class="product-card__rating">
+                      <%= product.rating %>
+                        <span>(<%= product.reviewCount %>)</span>
+                    </div>
 
-          <article class="product-card">
-            <a class="product-card__media" href="/pages/review/product_detail/review4.html">
-              <img src="/images/shopping_items/brocade/brocade2.png" alt="Handmade Horse Brocade" loading="lazy" />
-            </a>
-            <div class="product-card__body">
-              <h3>Handmade Horse Brocade</h3>
-              <div class="product-card__rating">★★★★★ <span>(167)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$45.00</span>
-                <a class="product-card__add" href="/pages/cart/cart.html" aria-label="Add horse brocade">+</a>
-              </div>
-            </div>
-          </article>
+                    <div class="product-card__row">
+                      <span class="product-card__price">
+                        <%= product.price %>
+                      </span>
 
-          <article class="product-card">
-            <a class="product-card__media" href="/pages/review/product_detail/review6.html">
-              <img src="/images/shopping_items/incense/incense2.png" alt="Hand-rolled agarwood incense"
-                loading="lazy" />
-              <span class="product-card__badge">New</span>
-            </a>
-            <div class="product-card__body">
-              <h3>Agarwood Incense</h3>
-              <div class="product-card__rating">★★★★★ <span>(112)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$38.00</span>
-                <a class="product-card__add" href="pages/cart/shoppingcart.html?category=incense"
-                  aria-label="Add Agarwood Incense">+</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" id="feat-6">
-            <a class="product-card__media" href="/pages/review/product_detail/review8.html">
-              <img src="/images/shopping_items/painting/painting_2.png" alt="Dong Ho Painting" loading="lazy" />
-            </a>
-            <div class="product-card__body">
-              <h3>Dong Ho Painting</h3>
-              <div class="product-card__rating">★★★★★ <span>(95)</span></div>
-              <div class="product-card__row">
-                <span class="product-card__price">$16.00</span>
-                <a class="product-card__add" href="/pages/cart/cart.html" aria-label="Add Dong Ho Painting">+</a>
-              </div>
-            </div>
-          </article>
-
+                      <a class="product-card__add" href="/cart/cart" aria-label="Add <%= product.name %>">
+                        +
+                      </a>
+                    </div>
+                  </div>
+            </article>
+            <% }); %>
         </div>
 
         <a class="featured__nav featured__nav--next" href="#feat-6" aria-label="Scroll to end">›</a>
       </div>
 
-      <a class="section-more" href="/pages/cart/products.html">Shop the Full Collection <span>↗</span></a>
+      <a class="section-more" href="/pages/cart/products">Shop the Full Collection <span>↗</span></a>
     </section>
 
     <!-- ================================================
@@ -449,8 +294,8 @@
           so what you bring home carries more than its shape.
         </p>
         <div class="editorial__cta">
-          <a class="btn-outline-light" href="pages/blog/blog.html#post-provenance">Meet the Makers</a>
-          <a class="btn-solid-light" href="/pages/cart/products.html">Shop the Collection</a>
+          <a class="btn-outline-light" href="pages/blog/blog#post-provenance">Meet the Makers</a>
+          <a class="btn-solid-light" href="/pages/cart/products">Shop the Collection</a>
         </div>
       </div>
     </section>
@@ -461,42 +306,26 @@
     <section class="testimonials" aria-labelledby="testimonials-heading">
       <p class="section-kicker testimonials__kicker" id="testimonials-heading">What Collectors Say</p>
       <div class="testimonials__strip">
+        <% testimonials.forEach((testimonial)=> { %>
+          <blockquote class="testimonial-card">
+            <p>“<%= testimonial.quote %>”</p>
 
-        <blockquote class="testimonial-card">
-          <p>"The vase arrived with a handwritten card from the workshop. It's the first thing
-            guests ask about."</p>
-          <div class="testimonial-card__author">
-            <span class="avatar">T</span>
-            <div><strong>Trang N.</strong><span>Hồ Chí Minh City</span></div>
-          </div>
-        </blockquote>
+            <div class="testimonial-card__author">
+              <span class="avatar">
+                <%= testimonial.initial %>
+              </span>
 
-        <blockquote class="testimonial-card">
-          <p>"I've bought from three different craft marketplaces. This is the only one that tells
-            me who actually made the piece."</p>
-          <div class="testimonial-card__author">
-            <span class="avatar">D</span>
-            <div><strong>David R.</strong><span>Singapore</span></div>
-          </div>
-        </blockquote>
-
-        <blockquote class="testimonial-card">
-          <p>"The wood comb is even better in person. Packaging alone felt like a gift."</p>
-          <div class="testimonial-card__author">
-            <span class="avatar">M</span>
-            <div><strong>Minh H.</strong><span>Hà Nội</span></div>
-          </div>
-        </blockquote>
-
-        <blockquote class="testimonial-card">
-          <p>"Ordered a scarf for my mother. She wore it to a wedding and got asked about it all
-            night."</p>
-          <div class="testimonial-card__author">
-            <span class="avatar">L</span>
-            <div><strong>Léa B.</strong><span>Paris</span></div>
-          </div>
-        </blockquote>
-
+              <div>
+                <strong>
+                  <%= testimonial.name %>
+                </strong>
+                <span>
+                  <%= testimonial.location %>
+                </span>
+              </div>
+            </div>
+          </blockquote>
+          <% }); %>
       </div>
     </section>
 
@@ -511,39 +340,34 @@
       </div>
 
       <div class="journal-preview__grid">
+        <% journalPosts.forEach((post)=> { %>
+          <a class="journal-card <%= post.featured ? 'journal-card--feature' : '' %>" href="/blog/blog#<%= post.id %>">
+            <img src="<%= post.image %>" alt="<%= post.alt %>" loading="lazy" />
 
-        <a class="journal-card journal-card--feature" href="pages/blog/blog.html#post-hoi-an">
-          <img src="/images/landingpics/journal-hoian.png" alt="Historic Hội An street at sunrise" loading="lazy" />
-          <div class="journal-card__body">
-            <span class="journal-card__tag">Places</span>
-            <h3>A Slow Morning in Hội An</h3>
-            <p>Before the crowds arrive, work resumes at a scale that's easy to miss later in the day.</p>
-            <span class="journal-card__meta">Linh Trần · June 11, 2026</span>
-          </div>
-        </a>
+            <div class="journal-card__body">
+              <span class="journal-card__tag">
+                <%= post.tag %>
+              </span>
 
-        <a class="journal-card" href="pages/blog/blog.html#post-bat-trang">
-          <img src="/images/landingpics/journal-bat-trang.png" alt="Ceramic vessels in a workshop" loading="lazy" />
-          <div class="journal-card__body">
-            <span class="journal-card__tag">Guide</span>
-            <h3>Bát Tràng Beyond Blue and White</h3>
-            <span class="journal-card__meta">Mai An · June 28, 2026</span>
-          </div>
-        </a>
+              <h3>
+                <%= post.title %>
+              </h3>
 
-        <a class="journal-card" href="pages/blog/blog.html#post-lacquer-artist">
-          <img src="/images/landingpics/journal-lacquer.png" alt="Artist hands finishing a lacquer surface"
-            loading="lazy" />
-          <div class="journal-card__body">
-            <span class="journal-card__tag">Guide</span>
-            <h3>The Patience of a Lacquer Artist</h3>
-            <span class="journal-card__meta">Minh Khôi · June 19, 2026</span>
-          </div>
-        </a>
+              <% if (post.description) { %>
+                <p>
+                  <%= post.description %>
+                </p>
+                <% } %>
 
+                  <span class="journal-card__meta">
+                    <%= post.author %> · <%= post.date %>
+                  </span>
+            </div>
+          </a>
+          <% }); %>
       </div>
 
-      <a class="section-more" href="pages/blog/blog.html">Read the full Journal <span>↗</span></a>
+      <a class="section-more" href="pages/blog/blog">Read the full Journal <span>↗</span></a>
     </section>
 
     <!-- ================================================
@@ -593,7 +417,7 @@
         <h2>Find Your Craft</h2>
         <p class="finder-cta__text">Answer four short questions about how you live, gift and
           decorate — we'll point you to the tradition that fits.</p>
-        <a class="finder-cta__btn" href="/cart/products.html">
+        <a class="finder-cta__btn" href="/cart/products">
           Take the Craft Finder <span>→</span>
         </a>
       </div>
@@ -604,13 +428,13 @@
          ================================================ -->
     <section class="community-split" aria-label="Community and wishlist">
 
-      <a class="split-card split-card--forum" href="pages/forum/forum.html">
+      <a class="split-card split-card--forum" href="pages/forum/forum">
         <span class="split-card__title">The Round Table</span>
         <p class="split-card__desc">Talk technique, provenance and care with fellow collectors and makers.</p>
         <span class="split-card__cta">Visit the Forum →</span>
       </a>
 
-      <a class="split-card split-card--wishlist" href="/pages/cart/cart.html">
+      <a class="split-card split-card--wishlist" href="/pages/cart/cart">
         <span class="split-card__title">Your Curated Collection</span>
         <p class="split-card__desc">Save the pieces that speak to you, and return whenever you're ready.</p>
         <span class="split-card__cta">Open Cart →</span>
