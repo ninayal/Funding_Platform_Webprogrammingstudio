@@ -1,22 +1,35 @@
+"use strict";
+
 const express = require("express");
 const blogController = require("../controllers/blogController");
 
 const router = express.Router();
 
-router.get("/blog", (req, res) => {
-  res.render("blog/blog");
-});
+/*
+ * config/routeConfig.js already mounts this router at /blog.
+ * Child routes below must not repeat the /blog prefix.
+ */
 
-router.get("/blog/lead-story", (req, res) => {
-  res.render("blog/blog_lead_story");
-});
+router.get("/", blogController.getBlogPage);
+router.get("/my-posts", blogController.getMyPostsPage);
 
-router.get("/blog/my-posts", (req, res) => {
-  res.render("blog/my_posts");
-});
+/*
+ * POST handlers are ready for create_post.ejs and post_edit.ejs.
+ * The GET form pages can be added in the next phase.
+ */
+router.post("/", blogController.createPost);
+router.post("/:id/update", blogController.updatePost);
+router.post("/:id/draft", blogController.saveDraft);
+router.post("/:id/publish", blogController.publishPost);
+router.post("/:id/delete", blogController.deletePost);
 
-router.get("/blog/post-edit", (req, res) => {
-  res.render("blog/post_edit");
-});
+router.post("/:id/comments", blogController.addComment);
+router.post(
+  "/:id/comments/:commentId/delete",
+  blogController.deleteComment,
+);
+
+/* Keep this last so it does not capture /my-posts. */
+router.get("/:id", blogController.getBlogViewPage);
 
 module.exports = router;

@@ -1,0 +1,180 @@
+/* ==================================================
+   GENERAL DYNAMIC STATES
+================================================== */
+
+[data-blog-post][hidden],
+.blog-empty-message[hidden],
+[data-copy-feedback][hidden],
+[data-error-for]:empty {
+    display: none !important;
+}
+
+
+/* ==================================================
+   CATEGORY FILTERING
+
+   The original blog-tools.css hides nonmatching cards,
+   but it does not remove the empty Lead and Featured
+   section wrappers.
+
+   When a category other than All is selected:
+   - hide the complete Lead Story section;
+   - hide the complete Featured Stories section;
+   - hide the archive heading and sort controls;
+   - show only matching archive cards directly below
+     the toolbar.
+================================================== */
+
+/* Remove Lead Story for every specific category */
+#filter-mission:checked~.blog-shell .lead-story-section,
+#filter-donation:checked~.blog-shell .lead-story-section,
+#filter-places:checked~.blog-shell .lead-story-section,
+#filter-guide:checked~.blog-shell .lead-story-section {
+    display: none !important;
+}
+
+/* Remove Featured Stories for every specific category */
+#filter-mission:checked~.blog-shell .featured-section,
+#filter-donation:checked~.blog-shell .featured-section,
+#filter-places:checked~.blog-shell .featured-section,
+#filter-guide:checked~.blog-shell .featured-section {
+    display: none !important;
+}
+
+/* Remove "The archive", "All posted stories" and sorting */
+#filter-mission:checked~.blog-shell .all-posts-section>.section-heading,
+#filter-donation:checked~.blog-shell .all-posts-section>.section-heading,
+#filter-places:checked~.blog-shell .all-posts-section>.section-heading,
+#filter-guide:checked~.blog-shell .all-posts-section>.section-heading {
+    display: none !important;
+}
+
+/* Remove unnecessary spacing above filtered cards */
+#filter-mission:checked~.blog-shell .all-posts-section,
+#filter-donation:checked~.blog-shell .all-posts-section,
+#filter-places:checked~.blog-shell .all-posts-section,
+#filter-guide:checked~.blog-shell .all-posts-section {
+    margin: 0 !important;
+    padding-top: 24px !important;
+}
+
+/*
+ * Guarantee that only the selected category appears.
+ * This duplicates the existing category rules with
+ * !important so card display rules cannot override them.
+ */
+
+#filter-mission:checked~.blog-shell #blog-post-list .post:not(.mission),
+
+#filter-donation:checked~.blog-shell #blog-post-list .post:not(.donation),
+
+#filter-places:checked~.blog-shell #blog-post-list .post:not(.places),
+
+#filter-guide:checked~.blog-shell #blog-post-list .post:not(.guide) {
+    display: none !important;
+}
+
+
+/* ==================================================
+   SORT CONTROL
+================================================== */
+
+.blog-sort-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--brown);
+    font-family: var(--ff-ui);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.blog-sort-control select {
+    min-width: 150px;
+    min-height: 44px;
+    padding: 0 42px 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--deep);
+    font-family: var(--ff-ui);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.blog-sort-control select:focus {
+    border-color: rgba(163, 29, 29, 0.62);
+    box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
+}
+
+
+/* ==================================================
+   EMPTY RESULTS
+================================================== */
+
+.blog-empty-message {
+    margin: 28px 0 0;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.35);
+    text-align: center;
+}
+
+
+/* ==================================================
+   COMMENT VALIDATION
+================================================== */
+
+.blog-comment-form input[aria-invalid="true"],
+.blog-comment-form textarea[aria-invalid="true"] {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(163, 29, 29, 0.08);
+}
+
+[data-error-for] {
+    color: var(--red);
+    font-size: 11px;
+}
+
+
+/* ==================================================
+   COMMENT DELETE BUTTON
+================================================== */
+
+.blog-comment__content form {
+    display: inline;
+    margin-left: 12px;
+}
+
+.blog-comment__content form button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--red);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 720px) {
+    .all-heading {
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .blog-sort-control {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

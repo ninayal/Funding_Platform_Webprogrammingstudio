@@ -1,64 +1,149 @@
-<span id="home-active" class="nav-active-target" aria-hidden="true"></span>
-<span id="giftcard-active" class="nav-active-target" aria-hidden="true"></span>
-<input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+<% const useBlogHeader=typeof headerVariant !=="undefined" && headerVariant==="blog" ; %>
 
-<div class="topbar">
-    <p class="topbar__text">
-        New Collection Available Now &nbsp;|&nbsp;
-        <a href="/products">Shop Now</a>
-    </p>
+    <span id="home-active" class="nav-active-target" aria-hidden="true"></span>
+    <span id="giftcard-active" class="nav-active-target" aria-hidden="true"></span>
 
-    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">
-        ✕
-    </label>
-</div>
+    <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
 
-<nav class="nav">
-    <a class="nav__logo" href="/">
-        <img src="/images/logo.png" alt="Lang & Co. logo" />
-    </a>
+    <div class="topbar">
+        <p class="topbar__text">
+            New Collection Available Now &nbsp;|&nbsp;
+            <a href="/cart/products">Shop Now</a>
+        </p>
 
-    <div class="nav__pill">
-        <ul class="nav__links">
-            <li>
-                <a id="nav-home" href="/">Home</a>
-            </li>
-
-            <li>
-                <a id="nav-shop" href="/products">Shop</a>
-            </li>
-
-            <li>
-                <a id="nav-blog" href="/blog">Blog</a>
-            </li>
-
-            <li>
-                <a id="nav-forum" href="/forum">Forum</a>
-            </li>
-
-            <li>
-                <a id="nav-giftcard" href="/giftcard">Giftcard</a>
-            </li>
-        </ul>
+        <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">
+            ✕
+        </label>
     </div>
 
-    <div class="nav__icons">
-        <a class="nav__icon-btn" href="/profile" aria-label="Account — Log in or sign up">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                aria-hidden="true">
-                <circle cx="12" cy="8" r="3.6" />
-                <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-            </svg>
-        </a>
+    <% if (useBlogHeader) { %>
 
-        <a class="nav__icon-btn" href="/cart" aria-label="Shopping bag">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                aria-hidden="true">
-                <path d="M6 8h12l-1 13H7L6 8Z" />
-                <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-            </svg>
+        <!-- Blog/light header -->
+        <nav class="nav nav--light nav--centered">
 
-            <span class="nav__badge-count">4</span>
-        </a>
-    </div>
-</nav>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+
+            <div class="nav__left">
+                <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                        aria-hidden="true">
+                        <path d="M3 6h18M3 12h18M3 18h18" />
+                    </svg>
+                </label>
+
+                <button type="button" class="nav__icon-btn" aria-label="Search">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                        aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="m20 20-3.8-3.8" />
+                    </svg>
+                </button>
+            </div>
+
+            <a class="nav__logo nav__logo--center" href="/" aria-label="Làng & Co. home">
+                <img src="/images/logo.png" alt="Làng & Co. logo" />
+            </a>
+
+            <div class="nav__icons">
+                <a class="nav__icon-btn" href="/shared/profile" aria-label="Account — Log in or sign up">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                        aria-hidden="true">
+                        <circle cx="12" cy="8" r="3.6" />
+                        <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+                    </svg>
+                </a>
+
+                <a class="nav__icon-btn" href="/cart/cart" aria-label="Shopping bag, 4 items">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                        aria-hidden="true">
+                        <path d="M6 8h12l-1 13H7L6 8Z" />
+                        <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+                    </svg>
+
+                    <span class="nav__badge-count">4</span>
+                </a>
+            </div>
+
+            <div class="mobile-menu">
+                <ul>
+                    <li>
+                        <a id="nav-home" href="/">Home</a>
+                    </li>
+
+                    <li>
+                        <a id="nav-shop" href="/cart/products">Shop</a>
+                    </li>
+
+                    <li>
+                        <a id="nav-blog" href="/blog">Blog</a>
+                    </li>
+
+                    <li>
+                        <a id="nav-forum" href="/forum">Forum</a>
+                    </li>
+
+                    <li>
+                        <a id="nav-giftcard" href="/giftcard/giftcard">
+                            Giftcards
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <% } else { %>
+
+            <!-- Existing/default website header -->
+            <nav class="nav">
+                <a class="nav__logo" href="/">
+                    <img src="/images/logo.png" alt="Làng & Co. logo" />
+                </a>
+
+                <div class="nav__pill">
+                    <ul class="nav__links">
+                        <li>
+                            <a id="nav-home" href="/">Home</a>
+                        </li>
+
+                        <li>
+                            <a id="nav-shop" href="/cart/products">Shop</a>
+                        </li>
+
+                        <li>
+                            <a id="nav-blog" href="/blog">Blog</a>
+                        </li>
+
+                        <li>
+                            <a id="nav-forum" href="/forum">Forum</a>
+                        </li>
+
+                        <li>
+                            <a id="nav-giftcard" href="/giftcard/giftcard">
+                                Giftcard
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav__icons">
+                    <a class="nav__icon-btn" href="/shared/profile" aria-label="Account — Log in or sign up">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" aria-hidden="true">
+                            <circle cx="12" cy="8" r="3.6" />
+                            <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+                        </svg>
+                    </a>
+
+                    <a class="nav__icon-btn" href="/cart/cart" aria-label="Shopping bag">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" aria-hidden="true">
+                            <path d="M6 8h12l-1 13H7L6 8Z" />
+                            <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+                        </svg>
+
+                        <span class="nav__badge-count">4</span>
+                    </a>
+                </div>
+            </nav>
+
+            <% } %>
