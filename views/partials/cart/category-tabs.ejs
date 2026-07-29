@@ -1,0 +1,12 @@
+<nav class="category-tabs container" aria-label="Shop by category">
+    <% categories.forEach((category)=> { %>
+        <button type="button" class="tab <%= category.id === 'all' ? 'is-active' : '' %>"
+            data-category="<%= category.id %>">
+            <%= category.label %>
+
+                <span>
+                    (<%= categoryCounts[category.id] %>)
+                </span>
+        </button>
+        <% }); %>
+</nav>
