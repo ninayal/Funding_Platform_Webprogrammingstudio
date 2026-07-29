@@ -7,7 +7,7 @@ const footerConfig = {
         { label: "Home", href: "/" },
         { label: "Shop All", href: "/cart/products" },
         { label: "Gift Cards", href: "/giftcard/giftcard" },
-        { label: "Reviews", href: "/review/product-review" },
+        { label: "Reviews", href: "/review" },
       ],
     },
     {

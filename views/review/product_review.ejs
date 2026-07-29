@@ -3,27 +3,9 @@
 <head>
     <%- include("../partials/product_review/head") %>
 </head>
-<body>
-    <main
-        class="product-review"
-        data-product-id="<%= product.id %>"
-        data-form-mode="<%= formMode %>"
-        data-editing-review-id="<%= editingReviewId %>"
-        data-page-status="<%= pageStatus %>"
-    >
-        <section class="pr-hero">
-            <%- include("../partials/product_review/hero-intro") %>
-
-            <div class="pr-hero__grid">
-                <%- include("../partials/product_review/score-card") %>
-                <%- include("../partials/product_review/review-form") %>
-            </div>
-        </section>
-
-        <section class="pr-list" id="customer-reviews">
-            <%- include("../partials/product_review/review-toolbar") %>
-            <%- include("../partials/product_review/review-list") %>
-        </section>
+<body class="product-review-page">
+    <main>
+        <%- include("../partials/product_review/section") %>
     </main>
 </body>
 </html>

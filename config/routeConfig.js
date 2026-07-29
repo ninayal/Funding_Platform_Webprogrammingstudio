@@ -9,18 +9,11 @@ const giftcardRoutes = require("../routes/giftcardRoutes");
 
 const router = express.Router();
 
-/*
- * Top-level application modules.
- *
- * This file only decides which large module owns each URL prefix.
- * The child pages and actions inside each module remain in its own
- * routes/<module>Routes.js file.
- */
-
 router.use("/", homeRoutes);
 router.use("/shared", sharedRoutes);
 router.use("/cart", cartRoutes);
 router.use("/blog", blogRoutes);
+// Phải có dòng này
 router.use("/review", reviewRoutes);
 router.use("/giftcard", giftcardRoutes);
 

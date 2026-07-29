@@ -38,7 +38,7 @@
             <div class="pr-card__owner-actions">
                 <a
                     class="pr-card__owner-action"
-                    href="/review/reviews/<%= review.id %>/edit#review-form"
+                    href="/review/reviews/<%= review.id %>/edit?returnPath=<%= encodeURIComponent(returnPath) %>#review-form"
                 >Edit</a>
 
                 <form
@@ -46,6 +46,11 @@
                     action="/review/reviews/<%= review.id %>/delete"
                     method="post"
                 >
+                    <input
+                        type="hidden"
+                        name="returnPath"
+                        value="<%= returnPath %>"
+                    />
                     <button
                         class="pr-card__owner-action pr-card__owner-action--delete"
                         type="submit"

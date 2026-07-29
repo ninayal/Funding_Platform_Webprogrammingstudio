@@ -6,29 +6,92 @@
   --ff-script: var(--ff-display);
   --ff-ui: var(--ff-body);
 }
+/* ================================================
+   PRODUCT DETAIL PAGE BASE
+   ================================================ */
 
-*,
-*::before,
-*::after {
+.product-detail-page {
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f8f4ec;
+  background-image: url("/images/linen-beige.png");
+  background-repeat: repeat;
+  color: var(--deep);
+  font-family: var(--ff-body);
+}
+
+/* Radio inputs control size and tabs but must not be visible */
+.state-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  clip-path: inset(50%);
+}
+
+/* Safety in case shared .container is unavailable */
+.breadcrumb.container,
+.pd-main.container,
+.pd-tabs-section.container,
+.pd-related.container {
+  width: calc(100% - 64px);
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Breadcrumb base */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-family: var(--ff-body);
+  font-size: 15px;
+  color: var(--deep);
+}
+
+.breadcrumb a {
+  color: var(--brown);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--red);
+  text-decoration: underline;
+}
+
+.product-review,
+.product-review *,
+.product-review *::before,
+.product-review *::after {
   box-sizing: border-box;
 }
 
-html,
-body {
+body.product-review-page {
   width: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
-
   background-color: var(--cream, #fef9e1);
   background-image: url("/images/linen-beige.png");
   background-repeat: repeat;
   background-position: top left;
 }
 
-body {
-  font-family: var(--ff-body);
+.product-review {
+  width: 100%;
+  min-height: 100%;
+  padding: 0 0 40px;
+  background: transparent;
   color: var(--deep);
+  font-family: var(--ff-body);
 }
 
 .product-review {
