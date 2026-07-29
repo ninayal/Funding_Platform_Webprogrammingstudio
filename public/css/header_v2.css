@@ -151,7 +151,7 @@ body {
     width: max-content;
     max-width: 100%;
     margin: 0;
-    padding: 10px 24px;
+    padding: 20px 34px;
     overflow: hidden;
     list-style: none;
     border: 1px solid rgba(254, 249, 225, 0.22);
@@ -173,7 +173,7 @@ body {
     justify-content: center;
     color: rgba(254, 249, 225, 0.92);
     font-family: var(--ff-ui, Arial, sans-serif);
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 1.25px;
     line-height: 1;

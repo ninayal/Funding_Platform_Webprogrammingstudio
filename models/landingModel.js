@@ -296,7 +296,7 @@ const communityCards = [
     description:
       "Save the pieces that speak to you, and return whenever you are ready.",
     cta: "Open Cart →",
-    href: "/cart/cart",
+    href: "/cart",
   },
 ];
 
