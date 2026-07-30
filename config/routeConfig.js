@@ -6,6 +6,7 @@ const cartRoutes = require("../routes/cartRoutes");
 const blogRoutes = require("../routes/blogRoutes");
 const reviewRoutes = require("../routes/reviewRoutes");
 const giftcardRoutes = require("../routes/giftcardRoutes");
+const forumRoutes = require("../routes/forumRoutes");
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use("/blog", blogRoutes);
 // Phải có dòng này
 router.use("/review", reviewRoutes);
 router.use("/giftcard", giftcardRoutes);
+router.use("/forum", forumRoutes);
 
 module.exports = router;
