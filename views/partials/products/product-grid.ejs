@@ -1,56 +1,90 @@
-<section class="shop-grid" aria-label="All products">
-    <% products.forEach((product)=> { %>
-        <article class="shop-card product-<%= product.id %> <%= product.category %>">
-            <div class="shop-card__media">
-                <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
+<section
+  class="shop-grid"
+  aria-label="All products"
+>
+  <% products.forEach((product) => { %>
+    <article
+      class="
+        shop-card
+        product-<%= product.id %>
+        <%= product.category %>
+      "
+    >
+      <div class="shop-card__media">
+        <a href="<%= product.href %>">
+          <img
+            src="<%= product.image %>"
+            alt="<%= product.alt %>"
+            loading="lazy"
+          />
+        </a>
 
-                <button type="button" class="wishlist-btn" aria-label="Save <%= product.name %> to wishlist">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                        aria-hidden="true">
-                        <path
-                            d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
-                    </svg>
-                </button>
+        <button
+          type="button"
+          class="wishlist-btn"
+          aria-label="Save <%= product.name %> to wishlist"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            aria-hidden="true"
+          >
+            <path
+              d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
+            />
+          </svg>
+        </button>
 
-                <a href="/cart/cart" class="quickadd-btn" aria-label="Quick add <%= product.name %> to cart">
-                    +
-                </a>
-            </div>
+        <a
+          href="/cart"
+          class="quickadd-btn"
+          aria-label="Quick add <%= product.name %> to cart"
+        >
+          +
+        </a>
+      </div>
 
-            <div class="shop-card__body">
-                <p class="shop-card__maker">
-                    <%= product.maker %>
-                </p>
+      <div class="shop-card__body">
+        <p class="shop-card__maker">
+          <%= product.maker %>
+        </p>
 
-                <h3 class="shop-card__title">
-                    <a href="/review/review/<%= product.reviewNumber %>">
-                        <%= product.name %>
-                    </a>
-                </h3>
+        <h3 class="shop-card__title">
+          <a href="<%= product.href %>">
+            <%= product.name %>
+          </a>
+        </h3>
 
-                <p class="shop-card__price">
-                    <%= product.price %>
+        <p class="shop-card__price">
+          <%= product.priceDisplay %>
 
-                        <% if (product.oldPrice) { %>
-                            <span class="shop-card__price-was">
-                                <%= product.oldPrice %>
-                            </span>
-                            <% } %>
-                </p>
+          <% if (product.oldPriceDisplay) { %>
+            <span class="shop-card__price-was">
+              <%= product.oldPriceDisplay %>
+            </span>
+          <% } %>
+        </p>
 
-                <p class="shop-card__rating">
-                    <%= product.rating %>
-                        <span>(<%= product.reviewCount %>)</span>
-                </p>
+        <p class="shop-card__rating">
+          <%= product.ratingStars %>
 
-                <p class="shop-card__tag">
-                    <%= product.tag || " " %>
-                </p>
+          <span>
+            (<%= product.reviewCount %>)
+          </span>
+        </p>
 
-                <p class="shop-card__variant">
-                    <%= product.variant %>
-                </p>
-            </div>
-        </article>
-        <% }); %>
+        <p class="shop-card__tag">
+          <%= product.tag || " " %>
+        </p>
+
+        <p class="shop-card__variant">
+          <%= product.variant %>
+        </p>
+      </div>
+    </article>
+  <% }); %>
 </section>

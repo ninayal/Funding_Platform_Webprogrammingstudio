@@ -1,43 +1,52 @@
 <div class="pr-score-card">
-    <div class="pr-score-card__top">
-        <p class="pr-score-card__number"><%= averageRating %></p>
+  <div class="pr-score-card__top">
+    <p class="pr-score-card__number">
+      <%= averageRating %>
+    </p>
 
-        <p
-            class="pr-score-card__stars"
-            aria-label="Rated <%= averageRating %> out of 5 stars"
-        ><%= displayAverageStars %></p>
+    <p
+      class="pr-score-card__stars"
+      aria-label="Rated <%= averageRating %> out of 5 stars"
+    ><%= displayAverageStars %></p>
 
-        <p class="pr-score-card__count">
-            Based on <%= totalReviews %>
-            review<%= totalReviews === 1 ? "" : "s" %>
-        </p>
-    </div>
+    <p class="pr-score-card__count">
+      Based on <%= totalReviews %>
+      review<%= totalReviews === 1
+        ? ""
+        : "s" %>
+    </p>
+  </div>
 
-    <div class="pr-breakdown" aria-label="Rating breakdown">
-        <% ratingBreakdown.forEach((item) => { %>
-            <div class="pr-breakdown__row">
-                <span class="pr-breakdown__label">
-                    <%= item.rating %>★
-                </span>
+  <div
+    class="pr-breakdown"
+    aria-label="Rating breakdown"
+  >
+    <% ratingBreakdown.forEach(
+      (item) => {
+    %>
+      <div class="pr-breakdown__row">
+        <span class="pr-breakdown__label">
+          <%= item.rating %>★
+        </span>
 
-                <span
-                    class="pr-breakdown__bar"
-                    role="progressbar"
-                    aria-label="<%= item.rating %>-star reviews"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="<%= item.percentage %>"
-                >
-                    <span
-                        class="pr-breakdown__fill pr-breakdown__fill--<%= item.rating %>"
-                        style="width: <%= item.percentage %>%"
-                    ></span>
-                </span>
+        <span
+          class="pr-breakdown__bar"
+          role="progressbar"
+          aria-label="<%= item.rating %>-star reviews"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="<%= item.percentage %>"
+        >
+          <span
+            class="pr-breakdown__fill pr-breakdown__fill--<%= item.rating %>"
+            style="width: <%= item.percentage %>%"
+          ></span>
+        </span>
 
-                <span class="pr-breakdown__value">
-                    <%= item.count %>
-                </span>
-            </div>
-        <% }); %>
-    </div>
+        <span class="pr-breakdown__value">
+          <%= item.count %>
+        </span>
+      </div>
+    <% }); %>
+  </div>
 </div>

@@ -1,24 +1,24 @@
 <div
-    class="product-review"
-    data-product-id="<%= product.id %>"
-    data-form-mode="<%= formMode %>"
-    data-editing-review-id="<%= editingReviewId %>"
-    data-page-status="<%= pageStatus %>"
+  class="product-review"
+  data-product-id="<%= product.id %>"
+  data-form-mode="<%= formMode %>"
+  data-editing-review-id="<%= editingReviewId %>"
+  data-page-status="<%= pageStatus %>"
 >
-    <section class="pr-hero">
-        <%- include("hero-intro") %>
+  <section class="pr-hero">
+    <%- include("hero-intro") %>
 
-        <div class="pr-hero__grid">
-            <%- include("score-card") %>
-            <%- include("review-form") %>
-        </div>
-    </section>
+    <div class="pr-hero__grid">
+      <%- include("score-card") %>
+      <%- include("review-form") %>
+    </div>
+  </section>
 
-    <section
-        class="pr-list"
-        id="customer-reviews"
-    >
-        <%- include("review-toolbar") %>
-        <%- include("review-list") %>
-    </section>
+  <section
+    class="pr-list"
+    id="customer-reviews"
+  >
+    <%- include("review-toolbar") %>
+    <%- include("review-list") %>
+  </section>
 </div>

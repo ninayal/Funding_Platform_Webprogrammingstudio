@@ -1,205 +1,252 @@
 <form
-    class="pr-form"
-    id="review-form"
-    action="<%= formMode === 'edit'
-        ? `/review/reviews/${editingReviewId}/update`
-        : '/review/reviews' %>"
-    method="post"
-    novalidate
+  class="pr-form"
+  id="review-form"
+  action="<%= formMode === 'edit'
+    ? `/products/${productData.slug}/reviews/${editingReviewId}/update`
+    : `/products/${productData.slug}/reviews` %>"
+  method="post"
+  novalidate
 >
-    <input type="hidden" name="productId" value="<%= product.id %>" />
-    <input type="hidden" name="returnPath" value="<%= returnPath %>" />
+  <div class="pr-form__head">
+    <h2>
+      <%= formMode === "edit"
+        ? "Edit your review"
+        : "Write a review" %>
+    </h2>
 
-    <div class="pr-form__head">
-        <h2>
-            <%= formMode === "edit"
-                ? "Edit your review"
-                : "Write a review" %>
-        </h2>
+    <p>
+      <%= formMode === "edit"
+        ? "Update the fields below, then save your changes."
+        : `Tell us what stood out about ${productData.name}.` %>
+    </p>
+  </div>
 
-        <p>
-            <%= formMode === "edit"
-                ? "Update the fields below, then save your changes."
-                : "Tell us what stood out to you." %>
-        </p>
+  <fieldset
+    class="pr-rating-fieldset"
+    aria-describedby="rating-error"
+  >
+    <legend class="pr-field-label">
+      Your rating
+    </legend>
+
+    <div class="pr-form__rating">
+      <% ratingValues.forEach(
+        (rating, index) => {
+      %>
+        <input
+          class="pr-rating-input"
+          type="radio"
+          name="rating"
+          id="rating-<%= rating %>"
+          value="<%= rating %>"
+          aria-label="<%= rating %> out of 5 stars"
+          <%= Number(formValues.rating) === rating
+            ? "checked"
+            : "" %>
+          <%= index === 0
+            ? "required"
+            : "" %>
+        />
+
+        <label
+          class="pr-rating-label"
+          for="rating-<%= rating %>"
+          title="<%= rating %> out of 5 stars"
+        >★</label>
+      <% }); %>
     </div>
 
-    <fieldset
-        class="pr-rating-fieldset"
-        aria-describedby="rating-error"
+    <small
+      class="pr-field-error"
+      id="rating-error"
     >
-        <legend class="pr-field-label">Your rating</legend>
+      <%= serverErrors.rating || "" %>
+    </small>
+  </fieldset>
 
-        <div class="pr-form__rating">
-            <% ratingValues.forEach((rating, index) => { %>
-                <input
-                    class="pr-rating-input"
-                    type="radio"
-                    name="rating"
-                    id="rating-<%= rating %>"
-                    value="<%= rating %>"
-                    aria-label="<%= rating %> out of 5 stars"
-                    <%= Number(formValues.rating) === rating
-                        ? "checked"
-                        : "" %>
-                    <%= index === 0 ? "required" : "" %>
-                />
+  <div class="pr-form__row">
+    <label
+      class="pr-field-label"
+      for="review-name"
+    >
+      Your name
+    </label>
 
-                <label
-                    class="pr-rating-label"
-                    for="rating-<%= rating %>"
-                    title="<%= rating %> out of 5 stars"
-                >★</label>
-            <% }); %>
-        </div>
+    <input
+      class="pr-input"
+      type="text"
+      id="review-name"
+      value="<%= currentUser.name %>"
+      readonly
+    />
 
-        <small class="pr-field-error" id="rating-error">
-            <%= serverErrors.rating || "" %>
-        </small>
-    </fieldset>
+    <small class="pr-file-note">
+      The reviewer name comes from the
+      currently logged-in user.
+    </small>
+  </div>
 
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-name">
-            Your name
-        </label>
+  <div class="pr-form__row">
+    <label
+      class="pr-field-label"
+      for="review-title"
+    >
+      Review title
+    </label>
 
-        <input
-            class="pr-input"
-            type="text"
-            id="review-name"
-            value="<%= currentUser.name %>"
-            readonly
-        />
+    <input
+      class="pr-input"
+      type="text"
+      id="review-title"
+      name="reviewTitle"
+      value="<%= formValues.reviewTitle %>"
+      placeholder="Summarize your experience"
+      minlength="4"
+      maxlength="80"
+      autocomplete="off"
+      aria-describedby="
+        review-title-counter
+        review-title-error
+      "
+      required
+    />
 
-        <small class="pr-file-note">
-            The reviewer name comes from the currently logged-in user.
-        </small>
-    </div>
+    <small
+      class="pr-character-count"
+      id="review-title-counter"
+    >0/80</small>
 
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-title">
-            Review title
-        </label>
+    <small
+      class="pr-field-error"
+      id="review-title-error"
+    >
+      <%= serverErrors.reviewTitle || "" %>
+    </small>
+  </div>
 
-        <input
-            class="pr-input"
-            type="text"
-            id="review-title"
-            name="reviewTitle"
-            value="<%= formValues.reviewTitle %>"
-            placeholder="Summarize your experience"
-            minlength="4"
-            maxlength="80"
-            autocomplete="off"
-            aria-describedby="review-title-counter review-title-error"
-            required
-        />
+  <div class="pr-form__row">
+    <label
+      class="pr-field-label"
+      for="review-date"
+    >
+      Date added
+    </label>
 
-        <small
-            class="pr-character-count"
-            id="review-title-counter"
-        >0/80</small>
+    <input
+      class="pr-input"
+      type="date"
+      id="review-date"
+      value="<%= reviewDateValue %>"
+      readonly
+    />
+  </div>
 
-        <small class="pr-field-error" id="review-title-error">
-            <%= serverErrors.reviewTitle || "" %>
-        </small>
-    </div>
+  <div class="pr-form__row">
+    <label
+      class="pr-field-label"
+      for="review-content"
+    >
+      Your review
+    </label>
 
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-date">
-            Date added
-        </label>
+    <textarea
+      class="pr-textarea"
+      id="review-content"
+      name="review"
+      rows="6"
+      minlength="10"
+      maxlength="600"
+      placeholder="Share your experience with this product..."
+      aria-describedby="
+        review-content-counter
+        review-content-error
+      "
+      required
+    ><%= formValues.review %></textarea>
 
-        <input
-            class="pr-input"
-            type="date"
-            id="review-date"
-            value="<%= reviewDateValue %>"
-            readonly
-        />
-    </div>
+    <small
+      class="pr-character-count"
+      id="review-content-counter"
+    >0/600</small>
 
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-content">
-            Your review
-        </label>
+    <small
+      class="pr-field-error"
+      id="review-content-error"
+    >
+      <%= serverErrors.review || "" %>
+    </small>
+  </div>
 
-        <textarea
-            class="pr-textarea"
-            id="review-content"
-            name="review"
-            rows="6"
-            minlength="10"
-            maxlength="600"
-            placeholder="Share your experience with this product..."
-            aria-describedby="review-content-counter review-content-error"
-            required
-        ><%= formValues.review %></textarea>
+  <div class="pr-form__row">
+    <label
+      class="pr-field-label"
+      for="review-image-url"
+    >
+      Product image URL
+    </label>
 
-        <small
-            class="pr-character-count"
-            id="review-content-counter"
-        >0/600</small>
+    <input
+      class="pr-input"
+      type="text"
+      id="review-image-url"
+      name="imageUrl"
+      value="<%= formValues.imageUrl %>"
+      maxlength="500"
+      placeholder="/images/... or https://..."
+      aria-describedby="
+        review-image-note
+        review-image-error
+      "
+    />
 
-        <small class="pr-field-error" id="review-content-error">
-            <%= serverErrors.review || "" %>
-        </small>
-    </div>
+    <small
+      class="pr-file-note"
+      id="review-image-note"
+    >
+      Optional. Use an http(s) URL or a local
+      /images/ or /uploads/ path.
+    </small>
 
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-image-url">
-            Product image URL
-        </label>
+    <small
+      class="pr-field-error"
+      id="review-image-error"
+    >
+      <%= serverErrors.imageUrl || "" %>
+    </small>
+  </div>
 
-        <input
-            class="pr-input"
-            type="text"
-            id="review-image-url"
-            name="imageUrl"
-            value="<%= formValues.imageUrl %>"
-            maxlength="500"
-            placeholder="/images/... or https://..."
-            aria-describedby="review-image-note review-image-error"
-        />
+  <div class="pr-form__actions">
+    <button
+      class="pr-submit"
+      id="review-submit"
+      type="submit"
+    >
+      <%= formMode === "edit"
+        ? "Save Changes"
+        : "Submit Review" %>
+    </button>
 
-        <small class="pr-file-note" id="review-image-note">
-            Optional. Use an http(s) URL or a local
-            /images/ or /uploads/ path.
-        </small>
+    <button
+      class="pr-secondary-button"
+      id="clear-review-draft"
+      type="button"
+    >
+      Clear Draft
+    </button>
 
-        <small class="pr-field-error" id="review-image-error">
-            <%= serverErrors.imageUrl || "" %>
-        </small>
-    </div>
+    <% if (formMode === "edit") { %>
+      <a
+        class="pr-secondary-button"
+        href="<%= productData.href %>?tab=review#customer-reviews"
+      >
+        Cancel Edit
+      </a>
+    <% } %>
+  </div>
 
-    <div class="pr-form__actions">
-        <button class="pr-submit" id="review-submit" type="submit">
-            <%= formMode === "edit"
-                ? "Save Changes"
-                : "Submit Review" %>
-        </button>
-
-        <button
-            class="pr-secondary-button"
-            id="clear-review-draft"
-            type="button"
-        >
-            Clear Draft
-        </button>
-
-        <% if (formMode === "edit") { %>
-            <a
-                class="pr-secondary-button"
-                href="/review/product-review"
-            >
-                Cancel Edit
-            </a>
-        <% } %>
-    </div>
-
-    <p
-        class="pr-draft-status"
-        id="review-draft-status"
-        role="status"
-    ></p>
+  <p
+    class="pr-draft-status"
+    id="review-draft-status"
+    role="status"
+  ></p>
 </form>
