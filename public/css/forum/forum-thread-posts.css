@@ -43,15 +43,15 @@
 
 .forum-post__username {
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--ink);
 }
 
 .forum-post__rank {
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -73,9 +73,9 @@
 }
 
 .forum-post__date {
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -126,9 +126,9 @@
 
 .forum-post__index {
   margin-left: 4px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -137,8 +137,8 @@
   margin-bottom: 18px;
   overflow-wrap: break-word;
   word-break: break-word;
-  font-family: var(--ff-ui);
-  font-size: 17px;
+  font-family: var(--ff-body);
+  font-size: 18px;
   line-height: 1.7;
   color: var(--ink);
 }
@@ -208,10 +208,10 @@
   margin-left: auto;
   border: 0;
   background: transparent;
-  color: var(--red);
+  color: var(--darkred);
   font-family: var(--ff-ui);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
   text-decoration: none;

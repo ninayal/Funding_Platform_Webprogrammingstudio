@@ -7,13 +7,19 @@
   <title>Làng & Co. — Forum</title>
   <link rel="stylesheet" href="/css/landingpage/index.css" />
   <link rel="stylesheet" href="/css/header_v2.css" />
+  <link rel="stylesheet" href="/css/header_mobile.css" />
   <link rel="stylesheet" href="/css/footer.css" />
   <link rel="stylesheet" href="/css/forum/forum.css" />
 </head>
 
 <body>
 
-  <%- include("../partials/header_v2", { activePage: "forum" }) %>
+  <div class="forum-header-desktop">
+    <%- include("../partials/header_v2", { activePage: "forum" }) %>
+  </div>
+  <div class="forum-header-mobile">
+    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
+  </div>
 
   <div class="wave">
 

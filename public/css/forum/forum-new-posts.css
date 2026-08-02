@@ -30,7 +30,7 @@
 }
 
 .meta-page {
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .thread-card__latest-reply {
@@ -38,9 +38,9 @@
   align-items: center;
   gap: 10px;
   min-width: 0;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: .04em;
   text-transform: uppercase;
 }

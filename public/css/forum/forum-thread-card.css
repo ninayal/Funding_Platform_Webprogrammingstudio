@@ -17,8 +17,8 @@
 
 .thread-card__title {
   margin: 0 0 8px;
-  font-family: var(--ff-ui);
-  font-size: 24px;
+  font-family: var(--ff-script);
+  font-size: 25px;
   font-weight: 500;
   color: var(--ink);
 }
@@ -29,8 +29,9 @@
   gap: 18px;
   padding-top: 14px;
   border-top: 1px solid var(--line);
-  color: var(--brown);
-  font-size: 10px;
+  color: var(--ink);
+  font-family: var(--ff-ui);
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: .1em;
   text-transform: uppercase;

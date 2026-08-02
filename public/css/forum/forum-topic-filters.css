@@ -16,16 +16,17 @@
 button.topics-block {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 40px;
   margin: 0;
-  padding: 0 18px;
-  border: 1px solid var(--tan);
+  padding: 0 20px;
+  border: 1px solid var(--brown);
   border-radius: 999px;
   background: var(--white);
-  color: var(--brown);
+  color: var(--ink);
   font-family: var(--ff-ui);
   font-style: italic;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
   transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
@@ -44,12 +45,12 @@ div.topics-block::after {
   transform: translateY(calc(-50% + 10px));
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: var(--cream);
-  color: var(--red);
-  font-size: 14px;
+  color: var(--darkred);
+  font-size: 16px;
 }
 

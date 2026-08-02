@@ -5,14 +5,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 22px;
+  min-height: 46px;
+  padding: 0 26px;
   border-radius: 999px;
   background: var(--darkred);
   color: var(--cream);
   font-family: var(--ff-ui);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
   cursor: pointer;

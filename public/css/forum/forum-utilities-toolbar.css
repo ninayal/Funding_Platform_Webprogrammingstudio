@@ -24,12 +24,12 @@
 }
 
 .forum-toolbar__tab {
-  padding: 9px 18px;
+  padding: 11px 20px;
   border-radius: 999px;
-  color: var(--brown);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
   text-decoration: none;
@@ -48,12 +48,12 @@
 .forum-toolbar__search {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   margin-left: auto;
   border: 0;
   border-radius: 50%;
-  background: var(--darkred) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FEF9E1' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cline x1='20' y1='20' x2='15.6' y2='15.6'/%3E%3C/svg%3E") center / 16px no-repeat;
+  background: var(--darkred) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FEF9E1' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cline x1='20' y1='20' x2='15.6' y2='15.6'/%3E%3C/svg%3E") center / 18px no-repeat;
   cursor: pointer;
   transition: background-color .2s ease;
 }
@@ -68,14 +68,14 @@
 .forum-breadcrumb {
   width: min(1600px, calc(100% - 48px));
   margin: 18px auto 22px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
   font-size: 18px;
   font-weight: 500;
 }
 
 .forum-breadcrumb a {
-  color: var(--muted);
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -104,18 +104,18 @@
 }
 
 .wishlist-header h1 {
-  font-family: var(--ff-ui);
+  font-family: var(--ff-script);
   font-weight: 500;
   font-style: italic;
-  font-size: clamp(38px, 5vw, 54px);
+  font-size: clamp(40px, 5vw, 56px);
   line-height: 1;
   color: var(--deep);
 }
 
 .wishlist-header__sub {
   font-family: var(--ff-body);
-  font-size: 19px;
-  color: var(--brown);
+  font-size: 20px;
+  color: var(--ink);
   max-width: 340px;
   text-align: right;
 }

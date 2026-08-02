@@ -3,8 +3,8 @@
 ------------------------------ */
 .forum-section-heading {
   margin: 0 0 18px;
-  font-family: var(--ff-ui);
-  font-size: 22px;
+  font-family: var(--ff-script);
+  font-size: 24px;
   font-style: italic;
   font-weight: 500;
   color: var(--ink);
@@ -12,7 +12,7 @@
 
 .forum-section-title {
   margin: 0;
-  font-family: var(--ff-ui);
+  font-family: var(--ff-script);
   font-size: clamp(28px, 4.4vw, 38px);
   font-style: italic;
   font-weight: 500;
@@ -67,17 +67,17 @@
 
 .topic-card__title {
   margin: 0 0 6px;
-  font-family: var(--ff-ui);
-  font-size: 22px;
+  font-family: var(--ff-script);
+  font-size: 23px;
   font-weight: 500;
   color: var(--ink);
 }
 
 .topic-card__meta {
   margin-bottom: 12px;
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -92,14 +92,14 @@
 }
 
 .topic-card__latest-title {
-  font-family: var(--ff-ui);
+  font-family: var(--ff-script);
   font-style: italic;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink);
 }
 
 .topic-card__latest-date {
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
   font-size: 13px;
 }
@@ -141,9 +141,9 @@
 }
 
 .post-mini__title {
-  font-family: var(--ff-ui);
+  font-family: var(--ff-script);
   font-style: italic;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--ink);
   transition: color .18s ease;
 }
@@ -154,9 +154,9 @@
 
 .post-mini__meta,
 .post-mini__stats {
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .04em;
 }
 
@@ -176,9 +176,9 @@
 }
 
 .forum-stats-row dt {
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -186,7 +186,7 @@
   margin: 0;
   color: var(--ink);
   font-family: var(--ff-ui);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   text-align: right;
 }

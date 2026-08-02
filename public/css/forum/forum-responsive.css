@@ -15,6 +15,26 @@ svg {
 }
 
 /* -----------------------------
+   HEADER SWAP
+   Forum pages show the pill nav (header_v2) on tablet/desktop and the
+   hamburger nav (header_mobile) on phones, instead of squeezing the pill
+   nav down to unreadable sizes.
+------------------------------ */
+.forum-header-mobile {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .forum-header-desktop {
+    display: none;
+  }
+
+  .forum-header-mobile {
+    display: block;
+  }
+}
+
+/* -----------------------------
    TABLET / SMALL LAPTOP
    1040px and below
 ------------------------------ */

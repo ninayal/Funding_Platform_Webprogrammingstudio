@@ -8,8 +8,8 @@
 
 .forum-title h1 {
   margin: 0;
-  font-family: var(--ff-ui);
-  font-size: clamp(38px, 6vw, 64px);
+  font-family: var(--ff-script);
+  font-size: clamp(40px, 6vw, 68px);
   font-style: italic;
   font-weight: 500;
   letter-spacing: -.02em;
