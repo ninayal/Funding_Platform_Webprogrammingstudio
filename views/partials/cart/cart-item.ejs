@@ -1,0 +1,27 @@
+<article class="cart-item">
+    <img src="<%= item.product.image %>" alt="<%= item.product.name %>">
+    <div class="cart-item-info">
+        <h3>
+            <%= item.product.name %>
+        </h3>
+        <p>
+            £<%= item.product.price.toFixed(2) %>
+        </p>
+        <form action="/cart/update" method="POST">
+            <input type="hidden" name="productId" value="<%= item.product.id %>">
+            <input type="number" name="quantity" min="1" max="<%= item.product.stock %>" value="<%= item.quantity %>">
+            <button type="submit">
+                Update
+            </button>
+        </form>
+        <form action="/cart/remove" method="POST">
+            <input type="hidden" name="productId" value="<%= item.product.id %>">
+            <button type="submit">
+                Remove
+            </button>
+        </form>
+    </div>
+    <div class="cart-item-total">
+        £<%= item.subtotal.toFixed(2) %>
+    </div>
+</article>
