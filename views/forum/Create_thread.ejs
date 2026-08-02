@@ -38,13 +38,17 @@
       <h1>Create Thread</h1>
     </div>
 
-    <form class="create-thread-form" id="createThreadForm" action="#" method="POST">
+    <form class="create-thread-form" id="createThreadForm" action="/forum/create" method="POST">
 
       <input type="text" name="title" class="create-thread-title-input" placeholder="Title" required>
 
       <div class="create-thread-topic-row">
-        <button type="button" class="topic-add-btn" id="addTopicBtn">+ Topic</button>
-        <div class="create-thread-topics" id="topicList"></div>
+        <select name="category" class="create-thread-category-select" required>
+          <option value="" disabled selected>Choose a category</option>
+          <% categories.forEach((cat) => { %>
+          <option value="<%= cat.id %>"><%= cat.label %></option>
+          <% }) %>
+        </select>
       </div>
 
       <textarea name="content" class="create-thread-content" placeholder="Content" required></textarea>

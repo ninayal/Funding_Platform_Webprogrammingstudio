@@ -48,7 +48,31 @@ const getThreadContent = (req, res, next) => {
 };
 
 const getCreateThreadPage = (req, res) => {
-  res.render("forum/Create_thread");
+  res.render("forum/Create_thread", {
+    categories: forumModel.categories,
+  });
+};
+
+const createThread = (req, res) => {
+  const { category, title, content } = req.body;
+  const categoryMeta = forumModel.getCategoryMeta(category);
+
+  if (!categoryMeta || !String(title || "").trim() || !String(content || "").trim()) {
+    return res.redirect("/forum/create");
+  }
+
+  const author = req.currentUser || {};
+
+  const thread = forumModel.addThread({
+    category,
+    title: String(title).trim(),
+    content: String(content).trim(),
+    author: author.name || "Guest",
+    initials: author.initials || "GU",
+    rank: "Member",
+  });
+
+  return res.redirect(`/forum/thread/${thread.slug}`);
 };
 
 module.exports = {
@@ -56,4 +80,5 @@ module.exports = {
   getThreadList,
   getThreadContent,
   getCreateThreadPage,
+  createThread,
 };
