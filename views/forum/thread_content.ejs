@@ -38,7 +38,10 @@
       <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
       <a href="#" class="forum-toolbar__tab">Your Posts</a>
       <a href="#" class="forum-toolbar__tab">Bookmarked</a>
-      <button type="button" class="forum-toolbar__search" aria-label="Search"></button>
+      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
+        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
+        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
+      </form>
     </nav>
 
 

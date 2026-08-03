@@ -114,8 +114,14 @@ svg {
     font-size: 11px;
   }
 
-  .forum-toolbar__search {
+  .forum-toolbar__search-form {
     margin-left: 0;
+    width: 100%;
+  }
+
+  .forum-toolbar__search-input {
+    flex: 1;
+    max-width: none;
   }
 
   .topics-block {

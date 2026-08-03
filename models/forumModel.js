@@ -48,6 +48,56 @@ const escapeHtml = (value) =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
+const stripHtml = (html) =>
+  String(html)
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const buildSnippet = (text, query, radius = 80) => {
+  const lower = text.toLowerCase();
+  const idx = lower.indexOf(query.toLowerCase());
+
+  if (idx === -1) {
+    return text.slice(0, radius * 2).trim();
+  }
+
+  const start = Math.max(0, idx - radius);
+  const end = Math.min(text.length, idx + query.length + radius);
+
+  return `${start > 0 ? "…" : ""}${text.slice(start, end).trim()}${end < text.length ? "…" : ""}`;
+};
+
+const searchThreads = (rawQuery) => {
+  const query = String(rawQuery || "").trim();
+
+  if (!query) {
+    return [];
+  }
+
+  const needle = query.toLowerCase();
+
+  return threads
+    .map((thread) => {
+      const titleMatch = thread.title.toLowerCase().includes(needle);
+
+      const matchedPost = titleMatch
+        ? null
+        : thread.posts.find((post) => stripHtml(post.content).toLowerCase().includes(needle));
+
+      if (!titleMatch && !matchedPost) {
+        return null;
+      }
+
+      return {
+        thread,
+        matchedIn: titleMatch ? "title" : "post",
+        snippet: matchedPost ? buildSnippet(stripHtml(matchedPost.content), query) : null,
+      };
+    })
+    .filter(Boolean);
+};
+
 const slugify = (title) =>
   String(title)
     .toLowerCase()
@@ -123,4 +173,5 @@ module.exports = {
   getForumSummary,
   getForumTotals,
   addThread,
+  searchThreads,
 };

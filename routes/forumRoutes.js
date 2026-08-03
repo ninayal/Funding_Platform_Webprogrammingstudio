@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/", forumController.getForumHome);
 router.get("/new-posts", forumController.getThreadList);
+router.get("/search", forumController.searchForum);
 router.get("/create", forumController.getCreateThreadPage);
 router.post("/create", forumController.createThread);
 router.get("/category/:category", forumController.getThreadList);

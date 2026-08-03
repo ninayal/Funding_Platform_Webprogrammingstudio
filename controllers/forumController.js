@@ -47,6 +47,17 @@ const getThreadContent = (req, res, next) => {
   });
 };
 
+const searchForum = (req, res) => {
+  const query = String(req.query.q || "").trim();
+
+  res.render("forum/search_results", {
+    query,
+    results: query ? forumModel.searchThreads(query) : [],
+    getRepliesCount: forumModel.getRepliesCount,
+    getLatestPost: forumModel.getLatestPost,
+  });
+};
+
 const getCreateThreadPage = (req, res) => {
   res.render("forum/Create_thread", {
     categories: forumModel.categories,
@@ -81,4 +92,5 @@ module.exports = {
   getThreadContent,
   getCreateThreadPage,
   createThread,
+  searchForum,
 };
