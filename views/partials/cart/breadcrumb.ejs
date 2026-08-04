@@ -3,3 +3,22 @@
     <span>/</span>
     <span>Shopping Cart</span>
 </nav>
+<div class="cart-toolbar container">
+    <input id="cart-search" type="search" placeholder="Search products..." autocomplete="off">
+
+    <select id="cart-sort">
+        <option value="">Sort By</option>
+        <option value="title-asc">Title A–Z</option>
+        <option value="title-desc">Title Z–A</option>
+        <option value="price-asc">Price Low–High</option>
+        <option value="price-desc">Price High–Low</option>
+        <option value="quantity-asc">Quantity Low–High</option>
+        <option value="quantity-desc">Quantity High–Low</option>
+    </select>
+
+    <select id="cart-filter">
+        <option value="all">All Items</option>
+        <option value="single">Quantity = 1</option>
+        <option value="multiple">Quantity > 1</option>
+    </select>
+</div>
