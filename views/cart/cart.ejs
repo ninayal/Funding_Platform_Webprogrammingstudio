@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title><%= pageTitle %></title>
-
-  <link rel="stylesheet" href="/css/header_v2.css">
-  <link rel="stylesheet" href="/css/cart/cart.css">
-  <link rel="stylesheet" href="/css/footer.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Làng &amp; Co. — <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" href="/css/header_v2.css">
+    <link rel="stylesheet" href="/css/cart/cart.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
-
-<%- include("../partials/header_v2") %>
-
-<main class="cart-page">
-
-    <%- include("../partials/cart/breadcrumb") %>
-
-    <% if(cart.items.length === 0){ %>
-
-        <%- include("../partials/cart/empty-cart") %>
-
-    <% } else { %>
-
-        <section class="cart-layout container">
-
-            <%- include("../partials/cart/cart-list") %>
-
-            <%- include("../partials/cart/order-summary") %>
-
-        </section>
-
-    <% } %>
-
-</main>
-
-<%- include("../partials/footer") %>
-
+    <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
+        ?currentUser:null }) %>
+        <main class="cart-page">
+            <%- include("../partials/cart/breadcrumb") %>
+                <% if(cart.hasItems){ %>
+                    <section class="cart-layout container">
+                        <%- include("../partials/cart/cart-list",{cart}) %>
+                            <%- include("../partials/cart/order-summary",{cart}) %>
+                    </section>
+                    <% }else{ %>
+                        <%- include("../partials/cart/empty-cart") %>
+                            <% } %>
+        </main>
+        <%- include("../partials/footer") %>
+            <script src="/js/cart/cart.js" defer></script>
 </body>
+
 </html>

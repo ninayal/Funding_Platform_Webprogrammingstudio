@@ -1,20 +1,10 @@
 <aside class="order-summary">
-    <h2>
-        Order Summary
-    </h2>
-    <p>
-        Items
-        <span>
+    <h2>Order Summary</h2>
+    <p>Items<span>
             <%= cart.totalQuantity %>
-        </span>
-    </p>
-    <p>
-        Subtotal
-        <span>
-            £<%= cart.subtotal.toFixed(2) %>
-        </span>
-    </p>
-    <a href="/cart/checkout" class="checkout-btn">
-        Proceed to Checkout
-    </a>
+        </span></p>
+    <p>Subtotal<span>
+            <%= cart.subtotalFormatted %>
+        </span></p>
+    <a href="/cart/checkout" class="checkout-btn">Proceed to Checkout</a>
 </aside>
