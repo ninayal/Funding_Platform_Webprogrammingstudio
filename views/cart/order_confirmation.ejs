@@ -2,43 +2,202 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="theme-color" content="#A31D1D">
-  <title>Làng &amp; Co. — <%= pageTitle %>
-  </title>
-  <link rel="stylesheet" href="/css/landingpage/index.css">
-  <link rel="stylesheet" href="/css/header_v2.css">
-  <link rel="stylesheet" href="/css/cart/order_confirmation.css">
-  <link rel="stylesheet" href="/css/footer.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Làng & Co. — Order Confirmed</title>
+  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
+  <link rel="stylesheet" href="../../public/css/header.css" />
+  <link rel="stylesheet" href="../../public/css/shared-include.css" />
+  <link rel="stylesheet" href="../../public/css/cart/order_confirmation.css" />
 </head>
 
 <body>
-  <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
-    ?currentUser:null }) %>
-    <%- include("../partials/order-confirmation/hero") %>
-      <div class="wave">
-        <div class="below">
-          <p class="below__headline"></p>
-        </div>
-        <main class="confirm-page">
-          <div class="confirm-shell">
-            <%- include("../partials/order-confirmation/summary",{order}) %>
-              <section class="confirm-details">
-                <div class="confirm-card">
-                  <%- include("../partials/order-confirmation/items",{order}) %>
-                    <%- include("../partials/order-confirmation/totals",{order}) %>
-                </div>
-                <div class="confirm-card-row">
-                  <%- include("../partials/order-confirmation/delivery-address",{order}) %>
-                    <%- include("../partials/order-confirmation/payment-method",{order}) %>
-                </div>
-                <%- include("../partials/order-confirmation/note") %>
-              </section>
+
+  <!-- ================================================
+       HERO
+       ================================================ -->
+  <section class="hero">
+
+    <div class="hero__bg"></div>
+
+    <iframe src="../global/header.html#nav-shop" title="Header" class="shared-include shared-header" loading="eager"
+      scrolling="no"></iframe>
+
+    <div class="hero__title">
+      <a class="hero__kicker" href="../../index.html">
+        Step 3 of 3 · Confirmation
+        <span class="hero__kicker-arrow">→</span>
+      </a>
+      <span class="script">Order Confirmed</span>
+      <span class="serif">Cảm ơn bạn — your pieces are on their way.</span>
+    </div>
+
+    <div class="hero__cta">
+      <a class="hero__cta-primary" href="products.html">
+        Continue Shopping →
+      </a>
+      <a class="hero__cta-ghost" href="../shared/profile.html">
+        View My Orders →
+      </a>
+    </div>
+
+  </section>
+
+  <div class="wave">
+    <div class="below">
+      <p class="below__headline"></p>
+    </div>
+
+    <!-- ================================================
+         MAIN
+         ================================================ -->
+    <main class="confirm-page">
+      <div class="confirm-shell">
+
+        <section class="confirm-summary">
+          <div class="confirm-check" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
           </div>
-        </main>
+
+          <h1>Thank you, John.</h1>
+          <p class="confirm-lede">Your order has been placed successfully. A confirmation email with your
+            receipt is on its way to <strong>john@example.com</strong>.</p>
+
+          <div class="confirm-meta">
+            <div>
+              <p class="confirm-meta__label">Order number</p>
+              <p class="confirm-meta__value">#LC-20260711-0482</p>
+            </div>
+            <div>
+              <p class="confirm-meta__label">Order date</p>
+              <p class="confirm-meta__value">July 11, 2026</p>
+            </div>
+            <div>
+              <p class="confirm-meta__label">Estimated delivery</p>
+              <p class="confirm-meta__value">July 18 – July 21, 2026</p>
+            </div>
+          </div>
+
+          <div class="confirm-actions">
+            <a href="products.html" class="confirm-btn confirm-btn--primary">Continue Shopping</a>
+            <a href="../shared/profile.html" class="confirm-btn confirm-btn--ghost">View My Orders</a>
+          </div>
+        </section>
+
+        <!-- ============== ORDER DETAILS ============== -->
+        <section class="confirm-details">
+
+          <div class="confirm-card">
+            <h2>Items Ordered</h2>
+            <ul class="confirm-items">
+              <li class="confirm-item">
+                <span class="confirm-item__media">
+                  <img src="/public/images/shopping_items/ceramic/ceramic1.png"
+                    alt="Cream ceramic mug sculpted with a face and pink bow" />
+                </span>
+                <span class="confirm-item__body">
+                  <span class="confirm-item__name">Sculpted Face Ceramic Mug</span>
+                  <span class="confirm-item__meta">Qty 1</span>
+                </span>
+                <span class="confirm-item__price">$68.00</span>
+              </li>
+              <li class="confirm-item">
+                <span class="confirm-item__media">
+                  <img src="/public/images/shopping_items/brocade/brocade2.png"
+                    alt="Colorful handmade horse figurine covered in traditional brocade patterns" />
+                </span>
+                <span class="confirm-item__body">
+                  <span class="confirm-item__name">Handmade Brocade Horse Figurine</span>
+                  <span class="confirm-item__meta">Qty 2</span>
+                </span>
+                <span class="confirm-item__price">$90.00</span>
+              </li>
+              <li class="confirm-item">
+                <span class="confirm-item__media">
+                  <img src="/public/images/shopping_items/painting/painting_1.png"
+                    alt="Framed Vietnamese folk painting of a child holding a large carp" />
+                </span>
+                <span class="confirm-item__body">
+                  <span class="confirm-item__name">Vietnamese Folk Painting — Child with Carp</span>
+                  <span class="confirm-item__meta">Qty 1</span>
+                </span>
+                <span class="confirm-item__price">$120.00</span>
+              </li>
+              <li class="confirm-item">
+                <span class="confirm-item__media">
+                  <img src="/public/images/shopping_items/incense/incense2.png"
+                    alt="Natural brown incense cones presented in a metal gift tin with a ceramic holder" />
+                </span>
+                <span class="confirm-item__body">
+                  <span class="confirm-item__name">Natural Incense Cone Gift Set</span>
+                  <span class="confirm-item__meta">Qty 1</span>
+                </span>
+                <span class="confirm-item__price">$38.00</span>
+              </li>
+            </ul>
+
+            <dl class="confirm-totals">
+              <div>
+                <dt>Subtotal</dt>
+                <dd>$316.00</dd>
+              </div>
+              <div>
+                <dt>Shipping</dt>
+                <dd>Free</dd>
+              </div>
+              <div>
+                <dt>Estimated tax</dt>
+                <dd>$0.00</dd>
+              </div>
+              <div class="confirm-totals__grand">
+                <dt>Total</dt>
+                <dd>$316.00 <small>USD</small></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="confirm-card-row">
+            <div class="confirm-card">
+              <h2>Delivery Address</h2>
+              <p class="confirm-address">
+                John Doe<br />
+                123 Nguyễn Huệ Street<br />
+                District 1, Ho Chi Minh City<br />
+                Vietnam<br />
+                +84 90 123 4567
+              </p>
+            </div>
+
+            <div class="confirm-card">
+              <h2>Payment Method</h2>
+              <p class="confirm-address">
+                Visa ending in 4242<br />
+                Billing address same as delivery
+              </p>
+            </div>
+          </div>
+
+          <div class="confirm-note">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              aria-hidden="true">
+              <path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7C10 3 6 3 6 6s4 3 6 1M12 7c2-4 6-4 6-1s-4 3-6 1" />
+            </svg>
+            <p>Your order is wrapped in hand-stamped tissue paper. We'll email tracking details as soon as
+              it leaves the workshop.</p>
+          </div>
+        </section>
+
       </div>
-      <%- include("../partials/footer") %>
+    </main>
+
+  </div>
+
+  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
+
 </body>
 
 </html>
