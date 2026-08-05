@@ -11,110 +11,197 @@ const reviewModel = require(
 const {
   getCurrentUser,
   renderProductDetail
-} = require("./productController");
+} = require(
+  "./productController"
+);
 
-const cleanSingleLine = (value) =>
+const MAX_REVIEW_IMAGE_COUNT = 3;
+
+const cleanSingleLine = (
+  value
+) =>
   String(value || "")
     .replace(/\s+/g, " ")
     .trim();
 
-const cleanParagraph = (value) =>
+const cleanParagraph = (
+  value
+) =>
   String(value || "")
     .replace(/\r\n/g, "\n")
     .replace(/[ \t]+/g, " ")
     .trim();
 
-const isValidImagePath = (image) => {
-  if (!image) {
-    return true;
+const convertImagesToDataUrls = (
+  files
+) => {
+  if (!Array.isArray(files)) {
+    return [];
   }
 
-  if (
-    image.startsWith("/images/") ||
-    image.startsWith("/uploads/")
-  ) {
-    return true;
-  }
-
-  try {
-    const parsedUrl = new URL(image);
-
-    return (
-      parsedUrl.protocol === "http:" ||
-      parsedUrl.protocol === "https:"
+  return files
+    .filter(
+      (file) =>
+        file?.buffer &&
+        file?.mimetype
+    )
+    .map(
+      (file) =>
+        `data:${file.mimetype};base64,` +
+        file.buffer.toString(
+          "base64"
+        )
     );
-  } catch {
-    return false;
-  }
 };
 
-const validateReview = (body) => {
+const toArray = (
+  value
+) => {
+  if (
+    value === undefined ||
+    value === null ||
+    value === ""
+  ) {
+    return [];
+  }
+
+  return Array.isArray(value)
+    ? value
+    : [value];
+};
+
+const selectKeptImages = (
+  existingImages,
+  submittedIndexes
+) => {
+  const source =
+    Array.isArray(
+      existingImages
+    )
+      ? existingImages
+      : [];
+
+  const indexes = [
+    ...new Set(
+      toArray(
+        submittedIndexes
+      )
+        .map(Number)
+        .filter(
+          (index) =>
+            Number.isInteger(index) &&
+            index >= 0 &&
+            index < source.length
+        )
+    )
+  ];
+
+  return indexes.map(
+    (index) =>
+      source[index]
+  );
+};
+
+const validateReview = (
+  body,
+  {
+    imageCount = 0,
+    uploadError = ""
+  } = {}
+) => {
   const values = {
-    rating: Number(body.rating),
+    rating:
+      Number(body.rating),
+
     reviewTitle:
-      cleanSingleLine(body.reviewTitle),
+      cleanSingleLine(
+        body.reviewTitle
+      ),
+
     review:
-      cleanParagraph(body.review),
-    imageUrl:
-      cleanSingleLine(body.imageUrl)
+      cleanParagraph(
+        body.review
+      )
   };
 
   const errors = {};
 
   if (
-    !Number.isInteger(values.rating) ||
+    !Number.isInteger(
+      values.rating
+    ) ||
     values.rating < 1 ||
     values.rating > 5
   ) {
     errors.rating =
-      "Choose a rating from 1 to 5 stars.";
+      "Choose a rating " +
+      "from 1 to 5 stars.";
   }
 
   if (
-    values.reviewTitle.length < 4 ||
-    values.reviewTitle.length > 80
+    values.reviewTitle.length <
+      4 ||
+    values.reviewTitle.length >
+      80
   ) {
     errors.reviewTitle =
-      "The title must contain between 4 and 80 characters.";
+      "The title must contain " +
+      "between 4 and 80 characters.";
   } else if (
     !/[\p{L}\p{N}]/u.test(
       values.reviewTitle
     )
   ) {
     errors.reviewTitle =
-      "The title must contain at least one letter or number.";
+      "The title must contain " +
+      "at least one letter or number.";
   }
 
-  const wordCount = values.review
-    .split(/\s+/)
-    .filter(Boolean)
-    .length;
+  const wordCount =
+    values.review
+      .split(/\s+/)
+      .filter(Boolean)
+      .length;
 
   if (
     values.review.length < 10 ||
     values.review.length > 600
   ) {
     errors.review =
-      "The review must contain between 10 and 600 characters.";
-  } else if (wordCount < 3) {
-    errors.review =
-      "The review must contain at least three words.";
-  }
-
-  if (values.imageUrl.length > 500) {
-    errors.imageUrl =
-      "The image URL must not exceed 500 characters.";
+      "The review must contain " +
+      "between 10 and 600 characters.";
   } else if (
-    !isValidImagePath(values.imageUrl)
+    wordCount < 3
   ) {
-    errors.imageUrl =
-      "Use an http(s) URL or a local /images/ or /uploads/ path.";
+    errors.review =
+      "The review must contain " +
+      "at least three words.";
   }
 
-  return { values, errors };
+  if (uploadError) {
+    errors.reviewImages =
+      uploadError;
+  } else if (imageCount < 1) {
+    errors.reviewImages =
+      "Upload at least one product photo.";
+  } else if (
+    imageCount >
+    MAX_REVIEW_IMAGE_COUNT
+  ) {
+    errors.reviewImages =
+      "Upload no more than 3 images.";
+  }
+
+  return {
+    values,
+    errors
+  };
 };
 
-const getProductOr404 = (req, res) => {
+const getProductOr404 = (
+  req,
+  res
+) => {
   const product =
     productModel.getProductBySlug(
       req.params.slug
@@ -123,7 +210,9 @@ const getProductOr404 = (req, res) => {
   if (!product) {
     res
       .status(404)
-      .send("Product not found.");
+      .send(
+        "Product not found."
+      );
 
     return null;
   }
@@ -131,15 +220,37 @@ const getProductOr404 = (req, res) => {
   return product;
 };
 
+const getAuthenticatedUser = (
+  req,
+  res
+) => {
+  const currentUser =
+    getCurrentUser(req);
+
+  if (!currentUser) {
+    res
+      .status(401)
+      .send(
+        "Sign in before " +
+        "writing a review."
+      );
+
+    return null;
+  }
+
+  return currentUser;
+};
+
 const redirectToReviews = (
   res,
   product,
   status
 ) => {
-  const params = new URLSearchParams({
-    tab: "review",
-    status
-  });
+  const params =
+    new URLSearchParams({
+      tab: "review",
+      status
+    });
 
   return res.redirect(
     `${product.href}?${params}` +
@@ -154,19 +265,48 @@ const createReview = (
 ) => {
   try {
     const product =
-      getProductOr404(req, res);
+      getProductOr404(
+        req,
+        res
+      );
 
     if (!product) {
       return;
     }
 
     const currentUser =
-      getCurrentUser(req);
+      getAuthenticatedUser(
+        req,
+        res
+      );
 
-    const { values, errors } =
-      validateReview(req.body);
+    if (!currentUser) {
+      return;
+    }
 
-    if (Object.keys(errors).length) {
+    const newImages =
+      convertImagesToDataUrls(
+        req.files
+      );
+
+    const {
+      values,
+      errors
+    } = validateReview(
+      req.body,
+      {
+        imageCount:
+          newImages.length,
+
+        uploadError:
+          req.reviewUploadError
+      }
+    );
+
+    if (
+      Object.keys(errors)
+        .length
+    ) {
       return renderProductDetail(
         req,
         res,
@@ -174,10 +314,18 @@ const createReview = (
           product,
           statusCode: 422,
           openReviewTab: true,
-          formValues: values,
+          formOpen: true,
+
+          formValues: {
+            ...values,
+            existingImages: []
+          },
+
           serverErrors: errors,
+
           pageMessage:
-            "Correct the highlighted fields before submitting."
+            errors.reviewImages ||
+            "Correct the highlighted fields. Select the images again before resubmitting."
         }
       );
     }
@@ -185,12 +333,23 @@ const createReview = (
     reviewModel.createReview(
       product.id,
       {
-        userId: currentUser.id,
-        name: currentUser.name,
-        rating: values.rating,
-        title: values.reviewTitle,
-        comment: values.review,
-        image: values.imageUrl
+        userId:
+          currentUser.id,
+
+        name:
+          currentUser.name,
+
+        rating:
+          values.rating,
+
+        title:
+          values.reviewTitle,
+
+        comment:
+          values.review,
+
+        images:
+          newImages
       }
     );
 
@@ -211,14 +370,24 @@ const showEditReviewPage = (
 ) => {
   try {
     const product =
-      getProductOr404(req, res);
+      getProductOr404(
+        req,
+        res
+      );
 
     if (!product) {
       return;
     }
 
     const currentUser =
-      getCurrentUser(req);
+      getAuthenticatedUser(
+        req,
+        res
+      );
+
+    if (!currentUser) {
+      return;
+    }
 
     const review =
       reviewModel.getReviewById(
@@ -229,16 +398,20 @@ const showEditReviewPage = (
     if (!review) {
       return res
         .status(404)
-        .send("Review not found.");
+        .send(
+          "Review not found."
+        );
     }
 
     if (
-      review.userId !== currentUser.id
+      review.userId !==
+      currentUser.id
     ) {
       return res
         .status(403)
         .send(
-          "You may only edit your own review."
+          "You may only edit " +
+          "your own review."
         );
     }
 
@@ -248,16 +421,29 @@ const showEditReviewPage = (
       {
         product,
         openReviewTab: true,
+        formOpen: true,
         formMode: "edit",
-        editingReviewId: review.id,
+
+        editingReviewId:
+          review.id,
+
         formValues: {
-          rating: review.rating,
-          reviewTitle: review.title,
-          review: review.comment,
-          imageUrl: review.image
+          rating:
+            review.rating,
+
+          reviewTitle:
+            review.title,
+
+          review:
+            review.comment,
+
+          existingImages:
+            review.images || []
         },
+
         pageMessage:
-          "You are editing your review."
+          "You are editing " +
+          "your review."
       }
     );
   } catch (error) {
@@ -272,14 +458,24 @@ const updateReview = (
 ) => {
   try {
     const product =
-      getProductOr404(req, res);
+      getProductOr404(
+        req,
+        res
+      );
 
     if (!product) {
       return;
     }
 
     const currentUser =
-      getCurrentUser(req);
+      getAuthenticatedUser(
+        req,
+        res
+      );
+
+    if (!currentUser) {
+      return;
+    }
 
     const existingReview =
       reviewModel.getReviewById(
@@ -290,7 +486,9 @@ const updateReview = (
     if (!existingReview) {
       return res
         .status(404)
-        .send("Review not found.");
+        .send(
+          "Review not found."
+        );
     }
 
     if (
@@ -300,14 +498,45 @@ const updateReview = (
       return res
         .status(403)
         .send(
-          "You may only update your own review."
+          "You may only update " +
+          "your own review."
         );
     }
 
-    const { values, errors } =
-      validateReview(req.body);
+    const keptImages =
+      selectKeptImages(
+        existingReview.images,
+        req.body.keepImageIndexes
+      );
 
-    if (Object.keys(errors).length) {
+    const newImages =
+      convertImagesToDataUrls(
+        req.files
+      );
+
+    const finalImages = [
+      ...keptImages,
+      ...newImages
+    ];
+
+    const {
+      values,
+      errors
+    } = validateReview(
+      req.body,
+      {
+        imageCount:
+          finalImages.length,
+
+        uploadError:
+          req.reviewUploadError
+      }
+    );
+
+    if (
+      Object.keys(errors)
+        .length
+    ) {
       return renderProductDetail(
         req,
         res,
@@ -315,13 +544,23 @@ const updateReview = (
           product,
           statusCode: 422,
           openReviewTab: true,
+          formOpen: true,
           formMode: "edit",
+
           editingReviewId:
             existingReview.id,
-          formValues: values,
+
+          formValues: {
+            ...values,
+
+            existingImages:
+              keptImages
+          },
+
           serverErrors: errors,
+
           pageMessage:
-            "Correct the highlighted fields before updating."
+            "Correct the highlighted fields. Newly selected images must be selected again."
         }
       );
     }
@@ -332,18 +571,40 @@ const updateReview = (
         existingReview.id,
         currentUser.id,
         {
-          rating: values.rating,
-          title: values.reviewTitle,
-          comment: values.review,
-          image: values.imageUrl
+          rating:
+            values.rating,
+
+          title:
+            values.reviewTitle,
+
+          comment:
+            values.review,
+
+          images:
+            finalImages
         }
       );
 
-    if (result.status === "forbidden") {
+    if (
+      result.status ===
+      "not-found"
+    ) {
+      return res
+        .status(404)
+        .send(
+          "Review not found."
+        );
+    }
+
+    if (
+      result.status ===
+      "forbidden"
+    ) {
       return res
         .status(403)
         .send(
-          "You may only update your own review."
+          "You may only update " +
+          "your own review."
         );
     }
 
@@ -364,14 +625,24 @@ const deleteReview = (
 ) => {
   try {
     const product =
-      getProductOr404(req, res);
+      getProductOr404(
+        req,
+        res
+      );
 
     if (!product) {
       return;
     }
 
     const currentUser =
-      getCurrentUser(req);
+      getAuthenticatedUser(
+        req,
+        res
+      );
+
+    if (!currentUser) {
+      return;
+    }
 
     const result =
       reviewModel.deleteReview(
@@ -380,17 +651,26 @@ const deleteReview = (
         currentUser.id
       );
 
-    if (result.status === "not-found") {
+    if (
+      result.status ===
+      "not-found"
+    ) {
       return res
         .status(404)
-        .send("Review not found.");
+        .send(
+          "Review not found."
+        );
     }
 
-    if (result.status === "forbidden") {
+    if (
+      result.status ===
+      "forbidden"
+    ) {
       return res
         .status(403)
         .send(
-          "You may only delete your own review."
+          "You may only delete " +
+          "your own review."
         );
     }
 

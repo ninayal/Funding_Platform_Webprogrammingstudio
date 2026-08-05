@@ -1,0 +1,474 @@
+/* =====================================================
+   MULTIPLE REVIEW IMAGES
+   Uses px and % sizing only.
+   Uses only --ff-display and --ff-body.
+   ===================================================== */
+
+.pr-multi-upload {
+  display: grid;
+  grid-template-columns: 30% 68%;
+  column-gap: 2%;
+  width: 100%;
+  min-height: 96px;
+}
+
+.pr-multi-upload__dropzone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 96px;
+  padding: 12px 14px;
+  border: 1px dashed
+    rgba(163, 29, 29, 0.42);
+  border-radius: 16px;
+  background:
+    rgba(255, 248, 236, 0.72);
+  cursor: pointer;
+  font-family: var(--ff-body);
+}
+
+.pr-multi-upload__dropzone
+strong {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--ff-body);
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.pr-multi-upload__dropzone
+small {
+  display: block;
+  font-family: var(--ff-body);
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.pr-multi-upload__dropzone
+.pr-upload__formats {
+  margin-left: auto;
+  max-width: 110px;
+  font-family: var(--ff-body);
+  font-size: 9px;
+  line-height: 13px;
+  text-align: right;
+}
+
+.pr-multi-upload__gallery {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  min-height: 96px;
+  padding: 8px;
+  border: 1px solid
+    rgba(116, 81, 45, 0.16);
+  border-radius: 16px;
+  background:
+    rgba(255, 253, 248, 0.92);
+}
+
+.pr-multi-upload__new-items {
+  display: contents;
+}
+
+.pr-multi-upload__item {
+  position: relative;
+  width:
+    calc((100% - 16px) / 3);
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 11px;
+  background:
+    rgba(239, 229, 211, 0.7);
+}
+
+.pr-multi-upload__item img {
+  display: block;
+  width: 100%;
+  height: 78px;
+  object-fit: cover;
+}
+
+.pr-multi-upload__item button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background:
+    rgba(26, 18, 12, 0.76);
+  color: #fff;
+  font-family: var(--ff-body);
+  font-size: 17px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.pr-multi-upload__empty {
+  align-self: center;
+  width: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+  text-align: center;
+}
+
+.pr-multi-upload__status-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.pr-multi-upload__count {
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.pr-card__media {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  gap: 8px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.pr-card__gallery-item {
+  height: 190px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    rgba(239, 229, 211, 0.7);
+}
+
+.pr-card__gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pr-card__media--count-1
+.pr-card__gallery-item {
+  width: 100%;
+  max-width: 430px;
+}
+
+.pr-card__media--count-2
+.pr-card__gallery-item {
+  width: 49%;
+}
+
+.pr-card__media--count-3
+.pr-card__gallery-item {
+  width: 32%;
+}
+
+@media (max-width: 760px) {
+  .pr-multi-upload {
+    grid-template-columns: 100%;
+    column-gap: 0%;
+    row-gap: 8px;
+  }
+
+  .pr-multi-upload__gallery {
+    min-height: 90px;
+  }
+
+  .pr-card__media {
+    flex-wrap: wrap;
+  }
+
+  .pr-card__media--count-1
+  .pr-card__gallery-item,
+  .pr-card__media--count-2
+  .pr-card__gallery-item,
+  .pr-card__media--count-3
+  .pr-card__gallery-item {
+    width: 100%;
+  }
+}
+/* =====================================================
+   COMPACT HORIZONTAL REVIEW CARD
+   ===================================================== */
+
+.pr-card {
+  display: block !important;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 22px 24px !important;
+
+  border: 1px solid
+    rgba(163, 29, 29, 0.28);
+
+  border-radius: 22px;
+
+  background:
+    rgba(255, 253, 248, 0.92);
+
+  box-shadow:
+    0 8px 24px
+    rgba(24, 18, 13, 0.04);
+
+  font-family: var(--ff-body);
+
+  align-content: start !important;
+  justify-content: initial !important;
+}
+
+/* Header: avatar/user bên trái, sao bên phải */
+
+.pr-card__top {
+  display: flex !important;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 16px !important;
+}
+
+.pr-card__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pr-card__avatar {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(45, 31, 23, 0.96);
+
+  color: #fff;
+
+  font-family: var(--ff-body);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pr-card__user {
+  margin: 0 0 3px !important;
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+}
+
+.pr-card__date {
+  color: var(--muted);
+
+  font-family: var(--ff-body);
+  font-size: 12px;
+  line-height: 17px;
+}
+
+/* Sao dùng màu đỏ của project */
+
+.pr-card__stars {
+  flex: 0 0 auto;
+  margin: 2px 0 0 !important;
+
+  color: var(--red) !important;
+
+  font-family: var(--ff-body);
+  font-size: 21px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+/* Owner tools */
+
+.pr-card__owner-tools {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin: -5px 0 12px;
+}
+
+.pr-card__owner-badge {
+  padding: 5px 10px;
+
+  border: 1px solid
+    rgba(163, 29, 29, 0.34);
+
+  border-radius: 999px;
+
+  color: var(--red);
+
+  font-family: var(--ff-body);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+.pr-card__owner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pr-card__owner-action {
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: var(--deep);
+
+  font-family: var(--ff-body);
+  font-size: 12px;
+  line-height: 17px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pr-card__owner-action--delete {
+  color: var(--red);
+}
+
+/* Title và comment không còn cách xa nhau */
+
+.pr-card__title {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+
+  color: var(--deep);
+
+  font-family: var(--ff-display);
+  font-size: 26px !important;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px !important;
+}
+
+.pr-card__comment {
+  max-width: 900px;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: var(--brown);
+
+  font-family: var(--ff-body);
+  font-size: 15px !important;
+  line-height: 23px !important;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Gallery nằm ngay dưới comment */
+
+.pr-card__media {
+  display: grid !important;
+  width: 100%;
+  gap: 6px;
+  margin: 18px 0 0 !important;
+}
+
+.pr-card__gallery-item {
+  width: 100% !important;
+  height: 210px !important;
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background:
+    rgba(239, 229, 211, 0.72);
+}
+
+.pr-card__gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* Một ảnh */
+
+.pr-card__media--count-1 {
+  grid-template-columns: 48%;
+}
+
+/* Hai ảnh */
+
+.pr-card__media--count-2 {
+  grid-template-columns: 49% 49%;
+}
+
+/* Ba ảnh */
+
+.pr-card__media--count-3 {
+  grid-template-columns:
+    32% 32% 32%;
+}
+
+/* Xóa các pseudo-element cũ gây đường kẻ dài */
+
+.pr-card::before,
+.pr-card::after {
+  display: none !important;
+}
+
+/* Mobile */
+
+@media (max-width: 760px) {
+  .pr-card {
+    padding: 18px 16px !important;
+    border-radius: 18px;
+  }
+
+  .pr-card__top {
+    gap: 12px;
+  }
+
+  .pr-card__stars {
+    font-size: 17px;
+    line-height: 21px;
+    letter-spacing: 1px;
+  }
+
+  .pr-card__title {
+    font-size: 23px !important;
+    line-height: 29px !important;
+  }
+
+  .pr-card__media--count-1,
+  .pr-card__media--count-2,
+  .pr-card__media--count-3 {
+    grid-template-columns: 100%;
+  }
+
+  .pr-card__gallery-item {
+    height: 220px !important;
+  }
+}

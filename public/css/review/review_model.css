@@ -1,0 +1,427 @@
+/* =====================================================
+   REVIEW MODAL — CLASSIC STACKED FORMAT
+   Preview replaces upload area instead of adding height.
+   Desktop sizing uses px and % only.
+   Font families use only --ff-display and --ff-body.
+   ===================================================== */
+
+body.pr-modal-open {
+  overflow: hidden;
+}
+
+.pr-review-modal {
+  position: fixed;
+  z-index: 5000;
+  inset: 0;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 14px;
+  font-family: var(--ff-body);
+}
+
+.pr-review-modal[hidden] {
+  display: none !important;
+}
+
+.pr-review-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(24, 18, 13, 0.58);
+  backdrop-filter: blur(5px);
+}
+
+.pr-review-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 88%;
+  max-width: 1340px;
+  max-height: calc(100% - 28px);
+  overflow: visible;
+  border: 1px solid rgba(116, 81, 45, 0.18);
+  border-radius: 26px;
+  background: rgba(255, 252, 244, 0.99);
+  box-shadow: 0 28px 90px rgba(18, 12, 8, 0.3);
+}
+
+.pr-review-modal__scroll {
+  width: 100%;
+  overflow: visible;
+}
+
+.pr-review-modal .pr-form {
+  width: 100%;
+  margin: 0;
+  padding: 20px 34px 22px;
+  border: 0;
+  border-radius: 26px;
+  box-shadow: none;
+  font-family: var(--ff-body);
+}
+
+.pr-review-modal .pr-form__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+}
+
+.pr-review-modal .pr-form__head h2 {
+  margin: 0 0 4px;
+  font-family: var(--ff-display);
+  font-size: 42px;
+  line-height: 46px;
+}
+
+.pr-review-modal .pr-form__head p {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.pr-review-modal .pr-form__eyebrow {
+  margin: 0 0 5px !important;
+  font-family: var(--ff-body);
+  font-size: 10px !important;
+  line-height: 14px;
+}
+
+.pr-review-modal .pr-form__close {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  font-family: var(--ff-body);
+  font-size: 24px;
+}
+
+.pr-review-modal .pr-rating-fieldset {
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.pr-review-modal .pr-form__rating {
+  gap: 4px;
+}
+
+.pr-review-modal .pr-rating-label {
+  font-family: var(--ff-body);
+  font-size: 36px;
+  line-height: 38px;
+}
+
+.pr-review-modal .pr-form__identity-grid {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  column-gap: 2%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.pr-review-modal .pr-form__row {
+  margin-bottom: 0;
+}
+
+.pr-review-modal .pr-field-label {
+  margin-bottom: 5px;
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.pr-review-modal .pr-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+}
+
+.pr-review-modal .pr-form__row--review {
+  width: 100%;
+  margin-bottom: 7px;
+}
+
+.pr-review-modal .pr-textarea {
+  width: 100%;
+  min-height: 125px;
+  height: 125px;
+  padding: 13px 15px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 20px;
+  resize: none;
+}
+
+.pr-review-modal .pr-form__row--photo {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.pr-review-modal .pr-upload {
+  position: relative;
+  width: 100%;
+  min-height: 82px;
+}
+
+.pr-review-modal .pr-upload__dropzone {
+  display: grid;
+  grid-template-columns: 54px 62% 26%;
+  column-gap: 14px;
+  align-items: center;
+  width: 100%;
+  min-height: 82px;
+  padding: 11px 16px;
+  border-radius: 16px;
+}
+
+.pr-review-modal .pr-upload__icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  font-family: var(--ff-body);
+  font-size: 24px;
+}
+
+.pr-review-modal .pr-upload__copy strong {
+  margin-bottom: 2px;
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.pr-review-modal .pr-upload__copy small {
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.pr-review-modal .pr-upload__formats {
+  font-family: var(--ff-body);
+  font-size: 10px;
+  line-height: 14px;
+  text-align: right;
+}
+
+/*
+ * The preview covers the upload box.
+ * It does not create an additional row or increase modal height.
+ */
+.pr-review-modal .pr-upload__preview {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 64px 72% 16%;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 82px;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(116, 81, 45, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 252, 244, 1);
+}
+
+.pr-review-modal .pr-upload__preview[hidden] {
+  display: none !important;
+}
+
+.pr-review-modal .pr-upload__preview img {
+  width: 64px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pr-review-modal .pr-upload__preview strong,
+.pr-review-modal .pr-upload__preview small,
+.pr-review-modal .pr-upload__remove {
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.pr-review-modal .pr-upload__remove {
+  justify-self: end;
+}
+
+.pr-review-modal .pr-file-note,
+.pr-review-modal .pr-character-count,
+.pr-review-modal .pr-field-error {
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.pr-review-modal .pr-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 9px;
+  width: 100%;
+  margin-top: 7px;
+}
+
+.pr-review-modal .pr-submit,
+.pr-review-modal .pr-secondary-button {
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 20px;
+  font-family: var(--ff-body);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.pr-review-modal .pr-draft-status {
+  min-height: 0;
+  margin: 4px 0 0;
+  font-family: var(--ff-body);
+  font-size: 11px;
+  line-height: 15px;
+}
+
+@media (max-width: 1100px) {
+  .pr-review-modal__dialog {
+    width: 96%;
+  }
+
+  .pr-review-modal .pr-form {
+    padding: 18px 24px 20px;
+  }
+
+  .pr-review-modal .pr-form__head h2 {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .pr-review-modal .pr-textarea {
+    min-height: 115px;
+    height: 115px;
+  }
+}
+
+@media (max-width: 760px) {
+  .pr-review-modal {
+    position: absolute;
+    min-height: 100%;
+    height: auto;
+    padding: 10px;
+    place-items: start center;
+  }
+
+  body.pr-modal-open {
+    overflow: auto;
+  }
+
+  .pr-review-modal__dialog {
+    width: 100%;
+    max-height: none;
+  }
+
+  .pr-review-modal .pr-form__identity-grid {
+    grid-template-columns: 100%;
+    column-gap: 0%;
+    row-gap: 10px;
+  }
+
+  .pr-review-modal .pr-upload__dropzone {
+    grid-template-columns: 54px 76%;
+    column-gap: 12px;
+    row-gap: 4px;
+  }
+
+  .pr-review-modal .pr-upload__formats {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .pr-review-modal .pr-upload__preview {
+    grid-template-columns: 64px 62% 18%;
+  }
+
+  .pr-review-modal .pr-textarea {
+    min-height: 150px;
+    height: 150px;
+  }
+}
+/* =====================================================
+   GOOGLE-STYLE RATING STARS
+   ===================================================== */
+
+.pr-review-modal .pr-form__rating {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  flex-direction: row;
+  gap: 18px;
+}
+
+.pr-review-modal .pr-rating-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pr-review-modal .pr-rating-label {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  place-items: center;
+
+  border: 0;
+  background: transparent;
+
+  font-family: var(--ff-body);
+  font-size: 0;
+  line-height: 48px;
+
+  cursor: pointer;
+}
+
+.pr-review-modal
+.pr-rating-label::before {
+  content: "☆";
+
+  color: #8f8a84;
+
+  font-family: var(--ff-body);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 48px;
+
+  transition:
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.pr-review-modal
+.pr-rating-label.is-active::before {
+  content: "★";
+  color: var(--red);
+}
+
+.pr-review-modal
+.pr-rating-label:hover::before {
+  transform: scale(1.08);
+}
+
+.pr-review-modal
+.pr-rating-label:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 50%;
+}

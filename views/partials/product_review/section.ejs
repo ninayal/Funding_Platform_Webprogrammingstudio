@@ -4,15 +4,44 @@
   data-form-mode="<%= formMode %>"
   data-editing-review-id="<%= editingReviewId %>"
   data-page-status="<%= pageStatus %>"
+  data-authenticated="<%= isAuthenticated %>"
 >
-  <section class="pr-hero">
+  <section
+    class="pr-hero"
+    aria-labelledby="review-section-title"
+  >
     <%- include("hero-intro") %>
 
-    <div class="pr-hero__grid">
-      <%- include("score-card") %>
-      <%- include("review-form") %>
-    </div>
+    <%- include("score-card") %>
   </section>
+
+  <div
+    class="pr-review-modal"
+    id="review-composer-panel"
+    aria-hidden="<%= formOpen ? 'false' : 'true' %>"
+    <%= formOpen ? "" : "hidden" %>
+  >
+    <button
+      class="pr-review-modal__backdrop"
+      type="button"
+      data-close-review-modal
+      aria-label="Close review form"
+      tabindex="-1"
+    ></button>
+
+    <div
+      class="pr-review-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="<%= formMode === 'edit'
+        ? 'Edit your product review'
+        : 'Write a product review' %>"
+    >
+      <div class="pr-review-modal__scroll">
+        <%- include("review-form") %>
+      </div>
+    </div>
+  </div>
 
   <section
     class="pr-list"
