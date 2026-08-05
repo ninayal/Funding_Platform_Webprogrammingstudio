@@ -1,16 +1,51 @@
 <aside class="shop-sidebar" aria-label="Filters">
-  <% filters.forEach((filter) => { %>
-    <details class="filter-group" <%= filter.open ? "open" : "" %>>
-      <summary><%= filter.title %></summary>
-
-      <div class="filter-options">
-        <% filter.options.forEach((option) => { %>
-          <label>
-            <input type="checkbox" />
-            <%= option %>
-          </label>
-        <% }); %>
-      </div>
+    <details class="filter-group" open>
+        <summary>Price</summary>
+        <div class="filter-options">
+            <label><input type="checkbox" name="price" value="under-25">Under £25</label>
+            <label><input type="checkbox" name="price" value="25-50">£25–£50</label>
+            <label><input type="checkbox" name="price" value="50-100">£50–£100</label>
+            <label><input type="checkbox" name="price" value="100-plus">£100 and over</label>
+        </div>
     </details>
-  <% }); %>
+    <details class="filter-group">
+        <summary>Craft Village</summary>
+        <div class="filter-options">
+            <% filterOptions.makers.forEach(maker=>{ %>
+                <label><input type="checkbox" name="maker" value="<%= maker %>">
+                    <%= maker %>
+                </label>
+                <% }) %>
+        </div>
+    </details>
+    <details class="filter-group">
+        <summary>Material</summary>
+        <div class="filter-options">
+            <% filterOptions.materials.forEach(material=>{ %>
+                <label><input type="checkbox" name="material" value="<%= material %>">
+                    <%= material %>
+                </label>
+                <% }) %>
+        </div>
+    </details>
+    <details class="filter-group">
+        <summary>Availability</summary>
+        <div class="filter-options">
+            <% filterOptions.availability.forEach(option=>{ %>
+                <label><input type="checkbox" name="availability" value="<%= option.value %>">
+                    <%= option.label %>
+                </label>
+                <% }) %>
+        </div>
+    </details>
+    <details class="filter-group">
+        <summary>Rating</summary>
+        <div class="filter-options">
+            <% filterOptions.ratings.forEach(option=>{ %>
+                <label><input type="checkbox" name="rating" value="<%= option.value %>">
+                    <%= option.label %>
+                </label>
+                <% }) %>
+        </div>
+    </details>
 </aside>

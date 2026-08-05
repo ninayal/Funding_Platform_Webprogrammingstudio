@@ -1,9 +1,11 @@
-<section class="shop-grid" aria-label="All products">
-    <% products.forEach((product)=> { %>
-        <article class="shop-card product-<%= product.id %> <%= product.category %>">
+<section class="shop-grid" id="product-grid" aria-label="All products">
+    <% products.forEach(product=>{ %>
+        <article class="shop-card" data-id="<%= product.id %>" data-name="<%= product.name.toLowerCase() %>"
+            data-category="<%= product.category %>" data-maker="<%= product.maker %>"
+            data-material="<%= product.material %>" data-price="<%= product.price %>" data-stock="<%= product.stock %>"
+            data-rating="<%= product.rating %>">
             <div class="shop-card__media">
-                <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
-
+                <img src="<%= product.image %>" alt="<%= product.name %>">
                 <button type="button" class="wishlist-btn" aria-label="Save <%= product.name %> to wishlist">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                         aria-hidden="true">
@@ -11,46 +13,33 @@
                             d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
                     </svg>
                 </button>
-
-                <a href="/cart/cart" class="quickadd-btn" aria-label="Quick add <%= product.name %> to cart">
-                    +
-                </a>
+                <form action="/cart/add" method="POST">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="quickadd-btn" aria-label="Add <%= product.name %> to cart">+</button>
+                </form>
             </div>
-
             <div class="shop-card__body">
                 <p class="shop-card__maker">
                     <%= product.maker %>
                 </p>
-
                 <h3 class="shop-card__title">
-                    <a href="/review/review/<%= product.reviewNumber %>">
+                    <a href="/review/<%= product.slug %>">
                         <%= product.name %>
                     </a>
                 </h3>
-
-                <p class="shop-card__price">
-                    <%= product.price %>
-
-                        <% if (product.oldPrice) { %>
-                            <span class="shop-card__price-was">
-                                <%= product.oldPrice %>
-                            </span>
-                            <% } %>
+                <p class="shop-card__price">£<%= product.price.toFixed(2) %>
                 </p>
-
                 <p class="shop-card__rating">
-                    <%= product.rating %>
-                        <span>(<%= product.reviewCount %>)</span>
+                    <%= product.ratingStars %><span>(<%= product.reviewCount %>)</span>
                 </p>
-
                 <p class="shop-card__tag">
-                    <%= product.tag || " " %>
+                    <%= product.tag||"" %>
                 </p>
-
                 <p class="shop-card__variant">
-                    <%= product.variant %>
+                    <%= product.variant||"" %>
                 </p>
             </div>
         </article>
-        <% }); %>
+        <% }) %>
 </section>

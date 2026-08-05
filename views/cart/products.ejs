@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#A31D1D">
   <title>Làng &amp; Co. — <%= pageTitle %>
   </title>
   <link rel="stylesheet" href="/css/landingpage/index.css">
@@ -15,23 +16,26 @@
 <body>
   <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
     ?currentUser:null }) %>
-    <main class="shop-wrap">
-      <%- include("../partials/cart/breadcrumb") %>
-        <%- include("../partials/products/shop-header") %>
-          <%- include("../partials/products/category-tabs") %>
-            <div class="shop-shell container">
-              <%- include("../partials/products/filters",{filterOptions}) %>
-                <section class="shop-content">
-                  <%- include("../partials/products/toolbar",{productCount:products.length}) %>
-                    <%- include("../partials/products/product-grid",{products}) %>
-                      <%- include("../partials/products/empty-state") %>
-                </section>
-            </div>
-    </main>
-    <%- include("../partials/footer") %>
-      <script id="products-data"
-        type="application/json"><%- JSON.stringify(products).replace(/</g,"\\u003c") %></script>
-      <script src="/js/cart/products.js" defer></script>
+    <%- include("../partials/products/filter-state",{categories,sortOptions}) %>
+      <main class="shop-wrap">
+        <%- include("../partials/products/breadcrumb") %>
+          <%- include("../partials/products/shop-header") %>
+            <%- include("../partials/products/category-tabs",{categories,categoryCounts}) %>
+              <div class="shop-shell container">
+                <%- include("../partials/products/filters",{filterOptions}) %>
+                  <section class="shop-content">
+                    <%- include("../partials/products/toolbar",{ productCount:products.length, sortOptions }) %>
+                      <%- include("../partials/products/product-grid",{products}) %>
+                        <%- include("../partials/products/empty-state") %>
+                          <%- include("../partials/products/pagination",{productCount:products.length}) %>
+                  </section>
+              </div>
+              <%- include("../partials/products/seo-copy") %>
+      </main>
+      <%- include("../partials/footer") %>
+        <script id="products-data"
+          type="application/json"><%- JSON.stringify(products).replace(/</g,"\\u003c") %></script>
+        <script src="/js/cart/products.js" defer></script>
 </body>
 
 </html>

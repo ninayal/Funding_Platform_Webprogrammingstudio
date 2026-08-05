@@ -1,0 +1,13 @@
+<div class="shop-toolbar">
+    <p class="results-count"><span id="results-count">
+            <%= productCount %>
+        </span> results</p>
+    <label for="product-sort" class="visually-hidden">Sort products</label>
+    <select id="product-sort" class="sort-select">
+        <% sortOptions.forEach(option=>{ %>
+            <option value="<%= option.id %>">
+                <%= option.label %>
+            </option>
+            <% }) %>
+    </select>
+</div>
