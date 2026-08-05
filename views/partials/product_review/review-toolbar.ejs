@@ -1,16 +1,35 @@
+<%
+  const safeReviews =
+    Array.isArray(reviews)
+      ? reviews
+      : [];
+
+  const initialReviewCount =
+    safeReviews.length;
+
+  const initialReviewLabel =
+    initialReviewCount === 1
+      ? "1 review found."
+      : `${initialReviewCount} reviews found.`;
+%>
+
 <div class="pr-list__head">
-  <div>
+  <div class="pr-list__intro">
     <p class="pr-list__kicker">
       Customer Voices
     </p>
 
-    <h2>Recent Reviews</h2>
+    <h2>
+      Recent Reviews
+    </h2>
 
     <p
       class="pr-results-summary"
       id="review-results-summary"
       aria-live="polite"
-    ></p>
+    >
+      <%= initialReviewLabel %>
+    </p>
   </div>
 
   <div class="pr-sort">
@@ -23,32 +42,42 @@
         class="pr-search__label"
         for="review-search-query"
       >
-        Search reviews
+        Search Reviews
       </label>
 
       <div class="pr-search__controls">
         <select
           class="pr-search__select"
           id="review-search-field"
-          name="searchField"
-          aria-label="Choose review field to search"
+          aria-label="Choose review field"
         >
-          <% searchFields.forEach(
-            (field) => {
-          %>
-            <option value="<%= field.value %>">
-              <%= field.label %>
-            </option>
-          <% }); %>
+          <option value="all">
+            All fields
+          </option>
+
+          <option value="title">
+            Review title
+          </option>
+
+          <option value="reviewer">
+            Reviewer
+          </option>
+
+          <option value="description">
+            Review content
+          </option>
+
+          <option value="date">
+            Date
+          </option>
         </select>
 
         <input
           class="pr-search__input"
-          type="search"
           id="review-search-query"
-          name="searchQuery"
+          type="search"
           placeholder="Search reviews..."
-          maxlength="80"
+          autocomplete="off"
         />
 
         <button
@@ -65,7 +94,7 @@
         class="pr-sort__label"
         for="review-sort"
       >
-        Sort reviews
+        Sort Reviews
       </label>
 
       <select
@@ -94,30 +123,34 @@
       </select>
     </div>
 
-    <span class="pr-sort__label">
-      Filter by rating
-    </span>
+    <div>
+      <p class="pr-sort__label">
+        Filter by Rating
+      </p>
 
-    <div
-      class="pr-sort__chips"
-      role="group"
-      aria-label="Filter reviews by rating"
-    >
-      <button
-        class="pr-sort__chip is-active"
-        type="button"
-        data-rating-filter="all"
-      >All</button>
-
-      <% ratingValues.forEach(
-        (rating) => {
-      %>
+      <div
+        class="pr-sort__chips"
+        role="group"
+        aria-label="Filter reviews by rating"
+      >
         <button
-          class="pr-sort__chip"
+          class="pr-sort__chip is-active"
           type="button"
-          data-rating-filter="<%= rating %>"
-        ><%= rating %>★</button>
-      <% }); %>
+          data-rating-filter="all"
+        >
+          All
+        </button>
+
+        <% [5, 4, 3, 2, 1].forEach((rating) => { %>
+          <button
+            class="pr-sort__chip"
+            type="button"
+            data-rating-filter="<%= rating %>"
+          >
+            <%= rating %>★
+          </button>
+        <% }); %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 <%
   const reviewImages =
-    Array.isArray(review.images) && review.images.length
+    Array.isArray(review.images) &&
+    review.images.length
       ? review.images
       : review.image
         ? [review.image]
@@ -8,7 +9,9 @@
 %>
 
 <article
-  class="pr-card<%= review.isOwn ? ' pr-card--own' : '' %>"
+  class="pr-card<%= review.isOwn
+    ? ' pr-card--own'
+    : '' %>"
   data-review-id="<%= review.id %>"
   data-rating="<%= review.rating %>"
   data-title="<%= review.title.toLowerCase() %>"
@@ -66,7 +69,10 @@
             method="post"
           >
             <button
-              class="pr-card__owner-action pr-card__owner-action--delete"
+              class="
+                pr-card__owner-action
+                pr-card__owner-action--delete
+              "
               type="submit"
               data-delete-review
             >
@@ -90,17 +96,24 @@
 
   <% if (reviewImages.length) { %>
     <div
-      class="pr-card__media pr-card__media--count-<%= Math.min(reviewImages.length, 3) %>"
+      class="pr-card__media"
       aria-label="<%= reviewImages.length %> review photos"
     >
       <% reviewImages.slice(0, 3).forEach((image, index) => { %>
         <figure class="pr-card__gallery-item">
-          <img
-            src="<%= image %>"
-            alt="Review photo <%= index + 1 %> for <%= productData.name %>"
-            loading="lazy"
-            decoding="async"
-          />
+          <button
+            class="pr-card__image-button"
+            type="button"
+            data-review-lightbox
+            aria-label="Open review photo <%= index + 1 %> in full screen"
+          >
+            <img
+              src="<%= image %>"
+              alt="Review photo <%= index + 1 %> for <%= productData.name %>"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
         </figure>
       <% }); %>
     </div>

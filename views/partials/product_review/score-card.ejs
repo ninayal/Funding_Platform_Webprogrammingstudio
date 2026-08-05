@@ -18,6 +18,22 @@
     totalReviews === 1
       ? "1 review"
       : `${totalReviews} reviews`;
+
+  const interactiveRatings =
+    Array.isArray(ratingValues)
+      ? [...ratingValues]
+          .map(Number)
+          .sort(
+            (first, second) =>
+              first - second
+          )
+      : [1, 2, 3, 4, 5];
+
+  const safeLoginUrl =
+    typeof loginUrl === "string" &&
+    loginUrl
+      ? loginUrl
+      : "/shared/login";
 %>
 
 <section
@@ -25,11 +41,9 @@
   aria-label="Customer review overview"
 >
   <div class="pr-overview__distribution">
-    <div class="pr-overview__heading">
-      <h3 class="pr-overview__title">
-        Rating Distribution
-      </h3>
-    </div>
+    <h3 class="pr-overview__title">
+      Rating Distribution
+    </h3>
 
     <div
       class="pr-distribution"
@@ -40,10 +54,7 @@
           <span class="pr-distribution__stars">
             <%= item.rating %>
             <span aria-hidden="true">★</span>
-
-            <span class="sr-only">
-              stars
-            </span>
+            <span class="sr-only">stars</span>
           </span>
 
           <span
@@ -133,14 +144,14 @@
         role="group"
         aria-label="Choose a rating and open the review form"
       >
-        <% ratingValues.forEach((rating) => { %>
+        <% interactiveRatings.forEach((rating) => { %>
           <button
             class="pr-rating-launch__star"
             type="button"
             data-open-review
             data-rating-value="<%= rating %>"
             aria-controls="review-composer-panel"
-            aria-expanded="<%= formOpen %>"
+            aria-expanded="<%= formOpen ? 'true' : 'false' %>"
             aria-label="<%= rating %> out of 5 stars"
             title="<%= rating %> out of 5 stars"
           >
@@ -151,17 +162,22 @@
 
       <p class="pr-overview__hint">
         Select a star to open the review form.
-        One uploaded product photo is required.
+        Upload 1 to 3 product photos.
       </p>
     <% } else { %>
       <div
         class="pr-rating-launch"
+        role="group"
         aria-label="Sign in to rate this product"
       >
-        <% ratingValues.forEach((rating) => { %>
+        <% interactiveRatings.forEach((rating) => { %>
           <a
-            class="pr-rating-launch__star"
-            href="<%= loginUrl %>"
+            class="
+              pr-rating-launch__star
+              pr-rating-launch__star--login
+            "
+            href="<%= safeLoginUrl %>"
+            data-rating-value="<%= rating %>"
             aria-label="Sign in to give <%= rating %> out of 5 stars"
             title="Sign in to write a review"
           >
@@ -170,8 +186,11 @@
         <% }); %>
       </div>
 
-      <p class="pr-overview__hint">
-        <a href="<%= loginUrl %>">
+      <p class="pr-overview__hint pr-overview__hint--login">
+        <a
+          class="pr-overview__signin-link"
+          href="<%= safeLoginUrl %>"
+        >
           Sign in
         </a>
         before rating or reviewing this product.
