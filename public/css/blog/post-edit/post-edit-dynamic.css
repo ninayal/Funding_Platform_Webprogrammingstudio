@@ -1,0 +1,152 @@
+.post-form-error {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border: 1px solid rgba(163, 29, 29, 0.26);
+  border-radius: 10px;
+  background: rgba(163, 29, 29, 0.07);
+  color: #8f1919;
+}
+
+.post-field-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.post-field-error {
+  display: block;
+  min-height: 16px;
+  margin-top: 5px;
+  color: #a31d1d;
+  font-size: 11px;
+}
+
+.post-field-error:empty {
+  display: none;
+}
+
+.post-field-meta
+[data-post-count] {
+  margin-left: auto;
+  color: rgba(51, 39, 30, 0.55);
+  font-size: 11px;
+}
+
+.post-edit-form
+[aria-invalid="true"] {
+  border-color: #a31d1d !important;
+  box-shadow:
+    0 0 0 3px
+    rgba(163, 29, 29, 0.09);
+}
+
+.post-edit-form
+input[readonly] {
+  cursor: default;
+  background:
+    rgba(75, 56, 43, 0.05);
+  color:
+    rgba(51, 39, 30, 0.7);
+}
+
+.post-form-help {
+  display: block;
+  margin-top: 5px;
+  color:
+    rgba(51, 39, 30, 0.56);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.post-form-feedback {
+  min-height: 18px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.post-edit-preview__image {
+  position: relative;
+}
+
+.post-edit-preview__image
+img[hidden] {
+  display: none;
+}
+
+.post-preview-placeholder {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    rgba(75, 56, 43, 0.07);
+  color:
+    rgba(51, 39, 30, 0.52);
+  font-size: 13px;
+  text-align: center;
+}
+
+.post-preview-placeholder[hidden] {
+  display: none;
+}
+
+.post-edit-help {
+  margin-top: 20px;
+  padding: 20px;
+  border:
+    1px solid
+    var(
+      --line,
+      rgba(75, 56, 43, 0.15)
+    );
+  border-radius: 14px;
+  background:
+    rgba(255, 255, 255, 0.35);
+}
+
+.post-edit-help h2 {
+  margin-top: 0;
+}
+
+.post-edit-help ul {
+  margin: 0;
+  padding-left: 18px;
+  color:
+    rgba(51, 39, 30, 0.68);
+  line-height: 1.7;
+}
+
+.post-edit-delete-button {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  text-decoration: none;
+}
+
+/* Align paired form controls from the top */
+.post-edit-grid--two {
+  align-items: start;
+}
+
+/* Keep every field anchored to the top of its grid cell */
+.post-edit-grid--two > label {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+/* Keep equal spacing between labels and controls */
+.post-edit-grid--two > label > input,
+.post-edit-grid--two > label > select {
+  margin-top: 12px;
+}
+
+/* Counter/error area must not move the input itself */
+.post-edit-grid--two .post-field-meta,
+.post-edit-grid--two .post-field-error {
+  margin-top: 8px;
+}

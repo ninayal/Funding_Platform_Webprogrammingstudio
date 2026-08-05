@@ -11,6 +11,7 @@ const blogCommentModel =
 
 const {
   CATEGORY_ORDER,
+  contentToText,
   normalisePostInput,
   validateCommentContent,
   validatePost,
@@ -18,11 +19,26 @@ const {
   "../validators/blogValidators",
 );
 
-const {
-  requestWantsJson,
-} = require(
-  "../middlewares/authMiddleware",
-);
+const BLOG_DEVELOPMENT_ACTOR =
+  Object.freeze({
+    id: "user-huy-ba",
+    name: "Huy Ba",
+    email: "huy@example.com",
+    initials: "HB",
+    role: "Community contributor",
+  });
+
+const requestWantsJson = (req) => {
+  const acceptHeader =
+    req.get("accept") || "";
+
+  return (
+    req.xhr ||
+    acceptHeader.includes(
+      "application/json",
+    )
+  );
+};
 
 const formatDate = (
   value,
@@ -67,11 +83,9 @@ const toCategorySlug = (
       "",
     );
 
-const getCurrentUser = (
-  req,
-) =>
-  req.currentUser ||
-  null;
+
+const getCurrentUser = () =>
+  BLOG_DEVELOPMENT_ACTOR;
 
 const preparePostForView = (
   req,
@@ -114,7 +128,7 @@ const preparePostForView = (
     displayDate:
       formatDate(
         post.publishedAt ||
-          post.updatedAt,
+        post.updatedAt,
       ),
 
     url,
@@ -131,6 +145,207 @@ const preparePostForView = (
   };
 };
 
+const toDateInputValue = (
+  value,
+) => {
+  const date =
+    value
+      ? new Date(value)
+      : new Date();
+
+  if (
+    Number.isNaN(
+      date.getTime(),
+    )
+  ) {
+    return "";
+  }
+
+  return date
+    .toISOString()
+    .slice(0, 10);
+};
+
+const getPostFormValues = (
+  post = {},
+) => ({
+  title:
+    post.title || "",
+
+  category:
+    post.category || "Guide",
+
+  tags:
+    Array.isArray(post.tags)
+      ? post.tags.join(", ")
+      : "",
+
+  imageUrl:
+    post.image?.url || "",
+
+  imageAlt:
+    post.image?.alt || "",
+
+  imageCaption:
+    post.image?.caption || "",
+
+  summary:
+    post.summary || "",
+
+  archiveSummary:
+    post.archiveSummary || "",
+
+  content:
+    contentToText(
+      post.content || [],
+    ),
+
+  readTime:
+    post.readTime || 5,
+
+  status:
+    post.status || "draft",
+
+  dateAdded:
+    toDateInputValue(
+      post.publishedAt ||
+      post.updatedAt,
+    ),
+
+  displayDate:
+    post.publishedAt ||
+      post.updatedAt
+      ? formatDate(
+        post.publishedAt ||
+        post.updatedAt,
+      )
+      : "Not published",
+});
+
+const calculateDraftCompletion = (
+  post,
+) => {
+  const requiredSections = [
+    Boolean(
+      String(
+        post.title || "",
+      ).trim(),
+    ),
+
+    Boolean(
+      String(
+        post.summary || "",
+      ).trim(),
+    ),
+
+    Boolean(
+      post.image &&
+      post.image.url,
+    ),
+
+    Boolean(
+      Array.isArray(
+        post.content,
+      ) &&
+      post.content.some(
+        (block) =>
+          String(
+            block.text || "",
+          ).trim(),
+      ),
+    ),
+
+    Boolean(
+      Array.isArray(
+        post.tags,
+      ) &&
+      post.tags.length > 0,
+    ),
+  ];
+
+  const completed =
+    requiredSections.filter(
+      Boolean,
+    ).length;
+
+  return Math.round(
+    (
+      completed /
+      requiredSections.length
+    ) *
+    100,
+  );
+};
+
+const prepareMyPostForView = (
+  req,
+  post,
+) => {
+  const preparedPost =
+    preparePostForView(
+      req,
+      post,
+    );
+
+  const status =
+    post.status === "published"
+      ? "published"
+      : "draft";
+
+  return {
+    ...preparedPost,
+
+    status,
+
+    statusLabel:
+      status === "published"
+        ? "Published"
+        : "Draft",
+
+    dateText:
+      status === "draft"
+        ? `Last edited ${preparedPost.displayDate}`
+        : preparedPost.displayDate,
+
+    dateTime:
+      post.publishedAt ||
+      post.updatedAt ||
+      "",
+
+    editUrl:
+      `/blog/${encodeURIComponent(
+        post.id,
+      )}/edit`,
+
+    imageUrl:
+      post.image?.listUrl ||
+      post.image?.url ||
+      "/images/blog-placeholder.jpg",
+
+    imageAlt:
+      post.image?.alt ||
+      post.title ||
+      "Blog post image",
+
+    summary:
+      post.archiveSummary ||
+      post.summary ||
+      "No summary has been added.",
+
+    commentCount:
+      blogCommentModel.countCommentsByPostId(
+        post.id,
+      ),
+
+    draftCompletion:
+      status === "draft"
+        ? calculateDraftCompletion(
+          post,
+        )
+        : 100,
+  };
+};
+
 const prepareCommentsForView = (
   post,
   currentUser,
@@ -139,7 +354,7 @@ const prepareCommentsForView = (
     .getCommentsByPostId(
       post.id,
       currentUser?.id ||
-        null,
+      null,
     )
     .map((comment) => ({
       ...comment,
@@ -152,12 +367,12 @@ const prepareCommentsForView = (
       canDelete:
         Boolean(
           currentUser &&
-            (
-              comment.author.id ===
-                currentUser.id ||
-              post.author.id ===
-                currentUser.id
-            ),
+          (
+            comment.author.id ===
+            currentUser.id ||
+            post.author.id ===
+            currentUser.id
+          ),
         ),
 
       replies:
@@ -173,38 +388,23 @@ const prepareCommentsForView = (
             canDelete:
               Boolean(
                 currentUser &&
-                  (
-                    reply.author.id ===
-                      currentUser.id ||
-                    post.author.id ===
-                      currentUser.id
-                  ),
+                (
+                  reply.author.id ===
+                  currentUser.id ||
+                  post.author.id ===
+                  currentUser.id
+                ),
               ),
           }),
         ),
     }));
 
-const getSharedViewData = (
-  req,
-) => {
-  const currentUser =
-    getCurrentUser(req);
-
-  return {
-    currentUser,
-
-    currentUserId:
-      currentUser?.id ||
-      null,
-
-    myPostCount:
-      currentUser
-        ? blogModel.countPostsByAuthorId(
-            currentUser.id,
-          )
-        : 0,
-  };
-};
+const getSharedViewData = () => ({
+  myPostCount:
+    blogModel.countPostsByAuthorId(
+      BLOG_DEVELOPMENT_ACTOR.id,
+    ),
+});
 
 const getCategoriesForView =
   () => {
@@ -289,7 +489,7 @@ const buildBlogViewData = (
     );
 
   return {
-    ...getSharedViewData(req),
+    ...getSharedViewData(),
 
     pageTitle:
       preparedPost.title,
@@ -360,9 +560,7 @@ const getBlogPage = (
     return res.render(
       "blog/blog",
       {
-        ...getSharedViewData(
-          req,
-        ),
+        ...getSharedViewData(),
 
         pageTitle:
           "Journal",
@@ -410,7 +608,7 @@ const getBlogViewPage = (
       blogModel.getVisiblePostById(
         req.params.id,
         currentUser?.id ||
-          null,
+        null,
       );
 
     if (!post) {
@@ -451,13 +649,13 @@ const addComment = (
     const post =
       blogModel.getVisiblePostById(
         req.params.id,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
       );
 
     if (
       !post ||
       post.status !==
-        "published"
+      "published"
     ) {
       return res
         .status(404)
@@ -503,7 +701,7 @@ const addComment = (
 
     blogCommentModel.addComment(
       post.id,
-      req.currentUser,
+      BLOG_DEVELOPMENT_ACTOR,
       content,
     );
 
@@ -526,13 +724,13 @@ const addReply = (
     const post =
       blogModel.getVisiblePostById(
         req.params.id,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
       );
 
     if (
       !post ||
       post.status !==
-        "published"
+      "published"
     ) {
       return res
         .status(404)
@@ -586,7 +784,7 @@ const addReply = (
       blogCommentModel.addReply(
         post.id,
         req.params.commentId,
-        req.currentUser,
+        BLOG_DEVELOPMENT_ACTOR,
         content,
       );
 
@@ -621,7 +819,7 @@ const toggleCommentLike = (
     const post =
       blogModel.getVisiblePostById(
         req.params.id,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
       );
 
     if (!post) {
@@ -638,7 +836,7 @@ const toggleCommentLike = (
       blogCommentModel.toggleLike(
         post.id,
         req.params.commentId,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
       );
 
     if (!result.ok) {
@@ -694,7 +892,7 @@ const deleteComment = (
       blogCommentModel.deleteComment(
         post.id,
         req.params.commentId,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
         post.author.id,
       );
 
@@ -730,23 +928,53 @@ const getMyPostsPage = (
     const posts =
       blogModel
         .getPostsByAuthorId(
-          req.currentUser.id,
+          BLOG_DEVELOPMENT_ACTOR.id,
         )
         .map((post) =>
-          preparePostForView(
+          prepareMyPostForView(
             req,
             post,
           ),
         );
 
+    const statistics = {
+      total:
+        posts.length,
+
+      published:
+        posts.filter(
+          (post) =>
+            post.status ===
+            "published",
+        ).length,
+
+      drafts:
+        posts.filter(
+          (post) =>
+            post.status ===
+            "draft",
+        ).length,
+    };
+
+    const author = {
+      ...BLOG_DEVELOPMENT_ACTOR,
+
+      description:
+        "Writing about Vietnamese traditional crafts, cultural preservation, community support, and responsible digital platforms.",
+    };
+
     return res.render(
       "blog/my_posts",
       {
-        ...getSharedViewData(
-          req,
-        ),
+        ...getSharedViewData(),
+
         pageTitle:
           "My Blog Posts",
+
+        author,
+
+        statistics,
+
         posts,
       },
     );
@@ -755,30 +983,112 @@ const getMyPostsPage = (
   }
 };
 
+const renderPostForm = (
+  req,
+  res,
+  {
+    mode,
+    post = null,
+    values = {},
+    errors = {},
+    status = 200,
+  },
+) => {
+  const preparedPost =
+    post
+      ? preparePostForView(
+        req,
+        post,
+      )
+      : null;
+
+  const formValues = {
+    ...getPostFormValues(
+      post || {},
+    ),
+
+    ...values,
+  };
+
+  const author = {
+    ...(
+      post?.author ||
+      BLOG_DEVELOPMENT_ACTOR
+    ),
+  };
+
+  const previewStats = {
+    commentCount:
+      post
+        ? blogCommentModel
+          .countCommentsByPostId(
+            post.id,
+          )
+        : 0,
+
+    viewCount:
+      Number(
+        post?.viewCount || 0,
+      ),
+
+    lastEdited:
+      post?.updatedAt
+        ? formatDate(
+          post.updatedAt,
+        )
+        : "Not saved yet",
+  };
+
+  return res
+    .status(status)
+    .render(
+      "blog/post_edit",
+      {
+        ...getSharedViewData(),
+
+        pageTitle:
+          mode === "create"
+            ? "Create Blog Post"
+            : "Edit Blog Post",
+
+        mode,
+
+        post:
+          preparedPost,
+
+        author,
+
+        values:
+          formValues,
+
+        errors,
+
+        categories:
+          CATEGORY_ORDER,
+
+        previewStats,
+      },
+    );
+};
+
 const getCreatePostPage = (
   req,
   res,
 ) =>
-  res.render(
-    "blog/post_edit",
+  renderPostForm(
+    req,
+    res,
     {
-      ...getSharedViewData(
-        req,
-      ),
-
-      pageTitle:
-        "Create Post",
-
-      formMode: "create",
-
-      post: null,
-
-      values: {},
-
-      errors: {},
-
-      categories:
-        CATEGORY_ORDER,
+      mode: "create",
+      values: {
+        dateAdded:
+          toDateInputValue(
+            new Date(),
+          ),
+        status: "draft",
+        category: "Guide",
+        readTime: 5,
+      },
     },
   );
 
@@ -801,53 +1111,24 @@ const getPostEditPage = (
 
   if (
     post.author.id !==
-    req.currentUser.id
+    BLOG_DEVELOPMENT_ACTOR.id
   ) {
     return res
       .status(403)
       .send(
-        "You cannot edit another user's post.",
+        "You can edit only the development actor's posts.",
       );
   }
 
-  return res.render(
-    "blog/post_edit",
+  return renderPostForm(
+    req,
+    res,
     {
-      ...getSharedViewData(
-        req,
-      ),
-
-      pageTitle:
-        "Edit Post",
-
-      formMode: "edit",
-
-      post:
-        preparePostForView(
-          req,
-          post,
-        ),
-
-      values: {},
-
-      errors: {},
-
-      categories:
-        CATEGORY_ORDER,
+      mode: "edit",
+      post,
     },
   );
 };
-
-const sendPostErrors = (
-  res,
-  errors,
-) =>
-  res.status(422).json({
-    ok: false,
-    message:
-      "Blog post validation failed.",
-    errors,
-  });
 
 const createPost = (
   req,
@@ -874,16 +1155,29 @@ const createPost = (
       Object.keys(errors)
         .length > 0
     ) {
-      return sendPostErrors(
+      return renderPostForm(
+        req,
         res,
-        errors,
+        {
+          mode: "create",
+
+          values: {
+            ...req.body,
+            status:
+              values.status,
+          },
+
+          errors,
+
+          status: 422,
+        },
       );
     }
 
     const post =
       blogModel.createPost(
         values,
-        req.currentUser,
+        BLOG_DEVELOPMENT_ACTOR,
       );
 
     return res.redirect(
@@ -915,6 +1209,17 @@ const updatePost = (
         );
     }
 
+    if (
+      existing.author.id !==
+      BLOG_DEVELOPMENT_ACTOR.id
+    ) {
+      return res
+        .status(403)
+        .send(
+          "You cannot edit this post.",
+        );
+    }
+
     const status =
       req.body.status ||
       existing.status;
@@ -939,28 +1244,47 @@ const updatePost = (
       Object.keys(errors)
         .length > 0
     ) {
-      return sendPostErrors(
+      return renderPostForm(
+        req,
         res,
-        errors,
+        {
+          mode: "edit",
+
+          post:
+            existing,
+
+          values: {
+            ...req.body,
+            status,
+          },
+
+          errors,
+
+          status: 422,
+        },
       );
     }
 
     const result =
       blogModel.updatePost(
         existing.id,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
         {
           ...values,
 
           image: {
             url:
               values.imageUrl,
+
             listUrl:
               values.imageUrl,
+
             alt:
               values.imageAlt,
+
             caption:
               values.imageCaption,
+
             listCaption:
               values.imageCaption,
           },
@@ -1028,7 +1352,7 @@ const deletePost = (
     const result =
       blogModel.deletePost(
         req.params.id,
-        req.currentUser.id,
+        BLOG_DEVELOPMENT_ACTOR.id,
       );
 
     if (!result.ok) {

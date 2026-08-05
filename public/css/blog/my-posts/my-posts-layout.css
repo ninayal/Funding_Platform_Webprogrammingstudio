@@ -2,8 +2,8 @@
     position: relative;
     z-index: 2;
     min-height: 100vh;
-    margin-top: -46px;
-    padding: 18px 0 96px;
+    margin-top: 0;
+    padding: 28px 0 96px;
     background: transparent;
 }
 
@@ -15,18 +15,43 @@
 
 /* Breadcrumb matches the Blog home page */
 .my-posts-breadcrumb {
-    width: calc(100% - 48px);
-    max-width: 1600px;
+    width: min(1240px,
+            calc(100% - 48px));
+
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 0 auto 18px;
+
+    margin:
+        0 auto 28px;
+
     color: var(--muted);
-    font-family: var(--my-posts-sans);
-    font-size: 18px;
+
+    font-family:
+        var(--my-posts-sans);
+
+    font-size: 16px;
     font-weight: 500;
     line-height: 1.4;
+}
+
+.my-posts-breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.my-posts-breadcrumb a:hover {
+    color: var(--red);
+}
+
+.my-posts-breadcrumb span[aria-hidden="true"] {
+    color: var(--muted);
+}
+
+.my-posts-breadcrumb span[aria-current="page"] {
+    color: var(--deep);
+    font-weight: 600;
 }
 
 .my-posts-breadcrumb a {

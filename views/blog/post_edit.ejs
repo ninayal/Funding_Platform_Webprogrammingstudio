@@ -1,406 +1,798 @@
+<%
+  const viewMode =
+    typeof mode !== "undefined"
+      ? mode
+      : "create";
+
+  const isCreate =
+    viewMode === "create";
+
+  const viewPost =
+    typeof post !== "undefined"
+      ? post
+      : null;
+
+  const viewValues =
+    typeof values !== "undefined" &&
+    values
+      ? values
+      : {};
+
+  const viewErrors =
+    typeof errors !== "undefined" &&
+    errors
+      ? errors
+      : {};
+
+  const viewCategories =
+    typeof categories !== "undefined" &&
+    Array.isArray(categories)
+      ? categories
+      : [
+          "Mission",
+          "Donation",
+          "Places",
+          "Guide"
+        ];
+
+  const viewAuthor =
+    typeof author !== "undefined" &&
+    author
+      ? author
+      : {
+          name: "Huy Ba",
+          initials: "HB",
+          role: "Community contributor"
+        };
+
+  const viewPreviewStats =
+    typeof previewStats !== "undefined" &&
+    previewStats
+      ? previewStats
+      : {
+          commentCount: 0,
+          viewCount: 0,
+          lastEdited: "Not saved yet"
+        };
+
+  const postId =
+    viewPost && viewPost.id
+      ? viewPost.id
+      : "";
+
+  const formAction =
+    isCreate
+      ? "/blog"
+      : `/blog/${encodeURIComponent(postId)}/update`;
+
+  const deleteAction =
+    isCreate
+      ? ""
+      : `/blog/${encodeURIComponent(postId)}/delete`;
+
+  const storageKey =
+    isCreate
+      ? "langco.blog.postDraft.new"
+      : `langco.blog.postDraft.${postId}`;
+
+  const currentStatus =
+    viewValues.status === "published"
+      ? "published"
+      : "draft";
+
+  const statusLabel =
+    currentStatus === "published"
+      ? "Published"
+      : "Draft";
+
+  const pageHeading =
+    isCreate
+      ? "Create Blog Post"
+      : "Edit Blog Post";
+
+  const formHeading =
+    isCreate
+      ? "Write your story"
+      : "Edit your story";
+%>
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#A31D1D" />
 
-    <title>Edit Blog Post — Làng &amp; Co.</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="theme-color"
+      content="#A31D1D"
+    />
+
+    <title>
+      <%= pageHeading %> — Làng &amp; Co.
+    </title>
 
     <!-- Shared styles -->
-    <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-    <link rel="stylesheet" href="../../public/css/header.css" />
-    <link rel="stylesheet" href="../../public/css/shared-include.css" />
-    <link rel="stylesheet" href="../../public/css/header_shoppingcart.css" />
+    <link
+      rel="stylesheet"
+      href="/css/landingpage/index.css"
+    />
 
-    <!-- Post Edit styles: imports all smaller files -->
-    <link rel="stylesheet" href="../../public/css/blog/post-edit/post-edit.css" />
-</head>
+    <link
+      rel="stylesheet"
+      href="/css/header_v2.css"
+    />
 
-<body>
+    <link
+      rel="stylesheet"
+      href="/css/shared-include.css"
+    />
 
-    <!-- ================================================
-       HEADER
-       ================================================ -->
-    <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
-    <div class="topbar">
-        <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
-            <a href="../cart/products.html" target="_top">Shop Now</a>
-        </p>
-        <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
-    </div>
-    <nav class="nav nav--light nav--centered">
+    <link
+      rel="stylesheet"
+      href="/css/footer.css"
+    />
 
-        <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+    <!-- Existing Post Edit design -->
+    <link
+      rel="stylesheet"
+      href="/css/blog/post-edit/post-edit.css"
+    />
 
-        <div class="nav__left">
-            <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    aria-hidden="true">
-                    <path d="M3 6h18M3 12h18M3 18h18" />
-                </svg>
-            </label>
-            <button type="button" class="nav__icon-btn" aria-label="Search">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    aria-hidden="true">
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m20 20-3.8-3.8" />
-                </svg>
-            </button>
-        </div>
+    <!-- Dynamic form states -->
+    <link
+      rel="stylesheet"
+      href="/css/blog/post-edit/post-edit-dynamic.css"
+    />
 
-        <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
-            <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+    <script
+      src="/js/blog/post-form.js"
+      defer
+    ></script>
+  </head>
+
+  <body>
+    <%- include("../partials/header_v2", {
+      activePage: "blog",
+      showAccountIcon: false
+    }) %>
+
+    <main
+      class="post-edit-page"
+      id="edit-top"
+    >
+      <!-- Breadcrumb -->
+      <nav
+        class="post-edit-breadcrumb post-edit-container"
+        aria-label="Breadcrumb"
+      >
+        <a href="/">
+          Home
         </a>
 
-        <div class="nav__icons">
-            <a class="nav__icon-btn" href="../shared/profile.html" target="_top"
-                aria-label="Account — Log in or sign up">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    aria-hidden="true">
-                    <circle cx="12" cy="8" r="3.6" />
-                    <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-                </svg>
-            </a>
-            <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    aria-hidden="true">
-                    <path d="M6 8h12l-1 13H7L6 8Z" />
-                    <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-                </svg>
-                <span class="nav__badge-count">4</span>
-            </a>
+        <span aria-hidden="true">
+          •
+        </span>
+
+        <a href="/blog">
+          Journal
+        </a>
+
+        <span aria-hidden="true">
+          •
+        </span>
+
+        <a href="/blog/my-posts">
+          My Posts
+        </a>
+
+        <span aria-hidden="true">
+          •
+        </span>
+
+        <span aria-current="page">
+          <%= isCreate
+            ? "Create Post"
+            : "Edit Post"
+          %>
+        </span>
+      </nav>
+
+      <!-- Page heading -->
+      <header
+        class="post-edit-header post-edit-container"
+      >
+        <div class="post-edit-header__copy">
+          <p class="post-edit-kicker">
+            Author workspace
+          </p>
+
+          <h1>
+            <%= pageHeading %>
+          </h1>
+
+          <p>
+            <% if (isCreate) { %>
+              Create a new story, save it as
+              a draft, or publish it to the
+              Journal.
+            <% } else { %>
+              Refine the story, update its
+              publishing details, or move it
+              back to draft status.
+            <% } %>
+          </p>
         </div>
+      </header>
 
-        <div class="mobile-menu">
-            <ul>
-                <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
-                <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
-                <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
-                <li><a id="nav-forum" href="/forum" target="_top">Forum</a></li>
-                <li><a id="nav-wishlist" href="../giftcard/giftcard.html" target="_top">Giftcards</a></li>
-            </ul>
-        </div>
-    </nav>
+      <!-- Main editing layout -->
+      <div
+        class="post-edit-layout post-edit-container"
+      >
+        <!-- Edit form -->
+        <section
+          class="post-edit-panel"
+          aria-labelledby="post-edit-form-heading"
+        >
+          <div class="post-edit-panel__heading">
+            <div>
+              <p class="post-edit-kicker">
+                Post details
+              </p>
 
-    <!-- ================================================
-         EDIT BLOG POST PAGE
-    ================================================ -->
-    <main class="post-edit-page" id="edit-top">
-
-        <!-- Breadcrumb -->
-        <nav class="post-edit-breadcrumb post-edit-container" aria-label="Breadcrumb">
-            <a href="../../index.html">Home</a>
-            <span aria-hidden="true">•</span>
-            <a href="./blog.html">Journal</a>
-            <span aria-hidden="true">•</span>
-            <a href="./my_posts.html">My Posts</a>
-            <span aria-hidden="true">•</span>
-            <span aria-current="page">Edit Post</span>
-        </nav>
-
-        <!-- Page heading -->
-        <header class="post-edit-header post-edit-container">
-
-            <div class="post-edit-header__copy">
-                <p class="post-edit-kicker">Author workspace</p>
-
-                <h1>Edit Blog Post</h1>
-
-                <p>
-                    Refine the story, update its publishing details, or remove
-                    it from your Blog account.
-                </p>
+              <h2 id="post-edit-form-heading">
+                <%= formHeading %>
+              </h2>
             </div>
 
-            <a class="post-edit-back" href="./my_posts.html">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                    <path d="m15 18-6-6 6-6"></path>
-                </svg>
+            <span
+              class="post-edit-status"
+              data-preview-status
+            >
+              <%= statusLabel %>
+            </span>
+          </div>
 
-                Back to My Posts
-            </a>
+          <% if (viewErrors.form) { %>
+            <p
+              class="post-form-error"
+              role="alert"
+            >
+              <%= viewErrors.form %>
+            </p>
+          <% } %>
 
-        </header>
+          <form
+            class="post-edit-form"
+            action="<%= formAction %>"
+            method="post"
+            novalidate
+            data-post-form
+            data-mode="<%= viewMode %>"
+            data-storage-key="<%= storageKey %>"
+          >
+            <!-- Values retained by the model but
+                 not shown in the original design -->
+            <input
+              type="hidden"
+              name="readTime"
+              value="<%= viewValues.readTime || 5 %>"
+            />
 
-        <!-- ================================================
-             MAIN EDITING LAYOUT
-        ================================================ -->
-        <div class="post-edit-layout post-edit-container">
+            <input
+              type="hidden"
+              name="archiveSummary"
+              value="<%= viewValues.archiveSummary || "" %>"
+            />
 
-            <!-- ================================================
-                 EDIT FORM
-            ================================================ -->
-            <section class="post-edit-panel" aria-labelledby="post-edit-form-heading">
-                <div class="post-edit-panel__heading">
-                    <div>
-                        <p class="post-edit-kicker">Post details</p>
-                        <h2 id="post-edit-form-heading">Edit your story</h2>
-                    </div>
+            <input
+              type="hidden"
+              name="imageAlt"
+              value="<%= viewValues.imageAlt || "" %>"
+            />
 
-                    <span class="post-edit-status">
-                        Published
-                    </span>
+            <input
+              type="hidden"
+              name="imageCaption"
+              value="<%= viewValues.imageCaption || "" %>"
+            />
+
+            <!-- Basic information -->
+            <fieldset class="post-edit-section">
+              <legend>
+                Basic information
+              </legend>
+
+              <div
+                class="post-edit-grid post-edit-grid--two"
+              >
+                <label>
+                  Post title
+
+                  <input
+                    type="text"
+                    name="title"
+                    value="<%= viewValues.title || "" %>"
+                    minlength="5"
+                    maxlength="150"
+                    required
+                    aria-invalid="<%= viewErrors.title ? 'true' : 'false' %>"
+                    data-post-field="title"
+                  />
+
+                  <span class="post-field-meta">
+                    <small
+                      class="post-field-error"
+                      data-post-error="title"
+                    >
+                      <%= viewErrors.title || "" %>
+                    </small>
+
+                    <small data-post-count="title">
+                      0 / 150
+                    </small>
+                  </span>
+                </label>
+
+                <label>
+                  Author
+
+                  <input
+                    type="text"
+                    value="<%= viewAuthor.name %>"
+                    readonly
+                    aria-readonly="true"
+                  />
+                </label>
+              </div>
+
+              <div
+                class="post-edit-grid post-edit-grid--two"
+              >
+                <label>
+                  Date added
+
+                  <input
+                    type="date"
+                    value="<%= viewValues.dateAdded || "" %>"
+                    readonly
+                    aria-readonly="true"
+                    data-preview-date-source
+                  />
+                </label>
+
+                <label>
+                  Category
+
+                  <select
+                    name="category"
+                    required
+                    aria-invalid="<%= viewErrors.category ? 'true' : 'false' %>"
+                    data-post-field="category"
+                  >
+                    <% viewCategories.forEach((category) => { %>
+                      <option
+                        value="<%= category %>"
+                        <%= viewValues.category === category
+                          ? "selected"
+                          : ""
+                        %>
+                      >
+                        <%= category %>
+                      </option>
+                    <% }); %>
+                  </select>
+
+                  <small
+                    class="post-field-error"
+                    data-post-error="category"
+                  >
+                    <%= viewErrors.category || "" %>
+                  </small>
+                </label>
+              </div>
+
+              <label>
+                Tags
+
+                <input
+                  type="text"
+                  name="tags"
+                  value="<%= viewValues.tags || "" %>"
+                  maxlength="240"
+                  placeholder="Community, Makers, Social Impact"
+                  data-post-field="tags"
+                />
+
+                <small class="post-form-help">
+                  Separate up to 12 tags with commas.
+                </small>
+
+                <small
+                  class="post-field-error"
+                  data-post-error="tags"
+                ></small>
+              </label>
+            </fieldset>
+
+            <!-- Image and summary -->
+            <fieldset class="post-edit-section">
+              <legend>
+                Story preview
+              </legend>
+
+              <label>
+                Image URL
+
+                <input
+                  type="url"
+                  name="imageUrl"
+                  value="<%= viewValues.imageUrl || "" %>"
+                  placeholder="https://images.example.com/story.jpg"
+                  required
+                  aria-invalid="<%= viewErrors.imageUrl ? 'true' : 'false' %>"
+                  data-post-field="imageUrl"
+                />
+
+                <small
+                  class="post-field-error"
+                  data-post-error="imageUrl"
+                >
+                  <%= viewErrors.imageUrl || "" %>
+                </small>
+              </label>
+
+              <label>
+                Short summary
+
+                <textarea
+                  name="summary"
+                  rows="4"
+                  minlength="20"
+                  maxlength="400"
+                  required
+                  aria-invalid="<%= viewErrors.summary ? 'true' : 'false' %>"
+                  data-post-field="summary"
+                ><%= viewValues.summary || "" %></textarea>
+
+                <span class="post-field-meta">
+                  <small
+                    class="post-field-error"
+                    data-post-error="summary"
+                  >
+                    <%= viewErrors.summary || "" %>
+                  </small>
+
+                  <small data-post-count="summary">
+                    0 / 400
+                  </small>
+                </span>
+              </label>
+            </fieldset>
+
+            <!-- Main content -->
+            <fieldset class="post-edit-section">
+              <legend>
+                Main content
+              </legend>
+
+              <label>
+                Article text
+
+                <textarea
+                  name="content"
+                  rows="16"
+                  minlength="50"
+                  maxlength="20000"
+                  required
+                  aria-invalid="<%= viewErrors.content ? 'true' : 'false' %>"
+                  data-post-field="content"
+                ><%= viewValues.content || "" %></textarea>
+
+                <span class="post-field-meta">
+                  <small
+                    class="post-field-error"
+                    data-post-error="content"
+                  >
+                    <%= viewErrors.content || "" %>
+                  </small>
+
+                  <small data-post-count="content">
+                    0 / 20000
+                  </small>
+                </span>
+
+                <small class="post-form-help">
+                  Separate paragraphs with a blank line.
+                </small>
+              </label>
+            </fieldset>
+
+            <p
+              class="post-form-feedback"
+              data-post-feedback
+              aria-live="polite"
+            ></p>
+
+            <!-- Form actions -->
+            <div class="post-edit-actions">
+              <a
+                class="post-edit-button"
+                href="/blog/my-posts"
+              >
+                Cancel
+              </a>
+
+              <button
+                class="post-edit-button post-edit-button--secondary"
+                type="submit"
+                name="status"
+                value="draft"
+                data-submit-status="draft"
+              >
+                Save as Draft
+              </button>
+
+              <button
+                class="post-edit-button post-edit-button--primary"
+                type="submit"
+                name="status"
+                value="published"
+                data-submit-status="published"
+              >
+                <% if (
+                  !isCreate &&
+                  currentStatus === "published"
+                ) { %>
+                  Save Changes
+                <% } else { %>
+                  Publish Post
+                <% } %>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Post summary sidebar -->
+        <aside class="post-edit-sidebar">
+          <section
+            class="post-edit-preview"
+            data-post-preview
+          >
+            <div class="post-edit-preview__image">
+              <img
+                src="<%= viewValues.imageUrl || "" %>"
+                alt=""
+                data-preview-image
+                <%= viewValues.imageUrl ? "" : "hidden" %>
+              />
+
+              <div
+                class="post-preview-placeholder"
+                data-preview-placeholder
+                <%= viewValues.imageUrl ? "hidden" : "" %>
+              >
+                Story image preview
+              </div>
+            </div>
+
+            <div class="post-edit-preview__body">
+              <div class="post-edit-preview__meta">
+                <span data-preview-category>
+                  <%= viewValues.category || "Guide" %>
+                </span>
+
+                <time
+                  datetime="<%= viewValues.dateAdded || "" %>"
+                  data-preview-date
+                >
+                  <%= viewValues.displayDate || "Not published" %>
+                </time>
+              </div>
+
+              <h2 data-preview-title>
+                <%= viewValues.title || "Your story title" %>
+              </h2>
+
+              <p data-preview-summary>
+                <%= viewValues.summary ||
+                  "Your summary will appear here as you type."
+                %>
+              </p>
+
+              <dl class="post-edit-preview__statistics">
+                <div>
+                  <dt>
+                    Status
+                  </dt>
+
+                  <dd data-preview-status-text>
+                    <%= statusLabel %>
+                  </dd>
                 </div>
 
-                <form class="post-edit-form" action="#post-saved" method="get">
-                    <!-- Basic information -->
-                    <fieldset class="post-edit-section">
-                        <legend>Basic information</legend>
+                <div>
+                  <dt>
+                    Comments
+                  </dt>
 
-                        <div class="post-edit-grid post-edit-grid--two">
-                            <label>
-                                Post title
+                  <dd>
+                    <%= viewPreviewStats.commentCount %>
+                  </dd>
+                </div>
 
-                                <input type="text" name="title" value="What a Craft Community Needs from a Platform"
-                                    required />
-                            </label>
+                <div>
+                  <dt>
+                    Views
+                  </dt>
 
-                            <label>
-                                Author
+                  <dd>
+                    <%= viewPreviewStats.viewCount %>
+                  </dd>
+                </div>
 
-                                <input type="text" name="author" value="Huy Ba" required />
-                            </label>
-                        </div>
+                <div>
+                  <dt>
+                    Last edited
+                  </dt>
 
-                        <div class="post-edit-grid post-edit-grid--two">
-                            <label>
-                                Date added
+                  <dd>
+                    <%= viewPreviewStats.lastEdited %>
+                  </dd>
+                </div>
+              </dl>
 
-                                <input type="date" name="dateAdded" value="2026-05-02" required />
-                            </label>
+              <% if (!isCreate && viewPost) { %>
+                <a
+                  class="post-edit-preview__link"
+                  href="/blog/<%= encodeURIComponent(viewPost.id) %>"
+                >
+                  Open current post
 
-                            <label>
-                                Category
+                  <span aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              <% } %>
+            </div>
+          </section>
 
-                                <select name="category" required>
-                                    <option>Mission</option>
-                                    <option selected>Donation</option>
-                                    <option>Places</option>
-                                    <option>Guide</option>
-                                </select>
-                            </label>
-                        </div>
+          <% if (isCreate) { %>
+            <section class="post-edit-help">
+              <p class="post-edit-kicker">
+                Publishing checks
+              </p>
 
-                        <label>
-                            Tags
+              <h2>
+                Before publishing
+              </h2>
 
-                            <input type="text" name="tags" value="Community, Makers, Social Impact"
-                                placeholder="Separate tags with commas" required />
-                        </label>
-                    </fieldset>
+              <ul>
+                <li>
+                  Check names, places, and cultural claims.
+                </li>
 
-                    <!-- Image and summary -->
-                    <fieldset class="post-edit-section">
-                        <legend>Story preview</legend>
+                <li>
+                  Use an image that accurately represents the story.
+                </li>
 
-                        <label>
-                            Image URL
-
-                            <input type="url" name="imageUrl"
-                                value="https://images.unsplash.com/photo-1529156069898-49953e39b3ac" required />
-                        </label>
-
-                        <label>
-                            Short summary
-
-                            <textarea name="summary" rows="4"
-                                required>Notes from conversations with makers about visibility, pricing, cultural context, and the difference between exposure and useful community support.</textarea>
-                        </label>
-                    </fieldset>
-
-                    <!-- Main content -->
-                    <fieldset class="post-edit-section">
-                        <legend>Main content</legend>
-
-                        <label>
-                            Article text
-
-                            <textarea name="content" rows="16"
-                                required>In conversations with makers, the same concerns return: pricing pressure, loss of context, copied images, and the burden of maintaining another digital profile.
-
-A useful platform should reduce those burdens rather than move them around. That means clear ownership controls, realistic moderation, transparent fees, and editorial support that does not erase the maker's voice.
-
-Visibility is valuable only when makers retain control over how their names, images, products, and production processes are represented. The platform should provide practical support while preserving the cultural context connected to each object.</textarea>
-                        </label>
-                    </fieldset>
-
-                    <!-- Form actions -->
-                    <div class="post-edit-actions">
-                        <a class="post-edit-button" href="./my_posts.html">
-                            Cancel
-                        </a>
-
-                        <a class="post-edit-button post-edit-button--secondary" href="#draft-saved">
-                            Save as Draft
-                        </a>
-
-                        <button class="post-edit-button post-edit-button--primary" type="submit">
-                            Save Changes
-                        </button>
-                    </div>
-                </form>
+                <li>
+                  Save a draft when the article is not ready.
+                </li>
+              </ul>
             </section>
+          <% } else { %>
+            <!-- Danger zone preserved from the HTML -->
+            <section class="post-edit-danger">
+              <h2>
+                Delete this post
+              </h2>
 
-            <!-- ================================================
-                 POST SUMMARY SIDEBAR
-            ================================================ -->
-            <aside class="post-edit-sidebar">
+              <p>
+                Remove the post permanently
+                from the Journal.
+              </p>
 
-                <section class="post-edit-preview">
-                    <div class="post-edit-preview__image">
-                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&amp;fit=crop&amp;w=1000&amp;q=88"
-                            alt="Community members gathering outdoors" />
-                    </div>
+              <a
+                class="post-edit-delete-button"
+                href="#delete-post"
+              >
+                Delete Post
+              </a>
+            </section>
+          <% } %>
+        </aside>
+      </div>
 
-                    <div class="post-edit-preview__body">
-                        <div class="post-edit-preview__meta">
-                            <span>Donation</span>
-
-                            <time datetime="2026-05-02">
-                                May 2, 2026
-                            </time>
-                        </div>
-
-                        <h2>
-                            What a Craft Community Needs from a Platform
-                        </h2>
-
-                        <p>
-                            Notes from conversations with makers about
-                            visibility, pricing, cultural context, and useful
-                            community support.
-                        </p>
-
-                        <dl class="post-edit-preview__statistics">
-                            <div>
-                                <dt>Status</dt>
-                                <dd>Published</dd>
-                            </div>
-
-                            <div>
-                                <dt>Comments</dt>
-                                <dd>12</dd>
-                            </div>
-
-                            <div>
-                                <dt>Views</dt>
-                                <dd>84</dd>
-                            </div>
-
-                            <div>
-                                <dt>Last edited</dt>
-                                <dd>July 18, 2026</dd>
-                            </div>
-                        </dl>
-
-                        <a class="post-edit-preview__link" href="./blog.html#post-community">
-                            Open current post
-                            <span aria-hidden="true">↗</span>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="post-edit-danger">
-                    <p class="post-edit-kicker">Danger zone</p>
-
-                    <h2>Delete this post</h2>
-
-                    <p>
-                        Remove the post from your account and from the Journal.
-                    </p>
-
-                    <button class="post-edit-delete-button" type="button" onclick="window.location.hash='delete-post'">
-                        Delete Post
-                    </button>
-                </section>
-
-            </aside>
-
-        </div>
-
-        <div class="post-edit-return post-edit-container">
-            <a href="./my_posts.html">
-                ← Return to My Posts
-            </a>
-        </div>
-
+      <div
+        class="post-edit-return post-edit-container"
+      >
+        <a href="/blog/my-posts">
+          ← Return to My Posts
+        </a>
+      </div>
     </main>
 
-    <!-- ================================================
-         SAVE STATES
-    ================================================ -->
-    <div id="post-saved" class="post-edit-state-target" aria-hidden="true"></div>
-
-    <div id="draft-saved" class="post-edit-state-target" aria-hidden="true"></div>
-
-    <div id="post-deleted" class="post-edit-state-target" aria-hidden="true"></div>
-
-    <div class="post-edit-toast post-edit-toast--saved" role="status">
-        Your changes have been saved.
-    </div>
-
-    <div class="post-edit-toast post-edit-toast--draft" role="status">
-        The post has been moved to Drafts.
-    </div>
-
-    <div class="post-edit-toast post-edit-toast--deleted" role="status">
-        The post has been deleted.
-        <a href="./my_posts.html">Return to My Posts</a>
-    </div>
-
-    <!-- ================================================
-         DELETE CONFIRMATION OVERLAY
-    ================================================ -->
-    <section id="delete-post" class="post-delete-overlay" aria-labelledby="delete-post-heading">
-        <a class="post-delete-overlay__backdrop" href="#edit-top" aria-label="Close delete confirmation"></a>
+    <% if (!isCreate && viewPost) { %>
+      <!-- Delete confirmation overlay -->
+      <section
+        id="delete-post"
+        class="post-delete-overlay"
+        aria-labelledby="delete-post-heading"
+      >
+        <a
+          class="post-delete-overlay__backdrop"
+          href="#edit-top"
+          aria-label="Close delete confirmation"
+        ></a>
 
         <div class="post-delete-dialog">
-            <a class="post-delete-dialog__close" href="#edit-top" aria-label="Close delete confirmation">
-                ×
+          <a
+            class="post-delete-dialog__close"
+            href="#edit-top"
+            aria-label="Close delete confirmation"
+          >
+            ×
+          </a>
+
+          <div
+            class="post-delete-dialog__icon"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path d="M4 7h16"></path>
+              <path d="M9 7V4h6v3"></path>
+              <path d="m7 7 1 13h8l1-13"></path>
+              <path d="M10 11v5M14 11v5"></path>
+            </svg>
+          </div>
+
+          <p class="post-edit-kicker">
+            Confirm deletion
+          </p>
+
+          <h2 id="delete-post-heading">
+            Delete this Blog post?
+          </h2>
+
+          <p>
+            “<%= viewValues.title || viewPost.title %>”
+            will be permanently removed from
+            the Journal.
+          </p>
+
+          <div class="post-delete-dialog__actions">
+            <a
+              class="post-edit-button"
+              href="#edit-top"
+            >
+              Keep Post
             </a>
 
-            <div class="post-delete-dialog__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                    <path d="M4 7h16"></path>
-                    <path d="M9 7V4h6v3"></path>
-                    <path d="m7 7 1 13h8l1-13"></path>
-                    <path d="M10 11v5M14 11v5"></path>
-                </svg>
-            </div>
-
-            <p class="post-edit-kicker">Confirm deletion</p>
-
-            <h2 id="delete-post-heading">
-                Delete this Blog post?
-            </h2>
-
-            <p>
-                “What a Craft Community Needs from a Platform” will be removed
-                from the Journal and from your Blog account.
-            </p>
-
-            <div class="post-delete-dialog__actions">
-                <a class="post-edit-button" href="#edit-top">
-                    Keep Post
-                </a>
-
-                <button class="post-edit-button post-edit-button--danger" type="button"
-                    onclick="window.location.hash='post-deleted'">
-                    Delete Permanently
-                </button>
-            </div>
+            <form
+              action="<%= deleteAction %>"
+              method="post"
+            >
+              <button
+                class="post-edit-button post-edit-button--danger"
+                type="submit"
+              >
+                Delete Permanently
+              </button>
+            </form>
+          </div>
         </div>
-    </section>
+      </section>
+    <% } %>
 
-    <!-- ================================================
-         FOOTER
-    ================================================ -->
-    <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-        scrolling="no">
-    </iframe>
-
-</body>
-
+    <%- include("../partials/footer") %>
+  </body>
 </html>

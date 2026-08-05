@@ -57,3 +57,24 @@
 #status-archived:checked~.my-posts-layout .my-post-card:not(.post-archived) {
     display: none;
 }
+
+/* Space between filter name and post count */
+.my-posts-filters label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.my-posts-filters label>span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 22px;
+
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+}

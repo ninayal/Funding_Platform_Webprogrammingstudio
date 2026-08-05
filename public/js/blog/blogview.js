@@ -532,17 +532,6 @@ document.addEventListener(
                 await response.json();
 
               if (
-                response.status ===
-                  401 &&
-                result.loginUrl
-              ) {
-                window.location.href =
-                  result.loginUrl;
-
-                return;
-              }
-
-              if (
                 !response.ok ||
                 !result.ok
               ) {
