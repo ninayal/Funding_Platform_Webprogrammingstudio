@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const rating = Number(card.dataset.rating);
             const visible =
                 (category === "all" || card.dataset.category === category) &&
-                (matchesPrice(price, prices)) &&
+                matchesPrice(price, prices) &&
                 (makers.length === 0 || makers.includes(card.dataset.maker)) &&
                 (materials.length === 0 || materials.includes(card.dataset.material)) &&
-                (matchesAvailability(stock, availability)) &&
+                matchesAvailability(stock, availability) &&
                 (ratings.length === 0 || ratings.some((value) => rating >= Number(value)));
             card.hidden = !visible;
             if (visible) visibleCount += 1;
@@ -68,6 +68,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         sorted.forEach((card) => grid.appendChild(card));
     };
+    document.querySelectorAll('form[action="/cart/add"]').forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const button = form.querySelector('button[type="submit"]');
+            button.disabled = true;
+            try {
+                const response = await fetch("/cart/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    },
+                    body: JSON.stringify({
+                        productId: form.elements.productId.value,
+                        quantity: Number(form.elements.quantity.value)
+                    })
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || "Unable to add product.");
+                }
+                const badge = document.querySelector("#cart-badge");
+                if (badge) {
+                    badge.textContent = result.cart.totalQuantity;
+                    badge.hidden = result.cart.totalQuantity === 0;
+                }
+                button.textContent = "✓";
+                setTimeout(() => {
+                    button.textContent = "+";
+                }, 800);
+            } catch (error) {
+                window.alert(error.message);
+            } finally {
+                button.disabled = false;
+            }
+        });
+    });
     categoryInputs.forEach((input) => input.addEventListener("change", applyFilters));
     filterInputs.forEach((input) => input.addEventListener("change", applyFilters));
     sortSelect?.addEventListener("change", sortProducts);

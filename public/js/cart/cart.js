@@ -1,89 +1,114 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const cartList = document.querySelector("#cart-list");
-    const quantityInputs = document.querySelectorAll(".cart-quantity-input");
-    const updateForms = document.querySelectorAll(".cart-update-form");
-    const removeForms = document.querySelectorAll(".cart-remove-form");
-    const searchInput = document.querySelector("#cart-search");
-    const sortSelect = document.querySelector("#cart-sort");
-    const filterSelect = document.querySelector("#cart-filter");
+    const cartList = document.querySelector(".cart-list");
+    const currency = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+    });
     const showFeedback = (message, type = "error") => {
         let feedback = document.querySelector("#cart-feedback");
         if (!feedback) {
             feedback = document.createElement("p");
             feedback.id = "cart-feedback";
             feedback.setAttribute("role", "status");
-            document.querySelector(".cart-page")?.prepend(feedback);
+            document.querySelector(".cart-items")?.prepend(feedback);
         }
         feedback.textContent = message;
         feedback.className = `cart-feedback ${type}`;
     };
-    const validateQuantity = (input) => {
+    const updateCartItem = async (row, input) => {
+        const productId = row.dataset.productId;
         const quantity = Number(input.value);
         const min = Number(input.min) || 1;
         const max = Number(input.max);
-        if (!Number.isInteger(quantity) || quantity < min) {
-            input.setCustomValidity(`Quantity must be at least ${min}.`);
-            showFeedback(`Quantity must be at least ${min}.`);
-            return false;
+        if (!Number.isInteger(quantity) || quantity < min || quantity > max) {
+            input.value = Math.min(max, Math.max(min, quantity || min));
+            showFeedback(`Quantity must be between ${min} and ${max}.`);
+            return;
         }
-        if (Number.isFinite(max) && quantity > max) {
-            input.setCustomValidity(`Only ${max} item(s) available.`);
-            showFeedback(`Only ${max} item(s) available.`);
-            return false;
+        input.disabled = true;
+        try {
+            const response = await fetch("/cart/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    productId,
+                    quantity
+                })
+            });
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Unable to update cart.");
+            }
+            row.dataset.quantity = quantity;
+            const item = result.cart.items.find((cartItem) => cartItem.productId === productId);
+            if (item) {
+                row.querySelector(".price-now").textContent = item.subtotalFormatted;
+            }
+            document.querySelector("#cart-subtotal").textContent = result.cart.subtotalFormatted;
+            document.querySelector("#cart-total").textContent = result.cart.subtotalFormatted;
+            document.querySelector(".cart-count").textContent = `(${result.cart.totalQuantity} items)`;
+            const badge = document.querySelector("#cart-badge");
+            if (badge) {
+                badge.textContent = result.cart.totalQuantity;
+                badge.hidden = result.cart.totalQuantity === 0;
+            }
+            showFeedback("Cart updated.", "success");
+        } catch (error) {
+            showFeedback(error.message);
+        } finally {
+            input.disabled = false;
         }
-        input.setCustomValidity("");
-        return true;
     };
-    quantityInputs.forEach((input) => {
-        input.addEventListener("input", () => {
-            validateQuantity(input);
-            const item = input.closest(".cart-item");
-            if (item) item.dataset.quantity = input.value;
+    document.querySelectorAll(".cart-row").forEach((row) => {
+        const input = row.querySelector(".cart-quantity-input");
+        const decrease = row.querySelector(".qty-decrease");
+        const increase = row.querySelector(".qty-increase");
+        let timer;
+        const scheduleUpdate = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => updateCartItem(row, input), 300);
+        };
+        decrease?.addEventListener("click", () => {
+            input.value = Math.max(Number(input.min) || 1, Number(input.value) - 1);
+            scheduleUpdate();
         });
+        increase?.addEventListener("click", () => {
+            input.value = Math.min(Number(input.max), Number(input.value) + 1);
+            scheduleUpdate();
+        });
+        input?.addEventListener("change", scheduleUpdate);
     });
-    updateForms.forEach((form) => {
+    document.querySelectorAll(".cart-remove-form").forEach((form) => {
         form.addEventListener("submit", (event) => {
-            const input = form.querySelector(".cart-quantity-input");
-            if (!input || !validateQuantity(input)) {
+            if (!window.confirm("Remove this item from your cart?")) {
                 event.preventDefault();
-                input?.reportValidity();
             }
         });
     });
-    removeForms.forEach((form) => {
-        form.addEventListener("submit", (event) => {
-            if (!window.confirm("Remove this item from your cart?")) event.preventDefault();
-        });
-    });
-    const updateVisibleItems = () => {
+    const sortRows = (type) => {
         if (!cartList) return;
-        const query = searchInput?.value.trim().toLowerCase() || "";
-        const filter = filterSelect?.value || "all";
-        const items = [...cartList.querySelectorAll(".cart-item")];
-        items.forEach((item) => {
-            const title = item.dataset.title || "";
-            const quantity = Number(item.dataset.quantity);
-            const matchesSearch = title.includes(query);
-            const matchesFilter = filter === "all" || (filter === "single" && quantity === 1) || (filter === "multiple" && quantity > 1);
-            item.hidden = !(matchesSearch && matchesFilter);
+        const rows = [...cartList.querySelectorAll(".cart-row")];
+        rows.sort((a, b) => {
+            if (type === "title") return (a.dataset.title || "").localeCompare(b.dataset.title || "");
+            if (type === "quantity") return Number(b.dataset.quantity) - Number(a.dataset.quantity);
+            if (type === "price") return Number(a.dataset.price) - Number(b.dataset.price);
+            return Number(a.className.match(/item-(\d+)/)?.[1] || 0) - Number(b.className.match(/item-(\d+)/)?.[1] || 0);
         });
+        rows.forEach((row) => cartList.appendChild(row));
     };
-    const sortItems = () => {
-        if (!cartList || !sortSelect) return;
-        const items = [...cartList.querySelectorAll(".cart-item")];
-        const value = sortSelect.value;
-        items.sort((a, b) => {
-            if (value === "title-asc") return (a.dataset.title || "").localeCompare(b.dataset.title || "");
-            if (value === "title-desc") return (b.dataset.title || "").localeCompare(a.dataset.title || "");
-            if (value === "price-asc") return Number(a.dataset.price) - Number(b.dataset.price);
-            if (value === "price-desc") return Number(b.dataset.price) - Number(a.dataset.price);
-            if (value === "quantity-asc") return Number(a.dataset.quantity) - Number(b.dataset.quantity);
-            if (value === "quantity-desc") return Number(b.dataset.quantity) - Number(a.dataset.quantity);
-            return 0;
-        });
-        items.forEach((item) => cartList.appendChild(item));
-    };
-    searchInput?.addEventListener("input", updateVisibleItems);
-    filterSelect?.addEventListener("change", updateVisibleItems);
-    sortSelect?.addEventListener("change", sortItems);
+    document.querySelector("#cart-sort-default")?.addEventListener("change", (event) => {
+        if (event.target.checked) sortRows("default");
+    });
+    document.querySelector("#cart-sort-title")?.addEventListener("change", (event) => {
+        if (event.target.checked) sortRows("title");
+    });
+    document.querySelector("#cart-sort-qty")?.addEventListener("change", (event) => {
+        if (event.target.checked) sortRows("quantity");
+    });
+    document.querySelector("#cart-sort-price")?.addEventListener("change", (event) => {
+        if (event.target.checked) sortRows("price");
+    });
 });

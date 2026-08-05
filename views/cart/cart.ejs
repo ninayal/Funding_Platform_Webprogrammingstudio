@@ -4,29 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="theme-color" content="#A31D1D">
     <title>Làng &amp; Co. — <%= pageTitle %>
     </title>
-    <link rel="stylesheet" href="/css/header_v2.css">
+    <link rel="stylesheet" href="/css/landingpage/index.css">
+    <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/cart/cart.css">
     <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
-    <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
+    <%- include("../partials/header",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
         ?currentUser:null }) %>
-        <main class="cart-page">
-            <%- include("../partials/cart/breadcrumb") %>
-                <% if(cart.hasItems){ %>
-                    <section class="cart-layout container">
-                        <%- include("../partials/cart/cart-list",{cart}) %>
-                            <%- include("../partials/cart/order-summary",{cart}) %>
-                    </section>
-                    <% }else{ %>
-                        <%- include("../partials/cart/empty-cart") %>
-                            <% } %>
-        </main>
-        <%- include("../partials/footer") %>
-            <script src="/js/cart/cart.js" defer></script>
+        <%- include("../partials/cart/hero",{cart}) %>
+            <div class="wave">
+                <div class="below">
+                    <p class="below__headline"></p>
+                </div>
+                <main class="cart-page">
+                    <%- include("../partials/cart/cart-content",{cart}) %>
+                        <%- include("../partials/cart/also-like") %>
+                </main>
+            </div>
+            <%- include("../partials/footer") %>
+                <script src="/js/cart/cart.js" defer></script>
 </body>
 
 </html>

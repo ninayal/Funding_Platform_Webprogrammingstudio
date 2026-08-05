@@ -8,13 +8,13 @@
   <title>Làng &amp; Co. — <%= pageTitle %>
   </title>
   <link rel="stylesheet" href="/css/landingpage/index.css">
-  <link rel="stylesheet" href="/css/header_v2.css">
+  <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/cart/checkout.css">
   <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
-  <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
+  <%- include("../partials/header",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
     ?currentUser:null }) %>
     <%- include("../partials/checkout/hero") %>
       <div class="wave">
