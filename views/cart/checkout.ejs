@@ -14,8 +14,7 @@
 </head>
 
 <body>
-  <%- include("../partials/header",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
-    ?currentUser:null }) %>
+  <%- include("../partials/header",{activePage,currentUser,cartCount}) %>
     <%- include("../partials/checkout/hero") %>
       <div class="wave">
         <div class="below">
@@ -24,13 +23,13 @@
         <main class="checkout-page">
           <%- include("../partials/checkout/shipping-state") %>
             <div class="checkout-shell">
-              <form class="checkout-form" id="checkout-form-id" action="/cart/checkout" method="POST" novalidate>
+              <form class="checkout-form" id="checkout-form-id" action="/cart/checkout" method="POST">
                 <%- include("../partials/checkout/progress") %>
-                  <%- include("../partials/checkout/contact-form") %>
-                    <%- include("../partials/checkout/delivery-form") %>
-                      <%- include("../partials/checkout/shipping-form") %>
-                        <%- include("../partials/checkout/payment-form") %>
-                          <%- include("../partials/checkout/gift-note-form") %>
+                  <%- include("../partials/checkout/contact-form",{formData,errors}) %>
+                    <%- include("../partials/checkout/delivery-form",{formData,errors}) %>
+                      <%- include("../partials/checkout/shipping-form",{formData,errors}) %>
+                        <%- include("../partials/checkout/payment-form",{formData,errors}) %>
+                          <%- include("../partials/checkout/gift-note-form",{formData}) %>
               </form>
               <%- include("../partials/checkout/order-summary",{cart}) %>
             </div>

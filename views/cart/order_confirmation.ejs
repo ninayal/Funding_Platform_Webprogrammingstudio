@@ -14,8 +14,7 @@
 </head>
 
 <body>
-  <%- include("../partials/header",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
-    ?currentUser:null }) %>
+  <%- include("../partials/header",{activePage,currentUser,cartCount}) %>
     <%- include("../partials/order-confirmation/hero") %>
       <div class="wave">
         <div class="below">

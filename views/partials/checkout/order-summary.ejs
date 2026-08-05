@@ -4,6 +4,7 @@
             <h2>Order Summary</h2>
             <a href="/cart" class="edit-cart-link">Edit bag</a>
         </div>
+
         <ul class="mini-cart-list">
             <% cart.items.forEach(item=>{ %>
                 <li class="mini-cart-row">
@@ -22,11 +23,13 @@
                 </li>
                 <% }) %>
         </ul>
-        <div class="promo-row">
+
+        <form class="promo-row" action="#" method="get">
             <label class="visually-hidden" for="promo">Gift card or promo code</label>
-            <input type="text" id="promo" name="promo" placeholder="Gift card or promo code" form="checkout-form-id">
-            <button type="button" id="apply-promo">Apply</button>
-        </div>
+            <input type="text" id="promo" name="promo" placeholder="Gift card or promo code">
+            <button type="submit">Apply</button>
+        </form>
+
         <dl class="summary-lines">
             <div>
                 <dt>Subtotal</dt>
@@ -37,25 +40,37 @@
             <div>
                 <dt>Shipping</dt>
                 <dd class="shipping-cost shipping-cost--standard">Free</dd>
-                <dd class="shipping-cost shipping-cost--express">£12.00</dd>
+                <dd class="shipping-cost shipping-cost--express">$12.00</dd>
             </div>
             <div>
                 <dt>Estimated tax</dt>
-                <dd>£0.00</dd>
+                <dd>$0.00</dd>
             </div>
         </dl>
+
         <div class="summary-total">
             <span>Total</span>
             <span class="summary-total__amount">
                 <span class="grand-total grand-total--standard">
                     <%= cart.subtotalFormatted %>
                 </span>
-                <span class="grand-total grand-total--express">£<%= cart.expressTotal.toFixed(2) %></span>
-                <small>GBP</small>
+                <span class="grand-total grand-total--express">
+                    <%= cart.expressTotalFormatted %>
+                </span>
+                <small>USD</small>
             </span>
         </div>
-        <button type="submit" form="checkout-form-id" class="place-order-btn">Place Order <span>→</span></button>
-        <p class="summary-fine">By placing your order, you agree to our Terms of Service and Privacy Policy.</p>
+
+        <button type="submit" form="checkout-form-id" class="place-order-btn">
+            Place Order <span>→</span>
+        </button>
+
+        <p class="summary-fine">
+            By placing your order, you agree to our
+            <a href="#">Terms of Service</a> and
+            <a href="#">Privacy Policy</a>.
+        </p>
+
         <div class="pay-icons" aria-label="Accepted payment methods">
             <span>Visa</span>
             <span>Mastercard</span>

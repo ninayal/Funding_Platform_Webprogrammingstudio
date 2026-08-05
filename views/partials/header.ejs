@@ -1,4 +1,5 @@
 <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input">
+
 <div class="topbar">
     <p class="topbar__text">
         New Collection Available Now
@@ -7,22 +8,35 @@
     </p>
     <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss announcement">✕</label>
 </div>
+
 <nav class="nav">
     <a class="nav__logo" href="/">
         <img src="/images/logo.png" alt="Lang & Co. logo">
     </a>
+
     <div class="nav__pill">
         <ul class="nav__links">
-            <li><a id="nav-home" href="/" class="<%= activePage===" home"?"is-active":"" %>">Home</a></li>
-            <li><a id="nav-shop" href="/cart/products" class="<%= activePage===" shop"?"is-active":"" %>">Shop</a></li>
-            <li><a id="nav-blog" href="/blog" class="<%= activePage===" blog"?"is-active":"" %>">Blog</a></li>
-            <li><a id="nav-forum" href="/forum/forum" class="<%= activePage===" forum"?"is-active":"" %>">Forum</a></li>
-            <li><a id="nav-giftcard" href="/giftcard/giftcard" class="<%= activePage===" giftcard"?"is-active":""
-                    %>">Giftcard</a></li>
+            <li>
+                <a id="nav-home" href="/" class="<%= activePage===" home"?"is-active":"" %>">Home</a>
+            </li>
+            <li>
+                <a id="nav-shop" href="/cart/products" class="<%= activePage===" shop"?"is-active":"" %>">Shop</a>
+            </li>
+            <li>
+                <a id="nav-blog" href="/blog" class="<%= activePage===" blog"?"is-active":"" %>">Blog</a>
+            </li>
+            <li>
+                <a id="nav-forum" href="/forum/forum" class="<%= activePage===" forum"?"is-active":"" %>">Forum</a>
+            </li>
+            <li>
+                <a id="nav-giftcard" href="/giftcard/giftcard" class="<%= activePage===" giftcard"?"is-active":""
+                    %>">Giftcard</a>
+            </li>
         </ul>
     </div>
+
     <div class="nav__icons">
-        <% if(typeof currentUser!=="undefined" &&currentUser){ %>
+        <% if(currentUser){ %>
             <a class="nav__icon-btn" href="/profile" aria-label="View account profile">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                     aria-hidden="true">
@@ -39,15 +53,15 @@
                     </svg>
                 </a>
                 <% } %>
-                    <a class="nav__icon-btn" href="/cart" aria-label="Shopping bag, <%= typeof cartCount!=="
-                        undefined"?cartCount:0 %> item(s)">
+
+                    <a class="nav__icon-btn" href="/cart" aria-label="Shopping bag, <%= cartCount %> item(s)">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.6" aria-hidden="true">
                             <path d="M6 8h12l-1 13H7L6 8Z"></path>
                             <path d="M9 8V6a3 3 0 0 1 6 0v2"></path>
                         </svg>
-                        <span id="cart-badge" class="nav__badge-count" <%=!(typeof cartCount!=="undefined"
-                            &&cartCount>0)?"hidden":"" %>><%= typeof cartCount!=="undefined" ?cartCount:0 %></span>
+                        <span id="cart-badge" class="nav__badge-count" <%=cartCount===0?"hidden":"" %>><%= cartCount %>
+                                </span>
                     </a>
     </div>
 </nav>

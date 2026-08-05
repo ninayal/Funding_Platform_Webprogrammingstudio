@@ -14,27 +14,24 @@
 </head>
 
 <body>
-  <%- include("../partials/header_v2",{ activePage:"shop", currentUser:typeof currentUser!=="undefined"
-    ?currentUser:null }) %>
+  <%- include("../partials/header_v2",{activePage,currentUser,cartCount}) %>
     <%- include("../partials/products/filter-state",{categories,sortOptions}) %>
-      <main class="shop-wrap">
+      <div class="shop-wrap">
         <%- include("../partials/products/breadcrumb") %>
           <%- include("../partials/products/shop-header") %>
             <%- include("../partials/products/category-tabs",{categories,categoryCounts}) %>
               <div class="shop-shell container">
                 <%- include("../partials/products/filters",{filterOptions}) %>
-                  <section class="shop-content">
-                    <%- include("../partials/products/toolbar",{ productCount:products.length, sortOptions }) %>
+                  <div class="shop-content">
+                    <%- include("../partials/products/toolbar",{productCount:products.length,sortOptions}) %>
                       <%- include("../partials/products/product-grid",{products}) %>
                         <%- include("../partials/products/empty-state") %>
                           <%- include("../partials/products/pagination",{productCount:products.length}) %>
-                  </section>
+                  </div>
               </div>
               <%- include("../partials/products/seo-copy") %>
-      </main>
+      </div>
       <%- include("../partials/footer") %>
-        <script id="products-data"
-          type="application/json"><%- JSON.stringify(products).replace(/</g,"\\u003c") %></script>
         <script src="/js/cart/products.js" defer></script>
 </body>
 

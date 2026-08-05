@@ -3,6 +3,6 @@
   <input class="state-control" type="radio" name="category" id="filter-<%= category.id %>">
   <% }) %>
     <input class="state-control" type="radio" name="sort" id="sort-featured" checked>
-    <% sortOptions.filter(option=>option.id!=="featured").forEach(option=>{ %>
-      <input class="state-control" type="radio" name="sort" id="sort-<%= option.id %>">
-      <% }) %>
+    <input class="state-control" type="radio" name="sort" id="sort-low">
+    <input class="state-control" type="radio" name="sort" id="sort-high">
+    <input class="state-control" type="radio" name="sort" id="sort-name">

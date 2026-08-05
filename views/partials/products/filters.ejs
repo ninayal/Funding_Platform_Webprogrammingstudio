@@ -2,12 +2,13 @@
     <details class="filter-group" open>
         <summary>Price</summary>
         <div class="filter-options">
-            <label><input type="checkbox" name="price" value="under-25">Under £25</label>
-            <label><input type="checkbox" name="price" value="25-50">£25–£50</label>
-            <label><input type="checkbox" name="price" value="50-100">£50–£100</label>
-            <label><input type="checkbox" name="price" value="100-plus">£100 and over</label>
+            <label><input type="checkbox" name="price" value="under-25"> Under $25</label>
+            <label><input type="checkbox" name="price" value="25-50"> $25 – $50</label>
+            <label><input type="checkbox" name="price" value="50-100"> $50 – $100</label>
+            <label><input type="checkbox" name="price" value="100-plus"> $100 &amp; over</label>
         </div>
     </details>
+
     <details class="filter-group">
         <summary>Craft Village</summary>
         <div class="filter-options">
@@ -18,6 +19,7 @@
                 <% }) %>
         </div>
     </details>
+
     <details class="filter-group">
         <summary>Material</summary>
         <div class="filter-options">
@@ -28,24 +30,20 @@
                 <% }) %>
         </div>
     </details>
+
     <details class="filter-group">
         <summary>Availability</summary>
         <div class="filter-options">
-            <% filterOptions.availability.forEach(option=>{ %>
-                <label><input type="checkbox" name="availability" value="<%= option.value %>">
-                    <%= option.label %>
-                </label>
-                <% }) %>
+            <label><input type="checkbox" name="availability" value="in-stock"> In stock</label>
+            <label><input type="checkbox" name="availability" value="low-stock"> Low stock</label>
         </div>
     </details>
+
     <details class="filter-group">
         <summary>Rating</summary>
         <div class="filter-options">
-            <% filterOptions.ratings.forEach(option=>{ %>
-                <label><input type="checkbox" name="rating" value="<%= option.value %>">
-                    <%= option.label %>
-                </label>
-                <% }) %>
+            <label><input type="checkbox" name="rating" value="4"> ★★★★ &amp; up</label>
+            <label><input type="checkbox" name="rating" value="5"> ★★★★★ only</label>
         </div>
     </details>
 </aside>
