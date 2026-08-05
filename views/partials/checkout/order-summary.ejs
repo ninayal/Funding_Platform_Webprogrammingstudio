@@ -1,0 +1,66 @@
+<aside class="checkout-summary" aria-label="Order summary">
+    <div class="summary-card">
+        <div class="summary-card__head">
+            <h2>Order Summary</h2>
+            <a href="/cart" class="edit-cart-link">Edit bag</a>
+        </div>
+        <ul class="mini-cart-list">
+            <% cart.items.forEach(item=>{ %>
+                <li class="mini-cart-row">
+                    <span class="mini-cart-row__media">
+                        <img src="<%= item.image %>" alt="<%= item.name %>">
+                        <span class="mini-cart-row__qty">
+                            <%= item.quantity %>
+                        </span>
+                    </span>
+                    <span class="mini-cart-row__name">
+                        <%= item.name %>
+                    </span>
+                    <span class="mini-cart-row__price">
+                        <%= item.subtotalFormatted %>
+                    </span>
+                </li>
+                <% }) %>
+        </ul>
+        <div class="promo-row">
+            <label class="visually-hidden" for="promo">Gift card or promo code</label>
+            <input type="text" id="promo" name="promo" placeholder="Gift card or promo code" form="checkout-form-id">
+            <button type="button" id="apply-promo">Apply</button>
+        </div>
+        <dl class="summary-lines">
+            <div>
+                <dt>Subtotal</dt>
+                <dd>
+                    <%= cart.subtotalFormatted %>
+                </dd>
+            </div>
+            <div>
+                <dt>Shipping</dt>
+                <dd class="shipping-cost shipping-cost--standard">Free</dd>
+                <dd class="shipping-cost shipping-cost--express">£12.00</dd>
+            </div>
+            <div>
+                <dt>Estimated tax</dt>
+                <dd>£0.00</dd>
+            </div>
+        </dl>
+        <div class="summary-total">
+            <span>Total</span>
+            <span class="summary-total__amount">
+                <span class="grand-total grand-total--standard">
+                    <%= cart.subtotalFormatted %>
+                </span>
+                <span class="grand-total grand-total--express">£<%= cart.expressTotal.toFixed(2) %></span>
+                <small>GBP</small>
+            </span>
+        </div>
+        <button type="submit" form="checkout-form-id" class="place-order-btn">Place Order <span>→</span></button>
+        <p class="summary-fine">By placing your order, you agree to our Terms of Service and Privacy Policy.</p>
+        <div class="pay-icons" aria-label="Accepted payment methods">
+            <span>Visa</span>
+            <span>Mastercard</span>
+            <span>AMEX</span>
+            <span>PayPal</span>
+        </div>
+    </div>
+</aside>

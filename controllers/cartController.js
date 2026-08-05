@@ -18,12 +18,14 @@ const prepareCartView = (cart) => {
     subtotalFormatted: `£${item.subtotal.toFixed(2)}`,
     searchTitle: item.product.name.toLowerCase()
   }));
+  const EXPRESS_SHIPPING_FEE = 12;
   return {
     items,
     hasItems: items.length > 0,
     totalQuantity: cart.totalQuantity,
     subtotal: cart.subtotal,
-    subtotalFormatted: `£${cart.subtotal.toFixed(2)}`
+    subtotalFormatted: `£${cart.subtotal.toFixed(2)}`,
+    expressTotal: cart.subtotal + EXPRESS_SHIPPING_FEE
   };
 };
 const getProductsPage = (req, res, next) => {
