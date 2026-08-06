@@ -5,10 +5,10 @@
 @media (max-width: 1200px) {
 
     .login-brand {
-        flex-basis: 58%;
+        flex-basis: 50%;
 
-        width: 58%;
-        max-width: 58%;
+        width: 50%;
+        max-width: 50%;
 
         padding:
             40px 35px 7% 4%;
@@ -28,12 +28,12 @@
 
 
     .login-glass {
-        flex-basis: 42%;
+        flex-basis: 50%;
 
-        width: 42%;
-        max-width: 42%;
+        width: 50%;
+        max-width: 50%;
 
-        min-width: 390px;
+        min-width: 0px;
 
         padding:
             36px 32px;
@@ -63,10 +63,10 @@
 
 
     .login-brand {
-        flex-basis: 52%;
+        flex-basis: 50%;
 
-        width: 52%;
-        max-width: 52%;
+        width: 50%;
+        max-width: 50%;
 
         min-height: 760px;
 
@@ -88,12 +88,12 @@
 
 
     .login-glass {
-        flex-basis: 48%;
+        flex-basis: 50%;
 
-        width: 48%;
-        max-width: 48%;
+        width: 50%;
+        max-width: 50%;
 
-        min-width: 360px;
+        min-width: 0px;
         min-height: 760px;
 
         padding:

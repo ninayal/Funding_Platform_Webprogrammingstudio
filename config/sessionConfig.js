@@ -1,28 +1,41 @@
 "use strict";
 
 const isProduction =
-  process.env.NODE_ENV === "production";
+  process.env.NODE_ENV ===
+  "production";
 
 const sessionConfig = {
-  name: "langco.sid",
+  name:
+    "langco.sid",
 
   secret:
     process.env.SESSION_SECRET ||
-    "lang-and-co-development-secret-change-me",
+    "lang-and-co-secret-key",
 
-  resave: false,
-  saveUninitialized: false,
+  resave:
+    false,
+
+  saveUninitialized:
+    false,
 
   cookie: {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: isProduction,
+    httpOnly:
+      true,
 
-    /*
-     * Keep the user logged in for seven days.
-     */
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
+    sameSite:
+      "lax",
+
+    secure:
+      isProduction,
+
+    maxAge:
+      1000 *
+      60 *
+      60 *
+      24 *
+      7
+  }
 };
 
-module.exports = sessionConfig;
+module.exports =
+  sessionConfig;

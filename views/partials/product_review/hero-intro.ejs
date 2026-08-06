@@ -1,16 +1,42 @@
+<%
+  const safePageMessage =
+    typeof pageMessage !== "undefined"
+      ? pageMessage
+      : "";
+
+  const safeProductName =
+    typeof productData !== "undefined" &&
+    productData &&
+    productData.name
+      ? productData.name
+      : "this product";
+%>
+
 <div class="pr-hero__intro">
-    <p class="pr-hero__kicker">Product Rating</p>
+  <p class="pr-hero__kicker">
+    Customer Reviews
+  </p>
 
-    <h1 class="pr-hero__title">
-        Loved by collectors of handmade craft.
-    </h1>
+  <h2
+    class="pr-hero__title"
+    id="review-section-title"
+  >
+    Real experiences with
+    <em><%= safeProductName %></em>
+  </h2>
 
-    <p class="pr-hero__desc">
-        Share your experience with this piece and help others understand
-        its quality, glaze, finish and handmade details.
-    </p>
+  <p class="pr-hero__desc">
+    Rate the product, describe the details
+    that mattered, and upload 1 to 3 photos
+    of the item you received.
+  </p>
 </div>
 
-<% if (pageMessage) { %>
-    <p class="pr-page-message" role="status"><%= pageMessage %></p>
+<% if (safePageMessage) { %>
+  <p
+    class="pr-page-message"
+    role="status"
+  >
+    <%= safePageMessage %>
+  </p>
 <% } %>

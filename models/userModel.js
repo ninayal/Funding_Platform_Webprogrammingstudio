@@ -1,337 +1,754 @@
 "use strict";
 
-const crypto = require("crypto");
+const crypto = require(
+  "crypto"
+);
 
-const users = [];
+const fs = require(
+  "fs"
+);
 
-const clone = (value) =>
-  JSON.parse(
-    JSON.stringify(value),
+const path = require(
+  "path"
+);
+
+const USERS_FILE =
+  path.join(
+    __dirname,
+    "../data/users.json"
   );
 
-const clean = (value) =>
-  String(value || "").trim();
+const DEFAULT_PREFERENCES = {
+  emailUpdates:
+    true,
 
-const getInitials = (name) =>
-  clean(name)
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+  orderNotifications:
+    true,
 
-const hashPassword = (
-  password,
-) => {
-  const salt =
-    crypto
-      .randomBytes(16)
-      .toString("hex");
+  communityReplies:
+    false,
 
-  const hash =
-    crypto
-      .scryptSync(
-        String(password),
-        salt,
-        64,
-      )
-      .toString("hex");
+  promotionalUpdates:
+    true,
 
-  return `${salt}:${hash}`;
+  saveShippingInformation:
+    true,
+
+  internationalShippingDefault:
+    false,
+
+  productCareGuides:
+    true
 };
 
-const verifyPasswordHash = (
-  password,
-  storedValue,
-) => {
+const clean = (
+  value
+) =>
+  String(value || "")
+    .trim();
+
+const normalise = (
+  value
+) =>
+  clean(value)
+    .toLowerCase();
+
+const ensureUsersFile = () => {
+  fs.mkdirSync(
+    path.dirname(
+      USERS_FILE
+    ),
+    {
+      recursive: true
+    }
+  );
+
+  if (
+    !fs.existsSync(
+      USERS_FILE
+    )
+  ) {
+    fs.writeFileSync(
+      USERS_FILE,
+      "[]\n",
+      "utf8"
+    );
+  }
+};
+
+const readUsers = () => {
+  ensureUsersFile();
+
   try {
-    const [
+    const users =
+      JSON.parse(
+        fs.readFileSync(
+          USERS_FILE,
+          "utf8"
+        )
+      );
+
+    return Array.isArray(users)
+      ? users
+      : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeUsers = (
+  users
+) => {
+  ensureUsersFile();
+
+  const temporaryFile =
+    `${USERS_FILE}.tmp`;
+
+  fs.writeFileSync(
+    temporaryFile,
+    `${JSON.stringify(
+      users,
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
+
+  fs.renameSync(
+    temporaryFile,
+    USERS_FILE
+  );
+};
+
+const hashPassword = (
+  password
+) => {
+  const salt =
+    crypto.randomBytes(16);
+
+  const hash =
+    crypto.scryptSync(
+      String(password),
       salt,
-      storedHash,
-    ] = String(
-      storedValue || "",
+      64
+    );
+
+  return [
+    "scrypt",
+    salt.toString("hex"),
+    hash.toString("hex")
+  ].join("$");
+};
+
+const verifyCurrentHash = (
+  password,
+  storedValue
+) => {
+  const [
+    algorithm,
+    saltValue,
+    hashValue
+  ] =
+    String(
+      storedValue || ""
+    ).split("$");
+
+  if (
+    algorithm !== "scrypt" ||
+    !saltValue ||
+    !hashValue
+  ) {
+    return false;
+  }
+
+  const calculatedHash =
+    crypto.scryptSync(
+      String(password),
+      Buffer.from(
+        saltValue,
+        "hex"
+      ),
+      64
+    );
+
+  const storedHash =
+    Buffer.from(
+      hashValue,
+      "hex"
+    );
+
+  return (
+    calculatedHash.length ===
+      storedHash.length &&
+    crypto.timingSafeEqual(
+      calculatedHash,
+      storedHash
+    )
+  );
+};
+
+const verifyLegacyHash = (
+  password,
+  storedValue
+) => {
+  const [
+    saltValue,
+    hashValue
+  ] =
+    String(
+      storedValue || ""
     ).split(":");
 
-    if (
-      !salt ||
-      !storedHash
-    ) {
-      return false;
-    }
+  if (
+    !saltValue ||
+    !hashValue
+  ) {
+    return false;
+  }
 
-    const calculatedHash =
-      crypto.scryptSync(
-        String(password),
-        salt,
-        64,
-      );
-
-    const storedBuffer =
-      Buffer.from(
-        storedHash,
-        "hex",
-      );
-
-    if (
-      calculatedHash.length !==
-      storedBuffer.length
-    ) {
-      return false;
-    }
-
-    return crypto.timingSafeEqual(
-      calculatedHash,
-      storedBuffer,
+  const calculatedHash =
+    crypto.scryptSync(
+      String(password),
+      saltValue,
+      64
     );
-  } catch (error) {
+
+  const storedHash =
+    Buffer.from(
+      hashValue,
+      "hex"
+    );
+
+  return (
+    calculatedHash.length ===
+      storedHash.length &&
+    crypto.timingSafeEqual(
+      calculatedHash,
+      storedHash
+    )
+  );
+};
+
+const verifyPassword = (
+  password,
+  storedValue
+) => {
+  try {
+    return String(
+      storedValue || ""
+    ).startsWith(
+      "scrypt$"
+    )
+      ? verifyCurrentHash(
+          password,
+          storedValue
+        )
+      : verifyLegacyHash(
+          password,
+          storedValue
+        );
+  } catch {
     return false;
   }
 };
 
+const createInitials = (
+  firstname,
+  lastname
+) =>
+  [
+    clean(firstname)[0],
+    clean(lastname)[0]
+  ]
+    .filter(Boolean)
+    .join("")
+    .toUpperCase();
+
 const toPublicUser = (
-  user,
+  user
 ) => {
   if (!user) {
     return null;
   }
 
-  const {
-    passwordHash,
-    ...safeUser
-  } = user;
+  return {
+    id:
+      user.id,
 
-  return clone(safeUser);
-};
+    firstname:
+      user.firstname || "",
 
-const findMutableByEmail = (
-  email,
-) => {
-  const normalised =
-    clean(email).toLowerCase();
+    lastname:
+      user.lastname || "",
 
-  return (
-    users.find(
-      (user) =>
-        user.email ===
-        normalised,
-    ) || null
-  );
-};
+    name:
+      `${user.firstname || ""} ${user.lastname || ""}`
+        .trim(),
 
-const findMutableByUsername = (
-  username,
-) => {
-  const normalised =
-    clean(
-      username,
-    ).toLowerCase();
+    username:
+      user.username || "",
 
-  return (
-    users.find(
-      (user) =>
-        user.username.toLowerCase() ===
-        normalised,
-    ) || null
-  );
-};
-
-const findById = (userId) => {
-  const user =
-    users.find(
-      (item) =>
-        item.id ===
-        clean(userId),
-    ) || null;
-
-  return toPublicUser(user);
-};
-
-const findByEmail = (
-  email,
-) =>
-  toPublicUser(
-    findMutableByEmail(email),
-  );
-
-const createUser = (
-  userData,
-) => {
-  const email =
-    clean(
-      userData.email,
-    ).toLowerCase();
-
-  const username =
-    clean(
-      userData.username,
-    );
-
-  if (
-    findMutableByEmail(email)
-  ) {
-    return {
-      ok: false,
-      reason:
-        "email-exists",
-    };
-  }
-
-  if (
-    findMutableByUsername(
-      username,
-    )
-  ) {
-    return {
-      ok: false,
-      reason:
-        "username-exists",
-    };
-  }
-
-  const firstname =
-    clean(
-      userData.firstname,
-    );
-
-  const lastname =
-    clean(
-      userData.lastname,
-    );
-
-  const name =
-    `${firstname} ${lastname}`.trim();
-
-  const now =
-    new Date().toISOString();
-
-  const user = {
-    id: crypto.randomUUID(),
-
-    firstname,
-    lastname,
-    name,
-
-    username,
-    email,
-
-    gender:
-      clean(
-        userData.gender,
-      ),
-
-    description:
-      clean(
-        userData.description,
-      ),
+    email:
+      user.email || "",
 
     initials:
-      getInitials(name),
-
-    role: "User",
-
-    passwordHash:
-      hashPassword(
-        userData.password,
+      createInitials(
+        user.firstname,
+        user.lastname
       ),
 
-    createdAt: now,
-    updatedAt: now,
-  };
+    role:
+      user.role || "User",
 
-  users.push(user);
+    gender:
+      user.gender || "",
 
-  return {
-    ok: true,
-    user:
-      toPublicUser(user),
+    description:
+      user.description || "",
+
+    phone:
+      user.phone || "",
+
+    location:
+      user.location || "",
+
+    postalCode:
+      user.postalCode || "",
+
+    address:
+      user.address || "",
+
+    about:
+      user.about ||
+      user.description ||
+      "",
+
+    avatar:
+      user.avatar ||
+      "/images/profile.png",
+
+    tier:
+      user.tier ||
+      "Craft Collector",
+
+    preferences: {
+      ...DEFAULT_PREFERENCES,
+      ...(
+        user.preferences || {}
+      )
+    },
+
+    createdAt:
+      user.createdAt || "",
+
+    updatedAt:
+      user.updatedAt ||
+      user.createdAt ||
+      ""
   };
+};
+
+const findIndexById = (
+  users,
+  userId
+) =>
+  users.findIndex(
+    (user) =>
+      String(user.id) ===
+      String(userId)
+  );
+
+const findById = (
+  userId
+) => {
+  const users =
+    readUsers();
+
+  const index =
+    findIndexById(
+      users,
+      userId
+    );
+
+  return index === -1
+    ? null
+    : toPublicUser(
+        users[index]
+      );
 };
 
 const authenticate = (
   email,
-  password,
+  password
 ) => {
   const user =
-    findMutableByEmail(email);
-
-  if (!user) {
-    return {
-      ok: false,
-      reason:
-        "invalid-credentials",
-    };
-  }
-
-  const valid =
-    verifyPasswordHash(
-      password,
-      user.passwordHash,
+    readUsers().find(
+      (candidate) =>
+        normalise(
+          candidate.email
+        ) ===
+        normalise(email)
     );
 
-  if (!valid) {
+  if (
+    !user ||
+    !verifyPassword(
+      password,
+      user.passwordHash
+    )
+  ) {
     return {
-      ok: false,
+      ok:
+        false,
       reason:
-        "invalid-credentials",
+        "invalid-credentials"
     };
   }
 
   return {
-    ok: true,
+    ok:
+      true,
     user:
-      toPublicUser(user),
+      toPublicUser(user)
   };
 };
 
-const getAllUsers = () =>
-  users.map(toPublicUser);
+const createUser = (
+  values
+) => {
+  const users =
+    readUsers();
 
-/*
- * Assessment demonstration account.
- */
-const seedDemoUser = () => {
+  const email =
+    normalise(
+      values.email
+    );
+
+  const username =
+    normalise(
+      values.username
+    );
+
   if (
-    findMutableByEmail(
-      "huy@example.com",
+    users.some(
+      (user) =>
+        normalise(
+          user.email
+        ) === email
     )
   ) {
-    return;
+    return {
+      ok:
+        false,
+      reason:
+        "email-exists"
+    };
+  }
+
+  if (
+    users.some(
+      (user) =>
+        normalise(
+          user.username
+        ) === username
+    )
+  ) {
+    return {
+      ok:
+        false,
+      reason:
+        "username-exists"
+    };
   }
 
   const now =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
 
-  users.push({
-    id: "user-huy-ba",
-    firstname: "Huy",
-    lastname: "Ba",
-    name: "Huy Ba",
-    username: "huyba",
-    email:
-      "huy@example.com",
+  const user = {
+    id:
+      crypto.randomUUID(),
+
+    firstname:
+      clean(
+        values.firstname
+      ),
+
+    lastname:
+      clean(
+        values.lastname
+      ),
+
+    username:
+      clean(
+        values.username
+      ),
+
+    email,
+
     gender:
-      "prefer_not",
+      clean(
+        values.gender
+      ),
+
     description:
-      "Community contributor and Blog author.",
-    initials: "HB",
-    role: "Author",
+      clean(
+        values.description
+      ),
+
+    role:
+      "User",
+
+    phone:
+      "",
+
+    location:
+      "",
+
+    postalCode:
+      "",
+
+    address:
+      "",
+
+    about:
+      clean(
+        values.description
+      ),
+
+    avatar:
+      "/images/profile.png",
+
+    tier:
+      "Craft Collector",
+
+    preferences: {
+      ...DEFAULT_PREFERENCES
+    },
+
     passwordHash:
       hashPassword(
-        "Password123!",
+        values.password
       ),
-    createdAt: now,
-    updatedAt: now,
-  });
+
+    createdAt:
+      now,
+
+    updatedAt:
+      now
+  };
+
+  users.push(user);
+  writeUsers(users);
+
+  return {
+    ok:
+      true,
+    user:
+      toPublicUser(user)
+  };
 };
 
-seedDemoUser();
+const updateAccount = (
+  userId,
+  values
+) => {
+  const users =
+    readUsers();
+
+  const index =
+    findIndexById(
+      users,
+      userId
+    );
+
+  if (
+    index === -1
+  ) {
+    return {
+      ok:
+        false,
+      reason:
+        "user-not-found"
+    };
+  }
+
+  const duplicateEmail =
+    users.some(
+      (user, userIndex) =>
+        userIndex !== index &&
+        normalise(
+          user.email
+        ) ===
+        normalise(
+          values.email
+        )
+    );
+
+  if (
+    duplicateEmail
+  ) {
+    return {
+      ok:
+        false,
+      reason:
+        "email-exists"
+    };
+  }
+
+  const user =
+    users[index];
+
+  const changingPassword =
+    Boolean(
+      values.newPassword
+    );
+
+  if (
+    changingPassword &&
+    !verifyPassword(
+      values.currentPassword,
+      user.passwordHash
+    )
+  ) {
+    return {
+      ok:
+        false,
+      reason:
+        "invalid-current-password"
+    };
+  }
+
+  const updatedUser = {
+    ...user,
+
+    firstname:
+      clean(
+        values.firstname
+      ),
+
+    lastname:
+      clean(
+        values.lastname
+      ),
+
+    email:
+      normalise(
+        values.email
+      ),
+
+    phone:
+      clean(
+        values.phone
+      ),
+
+    location:
+      clean(
+        values.location
+      ),
+
+    postalCode:
+      clean(
+        values.postalCode
+      ),
+
+    address:
+      clean(
+        values.address
+      ),
+
+    about:
+      clean(
+        values.about
+      ),
+
+    description:
+      clean(
+        values.about
+      ),
+
+    updatedAt:
+      new Date()
+        .toISOString()
+  };
+
+  if (
+    changingPassword
+  ) {
+    updatedUser.passwordHash =
+      hashPassword(
+        values.newPassword
+      );
+  }
+
+  users[index] =
+    updatedUser;
+
+  writeUsers(users);
+
+  return {
+    ok:
+      true,
+    user:
+      toPublicUser(
+        updatedUser
+      )
+  };
+};
+
+const updatePreferences = (
+  userId,
+  preferences
+) => {
+  const users =
+    readUsers();
+
+  const index =
+    findIndexById(
+      users,
+      userId
+    );
+
+  if (
+    index === -1
+  ) {
+    return {
+      ok:
+        false,
+      reason:
+        "user-not-found"
+    };
+  }
+
+  users[index] = {
+    ...users[index],
+
+    preferences: {
+      ...DEFAULT_PREFERENCES,
+      ...preferences
+    },
+
+    updatedAt:
+      new Date()
+        .toISOString()
+  };
+
+  writeUsers(users);
+
+  return {
+    ok:
+      true,
+    user:
+      toPublicUser(
+        users[index]
+      )
+  };
+};
 
 module.exports = {
   authenticate,
   createUser,
-  findByEmail,
   findById,
-  getAllUsers,
-  toPublicUser,
+  updateAccount,
+  updatePreferences
 };

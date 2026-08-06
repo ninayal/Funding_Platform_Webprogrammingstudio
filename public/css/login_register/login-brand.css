@@ -5,9 +5,9 @@
 .login-brand {
     position: relative;
     z-index: 10;
-    flex: 0 0 63%;
-    width: 63%;
-    max-width: 63%;
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
     height: 100%;
     padding: 48px 48px 8% 5%;
     display: flex;

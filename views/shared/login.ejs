@@ -1,23 +1,5 @@
-<%
-  const formValues =
-    typeof values !== "undefined"
-      ? values
-      : {};
-
-  const formErrors =
-    typeof errors !== "undefined"
-      ? errors
-      : {};
-
-  const redirectValue =
-    typeof redirect !== "undefined"
-      ? redirect
-      : "/";
-%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
 
@@ -26,7 +8,9 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Sign In | Làng &amp; Co.</title>
+  <title>
+    <%= pageTitle %> | Làng &amp; Co.
+  </title>
 
   <link
     rel="stylesheet"
@@ -38,13 +22,8 @@
     href="/css/login_register/login.css"
   />
 
-  <link
-    rel="stylesheet"
-    href="/css/login_register/auth-dynamic.css"
-  />
-
   <script
-    src="/js/shared/auth.js"
+    src="/js/login/login.js"
     defer
   ></script>
 </head>
@@ -56,6 +35,7 @@
       aria-hidden="true"
     ></div>
 
+    <!-- LEFT -->
     <div class="login-brand">
       <h1 class="login-brand__title">
         Craft lives<br />
@@ -69,6 +49,7 @@
       </p>
     </div>
 
+    <!-- RIGHT: original A1 glass panel -->
     <div class="login-glass">
       <div class="login-glass__logo">
         <img
@@ -92,18 +73,22 @@
         Sign In
       </h2>
 
-      <% if (formErrors.form) { %>
-        <p class="auth-form-error" role="alert">
-          <%= formErrors.form %>
-        </p>
-      <% } %>
+      <div
+        class="<%= formErrorClass %>"
+        id="login-form-error"
+        role="alert"
+        aria-hidden="<%= formErrorAriaHidden %>"
+      >
+        <%= formErrorText %>
+      </div>
 
       <form
         class="login-form"
+        id="login-form"
         action="/shared/login"
         method="post"
+        data-login-form
         novalidate
-        data-auth-form="login"
       >
         <input
           type="hidden"
@@ -112,74 +97,81 @@
         />
 
         <div class="form-group">
-          <label class="form-label" for="email">
+          <label
+            class="form-label"
+            for="email"
+          >
             E-mail
           </label>
 
           <input
-            class="form-input"
+            class="<%= emailInputClass %>"
             type="email"
             id="email"
             name="email"
+            value="<%= emailValue %>"
             placeholder="E-mail Address"
-            value="<%= formValues.email || '' %>"
-            required
             autocomplete="email"
-            aria-invalid="<%= formErrors.email ? 'true' : 'false' %>"
+            aria-describedby="email-message"
+            aria-invalid="<%= emailAriaInvalid %>"
+            data-login-email
+            required
           />
 
           <small
-            class="auth-field-error"
-            data-error-for="email"
-            aria-live="polite"
+            class="<%= emailMessageClass %>"
+            id="email-message"
+            data-email-message
           >
-            <%= formErrors.email || "" %>
+            <%= emailMessageText %>
           </small>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="password">
+          <label
+            class="form-label"
+            for="password"
+          >
             Password
           </label>
 
           <input
-            class="form-input"
+            class="<%= passwordInputClass %>"
             type="password"
             id="password"
             name="password"
             placeholder="············"
-            required
             autocomplete="current-password"
-            aria-invalid="<%= formErrors.password ? 'true' : 'false' %>"
+            aria-describedby="password-message"
+            aria-invalid="<%= passwordAriaInvalid %>"
+            data-login-password
+            required
           />
 
           <small
-            class="auth-field-error"
-            data-error-for="password"
-            aria-live="polite"
+            class="<%= passwordMessageClass %>"
+            id="password-message"
+            data-password-message
           >
-            <%= formErrors.password || "" %>
+            <%= passwordMessageText %>
           </small>
 
           <a
             class="form-forgot"
-            href="/shared/forgot-password"
+            href="<%= forgotPasswordUrl %>"
           >
             Forgot password?
           </a>
         </div>
 
-        <p
-          class="auth-live-feedback"
-          data-auth-feedback
-          aria-live="polite"
-        ></p>
-
         <button
           class="login-btn"
           type="submit"
+          data-login-submit
         >
-          Sign In
+          <span data-submit-label>
+            Sign In
+          </span>
         </button>
       </form>
 
@@ -191,10 +183,7 @@
 
       <p class="login-signup-text">
         Don't have an account?
-
-        <a
-          href="/shared/register?redirect=<%= encodeURIComponent(redirectValue) %>"
-        >
+        <a href="<%= registerUrl %>">
           Sign Up
         </a>
       </p>
@@ -204,17 +193,21 @@
         <span class="login-divider__line"></span>
       </div>
 
-      <a class="login-guest" href="/">
-        <span class="guest-icon">✦</span>
+      <div>
+        <a
+          class="login-guest"
+          href="<%= guestUrl %>"
+        >
+          <span class="guest-icon">✦</span>
 
-        <span class="guest-text">
-          Continue exploring as a guest
-        </span>
+          <span class="guest-text">
+            Continue exploring as a guest
+          </span>
 
-        <span class="guest-arrow">→</span>
-      </a>
+          <span class="guest-arrow">→</span>
+        </a>
+      </div>
     </div>
   </main>
 </body>
-
 </html>

@@ -1,5 +1,5 @@
 /* ================================================
-   PRODUCT GRID 
+   PRODUCT GRID
    ================================================ */
 .shop-grid {
   display: grid;
@@ -18,6 +18,12 @@
   overflow: hidden;
   background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
   margin-bottom: 12px;
+}
+
+.shop-card__product-link {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .shop-card__media img {
@@ -118,17 +124,31 @@
 }
 
 .shop-card__rating {
-  font-size: 13px;
-  color: var(--red);
-  letter-spacing: 1px;
   margin-bottom: 5px;
 }
 
-.shop-card__rating span {
-  font-family: var(--ff-ui);
+.shop-card__rating-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.shop-card__stars {
+  color: var(--red);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.shop-card__review-count {
   color: var(--sand);
+  font-family: var(--ff-ui);
+  font-size: 12px;
   letter-spacing: normal;
-  margin-left: 3px;
+}
+
+.shop-card__rating-link:hover .shop-card__review-count {
+  color: var(--red);
 }
 
 .shop-card__tag {
