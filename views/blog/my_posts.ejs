@@ -1,35 +1,3 @@
-<%
-  const viewPageTitle =
-    typeof pageTitle !== "undefined" && pageTitle
-      ? pageTitle
-      : "My Blog Posts";
-
-  const viewPosts =
-    typeof posts !== "undefined" &&
-    Array.isArray(posts)
-      ? posts
-      : [];
-
-  const viewAuthor =
-    typeof author !== "undefined" && author
-      ? author
-      : {
-          name: "Blog Author",
-          initials: "BA",
-          role: "Community contributor",
-          description: ""
-        };
-
-  const viewStatistics =
-    typeof statistics !== "undefined" && statistics
-      ? statistics
-      : {
-          total: 0,
-          published: 0,
-          drafts: 0
-        };
-%>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,7 +14,7 @@
     />
 
     <title>
-      <%= viewPageTitle %> — Làng &amp; Co.
+      <%= pageTitle %> — Làng &amp; Co.
     </title>
 
     <!-- Shared styles -->
@@ -75,7 +43,6 @@
       rel="stylesheet"
       href="/css/blog/my-posts/my-posts.css"
     />
-
   </head>
 
   <body>
@@ -112,14 +79,16 @@
       </nav>
 
       <!-- Page heading -->
-      <header class="my-posts-header my-posts-container">
+      <header
+        class="my-posts-header my-posts-container"
+      >
         <div>
           <p class="my-posts-kicker">
             Author workspace
           </p>
 
           <h1>
-            <%= viewPageTitle %>
+            <%= pageTitle %>
           </h1>
 
           <p class="my-posts-subtitle">
@@ -166,7 +135,9 @@
         value="draft"
       />
 
-      <div class="my-posts-layout my-posts-container">
+      <div
+        class="my-posts-layout my-posts-container"
+      >
         <!-- Author summary -->
         <aside class="author-panel">
           <div class="author-profile">
@@ -174,30 +145,30 @@
               class="author-profile__avatar"
               aria-hidden="true"
             >
-              <%= viewAuthor.initials %>
+              <%= author.initials %>
             </div>
 
             <div>
               <h2>
-                <%= viewAuthor.name %>
+                <%= author.name %>
               </h2>
 
               <p>
-                <%= viewAuthor.role %>
+                <%= author.role %>
               </p>
             </div>
           </div>
 
-          <% if (viewAuthor.description) { %>
+          <% if (author.description) { %>
             <p class="author-profile__bio">
-              <%= viewAuthor.description %>
+              <%= author.description %>
             </p>
           <% } %>
 
           <div class="author-statistics">
             <div class="author-stat">
               <strong>
-                <%= viewStatistics.total %>
+                <%= statistics.total %>
               </strong>
 
               <span>
@@ -207,7 +178,7 @@
 
             <div class="author-stat">
               <strong>
-                <%= viewStatistics.published %>
+                <%= statistics.published %>
               </strong>
 
               <span>
@@ -217,7 +188,7 @@
 
             <div class="author-stat">
               <strong>
-                <%= viewStatistics.drafts %>
+                <%= statistics.drafts %>
               </strong>
 
               <span>
@@ -237,7 +208,7 @@
               All Posts
 
               <span>
-                <%= viewStatistics.total %>
+                <%= statistics.total %>
               </span>
             </label>
 
@@ -245,7 +216,7 @@
               Published
 
               <span>
-                <%= viewStatistics.published %>
+                <%= statistics.published %>
               </span>
             </label>
 
@@ -253,13 +224,13 @@
               Drafts
 
               <span>
-                <%= viewStatistics.drafts %>
+                <%= statistics.drafts %>
               </span>
             </label>
           </nav>
 
           <div class="my-posts-list">
-            <% if (viewPosts.length === 0) { %>
+            <% if (posts.length === 0) { %>
               <div class="my-posts-empty">
                 <h2>
                   No Blog posts yet
@@ -277,133 +248,135 @@
                   Create First Post
                 </a>
               </div>
-            <% } %>
-
-            <% viewPosts.forEach((post) => { %>
-              <article
-                class="my-post-card post-<%= post.status %>"
-                data-post-id="<%= post.id %>"
-                data-post-status="<%= post.status %>"
-              >
-                <a
-                  class="my-post-card__image"
-                  href="<%= post.url %>"
-                  aria-label="Open <%= post.title %>"
+            <% } else { %>
+              <% posts.forEach((post) => { %>
+                <article
+                  class="my-post-card post-<%= post.status %>"
+                  data-post-id="<%= post.id %>"
+                  data-post-status="<%= post.status %>"
                 >
-                  <img
-                    src="<%= post.imageUrl %>"
-                    alt="<%= post.imageAlt %>"
-                  />
-                </a>
+                  <a
+                    class="my-post-card__image"
+                    href="<%= post.url %>"
+                    aria-label="Open <%= post.title %>"
+                  >
+                    <img
+                      src="<%= post.imageUrl %>"
+                      alt="<%= post.imageAlt %>"
+                    />
+                  </a>
 
-                <div class="my-post-card__content">
-                  <div class="my-post-card__meta">
-                    <span class="post-category">
-                      <%= post.category %>
-                    </span>
+                  <div class="my-post-card__content">
+                    <div class="my-post-card__meta">
+                      <span class="post-category">
+                        <%= post.category %>
+                      </span>
 
-                    <time datetime="<%= post.dateTime %>">
-                      <%= post.dateText %>
-                    </time>
+                      <time datetime="<%= post.dateTime %>">
+                        <%= post.dateText %>
+                      </time>
 
-                    <span
-                      class="post-status post-status--<%= post.status %>"
-                    >
-                      <%= post.statusLabel %>
-                    </span>
-                  </div>
+                      <span
+                        class="post-status post-status--<%= post.status %>"
+                      >
+                        <%= post.statusLabel %>
+                      </span>
+                    </div>
 
-                  <h2>
-                    <a href="<%= post.url %>">
-                      <%= post.title %>
-                    </a>
-                  </h2>
+                    <h2>
+                      <a href="<%= post.url %>">
+                        <%= post.title %>
+                      </a>
+                    </h2>
 
-                  <p>
-                    <%= post.summary %>
-                  </p>
+                    <p>
+                      <%= post.summary %>
+                    </p>
 
-                  <% if (post.status === "draft") { %>
-                    <div class="draft-progress">
-                      <div class="draft-progress__heading">
+                    <% if (post.status === "draft") { %>
+                      <div class="draft-progress">
+                        <div class="draft-progress__heading">
+                          <span>
+                            Draft completion
+                          </span>
+
+                          <strong>
+                            <%= post.draftCompletion %>%
+                          </strong>
+                        </div>
+
+                        <div
+                          class="draft-progress__track"
+                          role="progressbar"
+                          aria-label="Draft completion"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          aria-valuenow="<%= post.draftCompletion %>"
+                        >
+                          <span
+                            style="width: <%= post.draftCompletion %>%;"
+                          ></span>
+                        </div>
+                      </div>
+                    <% } else { %>
+                      <div class="my-post-card__information">
                         <span>
-                          Draft completion
+                          <%= post.readTime %>
+                          min read
                         </span>
 
-                        <strong>
-                          <%= post.draftCompletion %>%
-                        </strong>
+                        <span>
+                          <%= post.commentCount %>
+                          <%= post.commentCount === 1
+                            ? "comment"
+                            : "comments"
+                          %>
+                        </span>
                       </div>
-
-                      <div
-                        class="draft-progress__track"
-                        role="progressbar"
-                        aria-label="Draft completion"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        aria-valuenow="<%= post.draftCompletion %>"
-                      >
-                        <span
-                          style="width: <%= post.draftCompletion %>%;"
-                        ></span>
-                      </div>
-                    </div>
-                  <% } else { %>
-                    <div class="my-post-card__information">
-                      <span>
-                        <%= post.readTime %>
-                        min read
-                      </span>
-
-                      <span>
-                        <%= post.commentCount %>
-                        <%= post.commentCount === 1
-                          ? "comment"
-                          : "comments"
-                        %>
-                      </span>
-                    </div>
-                  <% } %>
-
-                  <div class="my-post-card__actions">
-                    <% if (post.status === "draft") { %>
-                      <a
-                        class="post-action post-action--primary"
-                        href="<%= post.editUrl %>"
-                      >
-                        Continue Editing
-                      </a>
-
-                      <a
-                        class="post-action"
-                        href="<%= post.url %>"
-                      >
-                        Preview
-                      </a>
-                    <% } else { %>
-                      <a
-                        class="post-action post-action--primary"
-                        href="<%= post.url %>"
-                      >
-                        View Post
-                      </a>
-
-                      <a
-                        class="post-action"
-                        href="<%= post.editUrl %>"
-                      >
-                        Edit
-                      </a>
                     <% } %>
+
+                    <div class="my-post-card__actions">
+                      <% if (post.status === "draft") { %>
+                        <a
+                          class="post-action post-action--primary"
+                          href="<%= post.editUrl %>"
+                        >
+                          Continue Editing
+                        </a>
+
+                        <a
+                          class="post-action"
+                          href="<%= post.url %>"
+                        >
+                          Preview
+                        </a>
+                      <% } else { %>
+                        <a
+                          class="post-action post-action--primary"
+                          href="<%= post.url %>"
+                        >
+                          View Post
+                        </a>
+
+                        <a
+                          class="post-action"
+                          href="<%= post.editUrl %>"
+                        >
+                          Edit
+                        </a>
+                      <% } %>
+                    </div>
                   </div>
-                </div>
-              </article>
-            <% }); %>
+                </article>
+              <% }); %>
+            <% } %>
           </div>
         </section>
       </div>
 
-      <div class="my-posts-return my-posts-container">
+      <div
+        class="my-posts-return my-posts-container"
+      >
         <a href="/blog">
           ← Return to Journal
         </a>

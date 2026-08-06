@@ -562,7 +562,7 @@ const getBlogPage = (
           "Stories, thoughts and ideas.",
 
         categories:
-          [...CATEGORY_ORDER],
+          getCategoriesForView(),
 
         posts,
 
