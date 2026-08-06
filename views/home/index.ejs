@@ -1,32 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Home | Làng &amp; Co.</title>
+  <link rel="stylesheet" href="/css/landingpage/index.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/shared-include.css">
+  <link rel="stylesheet" href="/css/landingpage/index-base.css">
+  <link rel="stylesheet" href="/css/footer.css">
+</head>
 
-    <title>Home | Làng &amp; Co.</title>
-
-    <link rel="stylesheet" href="/css/landingpage/index.css" />
-    <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/shared-include.css" />
-    <link rel="stylesheet" href="/css/landingpage/index-base.css" />
-    <link rel="stylesheet" href="/css/footer.css" />
-  </head>
-
-  <body>
-    <%- include("../partials/landing/hero") %>
-
-    <main class="wave">
+<body>
+  <%- include("../partials/landing/hero") %>
+    <div class="wave">
       <%- include("../partials/landing/shop-sections") %>
-      <%- include("../partials/landing/brand-story") %>
-      <%- include("../partials/landing/social-proof") %>
-      <%- include("../partials/landing/final-cta") %>
-    </main>
-
+        <%- include("../partials/landing/brand-story") %>
+          <%- include("../partials/landing/social-proof") %>
+            <%- include("../partials/landing/final-cta") %>
+    </div>
     <%- include("../partials/footer") %>
-  </body>
+</body>
+
 </html>

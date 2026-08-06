@@ -99,6 +99,15 @@
   transition: background .3s cubic-bezier(.4, 0, .2, 1);
 }
 
+.featured .product-card__add {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
 .featured__nav:hover {
   background: var(--tan);
 }
@@ -221,4 +230,3 @@
   background: var(--red);
   transform: scale(1.08);
 }
-

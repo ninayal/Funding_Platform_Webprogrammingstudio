@@ -1,17 +1,13 @@
 <section class="below">
   <p class="below__headline">
-    Where Craft Meets<br />
+    Where Craft Meets<br>
     Living Tradition
   </p>
-
   <p class="below__sub">
     A curated marketplace where Vietnamese craftsmanship — in clay, silk,
     paint, wood and beyond — finds a home in the modern world.
   </p>
-
-  <a class="below__btn" href="/cart/products">
-    Explore the Collection
-  </a>
+  <a class="below__btn" href="/cart/products">Explore the Collection</a>
 </section>
 
 <div class="marquee" aria-hidden="true">
@@ -27,34 +23,30 @@
 
 <section class="quicknav" aria-label="Quick collection links">
   <a class="quicknav__tile quicknav__tile--wide" href="<%= quickNav.featured.href %>">
-    <img src="<%= quickNav.featured.image %>" alt="<%= quickNav.featured.alt %>" loading="lazy" />
-
+    <img src="<%= quickNav.featured.image %>" alt="<%= quickNav.featured.alt %>" loading="lazy">
     <span class="quicknav__label">
       <%= quickNav.featured.label %>
     </span>
   </a>
 
   <div class="quicknav__stack">
-    <% quickNav.secondary.forEach((item)=> { %>
+    <% quickNav.secondary.forEach(item=>{ %>
       <a class="quicknav__tile" href="<%= item.href %>">
-        <img src="<%= item.image %>" alt="<%= item.alt %>" loading="lazy" />
-
+        <img src="<%= item.image %>" alt="<%= item.alt %>" loading="lazy">
         <span class="quicknav__label">
           <%= item.label %>
         </span>
       </a>
-      <% }); %>
+      <% }) %>
   </div>
 </section>
 
 <section class="categories" aria-labelledby="categories-heading">
   <div class="section-head">
     <p class="section-kicker">Shop by Craft</p>
-
     <h2 id="categories-heading">
       Eight Traditions, <em>One Heritage</em>
     </h2>
-
     <p class="section-sub">
       Every region of Việt Nam carries its own hands, its own patience.
       Begin your collection with the craft that speaks to you.
@@ -62,27 +54,24 @@
   </div>
 
   <div class="categories__grid">
-    <% categories.forEach((category)=> { %>
-      <a class="category-card" href="/cart/products?category=<%= category.category %>">
+    <% categories.forEach(category=>{ %>
+      <a class="category-card" href="/cart/products">
         <span class="category-card__photo">
-          <img src="<%= category.image %>" alt="<%= category.alt %>" loading="lazy" />
+          <img src="<%= category.image %>" alt="<%= category.alt %>" loading="lazy">
         </span>
-
         <span class="category-card__label">
           <span class="category-card__title-row">
             <span class="category-card__vn">
               <%= category.name %>
             </span>
-
             <span class="category-card__arrow">→</span>
           </span>
-
           <span class="category-card__en">
             <%= category.vietnameseName %>
           </span>
         </span>
       </a>
-      <% }); %>
+      <% }) %>
   </div>
 </section>
 
@@ -92,7 +81,6 @@
       <p class="section-kicker">Handpicked</p>
       <h2 id="featured-heading">Featured Pieces</h2>
     </div>
-
     <a class="featured__viewall" href="/cart/products">
       View All <span>→</span>
     </a>
@@ -103,19 +91,17 @@
   </p>
 
   <div class="featured__carousel">
-    <a class="featured__nav featured__nav--prev" href="#feat-1" aria-label="Scroll to start">
-      ‹
-    </a>
+    <a class="featured__nav featured__nav--prev" href="#feat-1" aria-label="Scroll to start">‹</a>
 
     <div class="featured__track">
-      <% featuredProducts.forEach((product, index)=> { %>
-        <article class="product-card" id="feat-<%= index + 1 %>">
-          <a class="product-card__media" href="/review/review/<%= product.reviewNumber %>">
-            <img src="<%= product.image %>" alt="<%= product.alt %>" loading="lazy" />
+      <% featuredProducts.forEach((product,index)=>{ %>
+        <article class="product-card" id="feat-<%= index+1 %>">
+          <a class="product-card__media" href="/cart/products">
+            <img src="<%= product.image %>" alt="<%= product.alt||product.name %>" loading="lazy">
 
-            <% if (product.badge) { %>
+            <% if(product.tag){ %>
               <span class="product-card__badge">
-                <%= product.badge %>
+                <%= product.tag %>
               </span>
               <% } %>
           </a>
@@ -126,27 +112,28 @@
             </h3>
 
             <div class="product-card__rating">
-              <%= product.rating %>
+              <%= product.ratingStars %>
                 <span>(<%= product.reviewCount %>)</span>
             </div>
 
             <div class="product-card__row">
               <span class="product-card__price">
-                <%= product.price %>
+                <%= product.priceFormatted %>
               </span>
 
-              <a class="product-card__add" href="/cart/cart" aria-label="Add <%= product.name %>">
-                +
-              </a>
+              <form action="/cart/add" method="POST">
+                <input type="hidden" name="productId" value="<%= product.id %>">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="product-card__add" aria-label="Add <%= product.name %> to cart">+</button>
+              </form>
             </div>
           </div>
         </article>
-        <% }); %>
+        <% }) %>
     </div>
 
-    <a class="featured__nav featured__nav--next" href="#feat-<%= featuredProducts.length %>" aria-label="Scroll to end">
-      ›
-    </a>
+    <a class="featured__nav featured__nav--next" href="#feat-<%= featuredProducts.length %>"
+      aria-label="Scroll to end">›</a>
   </div>
 
   <a class="section-more" href="/cart/products">
