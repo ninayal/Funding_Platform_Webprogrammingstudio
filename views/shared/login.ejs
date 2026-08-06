@@ -1,52 +1,15 @@
-<%
-  const formValues =
-    typeof values !== "undefined"
-      ? values
-      : {};
-
-  const formErrors =
-    typeof errors !== "undefined"
-      ? errors
-      : {};
-
-  const redirectValue =
-    typeof redirect !== "undefined"
-      ? redirect
-      : "/";
-%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>Sign In | Làng &amp; Co.</title>
-
-  <link
-    rel="stylesheet"
-    href="/css/landingpage/index.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/login_register/login.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/login_register/auth-dynamic.css"
-  />
-
-  <script
-    src="/js/shared/auth.js"
-    defer
-  ></script>
+  <%- include("../partials/shared/auth-head", {
+    styles: [
+      "/css/landingpage/index.css",
+      "/css/login_register/login.css"
+    ],
+    scripts: [
+      "/js/login/login.js"
+    ]
+  }) %>
 </head>
 
 <body>
@@ -56,8 +19,14 @@
       aria-hidden="true"
     ></div>
 
-    <div class="login-brand">
-      <h1 class="login-brand__title">
+    <section
+      class="login-brand"
+      aria-labelledby="login-brand-title"
+    >
+      <h1
+        class="login-brand__title"
+        id="login-brand-title"
+      >
         Craft lives<br />
         in the <em>hands</em><br />
         that make it.
@@ -67,9 +36,12 @@
         Sign in to access your orders,<br />
         wishlist and community.
       </p>
-    </div>
+    </section>
 
-    <div class="login-glass">
+    <section
+      class="login-glass"
+      aria-labelledby="login-title"
+    >
       <div class="login-glass__logo">
         <img
           src="/images/logo.png"
@@ -88,102 +60,131 @@
         </div>
       </div>
 
-      <h2 class="login-glass__title">
+      <h2
+        class="login-glass__title"
+        id="login-title"
+      >
         Sign In
       </h2>
 
-      <% if (formErrors.form) { %>
-        <p class="auth-form-error" role="alert">
-          <%= formErrors.form %>
-        </p>
-      <% } %>
+      <div
+        class="<%= typeof formErrorClass !== 'undefined' ? formErrorClass : 'login-form-error is-hidden' %>"
+        id="login-form-error"
+        role="alert"
+        aria-hidden="<%= typeof formErrorAriaHidden !== 'undefined' ? formErrorAriaHidden : 'true' %>"
+      >
+        <%= typeof formErrorText !== "undefined" ? formErrorText : "" %>
+      </div>
 
       <form
         class="login-form"
+        id="login-form"
         action="/shared/login"
         method="post"
+        data-login-form
         novalidate
-        data-auth-form="login"
       >
         <input
           type="hidden"
           name="redirect"
-          value="<%= redirectValue %>"
+          value="<%= typeof redirectValue !== 'undefined' ? redirectValue : '/' %>"
         />
 
         <div class="form-group">
-          <label class="form-label" for="email">
+          <label
+            class="form-label"
+            for="email"
+          >
             E-mail
           </label>
 
           <input
-            class="form-input"
+            class="<%= typeof emailInputClass !== 'undefined' ? emailInputClass : 'form-input' %>"
             type="email"
             id="email"
             name="email"
+            value="<%= typeof emailValue !== 'undefined' ? emailValue : '' %>"
             placeholder="E-mail Address"
-            value="<%= formValues.email || '' %>"
-            required
             autocomplete="email"
-            aria-invalid="<%= formErrors.email ? 'true' : 'false' %>"
+            aria-describedby="email-message"
+            aria-invalid="<%= typeof emailAriaInvalid !== 'undefined' ? emailAriaInvalid : 'false' %>"
+            data-login-email
+            required
           />
 
           <small
-            class="auth-field-error"
-            data-error-for="email"
-            aria-live="polite"
+            class="<%= typeof emailMessageClass !== 'undefined' ? emailMessageClass : 'form-message form-help' %>"
+            id="email-message"
+            data-email-message
           >
-            <%= formErrors.email || "" %>
+            <%= typeof emailMessageText !== "undefined" ? emailMessageText : "Example: name@example.com" %>
           </small>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="password">
+          <label
+            class="form-label"
+            for="password"
+          >
             Password
           </label>
 
-          <input
-            class="form-input"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="············"
-            required
-            autocomplete="current-password"
-            aria-invalid="<%= formErrors.password ? 'true' : 'false' %>"
-          />
+          <div class="password-field">
+            <input
+              class="<%= typeof passwordInputClass !== 'undefined' ? passwordInputClass : 'form-input' %>"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="············"
+              autocomplete="current-password"
+              aria-describedby="password-message"
+              aria-invalid="<%= typeof passwordAriaInvalid !== 'undefined' ? passwordAriaInvalid : 'false' %>"
+              data-login-password
+              required
+            />
+
+            <button
+              class="password-toggle"
+              type="button"
+              aria-label="Show password"
+              aria-pressed="false"
+              data-password-toggle
+            >
+              Show
+            </button>
+          </div>
 
           <small
-            class="auth-field-error"
-            data-error-for="password"
-            aria-live="polite"
+            class="<%= typeof passwordMessageClass !== 'undefined' ? passwordMessageClass : 'form-message is-hidden' %>"
+            id="password-message"
+            data-password-message
           >
-            <%= formErrors.password || "" %>
+            <%= typeof passwordMessageText !== "undefined" ? passwordMessageText : "" %>
           </small>
 
           <a
             class="form-forgot"
-            href="/shared/forgot-password"
+            href="<%= typeof forgotPasswordUrl !== 'undefined' ? forgotPasswordUrl : '/shared/forgot-password' %>"
           >
             Forgot password?
           </a>
         </div>
 
-        <p
-          class="auth-live-feedback"
-          data-auth-feedback
-          aria-live="polite"
-        ></p>
-
         <button
           class="login-btn"
           type="submit"
+          data-login-submit
         >
-          Sign In
+          <span data-submit-label>
+            Sign In
+          </span>
         </button>
       </form>
 
-      <div class="login-divider">
+      <div
+        class="login-divider"
+        aria-hidden="true"
+      >
         <span class="login-divider__line"></span>
         <span class="login-divider__text">Or</span>
         <span class="login-divider__line"></span>
@@ -192,29 +193,42 @@
       <p class="login-signup-text">
         Don't have an account?
 
-        <a
-          href="/shared/register?redirect=<%= encodeURIComponent(redirectValue) %>"
-        >
+        <a href="<%= typeof registerUrl !== 'undefined' ? registerUrl : '/shared/register' %>">
           Sign Up
         </a>
       </p>
 
-      <div class="login-divider">
+      <div
+        class="login-divider"
+        aria-hidden="true"
+      >
         <span class="login-divider__line"></span>
         <span class="login-divider__line"></span>
       </div>
 
-      <a class="login-guest" href="/">
-        <span class="guest-icon">✦</span>
+      <a
+        class="login-guest"
+        href="<%= typeof guestUrl !== 'undefined' ? guestUrl : '/' %>"
+      >
+        <span
+          class="guest-icon"
+          aria-hidden="true"
+        >
+          ✦
+        </span>
 
         <span class="guest-text">
           Continue exploring as a guest
         </span>
 
-        <span class="guest-arrow">→</span>
+        <span
+          class="guest-arrow"
+          aria-hidden="true"
+        >
+          →
+        </span>
       </a>
-    </div>
+    </section>
   </main>
 </body>
-
 </html>

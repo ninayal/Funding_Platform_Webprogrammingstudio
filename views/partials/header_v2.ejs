@@ -71,7 +71,13 @@
 
         <!-- Profile và cart bên phải -->
         <div class="header-v2__right">
-            <a class="header-v2__icon" href="/shared/profile" aria-label="Account — Log in or sign up">
+            <a
+                class="header-v2__icon"
+                                href="<%= typeof currentUser !== 'undefined' && currentUser
+                                    ? '/shared/profile'
+                                    : '/shared/login?redirect=' + encodeURIComponent((typeof currentUrl !== 'undefined' && currentUrl) ? currentUrl : '/') %>"
+                aria-label="Account — Log in or sign up"
+            >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65"
                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="7.5" r="3.5" />

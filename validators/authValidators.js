@@ -14,30 +14,35 @@ const ALLOWED_GENDERS =
     "male",
     "female",
     "other",
-    "prefer_not",
+    "prefer_not"
   ]);
 
-const clean = (value) =>
-  String(value || "").trim();
+const clean = (
+  value
+) =>
+  String(value || "")
+    .trim();
 
 const validateLogin = (
-  body = {},
+  body = {}
 ) => {
   const values = {
-    email: clean(
-      body.email,
-    ).toLowerCase(),
+    email:
+      clean(
+        body.email
+      ).toLowerCase(),
 
-    password: String(
-      body.password || "",
-    ),
+    password:
+      String(
+        body.password || ""
+      )
   };
 
   const errors = {};
 
   if (
     !EMAIL_PATTERN.test(
-      values.email,
+      values.email
     )
   ) {
     errors.email =
@@ -51,57 +56,65 @@ const validateLogin = (
 
   return {
     values,
-    errors,
+    errors
   };
 };
 
 const validateRegistration = (
-  body = {},
+  body = {}
 ) => {
   const values = {
-    firstname: clean(
-      body.firstname,
-    ),
+    firstname:
+      clean(
+        body.firstname
+      ),
 
-    lastname: clean(
-      body.lastname,
-    ),
+    lastname:
+      clean(
+        body.lastname
+      ),
 
-    username: clean(
-      body.username,
-    ),
+    username:
+      clean(
+        body.username
+      ),
 
-    email: clean(
-      body.email,
-    ).toLowerCase(),
+    email:
+      clean(
+        body.email
+      ).toLowerCase(),
 
-    gender: clean(
-      body.gender,
-    ),
+    gender:
+      clean(
+        body.gender
+      ),
 
-    description: clean(
-      body.description,
-    ),
+    description:
+      clean(
+        body.description
+      ),
 
-    password: String(
-      body.password || "",
-    ),
+    password:
+      String(
+        body.password || ""
+      ),
 
     confirmPassword:
       String(
         body.confirm_password ||
-          body.confirmPassword ||
-          "",
+        body.confirmPassword ||
+        ""
       ),
 
-    terms: body.terms,
+    terms:
+      body.terms
   };
 
   const errors = {};
 
   if (
     !NAME_PATTERN.test(
-      values.firstname,
+      values.firstname
     )
   ) {
     errors.firstname =
@@ -110,7 +123,7 @@ const validateRegistration = (
 
   if (
     !NAME_PATTERN.test(
-      values.lastname,
+      values.lastname
     )
   ) {
     errors.lastname =
@@ -119,7 +132,7 @@ const validateRegistration = (
 
   if (
     !USERNAME_PATTERN.test(
-      values.username,
+      values.username
     )
   ) {
     errors.username =
@@ -128,7 +141,7 @@ const validateRegistration = (
 
   if (
     !EMAIL_PATTERN.test(
-      values.email,
+      values.email
     )
   ) {
     errors.email =
@@ -137,7 +150,7 @@ const validateRegistration = (
 
   if (
     !ALLOWED_GENDERS.has(
-      values.gender,
+      values.gender
     )
   ) {
     errors.gender =
@@ -155,16 +168,18 @@ const validateRegistration = (
   }
 
   const passwordValid =
-    values.password.length >= 8 &&
-    values.password.length <= 72 &&
+    values.password.length >=
+      8 &&
+    values.password.length <=
+      72 &&
     /[A-Z]/.test(
-      values.password,
+      values.password
     ) &&
     /[a-z]/.test(
-      values.password,
+      values.password
     ) &&
     /[0-9\W]/.test(
-      values.password,
+      values.password
     );
 
   if (!passwordValid) {
@@ -185,8 +200,10 @@ const validateRegistration = (
     "true",
     "on",
     "1",
-    1,
-  ].includes(values.terms);
+    1
+  ].includes(
+    values.terms
+  );
 
   if (!termsAccepted) {
     errors.terms =
@@ -195,11 +212,11 @@ const validateRegistration = (
 
   return {
     values,
-    errors,
+    errors
   };
 };
 
 module.exports = {
   validateLogin,
-  validateRegistration,
-}
+  validateRegistration
+};

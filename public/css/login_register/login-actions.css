@@ -33,24 +33,42 @@
     font-weight: 700;
     letter-spacing: 1px;
     color: #ffffff;
-    background: linear-gradient(135deg, var(--red) 0%, var(--darkred) 100%);
+    background:
+        linear-gradient(
+            135deg,
+            var(--red) 0%,
+            var(--darkred) 100%
+        );
     border: 1px solid rgba(255, 255, 255, 0.20);
     border-radius: 25px;
     cursor: pointer;
     box-shadow:
         0px 10px 28px rgba(109, 35, 35, 0.38),
         inset 0px 1px 0px rgba(255, 255, 255, 0.20);
-    transition: transform 200ms ease, box-shadow 220ms ease, filter 220ms ease;
+    transition:
+        transform 200ms ease,
+        box-shadow 220ms ease,
+        filter 220ms ease,
+        opacity 220ms ease;
 }
 
 .login-btn:hover {
     filter: brightness(1.08);
     transform: translateY(-2px);
-    box-shadow: 0px 14px 34px rgba(109, 35, 35, 0.46), inset 0px 1px 0px rgba(255, 255, 255, 0.22);
+    box-shadow:
+        0px 14px 34px rgba(109, 35, 35, 0.46),
+        inset 0px 1px 0px rgba(255, 255, 255, 0.22);
 }
 
 .login-btn:active {
     transform: translateY(0px);
+}
+
+.login-btn:disabled,
+.login-btn.is-loading {
+    cursor: wait;
+    opacity: 0.72;
+    transform: none;
 }
 
 
@@ -63,17 +81,20 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin:
-        26px 0px;
+    margin: 26px 0px;
 }
-
 
 .login-divider__line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.34) 50%, transparent 100%);
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.34) 50%,
+            transparent 100%
+        );
 }
-
 
 .login-divider__text {
     font-family: var(--ff-ui);
@@ -83,8 +104,6 @@
     color: rgba(255, 255, 255, 0.70);
     white-space: nowrap;
 }
-
-
 
 
 /* ================================================
@@ -101,7 +120,6 @@
     color: rgba(255, 255, 255, 0.82);
 }
 
-
 .login-signup-text a {
     margin-left: 3px;
     font-weight: 700;
@@ -116,5 +134,3 @@
     color: #ffffff;
     opacity: 1;
 }
-
-

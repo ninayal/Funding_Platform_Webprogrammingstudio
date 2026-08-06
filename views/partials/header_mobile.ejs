@@ -42,7 +42,14 @@
     </a>
 
     <div class="nav__icons">
-      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
+      <a
+        class="nav__icon-btn"
+        href="<%= typeof currentUser !== 'undefined' && currentUser
+          ? '/shared/profile'
+          : '/shared/login?redirect=' + encodeURIComponent((typeof currentUrl !== 'undefined' && currentUrl) ? currentUrl : '/') %>"
+        target="_top"
+        aria-label="Account — Log in or sign up"
+      >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
           aria-hidden="true">
           <circle cx="12" cy="8" r="3.6" />

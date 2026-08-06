@@ -1,5 +1,14 @@
+const {
+  buildLoginView
+} = require(
+  "../utils/loginViewModel"
+);
+
 const getLoginPage = (req, res) => {
-  res.render("shared/login");
+  res.render(
+    "shared/login",
+    buildLoginView()
+  );
 };
 
 const getRegisterPage = (req, res) => {

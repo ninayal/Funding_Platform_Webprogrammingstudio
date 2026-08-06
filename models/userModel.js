@@ -1,61 +1,135 @@
 "use strict";
 
-const crypto = require("crypto");
+const crypto = require(
+  "crypto"
+);
 
-const users = [];
+const fs = require(
+  "fs"
+);
 
-const clone = (value) =>
-  JSON.parse(
-    JSON.stringify(value),
+const path = require(
+  "path"
+);
+
+const USERS_FILE =
+  path.join(
+    __dirname,
+    "../data/users.json"
   );
 
-const clean = (value) =>
-  String(value || "").trim();
+const normalise = (
+  value
+) =>
+  String(value || "")
+    .trim()
+    .toLowerCase();
 
-const getInitials = (name) =>
-  clean(name)
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+const ensureUsersFile = () => {
+  fs.mkdirSync(
+    path.dirname(
+      USERS_FILE
+    ),
+    {
+      recursive: true
+    }
+  );
 
-const hashPassword = (
-  password,
-) => {
-  const salt =
-    crypto
-      .randomBytes(16)
-      .toString("hex");
-
-  const hash =
-    crypto
-      .scryptSync(
-        String(password),
-        salt,
-        64,
-      )
-      .toString("hex");
-
-  return `${salt}:${hash}`;
+  if (
+    !fs.existsSync(
+      USERS_FILE
+    )
+  ) {
+    fs.writeFileSync(
+      USERS_FILE,
+      "[]\n",
+      "utf8"
+    );
+  }
 };
 
-const verifyPasswordHash = (
+const readUsers = () => {
+  ensureUsersFile();
+
+  try {
+    const users =
+      JSON.parse(
+        fs.readFileSync(
+          USERS_FILE,
+          "utf8"
+        )
+      );
+
+    return Array.isArray(users)
+      ? users
+      : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeUsers = (
+  users
+) => {
+  ensureUsersFile();
+
+  const temporaryFile =
+    `${USERS_FILE}.tmp`;
+
+  fs.writeFileSync(
+    temporaryFile,
+    `${JSON.stringify(
+      users,
+      null,
+      2
+    )}\n`,
+    "utf8"
+  );
+
+  fs.renameSync(
+    temporaryFile,
+    USERS_FILE
+  );
+};
+
+const hashPassword = (
+  password
+) => {
+  const salt =
+    crypto.randomBytes(16);
+
+  const hash =
+    crypto.scryptSync(
+      String(password),
+      salt,
+      64
+    );
+
+  return [
+    "scrypt",
+    salt.toString("hex"),
+    hash.toString("hex")
+  ].join("$");
+};
+
+const verifyPassword = (
   password,
-  storedValue,
+  storedValue
 ) => {
   try {
     const [
-      salt,
-      storedHash,
-    ] = String(
-      storedValue || "",
-    ).split(":");
+      algorithm,
+      saltValue,
+      hashValue
+    ] =
+      String(
+        storedValue || ""
+      ).split("$");
 
     if (
-      !salt ||
-      !storedHash
+      algorithm !== "scrypt" ||
+      !saltValue ||
+      !hashValue
     ) {
       return false;
     }
@@ -63,275 +137,207 @@ const verifyPasswordHash = (
     const calculatedHash =
       crypto.scryptSync(
         String(password),
-        salt,
-        64,
+        Buffer.from(
+          saltValue,
+          "hex"
+        ),
+        64
       );
 
-    const storedBuffer =
+    const storedHash =
       Buffer.from(
-        storedHash,
-        "hex",
+        hashValue,
+        "hex"
       );
 
     if (
       calculatedHash.length !==
-      storedBuffer.length
+      storedHash.length
     ) {
       return false;
     }
 
     return crypto.timingSafeEqual(
       calculatedHash,
-      storedBuffer,
+      storedHash
     );
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 
 const toPublicUser = (
-  user,
-) => {
-  if (!user) {
-    return null;
-  }
+  user
+) => ({
+  id:
+    user.id,
 
-  const {
-    passwordHash,
-    ...safeUser
-  } = user;
+  name:
+    `${user.firstname} ${user.lastname}`
+      .trim(),
 
-  return clone(safeUser);
-};
+  firstname:
+    user.firstname,
 
-const findMutableByEmail = (
-  email,
-) => {
-  const normalised =
-    clean(email).toLowerCase();
+  lastname:
+    user.lastname,
 
-  return (
-    users.find(
-      (user) =>
-        user.email ===
-        normalised,
-    ) || null
-  );
-};
+  username:
+    user.username,
 
-const findMutableByUsername = (
-  username,
-) => {
-  const normalised =
-    clean(
-      username,
-    ).toLowerCase();
+  email:
+    user.email,
 
-  return (
-    users.find(
-      (user) =>
-        user.username.toLowerCase() ===
-        normalised,
-    ) || null
-  );
-};
+  initials:
+    [
+      user.firstname?.[0],
+      user.lastname?.[0]
+    ]
+      .filter(Boolean)
+      .join("")
+      .toUpperCase(),
 
-const findById = (userId) => {
-  const user =
-    users.find(
-      (item) =>
-        item.id ===
-        clean(userId),
-    ) || null;
+  role:
+    user.role || "User",
 
-  return toPublicUser(user);
-};
+  gender:
+    user.gender || "",
 
-const findByEmail = (
-  email,
-) =>
-  toPublicUser(
-    findMutableByEmail(email),
-  );
-
-const createUser = (
-  userData,
-) => {
-  const email =
-    clean(
-      userData.email,
-    ).toLowerCase();
-
-  const username =
-    clean(
-      userData.username,
-    );
-
-  if (
-    findMutableByEmail(email)
-  ) {
-    return {
-      ok: false,
-      reason:
-        "email-exists",
-    };
-  }
-
-  if (
-    findMutableByUsername(
-      username,
-    )
-  ) {
-    return {
-      ok: false,
-      reason:
-        "username-exists",
-    };
-  }
-
-  const firstname =
-    clean(
-      userData.firstname,
-    );
-
-  const lastname =
-    clean(
-      userData.lastname,
-    );
-
-  const name =
-    `${firstname} ${lastname}`.trim();
-
-  const now =
-    new Date().toISOString();
-
-  const user = {
-    id: crypto.randomUUID(),
-
-    firstname,
-    lastname,
-    name,
-
-    username,
-    email,
-
-    gender:
-      clean(
-        userData.gender,
-      ),
-
-    description:
-      clean(
-        userData.description,
-      ),
-
-    initials:
-      getInitials(name),
-
-    role: "User",
-
-    passwordHash:
-      hashPassword(
-        userData.password,
-      ),
-
-    createdAt: now,
-    updatedAt: now,
-  };
-
-  users.push(user);
-
-  return {
-    ok: true,
-    user:
-      toPublicUser(user),
-  };
-};
+  description:
+    user.description || ""
+});
 
 const authenticate = (
   email,
-  password,
+  password
 ) => {
   const user =
-    findMutableByEmail(email);
-
-  if (!user) {
-    return {
-      ok: false,
-      reason:
-        "invalid-credentials",
-    };
-  }
-
-  const valid =
-    verifyPasswordHash(
-      password,
-      user.passwordHash,
+    readUsers().find(
+      (candidate) =>
+        normalise(
+          candidate.email
+        ) ===
+        normalise(email)
     );
 
-  if (!valid) {
+  if (
+    !user ||
+    !verifyPassword(
+      password,
+      user.passwordHash
+    )
+  ) {
     return {
       ok: false,
       reason:
-        "invalid-credentials",
+        "invalid-credentials"
     };
   }
 
   return {
     ok: true,
     user:
-      toPublicUser(user),
+      toPublicUser(user)
   };
 };
 
-const getAllUsers = () =>
-  users.map(toPublicUser);
+const createUser = (
+  values
+) => {
+  const users =
+    readUsers();
 
-/*
- * Assessment demonstration account.
- */
-const seedDemoUser = () => {
+  const email =
+    normalise(
+      values.email
+    );
+
+  const username =
+    normalise(
+      values.username
+    );
+
   if (
-    findMutableByEmail(
-      "huy@example.com",
+    users.some(
+      (user) =>
+        normalise(
+          user.email
+        ) === email
     )
   ) {
-    return;
+    return {
+      ok: false,
+      reason:
+        "email-exists"
+    };
   }
 
-  const now =
-    new Date().toISOString();
+  if (
+    users.some(
+      (user) =>
+        normalise(
+          user.username
+        ) === username
+    )
+  ) {
+    return {
+      ok: false,
+      reason:
+        "username-exists"
+    };
+  }
 
-  users.push({
-    id: "user-huy-ba",
-    firstname: "Huy",
-    lastname: "Ba",
-    name: "Huy Ba",
-    username: "huyba",
-    email:
-      "huy@example.com",
+  const user = {
+    id:
+      crypto.randomUUID(),
+
+    firstname:
+      String(
+        values.firstname
+      ).trim(),
+
+    lastname:
+      String(
+        values.lastname
+      ).trim(),
+
+    username:
+      String(
+        values.username
+      ).trim(),
+
+    email,
+
     gender:
-      "prefer_not",
+      values.gender,
+
     description:
-      "Community contributor and Blog author.",
-    initials: "HB",
-    role: "Author",
+      values.description,
+
+    role:
+      "User",
+
     passwordHash:
       hashPassword(
-        "Password123!",
+        values.password
       ),
-    createdAt: now,
-    updatedAt: now,
-  });
-};
 
-seedDemoUser();
+    createdAt:
+      new Date()
+        .toISOString()
+  };
+
+  users.push(user);
+  writeUsers(users);
+
+  return {
+    ok: true,
+    user:
+      toPublicUser(user)
+  };
+};
 
 module.exports = {
   authenticate,
-  createUser,
-  findByEmail,
-  findById,
-  getAllUsers,
-  toPublicUser,
+  createUser
 };

@@ -1,7 +1,12 @@
 "use strict";
 
-const safeRedirectPath = (value, fallback = "/") => {
-  const candidate = String(value || "").trim();
+const safeRedirectPath = (
+  value,
+  fallback = "/"
+) => {
+  const candidate =
+    String(value || "")
+      .trim();
 
   if (
     !candidate.startsWith("/") ||
@@ -12,10 +17,19 @@ const safeRedirectPath = (value, fallback = "/") => {
   }
 
   try {
-    const baseUrl = "http://localhost";
-    const parsedUrl = new URL(candidate, baseUrl);
+    const baseUrl =
+      "http://localhost";
 
-    if (parsedUrl.origin !== baseUrl) {
+    const parsedUrl =
+      new URL(
+        candidate,
+        baseUrl
+      );
+
+    if (
+      parsedUrl.origin !==
+      baseUrl
+    ) {
       return fallback;
     }
 
@@ -29,19 +43,39 @@ const safeRedirectPath = (value, fallback = "/") => {
   }
 };
 
-const attachCurrentUser = (req, res, next) => {
-  const currentUser = req.session?.user || null;
+const attachCurrentUser = (
+  req,
+  res,
+  next
+) => {
+  const currentUser =
+    req.session?.user ||
+    null;
 
-  req.currentUser = currentUser;
-  res.locals.currentUser = currentUser;
-  res.locals.currentUserId = currentUser
-    ? String(currentUser.id)
-    : null;
+  req.currentUser =
+    currentUser;
+
+  res.locals.currentUser =
+    currentUser;
+
+  res.locals.currentUserId =
+    currentUser
+      ? String(
+          currentUser.id
+        )
+      : null;
+
+  res.locals.currentUrl =
+    req.originalUrl || "/";
 
   return next();
 };
 
-const requireAuth = (req, res, next) => {
+const requireAuth = (
+  req,
+  res,
+  next
+) => {
   const currentUser =
     req.currentUser ||
     req.session?.user;
@@ -50,9 +84,10 @@ const requireAuth = (req, res, next) => {
     return next();
   }
 
-  const redirectPath = encodeURIComponent(
-    req.originalUrl || "/"
-  );
+  const redirectPath =
+    encodeURIComponent(
+      req.originalUrl || "/"
+    );
 
   return res.redirect(
     `/shared/login?redirect=${redirectPath}`
@@ -60,7 +95,7 @@ const requireAuth = (req, res, next) => {
 };
 
 module.exports = {
+  safeRedirectPath,
   attachCurrentUser,
-  requireAuth,
-  safeRedirectPath
+  requireAuth
 };

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "user-huy-ba",
+    "firstname": "Huy",
+    "lastname": "Ba",
+    "username": "huyba",
+    "email": "huy@example.com",
+    "gender": "prefer_not",
+    "description": "Demo account for the login flow.",
+    "role": "User",
+    "passwordHash": "scrypt$6c616e67636f2d64656d6f2d75736572$c6c21d9e996717e60f28087b50069b9b5d3713c47f74158d52e8a534dd94f846c4bf7bc59077291ab57be68815d2747d740a4b4bb233f4a26b036b001fcbdf5a",
+    "createdAt": "2026-08-05T00:00:00.000Z"
+  }
+]

@@ -1,18 +1,17 @@
 "use strict";
 
 const express = require(
-  "express",
+  "express"
 );
 
-const authController =
-  require(
-    "../controllers/authController",
-  );
+const authController = require(
+  "../controllers/authController"
+);
 
 const {
-  requireAuth,
+  requireAuth
 } = require(
-  "../middlewares/authMiddleware",
+  "../middlewares/authMiddleware"
 );
 
 const router =
@@ -20,37 +19,37 @@ const router =
 
 router.get(
   "/login",
-  authController.getLoginPage,
+  authController.getLoginPage
 );
 
 router.post(
   "/login",
-  authController.login,
+  authController.login
 );
 
 router.get(
   "/register",
-  authController.getRegisterPage,
+  authController.getRegisterPage
 );
 
 router.post(
   "/register",
-  authController.register,
+  authController.register
 );
 
 router.post(
   "/logout",
   requireAuth,
-  authController.logout,
+  authController.logout
 );
 
 router.get(
   "/forgot-password",
   (req, res) => {
     res.render(
-      "shared/forgot_password",
+      "shared/forgot_password"
     );
-  },
+  }
 );
 
 router.get(
@@ -58,9 +57,9 @@ router.get(
   requireAuth,
   (req, res) => {
     res.render(
-      "shared/profile",
+      "shared/profile"
     );
-  },
+  }
 );
 
 router.get(
@@ -68,18 +67,18 @@ router.get(
   requireAuth,
   (req, res) => {
     res.render(
-      "shared/admin/admin",
+      "shared/admin/admin"
     );
-  },
+  }
 );
 
 router.get(
   "/sitemap",
   (req, res) => {
     res.render(
-      "shared/sitemap",
+      "shared/sitemap"
     );
-  },
+  }
 );
 
 module.exports = router;
