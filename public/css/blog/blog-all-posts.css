@@ -180,3 +180,62 @@ body:has(#post-created:target) .created-post {
   font-style: italic;
   font-size: 30px;
 }
+
+/* Sort control */
+
+.blog-sort-control {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.blog-sort-control span {
+  display: inline-block;
+  margin: 0;
+  font: inherit;
+}
+
+.blog-sort-control select {
+  width: auto;
+  min-width: 100px;
+  height: 44px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid rgba(116, 81, 45, 0.25);
+  border-radius: 999px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(73, 40, 22, 0.06);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.blog-sort-control select:hover {
+  border-color: rgba(163, 29, 29, 0.45);
+}
+
+.blog-sort-control select:focus {
+  border-color: var(--red);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 0 0 4px rgba(163, 29, 29, 0.08),
+    0 8px 20px rgba(73, 40, 22, 0.08);
+}

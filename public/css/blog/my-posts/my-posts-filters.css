@@ -45,16 +45,14 @@
 
 #status-all:checked~.my-posts-layout .my-posts-filters label[for="status-all"],
 #status-published:checked~.my-posts-layout .my-posts-filters label[for="status-published"],
-#status-draft:checked~.my-posts-layout .my-posts-filters label[for="status-draft"],
-#status-archived:checked~.my-posts-layout .my-posts-filters label[for="status-archived"] {
+#status-draft:checked~.my-posts-layout .my-posts-filters label[for="status-draft"] {
     border-color: var(--darkred);
     color: var(--cream);
     background: var(--darkred);
 }
 
 #status-published:checked~.my-posts-layout .my-post-card:not(.post-published),
-#status-draft:checked~.my-posts-layout .my-post-card:not(.post-draft),
-#status-archived:checked~.my-posts-layout .my-post-card:not(.post-archived) {
+#status-draft:checked~.my-posts-layout .my-post-card:not(.post-draft){
     display: none;
 }
 

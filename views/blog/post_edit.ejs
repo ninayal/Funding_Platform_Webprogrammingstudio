@@ -25,15 +25,10 @@
       : {};
 
   const viewCategories =
-    typeof categories !== "undefined" &&
-    Array.isArray(categories)
-      ? categories
-      : [
-          "Mission",
-          "Donation",
-          "Places",
-          "Guide"
-        ];
+  typeof categories !== "undefined" &&
+  Array.isArray(categories)
+    ? categories
+    : [];
 
   const viewAuthor =
     typeof author !== "undefined" &&
@@ -364,34 +359,34 @@
                   />
                 </label>
 
-                <label>
-                  Category
+                <label class="post-edit-field post-edit-field--compact">
+                Category
 
-                  <select
+                <select
                     name="category"
                     required
                     aria-invalid="<%= viewErrors.category ? 'true' : 'false' %>"
                     data-post-field="category"
-                  >
+                >
                     <% viewCategories.forEach((category) => { %>
-                      <option
+                    <option
                         value="<%= category %>"
                         <%= viewValues.category === category
-                          ? "selected"
-                          : ""
+                        ? "selected"
+                        : ""
                         %>
-                      >
+                    >
                         <%= category %>
-                      </option>
+                    </option>
                     <% }); %>
-                  </select>
+                </select>
 
-                  <small
+                <small
                     class="post-field-error"
                     data-post-error="category"
-                  >
+                >
                     <%= viewErrors.category || "" %>
-                  </small>
+                </small>
                 </label>
               </div>
 

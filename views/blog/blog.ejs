@@ -1,573 +1,364 @@
-<%
-  const viewPageTitle =
-    typeof pageTitle !== "undefined" && pageTitle
-      ? pageTitle
-      : "Journal";
+<% const viewPageTitle=typeof pageTitle !=="undefined" && pageTitle ? pageTitle : "Journal" ; const
+  viewPageSubtitle=typeof pageSubtitle !=="undefined" && pageSubtitle ? pageSubtitle : "Stories, thoughts and ideas." ;
+  const viewMyPostCount=typeof myPostCount !=="undefined" ? myPostCount : 0; const viewCategories=typeof categories
+  !=="undefined" && Array.isArray(categories) ? categories : []; const viewPosts=typeof posts !=="undefined" &&
+  Array.isArray(posts) ? posts : []; const viewFeaturedPosts=typeof featuredPosts !=="undefined" &&
+  Array.isArray(featuredPosts) ? featuredPosts : []; const viewLeadStory=typeof leadStory !=="undefined" ? leadStory :
+  null; %>
 
-  const viewPageSubtitle =
-    typeof pageSubtitle !== "undefined" && pageSubtitle
-      ? pageSubtitle
-      : "Stories, thoughts and ideas.";
+  <!DOCTYPE html>
+  <html lang="en">
 
-  const viewMyPostCount =
-    typeof myPostCount !== "undefined"
-      ? myPostCount
-      : 0;
-
-  const viewCategories =
-    typeof categories !== "undefined" &&
-    Array.isArray(categories)
-      ? categories
-      : [];
-
-  const viewPosts =
-    typeof posts !== "undefined" &&
-    Array.isArray(posts)
-      ? posts
-      : [];
-
-  const viewFeaturedPosts =
-    typeof featuredPosts !== "undefined" &&
-    Array.isArray(featuredPosts)
-      ? featuredPosts
-      : [];
-
-  const viewLeadStory =
-    typeof leadStory !== "undefined"
-      ? leadStory
-      : null;
-%>
-
-<!DOCTYPE html>
-<html lang="en">
   <head>
     <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-      name="theme-color"
-      content="#A31D1D"
-    />
+    <meta name="theme-color" content="#A31D1D" />
 
     <title>
       Làng &amp; Co. — <%= viewPageTitle %>
     </title>
 
-    <link
-      rel="stylesheet"
-      href="/css/landingpage/index.css"
-    />
+    <link rel="stylesheet" href="/css/landingpage/index.css" />
 
-    <link
-      rel="stylesheet"
-      href="/css/header_v2.css"
-    />
+    <link rel="stylesheet" href="/css/header_v2.css" />
 
-    <link
-      rel="stylesheet"
-      href="/css/shared-include.css"
-    />
+    <link rel="stylesheet" href="/css/shared-include.css" />
 
-    <link
-      rel="stylesheet"
-      href="/css/footer.css"
-    />
+    <link rel="stylesheet" href="/css/footer.css" />
 
-    <link
-      rel="stylesheet"
-      href="/css/blog/blog.css"
-    />
+    <link rel="stylesheet" href="/css/blog/blog.css" />
 
-    <link
-      rel="stylesheet"
-      href="/css/blog/blog-dynamic.css?v=20260731-1"
-    />
+    <link rel="stylesheet" href="/css/blog/blog-dynamic.css?v=20260731-1" />
 
-    <script
-      src="/js/blog/blog.js?v=20260731-1"
-      defer
-    ></script>
+    <script src="/js/blog/blog.js?v=20260731-1" defer></script>
   </head>
 
   <body>
-    <%- include("../partials/header_v2", {
-      activePage: "blog",
-      showAccountIcon: false
-    }) %>
+    <%- include("../partials/header_v2", { activePage: "blog" , showAccountIcon: false }) %>
 
-    <main
-      class="blog-page"
-      id="journal"
-    >
-      <nav
-        class="blog-breadcrumb blog-container"
-        aria-label="Breadcrumb"
-      >
-        <a href="/">
-          Home
-        </a>
+      <main class="blog-page" id="journal">
+        <nav class="blog-breadcrumb blog-container" aria-label="Breadcrumb">
+          <a href="/">
+            Home
+          </a>
 
-        <span aria-hidden="true">
-          •
-        </span>
+          <span aria-hidden="true">
+            •
+          </span>
 
-        <span aria-current="page">
-          <%= viewPageTitle %>
-        </span>
-      </nav>
+          <span aria-current="page">
+            <%= viewPageTitle %>
+          </span>
+        </nav>
 
-      <header class="blog-page-header blog-container">
-        <h1>
-          <%= viewPageTitle %>
-        </h1>
+        <header class="blog-page-header blog-container">
+          <h1>
+            <%= viewPageTitle %>
+          </h1>
 
-        <p class="blog-page-header__subtitle">
-          <%= viewPageSubtitle %>
-        </p>
-      </header>
+          <p class="blog-page-header__subtitle">
+            <%= viewPageSubtitle %>
+          </p>
+        </header>
 
-      <!--
+        <!--
         Radio inputs remain because the existing
         Blog CSS and JavaScript use this structure.
       -->
-      <input
-        class="blog-state-input"
-        type="radio"
-        name="post-filter"
-        id="filter-all"
-        value="all"
-        checked
-      />
+        <input class="blog-state-input" type="radio" name="post-filter" id="filter-all" value="all" checked />
 
-      <% viewCategories.forEach((category) => { %>
-        <input
-          class="blog-state-input"
-          type="radio"
-          name="post-filter"
-          id="filter-<%= category.slug %>"
-          value="<%= category.slug %>"
-        />
-      <% }); %>
+        <% viewCategories.forEach((category)=> { %>
+          <input class="blog-state-input" type="radio" name="post-filter" id="filter-<%= category.slug %>"
+            value="<%= category.slug %>" />
+          <% }); %>
 
-      <nav
-        class="blog-category-tabs blog-container"
-        aria-label="Journal categories"
-      >
-        <label
-          class="blog-category-tab"
-          for="filter-all"
-        >
-          All
-        </label>
+            <nav class="blog-category-tabs blog-container" aria-label="Journal categories">
+              <label class="blog-category-tab" for="filter-all">
+                All
+              </label>
 
-        <% viewCategories.forEach((category) => { %>
-          <label
-            class="blog-category-tab"
-            for="filter-<%= category.slug %>"
-          >
-            <%= category.name %>
-          </label>
-        <% }); %>
-      </nav>
+              <% viewCategories.forEach((category)=> { %>
+                <label class="blog-category-tab" for="filter-<%= category.slug %>">
+                  <%= category.name %>
+                </label>
+                <% }); %>
+            </nav>
 
-      <div class="blog-shell blog-container">
-        <div class="blog-toolbar">
-          <div class="blog-toolbar__left">
-            <form
-              class="blog-search"
-              action="/blog"
-              method="get"
-              role="search"
-              aria-label="Search blog posts"
-              data-blog-search-form
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="11"
-                  cy="11"
-                  r="7"
-                ></circle>
+            <div class="blog-shell blog-container">
+              <div class="blog-toolbar">
+                <div class="blog-toolbar__left">
+                  <form class="blog-search" action="/blog" method="get" role="search" aria-label="Search blog posts"
+                    data-blog-search-form>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                      <circle cx="11" cy="11" r="7"></circle>
 
-                <path
-                  d="m20 20-3.8-3.8"
-                ></path>
-              </svg>
+                      <path d="m20 20-3.8-3.8"></path>
+                    </svg>
 
-              <input
-                id="blog-search-input"
-                name="q"
-                type="search"
-                placeholder="Search title, author, date, tag, or story text..."
-                autocomplete="off"
-                data-blog-search-input
-              />
+                    <input id="blog-search-input" name="q" type="search"
+                      placeholder="Search title, author, date, tag, or story text..." autocomplete="off"
+                      data-blog-search-input />
 
-              <button
-                class="blog-search__clear"
-                type="reset"
-                aria-label="Clear blog search"
-                data-blog-search-clear
-              >
-                ×
-              </button>
-            </form>
+                    <button class="blog-search__clear" type="reset" aria-label="Clear blog search"
+                      data-blog-search-clear>
+                      ×
+                    </button>
+                  </form>
 
-            <a
-              class="blog-account-link"
-              href="/blog/my-posts"
-              aria-label="Open Blog post management"
-            >
-              <span
-                class="blog-account-link__avatar"
-                aria-hidden="true"
-              >
-                HB
-              </span>
+                  <a class="blog-account-link" href="/blog/my-posts" aria-label="Open Blog post management">
+                    <span class="blog-account-link__avatar" aria-hidden="true">
+                      <div class="blog-account__avatar">
+                        <%= blogActor.initials %>
+                      </div>
+                    </span>
 
-              <span class="blog-account-link__copy">
-                <strong>
-                  Manage Posts
-                </strong>
+                    <span class="blog-account-link__copy">
+                      <strong>
+                        Manage Posts
+                      </strong>
 
-                <small>
-                  <%= viewMyPostCount %>
-                  <%= viewMyPostCount === 1
-                    ? "story"
-                    : "stories"
-                  %>
-                </small>
-              </span>
+                      <small>
+                        <%= viewMyPostCount %>
+                          <%= viewMyPostCount===1 ? "story" : "stories" %>
+                      </small>
+                    </span>
 
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-              >
-                <path
-                  d="m9 18 6-6-6-6"
-                ></path>
-              </svg>
-            </a>
-          </div>
-
-          <div class="blog-toolbar__actions">
-            <a
-              class="blog-button blog-button--primary"
-              href="/blog/create"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 5v14M5 12h14"
-                ></path>
-              </svg>
-
-              Create Post
-            </a>
-          </div>
-        </div>
-
-        <% if (viewLeadStory) { %>
-          <section
-            class="lead-story-section"
-            aria-labelledby="lead-story-heading"
-          >
-            <p class="section-kicker">
-              From the team
-            </p>
-
-            <article
-              class="lead-story post <%= viewLeadStory.categorySlug %>"
-              data-blog-post
-              data-category="<%= viewLeadStory.categorySlug %>"
-              data-search="<%= viewLeadStory.searchableText %>"
-            >
-              <a
-                class="lead-image"
-                href="<%= viewLeadStory.url %>"
-                aria-label="Read <%= viewLeadStory.title %>"
-              >
-                <img
-                  src="<%= viewLeadStory.image.listUrl || viewLeadStory.image.url %>"
-                  alt="<%= viewLeadStory.image.alt %>"
-                />
-
-                <% if (viewLeadStory.image.listCaption) { %>
-                  <span class="image-caption">
-                    <%= viewLeadStory.image.listCaption %>
-                  </span>
-                <% } %>
-              </a>
-
-              <div class="lead-copy">
-                <div class="post-meta-line">
-                  <span class="tag">
-                    <%= viewLeadStory.category %>
-                  </span>
-
-                  <time datetime="<%= viewLeadStory.publishedAt %>">
-                    <%= viewLeadStory.displayDate %>
-                  </time>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                      <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                  </a>
                 </div>
 
-                <h2 id="lead-story-heading">
-                  <a href="<%= viewLeadStory.url %>">
-                    <%= viewLeadStory.title %>
-                  </a>
-                </h2>
+                <div class="blog-toolbar__actions">
+                  <a class="blog-button blog-button--primary" href="/blog/create">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14"></path>
+                    </svg>
 
-                <p class="lead-summary">
-                  <%= viewLeadStory.summary %>
-                </p>
-
-                <div class="author-row">
-                  <div
-                    class="author-avatar"
-                    aria-hidden="true"
-                  >
-                    <%= viewLeadStory.author.initials %>
-                  </div>
-
-                  <div>
-                    <strong>
-                      <%= viewLeadStory.author.name %>
-                    </strong>
-
-                    <span>
-                      <%= viewLeadStory.readTime %> min read
-                    </span>
-                  </div>
-                </div>
-
-                <div class="lead-actions">
-                  <a
-                    class="text-link"
-                    href="<%= viewLeadStory.url %>"
-                  >
-                    Read the full story
-
-                    <span aria-hidden="true">
-                      ↗
-                    </span>
-                  </a>
-
-                  <a
-                    class="icon-link"
-                    href="<%= viewLeadStory.shareEmailUrl %>"
-                    aria-label="Share this post by email"
-                  >
-                    Share
+                    Create Post
                   </a>
                 </div>
               </div>
-            </article>
-          </section>
-        <% } %>
 
-        <% if (viewFeaturedPosts.length > 0) { %>
-          <section
-            class="featured-section"
-            aria-labelledby="featured-heading"
-          >
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">
-                  Selected reading
-                </p>
-
-                <h2 id="featured-heading">
-                  Featured <em>stories</em>
-                </h2>
-              </div>
-            </div>
-
-            <div class="featured-grid">
-              <% viewFeaturedPosts.forEach((post) => { %>
-                <article
-                  class="featured-card post <%= post.categorySlug %>"
-                  data-blog-post
-                  data-category="<%= post.categorySlug %>"
-                  data-search="<%= post.searchableText %>"
-                >
-                  <a
-                    class="card-image"
-                    href="<%= post.url %>"
-                  >
-                    <img
-                      src="<%= post.image.listUrl || post.image.url %>"
-                      alt="<%= post.image.alt %>"
-                    />
-                  </a>
-
-                  <div class="card-body">
-                    <div class="post-meta-line">
-                      <span class="tag">
-                        <%= post.category %>
-                      </span>
-
-                      <time datetime="<%= post.publishedAt %>">
-                        <%= post.displayDate %>
-                      </time>
-                    </div>
-
-                    <h3>
-                      <a href="<%= post.url %>">
-                        <%= post.title %>
-                      </a>
-                    </h3>
-
-                    <p>
-                      <%= post.archiveSummary || post.summary %>
-                    </p>
-
-                    <div class="card-footer">
-                      <span>
-                        By <%= post.author.name %>
-                      </span>
-
-                      <a href="<%= post.url %>">
-                        Read story
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              <% }); %>
-            </div>
-          </section>
-        <% } %>
-
-        <section
-          class="all-posts-section"
-          aria-labelledby="all-posts-heading"
-        >
-          <div class="section-heading all-heading">
-            <div>
-              <p class="section-kicker">
-                The archive
-              </p>
-
-              <h2 id="all-posts-heading">
-                All posted <em>stories</em>
-              </h2>
-            </div>
-
-            <label
-              class="blog-sort-control"
-              for="blog-sort"
-            >
-              <span>
-                Sort stories
-              </span>
-
-              <select
-                id="blog-sort"
-                data-blog-sort
-              >
-                <option value="newest">
-                  Newest first
-                </option>
-
-                <option value="oldest">
-                  Oldest first
-                </option>
-
-                <option value="title">
-                  Title A–Z
-                </option>
-              </select>
-            </label>
-          </div>
-
-          <div
-            class="post-list"
-            id="blog-post-list"
-            aria-label="All blog post previews"
-          >
-            <% viewPosts.forEach((post) => { %>
-              <article
-                class="post-row post <%= post.categorySlug %>"
-                data-blog-post
-                data-category="<%= post.categorySlug %>"
-                data-search="<%= post.searchableText %>"
-                data-title="<%= post.title.toLowerCase() %>"
-                data-date="<%= post.publishedAt %>"
-              >
-                <a
-                  class="row-thumb"
-                  href="<%= post.url %>"
-                >
-                  <img
-                    src="<%= post.image.listUrl || post.image.url %>"
-                    alt="<%= post.image.alt %>"
-                  />
-                </a>
-
-                <div class="row-main">
-                  <div class="post-meta-line">
-                    <span class="tag">
-                      <%= post.category %>
-                    </span>
-
-                    <time datetime="<%= post.publishedAt %>">
-                      <%= post.displayDate %>
-                    </time>
-                  </div>
-
-                  <h3>
-                    <a href="<%= post.url %>">
-                      <%= post.title %>
-                    </a>
-                  </h3>
-
-                  <p>
-                    <%= post.archiveSummary || post.summary %>
+              <% if (viewLeadStory) { %>
+                <section class="lead-story-section" aria-labelledby="lead-story-heading">
+                  <p class="section-kicker">
+                    From the team
                   </p>
 
-                  <span class="row-author">
-                    <%= post.author.name %>
-                  </span>
-                </div>
+                  <article class="lead-story post <%= viewLeadStory.categorySlug %>" data-blog-post
+                    data-category="<%= viewLeadStory.categorySlug %>" data-search="<%= viewLeadStory.searchableText %>">
+                    <a class="lead-image" href="<%= viewLeadStory.url %>" aria-label="Read <%= viewLeadStory.title %>">
+                      <img src="<%= viewLeadStory.image.listUrl || viewLeadStory.image.url %>"
+                        alt="<%= viewLeadStory.image.alt %>" />
 
-                <a
-                  class="row-arrow"
-                  href="<%= post.url %>"
-                  aria-label="Open <%= post.title %>"
-                >
-                  ↗
-                </a>
-              </article>
-            <% }); %>
-          </div>
+                      <% if (viewLeadStory.image.listCaption) { %>
+                        <span class="image-caption">
+                          <%= viewLeadStory.image.listCaption %>
+                        </span>
+                        <% } %>
+                    </a>
 
-          <p
-            class="blog-empty-message"
-            id="blog-search-empty"
-            role="status"
-            hidden
-          >
-            No stories match your current search and category.
-          </p>
-        </section>
-      </div>
-    </main>
+                    <div class="lead-copy">
+                      <div class="post-meta-line">
+                        <span class="tag">
+                          <%= viewLeadStory.category %>
+                        </span>
 
-    <%- include("../partials/footer") %>
+                        <time datetime="<%= viewLeadStory.publishedAt %>">
+                          <%= viewLeadStory.displayDate %>
+                        </time>
+                      </div>
+
+                      <h2 id="lead-story-heading">
+                        <a href="<%= viewLeadStory.url %>">
+                          <%= viewLeadStory.title %>
+                        </a>
+                      </h2>
+
+                      <p class="lead-summary">
+                        <%= viewLeadStory.summary %>
+                      </p>
+
+                      <div class="author-row">
+                        <div class="author-avatar" aria-hidden="true">
+                          <%= viewLeadStory.author.initials %>
+                        </div>
+
+                        <div>
+                          <strong>
+                            <%= viewLeadStory.author.name %>
+                          </strong>
+
+                          <span>
+                            <%= viewLeadStory.readTime %> min read
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="lead-actions">
+                        <a class="text-link" href="<%= viewLeadStory.url %>">
+                          Read the full story
+
+                          <span aria-hidden="true">
+                            ↗
+                          </span>
+                        </a>
+
+                        <a class="icon-link" href="<%= viewLeadStory.shareEmailUrl %>"
+                          aria-label="Share this post by email">
+                          Share
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </section>
+                <% } %>
+
+                  <% if (viewFeaturedPosts.length> 0) { %>
+                    <section class="featured-section" aria-labelledby="featured-heading">
+                      <div class="section-heading">
+                        <div>
+                          <p class="section-kicker">
+                            Selected reading
+                          </p>
+
+                          <h2 id="featured-heading">
+                            Featured <em>stories</em>
+                          </h2>
+                        </div>
+                      </div>
+
+                      <div class="featured-grid">
+                        <% viewFeaturedPosts.forEach((post)=> { %>
+                          <article class="featured-card post <%= post.categorySlug %>" data-blog-post
+                            data-category="<%= post.categorySlug %>" data-search="<%= post.searchableText %>">
+                            <a class="card-image" href="<%= post.url %>">
+                              <img src="<%= post.image.listUrl || post.image.url %>" alt="<%= post.image.alt %>" />
+                            </a>
+
+                            <div class="card-body">
+                              <div class="post-meta-line">
+                                <span class="tag">
+                                  <%= post.category %>
+                                </span>
+
+                                <time datetime="<%= post.publishedAt %>">
+                                  <%= post.displayDate %>
+                                </time>
+                              </div>
+
+                              <h3>
+                                <a href="<%= post.url %>">
+                                  <%= post.title %>
+                                </a>
+                              </h3>
+
+                              <p>
+                                <%= post.archiveSummary || post.summary %>
+                              </p>
+
+                              <div class="card-footer">
+                                <span>
+                                  By <%= post.author.name %>
+                                </span>
+
+                                <a href="<%= post.url %>">
+                                  Read story
+                                </a>
+                              </div>
+                            </div>
+                          </article>
+                          <% }); %>
+                      </div>
+                    </section>
+                    <% } %>
+
+                      <section class="all-posts-section" aria-labelledby="all-posts-heading">
+                        <div class="section-heading all-heading">
+                          <div>
+                            <p class="section-kicker">
+                              The archive
+                            </p>
+
+                            <h2 id="all-posts-heading">
+                              All posted <em>stories</em>
+                            </h2>
+                          </div>
+
+                          <label class="blog-sort-control" for="blog-sort">
+                            <span>
+                              Sort stories
+                            </span>
+
+                            <select id="blog-sort" data-blog-sort>
+                              <option value="newest">
+                                Newest first
+                              </option>
+
+                              <option value="oldest">
+                                Oldest first
+                              </option>
+
+                              <option value="title">
+                                Title A–Z
+                              </option>
+                            </select>
+                          </label>
+                        </div>
+
+                        <div class="post-list" id="blog-post-list" aria-label="All blog post previews">
+                          <% viewPosts.forEach((post)=> { %>
+                            <article class="post-row post <%= post.categorySlug %>" data-blog-post
+                              data-category="<%= post.categorySlug %>" data-search="<%= post.searchableText %>"
+                              data-title="<%= post.title.toLowerCase() %>" data-date="<%= post.publishedAt %>">
+                              <a class="row-thumb" href="<%= post.url %>">
+                                <img src="<%= post.image.listUrl || post.image.url %>" alt="<%= post.image.alt %>" />
+                              </a>
+
+                              <div class="row-main">
+                                <div class="post-meta-line">
+                                  <span class="tag">
+                                    <%= post.category %>
+                                  </span>
+
+                                  <time datetime="<%= post.publishedAt %>">
+                                    <%= post.displayDate %>
+                                  </time>
+                                </div>
+
+                                <h3>
+                                  <a href="<%= post.url %>">
+                                    <%= post.title %>
+                                  </a>
+                                </h3>
+
+                                <p>
+                                  <%= post.archiveSummary || post.summary %>
+                                </p>
+
+                                <span class="row-author">
+                                  <%= post.author.name %>
+                                </span>
+                              </div>
+
+                              <a class="row-arrow" href="<%= post.url %>" aria-label="Open <%= post.title %>">
+                                ↗
+                              </a>
+                            </article>
+                            <% }); %>
+                        </div>
+
+                        <p class="blog-empty-message" id="blog-search-empty" role="status" hidden>
+                          No stories match your current search and category.
+                        </p>
+                      </section>
+            </div>
+      </main>
+
+      <%- include("../partials/footer") %>
   </body>
-</html>
+
+  </html>
