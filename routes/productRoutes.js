@@ -24,12 +24,8 @@ const reviewController = require(
   "../controllers/reviewController"
 );
 
-const router = express.Router();
-
-/*
- * Only authenticated users may create,
- * edit, update, or delete reviews.
- */
+const router =
+  express.Router();
 
 router.post(
   "/:slug/reviews",
@@ -56,10 +52,6 @@ router.post(
   requireAuth,
   reviewController.deleteReview
 );
-
-/*
- * Product pages remain publicly accessible.
- */
 
 router.get(
   "/:slug",

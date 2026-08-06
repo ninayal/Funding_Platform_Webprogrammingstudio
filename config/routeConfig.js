@@ -1,6 +1,8 @@
 "use strict";
 
-const express = require("express");
+const express = require(
+  "express"
+);
 
 const homeRoutes = require(
   "../routes/homeRoutes"
@@ -30,19 +32,42 @@ const giftcardRoutes = require(
   "../routes/giftcardRoutes"
 );
 
-const router = express.Router();
+const router =
+  express.Router();
 
-router.use("/", homeRoutes);
-router.use("/shared", sharedRoutes);
-router.use("/cart", cartRoutes);
-router.use("/blog", blogRoutes);
+router.use(
+  "/",
+  homeRoutes
+);
 
-// One dynamic product-detail template for every product.
-router.use("/products", productRoutes);
+router.use(
+  "/shared",
+  sharedRoutes
+);
 
-// Legacy review URLs only redirect to dynamic product URLs.
-router.use("/review", reviewRoutes);
+router.use(
+  "/cart",
+  cartRoutes
+);
 
-router.use("/giftcard", giftcardRoutes);
+router.use(
+  "/blog",
+  blogRoutes
+);
+
+router.use(
+  "/products",
+  productRoutes
+);
+
+router.use(
+  "/review",
+  reviewRoutes
+);
+
+router.use(
+  "/giftcard",
+  giftcardRoutes
+);
 
 module.exports = router;
