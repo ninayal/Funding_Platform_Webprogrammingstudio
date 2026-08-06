@@ -1,4 +1,5 @@
 const landingModel = require("../models/landingModel");
+const productModel = require("../models/productModel");
 const cartModel = require("../models/cartModel");
 
 const getHomePage = (req, res) => {
@@ -8,6 +9,7 @@ const getHomePage = (req, res) => {
 
   res.render("home/index", {
     ...landingModel.getLandingPageData(),
+    featuredProducts: productModel.getFeaturedProducts(6),
     pageTitle: "Home",
     activePage: "home",
     currentUser,

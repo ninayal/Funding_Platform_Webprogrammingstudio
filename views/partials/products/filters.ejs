@@ -1,49 +1,84 @@
 <aside class="shop-sidebar" aria-label="Filters">
-    <details class="filter-group" open>
-        <summary>Price</summary>
-        <div class="filter-options">
-            <label><input type="checkbox" name="price" value="under-25"> Under $25</label>
-            <label><input type="checkbox" name="price" value="25-50"> $25 – $50</label>
-            <label><input type="checkbox" name="price" value="50-100"> $50 – $100</label>
-            <label><input type="checkbox" name="price" value="100-plus"> $100 &amp; over</label>
-        </div>
-    </details>
-
-    <details class="filter-group">
-        <summary>Craft Village</summary>
-        <div class="filter-options">
-            <% filterOptions.makers.forEach(maker=>{ %>
-                <label><input type="checkbox" name="maker" value="<%= maker %>">
-                    <%= maker %>
+    <form id="product-filter-form" class="filter-form" action="/cart/products" method="GET">
+        <details class="filter-group" open>
+            <summary>Price</summary>
+            <div class="filter-options">
+                <label>
+                    <input type="checkbox" name="price" value="under-25"
+                        <%=selectedFilters.price.includes("under-25")?"checked":"" %>>
+                    Under $25
                 </label>
-                <% }) %>
-        </div>
-    </details>
-
-    <details class="filter-group">
-        <summary>Material</summary>
-        <div class="filter-options">
-            <% filterOptions.materials.forEach(material=>{ %>
-                <label><input type="checkbox" name="material" value="<%= material %>">
-                    <%= material %>
+                <label>
+                    <input type="checkbox" name="price" value="25-50"
+                        <%=selectedFilters.price.includes("25-50")?"checked":"" %>>
+                    $25–$50
                 </label>
-                <% }) %>
-        </div>
-    </details>
+                <label>
+                    <input type="checkbox" name="price" value="50-100"
+                        <%=selectedFilters.price.includes("50-100")?"checked":"" %>>
+                    $50–$100
+                </label>
+                <label>
+                    <input type="checkbox" name="price" value="100-plus"
+                        <%=selectedFilters.price.includes("100-plus")?"checked":"" %>>
+                    $100 and over
+                </label>
+            </div>
+        </details>
 
-    <details class="filter-group">
-        <summary>Availability</summary>
-        <div class="filter-options">
-            <label><input type="checkbox" name="availability" value="in-stock"> In stock</label>
-            <label><input type="checkbox" name="availability" value="low-stock"> Low stock</label>
-        </div>
-    </details>
+        <details class="filter-group">
+            <summary>Craft Village</summary>
+            <div class="filter-options">
+                <% filterOptions.makers.forEach(maker=>{ %>
+                    <label>
+                        <input type="checkbox" name="maker" value="<%= maker %>"
+                            <%=selectedFilters.maker.includes(maker)?"checked":"" %>>
+                        <%= maker %>
+                    </label>
+                    <% }) %>
+            </div>
+        </details>
 
-    <details class="filter-group">
-        <summary>Rating</summary>
-        <div class="filter-options">
-            <label><input type="checkbox" name="rating" value="4"> ★★★★ &amp; up</label>
-            <label><input type="checkbox" name="rating" value="5"> ★★★★★ only</label>
-        </div>
-    </details>
+        <details class="filter-group">
+            <summary>Material</summary>
+            <div class="filter-options">
+                <% filterOptions.materials.forEach(material=>{ %>
+                    <label>
+                        <input type="checkbox" name="material" value="<%= material %>"
+                            <%=selectedFilters.material.includes(material)?"checked":"" %>>
+                        <%= material %>
+                    </label>
+                    <% }) %>
+            </div>
+        </details>
+
+        <details class="filter-group">
+            <summary>Availability</summary>
+            <div class="filter-options">
+                <% filterOptions.availability.forEach(option=>{ %>
+                    <label>
+                        <input type="checkbox" name="availability" value="<%= option.value %>"
+                            <%=selectedFilters.availability.includes(option.value)?"checked":"" %>>
+                        <%= option.label %>
+                    </label>
+                    <% }) %>
+            </div>
+        </details>
+
+        <details class="filter-group">
+            <summary>Rating</summary>
+            <div class="filter-options">
+                <% filterOptions.ratings.forEach(option=>{ %>
+                    <label>
+                        <input type="checkbox" name="rating" value="<%= option.value %>"
+                            <%=selectedFilters.rating.includes(option.value)?"checked":"" %>>
+                        <%= option.label %>
+                    </label>
+                    <% }) %>
+            </div>
+        </details>
+
+        <button type="submit" class="filter-apply-btn">Apply Filters</button>
+        <a href="/cart/products" class="filter-reset-btn">Clear Filters</a>
+    </form>
 </aside>

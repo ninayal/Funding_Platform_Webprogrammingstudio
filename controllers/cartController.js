@@ -10,10 +10,7 @@ const getCurrentUser = (req, res) => {
 };
 
 const getCurrentUserId = (req) => {
-  if (req.session?.user?.id) {
-    return String(req.session.user.id);
-  }
-  return "demo-user";
+  return req.session?.user?.id ? String(req.session.user.id) : "demo-user";
 };
 
 const wantsJson = (req) => {
@@ -54,8 +51,8 @@ const prepareCartView = (cart) => {
 const getProductsPage = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
-    const productsPageData = productModel.getProductsPageData();
     const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const productsPageData = productModel.getProductsPageData(req.query);
 
     return res.render("cart/products", {
       ...productsPageData,
@@ -72,13 +69,19 @@ const getCartPage = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const excludedIds = cart.items.map((item) => item.productId);
+    const recommendedProducts = productModel.getRecommendedProducts(
+      excludedIds,
+      4
+    );
 
     return res.render("cart/cart", {
       pageTitle: "Shopping Cart",
       activePage: "shop",
       currentUser: getCurrentUser(req, res),
       cartCount: cart.totalQuantity,
-      cart
+      cart,
+      recommendedProducts
     });
   } catch (error) {
     return next(error);
@@ -134,7 +137,6 @@ const addToCart = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId, quantity = 1 } = req.body;
-
     const result = cartModel.addItemToCart(
       userId,
       productId,
@@ -145,12 +147,11 @@ const addToCart = (req, res, next) => {
       if (wantsJson(req)) {
         return res.status(400).json(result);
       }
+
       return res.status(400).send(result.message);
     }
 
-    const cart = prepareCartView(
-      cartModel.getCartSummary(userId)
-    );
+    const cart = prepareCartView(cartModel.getCartSummary(userId));
 
     if (wantsJson(req)) {
       return res.json({
@@ -170,7 +171,6 @@ const updateCartItem = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId, quantity } = req.body;
-
     const result = cartModel.updateCartItem(
       userId,
       productId,
@@ -181,12 +181,11 @@ const updateCartItem = (req, res, next) => {
       if (wantsJson(req)) {
         return res.status(400).json(result);
       }
+
       return res.status(400).send(result.message);
     }
 
-    const cart = prepareCartView(
-      cartModel.getCartSummary(userId)
-    );
+    const cart = prepareCartView(cartModel.getCartSummary(userId));
 
     if (wantsJson(req)) {
       return res.json({
@@ -206,7 +205,6 @@ const removeCartItem = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId } = req.body;
-
     const result = cartModel.removeCartItem(
       userId,
       productId
@@ -216,12 +214,11 @@ const removeCartItem = (req, res, next) => {
       if (wantsJson(req)) {
         return res.status(400).json(result);
       }
+
       return res.status(400).send(result.message);
     }
 
-    const cart = prepareCartView(
-      cartModel.getCartSummary(userId)
-    );
+    const cart = prepareCartView(cartModel.getCartSummary(userId));
 
     if (wantsJson(req)) {
       return res.json({
@@ -240,9 +237,7 @@ const removeCartItem = (req, res, next) => {
 const submitCheckout = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
-    const cart = prepareCartView(
-      cartModel.getCartSummary(userId)
-    );
+    const cart = prepareCartView(cartModel.getCartSummary(userId));
 
     if (!cart.hasItems) {
       return res.redirect("/cart");
@@ -266,8 +261,6 @@ const submitCheckout = (req, res, next) => {
       req.body.shipping === "express"
         ? EXPRESS_SHIPPING_FEE
         : 0;
-
-    const total = cart.subtotal + shippingFee;
 
     const order = orderModel.createOrder({
       userId,
@@ -297,7 +290,7 @@ const submitCheckout = (req, res, next) => {
       },
       giftNote: String(req.body.gift_note || "").trim(),
       subtotal: cart.subtotal,
-      total
+      total: cart.subtotal + shippingFee
     });
 
     cartModel.clearCart(userId);

@@ -14,26 +14,19 @@
 </head>
 
 <body>
-
-    <%- include("../partials/header",{ activePage, currentUser, cartCount }) %>
-
+    <%- include("../partials/header",{activePage,currentUser,cartCount}) %>
         <%- include("../partials/cart/hero",{cart}) %>
-
             <div class="wave">
                 <div class="below">
                     <p class="below__headline"></p>
                 </div>
-
                 <main class="cart-page">
                     <%- include("../partials/cart/cart-content",{cart}) %>
-                        <%- include("../partials/cart/also-like") %>
+                        <%- include("../partials/cart/also-like",{recommendedProducts}) %>
                 </main>
             </div>
-
             <%- include("../partials/footer") %>
-
                 <script src="/js/cart/cart.js" defer></script>
-
 </body>
 
 </html>

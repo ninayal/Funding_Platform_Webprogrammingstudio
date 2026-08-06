@@ -1,71 +1,46 @@
-<section class="also-like">
-    <div class="also-like__head">
-        <div>
-            <p class="section-kicker">Complete the collection</p>
-            <h2>You may also <em>like</em></h2>
+<% if(recommendedProducts.length){ %>
+    <section class="also-like">
+        <div class="also-like__head">
+            <div>
+                <p class="section-kicker">Complete the collection</p>
+                <h2>You may also <em>like</em></h2>
+            </div>
+            <a class="text-cta" href="/cart/products">View all pieces <span>→</span></a>
         </div>
-        <a class="text-cta" href="/cart/products">View all pieces <span>→</span></a>
-    </div>
-    <div class="also-like__track">
-        <article class="product-card">
-            <a class="product-card__media" href="/cart/products">
-                <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=500&q=80"
-                    alt="Ash glaze ceramic tea cup">
-                <span class="product-card__badge">Ceramics</span>
-            </a>
-            <div class="product-card__body">
-                <h3>Ash Glaze Tea Cup</h3>
-                <p class="product-card__rating">★★★★★ <span>(48)</span></p>
-                <div class="product-card__row">
-                    <span class="product-card__price">£24.00</span>
-                    <a href="/cart/products" class="product-card__add" aria-label="View Ash Glaze Tea Cup">+</a>
-                </div>
-            </div>
-        </article>
-        <article class="product-card">
-            <a class="product-card__media" href="/cart/products">
-                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=80"
-                    alt="Vermilion lacquer tray">
-                <span class="product-card__badge">Lacquer</span>
-            </a>
-            <div class="product-card__body">
-                <h3>Vermilion Lacquer Tray</h3>
-                <p class="product-card__rating">★★★★★ <span>(31)</span></p>
-                <div class="product-card__row">
-                    <span class="product-card__price">£56.00</span>
-                    <a href="/cart/products" class="product-card__add" aria-label="View Vermilion Lacquer Tray">+</a>
-                </div>
-            </div>
-        </article>
-        <article class="product-card">
-            <a class="product-card__media" href="/cart/products">
-                <img src="https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=500&q=80"
-                    alt="Incense bundle with holder">
-                <span class="product-card__badge">Incense</span>
-            </a>
-            <div class="product-card__body">
-                <h3>Sandalwood Incense Bundle</h3>
-                <p class="product-card__rating">★★★★☆ <span>(19)</span></p>
-                <div class="product-card__row">
-                    <span class="product-card__price">£16.00</span>
-                    <a href="/cart/products" class="product-card__add" aria-label="View Sandalwood Incense Bundle">+</a>
-                </div>
-            </div>
-        </article>
-        <article class="product-card">
-            <a class="product-card__media" href="/cart/products">
-                <img src="https://images.unsplash.com/photo-1600166898405-da9535204843?auto=format&fit=crop&w=500&q=80"
-                    alt="Hand-embroidered cotton table runner">
-                <span class="product-card__badge">Textiles</span>
-            </a>
-            <div class="product-card__body">
-                <h3>Embroidered Table Runner</h3>
-                <p class="product-card__rating">★★★★★ <span>(12)</span></p>
-                <div class="product-card__row">
-                    <span class="product-card__price">£34.00</span>
-                    <a href="/cart/products" class="product-card__add" aria-label="View Embroidered Table Runner">+</a>
-                </div>
-            </div>
-        </article>
-    </div>
-</section>
+
+        <div class="also-like__track">
+            <% recommendedProducts.forEach(product=>{ %>
+                <article class="product-card">
+                    <a class="product-card__media" href="/cart/products">
+                        <img src="<%= product.image %>" alt="<%= product.alt||product.name %>">
+                        <span class="product-card__badge">
+                            <%= product.categoryLabel %>
+                        </span>
+                    </a>
+
+                    <div class="product-card__body">
+                        <h3>
+                            <%= product.name %>
+                        </h3>
+                        <p class="product-card__rating">
+                            <%= product.ratingStars %> <span>(<%= product.reviewCount %>)</span>
+                        </p>
+
+                        <div class="product-card__row">
+                            <span class="product-card__price">
+                                <%= product.priceFormatted %>
+                            </span>
+
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="product-card__add"
+                                    aria-label="Add <%= product.name %> to cart">+</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+                <% }) %>
+        </div>
+    </section>
+    <% } %>
