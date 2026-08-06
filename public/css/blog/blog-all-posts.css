@@ -239,3 +239,70 @@ body:has(#post-created:target) .created-post {
     0 0 0 4px rgba(163, 29, 29, 0.08),
     0 8px 20px rgba(73, 40, 22, 0.08);
 }
+
+/* -----------------------------
+   BLOG PAGINATION
+------------------------------ */
+
+.blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 44px;
+}
+
+.blog-pagination[hidden] {
+  display: none !important;
+}
+
+.blog-pagination__numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.blog-pagination__button,
+.blog-pagination__number {
+  min-width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  border: 1px solid rgba(116, 81, 45, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.36);
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.blog-pagination__number {
+  padding: 0;
+}
+
+.blog-pagination__button:hover:not(:disabled),
+.blog-pagination__number:hover,
+.blog-pagination__number.is-active {
+  border-color: var(--red);
+  background: var(--red);
+  color: var(--cream);
+}
+
+.blog-pagination__number.is-active {
+  cursor: default;
+}
+
+.blog-pagination__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
