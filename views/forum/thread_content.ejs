@@ -36,8 +36,8 @@
     <!-- New Posts / Your Posts / Bookmarked + search -->
     <nav class="forum-toolbar">
       <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
-      <a href="#" class="forum-toolbar__tab">Your Posts</a>
-      <a href="#" class="forum-toolbar__tab">Bookmarked</a>
+      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
+      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
       <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
         <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
         <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
@@ -62,8 +62,10 @@
         <!-- Numbered post list -->
         <div class="post-list" id="postList">
 
-          <% thread.posts.forEach((post, index) => { %>
-          <article class="forum-post" id="post-<%= index + 1 %>">
+          <% thread.posts.forEach((post, index) => {
+            const postActionBase = `/forum/thread/${thread.slug}/post/${post.id}`;
+          %>
+          <article class="forum-post" id="post-<%= post.id %>">
             <div class="forum-post__sidebar">
               <div class="forum-post__avatar"><%= post.initials %></div>
               <span class="forum-post__username"><%= post.author %></span>
@@ -76,9 +78,11 @@
                   <button type="button" class="engage-btn" data-action="share" aria-label="Share post">
                     <img src="/images/forum_icon/shared.png" alt="">
                   </button>
-                  <button type="button" class="forum-post__bookmark" aria-label="Bookmark post">
-                    <img src="/images/forum_icon/bookmark.png" alt="">
-                  </button>
+                  <form class="forum-post__bookmark-form" action="<%= postActionBase %>/bookmark" method="post" data-bookmark-form>
+                    <button type="submit" class="forum-post__bookmark<%= post.bookmarkedByCurrentUser ? " is-active" : "" %>" data-bookmark-button aria-label="Bookmark post" aria-pressed="<%= post.bookmarkedByCurrentUser %>">
+                      <img src="/images/forum_icon/bookmark.png" alt="">
+                    </button>
+                  </form>
                   <span class="forum-post__index">#<%= index + 1 %></span>
                 </div>
               </div>
@@ -86,12 +90,18 @@
                 <%- post.content %>
               </div>
               <div class="forum-post__footer">
-                <button type="button" class="vote-btn" data-action="upvote" aria-label="Upvote">
-                  <img src="/images/forum_icon/like.png" alt="">
-                </button>
-                <button type="button" class="vote-btn vote-btn--down" data-action="downvote" aria-label="Downvote">
-                  <img src="/images/forum_icon/dislike.png" alt="">
-                </button>
+                <form class="vote-form" action="<%= postActionBase %>/like" method="post" data-vote-form data-vote-kind="like">
+                  <button type="submit" class="vote-btn<%= post.likedByCurrentUser ? " is-active" : "" %>" data-vote-button aria-label="Upvote" aria-pressed="<%= post.likedByCurrentUser %>">
+                    <img src="/images/forum_icon/like.png" alt="">
+                  </button>
+                  <span class="vote-count" data-vote-count><%= post.likeCount %></span>
+                </form>
+                <form class="vote-form" action="<%= postActionBase %>/dislike" method="post" data-vote-form data-vote-kind="dislike">
+                  <button type="submit" class="vote-btn vote-btn--down<%= post.dislikedByCurrentUser ? " is-active" : "" %>" data-vote-button aria-label="Downvote" aria-pressed="<%= post.dislikedByCurrentUser %>">
+                    <img src="/images/forum_icon/dislike.png" alt="">
+                  </button>
+                  <span class="vote-count" data-vote-count><%= post.dislikeCount %></span>
+                </form>
                 <a href="#newCommentForm" class="forum-post__reply-btn">
                   <img src="/images/forum_icon/Reply.png" alt="">
                   Reply
@@ -152,6 +162,8 @@
   </div>
 
   <%- include("../partials/footer") %>
+
+  <script src="/js/forum/thread_content.js" defer></script>
 
 </body>
 

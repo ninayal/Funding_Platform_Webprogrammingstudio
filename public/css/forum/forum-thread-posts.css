@@ -121,6 +121,7 @@
 }
 
 .forum-post__bookmark.is-active {
+  background: rgba(163, 29, 29, .12);
   opacity: 1;
 }
 
@@ -169,6 +170,24 @@
   gap: 6px;
 }
 
+.vote-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vote-count {
+  min-width: 14px;
+  color: var(--ink);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.forum-post__bookmark-form {
+  display: inline-flex;
+}
+
 .vote-btn {
   display: grid;
   place-items: center;
@@ -198,6 +217,7 @@
 }
 
 .vote-btn.is-active {
+  background: rgba(163, 29, 29, .12);
   opacity: 1;
 }
 

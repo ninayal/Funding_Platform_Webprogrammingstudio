@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= categoryLabel %> | Lang & Co.</title>
+  <title>Bookmarked | Lang & Co.</title>
   <link rel="stylesheet" href="/css/landingpage/index.css" />
   <link rel="stylesheet" href="/css/header_v2.css" />
   <link rel="stylesheet" href="/css/header_mobile.css" />
@@ -24,7 +24,7 @@
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
       <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
-      <span aria-current="page"><%= categoryLabel %></span>
+      <span aria-current="page">Bookmarked</span>
     </div>
 
   <div class="wave">
@@ -34,66 +34,53 @@
       </div>
     <!-- New Posts / Your Posts / Bookmarked + search -->
     <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab<%= categoryId === "all" ? " is-active" : "" %>">New Posts</a>
+      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
       <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
+      <a href="/forum/bookmarked" class="forum-toolbar__tab is-active">Bookmarked</a>
       <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
         <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
         <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
       </form>
     </nav>
 
-
     <div class="new-post-header">
-      <h1 class="forum-section-title"><%= categoryLabel %></h1>
+      <h1 class="forum-section-title">Bookmarked</h1>
       <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
     </div>
 
     <div class="forum-container new-post-list">
-      <nav class="pagination" aria-label="Forum pagination">
-        <a href="#" class="page-link active" aria-current="page">1</a>
 
-      </nav>
-
-      <!-- Post list -->
+      <!-- Bookmarked posts -->
       <div class="thread-list">
-        <% threads.forEach(t => {
+        <% if (bookmarks.length === 0) { %>
+        <p class="forum-empty-message">You haven't bookmarked any posts yet.</p>
+        <% } else { %>
+        <% bookmarks.forEach(({ thread: t, post, index, snippet }) => {
           const catMeta = categories.find(c => c.id === t.category);
-          const repliesCount = getRepliesCount(t);
-          const latest = getLatestPost(t);
         %>
         <article class="thread-card thread-card--row">
-          <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
+          <div class="thread-card__avatar"><%= post.initials %></div>
           <div class="thread-card__main">
             <h3 class="thread-card__title">
               <span class="topic-pill"><%= catMeta.pillLabel %></span>
-              <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+              <a href="/forum/thread/<%= t.slug %>#post-<%= post.id %>" class="thread-card__title-link"><%= t.title %></a>
             </h3>
             <div class="thread-card__meta">
-              <span class="meta-author"><%= t.posts[0].author %></span>
-              <span class="meta-date"><%= t.posts[0].date %></span>
-              <span class="meta-page">Page: 1</span>
+              <span class="meta-author"><%= post.author %></span>
+              <span class="meta-date"><%= post.date %></span>
+              <span class="meta-page">Post #<%= index + 1 %></span>
             </div>
+            <p class="thread-card__snippet"><%= snippet %></p>
           </div>
-          <div class="thread-card__stats">
-            <span class="stat-pill">Replies: <%= repliesCount %></span>
-            <span class="stat-pill">Views: <%= t.views %></span>
-          </div>
-          <% if (repliesCount > 0) { %>
-          <div class="thread-card__latest-reply">
-            <span class="latest-reply-date"><%= latest.date %></span>
-            <div class="thread-card__avatar thread-card__avatar--sm"><%= latest.initials %></div>
-            <span class="latest-reply-user"><%= latest.author %></span>
-          </div>
-          <% } %>
+          <form action="/forum/thread/<%= t.slug %>/post/<%= post.id %>/bookmark" method="post">
+            <button type="submit" class="forum-post__bookmark is-active" aria-label="Remove bookmark">
+              <img src="/images/forum_icon/bookmark.png" alt="">
+            </button>
+          </form>
         </article>
         <% }) %>
+        <% } %>
       </div>
-
-      <nav class="pagination" aria-label="Forum pagination">
-        <a href="#" class="page-link active" aria-current="page">1</a>
-
-      </nav>
     </div>
   </div>
 

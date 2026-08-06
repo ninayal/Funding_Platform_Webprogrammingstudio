@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 
 const DATA_FILE = path.join(__dirname, "../data/forum.json");
 
@@ -12,10 +13,151 @@ const parseDate = (ddmmyyyy) => {
 
 const getCategoryMeta = (categoryId) => categories.find((c) => c.id === categoryId);
 
-const getThreadsByCategory = (categoryId) =>
-  categoryId === "all" ? threads : threads.filter((t) => t.category === categoryId);
+const isPublished = (thread) => thread.status !== "draft";
+
+const getThreadsByCategory = (categoryId) => {
+  const published = threads.filter(isPublished);
+  return categoryId === "all" ? published : published.filter((t) => t.category === categoryId);
+};
 
 const getThreadBySlug = (slug) => threads.find((t) => t.slug === slug);
+
+const getVisibleThreadBySlug = (slug, viewerId) => {
+  const thread = getThreadBySlug(slug);
+
+  if (!thread) {
+    return null;
+  }
+
+  if (!isPublished(thread) && thread.authorId !== viewerId) {
+    return null;
+  }
+
+  return thread;
+};
+
+const getThreadsByAuthor = (authorId) =>
+  threads
+    .filter((t) => t.authorId === authorId)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+const findPost = (slug, postId) => {
+  const thread = getThreadBySlug(slug);
+  const post = thread?.posts.find((p) => p.id === postId);
+
+  return post ? { thread, post } : null;
+};
+
+const decoratePost = (post, viewerId) => ({
+  ...post,
+  likeCount: post.likedBy.length,
+  dislikeCount: post.dislikedBy.length,
+  likedByCurrentUser: Boolean(viewerId) && post.likedBy.includes(viewerId),
+  dislikedByCurrentUser: Boolean(viewerId) && post.dislikedBy.includes(viewerId),
+  bookmarkedByCurrentUser: Boolean(viewerId) && post.bookmarkedBy.includes(viewerId),
+});
+
+const toggleReaction = (slug, postId, userId, kind) => {
+  const found = findPost(slug, postId);
+
+  if (!found || !userId) {
+    return null;
+  }
+
+  const { post } = found;
+  const [ownList, oppositeList] =
+    kind === "like" ? [post.likedBy, post.dislikedBy] : [post.dislikedBy, post.likedBy];
+
+  const oppositeIndex = oppositeList.indexOf(userId);
+  if (oppositeIndex !== -1) {
+    oppositeList.splice(oppositeIndex, 1);
+  }
+
+  const ownIndex = ownList.indexOf(userId);
+  let active;
+  if (ownIndex === -1) {
+    ownList.push(userId);
+    active = true;
+  } else {
+    ownList.splice(ownIndex, 1);
+    active = false;
+  }
+
+  saveThreadsToFile();
+
+  return {
+    ok: true,
+    liked: post.likedBy.includes(userId),
+    disliked: post.dislikedBy.includes(userId),
+    likeCount: post.likedBy.length,
+    dislikeCount: post.dislikedBy.length,
+    active,
+  };
+};
+
+const toggleLike = (slug, postId, userId) => toggleReaction(slug, postId, userId, "like");
+const toggleDislike = (slug, postId, userId) => toggleReaction(slug, postId, userId, "dislike");
+
+const toggleBookmark = (slug, postId, userId) => {
+  const found = findPost(slug, postId);
+
+  if (!found || !userId) {
+    return null;
+  }
+
+  const { post } = found;
+  const index = post.bookmarkedBy.indexOf(userId);
+  let bookmarked;
+
+  if (index === -1) {
+    post.bookmarkedBy.push(userId);
+    bookmarked = true;
+  } else {
+    post.bookmarkedBy.splice(index, 1);
+    bookmarked = false;
+  }
+
+  saveThreadsToFile();
+
+  return { ok: true, bookmarked, bookmarkCount: post.bookmarkedBy.length };
+};
+
+const getBookmarkedPosts = (userId) => {
+  const entries = [];
+
+  threads.forEach((thread) => {
+    if (!isPublished(thread) && thread.authorId !== userId) {
+      return;
+    }
+
+    thread.posts.forEach((post, index) => {
+      if (post.bookmarkedBy.includes(userId)) {
+        const snippet = stripHtml(post.content);
+        entries.push({
+          thread,
+          post,
+          index,
+          snippet: snippet.length > 160 ? `${snippet.slice(0, 160).trim()}…` : snippet,
+        });
+      }
+    });
+  });
+
+  return entries;
+};
+
+const publishThread = (slug, userId) => {
+  const thread = getThreadBySlug(slug);
+
+  if (!thread || thread.authorId !== userId) {
+    return null;
+  }
+
+  thread.status = "published";
+  saveThreadsToFile();
+
+  return thread;
+};
 
 const getRepliesCount = (thread) => thread.posts.length - 1;
 
@@ -37,10 +179,13 @@ const getForumSummary = () =>
     };
   });
 
-const getForumTotals = () => ({
-  posts: threads.length,
-  views: threads.reduce((sum, t) => sum + t.views, 0),
-});
+const getForumTotals = () => {
+  const published = threads.filter(isPublished);
+  return {
+    posts: published.length,
+    views: published.reduce((sum, t) => sum + t.views, 0),
+  };
+};
 
 const escapeHtml = (value) =>
   String(value)
@@ -78,6 +223,7 @@ const searchThreads = (rawQuery) => {
   const needle = query.toLowerCase();
 
   return threads
+    .filter(isPublished)
     .map((thread) => {
       const titleMatch = thread.title.toLowerCase().includes(needle);
 
@@ -125,7 +271,7 @@ const saveThreadsToFile = () => {
   );
 };
 
-const addThread = ({ category, title, content, author, initials, rank }) => {
+const addThread = ({ category, title, content, author, authorId, initials, rank, status }) => {
   const now = new Date();
   const date = [
     String(now.getDate()).padStart(2, "0"),
@@ -145,13 +291,21 @@ const addThread = ({ category, title, content, author, initials, rank }) => {
     category,
     title,
     views: 0,
+    authorId: authorId || null,
+    status: status === "draft" ? "draft" : "published",
+    createdAt: now.toISOString(),
     posts: [
       {
+        id: crypto.randomUUID(),
         author,
+        authorId: authorId || null,
         initials,
         rank,
         date,
         content: paragraphs,
+        likedBy: [],
+        dislikedBy: [],
+        bookmarkedBy: [],
       },
     ],
   };
@@ -168,6 +322,15 @@ module.exports = {
   getCategoryMeta,
   getThreadsByCategory,
   getThreadBySlug,
+  getVisibleThreadBySlug,
+  getThreadsByAuthor,
+  findPost,
+  decoratePost,
+  toggleLike,
+  toggleDislike,
+  toggleBookmark,
+  getBookmarkedPosts,
+  publishThread,
   getRepliesCount,
   getLatestPost,
   getForumSummary,

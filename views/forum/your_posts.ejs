@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= categoryLabel %> | Lang & Co.</title>
+  <title>Your Posts | Lang & Co.</title>
   <link rel="stylesheet" href="/css/landingpage/index.css" />
   <link rel="stylesheet" href="/css/header_v2.css" />
   <link rel="stylesheet" href="/css/header_mobile.css" />
@@ -24,7 +24,7 @@
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
       <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
-      <span aria-current="page"><%= categoryLabel %></span>
+      <span aria-current="page">Your Posts</span>
     </div>
 
   <div class="wave">
@@ -34,8 +34,8 @@
       </div>
     <!-- New Posts / Your Posts / Bookmarked + search -->
     <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab<%= categoryId === "all" ? " is-active" : "" %>">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
+      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
+      <a href="/forum/your-posts" class="forum-toolbar__tab is-active">Your Posts</a>
       <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
       <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
         <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
@@ -43,57 +43,53 @@
       </form>
     </nav>
 
-
     <div class="new-post-header">
-      <h1 class="forum-section-title"><%= categoryLabel %></h1>
+      <h1 class="forum-section-title">Your Posts</h1>
       <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
     </div>
 
     <div class="forum-container new-post-list">
-      <nav class="pagination" aria-label="Forum pagination">
-        <a href="#" class="page-link active" aria-current="page">1</a>
 
-      </nav>
-
-      <!-- Post list -->
+      <!-- Your threads (published + draft) -->
       <div class="thread-list">
+        <% if (threads.length === 0) { %>
+        <p class="forum-empty-message">You haven't created any threads yet.</p>
+        <% } else { %>
         <% threads.forEach(t => {
           const catMeta = categories.find(c => c.id === t.category);
           const repliesCount = getRepliesCount(t);
-          const latest = getLatestPost(t);
+          const isDraft = t.status === "draft";
         %>
         <article class="thread-card thread-card--row">
           <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
           <div class="thread-card__main">
             <h3 class="thread-card__title">
               <span class="topic-pill"><%= catMeta.pillLabel %></span>
+              <span class="status-pill status-pill--<%= isDraft ? "draft" : "published" %>"><%= isDraft ? "Draft" : "Published" %></span>
+              <% if (isDraft) { %>
+              <span class="thread-card__title-link"><%= t.title %></span>
+              <% } else { %>
               <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+              <% } %>
             </h3>
             <div class="thread-card__meta">
               <span class="meta-author"><%= t.posts[0].author %></span>
               <span class="meta-date"><%= t.posts[0].date %></span>
-              <span class="meta-page">Page: 1</span>
             </div>
           </div>
           <div class="thread-card__stats">
             <span class="stat-pill">Replies: <%= repliesCount %></span>
             <span class="stat-pill">Views: <%= t.views %></span>
           </div>
-          <% if (repliesCount > 0) { %>
-          <div class="thread-card__latest-reply">
-            <span class="latest-reply-date"><%= latest.date %></span>
-            <div class="thread-card__avatar thread-card__avatar--sm"><%= latest.initials %></div>
-            <span class="latest-reply-user"><%= latest.author %></span>
-          </div>
+          <% if (isDraft) { %>
+          <form class="thread-card__publish-form" action="/forum/thread/<%= t.slug %>/publish" method="post">
+            <button type="submit" class="publish-btn">Publish</button>
+          </form>
           <% } %>
         </article>
         <% }) %>
+        <% } %>
       </div>
-
-      <nav class="pagination" aria-label="Forum pagination">
-        <a href="#" class="page-link active" aria-current="page">1</a>
-
-      </nav>
     </div>
   </div>
 

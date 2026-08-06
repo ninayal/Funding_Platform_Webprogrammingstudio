@@ -29,6 +29,10 @@ const safeRedirectPath = (value, fallback = "/") => {
   }
 };
 
+const requestWantsJson = (req) =>
+  req.xhr ||
+  Boolean(req.headers.accept && req.headers.accept.includes("application/json"));
+
 const attachCurrentUser = (req, res, next) => {
   const currentUser = req.session?.user || null;
 
@@ -62,5 +66,6 @@ const requireAuth = (req, res, next) => {
 module.exports = {
   attachCurrentUser,
   requireAuth,
+  requestWantsJson,
   safeRedirectPath
 };
