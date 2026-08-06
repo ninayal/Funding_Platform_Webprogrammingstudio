@@ -30,11 +30,6 @@
       "[data-password-message]"
     );
 
-  const passwordToggle =
-    form.querySelector(
-      "[data-password-toggle]"
-    );
-
   const submitButton =
     form.querySelector(
       "[data-login-submit]"
@@ -45,21 +40,34 @@
       "[data-submit-label]"
     );
 
-  const EMAIL_PATTERN =
+  const emailPattern =
     /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  const EMAIL_HELP =
+  const emailHelp =
     "Example: name@example.com";
 
-  const removeFormError = () => {
-    document
-      .querySelector(
+  const clearFormError = () => {
+    const formError =
+      document.querySelector(
         "#login-form-error"
-      )
-      ?.remove();
+      );
+
+    if (!formError) {
+      return;
+    }
+
+    formError.textContent = "";
+    formError.classList.add(
+      "is-hidden"
+    );
+
+    formError.setAttribute(
+      "aria-hidden",
+      "true"
+    );
   };
 
-  const setFieldError = (
+  const showFieldError = (
     input,
     messageElement,
     message
@@ -83,7 +91,7 @@
   const clearFieldError = (
     input,
     messageElement,
-    helpText = ""
+    defaultText = ""
   ) => {
     input.classList.remove(
       "form-input--error"
@@ -95,24 +103,22 @@
     );
 
     messageElement.textContent =
-      helpText;
+      defaultText;
 
     messageElement.className =
-      helpText
+      defaultText
         ? "form-message form-help"
         : "form-message is-hidden";
   };
 
   const validateEmail = () => {
-    const email =
-      emailInput.value
-        .trim()
-        .toLowerCase();
+    const valid =
+      emailPattern.test(
+        emailInput.value.trim()
+      );
 
-    if (
-      !EMAIL_PATTERN.test(email)
-    ) {
-      setFieldError(
+    if (!valid) {
+      showFieldError(
         emailInput,
         emailMessage,
         "Enter a valid email address."
@@ -124,7 +130,7 @@
     clearFieldError(
       emailInput,
       emailMessage,
-      EMAIL_HELP
+      emailHelp
     );
 
     return true;
@@ -132,7 +138,7 @@
 
   const validatePassword = () => {
     if (!passwordInput.value) {
-      setFieldError(
+      showFieldError(
         passwordInput,
         passwordMessage,
         "Enter your password."
@@ -150,9 +156,19 @@
   };
 
   emailInput.addEventListener(
+    "blur",
+    validateEmail
+  );
+
+  passwordInput.addEventListener(
+    "blur",
+    validatePassword
+  );
+
+  emailInput.addEventListener(
     "input",
     () => {
-      removeFormError();
+      clearFormError();
 
       if (
         emailInput.getAttribute(
@@ -164,15 +180,10 @@
     }
   );
 
-  emailInput.addEventListener(
-    "blur",
-    validateEmail
-  );
-
   passwordInput.addEventListener(
     "input",
     () => {
-      removeFormError();
+      clearFormError();
 
       if (
         passwordInput.getAttribute(
@@ -184,48 +195,10 @@
     }
   );
 
-  passwordInput.addEventListener(
-    "blur",
-    validatePassword
-  );
-
-  passwordToggle.addEventListener(
-    "click",
-    () => {
-      const isVisible =
-        passwordInput.type ===
-        "text";
-
-      passwordInput.type =
-        isVisible
-          ? "password"
-          : "text";
-
-      passwordToggle.textContent =
-        isVisible
-          ? "Show"
-          : "Hide";
-
-      passwordToggle.setAttribute(
-        "aria-label",
-        isVisible
-          ? "Show password"
-          : "Hide password"
-      );
-
-      passwordToggle.setAttribute(
-        "aria-pressed",
-        String(!isVisible)
-      );
-
-      passwordInput.focus();
-    }
-  );
-
   form.addEventListener(
     "submit",
     (event) => {
-      removeFormError();
+      clearFormError();
 
       const emailValid =
         validateEmail();
@@ -251,10 +224,6 @@
       submitButton.disabled =
         true;
 
-      submitButton.classList.add(
-        "is-loading"
-      );
-
       submitLabel.textContent =
         "Signing In...";
     }
@@ -265,10 +234,6 @@
     () => {
       submitButton.disabled =
         false;
-
-      submitButton.classList.remove(
-        "is-loading"
-      );
 
       submitLabel.textContent =
         "Sign In";

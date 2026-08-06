@@ -9,7 +9,8 @@ const authController = require(
 );
 
 const {
-  requireAuth
+  requireAuth,
+  safeRedirectPath
 } = require(
   "../middlewares/authMiddleware"
 );
@@ -46,8 +47,17 @@ router.post(
 router.get(
   "/forgot-password",
   (req, res) => {
-    res.render(
-      "shared/forgot_password"
+    const redirect =
+      safeRedirectPath(
+        req.query.redirect,
+        "/"
+      );
+
+    return res.render(
+      "shared/forgot_password",
+      {
+        redirect
+      }
     );
   }
 );
@@ -56,7 +66,7 @@ router.get(
   "/profile",
   requireAuth,
   (req, res) => {
-    res.render(
+    return res.render(
       "shared/profile"
     );
   }
@@ -66,7 +76,7 @@ router.get(
   "/admin",
   requireAuth,
   (req, res) => {
-    res.render(
+    return res.render(
       "shared/admin/admin"
     );
   }
@@ -75,7 +85,7 @@ router.get(
 router.get(
   "/sitemap",
   (req, res) => {
-    res.render(
+    return res.render(
       "shared/sitemap"
     );
   }

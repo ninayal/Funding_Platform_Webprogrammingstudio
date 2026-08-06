@@ -1,6 +1,4 @@
-/* ================================================
-   FORM
-   ================================================ */
+/* FORM */
 
 .login-form {
     display: flex;
@@ -9,6 +7,7 @@
     margin-bottom: 16px;
 }
 
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -16,9 +15,7 @@
 }
 
 
-/* ================================================
-   LABELS
-   ================================================ */
+/* LABELS */
 
 .form-label {
     font-family: var(--ff-ui);
@@ -30,9 +27,7 @@
 }
 
 
-/* ================================================
-   INPUTS
-   ================================================ */
+/* INPUTS */
 
 .form-input {
     width: 100%;
@@ -46,9 +41,7 @@
     border: 1px solid rgba(255, 255, 255, 0.36);
     border-radius: 25px;
     outline: none;
-    box-shadow:
-        inset 0px 1px 0px rgba(255, 255, 255, 0.10),
-        0px 3px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.10), 0px 3px 12px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition:
@@ -58,111 +51,29 @@
         transform 200ms ease;
 }
 
+
 .form-input::placeholder {
     color: rgba(255, 255, 255, 0.62);
 }
+
 
 .form-input:hover {
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.48);
 }
 
+
 .form-input:focus {
     background: rgba(255, 255, 255, 0.22);
     border-color: rgba(229, 208, 172, 0.95);
-    box-shadow:
-        0px 0px 0px 3px rgba(229, 208, 172, 0.14),
-        inset 0px 1px 0px rgba(255, 255, 255, 0.14);
+    box-shadow: 0px 0px 0px 3px rgba(229, 208, 172, 0.14), inset 0px 1px 0px rgba(255, 255, 255, 0.14);
     transform: translateY(-1px);
 }
 
-
-/* ================================================
-   PASSWORD FIELD
-   ================================================ */
-
-.password-field {
-    position: relative;
-    width: 100%;
-}
-
-.password-field .form-input {
-    padding-right: 78px;
-}
-
-.password-toggle {
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    padding: 4px 6px;
-    color: rgba(255, 255, 255, 0.82);
-    background: transparent;
-    border: 0px;
-    border-radius: 8px;
-    font-family: var(--ff-ui);
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transform: translateY(-50%);
-}
-
-.password-toggle:hover {
-    color: #ffffff;
-}
-
-.password-toggle:focus-visible {
-    outline: 2px solid var(--tan);
-    outline-offset: 2px;
-}
-
-
-/* ================================================
-   HELP AND ERROR STATES
-   ================================================ */
-
-.form-message {
-    display: block;
-    margin-top: 1px;
-    font-family: var(--ff-ui);
-    font-size: 13px;
-    line-height: 140%;
-}
-
 .form-help {
-    color: rgba(255, 255, 255, 0.68);
-}
-
-.form-error {
-    color: #ffe0e0;
-    font-weight: 600;
-}
-
-.login-form-error {
-    margin: 0px 0px 14px;
-    padding: 11px 14px;
-    color: #fff4f4;
-    background: rgba(125, 16, 16, 0.42);
-    border: 1px solid rgba(255, 210, 210, 0.68);
-    border-radius: 16px;
-    font-family: var(--ff-ui);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 140%;
-}
-
-.form-input--error,
-.form-input--error:hover,
-.form-input--error:focus {
-    background: rgba(125, 16, 16, 0.24);
-    border-color: rgba(255, 190, 190, 0.96);
-}
-
-.form-input--error:focus {
-    box-shadow:
-        0px 0px 0px 3px rgba(255, 190, 190, 0.16),
-        inset 0px 1px 0px rgba(255, 255, 255, 0.10);
-}
-
-.is-hidden {
-    display: none !important;
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .68);
+    line-height: 1.4;
 }

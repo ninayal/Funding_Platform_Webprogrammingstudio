@@ -1,0 +1,263 @@
+/* ================================================
+   REGISTER PAGE LAYOUT
+   ================================================ */
+
+.register-page-body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.register-page {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
+.register-page .login-page__bg {
+    background-image:
+        url("/images/background_login_register/registerbackground.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.register-page .login-brand {
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+}
+
+
+/* ================================================
+   SCROLLABLE REGISTER PANEL
+   ================================================ */
+
+.login-glass--wide {
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+    min-width: 0px;
+    height: 100%;
+    min-height: 0px;
+    padding: 0px;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scroll-padding-top: 28px;
+}
+
+.login-glass--wide > * {
+    flex-shrink: 0;
+}
+
+.login-glass__content {
+    width: 100%;
+    min-height: 100%;
+    padding: 30px 5% 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.login-glass--wide::-webkit-scrollbar {
+    width: 9px;
+}
+
+.login-glass--wide::-webkit-scrollbar-track {
+    background:
+        rgba(255, 255, 255, 0.04);
+}
+
+.login-glass--wide::-webkit-scrollbar-thumb {
+    background:
+        rgba(229, 208, 172, 0.34);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-clip: padding-box;
+}
+
+
+/* ================================================
+   REGISTER FORM
+   ================================================ */
+
+.register-form {
+    gap: 13px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns:
+        calc(50% - 6px)
+        calc(50% - 6px);
+    gap: 12px;
+}
+
+.form-textarea {
+    min-height: 82px;
+    height: auto;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    line-height: 145%;
+    resize: vertical;
+}
+
+.form-select {
+    padding-right: 42px;
+    appearance: auto;
+    cursor: pointer;
+}
+
+.form-select option {
+    color: #333333;
+    background: #ffffff;
+}
+
+.register-field-error {
+    display: block;
+    min-height: 0px;
+    color: #ffe0e0;
+    font-family: var(--ff-ui);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 135%;
+}
+
+.register-field-error:empty {
+    display: none;
+}
+
+.form-input[aria-invalid="true"] {
+    background:
+        rgba(125, 16, 16, 0.24);
+    border-color:
+        rgba(255, 190, 190, 0.96);
+}
+
+
+/* ================================================
+   TERMS
+   ================================================ */
+
+.form-terms {
+    width: 100%;
+    margin: 2px 0px 3px;
+}
+
+.terms-label {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color:
+        rgba(255, 255, 255, 0.88);
+    font-family: var(--ff-ui);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 150%;
+    cursor: pointer;
+}
+
+.terms-label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    margin-top: 3px;
+    accent-color: var(--red);
+    cursor: pointer;
+}
+
+.terms-copy {
+    min-width: 0px;
+    color:
+        rgba(255, 255, 255, 0.88);
+    overflow-wrap: anywhere;
+}
+
+.terms-copy a {
+    color: var(--tan);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.terms-copy a:hover {
+    color: #ffffff;
+}
+
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 900px) {
+    .register-page .login-brand,
+    .login-glass--wide {
+        flex-basis: 50%;
+        width: 50%;
+        max-width: 50%;
+    }
+
+    .login-glass__content {
+        padding-right: 28px;
+        padding-left: 28px;
+    }
+
+    .form-row-2 {
+        grid-template-columns: 100%;
+        gap: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .register-page-body {
+        height: auto;
+        min-height: 100%;
+        overflow-y: auto;
+    }
+
+    .register-page {
+        height: auto;
+        min-height: 100%;
+    }
+
+    .register-page .login-brand {
+        width: 100%;
+        max-width: 100%;
+        flex: none;
+    }
+
+    .login-glass--wide {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0px;
+        height: auto;
+        min-height: 0px;
+        flex: none;
+        overflow: visible;
+    }
+
+    .login-glass__content {
+        min-height: 0px;
+        padding:
+            30px
+            22px
+            36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-glass__content {
+        padding:
+            26px
+            16px
+            32px;
+    }
+
+    .terms-label {
+        font-size: 14px;
+    }
+}
