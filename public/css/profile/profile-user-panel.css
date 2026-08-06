@@ -209,3 +209,16 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+.profile-field input[aria-invalid="true"],
+.profile-field textarea[aria-invalid="true"] {
+  border-color: rgba(163, 29, 29, .62);
+  background: rgba(163, 29, 29, .05);
+}
+
+.profile-character-count {
+  justify-self: end;
+  margin-top: -4px;
+  color: var(--muted);
+  font-size: 12px;
+}

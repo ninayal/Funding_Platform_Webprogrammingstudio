@@ -1,18 +1,22 @@
 "use strict";
 
 const express = require(
-  "express",
+  "express"
 );
 
-const authController =
-  require(
-    "../controllers/authController",
-  );
+const authController = require(
+  "../controllers/authController"
+);
+
+const profileController = require(
+  "../controllers/profileController"
+);
 
 const {
   requireAuth,
+  safeRedirectPath
 } = require(
-  "../middlewares/authMiddleware",
+  "../middlewares/authMiddleware"
 );
 
 const router =
@@ -20,66 +24,83 @@ const router =
 
 router.get(
   "/login",
-  authController.getLoginPage,
+  authController.getLoginPage
 );
 
 router.post(
   "/login",
-  authController.login,
+  authController.login
 );
 
 router.get(
   "/register",
-  authController.getRegisterPage,
+  authController.getRegisterPage
 );
 
 router.post(
   "/register",
-  authController.register,
+  authController.register
 );
 
 router.post(
   "/logout",
   requireAuth,
-  authController.logout,
+  authController.logout
 );
 
 router.get(
   "/forgot-password",
   (req, res) => {
-    res.render(
+    const redirect =
+      safeRedirectPath(
+        req.query.redirect,
+        "/"
+      );
+
+    return res.render(
       "shared/forgot_password",
+      {
+        redirect
+      }
     );
-  },
+  }
 );
 
 router.get(
   "/profile",
   requireAuth,
-  (req, res) => {
-    res.render(
-      "shared/profile",
-    );
-  },
+  profileController.getProfilePage
+);
+
+router.post(
+  "/profile",
+  requireAuth,
+  profileController.updateProfile
+);
+
+router.post(
+  "/profile/preferences",
+  requireAuth,
+  profileController.updatePreferences
 );
 
 router.get(
   "/admin",
   requireAuth,
   (req, res) => {
-    res.render(
-      "shared/admin/admin",
+    return res.render(
+      "shared/admin/admin"
     );
-  },
+  }
 );
 
 router.get(
   "/sitemap",
   (req, res) => {
-    res.render(
-      "shared/sitemap",
+    return res.render(
+      "shared/sitemap"
     );
-  },
+  }
 );
 
 module.exports = router;
