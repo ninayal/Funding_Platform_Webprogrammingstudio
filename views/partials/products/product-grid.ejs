@@ -1,48 +1,107 @@
-<section class="shop-grid" id="product-grid" aria-label="All products">
-    <% products.forEach((product,index)=>{ %>
-        <article class="shop-card product-<%= index+1 %> <%= product.category %>" data-id="<%= product.id %>"
-            data-name="<%= product.name.toLowerCase() %>" data-category="<%= product.category %>"
-            data-maker="<%= product.maker %>" data-material="<%= product.material %>" data-price="<%= product.price %>"
-            data-stock="<%= product.stock %>" data-rating="<%= product.rating %>">
-            <div class="shop-card__media">
-                <img src="<%= product.image %>" alt="<%= product.alt||product.name %>">
-                <form action="/cart/add" method="POST">
-                    <input type="hidden" name="productId" value="<%= product.id %>">
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="quickadd-btn" aria-label="Add <%= product.name %> to cart">+</button>
-                </form>
-            </div>
+<section
+  class="shop-grid"
+  id="product-grid"
+  aria-label="All products"
+>
+  <% products.forEach((product, index) => { %>
+    <article
+      class="shop-card product-<%= index + 1 %> <%= product.category %>"
+      data-id="<%= product.id %>"
+      data-name="<%= product.name.toLowerCase() %>"
+      data-category="<%= product.category %>"
+      data-maker="<%= product.maker %>"
+      data-material="<%= product.material %>"
+      data-price="<%= product.price %>"
+      data-stock="<%= product.stock %>"
+      data-rating="<%= product.rating %>"
+    >
+      <div class="shop-card__media">
+        <a
+          class="shop-card__product-link"
+          href="<%= product.reviewHref %>"
+          aria-label="View reviews for <%= product.name %>"
+        >
+          <img
+            src="<%= product.image %>"
+            alt="<%= product.imageAlt %>"
+            loading="lazy"
+          />
+        </a>
 
-            <div class="shop-card__body">
-                <p class="shop-card__maker">
-                    <%= product.maker %>
-                </p>
-                <h3 class="shop-card__title">
-                    <a href="/review">
-                        <%= product.name %>
-                    </a>
-                </h3>
+        <form
+          action="/cart/add"
+          method="post"
+        >
+          <input
+            type="hidden"
+            name="productId"
+            value="<%= product.id %>"
+          />
 
-                <p class="shop-card__price">
-                    $<%= product.price.toFixed(2) %>
-                        <% if(product.oldPrice){ %>
-                            <span class="shop-card__price-was">$<%= product.oldPrice.toFixed(2) %></span>
-                            <% } %>
-                </p>
+          <input
+            type="hidden"
+            name="quantity"
+            value="1"
+          />
 
-                <p class="shop-card__rating">
-                    <%= "★★★★★" .slice(0,Math.round(product.rating)) %>
-                        <%= "☆☆☆☆☆" .slice(Math.round(product.rating)) %>
-                            <span>(<%= product.reviewCount %>)</span>
-                </p>
+          <button
+            class="quickadd-btn"
+            type="submit"
+            aria-label="Add <%= product.name %> to cart"
+          >
+            +
+          </button>
+        </form>
+      </div>
 
-                <p class="shop-card__tag">
-                    <%= product.tag||"" %>
-                </p>
-                <p class="shop-card__variant">
-                    <%= product.variant||"" %>
-                </p>
-            </div>
-        </article>
-        <% }) %>
+      <div class="shop-card__body">
+        <p class="shop-card__maker">
+          <%= product.maker %>
+        </p>
+
+        <h3 class="shop-card__title">
+          <a href="<%= product.reviewHref %>">
+            <%= product.name %>
+          </a>
+        </h3>
+
+        <p class="shop-card__price">
+          <%= product.priceDisplay %>
+
+          <% if (product.oldPriceDisplay) { %>
+            <span class="shop-card__price-was">
+              <%= product.oldPriceDisplay %>
+            </span>
+          <% } %>
+        </p>
+
+        <p class="shop-card__rating">
+          <a
+            class="shop-card__rating-link"
+            href="<%= product.reviewHref %>"
+            aria-label="<%= product.reviewCount %> reviews for <%= product.name %>"
+          >
+            <span
+              class="shop-card__stars"
+              aria-hidden="true"
+            >
+              <%= product.ratingStars %>
+            </span>
+
+            <span class="shop-card__review-count">
+              (<%= product.reviewCount %>)
+            </span>
+          </a>
+        </p>
+
+        <p class="shop-card__tag">
+          <%= product.tag || "" %>
+        </p>
+
+        <p class="shop-card__variant">
+          <%= product.variant || "" %>
+        </p>
+      </div>
+    </article>
+  <% }); %>
 </section>
