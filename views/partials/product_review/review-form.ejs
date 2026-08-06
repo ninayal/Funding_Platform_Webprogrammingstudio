@@ -1,205 +1,363 @@
+<%
+  const reviewerName =
+    typeof currentUser !== "undefined" &&
+    currentUser &&
+    currentUser.name
+      ? currentUser.name
+      : "";
+%>
+<%
+  const existingImages =
+    Array.isArray(
+      formValues.existingImages
+    )
+      ? formValues.existingImages
+      : formValues.existingImage
+        ? [formValues.existingImage]
+        : [];
+
+  const interactiveRatings =
+    Array.isArray(ratingValues)
+      ? [...ratingValues]
+          .map(Number)
+          .sort(
+            (first, second) =>
+              first - second
+          )
+      : [1, 2, 3, 4, 5];
+%>
+
 <form
-    class="pr-form"
-    id="review-form"
-    action="<%= formMode === 'edit'
-        ? `/review/reviews/${editingReviewId}/update`
-        : '/review/reviews' %>"
-    method="post"
-    novalidate
+  class="pr-form"
+  id="review-form"
+  action="<%= formMode === 'edit'
+    ? `/products/${productData.slug}/reviews/${editingReviewId}/update`
+    : `/products/${productData.slug}/reviews` %>"
+  method="post"
+  enctype="multipart/form-data"
+  data-existing-image-count="<%= existingImages.length %>"
+  novalidate
 >
-    <input type="hidden" name="productId" value="<%= product.id %>" />
-    <input type="hidden" name="returnPath" value="<%= returnPath %>" />
+  <div class="pr-form__head">
+    <div>
+      <p class="pr-form__eyebrow">
+        <%= formMode === "edit"
+          ? "Update review"
+          : "Share your experience" %>
+      </p>
 
-    <div class="pr-form__head">
-        <h2>
-            <%= formMode === "edit"
-                ? "Edit your review"
-                : "Write a review" %>
-        </h2>
+      <h2 id="review-dialog-title">
+        <%= formMode === "edit"
+          ? "Edit your review"
+          : "Write your review" %>
+      </h2>
 
-        <p>
-            <%= formMode === "edit"
-                ? "Update the fields below, then save your changes."
-                : "Tell us what stood out to you." %>
-        </p>
+      <p>
+        <%= formMode === "edit"
+          ? "Keep, remove, or add photos before saving."
+          : `Tell other customers what stood out about ${productData.name}.` %>
+      </p>
     </div>
 
-    <fieldset
-        class="pr-rating-fieldset"
-        aria-describedby="rating-error"
+    <button
+      class="pr-form__close"
+      id="close-review-composer"
+      type="button"
+      aria-label="Close review form"
     >
-        <legend class="pr-field-label">Your rating</legend>
+      ×
+    </button>
+  </div>
 
-        <div class="pr-form__rating">
-            <% ratingValues.forEach((rating, index) => { %>
-                <input
-                    class="pr-rating-input"
-                    type="radio"
-                    name="rating"
-                    id="rating-<%= rating %>"
-                    value="<%= rating %>"
-                    aria-label="<%= rating %> out of 5 stars"
-                    <%= Number(formValues.rating) === rating
-                        ? "checked"
-                        : "" %>
-                    <%= index === 0 ? "required" : "" %>
-                />
+  <fieldset
+    class="pr-rating-fieldset"
+    aria-describedby="rating-error"
+  >
+    <legend class="pr-field-label">
+      Your rating
+    </legend>
 
-                <label
-                    class="pr-rating-label"
-                    for="rating-<%= rating %>"
-                    title="<%= rating %> out of 5 stars"
-                >★</label>
-            <% }); %>
-        </div>
-
-        <small class="pr-field-error" id="rating-error">
-            <%= serverErrors.rating || "" %>
-        </small>
-    </fieldset>
-
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-name">
-            Your name
-        </label>
-
+    <div class="pr-form__rating">
+      <% interactiveRatings.forEach((rating, index) => { %>
         <input
-            class="pr-input"
-            type="text"
-            id="review-name"
-            value="<%= currentUser.name %>"
-            readonly
+          class="pr-rating-input"
+          type="radio"
+          name="rating"
+          id="rating-<%= rating %>"
+          value="<%= rating %>"
+          aria-label="<%= rating %> out of 5 stars"
+          <%= Number(formValues.rating) === rating
+            ? "checked"
+            : "" %>
+          <%= index === 0
+            ? "required"
+            : "" %>
         />
 
-        <small class="pr-file-note">
-            The reviewer name comes from the currently logged-in user.
-        </small>
-    </div>
-
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-title">
-            Review title
-        </label>
-
-        <input
-            class="pr-input"
-            type="text"
-            id="review-title"
-            name="reviewTitle"
-            value="<%= formValues.reviewTitle %>"
-            placeholder="Summarize your experience"
-            minlength="4"
-            maxlength="80"
-            autocomplete="off"
-            aria-describedby="review-title-counter review-title-error"
-            required
-        />
-
-        <small
-            class="pr-character-count"
-            id="review-title-counter"
-        >0/80</small>
-
-        <small class="pr-field-error" id="review-title-error">
-            <%= serverErrors.reviewTitle || "" %>
-        </small>
-    </div>
-
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-date">
-            Date added
-        </label>
-
-        <input
-            class="pr-input"
-            type="date"
-            id="review-date"
-            value="<%= reviewDateValue %>"
-            readonly
-        />
-    </div>
-
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-content">
-            Your review
-        </label>
-
-        <textarea
-            class="pr-textarea"
-            id="review-content"
-            name="review"
-            rows="6"
-            minlength="10"
-            maxlength="600"
-            placeholder="Share your experience with this product..."
-            aria-describedby="review-content-counter review-content-error"
-            required
-        ><%= formValues.review %></textarea>
-
-        <small
-            class="pr-character-count"
-            id="review-content-counter"
-        >0/600</small>
-
-        <small class="pr-field-error" id="review-content-error">
-            <%= serverErrors.review || "" %>
-        </small>
-    </div>
-
-    <div class="pr-form__row">
-        <label class="pr-field-label" for="review-image-url">
-            Product image URL
-        </label>
-
-        <input
-            class="pr-input"
-            type="text"
-            id="review-image-url"
-            name="imageUrl"
-            value="<%= formValues.imageUrl %>"
-            maxlength="500"
-            placeholder="/images/... or https://..."
-            aria-describedby="review-image-note review-image-error"
-        />
-
-        <small class="pr-file-note" id="review-image-note">
-            Optional. Use an http(s) URL or a local
-            /images/ or /uploads/ path.
-        </small>
-
-        <small class="pr-field-error" id="review-image-error">
-            <%= serverErrors.imageUrl || "" %>
-        </small>
-    </div>
-
-    <div class="pr-form__actions">
-        <button class="pr-submit" id="review-submit" type="submit">
-            <%= formMode === "edit"
-                ? "Save Changes"
-                : "Submit Review" %>
-        </button>
-
-        <button
-            class="pr-secondary-button"
-            id="clear-review-draft"
-            type="button"
+        <label
+          class="pr-rating-label"
+          for="rating-<%= rating %>"
+          data-form-rating="<%= rating %>"
+          title="<%= rating %> out of 5 stars"
         >
-            Clear Draft
-        </button>
-
-        <% if (formMode === "edit") { %>
-            <a
-                class="pr-secondary-button"
-                href="/review/product-review"
-            >
-                Cancel Edit
-            </a>
-        <% } %>
+          ★
+        </label>
+      <% }); %>
     </div>
 
-    <p
-        class="pr-draft-status"
-        id="review-draft-status"
-        role="status"
-    ></p>
+    <small
+      class="pr-field-error"
+      id="rating-error"
+    >
+      <%= serverErrors.rating || "" %>
+    </small>
+  </fieldset>
+
+  <div class="pr-form__identity-grid">
+    <div class="pr-form__row">
+      <label
+        class="pr-field-label"
+        for="review-name"
+      >
+        Reviewer
+      </label>
+
+      <input
+        class="pr-input"
+        type="text"
+        id="review-name"
+        value="<%= reviewerName %>"
+        readonly
+      />
+
+      <small class="pr-file-note">
+        This name comes from your signed-in account.
+      </small>
+    </div>
+
+    <div class="pr-form__row">
+      <label
+        class="pr-field-label"
+        for="review-title"
+      >
+        Review title
+      </label>
+
+      <input
+        class="pr-input"
+        type="text"
+        id="review-title"
+        name="reviewTitle"
+        value="<%= formValues.reviewTitle || '' %>"
+        placeholder="Summarize your experience"
+        minlength="4"
+        maxlength="80"
+        autocomplete="off"
+        aria-describedby="
+          review-title-counter
+          review-title-error
+        "
+        required
+      />
+
+      <small
+        class="pr-character-count"
+        id="review-title-counter"
+      >0/80</small>
+
+      <small
+        class="pr-field-error"
+        id="review-title-error"
+      >
+        <%= serverErrors.reviewTitle || "" %>
+      </small>
+    </div>
+  </div>
+
+  <div class="pr-form__row pr-form__row--review">
+    <label
+      class="pr-field-label"
+      for="review-content"
+    >
+      Your review
+    </label>
+
+    <textarea
+      class="pr-textarea"
+      id="review-content"
+      name="review"
+      rows="5"
+      minlength="10"
+      maxlength="600"
+      placeholder="Describe the quality, materials, details, packaging, or how the product felt in person..."
+      aria-describedby="
+        review-content-counter
+        review-content-error
+      "
+      required
+    ><%= formValues.review || '' %></textarea>
+
+    <small
+      class="pr-character-count"
+      id="review-content-counter"
+    >0/600</small>
+
+    <small
+      class="pr-field-error"
+      id="review-content-error"
+    >
+      <%= serverErrors.review || "" %>
+    </small>
+  </div>
+
+  <div class="pr-form__row pr-form__row--photo">
+    <span class="pr-field-label">
+      Product photos
+    </span>
+
+    <div class="pr-multi-upload">
+      <input
+        class="pr-upload__input"
+        type="file"
+        id="review-images"
+        name="reviewImages"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+        aria-describedby="
+          review-images-note
+          review-images-error
+        "
+        <%= formMode === "create" &&
+            existingImages.length === 0
+          ? "required"
+          : "" %>
+      />
+
+      <label
+        class="pr-multi-upload__dropzone"
+        for="review-images"
+      >
+        <span
+          class="pr-upload__icon"
+          aria-hidden="true"
+        >
+          +
+        </span>
+
+        <span class="pr-upload__copy">
+          <strong>Add product photos</strong>
+          <small>Choose up to 3 images</small>
+        </span>
+
+        <span class="pr-upload__formats">
+          JPG, PNG, or WEBP · 1 MB each
+        </span>
+      </label>
+
+      <div
+        class="pr-multi-upload__gallery"
+        id="review-image-gallery"
+        aria-live="polite"
+      >
+        <% existingImages.forEach((image, index) => { %>
+          <article
+            class="pr-multi-upload__item"
+            data-existing-image
+          >
+            <img
+              src="<%= image %>"
+              alt="Existing review photo <%= index + 1 %>"
+            />
+
+            <input
+              type="hidden"
+              name="keepImageIndexes"
+              value="<%= index %>"
+            />
+
+            <button
+              type="button"
+              data-remove-existing-image
+              aria-label="Remove existing photo <%= index + 1 %>"
+            >
+              ×
+            </button>
+          </article>
+        <% }); %>
+
+        <div
+          class="pr-multi-upload__new-items"
+          id="review-new-image-previews"
+        ></div>
+
+        <p
+          class="pr-multi-upload__empty"
+          id="review-image-empty"
+          <%= existingImages.length
+            ? "hidden"
+            : "" %>
+        >
+          No photos selected yet.
+        </p>
+      </div>
+    </div>
+
+    <div class="pr-multi-upload__status-row">
+      <small
+        class="pr-file-note"
+        id="review-images-note"
+      >
+        At least 1 photo is required.
+      </small>
+
+      <small
+        class="pr-multi-upload__count"
+        id="review-image-count"
+      >
+        <%= existingImages.length %>/3 photos
+      </small>
+    </div>
+
+    <small
+      class="pr-field-error"
+      id="review-images-error"
+    >
+      <%= serverErrors.reviewImages || "" %>
+    </small>
+  </div>
+
+  <div class="pr-form__actions">
+    <button
+      class="pr-submit"
+      id="review-submit"
+      type="submit"
+    >
+      <%= formMode === "edit"
+        ? "Save Changes"
+        : "Publish Review" %>
+    </button>
+
+    <button
+      class="pr-secondary-button"
+      id="clear-review-draft"
+      type="button"
+    >
+      Clear Draft
+    </button>
+
+    <% if (formMode === "edit") { %>
+      <a
+        class="pr-secondary-button"
+        href="<%= productData.href %>?tab=review#customer-reviews"
+      >
+        Cancel Edit
+      </a>
+    <% } %>
+  </div>
+
+  <p
+    class="pr-draft-status"
+    id="review-draft-status"
+    role="status"
+  ></p>
 </form>

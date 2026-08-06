@@ -1,40 +1,61 @@
+"use strict";
+
 const express = require("express");
-const reviewController = require("../controllers/reviewController");
+
+const productModel = require(
+  "../models/productModel"
+);
 
 const router = express.Router();
 
-// GET /review
-router.get("/", reviewController.showReviewDetailPage);
+const redirectLegacyProduct = (
+  req,
+  res
+) => {
+  const product =
+    productModel.getProductByLegacyNumber(
+      req.params.legacyNumber
+    );
 
-// GET /review/product-review
+  if (!product) {
+    return res
+      .status(404)
+      .send("Product not found.");
+  }
+
+  return res.redirect(301, product.href);
+};
+
+// There is no longer one global review page.
+// Reviews now belong to a product resource.
+router.get("/", (req, res) => {
+  return res.redirect("/cart/products");
+});
+
 router.get(
   "/product-review",
-  reviewController.showProductReviewPage
+  (req, res) => {
+    return res.redirect("/cart/products");
+  }
 );
 
-router.post(
-  "/reviews",
-  reviewController.createReview
-);
-
+// Legacy local URLs:
+// /review/review/1
 router.get(
-  "/reviews/:reviewId/edit",
-  reviewController.showEditReviewPage
+  "/review/:legacyNumber",
+  redirectLegacyProduct
 );
 
-router.post(
-  "/reviews/:reviewId/update",
-  reviewController.updateReview
+// /review/product_detail/review1
+router.get(
+  "/product_detail/review:legacyNumber",
+  redirectLegacyProduct
 );
 
-router.post(
-  "/reviews/:reviewId/delete",
-  reviewController.deleteReview
+// /review/product_detail/review/1
+router.get(
+  "/product_detail/review/:legacyNumber",
+  redirectLegacyProduct
 );
-
-// URL cũ
-router.get("/product_detail/review1", (req, res) => {
-  return res.redirect("/review");
-});
 
 module.exports = router;

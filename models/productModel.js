@@ -1,122 +1,222 @@
+"use strict";
+
 const products = require("../data/products");
+const reviewModel = require("./reviewModel");
 
-const getAllProducts = () => {
-  return products.map((product) => ({ ...product }));
-};
+const categories = [
+  { id: "all", label: "All" },
+  { id: "ceramics", label: "Ceramics" },
+  { id: "painting", label: "Painting" },
+  { id: "brocade", label: "Brocade" },
+  { id: "bamboo", label: "Bamboo" },
+  { id: "wood", label: "Wood" },
+  { id: "incense", label: "Incense" },
+  { id: "stone", label: "Fengshui Stone" },
+  { id: "waterpuppet", label: "Water Puppets" }
+];
 
-const getProductById = (productId) => {
+const filters = [
+  {
+    title: "Price",
+    open: true,
+    options: [
+      "Under $25",
+      "$25 – $50",
+      "$50 – $100",
+      "$100 & over"
+    ]
+  },
+  {
+    title: "Craft Village",
+    open: false,
+    options: [
+      "Bát Tràng · Hanoi",
+      "Vạn Phúc · Hà Đông",
+      "Quảng Phú Cầu · Hanoi",
+      "Đông Hồ · Bắc Ninh",
+      "Đồng Kỵ · Bắc Ninh",
+      "Non Nước · Đà Nẵng",
+      "Đào Thục · Hanoi"
+    ]
+  },
+  {
+    title: "Material",
+    open: false,
+    options: [
+      "Ceramic",
+      "Brocade",
+      "Incense",
+      "Paper",
+      "Stone",
+      "Wood"
+    ]
+  },
+  {
+    title: "Availability",
+    open: false,
+    options: ["In stock", "Low stock"]
+  },
+  {
+    title: "Rating",
+    open: false,
+    options: ["★★★★ & up", "★★★★★ only"]
+  }
+];
+
+const sortOptions = [
+  { id: "featured", label: "Best Sellers" },
+  { id: "low", label: "Price: Low to high" },
+  { id: "high", label: "Price: High to low" },
+  { id: "name", label: "Name: A–Z" }
+];
+
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(Number(value) || 0);
+
+const createStars = (rating) => {
+  const rounded = Math.max(
+    0,
+    Math.min(5, Math.round(Number(rating) || 0))
+  );
+
   return (
-    products.find((product) => product.id === String(productId)) || null
+    "★".repeat(rounded) +
+    "☆".repeat(5 - rounded)
   );
 };
 
-const getCategories = () => {
-  const categoryMap = new Map();
-
-  products.forEach((product) => {
-    if (!categoryMap.has(product.category)) {
-      categoryMap.set(product.category, {
-        id: product.category,
-        label: product.categoryLabel,
-      });
-    }
-  });
-
-  return [
-    {
-      id: "all",
-      label: "All",
-    },
-    ...categoryMap.values(),
-  ];
-};
-
-const getCategoryCounts = () => {
-  const counts = {
-    all: products.length,
+const decorateProduct = (
+  product,
+  statsMap
+) => {
+  const stats = statsMap[product.id] || {
+    averageRating: 0,
+    totalReviews: 0
   };
-
-  products.forEach((product) => {
-    counts[product.category] =
-      (counts[product.category] || 0) + 1;
-  });
-
-  return counts;
-};
-
-const getFilterOptions = () => {
-  const makers = [
-    ...new Set(products.map((product) => product.maker)),
-  ].sort();
-
-  const materials = [
-    ...new Set(products.map((product) => product.material)),
-  ].sort();
 
   return {
-    makers,
-    materials,
-    availability: [
-      {
-        value: "in-stock",
-        label: "In stock",
-      },
-      {
-        value: "low-stock",
-        label: "Low stock",
-      },
-    ],
-    ratings: [
-      {
-        value: "4",
-        label: "4 stars & up",
-      },
-      {
-        value: "5",
-        label: "5 stars only",
-      },
-    ],
+    ...product,
+    href: `/products/${product.slug}`,
+    priceDisplay: formatCurrency(product.price),
+    oldPriceDisplay:
+      product.oldPrice == null
+        ? ""
+        : formatCurrency(product.oldPrice),
+    rating: stats.averageRating,
+    reviewCount: stats.totalReviews,
+    ratingStars: createStars(
+      stats.averageRating
+    ),
+    imageAlt: product.alt
   };
 };
 
-const getSortOptions = () => {
+const getDecoratedProducts = () => {
+  const statsMap =
+    reviewModel.getAllReviewStats();
+
+  return products.map((product) =>
+    decorateProduct(product, statsMap)
+  );
+};
+
+const getAllProducts = () =>
+  getDecoratedProducts();
+
+const getProductById = (productId) =>
+  getDecoratedProducts().find(
+    (product) =>
+      product.id === String(productId)
+  ) || null;
+
+const getProductBySlug = (slug) =>
+  getDecoratedProducts().find(
+    (product) =>
+      product.slug === String(slug)
+  ) || null;
+
+const getProductByLegacyNumber = (
+  legacyNumber
+) => {
+  const number = Number(legacyNumber);
+
+  if (!Number.isInteger(number)) {
+    return null;
+  }
+
+  return getDecoratedProducts().find(
+    (product) =>
+      product.featuredOrder === number
+  ) || null;
+};
+
+const getRelatedProducts = (
+  currentProductId,
+  limit = 3
+) => {
+  const allProducts = getDecoratedProducts();
+
+  const currentProduct = allProducts.find(
+    (product) =>
+      product.id === currentProductId
+  );
+
+  if (!currentProduct) {
+    return [];
+  }
+
+  const sameCategory = allProducts.filter(
+    (product) =>
+      product.id !== currentProduct.id &&
+      product.category ===
+        currentProduct.category
+  );
+
+  const fallback = allProducts.filter(
+    (product) =>
+      product.id !== currentProduct.id &&
+      product.category !==
+        currentProduct.category
+  );
+
   return [
-    {
-      id: "featured",
-      label: "Best Sellers",
-    },
-    {
-      id: "price-low",
-      label: "Price: Low to high",
-    },
-    {
-      id: "price-high",
-      label: "Price: High to low",
-    },
-    {
-      id: "name",
-      label: "Name: A–Z",
-    },
-    {
-      id: "rating",
-      label: "Highest rated",
-    },
-  ];
+    ...sameCategory,
+    ...fallback
+  ].slice(0, limit);
 };
 
-const getProductsPageData = () => {
-  return {
-    pageTitle: "Shop All",
-    products: getAllProducts(),
-    categories: getCategories(),
-    categoryCounts: getCategoryCounts(),
-    filterOptions: getFilterOptions(),
-    sortOptions: getSortOptions(),
-  };
-};
+const categoryCounts = categories.reduce(
+  (counts, category) => {
+    counts[category.id] =
+      category.id === "all"
+        ? products.length
+        : products.filter(
+            (product) =>
+              product.category === category.id
+          ).length;
+
+    return counts;
+  },
+  {}
+);
+
+const getProductsPageData = () => ({
+  pageTitle: "Shop All",
+  categories,
+  categoryCounts,
+  filters,
+  sortOptions,
+  products: getDecoratedProducts()
+});
 
 module.exports = {
   getAllProducts,
   getProductById,
+  getProductByLegacyNumber,
+  getProductBySlug,
   getProductsPageData,
+  getRelatedProducts
 };
