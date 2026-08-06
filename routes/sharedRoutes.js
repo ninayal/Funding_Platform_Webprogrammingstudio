@@ -8,6 +8,10 @@ const authController = require(
   "../controllers/authController"
 );
 
+const profileController = require(
+  "../controllers/profileController"
+);
+
 const {
   requireAuth,
   safeRedirectPath
@@ -65,11 +69,19 @@ router.get(
 router.get(
   "/profile",
   requireAuth,
-  (req, res) => {
-    return res.render(
-      "shared/profile"
-    );
-  }
+  profileController.getProfilePage
+);
+
+router.post(
+  "/profile",
+  requireAuth,
+  profileController.updateProfile
+);
+
+router.post(
+  "/profile/preferences",
+  requireAuth,
+  profileController.updatePreferences
 );
 
 router.get(

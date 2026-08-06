@@ -1,0 +1,185 @@
+<div class="profile-panel profile-panel--settings">
+  <form
+    class="settings-form"
+    action="/shared/profile/preferences"
+    method="post"
+    data-preferences-form
+  >
+    <div class="panel-heading">
+      <p class="profile-kicker">
+        Preferences
+      </p>
+
+      <h2>
+        Account Settings
+      </h2>
+
+      <p>
+        Customize how Làng &amp; Co. reaches you,
+        how your orders are updated, and how your
+        account feels day to day.
+      </p>
+    </div>
+
+    <fieldset class="setting-group">
+      <legend>
+        Communication
+      </legend>
+
+      <div class="setting-list">
+        <label>
+          <span>
+            Email updates
+          </span>
+
+          <input
+            type="checkbox"
+            name="emailUpdates"
+            <%= preferences.emailUpdates
+              ? "checked"
+              : "" %>
+          />
+        </label>
+
+        <label>
+          <span>
+            Order notifications
+          </span>
+
+          <input
+            type="checkbox"
+            name="orderNotifications"
+            <%= preferences.orderNotifications
+              ? "checked"
+              : "" %>
+          />
+        </label>
+
+        <label>
+          <span>
+            Community replies
+          </span>
+
+          <input
+            type="checkbox"
+            name="communityReplies"
+            <%= preferences.communityReplies
+              ? "checked"
+              : "" %>
+          />
+        </label>
+
+        <label>
+          <span>
+            Promotions and new collections
+          </span>
+
+          <input
+            type="checkbox"
+            name="promotionalUpdates"
+            <%= preferences.promotionalUpdates
+              ? "checked"
+              : "" %>
+          />
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="setting-group">
+      <legend>
+        Account Preferences
+      </legend>
+
+      <div class="setting-list">
+        <label>
+          <span>
+            Save shipping information
+          </span>
+
+          <input
+            type="checkbox"
+            name="saveShippingInformation"
+            <%= preferences.saveShippingInformation
+              ? "checked"
+              : "" %>
+          />
+        </label>
+
+        <label>
+          <span>
+            Default to international shipping
+          </span>
+
+          <input
+            type="checkbox"
+            name="internationalShippingDefault"
+            <%= preferences.internationalShippingDefault
+              ? "checked"
+              : "" %>
+          />
+        </label>
+
+        <label>
+          <span>
+            Receive product care guides
+          </span>
+
+          <input
+            type="checkbox"
+            name="productCareGuides"
+            <%= preferences.productCareGuides
+              ? "checked"
+              : "" %>
+          />
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="account-danger-zone">
+      <legend>
+        Danger Zone
+      </legend>
+
+      <p class="account-danger-zone__warning">
+        Account deactivation is displayed for the
+        interface demonstration but is not enabled.
+      </p>
+
+      <label class="account-danger-zone__confirm">
+        <input
+          type="checkbox"
+          name="confirmAccountDeactivation"
+          data-deactivate-confirm
+        />
+
+        <span>
+          I understand that this action affects
+          my account access.
+        </span>
+      </label>
+
+      <button
+        class="account-deactivate"
+        type="button"
+        data-deactivate-button
+        disabled
+      >
+        Deactivate Account
+      </button>
+
+      <p
+        class="profile-danger-status"
+        role="status"
+        data-deactivate-status
+      ></p>
+    </fieldset>
+
+    <button
+      class="profile-save"
+      type="submit"
+      data-preferences-submit
+    >
+      Save Preferences
+    </button>
+  </form>
+</div>

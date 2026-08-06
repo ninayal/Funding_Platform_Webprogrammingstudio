@@ -1,101 +1,3 @@
-<%
-  const viewMode =
-    typeof mode !== "undefined"
-      ? mode
-      : "create";
-
-  const isCreate =
-    viewMode === "create";
-
-  const viewPost =
-    typeof post !== "undefined"
-      ? post
-      : null;
-
-  const viewValues =
-    typeof values !== "undefined" &&
-    values
-      ? values
-      : {};
-
-  const viewErrors =
-    typeof errors !== "undefined" &&
-    errors
-      ? errors
-      : {};
-
-  const viewCategories =
-    typeof categories !== "undefined" &&
-    Array.isArray(categories)
-      ? categories
-      : [
-          "Mission",
-          "Donation",
-          "Places",
-          "Guide"
-        ];
-
-  const viewAuthor =
-    typeof author !== "undefined" &&
-    author
-      ? author
-      : {
-          name: "Huy Ba",
-          initials: "HB",
-          role: "Community contributor"
-        };
-
-  const viewPreviewStats =
-    typeof previewStats !== "undefined" &&
-    previewStats
-      ? previewStats
-      : {
-          commentCount: 0,
-          viewCount: 0,
-          lastEdited: "Not saved yet"
-        };
-
-  const postId =
-    viewPost && viewPost.id
-      ? viewPost.id
-      : "";
-
-  const formAction =
-    isCreate
-      ? "/blog"
-      : `/blog/${encodeURIComponent(postId)}/update`;
-
-  const deleteAction =
-    isCreate
-      ? ""
-      : `/blog/${encodeURIComponent(postId)}/delete`;
-
-  const storageKey =
-    isCreate
-      ? "langco.blog.postDraft.new"
-      : `langco.blog.postDraft.${postId}`;
-
-  const currentStatus =
-    viewValues.status === "published"
-      ? "published"
-      : "draft";
-
-  const statusLabel =
-    currentStatus === "published"
-      ? "Published"
-      : "Draft";
-
-  const pageHeading =
-    isCreate
-      ? "Create Blog Post"
-      : "Edit Blog Post";
-
-  const formHeading =
-    isCreate
-      ? "Write your story"
-      : "Edit your story";
-%>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -112,7 +14,7 @@
     />
 
     <title>
-      <%= pageHeading %> — Làng &amp; Co.
+      <%= pageTitle %> — Làng &amp; Co.
     </title>
 
     <!-- Shared styles -->
@@ -136,13 +38,12 @@
       href="/css/footer.css"
     />
 
-    <!-- Existing Post Edit design -->
+    <!-- Post form styles -->
     <link
       rel="stylesheet"
       href="/css/blog/post-edit/post-edit.css"
     />
 
-    <!-- Dynamic form states -->
     <link
       rel="stylesheet"
       href="/css/blog/post-edit/post-edit-dynamic.css"
@@ -194,7 +95,7 @@
         </span>
 
         <span aria-current="page">
-          <%= isCreate
+          <%= mode === "create"
             ? "Create Post"
             : "Edit Post"
           %>
@@ -211,11 +112,11 @@
           </p>
 
           <h1>
-            <%= pageHeading %>
+            <%= pageTitle %>
           </h1>
 
           <p>
-            <% if (isCreate) { %>
+            <% if (mode === "create") { %>
               Create a new story, save it as
               a draft, or publish it to the
               Journal.
@@ -232,7 +133,7 @@
       <div
         class="post-edit-layout post-edit-container"
       >
-        <!-- Edit form -->
+        <!-- Post form -->
         <section
           class="post-edit-panel"
           aria-labelledby="post-edit-form-heading"
@@ -244,7 +145,10 @@
               </p>
 
               <h2 id="post-edit-form-heading">
-                <%= formHeading %>
+                <%= mode === "create"
+                  ? "Create story"
+                  : "Edit story"
+                %>
               </h2>
             </div>
 
@@ -252,52 +156,60 @@
               class="post-edit-status"
               data-preview-status
             >
-              <%= statusLabel %>
+              <%= values.status === "published"
+                ? "Published"
+                : "Draft"
+              %>
             </span>
           </div>
 
-          <% if (viewErrors.form) { %>
+          <% if (errors.form) { %>
             <p
               class="post-form-error"
               role="alert"
             >
-              <%= viewErrors.form %>
+              <%= errors.form %>
             </p>
           <% } %>
 
           <form
             class="post-edit-form"
-            action="<%= formAction %>"
+            action="<%= mode === 'create'
+              ? '/blog'
+              : `/blog/${encodeURIComponent(post.id)}/update`
+            %>"
             method="post"
             novalidate
             data-post-form
-            data-mode="<%= viewMode %>"
-            data-storage-key="<%= storageKey %>"
+            data-mode="<%= mode %>"
+            data-storage-key="blog-post-form:<%= mode === 'create'
+              ? 'new'
+              : post.id
+            %>"
           >
-            <!-- Values retained by the model but
-                 not shown in the original design -->
+            <!-- Values retained by the model -->
             <input
               type="hidden"
               name="readTime"
-              value="<%= viewValues.readTime || 5 %>"
+              value="<%= values.readTime || 5 %>"
             />
 
             <input
               type="hidden"
               name="archiveSummary"
-              value="<%= viewValues.archiveSummary || "" %>"
+              value="<%= values.archiveSummary || "" %>"
             />
 
             <input
               type="hidden"
               name="imageAlt"
-              value="<%= viewValues.imageAlt || "" %>"
+              value="<%= values.imageAlt || "" %>"
             />
 
             <input
               type="hidden"
               name="imageCaption"
-              value="<%= viewValues.imageCaption || "" %>"
+              value="<%= values.imageCaption || "" %>"
             />
 
             <!-- Basic information -->
@@ -309,17 +221,22 @@
               <div
                 class="post-edit-grid post-edit-grid--two"
               >
-                <label>
+                <label
+                  class="post-edit-field post-edit-field--title"
+                >
                   Post title
 
                   <input
                     type="text"
                     name="title"
-                    value="<%= viewValues.title || "" %>"
+                    value="<%= values.title || "" %>"
                     minlength="5"
                     maxlength="150"
                     required
-                    aria-invalid="<%= viewErrors.title ? 'true' : 'false' %>"
+                    aria-invalid="<%= errors.title
+                      ? 'true'
+                      : 'false'
+                    %>"
                     data-post-field="title"
                   />
 
@@ -328,7 +245,7 @@
                       class="post-field-error"
                       data-post-error="title"
                     >
-                      <%= viewErrors.title || "" %>
+                      <%= errors.title || "" %>
                     </small>
 
                     <small data-post-count="title">
@@ -337,12 +254,14 @@
                   </span>
                 </label>
 
-                <label>
+                <label
+                  class="post-edit-field post-edit-field--compact"
+                >
                   Author
 
                   <input
                     type="text"
-                    value="<%= viewAuthor.name %>"
+                    value="<%= author.name %>"
                     readonly
                     aria-readonly="true"
                   />
@@ -352,31 +271,38 @@
               <div
                 class="post-edit-grid post-edit-grid--two"
               >
-                <label>
+                <label
+                  class="post-edit-field post-edit-field--compact"
+                >
                   Date added
 
                   <input
                     type="date"
-                    value="<%= viewValues.dateAdded || "" %>"
+                    value="<%= values.dateAdded || "" %>"
                     readonly
                     aria-readonly="true"
                     data-preview-date-source
                   />
                 </label>
 
-                <label>
+                <label
+                  class="post-edit-field post-edit-field--compact"
+                >
                   Category
 
                   <select
                     name="category"
                     required
-                    aria-invalid="<%= viewErrors.category ? 'true' : 'false' %>"
+                    aria-invalid="<%= errors.category
+                      ? 'true'
+                      : 'false'
+                    %>"
                     data-post-field="category"
                   >
-                    <% viewCategories.forEach((category) => { %>
+                    <% categories.forEach((category) => { %>
                       <option
                         value="<%= category %>"
-                        <%= viewValues.category === category
+                        <%= values.category === category
                           ? "selected"
                           : ""
                         %>
@@ -390,18 +316,18 @@
                     class="post-field-error"
                     data-post-error="category"
                   >
-                    <%= viewErrors.category || "" %>
+                    <%= errors.category || "" %>
                   </small>
                 </label>
               </div>
 
-              <label>
+              <label class="post-edit-field">
                 Tags
 
                 <input
                   type="text"
                   name="tags"
-                  value="<%= viewValues.tags || "" %>"
+                  value="<%= values.tags || "" %>"
                   maxlength="240"
                   placeholder="Community, Makers, Social Impact"
                   data-post-field="tags"
@@ -414,7 +340,9 @@
                 <small
                   class="post-field-error"
                   data-post-error="tags"
-                ></small>
+                >
+                  <%= errors.tags || "" %>
+                </small>
               </label>
             </fieldset>
 
@@ -424,16 +352,19 @@
                 Story preview
               </legend>
 
-              <label>
+              <label class="post-edit-field">
                 Image URL
 
                 <input
                   type="url"
                   name="imageUrl"
-                  value="<%= viewValues.imageUrl || "" %>"
+                  value="<%= values.imageUrl || "" %>"
                   placeholder="https://images.example.com/story.jpg"
                   required
-                  aria-invalid="<%= viewErrors.imageUrl ? 'true' : 'false' %>"
+                  aria-invalid="<%= errors.imageUrl
+                    ? 'true'
+                    : 'false'
+                  %>"
                   data-post-field="imageUrl"
                 />
 
@@ -441,11 +372,11 @@
                   class="post-field-error"
                   data-post-error="imageUrl"
                 >
-                  <%= viewErrors.imageUrl || "" %>
+                  <%= errors.imageUrl || "" %>
                 </small>
               </label>
 
-              <label>
+              <label class="post-edit-field">
                 Short summary
 
                 <textarea
@@ -454,16 +385,19 @@
                   minlength="20"
                   maxlength="400"
                   required
-                  aria-invalid="<%= viewErrors.summary ? 'true' : 'false' %>"
+                  aria-invalid="<%= errors.summary
+                    ? 'true'
+                    : 'false'
+                  %>"
                   data-post-field="summary"
-                ><%= viewValues.summary || "" %></textarea>
+                ><%= values.summary || "" %></textarea>
 
                 <span class="post-field-meta">
                   <small
                     class="post-field-error"
                     data-post-error="summary"
                   >
-                    <%= viewErrors.summary || "" %>
+                    <%= errors.summary || "" %>
                   </small>
 
                   <small data-post-count="summary">
@@ -479,7 +413,7 @@
                 Main content
               </legend>
 
-              <label>
+              <label class="post-edit-field">
                 Article text
 
                 <textarea
@@ -488,16 +422,19 @@
                   minlength="50"
                   maxlength="20000"
                   required
-                  aria-invalid="<%= viewErrors.content ? 'true' : 'false' %>"
+                  aria-invalid="<%= errors.content
+                    ? 'true'
+                    : 'false'
+                  %>"
                   data-post-field="content"
-                ><%= viewValues.content || "" %></textarea>
+                ><%= values.content || "" %></textarea>
 
                 <span class="post-field-meta">
                   <small
                     class="post-field-error"
                     data-post-error="content"
                   >
-                    <%= viewErrors.content || "" %>
+                    <%= errors.content || "" %>
                   </small>
 
                   <small data-post-count="content">
@@ -544,8 +481,8 @@
                 data-submit-status="published"
               >
                 <% if (
-                  !isCreate &&
-                  currentStatus === "published"
+                  mode !== "create" &&
+                  values.status === "published"
                 ) { %>
                   Save Changes
                 <% } else { %>
@@ -564,16 +501,22 @@
           >
             <div class="post-edit-preview__image">
               <img
-                src="<%= viewValues.imageUrl || "" %>"
-                alt=""
+                src="<%= values.imageUrl || "" %>"
+                alt="<%= values.imageAlt || values.title || "" %>"
                 data-preview-image
-                <%= viewValues.imageUrl ? "" : "hidden" %>
+                <%= values.imageUrl
+                  ? ""
+                  : "hidden"
+                %>
               />
 
               <div
                 class="post-preview-placeholder"
                 data-preview-placeholder
-                <%= viewValues.imageUrl ? "hidden" : "" %>
+                <%= values.imageUrl
+                  ? "hidden"
+                  : ""
+                %>
               >
                 Story image preview
               </div>
@@ -582,23 +525,23 @@
             <div class="post-edit-preview__body">
               <div class="post-edit-preview__meta">
                 <span data-preview-category>
-                  <%= viewValues.category || "Guide" %>
+                  <%= values.category || "Guide" %>
                 </span>
 
                 <time
-                  datetime="<%= viewValues.dateAdded || "" %>"
+                  datetime="<%= values.dateAdded || "" %>"
                   data-preview-date
                 >
-                  <%= viewValues.displayDate || "Not published" %>
+                  <%= values.displayDate || "Not published" %>
                 </time>
               </div>
 
               <h2 data-preview-title>
-                <%= viewValues.title || "Your story title" %>
+                <%= values.title || "Your story title" %>
               </h2>
 
               <p data-preview-summary>
-                <%= viewValues.summary ||
+                <%= values.summary ||
                   "Your summary will appear here as you type."
                 %>
               </p>
@@ -610,7 +553,10 @@
                   </dt>
 
                   <dd data-preview-status-text>
-                    <%= statusLabel %>
+                    <%= values.status === "published"
+                      ? "Published"
+                      : "Draft"
+                    %>
                   </dd>
                 </div>
 
@@ -620,7 +566,7 @@
                   </dt>
 
                   <dd>
-                    <%= viewPreviewStats.commentCount %>
+                    <%= previewStats.commentCount %>
                   </dd>
                 </div>
 
@@ -630,7 +576,7 @@
                   </dt>
 
                   <dd>
-                    <%= viewPreviewStats.viewCount %>
+                    <%= previewStats.viewCount %>
                   </dd>
                 </div>
 
@@ -640,15 +586,15 @@
                   </dt>
 
                   <dd>
-                    <%= viewPreviewStats.lastEdited %>
+                    <%= previewStats.lastEdited %>
                   </dd>
                 </div>
               </dl>
 
-              <% if (!isCreate && viewPost) { %>
+              <% if (mode !== "create" && post) { %>
                 <a
                   class="post-edit-preview__link"
-                  href="/blog/<%= encodeURIComponent(viewPost.id) %>"
+                  href="/blog/<%= encodeURIComponent(post.id) %>"
                 >
                   Open current post
 
@@ -660,7 +606,7 @@
             </div>
           </section>
 
-          <% if (isCreate) { %>
+          <% if (mode === "create") { %>
             <section class="post-edit-help">
               <p class="post-edit-kicker">
                 Publishing checks
@@ -685,7 +631,6 @@
               </ul>
             </section>
           <% } else { %>
-            <!-- Danger zone preserved from the HTML -->
             <section class="post-edit-danger">
               <h2>
                 Delete this post
@@ -716,7 +661,7 @@
       </div>
     </main>
 
-    <% if (!isCreate && viewPost) { %>
+    <% if (mode !== "create" && post) { %>
       <!-- Delete confirmation overlay -->
       <section
         id="delete-post"
@@ -764,7 +709,7 @@
           </h2>
 
           <p>
-            “<%= viewValues.title || viewPost.title %>”
+            “<%= values.title || post.title %>”
             will be permanently removed from
             the Journal.
           </p>
@@ -778,7 +723,7 @@
             </a>
 
             <form
-              action="<%= deleteAction %>"
+              action="/blog/<%= encodeURIComponent(post.id) %>/delete"
               method="post"
             >
               <button

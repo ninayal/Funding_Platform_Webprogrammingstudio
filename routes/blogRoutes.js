@@ -38,16 +38,6 @@ router.post(
 );
 
 router.post(
-  "/:id/draft",
-  blogController.saveDraft,
-);
-
-router.post(
-  "/:id/publish",
-  blogController.publishPost,
-);
-
-router.post(
   "/:id/delete",
   blogController.deletePost,
 );

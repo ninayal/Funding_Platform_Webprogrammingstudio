@@ -148,9 +148,9 @@ document.addEventListener(
 
       let message = "";
 
-      if (value.length < 3) {
+      if (!value) {
         message =
-          `${label} must contain at least 3 characters.`;
+          `${label} cannot be empty.`;
       } else if (
         value.length > 1000
       ) {
@@ -216,11 +216,25 @@ document.addEventListener(
             `${textarea.value.length} / 1000`;
         }
 
-        validateTextArea(
-          textarea,
-          errorElement,
-          "Comment",
-        );
+        if (
+          textarea.value.trim()
+        ) {
+          validateTextArea(
+            textarea,
+            errorElement,
+            "Comment",
+          );
+        } else {
+          textarea.setAttribute(
+            "aria-invalid",
+            "false",
+          );
+
+          if (errorElement) {
+            errorElement.textContent =
+              "";
+          }
+        }
 
         localStorage.setItem(
           storageKey,
@@ -228,32 +242,18 @@ document.addEventListener(
         );
       };
 
-      const query =
-        new URLSearchParams(
-          window.location.search,
+      const storedDraft =
+        localStorage.getItem(
+          storageKey,
         );
 
       if (
-        query.get("comment") ===
-        "added"
+        storedDraft &&
+        textarea &&
+        !textarea.value
       ) {
-        localStorage.removeItem(
-          storageKey,
-        );
-      } else {
-        const storedDraft =
-          localStorage.getItem(
-            storageKey,
-          );
-
-        if (
-          storedDraft &&
-          textarea &&
-          !textarea.value
-        ) {
-          textarea.value =
-            storedDraft;
-        }
+        textarea.value =
+          storedDraft;
       }
 
       textarea?.addEventListener(
@@ -284,6 +284,9 @@ document.addEventListener(
             return;
           }
 
+          localStorage.removeItem(
+            storageKey,
+          );              
           if (feedback) {
             feedback.textContent =
               "Posting comment…";
@@ -537,7 +540,7 @@ document.addEventListener(
               ) {
                 throw new Error(
                   result.message ||
-                    "Like could not be updated.",
+                  "Like could not be updated.",
                 );
               }
 
@@ -562,7 +565,7 @@ document.addEventListener(
             } catch (error) {
               window.alert(
                 error.message ||
-                  "Like could not be updated.",
+                "Like could not be updated.",
               );
             } finally {
               if (button) {

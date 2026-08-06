@@ -1,43 +1,3 @@
-<%
-  const viewPageTitle =
-    typeof pageTitle !== "undefined" && pageTitle
-      ? pageTitle
-      : "Journal";
-
-  const viewPageSubtitle =
-    typeof pageSubtitle !== "undefined" && pageSubtitle
-      ? pageSubtitle
-      : "Stories, thoughts and ideas.";
-
-  const viewMyPostCount =
-    typeof myPostCount !== "undefined"
-      ? myPostCount
-      : 0;
-
-  const viewCategories =
-    typeof categories !== "undefined" &&
-    Array.isArray(categories)
-      ? categories
-      : [];
-
-  const viewPosts =
-    typeof posts !== "undefined" &&
-    Array.isArray(posts)
-      ? posts
-      : [];
-
-  const viewFeaturedPosts =
-    typeof featuredPosts !== "undefined" &&
-    Array.isArray(featuredPosts)
-      ? featuredPosts
-      : [];
-
-  const viewLeadStory =
-    typeof leadStory !== "undefined"
-      ? leadStory
-      : null;
-%>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -54,7 +14,7 @@
     />
 
     <title>
-      Làng &amp; Co. — <%= viewPageTitle %>
+      Làng &amp; Co. — <%= pageTitle %>
     </title>
 
     <link
@@ -116,24 +76,27 @@
         </span>
 
         <span aria-current="page">
-          <%= viewPageTitle %>
+          <%= pageTitle %>
         </span>
       </nav>
 
-      <header class="blog-page-header blog-container">
+      <header
+        class="blog-page-header blog-container"
+      >
         <h1>
-          <%= viewPageTitle %>
+          <%= pageTitle %>
         </h1>
 
         <p class="blog-page-header__subtitle">
-          <%= viewPageSubtitle %>
+          <%= pageSubtitle %>
         </p>
       </header>
 
       <!--
-        Radio inputs remain because the existing
-        Blog CSS and JavaScript use this structure.
+        These radio inputs are used by the existing
+        Blog CSS and JavaScript category filtering.
       -->
+
       <input
         class="blog-state-input"
         type="radio"
@@ -143,7 +106,7 @@
         checked
       />
 
-      <% viewCategories.forEach((category) => { %>
+      <% categories.forEach((category) => { %>
         <input
           class="blog-state-input"
           type="radio"
@@ -164,7 +127,7 @@
           All
         </label>
 
-        <% viewCategories.forEach((category) => { %>
+        <% categories.forEach((category) => { %>
           <label
             class="blog-category-tab"
             for="filter-<%= category.slug %>"
@@ -231,7 +194,7 @@
                 class="blog-account-link__avatar"
                 aria-hidden="true"
               >
-                HB
+                <%= blogActor.initials %>
               </span>
 
               <span class="blog-account-link__copy">
@@ -240,8 +203,8 @@
                 </strong>
 
                 <small>
-                  <%= viewMyPostCount %>
-                  <%= viewMyPostCount === 1
+                  <%= myPostCount %>
+                  <%= myPostCount === 1
                     ? "story"
                     : "stories"
                   %>
@@ -284,7 +247,7 @@
           </div>
         </div>
 
-        <% if (viewLeadStory) { %>
+        <% if (leadStory) { %>
           <section
             class="lead-story-section"
             aria-labelledby="lead-story-heading"
@@ -294,24 +257,24 @@
             </p>
 
             <article
-              class="lead-story post <%= viewLeadStory.categorySlug %>"
+              class="lead-story post <%= leadStory.categorySlug %>"
               data-blog-post
-              data-category="<%= viewLeadStory.categorySlug %>"
-              data-search="<%= viewLeadStory.searchableText %>"
+              data-category="<%= leadStory.categorySlug %>"
+              data-search="<%= leadStory.searchableText %>"
             >
               <a
                 class="lead-image"
-                href="<%= viewLeadStory.url %>"
-                aria-label="Read <%= viewLeadStory.title %>"
+                href="<%= leadStory.url %>"
+                aria-label="Read <%= leadStory.title %>"
               >
                 <img
-                  src="<%= viewLeadStory.image.listUrl || viewLeadStory.image.url %>"
-                  alt="<%= viewLeadStory.image.alt %>"
+                  src="<%= leadStory.image.listUrl || leadStory.image.url %>"
+                  alt="<%= leadStory.image.alt %>"
                 />
 
-                <% if (viewLeadStory.image.listCaption) { %>
+                <% if (leadStory.image.listCaption) { %>
                   <span class="image-caption">
-                    <%= viewLeadStory.image.listCaption %>
+                    <%= leadStory.image.listCaption %>
                   </span>
                 <% } %>
               </a>
@@ -319,22 +282,24 @@
               <div class="lead-copy">
                 <div class="post-meta-line">
                   <span class="tag">
-                    <%= viewLeadStory.category %>
+                    <%= leadStory.category %>
                   </span>
 
-                  <time datetime="<%= viewLeadStory.publishedAt %>">
-                    <%= viewLeadStory.displayDate %>
+                  <time
+                    datetime="<%= leadStory.publishedAt %>"
+                  >
+                    <%= leadStory.displayDate %>
                   </time>
                 </div>
 
                 <h2 id="lead-story-heading">
-                  <a href="<%= viewLeadStory.url %>">
-                    <%= viewLeadStory.title %>
+                  <a href="<%= leadStory.url %>">
+                    <%= leadStory.title %>
                   </a>
                 </h2>
 
                 <p class="lead-summary">
-                  <%= viewLeadStory.summary %>
+                  <%= leadStory.summary %>
                 </p>
 
                 <div class="author-row">
@@ -342,16 +307,17 @@
                     class="author-avatar"
                     aria-hidden="true"
                   >
-                    <%= viewLeadStory.author.initials %>
+                    <%= leadStory.author.initials %>
                   </div>
 
                   <div>
                     <strong>
-                      <%= viewLeadStory.author.name %>
+                      <%= leadStory.author.name %>
                     </strong>
 
                     <span>
-                      <%= viewLeadStory.readTime %> min read
+                      <%= leadStory.readTime %>
+                      min read
                     </span>
                   </div>
                 </div>
@@ -359,7 +325,7 @@
                 <div class="lead-actions">
                   <a
                     class="text-link"
-                    href="<%= viewLeadStory.url %>"
+                    href="<%= leadStory.url %>"
                   >
                     Read the full story
 
@@ -370,7 +336,7 @@
 
                   <a
                     class="icon-link"
-                    href="<%= viewLeadStory.shareEmailUrl %>"
+                    href="<%= leadStory.shareEmailUrl %>"
                     aria-label="Share this post by email"
                   >
                     Share
@@ -381,7 +347,7 @@
           </section>
         <% } %>
 
-        <% if (viewFeaturedPosts.length > 0) { %>
+        <% if (featuredPosts.length > 0) { %>
           <section
             class="featured-section"
             aria-labelledby="featured-heading"
@@ -399,7 +365,7 @@
             </div>
 
             <div class="featured-grid">
-              <% viewFeaturedPosts.forEach((post) => { %>
+              <% featuredPosts.forEach((post) => { %>
                 <article
                   class="featured-card post <%= post.categorySlug %>"
                   data-blog-post
@@ -422,7 +388,9 @@
                         <%= post.category %>
                       </span>
 
-                      <time datetime="<%= post.publishedAt %>">
+                      <time
+                        datetime="<%= post.publishedAt %>"
+                      >
                         <%= post.displayDate %>
                       </time>
                     </div>
@@ -500,7 +468,7 @@
             id="blog-post-list"
             aria-label="All blog post previews"
           >
-            <% viewPosts.forEach((post) => { %>
+            <% posts.forEach((post) => { %>
               <article
                 class="post-row post <%= post.categorySlug %>"
                 data-blog-post
@@ -525,7 +493,9 @@
                       <%= post.category %>
                     </span>
 
-                    <time datetime="<%= post.publishedAt %>">
+                    <time
+                      datetime="<%= post.publishedAt %>"
+                    >
                       <%= post.displayDate %>
                     </time>
                   </div>

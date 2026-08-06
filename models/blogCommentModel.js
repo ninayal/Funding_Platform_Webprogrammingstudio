@@ -1,163 +1,32 @@
 "use strict";
 
-const crypto = require(
-  "crypto",
-);
+const crypto =
+  require("crypto");
 
-const comments = [
-  {
-    id: "comment-dev-1",
-    postId:
-      "developer-mission",
+const {
+  comments:
+  seedComments,
+} = require("../data/blog");
 
-    parentCommentId: null,
+const clone = (value) => {
+  if (value === undefined) {
+    return undefined;
+  }
 
-    author: {
-      id:
-        "user-mai-nguyen",
-      name:
-        "Mai Nguyễn",
-      initials: "MN",
-    },
-
-    content:
-      "I appreciate the distinction between documenting uncertainty and filling information gaps with marketing language.",
-
-    likedBy: [
-      "user-huy-ba",
-    ],
-
-    createdAt:
-      "2026-07-06T11:15:00.000Z",
-
-    updatedAt:
-      "2026-07-06T11:15:00.000Z",
-
-    status: "active",
-  },
-
-  {
-    id: "reply-dev-1",
-    postId:
-      "developer-mission",
-
-    parentCommentId:
-      "comment-dev-1",
-
-    author: {
-      id: "user-huy-ba",
-      name: "Huy Ba",
-      initials: "HB",
-    },
-
-    content:
-      "That distinction was one of the main design priorities.",
-
-    likedBy: [],
-
-    createdAt:
-      "2026-07-06T12:00:00.000Z",
-
-    updatedAt:
-      "2026-07-06T12:00:00.000Z",
-
-    status: "active",
-  },
-
-  {
-    id: "comment-dev-2",
-    postId:
-      "developer-mission",
-
-    parentCommentId: null,
-
-    author: {
-      id:
-        "user-trung-kien",
-      name:
-        "Trung Kiên",
-      initials: "TK",
-    },
-
-    content:
-      "Maker-controlled profiles with editorial support could help preserve accurate information.",
-
-    likedBy: [],
-
-    createdAt:
-      "2026-07-06T15:30:00.000Z",
-
-    updatedAt:
-      "2026-07-06T15:30:00.000Z",
-
-    status: "active",
-  },
-
-  {
-    id: "comment-dev-3",
-    postId:
-      "developer-mission",
-
-    parentCommentId: null,
-
-    author: {
-      id: "user-an-vy",
-      name: "An Vy",
-      initials: "AV",
-    },
-
-    content:
-      "The relationship between traditional products and charitable support makes the platform more meaningful.",
-
-    likedBy: [],
-
-    createdAt:
-      "2026-07-07T08:20:00.000Z",
-
-    updatedAt:
-      "2026-07-07T08:20:00.000Z",
-
-    status: "active",
-  },
-
-  {
-    id:
-      "comment-bat-trang-1",
-
-    postId: "bat-trang",
-
-    parentCommentId: null,
-
-    author: {
-      id:
-        "user-phuong-linh",
-      name:
-        "Phương Linh",
-      initials: "PL",
-    },
-
-    content:
-      "This is why village names should not be treated as a single aesthetic category.",
-
-    likedBy: [],
-
-    createdAt:
-      "2026-06-29T10:00:00.000Z",
-
-    updatedAt:
-      "2026-06-29T10:00:00.000Z",
-
-    status: "active",
-  },
-];
-
-const clone = (value) =>
-  JSON.parse(
+  return JSON.parse(
     JSON.stringify(value),
   );
+};
+
+/*
+ * Runtime copy of the seed comments.
+ */
+const comments =
+  seedComments.map(clone);
 
 const clean = (value) =>
-  String(value || "").trim();
+  String(value || "")
+    .trim();
 
 const getMutableComment = (
   commentId,
@@ -169,67 +38,95 @@ const getMutableComment = (
   ) || null;
 
 const buildAuthor = (
-  user,
+  user = {},
 ) => ({
-  id: clean(user.id),
-  name: clean(
-    user.name ||
+  id:
+    clean(user.id),
+
+  name:
+    clean(
+      user.name ||
       user.username ||
       "User",
-  ),
+    ),
 
-  initials: clean(
-    user.initials ||
+  initials:
+    clean(
+      user.initials ||
       "U",
-  ),
+    ),
 });
+
+const getLikedBy = (
+  comment,
+) =>
+  Array.isArray(
+    comment.likedBy,
+  )
+    ? comment.likedBy
+    : [];
 
 const decorateComment = (
   comment,
   currentUserId,
-) => ({
-  ...clone(comment),
+) => {
+  const likedBy =
+    getLikedBy(comment);
 
-  likeCount:
-    comment.likedBy.length,
+  return {
+    ...clone(comment),
 
-  likedByCurrentUser:
-    Boolean(
-      currentUserId &&
-        comment.likedBy.includes(
-          currentUserId,
+    likedBy:
+      clone(likedBy),
+
+    likeCount:
+      likedBy.length,
+
+    likedByCurrentUser:
+      Boolean(
+        currentUserId &&
+        likedBy.includes(
+          clean(
+            currentUserId,
+          ),
         ),
-    ),
-});
+      ),
+  };
+};
 
 const getCommentsByPostId = (
   postId,
   currentUserId = null,
 ) => {
-  const id = clean(postId);
+  const id =
+    clean(postId);
 
   const activeComments =
     comments.filter(
       (comment) =>
-        comment.postId === id &&
+        comment.postId ===
+        id &&
         comment.status ===
-          "active",
+        "active",
     );
 
   const roots =
     activeComments
       .filter(
         (comment) =>
-          !comment.parentCommentId,
+          !comment
+            .parentCommentId,
       )
       .sort(
-        (a, b) =>
+        (commentA, commentB) =>
           new Date(
-            b.createdAt,
-          ) -
+            commentB
+              .createdAt,
+          ).getTime() -
           new Date(
-            a.createdAt,
-          ),
+            commentA
+              .createdAt,
+          ).getTime(),
       );
 
   return roots.map(
@@ -238,23 +135,30 @@ const getCommentsByPostId = (
         activeComments
           .filter(
             (comment) =>
-              comment.parentCommentId ===
+              comment
+                .parentCommentId ===
               root.id,
           )
           .sort(
-            (a, b) =>
+            (
+              replyA,
+              replyB,
+            ) =>
               new Date(
-                a.createdAt,
-              ) -
+                replyA
+                  .createdAt,
+              ).getTime() -
               new Date(
-                b.createdAt,
-              ),
+                replyB
+                  .createdAt,
+              ).getTime(),
           )
-          .map((reply) =>
-            decorateComment(
-              reply,
-              currentUserId,
-            ),
+          .map(
+            (reply) =>
+              decorateComment(
+                reply,
+                currentUserId,
+              ),
           );
 
       return {
@@ -274,46 +178,79 @@ const getCommentsByPostId = (
 
 const countCommentsByPostId = (
   postId,
-) =>
-  comments.filter(
+) => {
+  const id =
+    clean(postId);
+
+  return comments.filter(
     (comment) =>
       comment.postId ===
-        clean(postId) &&
+      id &&
       comment.status ===
-        "active",
+      "active",
   ).length;
+};
 
 const addComment = (
   postId,
   user,
   content,
 ) => {
+  const id =
+    clean(postId);
+
+  const author =
+    buildAuthor(user);
+
+  const cleanContent =
+    clean(content);
+
+  if (
+    !id ||
+    !author.id ||
+    !cleanContent
+  ) {
+    return {
+      ok: false,
+      reason:
+        "invalid-input",
+    };
+  }
+
   const now =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
 
   const comment = {
     id:
       crypto.randomUUID(),
 
     postId:
-      clean(postId),
+      id,
 
-    parentCommentId: null,
+    parentCommentId:
+      null,
 
-    author:
-      buildAuthor(user),
+    author,
 
     content:
-      clean(content),
+      cleanContent,
 
     likedBy: [],
 
-    createdAt: now,
-    updatedAt: now,
-    status: "active",
+    createdAt:
+      now,
+
+    updatedAt:
+      now,
+
+    status:
+      "active",
   };
 
-  comments.push(comment);
+  comments.push(
+    comment,
+  );
 
   return {
     ok: true,
@@ -328,17 +265,37 @@ const addReply = (
   user,
   content,
 ) => {
+  const id =
+    clean(postId);
+
   const parent =
     getMutableComment(
       parentCommentId,
     );
 
+  const author =
+    buildAuthor(user);
+
+  const cleanContent =
+    clean(content);
+
+  if (
+    !id ||
+    !author.id ||
+    !cleanContent
+  ) {
+    return {
+      ok: false,
+      reason:
+        "invalid-input",
+    };
+  }
+
   if (
     !parent ||
-    parent.postId !==
-      clean(postId) ||
+    parent.postId !== id ||
     parent.status !==
-      "active"
+    "active"
   ) {
     return {
       ok: false,
@@ -348,45 +305,53 @@ const addReply = (
   }
 
   /*
-   * Keep only one visible reply level.
-   * Replying to a reply attaches it
-   * to the original parent comment.
+   * Only one visible reply level.
+   * Replying to a reply attaches the
+   * new reply to the original root.
    */
   const rootId =
     parent.parentCommentId ||
     parent.id;
 
   const now =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
 
   const reply = {
     id:
       crypto.randomUUID(),
 
     postId:
-      clean(postId),
+      id,
 
     parentCommentId:
       rootId,
 
-    author:
-      buildAuthor(user),
+    author,
 
     content:
-      clean(content),
+      cleanContent,
 
     likedBy: [],
 
-    createdAt: now,
-    updatedAt: now,
-    status: "active",
+    createdAt:
+      now,
+
+    updatedAt:
+      now,
+
+    status:
+      "active",
   };
 
-  comments.push(reply);
+  comments.push(
+    reply,
+  );
 
   return {
     ok: true,
-    reply: clone(reply),
+    reply:
+      clone(reply),
   };
 };
 
@@ -395,20 +360,30 @@ const toggleLike = (
   commentId,
   userId,
 ) => {
+  const id =
+    clean(postId);
+
+  const actorId =
+    clean(userId);
+
+  if (!actorId) {
+    return {
+      ok: false,
+      reason:
+        "user-required",
+    };
+  }
+
   const comment =
     getMutableComment(
       commentId,
     );
 
-  const actorId =
-    clean(userId);
-
   if (
     !comment ||
-    comment.postId !==
-      clean(postId) ||
+    comment.postId !== id ||
     comment.status !==
-      "active"
+    "active"
   ) {
     return {
       ok: false,
@@ -417,36 +392,53 @@ const toggleLike = (
     };
   }
 
+  if (
+    !Array.isArray(
+      comment.likedBy,
+    )
+  ) {
+    comment.likedBy =
+      [];
+  }
+
   const existingIndex =
-    comment.likedBy.indexOf(
-      actorId,
-    );
+    comment.likedBy
+      .indexOf(
+        actorId,
+      );
 
   let liked;
 
-  if (existingIndex === -1) {
-    comment.likedBy.push(
-      actorId,
-    );
+  if (
+    existingIndex === -1
+  ) {
+    comment.likedBy
+      .push(
+        actorId,
+      );
 
     liked = true;
   } else {
-    comment.likedBy.splice(
-      existingIndex,
-      1,
-    );
+    comment.likedBy
+      .splice(
+        existingIndex,
+        1,
+      );
 
     liked = false;
   }
 
   comment.updatedAt =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
 
   return {
     ok: true,
     liked,
+
     likeCount:
-      comment.likedBy.length,
+      comment.likedBy
+        .length,
   };
 };
 
@@ -456,6 +448,9 @@ const deleteComment = (
   actorId,
   postOwnerId,
 ) => {
+  const id =
+    clean(postId);
+
   const comment =
     getMutableComment(
       commentId,
@@ -463,8 +458,7 @@ const deleteComment = (
 
   if (
     !comment ||
-    comment.postId !==
-      clean(postId)
+    comment.postId !== id
   ) {
     return {
       ok: false,
@@ -480,15 +474,16 @@ const deleteComment = (
     actor &&
     (
       comment.author.id ===
-        actor ||
+      actor ||
       clean(postOwnerId) ===
-        actor
+      actor
     );
 
   if (!canDelete) {
     return {
       ok: false,
-      reason: "forbidden",
+      reason:
+        "forbidden",
     };
   }
 
@@ -497,13 +492,19 @@ const deleteComment = (
       comment.id,
     ]);
 
+  /*
+   * Deleting a root comment also
+   * removes its direct replies.
+   */
   if (
-    !comment.parentCommentId
+    !comment
+      .parentCommentId
   ) {
     comments.forEach(
       (item) => {
         if (
-          item.parentCommentId ===
+          item
+            .parentCommentId ===
           comment.id
         ) {
           idsToDelete.add(
@@ -540,7 +541,11 @@ const deleteComment = (
 const deleteCommentsByPostId = (
   postId,
 ) => {
-  const id = clean(postId);
+  const id =
+    clean(postId);
+
+  let deletedCount =
+    0;
 
   for (
     let index =
@@ -549,15 +554,22 @@ const deleteCommentsByPostId = (
     index -= 1
   ) {
     if (
-      comments[index].postId ===
-      id
+      comments[index]
+        .postId === id
     ) {
       comments.splice(
         index,
         1,
       );
+
+      deletedCount += 1;
     }
   }
+
+  return {
+    ok: true,
+    deletedCount,
+  };
 };
 
 module.exports = {

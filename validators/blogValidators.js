@@ -1,11 +1,12 @@
 "use strict";
 
-const CATEGORY_ORDER = [
-  "Mission",
-  "Donation",
-  "Places",
-  "Guide",
-];
+const CATEGORY_ORDER =
+  Object.freeze([
+    "Mission",
+    "Donation",
+    "Places",
+    "Guide",
+  ]);
 
 const HTTP_URL_PATTERN =
   /^https?:\/\/\S+$/i;
@@ -18,8 +19,8 @@ const parseTags = (value) =>
     Array.isArray(value)
       ? value
       : String(
-          value || "",
-        ).split(",")
+        value || "",
+      ).split(",")
   )
     .map(clean)
     .filter(Boolean)
@@ -87,7 +88,7 @@ const normalisePostInput = (
   const status =
     forcedStatus ||
     (body.status ===
-    "published"
+      "published"
       ? "published"
       : "draft");
 
@@ -98,7 +99,7 @@ const normalisePostInput = (
     category:
       clean(
         body.category ||
-          "Guide",
+        "Guide",
       ),
 
     summary:
@@ -107,7 +108,7 @@ const normalisePostInput = (
     archiveSummary:
       clean(
         body.archiveSummary ||
-          body.summary,
+        body.summary,
       ),
 
     readTime:
@@ -123,8 +124,8 @@ const normalisePostInput = (
     imageAlt:
       clean(
         body.imageAlt ||
-          body.title ||
-          "Blog image",
+        body.title ||
+        "Blog image",
       ),
 
     imageCaption:
@@ -164,13 +165,32 @@ const validatePost = (
 ) => {
   const errors = {};
 
+  const categoryErrorMessage =
+    `Choose one of the following categories: ${CATEGORY_ORDER.join(", ")
+    }.`;
+
+  /*
+   * Validate category for both drafts
+   * and published posts.
+   */
+  if (
+    !CATEGORY_ORDER.includes(
+      values.category,
+    )
+  ) {
+    errors.category =
+      categoryErrorMessage;
+  }
+
+  /*
+   * Draft validation is intentionally lighter.
+   */
   if (draft) {
     if (!values.title) {
       errors.title =
         "Give the draft a title before saving it.";
     } else if (
-      values.title.length >
-      150
+      values.title.length > 150
     ) {
       errors.title =
         "Draft title must not exceed 150 characters.";
@@ -189,30 +209,20 @@ const validatePost = (
     return errors;
   }
 
+  /*
+   * Published-post validation.
+   */
   if (
-    values.title.length <
-      5 ||
-    values.title.length >
-      150
+    values.title.length < 5 ||
+    values.title.length > 150
   ) {
     errors.title =
       "Title must contain between 5 and 150 characters.";
   }
 
   if (
-    !CATEGORY_ORDER.includes(
-      values.category,
-    )
-  ) {
-    errors.category =
-      "Choose Mission, Donation, Places, or Guide.";
-  }
-
-  if (
-    values.summary.length <
-      20 ||
-    values.summary.length >
-      400
+    values.summary.length < 20 ||
+    values.summary.length > 400
   ) {
     errors.summary =
       "Summary must contain between 20 and 400 characters.";
@@ -261,12 +271,14 @@ const validateCommentContent = (
 
   const errors = {};
 
-  if (
-    content.length < 3 ||
+  if (!content) {
+    errors.content =
+      `${label} cannot be empty.`;
+  } else if (
     content.length > 1000
   ) {
     errors.content =
-      `${label} must contain between 3 and 1000 characters.`;
+      `${label} must not exceed 1000 characters.`;
   }
 
   return {

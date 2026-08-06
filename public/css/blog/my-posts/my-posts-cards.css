@@ -45,10 +45,6 @@
     filter: saturate(0.72);
 }
 
-.post-archived .my-post-card__image img {
-    filter: grayscale(0.45) saturate(0.5);
-}
-
 .my-post-card__content {
     min-width: 0;
     padding: 25px 27px;

@@ -10,6 +10,11 @@ const blogCommentModel =
   );
 
 const {
+  developmentActor:
+  BLOG_DEVELOPMENT_ACTOR,
+} = require("../data/blog");
+
+const {
   CATEGORY_ORDER,
   contentToText,
   normalisePostInput,
@@ -18,15 +23,6 @@ const {
 } = require(
   "../validators/blogValidators",
 );
-
-const BLOG_DEVELOPMENT_ACTOR =
-  Object.freeze({
-    id: "user-huy-ba",
-    name: "Huy Ba",
-    email: "huy@example.com",
-    initials: "HB",
-    role: "Community contributor",
-  });
 
 const requestWantsJson = (req) => {
   const acceptHeader =
@@ -208,6 +204,7 @@ const getPostFormValues = (
 
   dateAdded:
     toDateInputValue(
+      post.createdAt ||
       post.publishedAt ||
       post.updatedAt,
     ),
@@ -404,6 +401,9 @@ const getSharedViewData = () => ({
     blogModel.countPostsByAuthorId(
       BLOG_DEVELOPMENT_ACTOR.id,
     ),
+
+  blogActor:
+    BLOG_DEVELOPMENT_ACTOR,
 });
 
 const getCategoriesForView =
@@ -445,13 +445,6 @@ const getCategoriesForView =
 const getNotice = (
   query,
 ) => {
-  if (
-    query.comment ===
-    "added"
-  ) {
-    return "Your comment was posted.";
-  }
-
   if (
     query.reply ===
     "added"
@@ -708,7 +701,7 @@ const addComment = (
     return res.redirect(
       `/blog/${encodeURIComponent(
         post.id,
-      )}?comment=added#comments`,
+      )}#comments`,
     );
   } catch (error) {
     return next(error);
@@ -1314,35 +1307,6 @@ const updatePost = (
   }
 };
 
-const saveDraft = (
-  req,
-  res,
-  next,
-) => {
-  req.body.status = "draft";
-
-  return updatePost(
-    req,
-    res,
-    next,
-  );
-};
-
-const publishPost = (
-  req,
-  res,
-  next,
-) => {
-  req.body.status =
-    "published";
-
-  return updatePost(
-    req,
-    res,
-    next,
-  );
-};
-
 const deletePost = (
   req,
   res,
@@ -1391,8 +1355,6 @@ module.exports = {
   getCreatePostPage,
   getMyPostsPage,
   getPostEditPage,
-  publishPost,
-  saveDraft,
   toggleCommentLike,
   updatePost,
 };
