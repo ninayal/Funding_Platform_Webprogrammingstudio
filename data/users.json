@@ -1,14 +1,31 @@
 [
   {
-    "id": "user-huy-ba",
-    "firstname": "Huy",
-    "lastname": "Ba",
-    "username": "huyba",
-    "email": "huy@example.com",
-    "gender": "prefer_not",
-    "description": "Demo account for the login flow.",
+    "id": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
+    "firstname": "nin",
+    "lastname": "lam",
+    "username": "ninayal_",
+    "email": "abc@gmail.com",
+    "gender": "male",
+    "description": "bjygyjgjyf",
     "role": "User",
-    "passwordHash": "scrypt$6c616e67636f2d64656d6f2d75736572$c6c21d9e996717e60f28087b50069b9b5d3713c47f74158d52e8a534dd94f846c4bf7bc59077291ab57be68815d2747d740a4b4bb233f4a26b036b001fcbdf5a",
-    "createdAt": "2026-08-05T00:00:00.000Z"
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "bjygyjgjyf",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$7a80b950bf86da5f3abe9b12e2b01a86$8423beb484d056648e489ab27791299559432ed690cb61feac6ed706e3f7610516ce1d2780551f0382587bd89c13f773aa7a471bd71c53339f8ef30bffdff0c4",
+    "createdAt": "2026-08-06T07:20:53.841Z",
+    "updatedAt": "2026-08-06T07:20:53.841Z"
   }
 ]

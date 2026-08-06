@@ -1,0 +1,29 @@
+<div class="confirm-card confirm-info-card">
+    <h2>Delivery Address</h2>
+    <address class="confirm-address">
+        <strong>
+            <%= order.delivery.firstName %>
+                <%= order.delivery.lastName %>
+        </strong>
+        <span>
+            <%= order.delivery.address1 %>
+        </span>
+        <% if(order.delivery.address2){ %><span>
+                <%= order.delivery.address2 %>
+            </span>
+            <% } %>
+                <span>
+                    <%= order.delivery.city %>, <%= order.delivery.state %>
+                            <%= order.delivery.postalCode %>
+                </span>
+                <span>
+                    <%= order.delivery.countryName||order.delivery.country.toUpperCase() %>
+                </span>
+    </address>
+    <div class="confirm-info-row">
+        <span>Phone</span>
+        <strong>
+            <%= order.delivery.phone %>
+        </strong>
+    </div>
+</div>
