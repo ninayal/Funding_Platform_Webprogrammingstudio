@@ -11,6 +11,7 @@
 }
 
 .pagination__info {
+  margin: 0;
   font-family: var(--ff-ui);
   font-size: 13px;
   color: var(--muted);
@@ -25,20 +26,22 @@
 .pagination__pages {
   display: flex;
   gap: 8px;
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.pagination__pages a
+.pagination__pages a,
 .pagination__pages span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   font-family: var(--ff-ui);
   font-size: 13px;
   font-weight: 600;
+  line-height: 1;
   color: var(--muted);
   text-decoration: none;
 }
@@ -48,4 +51,3 @@
   background: var(--deep);
   color: var(--cream);
 }
-

@@ -212,6 +212,20 @@ const getProductsPageData = () => ({
   products: getDecoratedProducts()
 });
 
+const getFeaturedProducts = (limit = 6) => {
+  return products
+    .filter((product) => product.stock > 0)
+    .sort((a, b) => (a.featuredOrder || 999) - (b.featuredOrder || 999))
+    .slice(0, limit)
+    .map((product) => ({
+      ...product,
+      priceFormatted: `$${product.price.toFixed(2)}`,
+      ratingStars:
+        "★".repeat(Math.round(product.rating)) +
+        "☆".repeat(5 - Math.round(product.rating))
+    }));
+};
+
 module.exports = {
   getAllProducts,
   getProductById,

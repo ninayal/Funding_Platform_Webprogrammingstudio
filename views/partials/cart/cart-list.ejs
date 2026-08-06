@@ -1,0 +1,5 @@
+<ul class="cart-list">
+    <% cart.items.forEach((item,index)=>{ %>
+        <%- include("./cart-item",{item,index}) %>
+            <% }) %>
+</ul>

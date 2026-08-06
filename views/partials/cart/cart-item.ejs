@@ -1,0 +1,45 @@
+<li class="cart-row item-<%= index+1 %>" data-product-id="<%= item.productId %>" data-title="<%= item.searchTitle %>"
+    data-quantity="<%= item.quantity %>" data-price="<%= item.price %>">
+    <a href="/cart/products" class="cart-row__media">
+        <img src="<%= item.image %>" alt="<%= item.name %>">
+    </a>
+    <div class="cart-row__body">
+        <p class="cart-row__maker">
+            <%= item.maker %>
+        </p>
+        <h3 class="cart-row__title">
+            <a href="#">
+                <%= item.name %>
+            </a>
+        </h3>
+        <p class="cart-row__variant">
+            <%= item.material %> · <%= item.variant %>
+        </p>
+        <% if(item.stock<=3){ %>
+            <p class="cart-row__stock">Only <%= item.stock %> left</p>
+            <% } %>
+                <div class="cart-row__controls">
+                    <div class="qty-stepper">
+                        <button type="button" class="qty-btn qty-decrease"
+                            aria-label="Decrease quantity">&minus;</button>
+                        <input type="number" class="qty-input cart-quantity-input" value="<%= item.quantity %>" min="1"
+                            max="<%= item.stock %>" aria-label="Quantity">
+                        <button type="button" class="qty-btn qty-increase" aria-label="Increase quantity">+</button>
+                    </div>
+                    <form class="cart-remove-form" action="/cart/remove" method="POST">
+                        <input type="hidden" name="productId" value="<%= item.productId %>">
+                        <button type="submit" class="text-action text-action--remove">Remove</button>
+                    </form>
+                </div>
+    </div>
+    <div class="cart-row__price">
+        <% if(item.oldPriceFormatted){ %>
+            <span class="price-was">
+                <%= item.oldPriceFormatted %>
+            </span>
+            <% } %>
+                <span class="price-now">
+                    <%= item.subtotalFormatted %>
+                </span>
+    </div>
+</li>

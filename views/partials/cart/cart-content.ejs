@@ -1,0 +1,9 @@
+<% if(cart.hasItems){ %>
+    <div class="cart-shell">
+        <%- include("./cart-sort-state") %>
+            <%- include("./cart-items",{cart}) %>
+                <%- include("./order-summary",{cart}) %>
+    </div>
+    <% }else{ %>
+        <%- include("./empty-cart") %>
+            <% } %>

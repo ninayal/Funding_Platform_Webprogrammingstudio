@@ -33,7 +33,7 @@
   color: var(--cream);
 }
 
-.split-card--wishlist {
+.split-card--cart {
   background: var(--darkred);
   color: var(--cream);
 }

@@ -1,0 +1,46 @@
+<% if(recommendedProducts.length){ %>
+    <section class="also-like">
+        <div class="also-like__head">
+            <div>
+                <p class="section-kicker">Complete the collection</p>
+                <h2>You may also <em>like</em></h2>
+            </div>
+            <a class="text-cta" href="/cart/products">View all pieces <span>→</span></a>
+        </div>
+
+        <div class="also-like__track">
+            <% recommendedProducts.forEach(product=>{ %>
+                <article class="product-card">
+                    <a class="product-card__media" href="/cart/products">
+                        <img src="<%= product.image %>" alt="<%= product.alt||product.name %>">
+                        <span class="product-card__badge">
+                            <%= product.categoryLabel %>
+                        </span>
+                    </a>
+
+                    <div class="product-card__body">
+                        <h3>
+                            <%= product.name %>
+                        </h3>
+                        <p class="product-card__rating">
+                            <%= product.ratingStars %> <span>(<%= product.reviewCount %>)</span>
+                        </p>
+
+                        <div class="product-card__row">
+                            <span class="product-card__price">
+                                <%= product.priceFormatted %>
+                            </span>
+
+                            <form action="/cart/add" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="product-card__add"
+                                    aria-label="Add <%= product.name %> to cart">+</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+                <% }) %>
+        </div>
+    </section>
+    <% } %>

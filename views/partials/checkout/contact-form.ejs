@@ -1,0 +1,20 @@
+<fieldset class="checkout-fieldset">
+    <legend>Contact</legend>
+
+    <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" value="<%= formData.email %>" placeholder="you@example.com"
+            maxlength="100" autocomplete="email" required>
+        <% if(errors.email){ %>
+            <p class="field-error">
+                <%= errors.email %>
+            </p>
+            <% } %>
+    </div>
+
+    <label class="checkbox-row">
+        <input type="checkbox" name="newsletter" <%=formData.newsletter?"checked":"" %>
+        >
+        <span>Email me with news, offers and craft stories</span>
+    </label>
+</fieldset>

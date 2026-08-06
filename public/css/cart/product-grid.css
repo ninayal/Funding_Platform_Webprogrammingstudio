@@ -32,49 +32,42 @@
   transform: scale(1.05);
 }
 
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 253, 245, .9);
-  color: var(--deep);
-  cursor: pointer;
-  transition: transform .2s;
-}
-
-.wishlist-btn:hover {
-  transform: scale(1.08);
-  color: var(--red);
-}
-
 .quickadd-btn {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: var(--deep);
   color: var(--cream);
-  font-size: 17px;
+  font-family: var(--ff-ui);
+  font-size: 22px;
+  font-weight: 400;
   line-height: 1;
-  text-decoration: none;
-  transition: background .2s, transform .2s;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 
 .quickadd-btn:hover {
   background: var(--red);
-  transform: scale(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, .22);
+}
+
+.quickadd-btn:active {
+  transform: translateY(0);
+}
+
+.quickadd-btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+  transform: none;
 }
 
 .shop-card__body p {
@@ -154,4 +147,3 @@
   font-size: 12px;
   color: var(--muted);
 }
-
