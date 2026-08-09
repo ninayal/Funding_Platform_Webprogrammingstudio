@@ -1,26 +1,209 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
+
 const {
   posts: seedPosts,
 } = require("../data/blog");
+
+const HUY_BA_USER_ID =
+  "user-huy-ba";
+
+const storagePath = path.join(
+  __dirname,
+  "../data/posts.json",
+);
+
+const clone = (value) => {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  return JSON.parse(
+    JSON.stringify(value),
+  );
+};
+
+const createEmptyStorage = () => ({
+  posts: [],
+  deletedPostIds: [],
+});
+
+const ensureStorageFile = () => {
+  if (fs.existsSync(storagePath)) {
+    return;
+  }
+
+  fs.writeFileSync(
+    storagePath,
+    JSON.stringify(
+      createEmptyStorage(),
+      null,
+      2,
+    ),
+    "utf8",
+  );
+};
+
+const readStorage = () => {
+  ensureStorageFile();
+
+  try {
+    const content = fs.readFileSync(
+      storagePath,
+      "utf8",
+    );
+
+    const parsed = JSON.parse(content);
+
+    return {
+      posts: Array.isArray(parsed.posts)
+        ? parsed.posts
+        : [],
+
+      deletedPostIds:
+        Array.isArray(
+          parsed.deletedPostIds,
+        )
+          ? parsed.deletedPostIds
+          : [],
+    };
+  } catch (error) {
+    console.error(
+      "Could not read Blog JSON storage:",
+      error,
+    );
+
+    return createEmptyStorage();
+  }
+};
+
+const writeStorage = (storage) => {
+  fs.writeFileSync(
+    storagePath,
+    JSON.stringify(
+      storage,
+      null,
+      2,
+    ),
+    "utf8",
+  );
+};
+
+const isHuyBaPost = (post) =>
+  post?.author?.id ===
+  HUY_BA_USER_ID;
+
+const mergeStoredPosts = () => {
+  const storage = readStorage();
+
+  const deletedIds = new Set(
+    storage.deletedPostIds,
+  );
+
+  const postsById = new Map();
+
+  seedPosts.forEach((post) => {
+    if (
+      post?.id &&
+      !deletedIds.has(post.id)
+    ) {
+      postsById.set(
+        post.id,
+        clone(post),
+      );
+    }
+  });
+
+  storage.posts.forEach((post) => {
+    if (
+      post?.id &&
+      isHuyBaPost(post) &&
+      !deletedIds.has(post.id)
+    ) {
+      postsById.set(
+        post.id,
+        clone(post),
+      );
+    }
+  });
+
+  return [
+    ...postsById.values(),
+  ];
+};
+
+const saveHuyBaPost = (post) => {
+  if (!isHuyBaPost(post)) {
+    return false;
+  }
+
+  const storage = readStorage();
+
+  const existingIndex =
+    storage.posts.findIndex(
+      (storedPost) =>
+        storedPost.id === post.id,
+    );
+
+  if (existingIndex === -1) {
+    storage.posts.push(
+      clone(post),
+    );
+  } else {
+    storage.posts[existingIndex] =
+      clone(post);
+  }
+
+  storage.deletedPostIds =
+    storage.deletedPostIds.filter(
+      (postId) =>
+        postId !== post.id,
+    );
+
+  writeStorage(storage);
+
+  return true;
+};
+
+const deleteStoredHuyBaPost = (
+  post,
+) => {
+  if (!isHuyBaPost(post)) {
+    return false;
+  }
+
+  const storage = readStorage();
+
+  storage.posts =
+    storage.posts.filter(
+      (storedPost) =>
+        storedPost.id !== post.id,
+    );
+
+  if (
+    !storage.deletedPostIds.includes(
+      post.id,
+    )
+  ) {
+    storage.deletedPostIds.push(
+      post.id,
+    );
+  }
+
+  writeStorage(storage);
+
+  return true;
+};
+
+const posts = mergeStoredPosts();
 
 const allowedStatuses =
   new Set([
     "draft",
     "published",
   ]);
-
-const clone = (value) =>
-  JSON.parse(
-    JSON.stringify(value),
-  );
-
-/*
- * Mutable runtime copy of the
- * seed posts from data/blog.js.
- */
-const posts =
-  seedPosts.map(clone);
 
 const normaliseId = (value) =>
   String(value || "").trim();
@@ -485,7 +668,7 @@ const createPost = (
   };
 
   posts.push(post);
-
+  saveHuyBaPost(post);
   return clone(post);
 };
 
@@ -584,14 +767,18 @@ const updatePost = (
   }
 
   post.updatedAt =
-    new Date()
-      .toISOString();
+  new Date().toISOString();
 
-  return {
-    ok: true,
-    post:
-      clone(post),
-  };
+/*
+ * Save the updated Huy Ba post
+ * into huy-blog-posts.json.
+ */
+saveHuyBaPost(post);
+
+return {
+  ok: true,
+  post: clone(post),
+};
 };
 
 const deletePost = (
@@ -609,10 +796,7 @@ const deletePost = (
   }
 
   if (
-    normaliseId(
-      posts[index]
-        .author?.id,
-    ) !==
+    posts[index].author.id !==
     normaliseId(ownerId)
   ) {
     return {
@@ -621,20 +805,20 @@ const deletePost = (
     };
   }
 
-  const [
+  const [deletedPost] =
+    posts.splice(index, 1);
+
+  /*
+   * Remove the post from JSON
+   * and remember its deleted ID.
+   */
+  deleteStoredHuyBaPost(
     deletedPost,
-  ] =
-    posts.splice(
-      index,
-      1,
-    );
+  );
 
   return {
     ok: true,
-    post:
-      clone(
-        deletedPost,
-      ),
+    post: clone(deletedPost),
   };
 };
 

@@ -1,70 +1,113 @@
 "use strict";
 
-const express = require("express");
+const express = require(
+  "express"
+);
 
 const blogController = require(
-  "../controllers/blogController",
+  "../controllers/blogController"
 );
 
-const router = express.Router();
+const {
+  requireAuth,
+} = require(
+  "../middlewares/authMiddleware"
+);
+
+const router =
+  express.Router();
+
+/*
+ * PUBLIC
+ * Anyone can see the Journal.
+ */
 router.get(
   "/",
-  blogController.getBlogPage,
+  blogController.getBlogPage
 );
 
+/*
+ * REGISTERED ACCOUNT ONLY
+ */
 router.get(
   "/my-posts",
-  blogController.getMyPostsPage,
+  requireAuth,
+  blogController.getMyPostsPage
 );
 
+/*
+ * CREATE
+ */
 router.get(
   "/create",
-  blogController.getCreatePostPage,
+  requireAuth,
+  blogController.getCreatePostPage
 );
 
 router.post(
   "/",
-  blogController.createPost,
+  requireAuth,
+  blogController.createPost
 );
 
+/*
+ * EDIT / UPDATE / DELETE
+ */
 router.get(
   "/:id/edit",
-  blogController.getPostEditPage,
+  requireAuth,
+  blogController.getPostEditPage
 );
 
 router.post(
   "/:id/update",
-  blogController.updatePost,
+  requireAuth,
+  blogController.updatePost
 );
 
 router.post(
   "/:id/delete",
-  blogController.deletePost,
+  requireAuth,
+  blogController.deletePost
 );
 
+/*
+ * COMMENTS
+ */
 router.post(
   "/:id/comments",
-  blogController.addComment,
+  requireAuth,
+  blogController.addComment
 );
 
 router.post(
   "/:id/comments/:commentId/replies",
-  blogController.addReply,
+  requireAuth,
+  blogController.addReply
 );
 
 router.post(
   "/:id/comments/:commentId/like",
-  blogController.toggleCommentLike,
+  requireAuth,
+  blogController.toggleCommentLike
 );
 
 router.post(
   "/:id/comments/:commentId/delete",
-  blogController.deleteComment,
+  requireAuth,
+  blogController.deleteComment
 );
 
+/*
+ * PUBLIC POST DETAIL
+ *
+ * Keep this route LAST because
+ * :id is dynamic.
+ */
 router.get(
   "/:id",
-  blogController.getBlogViewPage,
+  blogController.getBlogViewPage
 );
 
-module.exports = router;
+module.exports =
+  router;

@@ -1,15 +1,5 @@
 "use strict";
 
-const developmentActor = Object.freeze({
-  id: "user-huy-ba",
-  name: "Huy Ba",
-  email: "huy@example.com",
-  initials: "HB",
-  role: "Community contributor",
-  description:
-    "Writing about Vietnamese traditional crafts, cultural preservation, community support, and responsible digital platforms.",
-});
-
 const posts = [
   {
     id: "developer-mission",
@@ -1338,7 +1328,6 @@ const comments = [
 ];
 
 module.exports = {
-  developmentActor,
   posts,
   comments,
 };
