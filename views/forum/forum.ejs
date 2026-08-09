@@ -75,10 +75,10 @@
           <div class="post-mini-list">
             <% trendingThreads.forEach(t => { %>
             <a href="/forum/thread/<%= t.slug %>" class="post-mini">
-              <div class="post-mini__avatar"><%= t.posts[0].initials %></div>
+              <div class="post-mini__avatar"><%= getLatestPost(t).initials %></div>
               <div class="post-mini__body">
                 <span class="post-mini__title"><%= t.title %></span>
-                <span class="post-mini__meta"><%= t.posts[0].author %> · <%= t.posts[0].date %></span>
+                <span class="post-mini__meta"><%= getLatestPost(t).author %> · <%= getLatestPost(t).date %></span>
                 <span class="post-mini__stats">Views: <%= t.views %> · Replies: <%= getRepliesCount(t) %></span>
               </div>
             </a>
@@ -91,10 +91,10 @@
           <div class="post-mini-list">
             <% latestThreads.forEach(t => { %>
             <a href="/forum/thread/<%= t.slug %>" class="post-mini">
-              <div class="post-mini__avatar"><%= t.posts[0].initials %></div>
+              <div class="post-mini__avatar"><%= getLatestPost(t).initials %></div>
               <div class="post-mini__body">
                 <span class="post-mini__title"><%= t.title %></span>
-                <span class="post-mini__meta"><%= t.posts[0].author %> · <%= t.posts[0].date %></span>
+                <span class="post-mini__meta"><%= getLatestPost(t).author %> · <%= getLatestPost(t).date %></span>
                 <span class="post-mini__stats">Views: <%= t.views %> · Replies: <%= getRepliesCount(t) %></span>
               </div>
             </a>
@@ -115,11 +115,11 @@
             </div>
             <div class="forum-stats-row">
               <dt>Members</dt>
-              <dd>20</dd>
+              <dd><%= memberCount %></dd>
             </div>
             <div class="forum-stats-row">
               <dt>Lastest members</dt>
-              <dd>newbie_shopper</dd>
+              <dd><%= latestMemberUsername %></dd>
             </div>
           </dl>
         </div>

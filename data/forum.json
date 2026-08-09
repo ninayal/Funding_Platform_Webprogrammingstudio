@@ -42,7 +42,9 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [
+            "user-huy-ba"
+          ]
         }
       ],
       "authorId": null,
@@ -63,7 +65,9 @@
           "content": "<p>New here? Here's a quick guide to get you moving:</p>\n                <p><b>Creating a Post</b><br>Click \"New Thread\" at the top of any category. Give your post a clear title and choose the category that best fits your topic.</p>\n                <p><b>Replying</b><br>Found a thread you want to join? Scroll to the bottom and use the reply box. You can quote a specific comment by clicking \"Quote\" under that post.</p>\n                <p><b>Formatting Your Post</b><br>Our editor supports:</p>\n                <ul>\n                  <li>Bold, italics, and lists</li>\n                  <li>Inserting images (drag &amp; drop or use the image icon)</li>\n                  <li>Adding links to external sources</li>\n                </ul>\n                <p><b>Categories & Tags</b><br>Use tags to help others find your post (e.g., #bamboo-weaving, #question, #showcase). Browse by category from the sidebar.</p>\n                <p><b>Notifications</b><br>Turn on notifications for a thread to get updates when someone replies.</p>\n                <p>If you run into any issues, drop a note in the Feedback thread — we're always improving!</p>",
           "id": "24b83729-a772-44d8-a364-056a08182e6e",
           "authorId": null,
-          "likedBy": [],
+          "likedBy": [
+            "user-huy-ba"
+          ],
           "dislikedBy": [],
           "bookmarkedBy": []
         }
@@ -304,6 +308,52 @@
       "authorId": null,
       "status": "published",
       "createdAt": "2026-07-16T17:00:00.000Z"
+    },
+    {
+      "slug": "test-thread",
+      "category": "experience",
+      "title": "TEST THREAD",
+      "views": 0,
+      "authorId": "user-huy-ba",
+      "status": "draft",
+      "createdAt": "2026-08-09T12:40:03.402Z",
+      "posts": [
+        {
+          "id": "6423a7f3-5ea4-4284-81c8-4c602d195738",
+          "author": "Huy Ba",
+          "authorId": "user-huy-ba",
+          "initials": "HB",
+          "rank": "Member",
+          "date": "09/08/2026",
+          "content": "<p>TESTING CONTENT</p>",
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": []
+        }
+      ]
+    },
+    {
+      "slug": "test-thread-2",
+      "category": "qa",
+      "title": "TEST THREAD 2",
+      "views": 0,
+      "authorId": "user-huy-ba",
+      "status": "published",
+      "createdAt": "2026-08-09T12:40:25.810Z",
+      "posts": [
+        {
+          "id": "0cb3dd63-2a8c-4e1d-b5f8-7b1738d09c3a",
+          "author": "Huy Ba",
+          "authorId": "user-huy-ba",
+          "initials": "HB",
+          "rank": "Member",
+          "date": "09/08/2026",
+          "content": "<p>TEST CONTENT</p>",
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": []
+        }
+      ]
     }
   ]
 }

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const sanitizeHtml = require("sanitize-html");
 
 const DATA_FILE = path.join(__dirname, "../data/forum.json");
 
@@ -17,7 +18,12 @@ const isPublished = (thread) => thread.status !== "draft";
 
 const getThreadsByCategory = (categoryId) => {
   const published = threads.filter(isPublished);
-  return categoryId === "all" ? published : published.filter((t) => t.category === categoryId);
+  const filtered =
+    categoryId === "all" ? published : published.filter((t) => t.category === categoryId);
+
+  return filtered
+    .slice()
+    .sort((a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date));
 };
 
 const getThreadBySlug = (slug) => threads.find((t) => t.slug === slug);
@@ -179,6 +185,29 @@ const getForumSummary = () =>
     };
   });
 
+const getThreadEngagementScore = (thread) => {
+  const reactionTotal = thread.posts.reduce(
+    (sum, post) => sum + post.likedBy.length + post.dislikedBy.length + post.bookmarkedBy.length,
+    0
+  );
+
+  return reactionTotal * 5 + getRepliesCount(thread) * 2 + thread.views * 0.1;
+};
+
+const getTrendingThreads = (limit = 5) =>
+  threads
+    .filter(isPublished)
+    .slice()
+    .sort((a, b) => getThreadEngagementScore(b) - getThreadEngagementScore(a))
+    .slice(0, limit);
+
+const getLatestThreads = (limit = 5) =>
+  threads
+    .filter(isPublished)
+    .slice()
+    .sort((a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date))
+    .slice(0, limit);
+
 const getForumTotals = () => {
   const published = threads.filter(isPublished);
   return {
@@ -187,17 +216,32 @@ const getForumTotals = () => {
   };
 };
 
-const escapeHtml = (value) =>
-  String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-
 const stripHtml = (html) =>
   String(html)
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+
+const sanitizeContent = (html) =>
+  sanitizeHtml(String(html || ""), {
+    allowedTags: [
+      "p", "br", "b", "strong", "i", "em", "u", "s", "strike",
+      "ul", "ol", "li", "a", "img", "blockquote", "h1", "h2", "h3", "div", "span",
+    ],
+    allowedAttributes: {
+      a: ["href", "target", "rel"],
+      img: ["src", "alt"],
+    },
+    allowedSchemes: ["http", "https", "mailto"],
+    allowedSchemesByTag: {
+      img: ["http", "https", "data"],
+    },
+    transformTags: {
+      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
+    },
+  }).trim();
+
+const isContentEmpty = (html) => !/<img\b/i.test(html) && !stripHtml(html);
 
 const buildSnippet = (text, query, radius = 80) => {
   const lower = text.toLowerCase();
@@ -271,20 +315,15 @@ const saveThreadsToFile = () => {
   );
 };
 
-const addThread = ({ category, title, content, author, authorId, initials, rank, status }) => {
-  const now = new Date();
-  const date = [
-    String(now.getDate()).padStart(2, "0"),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    now.getFullYear(),
+const formatDate = (date) =>
+  [
+    String(date.getDate()).padStart(2, "0"),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    date.getFullYear(),
   ].join("/");
 
-  const paragraphs = String(content)
-    .split(/\r?\n+/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => `<p>${escapeHtml(line)}</p>`)
-    .join("");
+const addThread = ({ category, title, content, author, authorId, initials, rank, status }) => {
+  const now = new Date();
 
   const newThread = {
     slug: generateUniqueSlug(title),
@@ -301,8 +340,8 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
         authorId: authorId || null,
         initials,
         rank,
-        date,
-        content: paragraphs,
+        date: formatDate(now),
+        content,
         likedBy: [],
         dislikedBy: [],
         bookmarkedBy: [],
@@ -314,6 +353,32 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
   saveThreadsToFile();
 
   return newThread;
+};
+
+const addPost = (slug, { author, authorId, initials, rank, content }) => {
+  const thread = getThreadBySlug(slug);
+
+  if (!thread) {
+    return null;
+  }
+
+  const post = {
+    id: crypto.randomUUID(),
+    author,
+    authorId: authorId || null,
+    initials,
+    rank,
+    date: formatDate(new Date()),
+    content,
+    likedBy: [],
+    dislikedBy: [],
+    bookmarkedBy: [],
+  };
+
+  thread.posts.push(post);
+  saveThreadsToFile();
+
+  return { thread, post };
 };
 
 module.exports = {
@@ -335,6 +400,11 @@ module.exports = {
   getLatestPost,
   getForumSummary,
   getForumTotals,
+  getTrendingThreads,
+  getLatestThreads,
   addThread,
+  addPost,
+  sanitizeContent,
+  isContentEmpty,
   searchThreads,
 };

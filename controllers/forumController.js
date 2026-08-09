@@ -1,15 +1,22 @@
 const forumModel = require("../models/forumModel");
+const userModel = require("../models/userModel");
 const { requestWantsJson } = require("../middlewares/authMiddleware");
 
-const TRENDING_SLUGS = ["qa-handmade-verification", "experience-dongho-village"];
-const LATEST_SLUGS = ["experience-bamboo-tea-set", "feedback-checkout-mobile"];
+const MAX_CONTENT_LENGTH = 3_000_000;
 
 const getForumHome = (req, res) => {
+  const members = userModel.getAllUsers();
+  const latestMember = members
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+
   res.render("forum/forum", {
     categorySummary: forumModel.getForumSummary(),
     totals: forumModel.getForumTotals(),
-    trendingThreads: TRENDING_SLUGS.map(forumModel.getThreadBySlug),
-    latestThreads: LATEST_SLUGS.map(forumModel.getThreadBySlug),
+    trendingThreads: forumModel.getTrendingThreads(3),
+    latestThreads: forumModel.getLatestThreads(5),
+    memberCount: members.length,
+    latestMemberUsername: latestMember ? latestMember.username : "—",
     getLatestPost: forumModel.getLatestPost,
     getRepliesCount: forumModel.getRepliesCount,
   });
@@ -75,7 +82,13 @@ const createThread = (req, res) => {
   const { category, title, content, status } = req.body;
   const categoryMeta = forumModel.getCategoryMeta(category);
 
-  if (!categoryMeta || !String(title || "").trim() || !String(content || "").trim()) {
+  if (String(content || "").length > MAX_CONTENT_LENGTH) {
+    return res.redirect("/forum/create");
+  }
+
+  const sanitizedContent = forumModel.sanitizeContent(content);
+
+  if (!categoryMeta || !String(title || "").trim() || forumModel.isContentEmpty(sanitizedContent)) {
     return res.redirect("/forum/create");
   }
 
@@ -84,7 +97,7 @@ const createThread = (req, res) => {
   const thread = forumModel.addThread({
     category,
     title: String(title).trim(),
-    content: String(content).trim(),
+    content: sanitizedContent,
     author: author.name,
     authorId: author.id,
     initials: author.initials || "GU",
@@ -97,6 +110,39 @@ const createThread = (req, res) => {
   }
 
   return res.redirect(`/forum/thread/${thread.slug}`);
+};
+
+const replyToThread = (req, res) => {
+  const viewerId = req.currentUser?.id || null;
+  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId);
+
+  if (!thread) {
+    return res.status(404).redirect("/forum/new-posts");
+  }
+
+  const { content } = req.body;
+
+  if (String(content || "").length > MAX_CONTENT_LENGTH) {
+    return res.redirect(`/forum/thread/${thread.slug}`);
+  }
+
+  const sanitizedContent = forumModel.sanitizeContent(content);
+
+  if (forumModel.isContentEmpty(sanitizedContent)) {
+    return res.redirect(`/forum/thread/${thread.slug}`);
+  }
+
+  const author = req.currentUser;
+
+  const result = forumModel.addPost(thread.slug, {
+    author: author.name,
+    authorId: author.id,
+    initials: author.initials || "GU",
+    rank: "Member",
+    content: sanitizedContent,
+  });
+
+  return res.redirect(`/forum/thread/${thread.slug}#post-${result.post.id}`);
 };
 
 const getYourPostsPage = (req, res) => {
@@ -165,6 +211,7 @@ module.exports = {
   getThreadContent,
   getCreateThreadPage,
   createThread,
+  replyToThread,
   searchForum,
   getYourPostsPage,
   publishThread,

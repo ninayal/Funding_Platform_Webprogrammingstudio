@@ -13,6 +13,7 @@ router.get("/create", requireAuth, forumController.getCreateThreadPage);
 router.post("/create", requireAuth, forumController.createThread);
 router.get("/category/:category", forumController.getThreadList);
 router.get("/thread/:slug", forumController.getThreadContent);
+router.post("/thread/:slug/reply", requireAuth, forumController.replyToThread);
 router.post("/thread/:slug/publish", requireAuth, forumController.publishThread);
 router.post("/thread/:slug/post/:postId/like", requireAuth, forumController.toggleLike);
 router.post("/thread/:slug/post/:postId/dislike", requireAuth, forumController.toggleDislike);

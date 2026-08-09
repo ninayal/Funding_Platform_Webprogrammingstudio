@@ -51,7 +51,12 @@
         </select>
       </div>
 
-      <textarea name="content" class="create-thread-content" placeholder="Content" required></textarea>
+      <%- include("../partials/forum/rich_editor", {
+        fieldName: "content",
+        placeholder: "Content",
+        editorId: "createThreadEditor",
+        variant: "full"
+      }) %>
 
       <div class="create-thread-actions">
         <a href="/forum" class="draft-btn" id="cancelBtn">Cancel</a>
@@ -64,6 +69,8 @@
   </div>
 
   <%- include("../partials/footer") %>
+
+  <script src="/js/forum/rich_editor.js" defer></script>
 
 </body>
 

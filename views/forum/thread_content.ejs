@@ -119,14 +119,15 @@
         </nav>
 
         <!-- Post a reply -->
-        <form class="comment-composer" id="newCommentForm">
+        <form class="comment-composer" id="newCommentForm" action="/forum/thread/<%= thread.slug %>/reply" method="POST">
           <div class="comment-composer__avatar">YOU</div>
-          <div class="comment-form">
-            <textarea class="comment-form__input" name="content" rows="1" placeholder="Write a reply..."></textarea>
-            <label class="comment-form__attach" aria-label="Attach file">
-              <img src="/images/forum_icon/attach.png" alt="">
-              <input type="file">
-            </label>
+          <div class="comment-form comment-form--rich">
+            <%- include("../partials/forum/rich_editor", {
+              fieldName: "content",
+              placeholder: "Write a reply...",
+              editorId: `replyEditor-${thread.slug}`,
+              variant: "compact"
+            }) %>
             <button type="submit" class="comment-form__send" aria-label="Post reply">
               Post Reply
             </button>
@@ -164,6 +165,7 @@
   <%- include("../partials/footer") %>
 
   <script src="/js/forum/thread_content.js" defer></script>
+  <script src="/js/forum/rich_editor.js" defer></script>
 
 </body>
 
