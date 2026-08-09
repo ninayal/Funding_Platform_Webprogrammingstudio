@@ -1,23 +1,5 @@
-<%
-  const formValues =
-    typeof values !== "undefined"
-      ? values
-      : {};
-
-  const formErrors =
-    typeof errors !== "undefined"
-      ? errors
-      : {};
-
-  const redirectValue =
-    typeof redirect !== "undefined"
-      ? redirect
-      : "/";
-%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
 
@@ -26,7 +8,9 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Sign Up | Làng &amp; Co.</title>
+  <title>
+    Sign Up | Làng &amp; Co.
+  </title>
 
   <link
     rel="stylesheet"
@@ -42,28 +26,25 @@
     rel="stylesheet"
     href="/css/login_register/register.css"
   />
-
-  <link
-    rel="stylesheet"
-    href="/css/login_register/auth-dynamic.css"
-  />
-
-  <script
-    src="/js/shared/auth.js"
-    defer
-  ></script>
 </head>
 
-<body>
-  <main class="login-page">
+<body class="register-page-body">
+  <main class="login-page register-page">
     <div
       class="login-page__bg"
       aria-hidden="true"
     ></div>
 
-    <div class="login-brand">
-      <h1 class="login-brand__title">
-        Authentic Handcrafts<br />
+    <section
+      class="login-brand"
+      aria-labelledby="register-brand-title"
+    >
+      <h1
+        class="login-brand__title"
+        id="register-brand-title"
+      >
+        Authentic<br />
+        Handcrafts<br />
         <em>Truly</em><br />
         Vietnamese
       </h1>
@@ -72,347 +53,451 @@
         Create an account to access<br />
         orders, wishlist and community.
       </p>
-    </div>
+    </section>
 
-    <div class="login-glass login-glass--wide">
-      <div class="login-glass__logo">
-        <img
-          src="/images/logo.png"
-          alt="Làng & Co."
-        />
-
-        <div class="login-glass__logo-text">
-          <span class="logo-name">
-            Làng &amp; Co.
-          </span>
-
-          <span class="logo-sub">
-            Vietnamese Traditional Crafts
-          </span>
-        </div>
-      </div>
-
-      <h2 class="login-glass__title">
-        Sign Up
-      </h2>
-
-      <form
-        class="login-form"
-        action="/shared/register"
-        method="post"
-        novalidate
-        data-auth-form="register"
-      >
-        <input
-          type="hidden"
-          name="redirect"
-          value="<%= redirectValue %>"
-        />
-
-        <div class="form-row-2">
-          <div class="form-group">
-            <label class="form-label" for="firstname">
-              First Name
-            </label>
-
-            <input
-              class="form-input"
-              type="text"
-              id="firstname"
-              name="firstname"
-              value="<%= formValues.firstname || '' %>"
-              required
-              minlength="2"
-              maxlength="50"
-              autocomplete="given-name"
-              aria-invalid="<%= formErrors.firstname ? 'true' : 'false' %>"
-            />
-
-            <small
-              class="auth-field-error"
-              data-error-for="firstname"
-              aria-live="polite"
-            >
-              <%= formErrors.firstname || "" %>
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="lastname">
-              Last Name
-            </label>
-
-            <input
-              class="form-input"
-              type="text"
-              id="lastname"
-              name="lastname"
-              value="<%= formValues.lastname || '' %>"
-              required
-              minlength="2"
-              maxlength="50"
-              autocomplete="family-name"
-              aria-invalid="<%= formErrors.lastname ? 'true' : 'false' %>"
-            />
-
-            <small
-              class="auth-field-error"
-              data-error-for="lastname"
-              aria-live="polite"
-            >
-              <%= formErrors.lastname || "" %>
-            </small>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="username">
-            Username
-          </label>
-
-          <input
-            class="form-input"
-            type="text"
-            id="username"
-            name="username"
-            value="<%= formValues.username || '' %>"
-            required
-            minlength="3"
-            maxlength="30"
-            autocomplete="username"
-            aria-invalid="<%= formErrors.username ? 'true' : 'false' %>"
+    <section
+      class="login-glass login-glass--wide"
+      aria-labelledby="register-title"
+    >
+      <div class="login-glass__content">
+        <div class="login-glass__logo">
+          <img
+            src="/images/logo.png"
+            alt=""
+            aria-hidden="true"
           />
 
-          <small
-            class="auth-field-error"
-            data-error-for="username"
-            aria-live="polite"
-          >
-            <%= formErrors.username || "" %>
-          </small>
-        </div>
-
-        <div class="form-row-2">
-          <div class="form-group">
-            <label class="form-label" for="email">
-              E-mail
-            </label>
-
-            <input
-              class="form-input"
-              type="email"
-              id="email"
-              name="email"
-              value="<%= formValues.email || '' %>"
-              required
-              autocomplete="email"
-              aria-invalid="<%= formErrors.email ? 'true' : 'false' %>"
-            />
-
-            <small
-              class="auth-field-error"
-              data-error-for="email"
-              aria-live="polite"
-            >
-              <%= formErrors.email || "" %>
-            </small>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="gender">
-              Gender
-            </label>
-
-            <select
-              class="form-input form-select"
-              id="gender"
-              name="gender"
-              required
-              aria-invalid="<%= formErrors.gender ? 'true' : 'false' %>"
-            >
-              <option value="">
-                Select Gender
-              </option>
-
-              <option
-                value="male"
-                <%= formValues.gender === "male" ? "selected" : "" %>
-              >
-                Male
-              </option>
-
-              <option
-                value="female"
-                <%= formValues.gender === "female" ? "selected" : "" %>
-              >
-                Female
-              </option>
-
-              <option
-                value="other"
-                <%= formValues.gender === "other" ? "selected" : "" %>
-              >
-                Other
-              </option>
-
-              <option
-                value="prefer_not"
-                <%= formValues.gender === "prefer_not" ? "selected" : "" %>
-              >
-                Prefer not to say
-              </option>
-            </select>
-
-            <small
-              class="auth-field-error"
-              data-error-for="gender"
-              aria-live="polite"
-            >
-              <%= formErrors.gender || "" %>
-            </small>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="description">
-            Short Description
-          </label>
-
-          <textarea
-            class="form-input form-textarea"
-            id="description"
-            name="description"
-            rows="3"
-            minlength="10"
-            maxlength="200"
-            required
-            aria-invalid="<%= formErrors.description ? 'true' : 'false' %>"
-          ><%= formValues.description || "" %></textarea>
-
-          <small
-            class="auth-field-error"
-            data-error-for="description"
-            aria-live="polite"
-          >
-            <%= formErrors.description || "" %>
-          </small>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="password">
-            Password
-          </label>
-
-          <input
-            class="form-input"
-            type="password"
-            id="password"
-            name="password"
-            required
-            minlength="8"
-            maxlength="72"
-            autocomplete="new-password"
-            aria-invalid="<%= formErrors.password ? 'true' : 'false' %>"
-          />
-
-          <small
-            class="auth-field-error"
-            data-error-for="password"
-            aria-live="polite"
-          >
-            <%= formErrors.password || "" %>
-          </small>
-
-          <small class="form-help">
-            Use uppercase, lowercase, and a number or special character.
-          </small>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="confirm_password">
-            Confirm Password
-          </label>
-
-          <input
-            class="form-input"
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            required
-            minlength="8"
-            maxlength="72"
-            autocomplete="new-password"
-            aria-invalid="<%= formErrors.confirm_password ? 'true' : 'false' %>"
-          />
-
-          <small
-            class="auth-field-error"
-            data-error-for="confirm_password"
-            aria-live="polite"
-          >
-            <%= formErrors.confirm_password || "" %>
-          </small>
-        </div>
-
-        <div class="form-terms">
-          <label class="terms-label">
-            <input
-              type="checkbox"
-              id="terms"
-              name="terms"
-              <%= formValues.terms ? "checked" : "" %>
-              required
-            />
-
-            <span>
-              I agree to the Terms of Service and Privacy Policy.
+          <div class="login-glass__logo-text">
+            <span class="logo-name">
+              Làng &amp; Co.
             </span>
-          </label>
 
-          <small
-            class="auth-field-error"
-            data-error-for="terms"
-            aria-live="polite"
-          >
-            <%= formErrors.terms || "" %>
-          </small>
+            <span class="logo-sub">
+              Vietnamese Traditional Crafts
+            </span>
+          </div>
         </div>
 
-        <p
-          class="auth-live-feedback"
-          data-auth-feedback
-          aria-live="polite"
-        ></p>
-
-        <button
-          class="login-btn"
-          type="submit"
+        <h2
+          class="login-glass__title"
+          id="register-title"
         >
-          Create Account
-        </button>
-      </form>
+          Sign Up
+        </h2>
 
-      <p class="login-signup-text">
-        Already have an account?
+        <form
+          class="login-form register-form"
+          action="/shared/register"
+          method="post"
+          novalidate
+        >
+          <input
+            type="hidden"
+            name="redirect"
+            value="<%= redirect %>"
+          />
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label
+                class="form-label"
+                for="firstname"
+              >
+                First Name
+              </label>
+
+              <input
+                class="form-input"
+                type="text"
+                id="firstname"
+                name="firstname"
+                value="<%= values.firstname || '' %>"
+                placeholder="First name"
+                autocomplete="given-name"
+                aria-describedby="firstname-error"
+                aria-invalid="<%= errors.firstname
+                  ? 'true'
+                  : 'false' %>"
+                minlength="2"
+                maxlength="50"
+                required
+              />
+
+              <small
+                class="register-field-error"
+                id="firstname-error"
+              >
+                <%= errors.firstname || "" %>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label
+                class="form-label"
+                for="lastname"
+              >
+                Last Name
+              </label>
+
+              <input
+                class="form-input"
+                type="text"
+                id="lastname"
+                name="lastname"
+                value="<%= values.lastname || '' %>"
+                placeholder="Last name"
+                autocomplete="family-name"
+                aria-describedby="lastname-error"
+                aria-invalid="<%= errors.lastname
+                  ? 'true'
+                  : 'false' %>"
+                minlength="2"
+                maxlength="50"
+                required
+              />
+
+              <small
+                class="register-field-error"
+                id="lastname-error"
+              >
+                <%= errors.lastname || "" %>
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label
+              class="form-label"
+              for="username"
+            >
+              Username
+            </label>
+
+            <input
+              class="form-input"
+              type="text"
+              id="username"
+              name="username"
+              value="<%= values.username || '' %>"
+              placeholder="Choose a unique username"
+              autocomplete="username"
+              aria-describedby="username-error"
+              aria-invalid="<%= errors.username
+                ? 'true'
+                : 'false' %>"
+              minlength="3"
+              maxlength="30"
+              required
+            />
+
+            <small
+              class="register-field-error"
+              id="username-error"
+            >
+              <%= errors.username || "" %>
+            </small>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label
+                class="form-label"
+                for="email"
+              >
+                E-mail
+              </label>
+
+              <input
+                class="form-input"
+                type="email"
+                id="email"
+                name="email"
+                value="<%= values.email || '' %>"
+                placeholder="abc@gmail.com"
+                autocomplete="email"
+                aria-describedby="register-email-error"
+                aria-invalid="<%= errors.email
+                  ? 'true'
+                  : 'false' %>"
+                required
+              />
+
+              <small
+                class="register-field-error"
+                id="register-email-error"
+              >
+                <%= errors.email || "" %>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label
+                class="form-label"
+                for="gender"
+              >
+                Gender
+              </label>
+
+              <select
+                class="form-input form-select"
+                id="gender"
+                name="gender"
+                aria-describedby="gender-error"
+                aria-invalid="<%= errors.gender
+                  ? 'true'
+                  : 'false' %>"
+                required
+              >
+                <option
+                  value=""
+                  disabled
+                  <%= values.gender
+                    ? ""
+                    : "selected" %>
+                >
+                  Select Gender
+                </option>
+
+                <option
+                  value="male"
+                  <%= values.gender === "male"
+                    ? "selected"
+                    : "" %>
+                >
+                  Male
+                </option>
+
+                <option
+                  value="female"
+                  <%= values.gender === "female"
+                    ? "selected"
+                    : "" %>
+                >
+                  Female
+                </option>
+
+                <option
+                  value="other"
+                  <%= values.gender === "other"
+                    ? "selected"
+                    : "" %>
+                >
+                  Other
+                </option>
+
+                <option
+                  value="prefer_not"
+                  <%= values.gender === "prefer_not"
+                    ? "selected"
+                    : "" %>
+                >
+                  Prefer not to say
+                </option>
+              </select>
+
+              <small
+                class="register-field-error"
+                id="gender-error"
+              >
+                <%= errors.gender || "" %>
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label
+              class="form-label"
+              for="description"
+            >
+              Short Description
+            </label>
+
+            <textarea
+              class="form-input form-textarea"
+              id="description"
+              name="description"
+              rows="3"
+              minlength="10"
+              maxlength="200"
+              placeholder="Tell us briefly about yourself"
+              aria-describedby="description-error"
+              aria-invalid="<%= errors.description
+                ? 'true'
+                : 'false' %>"
+              required
+            ><%= values.description || "" %></textarea>
+
+            <small
+              class="register-field-error"
+              id="description-error"
+            >
+              <%= errors.description || "" %>
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label
+              class="form-label"
+              for="password"
+            >
+              Password
+            </label>
+
+            <input
+              class="form-input"
+              type="password"
+              id="password"
+              name="password"
+              placeholder="············"
+              autocomplete="new-password"
+              aria-describedby="
+                password-help
+                register-password-error
+              "
+              aria-invalid="<%= errors.password
+                ? 'true'
+                : 'false' %>"
+              minlength="8"
+              maxlength="72"
+              required
+            />
+
+            <small
+              class="form-help"
+              id="password-help"
+            >
+              Use uppercase, lowercase, and a number
+              or special character.
+            </small>
+
+            <small
+              class="register-field-error"
+              id="register-password-error"
+            >
+              <%= errors.password || "" %>
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label
+              class="form-label"
+              for="confirm_password"
+            >
+              Confirm Password
+            </label>
+
+            <input
+              class="form-input"
+              type="password"
+              id="confirm_password"
+              name="confirm_password"
+              placeholder="············"
+              autocomplete="new-password"
+              aria-describedby="confirm-password-error"
+              aria-invalid="<%= errors.confirm_password
+                ? 'true'
+                : 'false' %>"
+              minlength="8"
+              maxlength="72"
+              required
+            />
+
+            <small
+              class="register-field-error"
+              id="confirm-password-error"
+            >
+              <%= errors.confirm_password || "" %>
+            </small>
+          </div>
+
+          <div class="form-terms">
+            <label
+              class="terms-label"
+              for="terms"
+            >
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                <%= values.terms
+                  ? "checked"
+                  : "" %>
+                aria-describedby="terms-error"
+                required
+              />
+
+              <span class="terms-copy">
+                I agree to the
+                <a href="/terms-of-service">
+                  Terms of Service
+                </a>
+                and
+                <a href="/privacy-policy">
+                  Privacy Policy
+                </a>.
+              </span>
+            </label>
+
+            <small
+              class="register-field-error"
+              id="terms-error"
+            >
+              <%= errors.terms || "" %>
+            </small>
+          </div>
+
+          <button
+            class="login-btn"
+            type="submit"
+          >
+            Create Account
+          </button>
+        </form>
+
+        <p class="login-signup-text">
+          Already have an account?
+
+          <a
+            href="/shared/login?redirect=<%= encodeURIComponent(
+              redirect
+            ) %>"
+          >
+            Sign In
+          </a>
+        </p>
+
+        <div
+          class="login-divider"
+          aria-hidden="true"
+        >
+          <span class="login-divider__line"></span>
+          <span class="login-divider__line"></span>
+        </div>
 
         <a
-          href="/shared/login?redirect=<%= encodeURIComponent(redirectValue) %>"
+          class="login-guest"
+          href="<%= redirect %>"
         >
-          Sign In
+          <span
+            class="guest-icon"
+            aria-hidden="true"
+          >
+            ✦
+          </span>
+
+          <span class="guest-text">
+            Continue exploring as a guest
+          </span>
+
+          <span
+            class="guest-arrow"
+            aria-hidden="true"
+          >
+            →
+          </span>
         </a>
-      </p>
-
-      <a class="login-guest" href="/">
-        <span class="guest-icon">✦</span>
-
-        <span class="guest-text">
-          Continue exploring as a guest
-        </span>
-
-        <span class="guest-arrow">→</span>
-      </a>
-    </div>
+      </div>
+    </section>
   </main>
 </body>
-
 </html>

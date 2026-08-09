@@ -1,0 +1,7 @@
+<nav class="category-tabs container" aria-label="Shop by category">
+    <% categories.forEach(category=>{ %>
+        <label class="tab" for="filter-<%= category.id %>">
+            <%= category.label %>
+        </label>
+        <% }) %>
+</nav>

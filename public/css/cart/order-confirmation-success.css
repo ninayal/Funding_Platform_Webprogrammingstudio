@@ -195,3 +195,73 @@
     padding: 14px 18px;
   }
 }
+
+
+.confirm-card-row{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:24px;
+}
+
+.confirm-info-card{
+display:flex;
+flex-direction:column;
+gap:22px;
+padding:32px;
+}
+
+.confirm-info-card h2{
+margin:0;
+}
+
+.confirm-address{
+display:grid;
+gap:6px;
+margin:0;
+font-style:normal;
+line-height:1.5;
+}
+
+.confirm-address strong{
+font-size:18px;
+}
+
+.payment-card{
+display:grid;
+gap:10px;
+padding:18px;
+border:1px solid var(--line);
+border-radius:12px;
+background:rgba(175,143,111,.08);
+}
+
+.payment-card span,
+.confirm-info-row span{
+color:var(--muted);
+}
+
+.payment-card strong{
+font-size:18px;
+letter-spacing:.06em;
+}
+
+.confirm-info-row{
+display:flex;
+justify-content:space-between;
+gap:20px;
+padding-top:16px;
+border-top:1px solid var(--line);
+}
+
+.payment-status{
+padding:4px 10px;
+border-radius:999px;
+background:rgba(49,125,74,.1);
+color:#317d4a;
+}
+
+@media(max-width:760px){
+.confirm-card-row{
+grid-template-columns:1fr;
+}
+}

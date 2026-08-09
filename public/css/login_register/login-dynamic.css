@@ -1,0 +1,45 @@
+/* Server and client validation states only.
+   These rules do not change the initial A1 layout. */
+
+.form-message {
+    display: block;
+}
+
+.form-error {
+    margin-top: 6px;
+    color: #ffe0e0;
+    font-family: var(--ff-ui);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 140%;
+}
+
+.form-input--error,
+.form-input--error:hover,
+.form-input--error:focus {
+    background: rgba(125, 16, 16, 0.24);
+    border-color: rgba(255, 190, 190, 0.96);
+}
+
+.login-form-error {
+    margin-bottom: 16px;
+    padding: 11px 14px;
+    color: #fff3f3;
+    background: rgba(125, 16, 16, 0.42);
+    border: 1px solid rgba(255, 210, 210, 0.65);
+    border-radius: 14px;
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+}
+
+.login-btn:disabled {
+    cursor: wait;
+    opacity: 0.72;
+    transform: none;
+}
+
+.is-hidden {
+    display: none !important;
+}

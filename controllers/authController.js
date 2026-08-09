@@ -1,73 +1,106 @@
 "use strict";
 
 const userModel = require(
-  "../models/userModel",
+  "../models/userModel"
 );
 
 const {
   validateLogin,
-  validateRegistration,
+  validateRegistration
 } = require(
-  "../validators/authValidators",
+  "../validators/authValidators"
 );
 
 const {
-  safeRedirectPath,
+  safeRedirectPath
 } = require(
-  "../middlewares/authMiddleware",
+  "../middlewares/authMiddleware"
+);
+
+const {
+  buildLoginView
+} = require(
+  "../utils/loginViewModel"
 );
 
 const removeSensitiveValues = (
-  values = {},
+  values = {}
 ) => ({
   firstname:
     values.firstname || "",
+
   lastname:
     values.lastname || "",
+
   username:
     values.username || "",
+
   email:
     values.email || "",
+
   gender:
     values.gender || "",
+
   description:
     values.description || "",
+
   terms:
-    values.terms || "",
+    values.terms || ""
 });
 
 const getRedirectTarget = (
   req,
-  fallback = "/",
+  fallback = "/"
 ) =>
   safeRedirectPath(
     req.body?.redirect ||
-      req.query?.redirect,
-    fallback,
+    req.query?.redirect,
+    fallback
+  );
+
+const renderLogin = (
+  res,
+  {
+    status = 200,
+    values = {},
+    errors = {},
+    redirect = "/"
+  } = {}
+) =>
+  res.status(status).render(
+    "shared/login",
+    buildLoginView({
+      values,
+      errors,
+      redirect
+    })
   );
 
 const getLoginPage = (
   req,
-  res,
+  res
 ) => {
+  const redirectTarget =
+    getRedirectTarget(req);
+
   if (req.currentUser) {
-    return res.redirect("/");
+    return res.redirect(
+      redirectTarget
+    );
   }
 
-  return res.render(
-    "shared/login",
+  return renderLogin(
+    res,
     {
-      values: {},
-      errors: {},
       redirect:
-        getRedirectTarget(req),
-    },
+        redirectTarget
+    }
   );
 };
 
 const getRegisterPage = (
   req,
-  res,
+  res
 ) => {
   if (req.currentUser) {
     return res.redirect("/");
@@ -79,8 +112,8 @@ const getRegisterPage = (
       values: {},
       errors: {},
       redirect:
-        getRedirectTarget(req),
-    },
+        getRedirectTarget(req)
+    }
   );
 };
 
@@ -89,13 +122,13 @@ const establishSession = (
   res,
   next,
   user,
-  redirectTarget,
+  redirectTarget
 ) => {
   req.session.regenerate(
     (regenerateError) => {
       if (regenerateError) {
         return next(
-          regenerateError,
+          regenerateError
         );
       }
 
@@ -107,37 +140,37 @@ const establishSession = (
         email: user.email,
         initials:
           user.initials,
-        role: user.role,
+        role: user.role
       };
 
       return req.session.save(
         (saveError) => {
           if (saveError) {
             return next(
-              saveError,
+              saveError
             );
           }
 
           return res.redirect(
-            redirectTarget,
+            redirectTarget
           );
-        },
+        }
       );
-    },
+    }
   );
 };
 
 const login = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
     const {
       values,
-      errors,
+      errors
     } = validateLogin(
-      req.body,
+      req.body
     );
 
     const redirectTarget =
@@ -147,46 +180,44 @@ const login = (
       Object.keys(errors)
         .length > 0
     ) {
-      return res
-        .status(422)
-        .render(
-          "shared/login",
-          {
-            values: {
-              email:
-                values.email,
-            },
-            errors,
-            redirect:
-              redirectTarget,
+      return renderLogin(
+        res,
+        {
+          status: 422,
+          values: {
+            email:
+              values.email
           },
-        );
+          errors,
+          redirect:
+            redirectTarget
+        }
+      );
     }
 
     const result =
       userModel.authenticate(
         values.email,
-        values.password,
+        values.password
       );
 
     if (!result.ok) {
-      return res
-        .status(401)
-        .render(
-          "shared/login",
-          {
-            values: {
-              email:
-                values.email,
-            },
-            errors: {
-              form:
-                "The email or password is incorrect.",
-            },
-            redirect:
-              redirectTarget,
+      return renderLogin(
+        res,
+        {
+          status: 401,
+          values: {
+            email:
+              values.email
           },
-        );
+          errors: {
+            form:
+              "The email or password is incorrect."
+          },
+          redirect:
+            redirectTarget
+        }
+      );
     }
 
     return establishSession(
@@ -194,7 +225,7 @@ const login = (
       res,
       next,
       result.user,
-      redirectTarget,
+      redirectTarget
     );
   } catch (error) {
     return next(error);
@@ -204,16 +235,15 @@ const login = (
 const register = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
     const {
       values,
-      errors,
-    } =
-      validateRegistration(
-        req.body,
-      );
+      errors
+    } = validateRegistration(
+      req.body
+    );
 
     const redirectTarget =
       getRedirectTarget(req);
@@ -229,23 +259,22 @@ const register = (
           {
             values:
               removeSensitiveValues(
-                values,
+                values
               ),
             errors,
             redirect:
-              redirectTarget,
-          },
+              redirectTarget
+          }
         );
     }
 
     const result =
       userModel.createUser(
-        values,
+        values
       );
 
     if (!result.ok) {
-      const modelErrors =
-        {};
+      const modelErrors = {};
 
       if (
         result.reason ===
@@ -270,26 +299,22 @@ const register = (
           {
             values:
               removeSensitiveValues(
-                values,
+                values
               ),
             errors:
               modelErrors,
             redirect:
-              redirectTarget,
-          },
+              redirectTarget
+          }
         );
     }
 
-    /*
-     * Automatically log in
-     * after registration.
-     */
     return establishSession(
       req,
       res,
       next,
       result.user,
-      redirectTarget,
+      redirectTarget
     );
   } catch (error) {
     return next(error);
@@ -299,7 +324,7 @@ const register = (
 const logout = (
   req,
   res,
-  next,
+  next
 ) => {
   req.session.destroy(
     (error) => {
@@ -308,11 +333,11 @@ const logout = (
       }
 
       res.clearCookie(
-        "langco.sid",
+        "langco.sid"
       );
 
       return res.redirect("/");
-    },
+    }
   );
 };
 
@@ -320,6 +345,6 @@ module.exports = {
   getLoginPage,
   getRegisterPage,
   login,
-  logout,
   register,
+  logout
 };

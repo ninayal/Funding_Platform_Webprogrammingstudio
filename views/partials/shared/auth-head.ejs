@@ -1,0 +1,30 @@
+<%
+  const resolvedPageTitle =
+    typeof pageTitle === "string" &&
+    pageTitle.trim()
+      ? pageTitle
+      : "Sign In";
+%>
+
+<meta charset="UTF-8" />
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
+
+<title><%= resolvedPageTitle %> | Làng &amp; Co.</title>
+
+<% (styles || []).forEach((href) => { %>
+  <link
+    rel="stylesheet"
+    href="<%= href %>"
+  />
+<% }) %>
+
+<% (scripts || []).forEach((src) => { %>
+  <script
+    src="<%= src %>"
+    defer
+  ></script>
+<% }) %>

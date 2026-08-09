@@ -1,96 +1,181 @@
-<input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+<input
+  type="checkbox"
+  id="topbar-dismiss"
+  class="topbar-dismiss-input"
+>
 
 <div class="topbar">
-    <p class="topbar__text">
-        New Collection Available Now
-        <span aria-hidden="true">&nbsp;|&nbsp;</span>
+  <p class="topbar__text">
+    New Collection Available Now
 
-        <a href="/cart/products">
-            Shop Now
-        </a>
-    </p>
+    <span aria-hidden="true">
+      &nbsp;|&nbsp;
+    </span>
 
-    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss announcement">
-        ✕
-    </label>
+    <a href="/cart/products">
+      Shop Now
+    </a>
+  </p>
+
+  <label
+    class="topbar__close"
+    for="topbar-dismiss"
+    aria-label="Dismiss announcement"
+  >
+    ✕
+  </label>
 </div>
 
 <header class="header-v2">
-    <nav class="header-v2__nav" aria-label="Main navigation">
+  <nav
+    class="header-v2__nav"
+    aria-label="Main navigation"
+  >
+    <div class="header-v2__left">
+      <a
+        class="header-v2__logo"
+        href="/"
+        aria-label="Làng and Company homepage"
+      >
+        <img
+          src="/images/logo.png"
+          alt="Làng & Co. logo"
+        >
+      </a>
+    </div>
 
-        <!-- Logo bên trái -->
-        <div class="header-v2__left">
-            <a class="header-v2__logo" href="/" aria-label="Làng and Company homepage">
-                <img src="/images/logo.png" alt="Làng & Co. logo" />
-            </a>
-        </div>
-
-        <!-- Navigation pill ở giữa -->
-        <div class="header-v2__centre">
-            <ul class="header-v2__links">
-                <li>
-                    <a href="/" class="<%= typeof activePage !== 'undefined' && activePage === 'home'
+    <div class="header-v2__centre">
+      <ul class="header-v2__links">
+        <li>
+          <a
+            href="/"
+            class="<%= activePage === 'home'
               ? 'is-active'
-              : '' %>">
-                        Home
-                    </a>
-                </li>
+              : '' %>"
+          >
+            Home
+          </a>
+        </li>
 
-                <li>
-                    <a href="/cart/products" class="<%= typeof activePage !== 'undefined' && activePage === 'shop'
+        <li>
+          <a
+            href="/cart/products"
+            class="<%= activePage === 'shop'
               ? 'is-active'
-              : '' %>">
-                        Shop
-                    </a>
-                </li>
+              : '' %>"
+          >
+            Shop
+          </a>
+        </li>
 
-                <li>
-                    <a href="/blog" class="<%= typeof activePage !== 'undefined' && activePage === 'blog'
+        <li>
+          <a
+            href="/blog"
+            class="<%= activePage === 'blog'
               ? 'is-active'
-              : '' %>">
-                        Blog
-                    </a>
-                </li>
+              : '' %>"
+          >
+            Blog
+          </a>
+        </li>
 
-                <li>
-                    <a href="/forum" class="<%= typeof activePage !== 'undefined' && activePage === 'forum'
+        <li>
+          <a
+            href="/forum"
+            class="<%= activePage === 'forum'
               ? 'is-active'
-              : '' %>">
-                        Forum
-                    </a>
-                </li>
-                <li>
-                    <a href="/giftcard/giftcard" class="<%= typeof activePage !== 'undefined' && activePage === 'giftcard'
+              : '' %>"
+          >
+            Forum
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="/giftcard/giftcard"
+            class="<%= activePage === 'giftcard'
               ? 'is-active'
-              : '' %>">
-                        Giftcard
-                    </a>
-                </li>
-            </ul>
-        </div>
+              : '' %>"
+          >
+            Giftcard
+          </a>
+        </li>
+      </ul>
+    </div>
 
-        <!-- Profile và cart bên phải -->
-        <div class="header-v2__right">
-            <a class="header-v2__icon" href="/shared/profile" aria-label="Account — Log in or sign up">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="7.5" r="3.5" />
-                    <path d="M5 20c1.3-4.1 3.8-6.2 7-6.2s5.7 2.1 7 6.2" />
-                </svg>
-            </a>
+    <div class="header-v2__right">
+      <a
+        class="header-v2__icon"
+        href="<%= currentUser
+          ? '/shared/profile'
+          : '/shared/login?redirect=' +
+            encodeURIComponent(
+              typeof currentUrl !== 'undefined'
+                ? currentUrl
+                : '/'
+            ) %>"
+        aria-label="<%= currentUser
+          ? 'View account profile'
+          : 'Log in or sign up' %>"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.65"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle
+            cx="12"
+            cy="7.5"
+            r="3.5"
+          ></circle>
 
-            <a class="header-v2__icon header-v2__cart" href="/cart" aria-label="Shopping cart">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M6.5 8h11l-.8 12h-9.4L6.5 8Z" />
-                    <path d="M9 8V5.8A3 3 0 0 1 12 3a3 3 0 0 1 3 2.8V8" />
-                </svg>
+          <path
+            d="M5 20c1.3-4.1 3.8-6.2 7-6.2s5.7 2.1 7 6.2"
+          ></path>
+        </svg>
+      </a>
 
-                <span class="header-v2__badge">
-                    <%= typeof cartCount !=="undefined" ? cartCount : 4 %>
-                </span>
-            </a>
-        </div>
+      <a
+        class="header-v2__icon header-v2__cart"
+        href="/cart"
+        aria-label="Shopping cart, <%= cartCount %> item(s)"
+      >
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.65"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M6.5 8h11l-.8 12h-9.4L6.5 8Z"
+          ></path>
 
-    </nav>
+          <path
+            d="M9 8V5.8A3 3 0 0 1 12 3a3 3 0 0 1 3 2.8V8"
+          ></path>
+        </svg>
+
+        <span
+          class="header-v2__badge"
+          id="cart-badge"
+          <%= cartCount === 0
+            ? "hidden"
+            : "" %>
+        >
+          <%= cartCount %>
+        </span>
+      </a>
+    </div>
+  </nav>
 </header>

@@ -1,0 +1,17 @@
+<div class="confirm-card confirm-info-card">
+    <h2>Payment Method</h2>
+    <div class="payment-card">
+        <span>Credit / Debit Card</span>
+        <strong>•••• •••• •••• <%= order.payment.cardLastFour %></strong>
+    </div>
+    <div class="confirm-info-row">
+        <span>Cardholder</span>
+        <strong>
+            <%= order.payment.cardName %>
+        </strong>
+    </div>
+    <div class="confirm-info-row">
+        <span>Status</span>
+        <strong class="payment-status">Paid</strong>
+    </div>
+</div>

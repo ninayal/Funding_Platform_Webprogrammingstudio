@@ -1,0 +1,31 @@
+[
+  {
+    "id": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
+    "firstname": "nin",
+    "lastname": "lam",
+    "username": "ninayal_",
+    "email": "abc@gmail.com",
+    "gender": "male",
+    "description": "bjygyjgjyf",
+    "role": "User",
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "bjygyjgjyf",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$b753cf576f04ab3beef21e23c2c104be$bd142d0bcecc9acb7e99b3c651a0a9d48ce3420f3ec05927b9b04cfa10c2aff17aef01965089dd71dae9ffd84a0565706b834fc5340d00ba924e2c090a054f14",
+    "createdAt": "2026-08-06T07:20:53.841Z",
+    "updatedAt": "2026-08-06T07:44:03.552Z"
+  }
+]

@@ -1,0 +1,37 @@
+<div class="profile-panel profile-panel--notifications">
+  <div class="panel-heading">
+    <p class="profile-kicker">
+      Activity
+    </p>
+
+    <h2>
+      Notifications
+    </h2>
+
+    <p>
+      Important updates from your account,
+      orders, and the wider Làng &amp; Co.
+      community.
+    </p>
+  </div>
+
+  <div class="notification-list">
+    <% notifications.forEach((notification) => { %>
+      <div class="notification-card">
+        <span class="notification-chip">
+          <%= notification.type %>
+        </span>
+
+        <div>
+          <strong>
+            <%= notification.title %>
+          </strong>
+
+          <p>
+            <%= notification.description %>
+          </p>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>

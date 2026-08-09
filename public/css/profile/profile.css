@@ -2,5 +2,7 @@
 @import url("./profile-layout-sidebar.css");
 @import url("./profile-tab-states.css");
 @import url("./profile-user-panel.css");
-@import url("./profile-secondary-panels.css");
+@import url("./profile-orders.css");
+@import url("./profile-settings-notifications.css");
+@import url("./profile-feedback.css");
 @import url("./profile-responsive.css");

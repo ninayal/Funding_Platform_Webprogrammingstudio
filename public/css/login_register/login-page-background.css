@@ -29,7 +29,7 @@
     bottom: 0px;
     left: 0px;
     z-index: 0;
-    background-image: url('/public/images/background_login_register/loginbackground.png');
+    background-image: url('/images/background_login_register/loginbackground.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
