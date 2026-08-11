@@ -354,6 +354,64 @@
           "bookmarkedBy": []
         }
       ]
+    },
+    {
+      "slug": "testing",
+      "category": "qa",
+      "title": "Testing",
+      "views": 0,
+      "authorId": "user-huy-ba",
+      "status": "draft",
+      "createdAt": "2026-08-10T14:23:10.561Z",
+      "posts": [
+        {
+          "id": "9f3ffe32-a625-4674-a92a-a7cda5e39fc0",
+          "author": "Huy Ba",
+          "authorId": "user-huy-ba",
+          "initials": "HB",
+          "rank": "Member",
+          "date": "10/08/2026",
+          "content": "TEsting",
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": []
+        }
+      ]
+    },
+    {
+      "slug": "testing-3",
+      "category": "experience",
+      "title": "Testing 3",
+      "views": 0,
+      "authorId": "user-huy-ba",
+      "status": "published",
+      "createdAt": "2026-08-10T14:23:33.362Z",
+      "posts": [
+        {
+          "id": "55ec425c-a72b-4d01-999c-30052e11a50f",
+          "author": "Huy Ba",
+          "authorId": "user-huy-ba",
+          "initials": "HB",
+          "rank": "Member",
+          "date": "10/08/2026",
+          "content": "TEsting",
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": []
+        },
+        {
+          "id": "d3954dcf-7a0e-418a-a8a1-284003eba3b5",
+          "author": "Huy Ba",
+          "authorId": "user-huy-ba",
+          "initials": "HB",
+          "rank": "Member",
+          "date": "10/08/2026",
+          "content": "sadada",
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": []
+        }
+      ]
     }
   ]
 }

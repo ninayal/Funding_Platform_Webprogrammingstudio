@@ -27,7 +27,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: var(--brown);
+  color: var(--ink);
   font-family: var(--ff-ui);
   font-size: 15px;
   cursor: pointer;
@@ -74,7 +74,7 @@
 
 .rich-editor__content:empty::before {
   content: attr(data-placeholder);
-  color: #99816b;
+  color: var(--ink);
 }
 
 .rich-editor__content img {
