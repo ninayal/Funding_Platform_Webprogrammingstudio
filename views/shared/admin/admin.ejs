@@ -7,14 +7,14 @@
   <meta name="theme-color" content="#A31D1D" />
   <title>Làng &amp; Co. — Admin</title>
   <!-- Shared styles -->
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/admin/admin.css" />
-  <link rel="stylesheet" href="../../public/css/header_shoppingcart.css" />
-  <link rel="stylesheet" href="../../public/css/forum/forum-base.css" />
-  <link rel="stylesheet" href="../../public/css/forum/forum-utilities-toolbar.css" />
-  <link rel="stylesheet" href="../../public/css/admin/admin_responsive.css" />
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/admin/admin.css" />
+  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+  <link rel="stylesheet" href="/css/forum/forum-base.css" />
+  <link rel="stylesheet" href="/css/forum/forum-utilities-toolbar.css" />
+  <link rel="stylesheet" href="/css/admin/admin_responsive.css" />
 </head>
 
 <body>
@@ -48,8 +48,8 @@
       </button>
     </div>
 
-    <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
-      <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+    <a class="nav__logo nav__logo--center" href="/" target="_top">
+      <img src="/images/logo.png" alt="Lang & Co. logo" />
     </a>
 
     <div class="nav__icons">
@@ -255,6 +255,82 @@
               </tbody>
             </table>
           </div>
+
+          <!-- Password Reset Requests -->
+          <div class="panel-head" style="margin-top: 2.5rem;">
+            <h2 class="panel-head__title">Password Reset Requests</h2>
+          </div>
+
+          <% if (pendingRequests.length === 0) { %>
+          <p class="empty-state">No pending password reset requests.</p>
+          <% } else { %>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <caption class="sr-only">Pending password reset requests</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Requested At</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pendingRequests.forEach(function (resetRequest) { %>
+                <tr>
+                  <td><time datetime="<%= resetRequest.requestedAt %>"><%= new Date(resetRequest.requestedAt).toLocaleString() %></time></td>
+                  <td><%= resetRequest.email %></td>
+                  <td>
+                    <form method="post" action="/shared/admin/password-resets/<%= resetRequest.id %>/resolve" style="display:inline">
+                      <button type="submit" class="btn btn--success btn--small">Approve &amp; Issue Temp Password</button>
+                    </form>
+                    <form method="post" action="/shared/admin/password-resets/<%= resetRequest.id %>/reject" style="display:inline">
+                      <button type="submit" class="btn btn--danger btn--small">Reject</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+
+          <% if (resolvedRequests.length > 0) { %>
+          <div class="panel-head" style="margin-top: 1.5rem;">
+            <h2 class="panel-head__title">Recently Resolved</h2>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <caption class="sr-only">Recently resolved password reset requests</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Email</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Temporary Password</th>
+                  <th scope="col">Resolved At</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% resolvedRequests.forEach(function (resetRequest) { %>
+                <tr>
+                  <td><%= resetRequest.email %></td>
+                  <td>
+                    <% if (resetRequest.status === "resolved") { %>
+                    <span class="tag tag--active">Resolved</span>
+                    <% } else { %>
+                    <span class="tag tag--blocked">Rejected</span>
+                    <% } %>
+                  </td>
+                  <td><%= resetRequest.tempPassword || "—" %></td>
+                  <td><time datetime="<%= resetRequest.resolvedAt %>"><%= new Date(resetRequest.resolvedAt).toLocaleString() %></time></td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <p class="empty-state" style="margin-top: 0.75rem;">
+            Simulated email: copy the temporary password above and send it to the user (e.g. email or chat) so they can sign in and set a new password.
+          </p>
+          <% } %>
         </section>
 
         <!-- Settings panel -->

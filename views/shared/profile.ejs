@@ -7,11 +7,11 @@
 
   <title>User Profile | Làng & Co.</title>
 
-  <link rel="stylesheet" href="../../public/css/landingpage/index.css" />
-  <link rel="stylesheet" href="../../public/css/header.css" />
-  <link rel="stylesheet" href="/public/css/header_shoppingcart.css" />
-  <link rel="stylesheet" href="../../public/css/shared-include.css" />
-  <link rel="stylesheet" href="../../public/css/profile/profile.css" />
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/profile/profile.css" />
 </head>
 
 <body class="is-admin">
@@ -46,8 +46,8 @@
       </button>
     </div>
 
-    <a class="nav__logo nav__logo--center" href="../../index.html" target="_top">
-      <img src="../../public/images/logo.png" alt="Lang & Co. logo" />
+    <a class="nav__logo nav__logo--center" href="/" target="_top">
+      <img src="/images/logo.png" alt="Lang & Co. logo" />
     </a>
 
     <div class="nav__icons">
@@ -159,7 +159,7 @@
         </div>
 
 
-        <a class="profile-admin-link admin-only" href="admin.html">
+        <a class="profile-admin-link admin-only" href="/shared/admin">
           <svg viewBox="0 0 24 24">
             <path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7l8-4Z" />
             <path d="M9.5 12.2l1.7 1.7 3.5-4" />
@@ -169,14 +169,16 @@
           </span>
         </a>
 
-        <a class="profile-logout" href="login.html">
-          <svg viewBox="0 0 24 24">
-            <path d="M10 17l5-5-5-5" />
-            <path d="M15 12H3" />
-            <path d="M21 19V5a2 2 0 0 0-2-2h-5" />
-          </svg>
-          <span>Log out</span>
-        </a>
+        <form action="/shared/logout" method="post" class="profile-logout-form">
+          <button type="submit" class="profile-logout">
+            <svg viewBox="0 0 24 24">
+              <path d="M10 17l5-5-5-5" />
+              <path d="M15 12H3" />
+              <path d="M21 19V5a2 2 0 0 0-2-2h-5" />
+            </svg>
+            <span>Log out</span>
+          </button>
+        </form>
 
       </aside>
 
@@ -186,7 +188,7 @@
 
           <div class="profile-hero">
             <div class="profile-avatar-wrap">
-              <img class="profile-avatar" src="/public/images/profile.png" alt="Profile photo of Nguyễn Thị Doraemon" />
+              <img class="profile-avatar" src="/images/profile.png" alt="Profile photo of Nguyễn Thị Doraemon" />
               <button class="avatar-edit" type="button" aria-label="Edit profile image">✎</button>
             </div>
 

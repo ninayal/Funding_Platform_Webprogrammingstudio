@@ -153,16 +153,24 @@
   font-size: 20px;
 }
 
-.profile-logout {
+.profile-logout-form {
   margin-top: auto;
+}
+
+.profile-logout {
   min-height: 54px;
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  border: none;
+  background: none;
+  padding: 0;
   color: var(--red);
   text-decoration: none;
+  font-family: inherit;
   font-size: 15px;
   font-weight: 700;
+  cursor: pointer;
   position: relative;
   z-index: 1;
 }

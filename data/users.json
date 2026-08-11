@@ -1,0 +1,42 @@
+[
+  {
+    "id": "u1",
+    "username": "minhvu123",
+    "email": "minhvu12@gmail.com",
+    "passwordHash": "$2b$10$g6lqn.EVALuiD/Y.mDKqK.XS3Lx7Lgzmofg8Dm10ILTRKrr61aKZq",
+    "role": "user",
+    "status": "active",
+    "joinDate": "2026-07-13",
+    "requiresPasswordChange": false
+  },
+  {
+    "id": "u2",
+    "username": "alex123",
+    "email": "alex12@gmail.com",
+    "passwordHash": "$2b$10$RrRz36MQphdIBM6dI2wUBuMeod9qB7AM4ZRZDZCtXDmv66/J6HSNe",
+    "role": "user",
+    "status": "active",
+    "joinDate": "2026-07-01",
+    "requiresPasswordChange": false
+  },
+  {
+    "id": "u3",
+    "username": "david123",
+    "email": "david12@gmail.com",
+    "passwordHash": "$2b$10$RrRz36MQphdIBM6dI2wUBuMeod9qB7AM4ZRZDZCtXDmv66/J6HSNe",
+    "role": "user",
+    "status": "blocked",
+    "joinDate": "2026-07-02",
+    "requiresPasswordChange": false
+  },
+  {
+    "id": "admin1",
+    "username": "admin",
+    "email": "admin@langandco.com",
+    "passwordHash": "$2b$10$4wxqAeej6X9sN2Qzn1CHyuFtcZIFyk7e5KE11Mu/Dk1e8QtbKB/eG",
+    "role": "admin",
+    "status": "active",
+    "joinDate": "2026-01-01",
+    "requiresPasswordChange": false
+  }
+]

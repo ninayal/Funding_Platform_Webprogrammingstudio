@@ -3,28 +3,24 @@ const sharedController = require("../controllers/sharedController");
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
-  res.render("shared/login");
-});
+router.get("/login", sharedController.getLoginPage);
+router.post("/login", sharedController.postLogin);
+router.post("/logout", sharedController.postLogout);
 
-router.get("/register", (req, res) => {
-  res.render("shared/register");
-});
+router.get("/register", sharedController.getRegisterPage);
 
-router.get("/forgot-password", (req, res) => {
-  res.render("shared/forgot_password");
-});
+router.get("/forgot-password", sharedController.getForgotPasswordPage);
+router.post("/forgot-password", sharedController.postForgotPassword);
 
-router.get("/profile", (req, res) => {
-  res.render("shared/profile");
-});
+router.get("/reset-password", sharedController.getResetPasswordPage);
+router.post("/reset-password", sharedController.postResetPassword);
 
-router.get("/admin", (req, res) => {
-  res.render("shared/admin/admin");
-});
+router.get("/profile", sharedController.getProfilePage);
 
-router.get("/sitemap", (req, res) => {
-  res.render("shared/sitemap");
-});
+router.get("/admin", sharedController.getAdminPage);
+router.post("/admin/password-resets/:requestId/resolve", sharedController.postResolvePasswordReset);
+router.post("/admin/password-resets/:requestId/reject", sharedController.postRejectPasswordReset);
+
+router.get("/sitemap", sharedController.getSitemapPage);
 
 module.exports = router;
