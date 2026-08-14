@@ -93,10 +93,11 @@
   <section class="admin-page">
 
     <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
-    <input type="radio" name="admin-tab" id="admin-tab-dashboard" class="admin-tab-radio" aria-label="Dashboard tab">
-    <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab">
-    <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab" checked>
-    <input type="radio" name="admin-tab" id="admin-tab-settings" class="admin-tab-radio" aria-label="Settings tab">
+    <% const currentTab = typeof activeTab !== "undefined" && activeTab ? activeTab : "users"; %>
+    <input type="radio" name="admin-tab" id="admin-tab-dashboard" class="admin-tab-radio" aria-label="Dashboard tab" <%= currentTab === "dashboard" ? "checked" : "" %>>
+    <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab" <%= currentTab === "products" ? "checked" : "" %>>
+    <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab" <%= currentTab === "users" ? "checked" : "" %>>
+    <input type="radio" name="admin-tab" id="admin-tab-settings" class="admin-tab-radio" aria-label="Settings tab" <%= currentTab === "settings" ? "checked" : "" %>>
 
     <div class="admin">
 
@@ -161,6 +162,7 @@
 
       <!-- Content -->
       <main class="admin__content">
+        <a id="admin-top"></a>
 
         <!-- Dashboard panel -->
         <section class="panel panel--dashboard">
@@ -172,10 +174,121 @@
 
         <!-- Products panel -->
         <section class="panel panel--products">
-          <div class="panel-head">
+          <div class="panel-head panel-head--with-action">
             <h2 class="panel-head__title">Products</h2>
+            <a href="/shared/admin/products/new" class="btn btn--outline">+ Add Product</a>
           </div>
-          <p class="empty-state">Product management coming soon.</p>
+
+          <% if (typeof productNotice !== "undefined" && productNotice) { %>
+          <div class="admin-alert admin-alert--warning"><%= productNotice %></div>
+          <% } %>
+
+          <!-- Stats -->
+          <div class="admin-stats">
+            <div class="admin-stat">
+              <span class="admin-stat__label">Total Products</span>
+              <span class="admin-stat__value"><%= productStats.total %></span>
+            </div>
+            <div class="admin-stat">
+              <span class="admin-stat__label">Published</span>
+              <span class="admin-stat__value admin-stat__value--active"><%= productStats.published %></span>
+            </div>
+            <div class="admin-stat">
+              <span class="admin-stat__label">Hidden</span>
+              <span class="admin-stat__value admin-stat__value--blocked"><%= productStats.hidden %></span>
+            </div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="admin-toolbar">
+            <label class="admin-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="productSearchInput" placeholder="Find by title"
+                aria-label="Search products by title" autocomplete="off" />
+            </label>
+            <select id="productCategoryFilter" class="admin-select" aria-label="Filter products by category">
+              <option value="">All categories</option>
+              <% categories.forEach(function (cat) { %>
+              <option value="<%= cat.value %>"><%= cat.label %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <% if (products.length === 0) { %>
+          <p class="empty-state">No products yet. Click "Add Product" to create your first listing.</p>
+          <% } else { %>
+          <div class="admin-table-wrap">
+            <table class="admin-table admin-table--products" id="productsTable">
+              <caption class="sr-only">Product catalog</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Cover</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% products.forEach(function (product) {
+                  const categoryLabel = (categories.find((c) => c.value === product.category) || {}).label || product.category;
+                  const coverImage = (product.images || []).find(Boolean) || "/images/landingpics/product-ceramic-vase.png";
+                %>
+                <tr data-title="<%= product.title.toLowerCase() %>" data-category="<%= product.category %>">
+                  <td><img class="admin-table__thumb" src="<%= coverImage %>" alt="" width="56" height="56" /></td>
+                  <td><%= product.title %></td>
+                  <td><%= categoryLabel %></td>
+                  <td><%= product.price.toLocaleString("vi-VN") %>&#8363;</td>
+                  <td><%= product.stock %></td>
+                  <td>
+                    <% if (product.status === "published") { %>
+                    <span class="tag tag--active">Published</span>
+                    <% } else { %>
+                    <span class="tag tag--blocked">Hidden</span>
+                    <% } %>
+                  </td>
+                  <td class="admin-table__actions">
+                    <a href="/shared/admin/products/<%= product.id %>/edit" class="btn btn--outline btn--small">Edit</a>
+                    <form method="post" action="/shared/admin/products/<%= product.id %>/toggle" style="display:inline">
+                      <button type="submit"
+                        class="btn btn--small <%= product.status === 'published' ? 'btn--outline' : 'btn--success' %>">
+                        <%= product.status === "published" ? "Hide" : "Publish" %>
+                      </button>
+                    </form>
+                    <a href="#confirm-delete-<%= product.id %>" class="btn btn--danger btn--small">Delete</a>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <% } %>
+
+          <!-- Delete confirmation overlays -->
+          <% products.forEach(function (product) { %>
+          <section id="confirm-delete-<%= product.id %>" class="confirm-overlay"
+            aria-labelledby="confirm-delete-heading-<%= product.id %>">
+            <a class="confirm-overlay__backdrop" href="#admin-top" aria-label="Close delete confirmation"></a>
+            <div class="confirm-dialog">
+              <a class="confirm-dialog__close" href="#admin-top" aria-label="Close delete confirmation">&times;</a>
+              <p class="confirm-dialog__kicker">Confirm deletion</p>
+              <h3 id="confirm-delete-heading-<%= product.id %>">Delete "<%= product.title %>"?</h3>
+              <p>This removes the product permanently from the catalog. This can't be undone.</p>
+              <div class="confirm-dialog__actions">
+                <a href="#admin-top" class="btn btn--outline btn--small">Keep Product</a>
+                <form method="post" action="/shared/admin/products/<%= product.id %>/delete" style="display:inline">
+                  <button type="submit" class="btn btn--danger btn--small">Delete Permanently</button>
+                </form>
+              </div>
+            </div>
+          </section>
+          <% }) %>
         </section>
 
         <!-- Users panel -->
@@ -348,6 +461,31 @@
   <!--  Footer  -->
   <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
     scrolling="no"></iframe>
+
+  <script>
+    (function () {
+      var searchInput = document.getElementById("productSearchInput");
+      var categoryFilter = document.getElementById("productCategoryFilter");
+      var table = document.getElementById("productsTable");
+      if (!table) return;
+
+      var rows = Array.prototype.slice.call(table.querySelectorAll("tbody tr"));
+
+      function applyFilters() {
+        var query = (searchInput.value || "").trim().toLowerCase();
+        var category = categoryFilter.value;
+
+        rows.forEach(function (row) {
+          var matchesTitle = !query || row.dataset.title.indexOf(query) !== -1;
+          var matchesCategory = !category || row.dataset.category === category;
+          row.style.display = matchesTitle && matchesCategory ? "" : "none";
+        });
+      }
+
+      if (searchInput) searchInput.addEventListener("keyup", applyFilters);
+      if (categoryFilter) categoryFilter.addEventListener("change", applyFilters);
+    })();
+  </script>
 
 </body>
 
