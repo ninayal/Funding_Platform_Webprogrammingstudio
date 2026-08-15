@@ -56,5 +56,34 @@
     "passwordHash": "scrypt$dc9f79bb5f1f52aba10a1e646fb94957$9b281a8c2532c6446a984936499efdea35533bd2d276f768c53b4655e0a3374e89606bb39cc778af09fcd5d8977eb5950430a3d35c7752239f1253c340077b10",
     "createdAt": "2026-08-06T08:37:45.882Z",
     "updatedAt": "2026-08-06T08:38:11.970Z"
+  },
+  {
+    "id": "a71570f4-7258-4f3b-a1af-6be794f32924",
+    "firstname": "Khang",
+    "lastname": "dn",
+    "username": "Khangdn1412s",
+    "email": "phuckhangg14@gmail.com",
+    "gender": "male",
+    "description": "fasdfsdafasfas",
+    "role": "User",
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "fasdfsdafasfas",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$cd42c759d8c139b086924c9a84178735$09ff5dc5fa0cd4538481db8cb60b5385f4a6aea5ad91bce8bbf305d7606781ab1304db79d590b0d70cf0325eede9474de5db4d1b02972e7ddbb69280f7789cd1",
+    "createdAt": "2026-08-09T13:55:37.662Z",
+    "updatedAt": "2026-08-09T13:55:37.662Z"
   }
 ]

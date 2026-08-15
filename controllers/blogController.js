@@ -1,18 +1,10 @@
 "use strict";
 
-const blogModel = require(
-  "../models/blogModel",
-);
+const blogModel =
+  require("../models/blogModel");
 
 const blogCommentModel =
-  require(
-    "../models/blogCommentModel",
-  );
-
-const {
-  developmentActor:
-  BLOG_DEVELOPMENT_ACTOR,
-} = require("../data/blog");
+  require("../models/blogCommentModel");
 
 const {
   CATEGORY_ORDER,
@@ -21,8 +13,13 @@ const {
   validateCommentContent,
   validatePost,
 } = require(
-  "../validators/blogValidators",
+  "../validators/blogValidators"
 );
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 const requestWantsJson = (req) => {
   const acceptHeader =
@@ -31,14 +28,13 @@ const requestWantsJson = (req) => {
   return (
     req.xhr ||
     acceptHeader.includes(
-      "application/json",
+      "application/json"
     )
   );
 };
 
-const formatDate = (
-  value,
-) => {
+
+const formatDate = (value) => {
   if (!value) {
     return "Unpublished draft";
   }
@@ -48,7 +44,7 @@ const formatDate = (
 
   if (
     Number.isNaN(
-      date.getTime(),
+      date.getTime()
     )
   ) {
     return "";
@@ -60,32 +56,66 @@ const formatDate = (
       month: "long",
       day: "numeric",
       year: "numeric",
-    },
+    }
   ).format(date);
 };
 
+
 const toCategorySlug = (
-  category,
+  category
 ) =>
   String(category || "")
     .trim()
     .toLowerCase()
     .replace(
       /[^a-z0-9]+/g,
-      "-",
+      "-"
     )
     .replace(
       /^-+|-+$/g,
-      "",
+      ""
     );
 
 
-const getCurrentUser = () =>
-  BLOG_DEVELOPMENT_ACTOR;
+/*
+ * IMPORTANT
+ *
+ * Blog does NOT have a separate account.
+ *
+ * req.currentUser is the account created
+ * through your Register/Login system.
+ */
+const getCurrentUser = (req) =>
+  req.currentUser ||
+  req.session?.user ||
+  null;
+
+
+/*
+ * This is mainly a backup.
+ *
+ * Normally requireAuth in blogRoutes.js
+ * should handle the redirect first.
+ */
+const redirectToLogin = (
+  req,
+  res
+) => {
+  const redirectPath =
+    encodeURIComponent(
+      req.originalUrl ||
+      "/blog"
+    );
+
+  return res.redirect(
+    `/shared/login?redirect=${redirectPath}`
+  );
+};
+
 
 const preparePostForView = (
   req,
-  post,
+  post
 ) => {
   if (!post) {
     return null;
@@ -93,12 +123,12 @@ const preparePostForView = (
 
   const url =
     `/blog/${encodeURIComponent(
-      post.id,
+      post.id
     )}`;
 
   const absoluteUrl =
     `${req.protocol}://${req.get(
-      "host",
+      "host"
     )}${url}`;
 
   const searchableText = [
@@ -118,31 +148,34 @@ const preparePostForView = (
 
     categorySlug:
       toCategorySlug(
-        post.category,
+        post.category
       ),
 
     displayDate:
       formatDate(
         post.publishedAt ||
-        post.updatedAt,
+        post.updatedAt
       ),
 
     url,
+
     absoluteUrl,
+
     searchableText,
 
     shareEmailUrl:
       `mailto:?subject=${encodeURIComponent(
-        `${post.title} — Làng & Co.`,
+        `${post.title} — Làng & Co.`
       )}` +
       `&body=${encodeURIComponent(
-        `${post.summary}\n\n${absoluteUrl}`,
+        `${post.summary}\n\n${absoluteUrl}`
       )}`,
   };
 };
 
+
 const toDateInputValue = (
-  value,
+  value
 ) => {
   const date =
     value
@@ -151,7 +184,7 @@ const toDateInputValue = (
 
   if (
     Number.isNaN(
-      date.getTime(),
+      date.getTime()
     )
   ) {
     return "";
@@ -162,107 +195,119 @@ const toDateInputValue = (
     .slice(0, 10);
 };
 
+
 const getPostFormValues = (
-  post = {},
+  post = {}
 ) => ({
   title:
     post.title || "",
 
   category:
-    post.category || "Guide",
+    post.category ||
+    "Guide",
 
   tags:
-    Array.isArray(post.tags)
+    Array.isArray(
+      post.tags
+    )
       ? post.tags.join(", ")
       : "",
 
   imageUrl:
-    post.image?.url || "",
+    post.image?.url ||
+    "",
 
   imageAlt:
-    post.image?.alt || "",
+    post.image?.alt ||
+    "",
 
   imageCaption:
-    post.image?.caption || "",
+    post.image?.caption ||
+    "",
 
   summary:
-    post.summary || "",
+    post.summary ||
+    "",
 
   archiveSummary:
-    post.archiveSummary || "",
+    post.archiveSummary ||
+    "",
 
   content:
     contentToText(
-      post.content || [],
+      post.content || []
     ),
 
   readTime:
-    post.readTime || 5,
+    post.readTime ||
+    5,
 
   status:
-    post.status || "draft",
+    post.status ||
+    "draft",
 
   dateAdded:
     toDateInputValue(
       post.createdAt ||
       post.publishedAt ||
-      post.updatedAt,
+      post.updatedAt
     ),
 
   displayDate:
     post.publishedAt ||
-      post.updatedAt
+    post.updatedAt
       ? formatDate(
-        post.publishedAt ||
-        post.updatedAt,
-      )
+          post.publishedAt ||
+          post.updatedAt
+        )
       : "Not published",
 });
 
+
 const calculateDraftCompletion = (
-  post,
+  post
 ) => {
   const requiredSections = [
     Boolean(
       String(
-        post.title || "",
-      ).trim(),
+        post.title || ""
+      ).trim()
     ),
 
     Boolean(
       String(
-        post.summary || "",
-      ).trim(),
+        post.summary || ""
+      ).trim()
     ),
 
     Boolean(
       post.image &&
-      post.image.url,
+      post.image.url
     ),
 
     Boolean(
       Array.isArray(
-        post.content,
+        post.content
       ) &&
       post.content.some(
         (block) =>
           String(
-            block.text || "",
-          ).trim(),
-      ),
+            block.text || ""
+          ).trim()
+      )
     ),
 
     Boolean(
       Array.isArray(
-        post.tags,
+        post.tags
       ) &&
-      post.tags.length > 0,
+      post.tags.length > 0
     ),
   ];
 
   const completed =
     requiredSections.filter(
-      Boolean,
+      Boolean
     ).length;
 
   return Math.round(
@@ -270,22 +315,24 @@ const calculateDraftCompletion = (
       completed /
       requiredSections.length
     ) *
-    100,
+    100
   );
 };
 
+
 const prepareMyPostForView = (
   req,
-  post,
+  post
 ) => {
   const preparedPost =
     preparePostForView(
       req,
-      post,
+      post
     );
 
   const status =
-    post.status === "published"
+    post.status ===
+    "published"
       ? "published"
       : "draft";
 
@@ -311,7 +358,7 @@ const prepareMyPostForView = (
 
     editUrl:
       `/blog/${encodeURIComponent(
-        post.id,
+        post.id
       )}/edit`,
 
     imageUrl:
@@ -330,46 +377,57 @@ const prepareMyPostForView = (
       "No summary has been added.",
 
     commentCount:
-      blogCommentModel.countCommentsByPostId(
-        post.id,
-      ),
+      blogCommentModel
+        .countCommentsByPostId(
+          post.id
+        ),
 
     draftCompletion:
       status === "draft"
         ? calculateDraftCompletion(
-          post,
-        )
+            post
+          )
         : 100,
   };
 };
 
+
 const prepareCommentsForView = (
   post,
-  currentUser,
+  currentUser
 ) =>
   blogCommentModel
     .getCommentsByPostId(
       post.id,
       currentUser?.id ||
-      null,
+      null
     )
     .map((comment) => ({
       ...comment,
 
       displayDate:
         formatDate(
-          comment.createdAt,
+          comment.createdAt
         ),
 
       canDelete:
         Boolean(
           currentUser &&
           (
-            comment.author.id ===
-            currentUser.id ||
-            post.author.id ===
-            currentUser.id
-          ),
+            String(
+              comment.author.id
+            ) ===
+              String(
+                currentUser.id
+              ) ||
+
+            String(
+              post.author.id
+            ) ===
+              String(
+                currentUser.id
+              )
+          )
         ),
 
       replies:
@@ -379,46 +437,84 @@ const prepareCommentsForView = (
 
             displayDate:
               formatDate(
-                reply.createdAt,
+                reply.createdAt
               ),
 
             canDelete:
               Boolean(
                 currentUser &&
                 (
-                  reply.author.id ===
-                  currentUser.id ||
-                  post.author.id ===
-                  currentUser.id
-                ),
+                  String(
+                    reply.author.id
+                  ) ===
+                    String(
+                      currentUser.id
+                    ) ||
+
+                  String(
+                    post.author.id
+                  ) ===
+                    String(
+                      currentUser.id
+                    )
+                )
               ),
-          }),
+          })
         ),
     }));
 
-const getSharedViewData = () => ({
-  myPostCount:
-    blogModel.countPostsByAuthorId(
-      BLOG_DEVELOPMENT_ACTOR.id,
-    ),
 
-  blogActor:
-    BLOG_DEVELOPMENT_ACTOR,
-});
+/* =========================================================
+   SHARED BLOG ACCOUNT DATA
+========================================================= */
+
+/*
+ * Before:
+ *
+ * BLOG_DEVELOPMENT_ACTOR
+ *
+ * Now:
+ *
+ * req.currentUser
+ *
+ * Therefore My Posts belongs to whichever
+ * registered account is currently logged in.
+ */
+const getSharedViewData = (
+  req
+) => {
+  const currentUser =
+    getCurrentUser(req);
+
+  return {
+    myPostCount:
+      currentUser
+        ? blogModel
+            .countPostsByAuthorId(
+              currentUser.id
+            )
+        : 0,
+
+    blogActor:
+      currentUser,
+  };
+};
+
 
 const getCategoriesForView =
   () => {
     const available =
       new Set(
-        blogModel.getCategories(),
+        blogModel
+          .getCategories()
       );
 
     const ordered =
       CATEGORY_ORDER.filter(
         (category) =>
           available.has(
-            category,
-          ),
+            category
+          )
       );
 
     const remaining = [
@@ -426,8 +522,8 @@ const getCategoriesForView =
     ].filter(
       (category) =>
         !ordered.includes(
-          category,
-        ),
+          category
+        )
     );
 
     return [
@@ -435,15 +531,17 @@ const getCategoriesForView =
       ...remaining,
     ].map((name) => ({
       name,
+
       slug:
         toCategorySlug(
-          name,
+          name
         ),
     }));
   };
 
+
 const getNotice = (
-  query,
+  query
 ) => {
   if (
     query.reply ===
@@ -462,10 +560,11 @@ const getNotice = (
   return "";
 };
 
+
 const buildBlogViewData = (
   req,
   post,
-  options = {},
+  options = {}
 ) => {
   const currentUser =
     getCurrentUser(req);
@@ -473,40 +572,44 @@ const buildBlogViewData = (
   const preparedPost =
     preparePostForView(
       req,
-      post,
+      post
     );
 
   preparedPost.commentCount =
-    blogCommentModel.countCommentsByPostId(
-      post.id,
-    );
+    blogCommentModel
+      .countCommentsByPostId(
+        post.id
+      );
 
   return {
-    ...getSharedViewData(),
+    ...getSharedViewData(
+      req
+    ),
 
     pageTitle:
       preparedPost.title,
 
-    post: preparedPost,
+    post:
+      preparedPost,
 
     comments:
       prepareCommentsForView(
         post,
-        currentUser,
+        currentUser
       ),
 
     relatedPosts:
       blogModel
         .getRelatedPosts(
           post.id,
-          3,
+          3
         )
         .map(
           (relatedPost) =>
             preparePostForView(
               req,
-              relatedPost,
-            ),
+              relatedPost
+            )
         ),
 
     commentErrors:
@@ -530,14 +633,20 @@ const buildBlogViewData = (
       "",
 
     notice:
-      options.notice || "",
+      options.notice ||
+      "",
   };
 };
+
+
+/* =========================================================
+   BLOG LIST PAGE
+========================================================= */
 
 const getBlogPage = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
     const posts =
@@ -546,14 +655,16 @@ const getBlogPage = (
         .map((post) =>
           preparePostForView(
             req,
-            post,
-          ),
+            post
+          )
         );
 
     return res.render(
       "blog/blog",
       {
-        ...getSharedViewData(),
+        ...getSharedViewData(
+          req
+        ),
 
         pageTitle:
           "Journal",
@@ -569,7 +680,8 @@ const getBlogPage = (
         leadStory:
           preparePostForView(
             req,
-            blogModel.getLeadStory(),
+            blogModel
+              .getLeadStory()
           ),
 
         featuredPosts:
@@ -578,72 +690,98 @@ const getBlogPage = (
             .map((post) =>
               preparePostForView(
                 req,
-                post,
-              ),
+                post
+              )
             ),
-      },
+      }
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
+/* =========================================================
+   BLOG DETAIL PAGE
+========================================================= */
+
 const getBlogViewPage = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
     const currentUser =
       getCurrentUser(req);
 
     const post =
-      blogModel.getVisiblePostById(
-        req.params.id,
-        currentUser?.id ||
-        null,
-      );
+      blogModel
+        .getVisiblePostById(
+          req.params.id,
+
+          currentUser?.id ||
+          null
+        );
 
     if (!post) {
       return res
         .status(404)
         .send(
-          "Blog post not found.",
+          "Blog post not found."
         );
     }
 
     return res.render(
       "blog/blogview",
+
       buildBlogViewData(
         req,
         post,
         {
           notice:
             getNotice(
-              req.query,
+              req.query
             ),
+
           openReplyId:
-            req.query.openReply ||
+            req.query
+              .openReply ||
             "",
-        },
-      ),
+        }
+      )
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
 const addComment = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
-    const post =
-      blogModel.getVisiblePostById(
-        req.params.id,
-        BLOG_DEVELOPMENT_ACTOR.id,
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
       );
+    }
+
+    const post =
+      blogModel
+        .getVisiblePostById(
+          req.params.id,
+          currentUser.id
+        );
 
     if (
       !post ||
@@ -653,7 +791,7 @@ const addComment = (
       return res
         .status(404)
         .send(
-          "Blog post not found.",
+          "Blog post not found."
         );
     }
 
@@ -663,7 +801,7 @@ const addComment = (
     } =
       validateCommentContent(
         req.body.comment,
-        "Comment",
+        "Comment"
       );
 
     if (
@@ -674,6 +812,7 @@ const addComment = (
         .status(422)
         .render(
           "blog/blogview",
+
           buildBlogViewData(
             req,
             post,
@@ -687,38 +826,70 @@ const addComment = (
                 comment:
                   content,
               },
-            },
-          ),
+            }
+          )
         );
     }
 
-    blogCommentModel.addComment(
-      post.id,
-      BLOG_DEVELOPMENT_ACTOR,
-      content,
-    );
+    const result =
+      blogCommentModel
+        .addComment(
+          post.id,
 
+          currentUser,
+
+          content
+        );
+
+    if (
+      result &&
+      result.ok === false
+    ) {
+      return res
+        .status(400)
+        .send(
+          "Comment could not be posted."
+        );
+    }
+
+    /*
+     * No ?comment=added because you
+     * previously removed the comment
+     * success message.
+     */
     return res.redirect(
       `/blog/${encodeURIComponent(
-        post.id,
-      )}#comments`,
+        post.id
+      )}#comments`
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
 const addReply = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
-    const post =
-      blogModel.getVisiblePostById(
-        req.params.id,
-        BLOG_DEVELOPMENT_ACTOR.id,
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
       );
+    }
+
+    const post =
+      blogModel
+        .getVisiblePostById(
+          req.params.id,
+          currentUser.id
+        );
 
     if (
       !post ||
@@ -728,7 +899,7 @@ const addReply = (
       return res
         .status(404)
         .send(
-          "Blog post not found.",
+          "Blog post not found."
         );
     }
 
@@ -738,7 +909,7 @@ const addReply = (
     } =
       validateCommentContent(
         req.body.reply,
-        "Reply",
+        "Reply"
       );
 
     if (
@@ -749,6 +920,7 @@ const addReply = (
         .status(422)
         .render(
           "blog/blogview",
+
           buildBlogViewData(
             req,
             post,
@@ -768,166 +940,274 @@ const addReply = (
               openReplyId:
                 req.params
                   .commentId,
-            },
-          ),
+            }
+          )
         );
     }
 
     const result =
-      blogCommentModel.addReply(
-        post.id,
-        req.params.commentId,
-        BLOG_DEVELOPMENT_ACTOR,
-        content,
-      );
+      blogCommentModel
+        .addReply(
+          post.id,
 
-    if (!result.ok) {
+          req.params
+            .commentId,
+
+          currentUser,
+
+          content
+        );
+
+    if (
+      result &&
+      result.ok === false
+    ) {
       return res
         .status(404)
         .send(
-          "Parent comment not found.",
+          "Parent comment not found."
         );
     }
 
     return res.redirect(
       `/blog/${encodeURIComponent(
-        post.id,
-      )}?reply=added&openReply=${encodeURIComponent(
-        req.params.commentId,
-      )}#comment-${encodeURIComponent(
-        req.params.commentId,
-      )}`,
+        post.id
+      )}` +
+      `?reply=added` +
+      `&openReply=${encodeURIComponent(
+        req.params.commentId
+      )}` +
+      `#comment-${encodeURIComponent(
+        req.params.commentId
+      )}`
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
 const toggleCommentLike = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
-    const post =
-      blogModel.getVisiblePostById(
-        req.params.id,
-        BLOG_DEVELOPMENT_ACTOR.id,
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      if (
+        requestWantsJson(req)
+      ) {
+        return res
+          .status(401)
+          .json({
+            ok: false,
+
+            message:
+              "Login required.",
+          });
+      }
+
+      return redirectToLogin(
+        req,
+        res
       );
+    }
+
+    const post =
+      blogModel
+        .getVisiblePostById(
+          req.params.id,
+          currentUser.id
+        );
 
     if (!post) {
+      if (
+        requestWantsJson(req)
+      ) {
+        return res
+          .status(404)
+          .json({
+            ok: false,
+
+            message:
+              "Blog post not found.",
+          });
+      }
+
       return res
         .status(404)
-        .json({
-          ok: false,
-          message:
-            "Blog post not found.",
-        });
+        .send(
+          "Blog post not found."
+        );
     }
 
     const result =
-      blogCommentModel.toggleLike(
-        post.id,
-        req.params.commentId,
-        BLOG_DEVELOPMENT_ACTOR.id,
-      );
+      blogCommentModel
+        .toggleLike(
+          post.id,
 
-    if (!result.ok) {
+          req.params
+            .commentId,
+
+          currentUser.id
+        );
+
+    if (
+      !result ||
+      result.ok === false
+    ) {
+      if (
+        requestWantsJson(req)
+      ) {
+        return res
+          .status(404)
+          .json({
+            ok: false,
+
+            message:
+              "Comment not found.",
+          });
+      }
+
       return res
         .status(404)
-        .json({
-          ok: false,
-          message:
-            "Comment not found.",
-        });
+        .send(
+          "Comment not found."
+        );
     }
 
     if (
       requestWantsJson(req)
     ) {
       return res.json(
-        result,
+        result
       );
     }
 
     return res.redirect(
       `/blog/${encodeURIComponent(
-        post.id,
-      )}#comment-${encodeURIComponent(
-        req.params.commentId,
-      )}`,
+        post.id
+      )}` +
+      `#comment-${encodeURIComponent(
+        req.params.commentId
+      )}`
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
 const deleteComment = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
+      );
+    }
+
     const post =
       blogModel.getPostById(
-        req.params.id,
+        req.params.id
       );
 
     if (!post) {
       return res
         .status(404)
         .send(
-          "Blog post not found.",
+          "Blog post not found."
         );
     }
 
     const result =
-      blogCommentModel.deleteComment(
-        post.id,
-        req.params.commentId,
-        BLOG_DEVELOPMENT_ACTOR.id,
-        post.author.id,
-      );
+      blogCommentModel
+        .deleteComment(
+          post.id,
 
-    if (!result.ok) {
+          req.params
+            .commentId,
+
+          currentUser.id,
+
+          post.author.id
+        );
+
+    if (
+      !result ||
+      result.ok === false
+    ) {
       return res
         .status(
-          result.reason ===
-            "forbidden"
+          result?.reason ===
+          "forbidden"
             ? 403
-            : 404,
+            : 404
         )
         .send(
-          "Comment could not be deleted.",
+          "Comment could not be deleted."
         );
     }
 
     return res.redirect(
       `/blog/${encodeURIComponent(
-        post.id,
-      )}?comment=deleted#comments`,
+        post.id
+      )}?comment=deleted#comments`
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
+/* =========================================================
+   MY POSTS
+========================================================= */
+
 const getMyPostsPage = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
+      );
+    }
+
+    /*
+     * This is the key:
+     *
+     * Huy logs in -> Huy ID
+     * Alice logs in -> Alice ID
+     *
+     * Same function, different ID.
+     */
     const posts =
       blogModel
         .getPostsByAuthorId(
-          BLOG_DEVELOPMENT_ACTOR.id,
+          currentUser.id
         )
         .map((post) =>
           prepareMyPostForView(
             req,
-            post,
-          ),
+            post
+          )
         );
 
     const statistics = {
@@ -938,28 +1218,33 @@ const getMyPostsPage = (
         posts.filter(
           (post) =>
             post.status ===
-            "published",
+            "published"
         ).length,
 
       drafts:
         posts.filter(
           (post) =>
             post.status ===
-            "draft",
+            "draft"
         ).length,
     };
 
     const author = {
-      ...BLOG_DEVELOPMENT_ACTOR,
+      ...currentUser,
 
       description:
-        "Writing about Vietnamese traditional crafts, cultural preservation, community support, and responsible digital platforms.",
+        currentUser
+          .description ||
+        currentUser.about ||
+        "",
     };
 
     return res.render(
       "blog/my_posts",
       {
-        ...getSharedViewData(),
+        ...getSharedViewData(
+          req
+        ),
 
         pageTitle:
           "My Blog Posts",
@@ -969,12 +1254,17 @@ const getMyPostsPage = (
         statistics,
 
         posts,
-      },
+      }
     );
   } catch (error) {
     return next(error);
   }
 };
+
+
+/* =========================================================
+   CREATE / EDIT FORM
+========================================================= */
 
 const renderPostForm = (
   req,
@@ -985,28 +1275,45 @@ const renderPostForm = (
     values = {},
     errors = {},
     status = 200,
-  },
+  }
 ) => {
+  const currentUser =
+    getCurrentUser(req);
+
+  if (!currentUser) {
+    return redirectToLogin(
+      req,
+      res
+    );
+  }
+
   const preparedPost =
     post
       ? preparePostForView(
-        req,
-        post,
-      )
+          req,
+          post
+        )
       : null;
 
   const formValues = {
     ...getPostFormValues(
-      post || {},
+      post || {}
     ),
 
     ...values,
   };
 
+  /*
+   * When creating:
+   * author = currently logged-in user.
+   *
+   * When editing:
+   * author = existing post author.
+   */
   const author = {
     ...(
       post?.author ||
-      BLOG_DEVELOPMENT_ACTOR
+      currentUser
     ),
   };
 
@@ -1014,21 +1321,22 @@ const renderPostForm = (
     commentCount:
       post
         ? blogCommentModel
-          .countCommentsByPostId(
-            post.id,
-          )
+            .countCommentsByPostId(
+              post.id
+            )
         : 0,
 
     viewCount:
       Number(
-        post?.viewCount || 0,
+        post?.viewCount ||
+        0
       ),
 
     lastEdited:
       post?.updatedAt
         ? formatDate(
-          post.updatedAt,
-        )
+            post.updatedAt
+          )
         : "Not saved yet",
   };
 
@@ -1037,7 +1345,9 @@ const renderPostForm = (
     .render(
       "blog/post_edit",
       {
-        ...getSharedViewData(),
+        ...getSharedViewData(
+          req
+        ),
 
         pageTitle:
           mode === "create"
@@ -1060,56 +1370,84 @@ const renderPostForm = (
           CATEGORY_ORDER,
 
         previewStats,
-      },
+      }
     );
 };
 
+
 const getCreatePostPage = (
   req,
-  res,
+  res
 ) =>
   renderPostForm(
     req,
     res,
     {
-      mode: "create",
+      mode:
+        "create",
+
       values: {
         dateAdded:
           toDateInputValue(
-            new Date(),
+            new Date()
           ),
-        status: "draft",
-        category: "Guide",
-        readTime: 5,
+
+        status:
+          "draft",
+
+        category:
+          "Guide",
+
+        readTime:
+          5,
       },
-    },
+    }
   );
+
 
 const getPostEditPage = (
   req,
-  res,
+  res
 ) => {
+  const currentUser =
+    getCurrentUser(req);
+
+  if (!currentUser) {
+    return redirectToLogin(
+      req,
+      res
+    );
+  }
+
   const post =
     blogModel.getPostById(
-      req.params.id,
+      req.params.id
     );
 
   if (!post) {
     return res
       .status(404)
       .send(
-        "Blog post not found.",
+        "Blog post not found."
       );
   }
 
+  /*
+   * Only the account that owns the
+   * post may edit it.
+   */
   if (
-    post.author.id !==
-    BLOG_DEVELOPMENT_ACTOR.id
+    String(
+      post.author?.id
+    ) !==
+    String(
+      currentUser.id
+    )
   ) {
     return res
       .status(403)
       .send(
-        "You can edit only the development actor's posts.",
+        "You cannot edit this post."
       );
   }
 
@@ -1117,21 +1455,38 @@ const getPostEditPage = (
     req,
     res,
     {
-      mode: "edit",
+      mode:
+        "edit",
+
       post,
-    },
+    }
   );
 };
+
+
+/* =========================================================
+   CREATE POST
+========================================================= */
 
 const createPost = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
+      );
+    }
+
     const values =
       normalisePostInput(
-        req.body,
+        req.body
       );
 
     const errors =
@@ -1141,7 +1496,7 @@ const createPost = (
           draft:
             values.status ===
             "draft",
-        },
+        }
       );
 
     if (
@@ -1152,64 +1507,95 @@ const createPost = (
         req,
         res,
         {
-          mode: "create",
+          mode:
+            "create",
 
           values: {
             ...req.body,
+
             status:
               values.status,
           },
 
           errors,
 
-          status: 422,
-        },
+          status:
+            422,
+        }
       );
     }
 
+    /*
+     * IMPORTANT:
+     *
+     * owner is now the registered,
+     * currently logged-in account.
+     */
     const post =
       blogModel.createPost(
         values,
-        BLOG_DEVELOPMENT_ACTOR,
+        currentUser
       );
 
     return res.redirect(
       `/blog/${encodeURIComponent(
-        post.id,
-      )}`,
+        post.id
+      )}`
     );
   } catch (error) {
     return next(error);
   }
 };
 
+
+/* =========================================================
+   UPDATE POST
+========================================================= */
+
 const updatePost = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
+      );
+    }
+
     const existing =
       blogModel.getPostById(
-        req.params.id,
+        req.params.id
       );
 
     if (!existing) {
       return res
         .status(404)
         .send(
-          "Blog post not found.",
+          "Blog post not found."
         );
     }
 
+    /*
+     * Controller ownership check.
+     */
     if (
-      existing.author.id !==
-      BLOG_DEVELOPMENT_ACTOR.id
+      String(
+        existing.author?.id
+      ) !==
+      String(
+        currentUser.id
+      )
     ) {
       return res
         .status(403)
         .send(
-          "You cannot edit this post.",
+          "You cannot edit this post."
         );
     }
 
@@ -1220,7 +1606,7 @@ const updatePost = (
     const values =
       normalisePostInput(
         req.body,
-        status,
+        status
       );
 
     const errors =
@@ -1230,7 +1616,7 @@ const updatePost = (
           draft:
             status ===
             "draft",
-        },
+        }
       );
 
     if (
@@ -1241,7 +1627,8 @@ const updatePost = (
         req,
         res,
         {
-          mode: "edit",
+          mode:
+            "edit",
 
           post:
             existing,
@@ -1253,15 +1640,25 @@ const updatePost = (
 
           errors,
 
-          status: 422,
-        },
+          status:
+            422,
+        }
       );
     }
 
+    /*
+     * The model receives the current
+     * registered account ID.
+     *
+     * blogModel should ALSO verify
+     * that this ID owns the post.
+     */
     const result =
       blogModel.updatePost(
         existing.id,
-        BLOG_DEVELOPMENT_ACTOR.id,
+
+        currentUser.id,
+
         {
           ...values,
 
@@ -1281,68 +1678,104 @@ const updatePost = (
             listCaption:
               values.imageCaption,
           },
-        },
+        }
       );
 
-    if (!result.ok) {
+    if (
+      !result ||
+      result.ok === false
+    ) {
       return res
         .status(
-          result.reason ===
-            "forbidden"
+          result?.reason ===
+          "forbidden"
             ? 403
-            : 404,
+            : 404
         )
         .send(
-          "Blog post could not be updated.",
+          "Blog post could not be updated."
         );
     }
 
     return res.redirect(
       `/blog/${encodeURIComponent(
-        result.post.id,
-      )}`,
+        result.post.id
+      )}`
     );
   } catch (error) {
     return next(error);
   }
 };
+
+
+/* =========================================================
+   DELETE POST
+========================================================= */
 
 const deletePost = (
   req,
   res,
-  next,
+  next
 ) => {
   try {
+    const currentUser =
+      getCurrentUser(req);
+
+    if (!currentUser) {
+      return redirectToLogin(
+        req,
+        res
+      );
+    }
+
+    /*
+     * Only currentUser.id is passed.
+     *
+     * The model verifies ownership.
+     */
     const result =
       blogModel.deletePost(
         req.params.id,
-        BLOG_DEVELOPMENT_ACTOR.id,
+        currentUser.id
       );
 
-    if (!result.ok) {
+    if (
+      !result ||
+      result.ok === false
+    ) {
       return res
         .status(
-          result.reason ===
-            "forbidden"
+          result?.reason ===
+          "forbidden"
             ? 403
-            : 404,
+            : 404
         )
         .send(
-          "Blog post could not be deleted.",
+          "Blog post could not be deleted."
         );
     }
 
-    blogCommentModel.deleteCommentsByPostId(
-      req.params.id,
-    );
+    /*
+     * Remove comments belonging to
+     * the deleted Blog post.
+     */
+    blogCommentModel
+      .deleteCommentsByPostId(
+        req.params.id
+      );
 
     return res.redirect(
-      "/blog/my-posts",
+      "/blog/my-posts"
     );
   } catch (error) {
     return next(error);
   }
 };
+
+
+/* =========================================================
+   EXPORTS
+========================================================= */
 
 module.exports = {
   addComment,

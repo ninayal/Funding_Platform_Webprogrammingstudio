@@ -4,7 +4,7 @@ const homeRoutes = require("./homeRoutes");
 const sharedRoutes = require("./sharedRoutes");
 const cartRoutes = require("./cartRoutes");
 const blogRoutes = require("./blogRoutes");
-const reviewRoutes = require("../config/reviewRoutes");
+const reviewRoutes = require("./reviewRoutes");
 const giftcardRoutes = require("./giftcardRoutes");
 const forumRoutes = require("./forumRoutes");
 
