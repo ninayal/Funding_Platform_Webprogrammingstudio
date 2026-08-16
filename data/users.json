@@ -33,7 +33,7 @@
     "id": "admin1",
     "username": "admin",
     "email": "admin@langandco.com",
-    "passwordHash": "$2b$10$.kIGz4eBHL8Sj2C8q6PFQecKwdCWWh3N5rJziXJ6BAkyVpka3K7e.",
+    "passwordHash": "$2b$10$SQxxdeIPmAcqVAuDnYawP.XPKm1TYa7XRjHhYCbwGO/5gWGtjABnC",
     "role": "admin",
     "status": "active",
     "joinDate": "2026-01-01",
