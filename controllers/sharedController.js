@@ -10,7 +10,7 @@ const getLoginPage = (req, res) => {
   res.render("shared/login", { error: null });
 };
 
-const postLogin = (req, res) => {
+const postLogin = (req, res, next) => {
   const { email, password } = req.body;
   const user = email ? userModel.findUserByEmail(email) : null;
 
@@ -22,18 +22,32 @@ const postLogin = (req, res) => {
     return res.render("shared/login", { error: "This account has been blocked. Please contact support." });
   }
 
-  req.session.user = {
-    id: user.id,
-    email: user.email,
-    username: user.username,
-    role: user.role,
-  };
+  // Regenerate the session id on login (prevents session fixation), matching
+  // the auth flow already in place on main for the login/register routes.
+  return req.session.regenerate((regenerateError) => {
+    if (regenerateError) {
+      return next(regenerateError);
+    }
 
-  if (user.requiresPasswordChange) {
-    return res.redirect("/shared/reset-password");
-  }
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    };
 
-  return res.redirect(user.role === "admin" ? "/shared/admin" : "/shared/profile");
+    return req.session.save((saveError) => {
+      if (saveError) {
+        return next(saveError);
+      }
+
+      if (user.requiresPasswordChange) {
+        return res.redirect("/shared/reset-password");
+      }
+
+      return res.redirect(user.role === "admin" ? "/shared/admin" : "/shared/profile");
+    });
+  });
 };
 
 const postLogout = (req, res) => {
