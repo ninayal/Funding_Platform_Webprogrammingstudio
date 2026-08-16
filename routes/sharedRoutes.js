@@ -1,7 +1,6 @@
 const express = require("express");
 const sharedController = require("../controllers/sharedController");
 const uploadProductImages = require("../middlewares/uploadProductImages");
-const requireAdmin = require("../middlewares/requireAdmin");
 
 const router = express.Router();
 
@@ -19,16 +18,16 @@ router.post("/reset-password", sharedController.postResetPassword);
 
 router.get("/profile", sharedController.getProfilePage);
 
-router.get("/admin", requireAdmin, sharedController.getAdminPage);
-router.post("/admin/password-resets/:requestId/resolve", requireAdmin, sharedController.postResolvePasswordReset);
-router.post("/admin/password-resets/:requestId/reject", requireAdmin, sharedController.postRejectPasswordReset);
+router.get("/admin", sharedController.getAdminPage);
+router.post("/admin/password-resets/:requestId/resolve", sharedController.postResolvePasswordReset);
+router.post("/admin/password-resets/:requestId/reject", sharedController.postRejectPasswordReset);
 
-router.get("/admin/products/new", requireAdmin, sharedController.getProductFormPage);
-router.get("/admin/products/:id/edit", requireAdmin, sharedController.getProductFormPage);
-router.post("/admin/products", requireAdmin, uploadProductImages, sharedController.postCreateProduct);
-router.post("/admin/products/:id", requireAdmin, uploadProductImages, sharedController.postUpdateProduct);
-router.post("/admin/products/:id/toggle", requireAdmin, sharedController.postToggleProductStatus);
-router.post("/admin/products/:id/delete", requireAdmin, sharedController.postDeleteProduct);
+router.get("/admin/products/new", sharedController.getProductFormPage);
+router.get("/admin/products/:id/edit", sharedController.getProductFormPage);
+router.post("/admin/products", uploadProductImages, sharedController.postCreateProduct);
+router.post("/admin/products/:id", uploadProductImages, sharedController.postUpdateProduct);
+router.post("/admin/products/:id/toggle", sharedController.postToggleProductStatus);
+router.post("/admin/products/:id/delete", sharedController.postDeleteProduct);
 
 router.get("/sitemap", sharedController.getSitemapPage);
 
