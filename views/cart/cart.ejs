@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#A31D1D">
+
     <title>Làng &amp; Co. — <%= pageTitle %>
     </title>
+
     <link rel="stylesheet" href="/css/landingpage/index.css">
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/cart/cart.css">
@@ -14,19 +16,114 @@
 </head>
 
 <body>
-    <%- include("../partials/header",{activePage,currentUser,cartCount}) %>
-        <%- include("../partials/cart/hero",{cart}) %>
-            <div class="wave">
-                <div class="below">
-                    <p class="below__headline"></p>
-                </div>
-                <main class="cart-page">
-                    <%- include("../partials/cart/cart-content",{cart}) %>
-                        <%- include("../partials/cart/also-like",{recommendedProducts}) %>
-                </main>
+
+    <%- include("../partials/header", { activePage, currentUser, cartCount }) %>
+
+        <section class="hero">
+            <div class="hero__bg"></div>
+
+            <div class="hero__title">
+                <a class="hero__kicker" href="/cart/products">
+                    Step 1 of 3 · Your Bag
+                    <span class="hero__kicker-arrow">→</span>
+                </a>
+
+                <h1 class="script">Your Cart</h1>
+
+                <span class="serif">
+                    Handpicked pieces, ready for checkout.
+                </span>
             </div>
-            <%- include("../partials/footer") %>
-                <script src="/js/cart/cart.js" defer></script>
+
+            <div class="hero__cta">
+                <% if (cart.hasItems) { %>
+                    <a class="hero__cta-primary" href="/cart/checkout">
+                        Proceed to Checkout →
+                    </a>
+                    <% } %>
+
+                        <a class="hero__cta-ghost" href="/cart/products">
+                            Continue Shopping →
+                        </a>
+            </div>
+        </section>
+
+        <div class="wave">
+            <div class="below">
+                <p class="below__headline"></p>
+            </div>
+
+            <main class="cart-page">
+                <%- include( "../partials/cart/cart-content" , { cart } ) %>
+
+                    <% if (recommendedProducts.length) { %>
+                        <section class="also-like">
+                            <div class="also-like__head">
+                                <div>
+                                    <p class="section-kicker">
+                                        Complete the collection
+                                    </p>
+
+                                    <h2>
+                                        You may also <em>like</em>
+                                    </h2>
+                                </div>
+
+                                <a class="text-cta" href="/cart/products">
+                                    View all pieces <span>→</span>
+                                </a>
+                            </div>
+
+                            <div class="also-like__track">
+                                <% recommendedProducts.forEach((product)=> { %>
+                                    <article class="product-card">
+                                        <a class="product-card__media" href="/cart/products">
+                                            <img src="<%= product.image %>" alt="<%= product.alt || product.name %>">
+
+                                            <span class="product-card__badge">
+                                                <%= product.categoryLabel %>
+                                            </span>
+                                        </a>
+
+                                        <div class="product-card__body">
+                                            <h3>
+                                                <%= product.name %>
+                                            </h3>
+
+                                            <p class="product-card__rating">
+                                                <%= product.ratingStars %>
+                                                    <span>(<%= product.reviewCount %>)</span>
+                                            </p>
+
+                                            <div class="product-card__row">
+                                                <span class="product-card__price">
+                                                    <%= product.priceFormatted %>
+                                                </span>
+
+                                                <form action="/cart/add" method="POST">
+                                                    <input type="hidden" name="productId" value="<%= product.id %>">
+
+                                                    <input type="hidden" name="quantity" value="1">
+
+                                                    <button type="submit" class="product-card__add"
+                                                        aria-label="Add <%= product.name %> to cart">
+                                                        +
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <% }); %>
+                            </div>
+                        </section>
+                        <% } %>
+            </main>
+        </div>
+
+        <%- include("../partials/footer") %>
+
+            <script src="/js/cart/cart.js" defer></script>
+
 </body>
 
 </html>
