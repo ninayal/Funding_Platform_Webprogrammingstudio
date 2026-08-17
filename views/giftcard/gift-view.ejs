@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/giftcard/head") %>
+</head>
+
+<body class="giftcard-page">
+
+    <%- include("../partials/header", { activePage, cartCount }) %>
+
+
+        <main class="giftcard-wave">
+
+            <section class="
+        flow-section
+        flow-section--paper
+      ">
+                <div class="section-shell">
+
+                    <div class="section-heading">
+
+                        <p class="section-kicker">
+                            Impact Gift
+                        </p>
+
+                        <h1>
+                            Your gift has a story.
+                            <em>
+                                Its impact will have one too.
+                            </em>
+                        </h1>
+
+                    </div>
+
+
+                    <div class="gift-view-card">
+
+                        <div class="gift-view-card__main">
+
+                            <p class="gift-view-card__eyebrow">
+                                <%= giftcard.giftType %>
+                            </p>
+
+
+                            <h2>
+                                <%= giftcard.totalDisplay %>
+                            </h2>
+
+
+                            <p>
+                                <strong>
+                                    Gift code:
+                                </strong>
+
+                                <%= giftcard.code %>
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    From:
+                                </strong>
+
+                                <%= giftcard.senderName %>
+                            </p>
+
+
+                            <p>
+                                <strong>
+                                    For:
+                                </strong>
+
+                                <%= giftcard.recipientName %>
+                            </p>
+
+
+                            <blockquote>
+                                “<%= giftcard.message %>”
+                            </blockquote>
+
+                        </div>
+
+
+                        <div class="gift-view-card__status">
+
+                            <span>
+                                Impact status
+                            </span>
+
+                            <strong>
+                                <%= giftcard.status %>
+                            </strong>
+
+
+                            <p>
+                                Created on
+                                <%= new Date( giftcard.createdAt ).toLocaleDateString( "en-AU" ) %>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div style="
+            margin-top: 32px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+          ">
+
+                        <a class="btn btn-cream" href="/giftcard">
+                            Create Another Gift
+                        </a>
+
+
+                        <a class="btn btn-outline" href="/">
+                            Back to Home
+                        </a>
+
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+
+        <%- include("../partials/footer") %>
+
+</body>
+
+</html>

@@ -1,271 +1,380 @@
-<section
-  class="flow-section flow-section--paper"
-  id="details"
->
-  <div class="section-shell">
-    <div class="section-heading">
-      <p class="section-kicker">05 · Personalize</p>
+<% const formErrors=typeof errors !=="undefined" && errors ? errors : {}; %>
 
-      <h2>
-        Make the gift feel <em>like it came from you.</em>
-      </h2>
+  <section class="flow-section flow-section--paper" id="details">
+    <div class="section-shell">
 
-      <p>
-        The fields below adapt to the delivery format selected
-        in Step 2.
-      </p>
-    </div>
+      <div class="section-heading">
+        <p class="section-kicker">
+          05 · Personalize
+        </p>
 
-    <div class="details-layout">
-      <div class="details-form">
-        <div class="common-fields">
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Recipient name</span>
+        <h2>
+          Make the gift feel
+          <em>like it came from you.</em>
+        </h2>
 
-              <input
-                type="text"
-                id="recipient-name"
-                name="recipientName"
-                value="<%= defaults.recipientName %>"
-                placeholder="Minh"
-                minlength="2"
-                maxlength="60"
-                pattern=".*\S.*"
-                title="Enter the recipient's name."
-                required
-              />
-            </label>
-
-            <label class="field">
-              <span>Your name</span>
-
-              <input
-                type="text"
-                id="sender-name"
-                name="senderName"
-                value="<%= defaults.senderName %>"
-                placeholder="Huy"
-                minlength="2"
-                maxlength="60"
-                pattern=".*\S.*"
-                title="Enter your name."
-                autocomplete="name"
-                required
-              />
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Personal message</span>
-
-            <textarea
-              id="gift-message"
-              name="message"
-              rows="6"
-              minlength="5"
-              maxlength="280"
-              placeholder="Write a personal message."
-              required
-            ><%= defaults.message %></textarea>
-          </label>
-        </div>
-
-        <div class="conditional-fields honour-fields">
-          <p class="conditional-title">Donation cause</p>
-
-          <label class="field">
-            <span>Choose a cause</span>
-
-            <select id="cause-category" name="causeCategory">
-              <% causes.forEach((cause) => { %>
-                <option
-                  value="<%= cause.value %>"
-                  <%= cause.value === defaults.causeCategory
-                    ? "selected"
-                    : "" %>
-                >
-                  <%= cause.label %>
-                </option>
-              <% }); %>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Cause note</span>
-
-            <textarea
-              id="cause-note"
-              name="causeNote"
-              rows="4"
-              maxlength="180"
-              placeholder="Optional note about why this cause matters."
-            ></textarea>
-          </label>
-        </div>
-
-        <div class="conditional-fields digital-fields">
-          <p class="conditional-title">
-            Digital delivery details
-          </p>
-
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Recipient email</span>
-              <input
-                type="email"
-                name="recipientEmail"
-                placeholder="minh@example.com"
-              />
-            </label>
-
-            <label class="field">
-              <span>Email delivery</span>
-
-              <select name="emailTiming">
-                <% [
-                  "Send immediately",
-                  "Schedule delivery"
-                ].forEach((option) => { %>
-                  <option
-                    <%= option === defaults.emailTiming
-                      ? "selected"
-                      : "" %>
-                  >
-                    <%= option %>
-                  </option>
-                <% }); %>
-              </select>
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Scheduled delivery date</span>
-            <input type="date" name="emailDeliveryDate" />
-          </label>
-        </div>
-
-        <div class="conditional-fields printable-fields">
-          <p class="conditional-title">
-            Printable card options
-          </p>
-
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Card format</span>
-
-              <select name="printFormat">
-                <% printFormats.forEach((format) => { %>
-                  <option
-                    <%= format === defaults.printFormat
-                      ? "selected"
-                      : "" %>
-                  >
-                    <%= format %>
-                  </option>
-                <% }); %>
-              </select>
-            </label>
-
-            <label class="field">
-              <span>Paper size</span>
-
-              <select name="paperSize">
-                <% paperSizes.forEach((size) => { %>
-                  <option
-                    <%= size === defaults.paperSize
-                      ? "selected"
-                      : "" %>
-                  >
-                    <%= size %>
-                  </option>
-                <% }); %>
-              </select>
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Download format</span>
-
-            <select name="downloadFormat">
-              <option selected>
-                <%= defaults.downloadFormat %>
-              </option>
-            </select>
-          </label>
-        </div>
-
-        <div class="conditional-fields physical-fields">
-          <p class="conditional-title">
-            Physical delivery address
-          </p>
-
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Recipient phone</span>
-              <input
-                type="tel"
-                name="recipientPhone"
-                placeholder="+84..."
-              />
-            </label>
-
-            <label class="field">
-              <span>Preferred delivery date</span>
-              <input
-                type="date"
-                name="physicalDeliveryDate"
-              />
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Street address</span>
-            <input
-              type="text"
-              name="streetAddress"
-              placeholder="123 Example Street"
-            />
-          </label>
-
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Ward / District</span>
-              <input
-                type="text"
-                name="district"
-                placeholder="District"
-              />
-            </label>
-
-            <label class="field">
-              <span>City / Province</span>
-              <input
-                type="text"
-                name="city"
-                placeholder="Ho Chi Minh City"
-              />
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Postal code</span>
-            <input
-              type="text"
-              name="postalCode"
-              placeholder="700000"
-            />
-          </label>
-        </div>
+        <p>
+          The fields below adapt to the delivery format selected
+          in Step 2.
+        </p>
       </div>
 
-      <%- include("gift-preview") %>
-    </div>
 
-    <div class="section-next">
-      <button class="btn btn-primary" type="submit">
-        Review Your Gift
-      </button>
+      <div class="details-layout">
+
+        <div class="details-form">
+
+          <!-- =========================
+             COMMON FIELDS
+        ========================== -->
+
+          <div class="common-fields">
+
+            <div class="form-grid form-grid--two">
+
+              <label class="field">
+                <span>Recipient name</span>
+
+                <input type="text" id="recipient-name" name="recipientName" value="<%= defaults.recipientName || '' %>"
+                  placeholder="Minh" minlength="2" maxlength="60" pattern=".*\S.*" title="Enter the recipient's name."
+                  required />
+
+                <% if (formErrors.recipientName) { %>
+                  <span class="form-error">
+                    <%= formErrors.recipientName %>
+                  </span>
+                  <% } %>
+              </label>
+
+
+              <label class="field">
+                <span>Your name</span>
+
+                <input type="text" id="sender-name" name="senderName" value="<%= defaults.senderName || '' %>"
+                  placeholder="Huy" minlength="2" maxlength="60" pattern=".*\S.*" title="Enter your name."
+                  autocomplete="name" required />
+
+                <% if (formErrors.senderName) { %>
+                  <span class="form-error">
+                    <%= formErrors.senderName %>
+                  </span>
+                  <% } %>
+              </label>
+
+            </div>
+
+
+            <label class="field">
+              <span>Personal message</span>
+
+              <textarea id="gift-message" name="message" rows="6" minlength="5" maxlength="280"
+                placeholder="Write a personal message." required><%= defaults.message || "" %></textarea>
+
+              <% if (formErrors.message) { %>
+                <span class="form-error">
+                  <%= formErrors.message %>
+                </span>
+                <% } %>
+            </label>
+
+          </div>
+
+
+          <!-- =========================
+             DONATION IN HONOUR
+        ========================== -->
+
+          <div class="conditional-fields honour-fields">
+
+            <p class="conditional-title">
+              Donation cause
+            </p>
+
+
+            <label class="field">
+              <span>Choose a cause</span>
+
+              <select id="cause-category" name="causeCategory">
+                <% causes.forEach((cause)=> { %>
+
+                  <option value="<%= cause.value %>" <%=cause.value===defaults.causeCategory ? "selected" : "" %>
+                    >
+                    <%= cause.label %>
+                  </option>
+
+                  <% }); %>
+              </select>
+
+              <% if (formErrors.causeCategory) { %>
+                <span class="form-error">
+                  <%= formErrors.causeCategory %>
+                </span>
+                <% } %>
+            </label>
+
+
+            <label class="field">
+              <span>Cause note</span>
+
+              <textarea id="cause-note" name="causeNote" rows="4" maxlength="180"
+                placeholder="Optional note about why this cause matters."><%= defaults.causeNote || "" %></textarea>
+
+              <% if (formErrors.causeNote) { %>
+                <span class="form-error">
+                  <%= formErrors.causeNote %>
+                </span>
+                <% } %>
+            </label>
+
+          </div>
+
+
+          <!-- =========================
+             DIGITAL ECARD
+        ========================== -->
+
+          <div class="conditional-fields digital-fields">
+
+            <p class="conditional-title">
+              Digital delivery details
+            </p>
+
+
+            <div class="form-grid form-grid--two">
+
+              <label class="field">
+                <span>Recipient email</span>
+
+                <input type="email" name="recipientEmail" value="<%= defaults.recipientEmail || '' %>"
+                  placeholder="minh@example.com" />
+
+                <% if (formErrors.recipientEmail) { %>
+                  <span class="form-error">
+                    <%= formErrors.recipientEmail %>
+                  </span>
+                  <% } %>
+              </label>
+
+
+              <label class="field">
+                <span>Email delivery</span>
+
+                <select name="emailTiming">
+
+                  <% [ "Send immediately" , "Schedule delivery" ].forEach((option)=> { %>
+
+                    <option value="<%= option %>" <%=option===defaults.emailTiming ? "selected" : "" %>
+                      >
+                      <%= option %>
+                    </option>
+
+                    <% }); %>
+
+                </select>
+
+                <% if (formErrors.emailTiming) { %>
+                  <span class="form-error">
+                    <%= formErrors.emailTiming %>
+                  </span>
+                  <% } %>
+              </label>
+
+            </div>
+
+
+            <label class="field">
+              <span>Scheduled delivery date</span>
+
+              <input type="date" name="emailDeliveryDate" value="<%= defaults.emailDeliveryDate || '' %>" />
+
+              <% if (formErrors.emailDeliveryDate) { %>
+                <span class="form-error">
+                  <%= formErrors.emailDeliveryDate %>
+                </span>
+                <% } %>
+            </label>
+
+          </div>
+
+
+          <!-- =========================
+             PRINTABLE
+        ========================== -->
+
+          <div class="conditional-fields printable-fields">
+
+            <p class="conditional-title">
+              Printable card options
+            </p>
+
+
+            <div class="form-grid form-grid--two">
+
+              <label class="field">
+                <span>Card format</span>
+
+                <select name="printFormat">
+
+                  <% printFormats.forEach((format)=> { %>
+
+                    <option value="<%= format %>" <%=format===defaults.printFormat ? "selected" : "" %>
+                      >
+                      <%= format %>
+                    </option>
+
+                    <% }); %>
+
+                </select>
+
+                <% if (formErrors.printFormat) { %>
+                  <span class="form-error">
+                    <%= formErrors.printFormat %>
+                  </span>
+                  <% } %>
+              </label>
+
+
+              <label class="field">
+                <span>Paper size</span>
+
+                <select name="paperSize">
+
+                  <% paperSizes.forEach((size)=> { %>
+
+                    <option value="<%= size %>" <%=size===defaults.paperSize ? "selected" : "" %>
+                      >
+                      <%= size %>
+                    </option>
+
+                    <% }); %>
+
+                </select>
+
+                <% if (formErrors.paperSize) { %>
+                  <span class="form-error">
+                    <%= formErrors.paperSize %>
+                  </span>
+                  <% } %>
+              </label>
+
+            </div>
+
+
+            <label class="field">
+              <span>Download format</span>
+
+              <select name="downloadFormat">
+                <option value="PDF — Print Ready" <%=defaults.downloadFormat==="PDF — Print Ready" ? "selected" : "" %>
+                  >
+                  PDF — Print Ready
+                </option>
+              </select>
+            </label>
+
+          </div>
+
+
+          <!-- =========================
+             PHYSICAL CARD
+        ========================== -->
+
+          <div class="conditional-fields physical-fields">
+
+            <p class="conditional-title">
+              Physical delivery address
+            </p>
+
+
+            <div class="form-grid form-grid--two">
+
+              <label class="field">
+                <span>Recipient phone</span>
+
+                <input type="tel" name="recipientPhone" value="<%= defaults.recipientPhone || '' %>"
+                  placeholder="+84..." />
+
+                <% if (formErrors.recipientPhone) { %>
+                  <span class="form-error">
+                    <%= formErrors.recipientPhone %>
+                  </span>
+                  <% } %>
+              </label>
+
+
+              <label class="field">
+                <span>Preferred delivery date</span>
+
+                <input type="date" name="physicalDeliveryDate" value="<%= defaults.physicalDeliveryDate || '' %>" />
+              </label>
+
+            </div>
+
+
+            <label class="field">
+              <span>Street address</span>
+
+              <input type="text" name="streetAddress" value="<%= defaults.streetAddress || '' %>"
+                placeholder="123 Example Street" />
+
+              <% if (formErrors.streetAddress) { %>
+                <span class="form-error">
+                  <%= formErrors.streetAddress %>
+                </span>
+                <% } %>
+            </label>
+
+
+            <div class="form-grid form-grid--two">
+
+              <label class="field">
+                <span>Ward / District</span>
+
+                <input type="text" name="district" value="<%= defaults.district || '' %>" placeholder="District" />
+
+                <% if (formErrors.district) { %>
+                  <span class="form-error">
+                    <%= formErrors.district %>
+                  </span>
+                  <% } %>
+              </label>
+
+
+              <label class="field">
+                <span>City / Province</span>
+
+                <input type="text" name="city" value="<%= defaults.city || '' %>" placeholder="Ho Chi Minh City" />
+
+                <% if (formErrors.city) { %>
+                  <span class="form-error">
+                    <%= formErrors.city %>
+                  </span>
+                  <% } %>
+              </label>
+
+            </div>
+
+
+            <label class="field">
+              <span>Postal code</span>
+
+              <input type="text" name="postalCode" value="<%= defaults.postalCode || '' %>" placeholder="700000" />
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <%- include("gift-preview") %>
+
+      </div>
+
+
+      <div class="section-next">
+        <button class="btn btn-primary" type="submit">
+          Review Your Gift
+        </button>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>

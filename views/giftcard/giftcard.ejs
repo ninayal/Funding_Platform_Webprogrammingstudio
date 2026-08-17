@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include("../partials/giftcard/head") %>
 </head>
 
 <body class="giftcard-page">
-  <%- include("../partials/header", {
-    activePage,
-    cartCount
-  }) %>
+  <%- include("../partials/header", { activePage, cartCount }) %>
 
-  <%- include("../partials/giftcard/state-controls") %>
-  <%- include("../partials/giftcard/hero") %>
+    <%- include("../partials/giftcard/state-controls") %>
+      <%- include("../partials/giftcard/hero") %>
 
-  <main class="giftcard-wave">
-    <form
-      id="gift-card-form"
-      class="gift-card-form"
-      action="#review"
-      method="get"
-    >
-      <%- include("../partials/giftcard/gift-type-section") %>
-      <%- include("../partials/giftcard/delivery-section") %>
-      <%- include("../partials/giftcard/design-section") %>
-      <%- include("../partials/giftcard/amount-section") %>
-      <%- include("../partials/giftcard/personalize-section") %>
-    </form>
+        <main class="giftcard-wave">
+          <form id="gift-card-form" class="gift-card-form" action="/giftcard/review" method="post">
+            <%- include("../partials/giftcard/gift-type-section") %>
+              <%- include("../partials/giftcard/delivery-section") %>
+                <%- include("../partials/giftcard/design-section") %>
+                  <%- include("../partials/giftcard/amount-section") %>
+                    <%- include("../partials/giftcard/personalize-section") %>
+          </form>
 
-    <%- include("../partials/giftcard/review-section") %>
-    <%- include("../partials/giftcard/redeem-section") %>
-    <%- include("../partials/giftcard/gift-view-section") %>
-  </main>
+          <%- include("../partials/giftcard/review-section") %>
+            <%- include("../partials/giftcard/redeem-section") %>
+              <%- include("../partials/giftcard/gift-view-section") %>
+        </main>
 
-  <%- include("../partials/footer") %>
+        <%- include("../partials/footer") %>
 </body>
+
 </html>
