@@ -10,15 +10,24 @@ const getCurrentUser = (req) =>
 
 const getGiftcardPage = (req, res, next) => {
   try {
-    const pageData = giftcardModel.getGiftcardPageData();
+    const draft =
+      req.session?.giftcardDraft || {};
 
-    res.render("giftcard/giftcard", {
-      ...pageData,
-      errors: {},
-      createdGift: null,
-      redeemedGift: null,
-      redeemError: "",
-    });
+    const pageData =
+      giftcardModel.getGiftcardPageData(
+        draft,
+      );
+
+    return res.render(
+      "giftcard/giftcard",
+      {
+        ...pageData,
+        errors: {},
+        createdGift: null,
+        redeemedGift: null,
+        redeemError: "",
+      },
+    );
   } catch (error) {
     next(error);
   }
@@ -201,7 +210,7 @@ const getEditGiftcardPage = (
     if (
       giftcard.createdByUserId &&
       String(giftcard.createdByUserId) !==
-        String(currentUser.id)
+      String(currentUser.id)
     ) {
       return res
         .status(403)
