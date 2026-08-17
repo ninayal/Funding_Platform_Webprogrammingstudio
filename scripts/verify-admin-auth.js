@@ -17,13 +17,13 @@ const projectRoot = path.join(__dirname, "..");
 const usersFile = path.join(projectRoot, "data", "users.json");
 const backup = fs.readFileSync(usersFile, "utf-8");
 
-const bcrypt = require(path.join(projectRoot, "node_modules", "bcryptjs"));
+const { hashPassword } = require(path.join(projectRoot, "utils", "passwordUtils"));
 
 const TEST_PASSWORD = "Test1234!";
 
 async function main() {
   const users = JSON.parse(backup);
-  const passwordHash = bcrypt.hashSync(TEST_PASSWORD, 10);
+  const passwordHash = hashPassword(TEST_PASSWORD);
 
   users.push(
     {

@@ -3,40 +3,40 @@
     "id": "u1",
     "username": "minhvu123",
     "email": "minhvu12@gmail.com",
-    "passwordHash": "$2b$10$g6lqn.EVALuiD/Y.mDKqK.XS3Lx7Lgzmofg8Dm10ILTRKrr61aKZq",
+    "passwordHash": "scrypt$59f37a699bab82d40c38dd86e9d1384a$96bc498ef3cc959db994e566eec35967318a5bcfcbca1626c328d01a99d99dea000d4552704657481a8a41fc3bb9dc64a9ad593dbe5b814f31584a76ab576a30",
     "role": "user",
     "status": "active",
     "joinDate": "2026-07-13",
-    "requiresPasswordChange": false
+    "requiresPasswordChange": true
   },
   {
     "id": "u2",
     "username": "alex123",
     "email": "alex12@gmail.com",
-    "passwordHash": "$2b$10$RrRz36MQphdIBM6dI2wUBuMeod9qB7AM4ZRZDZCtXDmv66/J6HSNe",
+    "passwordHash": "scrypt$4bd296ce9637f15768fce6819dfe1e3a$fbb9ddecaafade071d9ef4a7a33ae79fb2846ab2b632b0576a4252b5f55a6b8acb89460943e792cc2645b0578df113958814bd67a1f0cb98cc3c68f3bb99a3a7",
     "role": "user",
     "status": "active",
     "joinDate": "2026-07-01",
-    "requiresPasswordChange": false
+    "requiresPasswordChange": true
   },
   {
     "id": "u3",
     "username": "david123",
     "email": "david12@gmail.com",
-    "passwordHash": "$2b$10$RrRz36MQphdIBM6dI2wUBuMeod9qB7AM4ZRZDZCtXDmv66/J6HSNe",
+    "passwordHash": "scrypt$302e754676e48abf7814ea0282357b03$9c88f5c2554b7da3e7c4d210e3e27dda80a0d2865769a2612f89a4ad3bfca6c8dc30135c2aedb8432afdd688f6e868505fc12a7359e7ca5fa84815d828fbc901",
     "role": "user",
     "status": "blocked",
     "joinDate": "2026-07-02",
-    "requiresPasswordChange": false
+    "requiresPasswordChange": true
   },
   {
     "id": "admin1",
     "username": "admin",
     "email": "admin@langandco.com",
-    "passwordHash": "$2b$10$SQxxdeIPmAcqVAuDnYawP.XPKm1TYa7XRjHhYCbwGO/5gWGtjABnC",
+    "passwordHash": "scrypt$b0a5d48916875e185a672e8f1417b336$f733fdbe3cdff039e8355f914136ea1976dbb65809ed2e60304a5faca2f75b40b9999a947ac0466ccba95df2392281c4055b5ec729ea02576db2aca9c45b35df",
     "role": "admin",
     "status": "active",
     "joinDate": "2026-01-01",
-    "requiresPasswordChange": false
+    "requiresPasswordChange": true
   }
 ]
