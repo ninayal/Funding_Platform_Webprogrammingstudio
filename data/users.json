@@ -3,11 +3,11 @@
     "id": "u1",
     "username": "minhvu123",
     "email": "minhvu12@gmail.com",
-    "passwordHash": "scrypt$59f37a699bab82d40c38dd86e9d1384a$96bc498ef3cc959db994e566eec35967318a5bcfcbca1626c328d01a99d99dea000d4552704657481a8a41fc3bb9dc64a9ad593dbe5b814f31584a76ab576a30",
+    "passwordHash": "scrypt$e78f865a7293547cd68fc47511cfb90a$fae913438787e03cfe02c06c24cf2a5c70872db9151908f93c531eee10897e53141b2a005e11c450ea0bae3196fa0dde6910dec6322c3879eaeb2778d1c020a7",
     "role": "user",
     "status": "active",
     "joinDate": "2026-07-13",
-    "requiresPasswordChange": true
+    "requiresPasswordChange": false
   },
   {
     "id": "u2",
@@ -33,10 +33,10 @@
     "id": "admin1",
     "username": "admin",
     "email": "admin@langandco.com",
-    "passwordHash": "scrypt$b0a5d48916875e185a672e8f1417b336$f733fdbe3cdff039e8355f914136ea1976dbb65809ed2e60304a5faca2f75b40b9999a947ac0466ccba95df2392281c4055b5ec729ea02576db2aca9c45b35df",
+    "passwordHash": "scrypt$b0af0d4bc3856c9658ed4dc7445a63a4$7cabf19adefcdde45cd496eb33343238a3356faceb63fa625f16e26ca2d528f66f302fc966c59419c9d3328bfe41cd5ae2cb58d43de74f69b33a5e7c389368a8",
     "role": "admin",
     "status": "active",
     "joinDate": "2026-01-01",
-    "requiresPasswordChange": true
+    "requiresPasswordChange": false
   }
 ]
