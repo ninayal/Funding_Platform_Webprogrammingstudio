@@ -3,10 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#A31D1D">
+
   <title>Làng &amp; Co. — <%= pageTitle %>
   </title>
+
   <link rel="stylesheet" href="/css/landingpage/index.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/cart/checkout.css">
@@ -14,29 +16,219 @@
 </head>
 
 <body>
-  <%- include("../partials/header",{activePage,currentUser,cartCount}) %>
-    <%- include("../partials/checkout/hero") %>
-      <div class="wave">
-        <div class="below">
-          <p class="below__headline"></p>
-        </div>
-        <main class="checkout-page">
-          <%- include("../partials/checkout/shipping-state") %>
-            <div class="checkout-shell">
-              <form class="checkout-form" id="checkout-form-id" action="/cart/checkout" method="POST">
-                <%- include("../partials/checkout/progress") %>
-                  <%- include("../partials/checkout/contact-form",{formData,errors}) %>
-                    <%- include("../partials/checkout/delivery-form",{formData,errors}) %>
-                      <%- include("../partials/checkout/shipping-form",{formData,errors}) %>
-                        <%- include("../partials/checkout/payment-form",{formData,errors}) %>
-                          <%- include("../partials/checkout/gift-note-form",{formData}) %>
-              </form>
-              <%- include("../partials/checkout/order-summary",{cart}) %>
-            </div>
-        </main>
+
+  <%- include("../partials/header", { activePage, currentUser, cartCount }) %>
+
+    <section class="hero">
+      <div class="hero__bg"></div>
+
+      <div class="hero__title">
+        <a class="hero__kicker" href="/cart">
+          Step 2 of 3 · Delivery &amp; Payment
+          <span class="hero__kicker-arrow">→</span>
+        </a>
+
+        <span class="script">Checkout</span>
+        <span class="serif">Almost there — just a few details.</span>
       </div>
-      <%- include("../partials/footer") %>
-        <script src="/js/cart/checkout.js" defer></script>
+
+      <div class="hero__cta">
+        <a class="hero__cta-primary" href="#payment-section">
+          Jump to Payment →
+        </a>
+
+        <a class="hero__cta-ghost" href="/cart">
+          ← Back to Your Bag
+        </a>
+      </div>
+    </section>
+
+    <div class="wave">
+      <div class="below">
+        <p class="below__headline"></p>
+      </div>
+
+      <main class="checkout-page">
+
+        <input class="state-control" type="radio" name="shipping" id="ship-standard" value="standard"
+          form="checkout-form-id" checked>
+
+        <input class="state-control" type="radio" name="shipping" id="ship-express" value="express"
+          form="checkout-form-id">
+
+        <div class="checkout-shell">
+
+          <form class="checkout-form" id="checkout-form-id" action="/cart/checkout" method="POST">
+
+            <ol class="checkout-progress" aria-label="Checkout progress">
+              <li class="is-done">
+                <span>1</span>
+                Bag
+              </li>
+
+              <li class="is-current">
+                <span>2</span>
+                Delivery &amp; Payment
+              </li>
+
+              <li>
+                <span>3</span>
+                Confirmation
+              </li>
+            </ol>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Contact</legend>
+
+              <div class="form-group">
+                <label for="email">Email address</label>
+
+                <input type="email" id="email" name="email" value="<%= formData.email %>" placeholder="you@example.com"
+                  maxlength="100" autocomplete="email" required>
+
+                <% if (errors.email) { %>
+                  <p class="field-error">
+                    <%= errors.email %>
+                  </p>
+                  <% } %>
+              </div>
+
+              <label class="checkbox-row">
+                <input type="checkbox" name="newsletter" <%=formData.newsletter ? "checked" : "" %>
+                >
+
+                <span>
+                  Email me with news, offers and craft stories
+                </span>
+              </label>
+            </fieldset>
+
+            <%- include("../partials/checkout/delivery-form", { formData, errors }) %>
+
+              <fieldset class="checkout-fieldset">
+                <legend>Shipping Method</legend>
+
+                <div class="shipping-options">
+                  <label class="shipping-option" for="ship-standard">
+                    <span class="shipping-option__name">Standard Shipping</span>
+                    <span class="shipping-option__meta">5–7 business days</span>
+                    <span class="shipping-option__price">Free</span>
+                  </label>
+
+                  <label class="shipping-option" for="ship-express">
+                    <span class="shipping-option__name">Express Shipping</span>
+                    <span class="shipping-option__meta">2–3 business days</span>
+                    <span class="shipping-option__price">£12.00</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset" id="payment-section">
+                <legend>Payment</legend>
+
+                <input type="hidden" name="payment_method" value="card">
+
+                <p class="secure-note">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    aria-hidden="true">
+                    <rect x="4" y="10" width="16" height="10" rx="1.5"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                  </svg>
+
+                  Your payment details are encrypted and processed securely.
+                </p>
+
+                <div class="form-group">
+                  <label for="card_name">Name on card</label>
+
+                  <input type="text" id="card_name" name="card_name" value="<%= formData.card_name %>"
+                    placeholder="Full name as shown on card" minlength="2" maxlength="80" autocomplete="cc-name"
+                    required>
+
+                  <% if (errors.card_name) { %>
+                    <p class="field-error">
+                      <%= errors.card_name %>
+                    </p>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                  <label for="card_number">Card number</label>
+
+                  <input type="text" id="card_number" name="card_number" value="<%= formData.card_number %>"
+                    placeholder="1234 1234 1234 1234" inputmode="numeric" pattern="(?:[0-9]{4} ){3}[0-9]{4}|[0-9]{16}"
+                    maxlength="19" autocomplete="cc-number" required>
+
+                  <% if (errors.card_number) { %>
+                    <p class="field-error">
+                      <%= errors.card_number %>
+                    </p>
+                    <% } %>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="card_expiry">Expiry date</label>
+
+                    <input type="text" id="card_expiry" name="card_expiry" value="<%= formData.card_expiry %>"
+                      placeholder="MM / YY" inputmode="numeric" pattern="(0[1-9]|1[0-2])\s?/\s?[0-9]{2}" maxlength="7"
+                      autocomplete="cc-exp" required>
+
+                    <% if (errors.card_expiry) { %>
+                      <p class="field-error">
+                        <%= errors.card_expiry %>
+                      </p>
+                      <% } %>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="card_cvv">Security code</label>
+
+                    <input type="text" id="card_cvv" name="card_cvv" value="<%= formData.card_cvv %>" placeholder="CVV"
+                      inputmode="numeric" pattern="[0-9]{3,4}" maxlength="4" autocomplete="cc-csc" required>
+
+                    <% if (errors.card_cvv) { %>
+                      <p class="field-error">
+                        <%= errors.card_cvv %>
+                      </p>
+                      <% } %>
+                  </div>
+                </div>
+
+                <label class="checkbox-row">
+                  <input type="checkbox" name="billing_same" <%=formData.billing_same===false ? "" : "checked" %>
+                  >
+
+                  <span>Billing address is the same as delivery address</span>
+                </label>
+              </fieldset>
+
+              <fieldset class="checkout-fieldset">
+                <legend>
+                  Gift Note
+                  <span class="optional">(optional)</span>
+                </legend>
+
+                <div class="form-group">
+                  <label for="gift_note">Personal message</label>
+
+                  <textarea id="gift_note" name="gift_note" rows="3"
+                    placeholder="Add a personal message — we'll include it on a hand-stamped card, free of charge."><%= formData.gift_note %></textarea>
+                </div>
+              </fieldset>
+
+          </form>
+
+          <%- include("../partials/checkout/order-summary", { cart }) %>
+
+        </div>
+      </main>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+      <script src="/js/cart/checkout.js" defer></script>
+
 </body>
 
 </html>

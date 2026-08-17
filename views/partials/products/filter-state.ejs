@@ -1,8 +1,0 @@
-<input class="state-control" type="radio" name="category" id="filter-all" checked>
-<% categories.filter(category=>category.id!=="all").forEach(category=>{ %>
-  <input class="state-control" type="radio" name="category" id="filter-<%= category.id %>">
-  <% }) %>
-    <input class="state-control" type="radio" name="sort" id="sort-featured" checked>
-    <input class="state-control" type="radio" name="sort" id="sort-low">
-    <input class="state-control" type="radio" name="sort" id="sort-high">
-    <input class="state-control" type="radio" name="sort" id="sort-name">
