@@ -334,7 +334,7 @@
 }
 
 .btn--outline {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(247, 246, 246, 0.78);
   color: var(--admin-text);
   border-color: rgba(116, 81, 45, 0.18);
 }
@@ -362,6 +362,17 @@
 
 .btn--success:hover {
   background: #175c27;
+}
+
+.btn--primary {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-strong);
+  border-color: rgba(163, 29, 29, 0.35);
+}
+
+.btn--primary:hover {
+  background: rgba(163, 29, 29, 0.18);
+  border-color: rgba(163, 29, 29, 0.5);
 }
 
 .btn--small {
