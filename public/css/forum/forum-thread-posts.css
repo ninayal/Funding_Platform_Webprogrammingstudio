@@ -48,6 +48,15 @@
   color: var(--ink);
 }
 
+.forum-post__username a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.forum-post__username a:hover {
+  text-decoration: underline;
+}
+
 .forum-post__rank {
   color: var(--ink);
   font-family: var(--ff-ui);
@@ -219,33 +228,5 @@
 .vote-btn.is-active {
   background: rgba(163, 29, 29, .12);
   opacity: 1;
-}
-
-.forum-post__reply-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  border: 0;
-  background: transparent;
-  color: var(--darkred);
-  font-family: var(--ff-ui);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color .18s ease;
-}
-
-.forum-post__reply-btn img {
-  width: 13px;
-  height: 13px;
-  opacity: .8;
-}
-
-.forum-post__reply-btn:hover {
-  color: var(--darkred);
 }
 

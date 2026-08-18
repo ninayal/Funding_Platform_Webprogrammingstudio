@@ -3,6 +3,13 @@ const userModel = require("../models/userModel");
 const { requestWantsJson } = require("../middlewares/authMiddleware");
 
 const MAX_CONTENT_LENGTH = 3_000_000;
+const MAX_TITLE_LENGTH = 150;
+const MAX_TEXT_LENGTH = 10_000;
+const SORT_OPTIONS = ["new", "top", "hot"];
+
+const isAdminUser = (user) => userModel.isAdminRole(user?.role);
+
+const plainTextLength = (html) => String(html || "").replace(/<[^>]*>/g, "").trim().length;
 
 const getForumHome = (req, res) => {
   const members = userModel.getAllUsers();
@@ -30,11 +37,14 @@ const getThreadList = (req, res, next) => {
     return next();
   }
 
+  const sortBy = SORT_OPTIONS.includes(req.query.sort) ? req.query.sort : "new";
+
   res.render("forum/thread_list", {
     categoryId,
     categoryLabel: categoryMeta ? categoryMeta.label : "New Posts",
-    threads: forumModel.getThreadsByCategory(categoryId),
+    threads: forumModel.getThreadsByCategory(categoryId, sortBy),
     categories: forumModel.categories,
+    sortBy,
     getLatestPost: forumModel.getLatestPost,
     getRepliesCount: forumModel.getRepliesCount,
   });
@@ -42,7 +52,8 @@ const getThreadList = (req, res, next) => {
 
 const getThreadContent = (req, res, next) => {
   const viewerId = req.currentUser?.id || null;
-  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId);
+  const isAdmin = isAdminUser(req.currentUser);
+  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
 
   if (!thread) {
     return next();
@@ -63,10 +74,22 @@ const getThreadContent = (req, res, next) => {
 
 const searchForum = (req, res) => {
   const query = String(req.query.q || "").trim();
+  const filters = {
+    category: String(req.query.category || "").trim(),
+    tag: String(req.query.tag || "").trim(),
+    author: String(req.query.author || "").trim(),
+    from: String(req.query.from || "").trim(),
+    to: String(req.query.to || "").trim(),
+  };
+
+  const hasFilters = Object.values(filters).some(Boolean);
 
   res.render("forum/search_results", {
     query,
-    results: query ? forumModel.searchThreads(query) : [],
+    filters,
+    categories: forumModel.categories,
+    tags: forumModel.getAllTags(),
+    results: query || hasFilters ? forumModel.searchThreads(query, filters) : [],
     getRepliesCount: forumModel.getRepliesCount,
     getLatestPost: forumModel.getLatestPost,
   });
@@ -75,14 +98,36 @@ const searchForum = (req, res) => {
 const getCreateThreadPage = (req, res) => {
   res.render("forum/Create_thread", {
     categories: forumModel.categories,
+    maxTitleLength: MAX_TITLE_LENGTH,
+    maxTextLength: MAX_TEXT_LENGTH,
+    thread: null,
+  });
+};
+
+const getEditThreadPage = (req, res, next) => {
+  const thread = forumModel.getThreadBySlug(req.params.slug);
+
+  if (!thread || thread.authorId !== req.currentUser.id) {
+    return next();
+  }
+
+  res.render("forum/Create_thread", {
+    categories: forumModel.categories,
+    maxTitleLength: MAX_TITLE_LENGTH,
+    maxTextLength: MAX_TEXT_LENGTH,
+    thread,
   });
 };
 
 const createThread = (req, res) => {
-  const { category, title, content, status } = req.body;
+  const { category, title, content, status, tags } = req.body;
   const categoryMeta = forumModel.getCategoryMeta(category);
 
-  if (String(content || "").length > MAX_CONTENT_LENGTH) {
+  if (
+    String(content || "").length > MAX_CONTENT_LENGTH ||
+    String(title || "").length > MAX_TITLE_LENGTH ||
+    plainTextLength(content) > MAX_TEXT_LENGTH
+  ) {
     return res.redirect("/forum/create");
   }
 
@@ -103,6 +148,7 @@ const createThread = (req, res) => {
     initials: author.initials || "GU",
     rank: "Member",
     status: status === "draft" ? "draft" : "published",
+    tags,
   });
 
   if (thread.status === "draft") {
@@ -112,17 +158,134 @@ const createThread = (req, res) => {
   return res.redirect(`/forum/thread/${thread.slug}`);
 };
 
+const editThread = (req, res) => {
+  const { category, title, content, tags } = req.body;
+
+  if (
+    String(content || "").length > MAX_CONTENT_LENGTH ||
+    String(title || "").length > MAX_TITLE_LENGTH ||
+    plainTextLength(content) > MAX_TEXT_LENGTH
+  ) {
+    return res.redirect(`/forum/thread/${req.params.slug}/edit`);
+  }
+
+  const thread = forumModel.editThread(req.params.slug, req.currentUser.id, {
+    title,
+    category,
+    tags,
+    content,
+  });
+
+  if (!thread) {
+    return res.redirect(`/forum/thread/${req.params.slug}/edit`);
+  }
+
+  return res.redirect(`/forum/thread/${thread.slug}`);
+};
+
+const deleteThread = (req, res) => {
+  const isAdmin = isAdminUser(req.currentUser);
+  const ok = forumModel.deleteThread(req.params.slug, req.currentUser.id, isAdmin);
+
+  if (!ok) {
+    return res.status(403).redirect(`/forum/thread/${req.params.slug}`);
+  }
+
+  return res.redirect("/forum/your-posts");
+};
+
+const getEditPostPage = (req, res, next) => {
+  const found = forumModel.findPost(req.params.slug, req.params.postId);
+
+  if (!found || found.post.authorId !== req.currentUser.id) {
+    return next();
+  }
+
+  res.render("forum/edit_post", {
+    thread: found.thread,
+    post: found.post,
+    maxTextLength: MAX_TEXT_LENGTH,
+  });
+};
+
+const editPost = (req, res) => {
+  const { content } = req.body;
+
+  if (String(content || "").length > MAX_CONTENT_LENGTH || plainTextLength(content) > MAX_TEXT_LENGTH) {
+    return res.redirect(`/forum/thread/${req.params.slug}/post/${req.params.postId}/edit`);
+  }
+
+  const result = forumModel.editPost(req.params.slug, req.params.postId, req.currentUser.id, content);
+
+  if (!result) {
+    return res.redirect(`/forum/thread/${req.params.slug}/post/${req.params.postId}/edit`);
+  }
+
+  return res.redirect(`/forum/thread/${req.params.slug}#post-${req.params.postId}`);
+};
+
+const deletePost = (req, res) => {
+  const isAdmin = isAdminUser(req.currentUser);
+  const found = forumModel.findPost(req.params.slug, req.params.postId);
+  const wasOriginalPost = Boolean(found && found.thread.posts[0].id === req.params.postId);
+
+  const ok = forumModel.deletePost(req.params.slug, req.params.postId, req.currentUser.id, isAdmin);
+
+  if (!ok) {
+    return res.status(403).redirect(`/forum/thread/${req.params.slug}`);
+  }
+
+  if (wasOriginalPost) {
+    return res.redirect("/forum/your-posts");
+  }
+
+  return res.redirect(`/forum/thread/${req.params.slug}`);
+};
+
+const reportPost = (req, res) => {
+  const { reason } = req.body;
+  const result = forumModel.reportPost(req.params.slug, req.params.postId, req.currentUser.id, reason);
+
+  if (!result) {
+    if (requestWantsJson(req)) {
+      return res.status(404).json({ ok: false, message: "Post not found." });
+    }
+    return res.redirect(`/forum/thread/${req.params.slug}`);
+  }
+
+  if (requestWantsJson(req)) {
+    return res.json(result);
+  }
+
+  return res.redirect(`/forum/thread/${req.params.slug}#post-${req.params.postId}`);
+};
+
+const getPostPreview = (req, res) => {
+  const preview = forumModel.getPostPreview(req.params.slug, req.params.postId);
+
+  if (!preview) {
+    return res.status(404).json({ ok: false, message: "Post not found." });
+  }
+
+  return res.json({ ok: true, ...preview });
+};
+
 const replyToThread = (req, res) => {
   const viewerId = req.currentUser?.id || null;
-  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId);
+  const isAdmin = isAdminUser(req.currentUser);
+  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
 
   if (!thread) {
     return res.status(404).redirect("/forum/new-posts");
   }
 
-  const { content } = req.body;
+  if (thread.locked) {
+    return res.redirect(`/forum/thread/${thread.slug}`);
+  }
 
-  if (String(content || "").length > MAX_CONTENT_LENGTH) {
+  const { content, parentPostId } = req.body;
+
+  if (String(content || "").length > MAX_CONTENT_LENGTH || plainTextLength(content) > MAX_TEXT_LENGTH) {
     return res.redirect(`/forum/thread/${thread.slug}`);
   }
 
@@ -140,6 +303,7 @@ const replyToThread = (req, res) => {
     initials: author.initials || "GU",
     rank: "Member",
     content: sanitizedContent,
+    parentPostId: parentPostId || null,
   });
 
   return res.redirect(`/forum/thread/${thread.slug}#post-${result.post.id}`);
@@ -173,6 +337,60 @@ const getBookmarkedPage = (req, res) => {
     bookmarks,
     categories: forumModel.categories,
   });
+};
+
+const getNotificationsPage = (req, res) => {
+  const notifications = forumModel.getNotificationsForUser(req.currentUser.id);
+  forumModel.markAllRead(req.currentUser.id);
+
+  res.render("forum/notifications", { notifications });
+};
+
+const getUserProfilePage = (req, res, next) => {
+  const profileUser = userModel.findById(req.params.userId);
+
+  if (!profileUser) {
+    return next();
+  }
+
+  const isAdmin = isAdminUser(req.currentUser);
+  const viewerId = req.currentUser?.id || null;
+
+  const threads = forumModel.getThreadsByAuthor(profileUser.id).filter((t) => {
+    if (isAdmin || t.authorId === viewerId) {
+      return true;
+    }
+    return t.status !== "draft" && !t.hidden;
+  });
+
+  res.render("forum/user_profile", {
+    profileUser,
+    threads,
+    getRepliesCount: forumModel.getRepliesCount,
+  });
+};
+
+const getAdminModerationPage = (req, res) => {
+  const threads = forumModel.threads
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  res.render("forum/admin_moderation", {
+    threads,
+    categories: forumModel.categories,
+    reports: forumModel.getOpenReports(),
+    getRepliesCount: forumModel.getRepliesCount,
+  });
+};
+
+const moderateThread = (req, res) => {
+  forumModel.moderateThread(req.params.slug, req.params.action);
+  return res.redirect("/forum/admin");
+};
+
+const resolveReport = (req, res) => {
+  forumModel.resolveReport(req.params.id, req.params.status);
+  return res.redirect("/forum/admin");
 };
 
 const respondToReaction = (req, res, result) => {
@@ -210,12 +428,25 @@ module.exports = {
   getThreadList,
   getThreadContent,
   getCreateThreadPage,
+  getEditThreadPage,
   createThread,
+  editThread,
+  deleteThread,
+  getEditPostPage,
+  editPost,
+  deletePost,
+  reportPost,
+  getPostPreview,
   replyToThread,
   searchForum,
   getYourPostsPage,
   publishThread,
   getBookmarkedPage,
+  getNotificationsPage,
+  getUserProfilePage,
+  getAdminModerationPage,
+  moderateThread,
+  resolveReport,
   toggleLike,
   toggleDislike,
   toggleBookmark,

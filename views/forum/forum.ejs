@@ -2,24 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Làng & Co. — Forum</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: "Làng & Co. — Forum" }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
   <div class="wave">
 
@@ -28,21 +16,7 @@
       <span aria-current="page">Forum</span>
     </div>
 
-      <div class="wishlist-header container">
-            <h1>Forum</h1>
-            <p class="wishlist-header__sub">Join the Conversations</p>
-      </div>
-
-    <!-- New Posts / Your Posts / Bookmarked + search -->
-    <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
-      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
-        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
-        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
-      </form>
-    </nav>
+    <%- include("../partials/forum/toolbar") %>
 
     <!-- Forum body: topic list + sidebar -->
     <div class="forum-layout">
@@ -57,11 +31,15 @@
             <div class="topic-card__main">
               <h3 class="topic-card__title"><%= cat.label %></h3>
               <div class="topic-card__meta">Threads: <%= cat.threadCount %> &nbsp;·&nbsp; Views: <%= cat.totalViews %></div>
+              <% if (cat.latestThread) { %>
               <div class="topic-card__latest">
                 <span class="topic-pill"><%= cat.pillLabel %></span>
                 <span class="topic-card__latest-title"><%= cat.latestThread.title %></span>
               </div>
               <div class="topic-card__latest-date"><%= getLatestPost(cat.latestThread).date %> - <%= getLatestPost(cat.latestThread).author %></div>
+              <% } else { %>
+              <p class="forum-empty-message forum-empty-message--inline">No threads yet in this category.</p>
+              <% } %>
             </div>
           </a>
           <% }) %>
@@ -73,6 +51,9 @@
         <div class="sidebar-box">
           <h3 class="sidebar-box__title">Trending Posts</h3>
           <div class="post-mini-list">
+            <% if (trendingThreads.length === 0) { %>
+            <p class="forum-empty-message forum-empty-message--inline">No trending posts yet.</p>
+            <% } %>
             <% trendingThreads.forEach(t => { %>
             <a href="/forum/thread/<%= t.slug %>" class="post-mini">
               <div class="post-mini__avatar"><%= getLatestPost(t).initials %></div>
@@ -87,8 +68,11 @@
         </div>
 
         <div class="sidebar-box">
-          <h3> <a href="/forum/new-posts" class="sidebar-box__title">Lastest Posts</h3>
+          <h3 class="sidebar-box__title"><a href="/forum/new-posts">Lastest Posts</a></h3>
           <div class="post-mini-list">
+            <% if (latestThreads.length === 0) { %>
+            <p class="forum-empty-message forum-empty-message--inline">No posts yet — be the first!</p>
+            <% } %>
             <% latestThreads.forEach(t => { %>
             <a href="/forum/thread/<%= t.slug %>" class="post-mini">
               <div class="post-mini__avatar"><%= getLatestPost(t).initials %></div>

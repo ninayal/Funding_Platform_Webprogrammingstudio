@@ -2,24 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search Forum | Lang & Co.</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: "Search Forum | Lang & Co." }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
@@ -28,20 +16,7 @@
     </div>
 
   <div class="wave">
-      <div class="wishlist-header container">
-            <h1>Forum</h1>
-            <p class="wishlist-header__sub">Join the Conversations</p>
-      </div>
-    <!-- New Posts / Your Posts / Bookmarked + search -->
-    <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
-      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
-        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." value="<%= query %>" autocomplete="off" />
-        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
-      </form>
-    </nav>
+    <%- include("../partials/forum/toolbar", { searchQuery: query }) %>
 
     <div class="new-post-header">
       <h1 class="forum-section-title">
@@ -54,14 +29,52 @@
       <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
     </div>
 
+    <form class="forum-advanced-search" method="GET" action="/forum/search">
+      <input type="hidden" name="q" value="<%= query %>" />
+      <div class="forum-advanced-search__row">
+        <label>
+          Category
+          <select name="category">
+            <option value="">Any category</option>
+            <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>" <%= filters.category === cat.id ? "selected" : "" %>><%= cat.label %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>
+          Tag
+          <select name="tag">
+            <option value="">Any tag</option>
+            <% tags.forEach(tag => { %>
+            <option value="<%= tag %>" <%= filters.tag === tag ? "selected" : "" %>><%= tag %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>
+          Author
+          <input type="text" name="author" value="<%= filters.author %>" placeholder="Author name" />
+        </label>
+        <label>
+          From
+          <input type="date" name="from" value="<%= filters.from %>" />
+        </label>
+        <label>
+          To
+          <input type="date" name="to" value="<%= filters.to %>" />
+        </label>
+        <button type="submit" class="forum-advanced-search__submit">Apply Filters</button>
+      </div>
+    </form>
+
     <div class="forum-container new-post-list">
 
       <!-- Result list -->
       <div class="thread-list">
-        <% if (!query) { %>
-        <p class="forum-empty-message">Type a keyword above to search thread titles and posts.</p>
+        <% const hasCriteria = query || Object.values(filters).some(Boolean); %>
+        <% if (!hasCriteria) { %>
+        <p class="forum-empty-message">Type a keyword or choose a filter above to search thread titles and posts.</p>
         <% } else if (results.length === 0) { %>
-        <p class="forum-empty-message">No threads or posts match "<%= query %>".</p>
+        <p class="forum-empty-message">No threads or posts match your search.</p>
         <% } else { %>
         <% results.forEach(({ thread: t, matchedIn, snippet }) => {
           const repliesCount = getRepliesCount(t);
@@ -73,6 +86,11 @@
             <h3 class="thread-card__title">
               <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
             </h3>
+            <% if (t.tags && t.tags.length > 0) { %>
+            <div class="thread-card__tags">
+              <% t.tags.forEach(tag => { %><a href="/forum/search?tag=<%= encodeURIComponent(tag) %>" class="tag-chip"><%= tag %></a><% }) %>
+            </div>
+            <% } %>
             <div class="thread-card__meta">
               <span class="meta-author"><%= t.posts[0].author %></span>
               <span class="meta-date"><%= t.posts[0].date %></span>

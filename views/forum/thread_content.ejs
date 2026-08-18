@@ -2,24 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thread | Lang & Co.</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: "Thread | Lang & Co." }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
@@ -29,25 +17,58 @@
     </div>
 
   <div class="wave">
-      <div class="wishlist-header container">
-            <h1>Forum</h1>
-            <p class="wishlist-header__sub">Join the Conversations</p>
+    <%- include("../partials/forum/toolbar") %>
+
+    <div class="forum-container thread-content-header">
+      <h1 class="thread-content-title">
+        <% if (thread.pinned) { %><span class="status-pill status-pill--pinned">Pinned</span><% } %>
+        <%= thread.title %>
+      </h1>
+      <div class="thread-content-tools">
+        <% if (thread.tags && thread.tags.length > 0) { %>
+        <div class="thread-content-tags">
+          <% thread.tags.forEach(tag => { %><a href="/forum/search?tag=<%= encodeURIComponent(tag) %>" class="tag-chip"><%= tag %></a><% }) %>
+        </div>
+        <% } %>
+        <div class="forum-post__share-wrap forum-thread-share">
+          <button type="button" class="engage-btn" data-thread-share-toggle aria-label="Share this thread" aria-expanded="false">
+            <img src="/images/forum_icon/shared.png" alt="">
+            <span class="forum-thread-share__label">Share</span>
+          </button>
+          <div class="forum-post__share-panel" data-thread-share-panel hidden>
+            <div class="forum-post__share-socials">
+              <a href="#" class="forum-post__share-icon" data-share-network="facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                <img src="/images/forum_icon/facebook.png" alt="">
+              </a>
+              <a href="#" class="forum-post__share-icon" data-share-network="instagram" aria-label="Share on Instagram">
+                <img src="/images/forum_icon/instagram.png" alt="">
+              </a>
+              <a href="#" class="forum-post__share-icon" data-share-network="twitter" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                <img src="/images/forum_icon/twitter.png" alt="">
+              </a>
+            </div>
+            <p class="forum-post__share-hint">Share this whole thread.</p>
+            <div class="forum-post__share-copy">
+              <input type="text" class="forum-post__share-link" data-share-link readonly aria-label="Link to this thread" />
+              <button type="button" class="forum-post__share-copy-btn" data-share-copy>Copy</button>
+            </div>
+          </div>
+        </div>
       </div>
-    <!-- New Posts / Your Posts / Bookmarked + search -->
-    <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
-      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
-        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
-        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
-      </form>
-    </nav>
-
-
-
-    <div class="forum-container">
-      <h1 class="thread-content-title"><%= thread.title %></h1>
+      <% if (thread.locked) { %>
+      <p class="forum-notice forum-notice--locked">This thread is locked. No new replies are allowed.</p>
+      <% } %>
+      <% if (thread.hidden) { %>
+      <p class="forum-notice forum-notice--hidden">This thread was hidden by a moderator. Only you and moderators can see it.</p>
+      <% } %>
+      <% if (locals.currentUserId && thread.authorId === currentUserId) { %>
+      <div class="thread-content-owner-actions">
+        <a href="/forum/thread/<%= thread.slug %>/edit" class="edit-btn">Edit Thread</a>
+        <form action="/forum/thread/<%= thread.slug %>/delete" method="post" onsubmit="return confirm('Delete this whole thread? This cannot be undone.');">
+          <button type="submit" class="delete-btn">Delete Thread</button>
+        </form>
+      </div>
+      <% } %>
     </div>
 
     <!-- Thread body + sidebar -->
@@ -68,15 +89,41 @@
           <article class="forum-post" id="post-<%= post.id %>">
             <div class="forum-post__sidebar">
               <div class="forum-post__avatar"><%= post.initials %></div>
-              <span class="forum-post__username"><%= post.author %></span>
+              <span class="forum-post__username"><a href="/forum/user/<%= post.authorId %>"><%= post.author %></a></span>
               <span class="forum-post__rank"><%= post.rank %></span>
             </div>
             <div class="forum-post__body">
               <div class="forum-post__header">
-                <span class="forum-post__date"><%= post.date %></span>
+                <span class="forum-post__date">
+                  <%= post.date %>
+                  <% if (post.editedAt) { %><span class="forum-post__edited">(edited)</span><% } %>
+                </span>
                 <div class="forum-post__header-actions">
-                  <button type="button" class="engage-btn" data-action="share" aria-label="Share post">
-                    <img src="/images/forum_icon/shared.png" alt="">
+                  <div class="forum-post__share-wrap">
+                    <button type="button" class="engage-btn" data-share-toggle data-post-id="<%= post.id %>" aria-label="Share post" aria-expanded="false">
+                      <img src="/images/forum_icon/shared.png" alt="">
+                    </button>
+                    <div class="forum-post__share-panel" data-share-panel hidden>
+                      <div class="forum-post__share-socials">
+                        <a href="#" class="forum-post__share-icon" data-share-network="facebook" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">
+                          <img src="/images/forum_icon/facebook.png" alt="">
+                        </a>
+                        <a href="#" class="forum-post__share-icon" data-share-network="instagram" aria-label="Share on Instagram">
+                          <img src="/images/forum_icon/instagram.png" alt="">
+                        </a>
+                        <a href="#" class="forum-post__share-icon" data-share-network="twitter" target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+                          <img src="/images/forum_icon/twitter.png" alt="">
+                        </a>
+                      </div>
+                      <p class="forum-post__share-hint">Paste this link into your reply to embed this post as a quote.</p>
+                      <div class="forum-post__share-copy">
+                        <input type="text" class="forum-post__share-link" data-share-link readonly aria-label="Link to this post" />
+                        <button type="button" class="forum-post__share-copy-btn" data-share-copy>Copy</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="engage-btn" data-report-toggle aria-label="Report post" aria-expanded="false">
+                    <img src="/images/forum_icon/flag.png" alt="">
                   </button>
                   <form class="forum-post__bookmark-form" action="<%= postActionBase %>/bookmark" method="post" data-bookmark-form>
                     <button type="submit" class="forum-post__bookmark<%= post.bookmarkedByCurrentUser ? " is-active" : "" %>" data-bookmark-button aria-label="Bookmark post" aria-pressed="<%= post.bookmarkedByCurrentUser %>">
@@ -86,9 +133,19 @@
                   <span class="forum-post__index">#<%= index + 1 %></span>
                 </div>
               </div>
+              <% if (post.parentPostId) { %>
+              <a href="#post-<%= post.parentPostId %>" class="forum-post__reply-badge">↳ Replying to a post above</a>
+              <% } %>
               <div class="forum-post__content">
                 <%- post.content %>
               </div>
+              <form class="forum-post__report-form" action="<%= postActionBase %>/report" method="post" data-report-form hidden>
+                <label class="forum-post__report-label" for="report-reason-<%= post.id %>">Tell us why you're reporting this post</label>
+                <textarea id="report-reason-<%= post.id %>" name="reason" class="forum-post__report-reason" rows="3" maxlength="500" placeholder="Describe the issue..." required></textarea>
+                <button type="submit" class="forum-post__report-submit" <%= post.reportedByCurrentUser ? "disabled" : "" %>>
+                  <%= post.reportedByCurrentUser ? "Reported" : "Submit Report" %>
+                </button>
+              </form>
               <div class="forum-post__footer">
                 <form class="vote-form" action="<%= postActionBase %>/like" method="post" data-vote-form data-vote-kind="like">
                   <button type="submit" class="vote-btn<%= post.likedByCurrentUser ? " is-active" : "" %>" data-vote-button aria-label="Upvote" aria-pressed="<%= post.likedByCurrentUser %>">
@@ -102,10 +159,12 @@
                   </button>
                   <span class="vote-count" data-vote-count><%= post.dislikeCount %></span>
                 </form>
-                <a href="#newCommentForm" class="forum-post__reply-btn">
-                  <img src="/images/forum_icon/Reply.png" alt="">
-                  Reply
-                </a>
+                <% if (index > 0 && locals.currentUserId && post.authorId === currentUserId) { %>
+                <a href="/forum/thread/<%= thread.slug %>/post/<%= post.id %>/edit" class="edit-btn">Edit</a>
+                <form action="<%= postActionBase %>/delete" method="post" onsubmit="return confirm('Delete this reply?');">
+                  <button type="submit" class="delete-btn">Delete</button>
+                </form>
+                <% } %>
               </div>
             </div>
           </article>
@@ -119,20 +178,23 @@
         </nav>
 
         <!-- Post a reply -->
-        <form class="comment-composer" id="newCommentForm" action="/forum/thread/<%= thread.slug %>/reply" method="POST">
+        <% if (!thread.locked) { %>
+        <form class="comment-composer" id="newCommentForm" action="/forum/thread/<%= thread.slug %>/reply" method="POST" data-reply-form>
           <div class="comment-composer__avatar">YOU</div>
           <div class="comment-form comment-form--rich">
             <%- include("../partials/forum/rich_editor", {
               fieldName: "content",
               placeholder: "Write a reply...",
               editorId: `replyEditor-${thread.slug}`,
-              variant: "compact"
+              variant: "compact",
+              maxTextLength: 10000
             }) %>
             <button type="submit" class="comment-form__send" aria-label="Post reply">
               Post Reply
             </button>
           </div>
         </form>
+        <% } %>
       </div>
 
       <!-- Sidebar -->

@@ -327,6 +327,41 @@ const seedDemoUser = () => {
 
 seedDemoUser();
 
+/*
+ * Temporary forum-moderation test account.
+ * NOTE: feature/admin branch is building its own admin/role infrastructure
+ * (middlewares/requireAdmin.js checks role === "admin", lowercase). This seed
+ * intentionally reuses that exact lowercase value so the two branches agree
+ * on what an "admin" role looks like once merged.
+ */
+const seedForumAdmin = () => {
+  if (findMutableByEmail("admin@langco.example")) {
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  users.push({
+    id: "user-forum-admin",
+    firstname: "Forum",
+    lastname: "Admin",
+    name: "Forum Admin",
+    username: "forumadmin",
+    email: "admin@langco.example",
+    gender: "prefer_not",
+    description: "Forum moderator account (seeded for testing).",
+    initials: "FA",
+    role: "admin",
+    passwordHash: hashPassword("Password123!"),
+    createdAt: now,
+    updatedAt: now,
+  });
+};
+
+seedForumAdmin();
+
+const isAdminRole = (role) => String(role || "").trim().toLowerCase() === "admin";
+
 module.exports = {
   authenticate,
   createUser,
@@ -334,4 +369,5 @@ module.exports = {
   findById,
   getAllUsers,
   toPublicUser,
+  isAdminRole,
 };

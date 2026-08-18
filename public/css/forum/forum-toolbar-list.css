@@ -158,3 +158,119 @@
   max-width: 340px;
   text-align: right;
 }
+
+/* -----------------------------
+   NEW POSTS PAGE (new_post.html)
+------------------------------ */
+.new-post-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(1600px, calc(100% - 48px));
+  margin: 18px auto 0;
+}
+
+.thread-card__title-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.thread-card__title-link:hover {
+  color: var(--red);
+  text-decoration: underline;
+}
+
+.forum-container .thread-list {
+  margin-top: 24px;
+}
+
+.new-post-list {
+  padding-bottom: 92px;
+}
+
+.meta-page {
+  color: var(--ink);
+}
+
+.thread-card__latest-reply {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--ink);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.latest-reply-date {
+  flex: none;
+}
+
+.latest-reply-user {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.thread-card__avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 11px;
+}
+
+/* -----------------------------
+   NOTIFICATIONS BELL + ADMIN TAB
+------------------------------ */
+.forum-toolbar__bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  text-decoration: none;
+  color: var(--brown);
+}
+
+.forum-toolbar__bell-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.forum-toolbar__badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--cream);
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.forum-toolbar__tab--admin {
+  border: 1px solid var(--darkred);
+  color: var(--dark);
+}
+
+.notification-card--unread {
+  background: rgba(175, 143, 111, 0.14);
+  border-left: 3px solid var(--darkred);
+}
+
+.forum-user-profile__bio {
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 16px;
+}

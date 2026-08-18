@@ -2,24 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Posts | Lang & Co.</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: "Your Posts | Lang & Co." }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
@@ -28,20 +16,7 @@
     </div>
 
   <div class="wave">
-      <div class="wishlist-header container">
-            <h1>Forum</h1>
-            <p class="wishlist-header__sub">Join the Conversations</p>
-      </div>
-    <!-- New Posts / Your Posts / Bookmarked + search -->
-    <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab is-active">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
-      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
-        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
-        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
-      </form>
-    </nav>
+    <%- include("../partials/forum/toolbar", { activeTab: "your-posts" }) %>
 
     <div class="new-post-header">
       <h1 class="forum-section-title">Your Posts</h1>
@@ -64,7 +39,7 @@
           <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
           <div class="thread-card__main">
             <h3 class="thread-card__title">
-              <span class="topic-pill"><%= catMeta.pillLabel %></span>
+              <a href="/forum/category/<%= catMeta.id %>" class="topic-pill"><%= catMeta.pillLabel %></a>
               <span class="status-pill status-pill--<%= isDraft ? "draft" : "published" %>"><%= isDraft ? "Draft" : "Published" %></span>
               <% if (isDraft) { %>
               <span class="thread-card__title-link"><%= t.title %></span>
@@ -80,12 +55,20 @@
           <div class="thread-card__stats">
             <span class="stat-pill">Replies: <%= repliesCount %></span>
             <span class="stat-pill">Views: <%= t.views %></span>
+            <% if (t.locked) { %><span class="status-pill status-pill--locked">Locked</span><% } %>
+            <% if (t.hidden) { %><span class="status-pill status-pill--hidden">Hidden by moderator</span><% } %>
           </div>
-          <% if (isDraft) { %>
-          <form class="thread-card__publish-form" action="/forum/thread/<%= t.slug %>/publish" method="post">
-            <button type="submit" class="publish-btn">Publish</button>
-          </form>
-          <% } %>
+          <div class="thread-card__owner-actions">
+            <% if (isDraft) { %>
+            <form class="thread-card__publish-form" action="/forum/thread/<%= t.slug %>/publish" method="post">
+              <button type="submit" class="publish-btn">Publish</button>
+            </form>
+            <% } %>
+            <a href="/forum/thread/<%= t.slug %>/edit" class="edit-btn">Edit</a>
+            <form class="thread-card__delete-form" action="/forum/thread/<%= t.slug %>/delete" method="post" onsubmit="return confirm('Delete this whole thread? This cannot be undone.');">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </div>
         </article>
         <% }) %>
         <% } %>

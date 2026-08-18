@@ -1,0 +1,21 @@
+<div class="wishlist-header container">
+  <h1>Forum</h1>
+  <p class="wishlist-header__sub">Join the Conversations</p>
+</div>
+
+<!-- New Posts / Your Posts / Bookmarked + search -->
+<nav class="forum-toolbar">
+  <a href="/forum/new-posts" class="forum-toolbar__tab<%= (typeof activeTab !== "undefined" && activeTab === "new-posts") ? " is-active" : "" %>">New Posts</a>
+  <a href="/forum/your-posts" class="forum-toolbar__tab<%= (typeof activeTab !== "undefined" && activeTab === "your-posts") ? " is-active" : "" %>">Your Posts</a>
+  <a href="/forum/bookmarked" class="forum-toolbar__tab<%= (typeof activeTab !== "undefined" && activeTab === "bookmarked") ? " is-active" : "" %>">Bookmarked</a>
+  <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
+    <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." value="<%= typeof searchQuery !== "undefined" ? searchQuery : "" %>" autocomplete="off" />
+    <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
+  </form>
+  <a href="/forum/notifications" class="forum-toolbar__bell" aria-label="Notifications">
+    <img src="/images/forum_icon/notification.png" alt="" class="forum-toolbar__bell-icon"><% if (forumUnreadCount > 0) { %><span class="forum-toolbar__badge"><%= forumUnreadCount %></span><% } %>
+  </a>
+  <% if (isForumAdmin) { %>
+  <a href="/forum/admin" class="forum-toolbar__tab forum-toolbar__tab--admin">Moderation</a>
+  <% } %>
+</nav>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Forum Moderation | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Moderation</span>
+    </div>
+
+  <div class="wave">
+    <div class="wishlist-header container">
+      <h1>Forum Moderation</h1>
+      <p class="wishlist-header__sub">Admin-only tools to keep the community tidy</p>
+    </div>
+
+    <div class="forum-container new-post-list admin-moderation">
+
+      <section class="admin-moderation__section">
+        <div class="admin-moderation__section-header">
+          <h2 class="forum-section-title">Open Reports</h2>
+          <span class="stat-pill stat-pill--reported">Open: <%= reports.length %></span>
+        </div>
+
+        <% if (reports.length === 0) { %>
+        <p class="forum-empty-message">No open reports. Nice and quiet.</p>
+        <% } else { %>
+        <div class="admin-report-list">
+          <% reports.forEach(r => { %>
+          <article class="admin-report-card">
+            <div class="admin-report-card__main">
+              <h3 class="thread-card__title">
+                <% if (r.thread) { %>
+                <a href="/forum/thread/<%= r.thread.slug %>#post-<%= r.postId %>" class="thread-card__title-link"><%= r.thread.title %></a>
+                <% } else { %>
+                <span class="thread-card__title-link">(post no longer exists)</span>
+                <% } %>
+              </h3>
+              <div class="admin-report-card__meta">
+                <% if (r.post) { %><span class="meta-author">Reported by post author: <%= r.post.author %></span><% } %>
+                <span class="meta-date">Reported <%= new Date(r.createdAt).toLocaleString() %></span>
+              </div>
+              <blockquote class="admin-report-card__reason">&ldquo;<%= r.reason %>&rdquo;</blockquote>
+              <% if (r.post) { %>
+              <div class="admin-report-card__content"><%- r.post.content %></div>
+              <% } %>
+            </div>
+            <div class="thread-card__owner-actions admin-report-card__actions">
+              <form action="/forum/admin/report/<%= r.id %>/resolved" method="post">
+                <button type="submit" class="publish-btn">Resolve</button>
+              </form>
+              <form action="/forum/admin/report/<%= r.id %>/dismissed" method="post">
+                <button type="submit" class="draft-btn">Dismiss</button>
+              </form>
+            </div>
+          </article>
+          <% }) %>
+        </div>
+        <% } %>
+      </section>
+
+      <section class="admin-moderation__section">
+        <div class="admin-moderation__section-header">
+          <h2 class="forum-section-title">All Threads</h2>
+          <span class="stat-pill">Total: <%= threads.length %></span>
+        </div>
+
+        <div class="thread-list">
+          <% threads.forEach(t => {
+            const catMeta = categories.find(c => c.id === t.category);
+          %>
+          <article class="thread-card thread-card--row admin-thread-row">
+            <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
+            <div class="thread-card__main">
+              <h3 class="thread-card__title">
+                <% if (catMeta) { %><a href="/forum/category/<%= catMeta.id %>" class="topic-pill"><%= catMeta.pillLabel %></a><% } %>
+                <% if (t.pinned) { %><span class="status-pill status-pill--pinned">Pinned</span><% } %>
+                <% if (t.locked) { %><span class="status-pill status-pill--locked">Locked</span><% } %>
+                <% if (t.hidden) { %><span class="status-pill status-pill--hidden">Hidden</span><% } %>
+                <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+              </h3>
+              <div class="thread-card__meta">
+                <span class="meta-author"><%= t.posts[0].author %></span>
+                <span class="meta-date"><%= t.posts[0].date %></span>
+              </div>
+            </div>
+            <div class="thread-card__owner-actions">
+              <form action="/forum/admin/thread/<%= t.slug %>/<%= t.pinned ? "unpin" : "pin" %>" method="post">
+                <button type="submit" class="draft-btn"><%= t.pinned ? "Unpin" : "Pin" %></button>
+              </form>
+              <form action="/forum/admin/thread/<%= t.slug %>/<%= t.locked ? "unlock" : "lock" %>" method="post">
+                <button type="submit" class="draft-btn"><%= t.locked ? "Unlock" : "Lock" %></button>
+              </form>
+              <form action="/forum/admin/thread/<%= t.slug %>/<%= t.hidden ? "unhide" : "hide" %>" method="post">
+                <button type="submit" class="delete-btn"><%= t.hidden ? "Unhide" : "Hide" %></button>
+              </form>
+            </div>
+          </article>
+          <% }) %>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

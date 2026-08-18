@@ -1,30 +1,4 @@
 {
-  "categories": [
-    {
-      "id": "announcement",
-      "label": "Announcement",
-      "icon": "annouce.png",
-      "pillLabel": "Announcement"
-    },
-    {
-      "id": "feedback",
-      "label": "Feedback",
-      "icon": "feedback.png",
-      "pillLabel": "Feedback"
-    },
-    {
-      "id": "qa",
-      "label": "Q&A",
-      "icon": "Question.png",
-      "pillLabel": "Q&A"
-    },
-    {
-      "id": "experience",
-      "label": "Experience Sharing",
-      "icon": "lightbulb.png",
-      "pillLabel": "Sharing"
-    }
-  ],
   "threads": [
     {
       "slug": "community-guidelines",
@@ -44,12 +18,19 @@
           "dislikedBy": [],
           "bookmarkedBy": [
             "user-huy-ba"
-          ]
+          ],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-13T17:00:00.000Z"
+      "createdAt": "2026-07-13T17:00:00.000Z",
+      "tags": [],
+      "pinned": true,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "getting-started",
@@ -69,12 +50,19 @@
             "user-huy-ba"
           ],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-13T17:00:00.000Z"
+      "createdAt": "2026-07-13T17:00:00.000Z",
+      "tags": [],
+      "pinned": true,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "welcome-introductions",
@@ -92,12 +80,19 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-13T17:00:00.000Z"
+      "createdAt": "2026-07-13T17:00:00.000Z",
+      "tags": [],
+      "pinned": true,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "qa-handmade-verification",
@@ -115,7 +110,10 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "artisan_hoa",
@@ -127,12 +125,19 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-17T17:00:00.000Z"
+      "createdAt": "2026-07-17T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "qa-battrang-chudau",
@@ -150,7 +155,10 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "minh_artisan",
@@ -162,12 +170,34 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
+        },
+        {
+          "id": "ab333c42-29ce-48b8-b6ff-e3dc94f1530d",
+          "author": "Forum Admin",
+          "authorId": "user-forum-admin",
+          "initials": "FA",
+          "rank": "Member",
+          "date": "18/08/2026",
+          "content": "http://localhost:3000/forum/thread/qa-battrang-chudau#post-2242d496-bb83-4606-858c-798274cab478<p><br /></p><p><br /></p><p>hay</p>",
+          "editedAt": null,
+          "parentPostId": null,
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": [],
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-14T17:00:00.000Z"
+      "createdAt": "2026-07-14T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "experience-bamboo-tea-set",
@@ -185,7 +215,10 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "khanh_admin",
@@ -197,12 +230,19 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-12T17:00:00.000Z"
+      "createdAt": "2026-07-12T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "experience-dongho-village",
@@ -220,7 +260,10 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "craft_lover_22",
@@ -232,12 +275,19 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-15T17:00:00.000Z"
+      "createdAt": "2026-07-15T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "feedback-checkout-mobile",
@@ -255,7 +305,10 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "linh_nguyen",
@@ -267,12 +320,19 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-12T17:00:00.000Z"
+      "createdAt": "2026-07-12T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     },
     {
       "slug": "feedback-save-for-later",
@@ -290,7 +350,12 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [
+            "user-huy-ba"
+          ],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         },
         {
           "author": "khanh_admin",
@@ -302,116 +367,22 @@
           "authorId": null,
           "likedBy": [],
           "dislikedBy": [],
-          "bookmarkedBy": []
+          "bookmarkedBy": [],
+          "editedAt": null,
+          "parentPostId": null,
+          "reportedBy": []
         }
       ],
       "authorId": null,
       "status": "published",
-      "createdAt": "2026-07-16T17:00:00.000Z"
-    },
-    {
-      "slug": "test-thread",
-      "category": "experience",
-      "title": "TEST THREAD",
-      "views": 0,
-      "authorId": "user-huy-ba",
-      "status": "draft",
-      "createdAt": "2026-08-09T12:40:03.402Z",
-      "posts": [
-        {
-          "id": "6423a7f3-5ea4-4284-81c8-4c602d195738",
-          "author": "Huy Ba",
-          "authorId": "user-huy-ba",
-          "initials": "HB",
-          "rank": "Member",
-          "date": "09/08/2026",
-          "content": "<p>TESTING CONTENT</p>",
-          "likedBy": [],
-          "dislikedBy": [],
-          "bookmarkedBy": []
-        }
-      ]
-    },
-    {
-      "slug": "test-thread-2",
-      "category": "qa",
-      "title": "TEST THREAD 2",
-      "views": 0,
-      "authorId": "user-huy-ba",
-      "status": "published",
-      "createdAt": "2026-08-09T12:40:25.810Z",
-      "posts": [
-        {
-          "id": "0cb3dd63-2a8c-4e1d-b5f8-7b1738d09c3a",
-          "author": "Huy Ba",
-          "authorId": "user-huy-ba",
-          "initials": "HB",
-          "rank": "Member",
-          "date": "09/08/2026",
-          "content": "<p>TEST CONTENT</p>",
-          "likedBy": [],
-          "dislikedBy": [],
-          "bookmarkedBy": []
-        }
-      ]
-    },
-    {
-      "slug": "testing",
-      "category": "qa",
-      "title": "Testing",
-      "views": 0,
-      "authorId": "user-huy-ba",
-      "status": "draft",
-      "createdAt": "2026-08-10T14:23:10.561Z",
-      "posts": [
-        {
-          "id": "9f3ffe32-a625-4674-a92a-a7cda5e39fc0",
-          "author": "Huy Ba",
-          "authorId": "user-huy-ba",
-          "initials": "HB",
-          "rank": "Member",
-          "date": "10/08/2026",
-          "content": "TEsting",
-          "likedBy": [],
-          "dislikedBy": [],
-          "bookmarkedBy": []
-        }
-      ]
-    },
-    {
-      "slug": "testing-3",
-      "category": "experience",
-      "title": "Testing 3",
-      "views": 0,
-      "authorId": "user-huy-ba",
-      "status": "published",
-      "createdAt": "2026-08-10T14:23:33.362Z",
-      "posts": [
-        {
-          "id": "55ec425c-a72b-4d01-999c-30052e11a50f",
-          "author": "Huy Ba",
-          "authorId": "user-huy-ba",
-          "initials": "HB",
-          "rank": "Member",
-          "date": "10/08/2026",
-          "content": "TEsting",
-          "likedBy": [],
-          "dislikedBy": [],
-          "bookmarkedBy": []
-        },
-        {
-          "id": "d3954dcf-7a0e-418a-a8a1-284003eba3b5",
-          "author": "Huy Ba",
-          "authorId": "user-huy-ba",
-          "initials": "HB",
-          "rank": "Member",
-          "date": "10/08/2026",
-          "content": "sadada",
-          "likedBy": [],
-          "dislikedBy": [],
-          "bookmarkedBy": []
-        }
-      ]
+      "createdAt": "2026-07-16T17:00:00.000Z",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false
     }
-  ]
+  ],
+  "deletedThreadSlugs": [],
+  "reports": [],
+  "notifications": []
 }

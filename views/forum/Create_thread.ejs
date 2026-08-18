@@ -2,31 +2,19 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Thread | Lang & Co.</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: `${thread ? "Edit Thread" : "Create Thread"} | Lang & Co.` }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
   <div class="wave">
 
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
       <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
-      <span aria-current="page">Create Thread</span>
+      <span aria-current="page"><%= thread ? "Edit Thread" : "Create Thread" %></span>
     </div>
 
     <div class="wishlist-header container">
@@ -35,36 +23,56 @@
     </div>
 
     <div class="forum-title">
-      <h1>Create Thread</h1>
+      <h1><%= thread ? "Edit Thread" : "Create Thread" %></h1>
     </div>
 
-    <form class="create-thread-form" id="createThreadForm" action="/forum/create" method="POST">
+    <form class="create-thread-form" id="createThreadForm" action="/forum/<%= thread ? `thread/${thread.slug}/edit` : "create" %>" method="POST">
 
-      <input type="text" name="title" class="create-thread-title-input" placeholder="Title" required>
+      <input type="text" name="title" class="create-thread-title-input" placeholder="Title" maxlength="<%= maxTitleLength %>" value="<%= thread ? thread.title : "" %>" required>
+      <span class="create-thread-title-counter" data-title-counter><%= thread ? thread.title.length : 0 %>/<%= maxTitleLength %></span>
 
       <div class="create-thread-topic-row">
         <select name="category" class="create-thread-category-select" required>
-          <option value="" disabled selected>Choose a category</option>
+          <option value="" disabled <%= !thread ? "selected" : "" %>>Choose a category</option>
           <% categories.forEach((cat) => { %>
-          <option value="<%= cat.id %>"><%= cat.label %></option>
+          <option value="<%= cat.id %>" <%= thread && thread.category === cat.id ? "selected" : "" %>><%= cat.label %></option>
           <% }) %>
         </select>
+        <input type="text" name="tags" class="create-thread-tags-input" placeholder="Tags (comma separated)" value="<%= thread && thread.tags ? thread.tags.join(', ') : '' %>">
       </div>
 
       <%- include("../partials/forum/rich_editor", {
         fieldName: "content",
         placeholder: "Content",
         editorId: "createThreadEditor",
-        variant: "full"
+        variant: "full",
+        maxTextLength: maxTextLength,
+        value: thread ? thread.posts[0].content : ""
       }) %>
 
       <div class="create-thread-actions">
-        <a href="/forum" class="draft-btn" id="cancelBtn">Cancel</a>
+        <a href="<%= thread ? `/forum/thread/${thread.slug}` : "/forum" %>" class="draft-btn" id="cancelBtn">Cancel</a>
+        <% if (!thread) { %>
         <button type="submit" name="status" value="draft" class="draft-btn" id="saveDraftBtn">Save Draft</button>
         <button type="submit" name="status" value="published" class="post-btn">Post</button>
+        <% } else { %>
+        <button type="submit" class="post-btn">Save Changes</button>
+        <% } %>
       </div>
 
     </form>
+
+    <script>
+      (function () {
+        var titleInput = document.querySelector(".create-thread-title-input");
+        var counter = document.querySelector("[data-title-counter]");
+        if (titleInput && counter) {
+          titleInput.addEventListener("input", function () {
+            counter.textContent = titleInput.value.length + "/" + titleInput.getAttribute("maxlength");
+          });
+        }
+      })();
+    </script>
 
   </div>
 

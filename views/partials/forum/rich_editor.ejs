@@ -1,4 +1,4 @@
-<div class="rich-editor rich-editor--<%= variant || "full" %>" data-rich-editor>
+<div class="rich-editor rich-editor--<%= variant || "full" %>" data-rich-editor <% if (typeof maxTextLength !== "undefined" && maxTextLength) { %>data-max-text="<%= maxTextLength %>"<% } %>>
   <div class="rich-editor__toolbar" role="toolbar" aria-label="Text formatting">
     <button type="button" class="rich-editor__btn" data-cmd="bold" aria-label="Bold" title="Bold"><b>B</b></button>
     <button type="button" class="rich-editor__btn" data-cmd="italic" aria-label="Italic" title="Italic"><i>I</i></button>
@@ -39,6 +39,8 @@
       </svg>
     </button>
     <input type="file" accept="image/*" class="rich-editor__image-input" data-rich-editor-image-input hidden>
+    <span class="rich-editor__divider" aria-hidden="true"></span>
+    <button type="button" class="rich-editor__btn rich-editor__btn--preview" data-preview-toggle aria-label="Preview" title="Preview">Preview</button>
   </div>
   <div
     class="rich-editor__content"
@@ -49,6 +51,10 @@
     role="textbox"
     aria-multiline="true"
     aria-label="<%= placeholder %>"
-  ></div>
-  <textarea name="<%= fieldName %>" class="rich-editor__hidden-input" data-rich-editor-input hidden></textarea>
+  ><%- typeof value !== "undefined" ? value : "" %></div>
+  <div class="rich-editor__preview" data-rich-editor-preview hidden></div>
+  <textarea name="<%= fieldName %>" class="rich-editor__hidden-input" data-rich-editor-input hidden><%- typeof value !== "undefined" ? value : "" %></textarea>
+  <% if (typeof maxTextLength !== "undefined" && maxTextLength) { %>
+  <span class="rich-editor__counter" data-rich-editor-counter>0/<%= maxTextLength %></span>
+  <% } %>
 </div>

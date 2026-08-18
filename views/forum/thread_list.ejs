@@ -2,24 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= categoryLabel %> | Lang & Co.</title>
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header_v2.css" />
-  <link rel="stylesheet" href="/css/header_mobile.css" />
-  <link rel="stylesheet" href="/css/footer.css" />
-  <link rel="stylesheet" href="/css/forum/forum.css" />
+  <%- include("../partials/forum/head", { pageTitle: `${categoryLabel} | Lang & Co.` }) %>
 </head>
 
 <body>
 
-  <div class="forum-header-desktop">
-    <%- include("../partials/header_v2", { activePage: "forum" }) %>
-  </div>
-  <div class="forum-header-mobile">
-    <%- include("../partials/header_mobile", { activePage: "forum" }) %>
-  </div>
+  <%- include("../partials/forum/header") %>
 
     <div class="forum-breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
@@ -28,24 +16,18 @@
     </div>
 
   <div class="wave">
-      <div class="wishlist-header container">
-            <h1>Forum</h1>
-            <p class="wishlist-header__sub">Join the Conversations</p>
-      </div>
-    <!-- New Posts / Your Posts / Bookmarked + search -->
-    <nav class="forum-toolbar">
-      <a href="/forum/new-posts" class="forum-toolbar__tab<%= categoryId === "all" ? " is-active" : "" %>">New Posts</a>
-      <a href="/forum/your-posts" class="forum-toolbar__tab">Your Posts</a>
-      <a href="/forum/bookmarked" class="forum-toolbar__tab">Bookmarked</a>
-      <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
-        <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." autocomplete="off" />
-        <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
-      </form>
-    </nav>
-
+    <%- include("../partials/forum/toolbar", { activeTab: categoryId === "all" ? "new-posts" : null }) %>
 
     <div class="new-post-header">
       <h1 class="forum-section-title"><%= categoryLabel %></h1>
+      <form class="forum-sort-form" method="GET">
+        <label for="sortSelect" class="forum-sort-form__label">Sort by</label>
+        <select name="sort" id="sortSelect" class="forum-sort-form__select" onchange="this.form.submit()">
+          <option value="new" <%= sortBy === "new" ? "selected" : "" %>>Newest activity</option>
+          <option value="top" <%= sortBy === "top" ? "selected" : "" %>>Top liked</option>
+          <option value="hot" <%= sortBy === "hot" ? "selected" : "" %>>Hot</option>
+        </select>
+      </form>
       <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
     </div>
 
@@ -57,6 +39,9 @@
 
       <!-- Post list -->
       <div class="thread-list">
+        <% if (threads.length === 0) { %>
+        <p class="forum-empty-message">No threads here yet. Be the first to start a conversation.</p>
+        <% } %>
         <% threads.forEach(t => {
           const catMeta = categories.find(c => c.id === t.category);
           const repliesCount = getRepliesCount(t);
@@ -66,11 +51,17 @@
           <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
           <div class="thread-card__main">
             <h3 class="thread-card__title">
-              <span class="topic-pill"><%= catMeta.pillLabel %></span>
+              <% if (t.pinned) { %><span class="status-pill status-pill--pinned">Pinned</span><% } %>
+              <a href="/forum/category/<%= catMeta.id %>" class="topic-pill"><%= catMeta.pillLabel %></a>
               <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
             </h3>
+            <% if (t.tags && t.tags.length > 0) { %>
+            <div class="thread-card__tags">
+              <% t.tags.forEach(tag => { %><a href="/forum/search?tag=<%= encodeURIComponent(tag) %>" class="tag-chip"><%= tag %></a><% }) %>
+            </div>
+            <% } %>
             <div class="thread-card__meta">
-              <span class="meta-author"><%= t.posts[0].author %></span>
+              <span class="meta-author"><a href="/forum/user/<%= t.posts[0].authorId %>"><%= t.posts[0].author %></a></span>
               <span class="meta-date"><%= t.posts[0].date %></span>
               <span class="meta-page">Page: 1</span>
             </div>
