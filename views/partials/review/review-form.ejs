@@ -1,61 +1,24 @@
-<%
-  const reviewerName =
-    typeof currentUser !== "undefined" &&
-    currentUser &&
-    currentUser.name
-      ? currentUser.name
-      : "";
-%>
-<%
-  const existingImages =
-    Array.isArray(
-      formValues.existingImages
-    )
-      ? formValues.existingImages
-      : formValues.existingImage
-        ? [formValues.existingImage]
-        : [];
-
-  const interactiveRatings =
-    Array.isArray(ratingValues)
-      ? [...ratingValues]
-          .map(Number)
-          .sort(
-            (first, second) =>
-              first - second
-          )
-      : [1, 2, 3, 4, 5];
-%>
-
 <form
   class="pr-form"
   id="review-form"
-  action="<%= formMode === 'edit'
-    ? `/products/${productData.slug}/reviews/${editingReviewId}/update`
-    : `/products/${productData.slug}/reviews` %>"
+  action="<%= reviewForm.action %>"
   method="post"
   enctype="multipart/form-data"
-  data-existing-image-count="<%= existingImages.length %>"
+  data-existing-image-count="<%= reviewForm.existingImageCount %>"
   novalidate
 >
   <div class="pr-form__head">
     <div>
       <p class="pr-form__eyebrow">
-        <%= formMode === "edit"
-          ? "Update review"
-          : "Share your experience" %>
+        <%= reviewForm.eyebrow %>
       </p>
 
       <h2 id="review-dialog-title">
-        <%= formMode === "edit"
-          ? "Edit your review"
-          : "Write your review" %>
+        <%= reviewForm.title %>
       </h2>
 
       <p>
-        <%= formMode === "edit"
-          ? "Keep, remove, or add photos before saving."
-          : `Tell other customers what stood out about ${productData.name}.` %>
+        <%= reviewForm.description %>
       </p>
     </div>
 
@@ -78,27 +41,27 @@
     </legend>
 
     <div class="pr-form__rating">
-      <% interactiveRatings.forEach((rating, index) => { %>
+      <% reviewForm.ratingOptions.forEach((rating) => { %>
         <input
           class="pr-rating-input"
           type="radio"
           name="rating"
-          id="rating-<%= rating %>"
-          value="<%= rating %>"
-          aria-label="<%= rating %> out of 5 stars"
-          <%= Number(formValues.rating) === rating
+          id="rating-<%= rating.value %>"
+          value="<%= rating.value %>"
+          aria-label="<%= rating.label %>"
+          <%= rating.checked
             ? "checked"
             : "" %>
-          <%= index === 0
+          <%= rating.required
             ? "required"
             : "" %>
         />
 
         <label
           class="pr-rating-label"
-          for="rating-<%= rating %>"
-          data-form-rating="<%= rating %>"
-          title="<%= rating %> out of 5 stars"
+          for="rating-<%= rating.value %>"
+          data-form-rating="<%= rating.value %>"
+          title="<%= rating.label %>"
         >
           ★
         </label>
@@ -109,7 +72,7 @@
       class="pr-field-error"
       id="rating-error"
     >
-      <%= serverErrors.rating || "" %>
+      <%= reviewForm.errors.rating || "" %>
     </small>
   </fieldset>
 
@@ -126,7 +89,7 @@
         class="pr-input"
         type="text"
         id="review-name"
-        value="<%= reviewerName %>"
+        value="<%= reviewForm.reviewerName %>"
         readonly
       />
 
@@ -148,7 +111,7 @@
         type="text"
         id="review-title"
         name="reviewTitle"
-        value="<%= formValues.reviewTitle || '' %>"
+        value="<%= reviewForm.titleValue %>"
         placeholder="Summarize your experience"
         minlength="4"
         maxlength="80"
@@ -169,7 +132,7 @@
         class="pr-field-error"
         id="review-title-error"
       >
-        <%= serverErrors.reviewTitle || "" %>
+        <%= reviewForm.errors.reviewTitle || "" %>
       </small>
     </div>
   </div>
@@ -195,7 +158,7 @@
         review-content-error
       "
       required
-    ><%= formValues.review || '' %></textarea>
+    ><%= reviewForm.reviewValue %></textarea>
 
     <small
       class="pr-character-count"
@@ -206,7 +169,7 @@
       class="pr-field-error"
       id="review-content-error"
     >
-      <%= serverErrors.review || "" %>
+      <%= reviewForm.errors.review || "" %>
     </small>
   </div>
 
@@ -227,8 +190,7 @@
           review-images-note
           review-images-error
         "
-        <%= formMode === "create" &&
-            existingImages.length === 0
+        <%= reviewForm.imageRequired
           ? "required"
           : "" %>
       />
@@ -259,26 +221,26 @@
         id="review-image-gallery"
         aria-live="polite"
       >
-        <% existingImages.forEach((image, index) => { %>
+        <% reviewForm.existingImages.forEach((image) => { %>
           <article
             class="pr-multi-upload__item"
             data-existing-image
           >
             <img
-              src="<%= image %>"
-              alt="Existing review photo <%= index + 1 %>"
+              src="<%= image.src %>"
+              alt="<%= image.alt %>"
             />
 
             <input
               type="hidden"
               name="keepImageIndexes"
-              value="<%= index %>"
+              value="<%= image.index %>"
             />
 
             <button
               type="button"
               data-remove-existing-image
-              aria-label="Remove existing photo <%= index + 1 %>"
+              aria-label="<%= image.removeLabel %>"
             >
               ×
             </button>
@@ -293,7 +255,7 @@
         <p
           class="pr-multi-upload__empty"
           id="review-image-empty"
-          <%= existingImages.length
+          <%= reviewForm.existingImageCount
             ? "hidden"
             : "" %>
         >
@@ -314,7 +276,7 @@
         class="pr-multi-upload__count"
         id="review-image-count"
       >
-        <%= existingImages.length %>/3 photos
+        <%= reviewForm.existingImageCount %>/3 photos
       </small>
     </div>
 
@@ -322,7 +284,7 @@
       class="pr-field-error"
       id="review-images-error"
     >
-      <%= serverErrors.reviewImages || "" %>
+      <%= reviewForm.errors.reviewImages || "" %>
     </small>
   </div>
 
@@ -332,9 +294,7 @@
       id="review-submit"
       type="submit"
     >
-      <%= formMode === "edit"
-        ? "Save Changes"
-        : "Publish Review" %>
+      <%= reviewForm.submitLabel %>
     </button>
 
     <button
@@ -345,10 +305,10 @@
       Clear Draft
     </button>
 
-    <% if (formMode === "edit") { %>
+    <% if (reviewForm.showCancel) { %>
       <a
         class="pr-secondary-button"
-        href="<%= productData.href %>?tab=review#customer-reviews"
+        href="<%= reviewForm.cancelUrl %>"
       >
         Cancel Edit
       </a>

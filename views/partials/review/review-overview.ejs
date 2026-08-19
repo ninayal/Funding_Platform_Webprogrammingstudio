@@ -1,40 +1,31 @@
-<%
-  const parsedOverallRating =
-    Number(averageRating || 0);
+<div class="pr-hero__intro">
+  <p class="pr-hero__kicker">
+    Customer Reviews
+  </p>
 
-  const overallRating =
-    Math.max(
-      0,
-      Math.min(
-        5,
-        parsedOverallRating
-      )
-    );
+  <h2
+    class="pr-hero__title"
+    id="review-section-title"
+  >
+    Real experiences with
+    <em><%= reviewOverview.productName %></em>
+  </h2>
 
-  const overallPercent =
-    (overallRating / 5) * 100;
+  <p class="pr-hero__desc">
+    Rate the product, describe the details
+    that mattered, and upload 1 to 3 photos
+    of the item you received.
+  </p>
+</div>
 
-  const totalReviewLabel =
-    totalReviews === 1
-      ? "1 review"
-      : `${totalReviews} reviews`;
-
-  const interactiveRatings =
-    Array.isArray(ratingValues)
-      ? [...ratingValues]
-          .map(Number)
-          .sort(
-            (first, second) =>
-              first - second
-          )
-      : [1, 2, 3, 4, 5];
-
-  const safeLoginUrl =
-    typeof loginUrl === "string" &&
-    loginUrl
-      ? loginUrl
-      : "/shared/login";
-%>
+<% if (reviewOverview.pageMessage) { %>
+  <p
+    class="pr-page-message"
+    role="status"
+  >
+    <%= reviewOverview.pageMessage %>
+  </p>
+<% } %>
 
 <section
   class="pr-overview"
@@ -49,7 +40,7 @@
       class="pr-distribution"
       aria-label="Rating distribution"
     >
-      <% ratingBreakdown.forEach((item) => { %>
+      <% reviewOverview.ratingBreakdown.forEach((item) => { %>
         <div class="pr-distribution__row">
           <span class="pr-distribution__stars">
             <%= item.rating %>
@@ -89,13 +80,13 @@
 
     <div
       class="pr-overall-ring"
-      style="--rating-progress: <%= overallPercent %>%"
+      style="--rating-progress: <%= reviewOverview.overallPercent %>%"
       role="img"
-      aria-label="Overall rating <%= overallRating.toFixed(1) %> out of 5"
+      aria-label="Overall rating <%= reviewOverview.overallRating %> out of 5"
     >
       <div class="pr-overall-ring__inner">
         <strong class="pr-overall-ring__score">
-          <%= overallRating.toFixed(1) %>
+          <%= reviewOverview.overallRating %>
         </strong>
 
         <span class="pr-overall-ring__maximum">
@@ -106,7 +97,7 @@
 
     <div
       class="pr-overall-stars"
-      aria-label="<%= overallRating.toFixed(1) %> out of 5 stars"
+      aria-label="<%= reviewOverview.overallRating %> out of 5 stars"
     >
       <span class="pr-overall-stars__base">
         ★★★★★
@@ -114,7 +105,7 @@
 
       <span
         class="pr-overall-stars__fill"
-        style="width: <%= overallPercent %>%"
+        style="width: <%= reviewOverview.overallPercent %>%"
         aria-hidden="true"
       >
         ★★★★★
@@ -122,7 +113,7 @@
     </div>
 
     <p class="pr-overview__review-total">
-      Based on <%= totalReviewLabel %>
+      Based on <%= reviewOverview.totalReviewLabel %>
     </p>
   </div>
 
@@ -138,22 +129,24 @@
       How was your experience?
     </h3>
 
-    <% if (isAuthenticated) { %>
+    <% if (reviewOverview.isAuthenticated) { %>
       <div
         class="pr-rating-launch"
         role="group"
         aria-label="Choose a rating and open the review form"
       >
-        <% interactiveRatings.forEach((rating) => { %>
+        <% reviewOverview.ratingOptions.forEach((rating) => { %>
           <button
             class="pr-rating-launch__star"
             type="button"
             data-open-review
-            data-rating-value="<%= rating %>"
+            data-rating-value="<%= rating.value %>"
             aria-controls="review-composer-panel"
-            aria-expanded="<%= formOpen ? 'true' : 'false' %>"
-            aria-label="<%= rating %> out of 5 stars"
-            title="<%= rating %> out of 5 stars"
+            aria-expanded="<%= reviewOverview.formOpen
+              ? 'true'
+              : 'false' %>"
+            aria-label="<%= rating.label %>"
+            title="<%= rating.label %>"
           >
             ★
           </button>
@@ -170,15 +163,15 @@
         role="group"
         aria-label="Sign in to rate this product"
       >
-        <% interactiveRatings.forEach((rating) => { %>
+        <% reviewOverview.ratingOptions.forEach((rating) => { %>
           <a
             class="
               pr-rating-launch__star
               pr-rating-launch__star--login
             "
-            href="<%= safeLoginUrl %>"
-            data-rating-value="<%= rating %>"
-            aria-label="Sign in to give <%= rating %> out of 5 stars"
+            href="<%= reviewOverview.loginUrl %>"
+            data-rating-value="<%= rating.value %>"
+            aria-label="<%= rating.loginLabel %>"
             title="Sign in to write a review"
           >
             ★
@@ -189,7 +182,7 @@
       <p class="pr-overview__hint pr-overview__hint--login">
         <a
           class="pr-overview__signin-link"
-          href="<%= safeLoginUrl %>"
+          href="<%= reviewOverview.loginUrl %>"
         >
           Sign in
         </a>
