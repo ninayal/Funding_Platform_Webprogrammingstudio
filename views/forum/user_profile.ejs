@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: `${profileUser.name} | Lang & Co.` }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page"><%= profileUser.name %></span>
+    </div>
+
+  <div class="wave">
+    <div class="wishlist-header container">
+      <h1><%= profileUser.name %></h1>
+      <p class="wishlist-header__sub">@<%= profileUser.username %> · <%= profileUser.role %></p>
+    </div>
+
+    <div class="forum-container new-post-list">
+      <% if (profileUser.description) { %>
+      <p class="forum-user-profile__bio"><%= profileUser.description %></p>
+      <% } %>
+
+      <h2 class="forum-section-title">Threads by <%= profileUser.name %></h2>
+
+      <div class="thread-list">
+        <% if (threads.length === 0) { %>
+        <p class="forum-empty-message"><%= profileUser.name %> hasn't posted any threads yet.</p>
+        <% } else { %>
+        <% threads.forEach(t => {
+          const repliesCount = getRepliesCount(t);
+        %>
+        <article class="thread-card thread-card--row">
+          <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
+          <div class="thread-card__main">
+            <h3 class="thread-card__title">
+              <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+            </h3>
+            <div class="thread-card__meta">
+              <span class="meta-date"><%= t.posts[0].date %></span>
+            </div>
+          </div>
+          <div class="thread-card__stats">
+            <span class="stat-pill">Replies: <%= repliesCount %></span>
+            <span class="stat-pill">Views: <%= t.views %></span>
+          </div>
+        </article>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

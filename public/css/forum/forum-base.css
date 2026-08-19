@@ -13,9 +13,14 @@
   --red: #A31D1D;
   --darkred: #6D2323;
 
-  --ff-script: 'Playfair Display', serif;
-  --ff-body: 'DM Sans', sans-serif;
-  --ff-ui: 'DM Sans', sans-serif;
+  /* Only two font families are used on the Forum page */
+  --ff-serif: 'Playfair Display', serif;
+  --ff-sans: 'DM Sans', Arial, Helvetica, sans-serif;
+
+  /* Compatibility aliases for the existing Forum CSS files */
+  --ff-script: var(--ff-serif);
+  --ff-body: var(--ff-serif);
+  --ff-ui: var(--ff-sans);
 
   --paper: var(--cream);
   --surface: rgba(254, 249, 225, 0.88);

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Notifications | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Notifications</span>
+    </div>
+
+  <div class="wave">
+    <%- include("../partials/forum/toolbar") %>
+
+    <div class="new-post-header">
+      <h1 class="forum-section-title">Notifications</h1>
+    </div>
+
+    <div class="forum-container new-post-list">
+      <div class="thread-list">
+        <% if (notifications.length === 0) { %>
+        <p class="forum-empty-message">You have no notifications yet.</p>
+        <% } else { %>
+        <% notifications.forEach(n => { %>
+        <article class="thread-card thread-card--row notification-card<%= n.read ? "" : " notification-card--unread" %>">
+          <div class="thread-card__main">
+            <h3 class="thread-card__title">
+              <% if (n.type === "reply") { %>
+              <span><%= n.actorName %> replied to your thread</span>
+              <% } else if (n.type === "like") { %>
+              <span><%= n.actorName %> liked your post</span>
+              <% } else { %>
+              <span>New activity on your post</span>
+              <% } %>
+            </h3>
+            <div class="thread-card__meta">
+              <span class="meta-date"><%= new Date(n.createdAt).toLocaleString() %></span>
+            </div>
+          </div>
+          <a href="/forum/thread/<%= n.threadSlug %>#post-<%= n.postId %>" class="thread-card__title-link">View</a>
+        </article>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

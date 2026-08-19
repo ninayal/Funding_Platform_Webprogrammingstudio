@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Bookmarked | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Bookmarked</span>
+    </div>
+
+  <div class="wave">
+    <%- include("../partials/forum/toolbar", { activeTab: "bookmarked" }) %>
+
+    <div class="new-post-header">
+      <h1 class="forum-section-title">Bookmarked</h1>
+      <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
+    </div>
+
+    <div class="forum-container new-post-list">
+
+      <!-- Bookmarked posts -->
+      <div class="thread-list">
+        <% if (bookmarks.length === 0) { %>
+        <p class="forum-empty-message">You haven't bookmarked any posts yet.</p>
+        <% } else { %>
+        <% bookmarks.forEach(({ thread: t, post, index, snippet }) => {
+          const catMeta = categories.find(c => c.id === t.category);
+        %>
+        <article class="thread-card thread-card--row">
+          <div class="thread-card__avatar"><%= post.initials %></div>
+          <div class="thread-card__main">
+            <h3 class="thread-card__title">
+              <a href="/forum/category/<%= catMeta.id %>" class="topic-pill"><%= catMeta.pillLabel %></a>
+              <a href="/forum/thread/<%= t.slug %>#post-<%= post.id %>" class="thread-card__title-link"><%= t.title %></a>
+            </h3>
+            <div class="thread-card__meta">
+              <span class="meta-author"><%= post.author %></span>
+              <span class="meta-date"><%= post.date %></span>
+              <span class="meta-page">Post #<%= index + 1 %></span>
+            </div>
+            <p class="thread-card__snippet"><%= snippet %></p>
+          </div>
+          <form action="/forum/thread/<%= t.slug %>/post/<%= post.id %>/bookmark" method="post">
+            <button type="submit" class="forum-post__bookmark is-active" aria-label="Remove bookmark">
+              <img src="/images/forum_icon/bookmark.png" alt="">
+            </button>
+          </form>
+        </article>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

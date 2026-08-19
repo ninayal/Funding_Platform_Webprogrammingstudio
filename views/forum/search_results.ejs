@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Search Forum | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Search</span>
+    </div>
+
+  <div class="wave">
+    <%- include("../partials/forum/toolbar", { searchQuery: query }) %>
+
+    <div class="new-post-header">
+      <h1 class="forum-section-title">
+        <% if (query) { %>
+        Search results for "<%= query %>"
+        <% } else { %>
+        Search the Forum
+        <% } %>
+      </h1>
+      <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
+    </div>
+
+    <form class="forum-advanced-search" method="GET" action="/forum/search">
+      <input type="hidden" name="q" value="<%= query %>" />
+      <div class="forum-advanced-search__row">
+        <label>
+          Category
+          <select name="category">
+            <option value="">Any category</option>
+            <% categories.forEach(cat => { %>
+            <option value="<%= cat.id %>" <%= filters.category === cat.id ? "selected" : "" %>><%= cat.label %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>
+          Tag
+          <select name="tag">
+            <option value="">Any tag</option>
+            <% tags.forEach(tag => { %>
+            <option value="<%= tag %>" <%= filters.tag === tag ? "selected" : "" %>><%= tag %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>
+          Author
+          <input type="text" name="author" value="<%= filters.author %>" placeholder="Author name" />
+        </label>
+        <label>
+          From
+          <input type="date" name="from" value="<%= filters.from %>" />
+        </label>
+        <label>
+          To
+          <input type="date" name="to" value="<%= filters.to %>" />
+        </label>
+        <button type="submit" class="forum-advanced-search__submit">Apply Filters</button>
+      </div>
+    </form>
+
+    <div class="forum-container new-post-list">
+
+      <!-- Result list -->
+      <div class="thread-list">
+        <% const hasCriteria = query || Object.values(filters).some(Boolean); %>
+        <% if (!hasCriteria) { %>
+        <p class="forum-empty-message">Type a keyword or choose a filter above to search thread titles and posts.</p>
+        <% } else if (results.length === 0) { %>
+        <p class="forum-empty-message">No threads or posts match your search.</p>
+        <% } else { %>
+        <% results.forEach(({ thread: t, matchedIn, snippet }) => {
+          const repliesCount = getRepliesCount(t);
+          const latest = getLatestPost(t);
+        %>
+        <article class="thread-card thread-card--row">
+          <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
+          <div class="thread-card__main">
+            <h3 class="thread-card__title">
+              <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+            </h3>
+            <% if (t.tags && t.tags.length > 0) { %>
+            <div class="thread-card__tags">
+              <% t.tags.forEach(tag => { %><a href="/forum/search?tag=<%= encodeURIComponent(tag) %>" class="tag-chip"><%= tag %></a><% }) %>
+            </div>
+            <% } %>
+            <div class="thread-card__meta">
+              <span class="meta-author"><%= t.posts[0].author %></span>
+              <span class="meta-date"><%= t.posts[0].date %></span>
+            </div>
+            <% if (matchedIn === "post" && snippet) { %>
+            <p class="thread-card__snippet"><%= snippet %></p>
+            <% } %>
+          </div>
+          <div class="thread-card__stats">
+            <span class="stat-pill">Replies: <%= repliesCount %></span>
+            <span class="stat-pill">Views: <%= t.views %></span>
+          </div>
+          <div class="thread-card__latest-reply">
+            <span class="latest-reply-date"><%= latest.date %></span>
+            <div class="thread-card__avatar thread-card__avatar--sm"><%= latest.initials %></div>
+            <span class="latest-reply-user"><%= latest.author %></span>
+          </div>
+        </article>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

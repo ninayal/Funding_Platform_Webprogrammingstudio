@@ -1,0 +1,417 @@
+// Static seed data for the forum. This mirrors the original demo content that shipped
+// with the app. Runtime changes (new threads, edits, deletions, reports, notifications)
+// are layered on top of this at startup by models/forumModel.js and persisted separately
+// in data/forum-storage.json, so this file itself is never rewritten by the app.
+
+const categories = [
+  {
+    "id": "announcement",
+    "label": "Announcement",
+    "icon": "annouce.png",
+    "pillLabel": "Announcement"
+  },
+  {
+    "id": "feedback",
+    "label": "Feedback",
+    "icon": "feedback.png",
+    "pillLabel": "Feedback"
+  },
+  {
+    "id": "qa",
+    "label": "Q&A",
+    "icon": "Question.png",
+    "pillLabel": "Q&A"
+  },
+  {
+    "id": "experience",
+    "label": "Experience Sharing",
+    "icon": "lightbulb.png",
+    "pillLabel": "Sharing"
+  }
+];
+
+const threads = [
+  {
+    "slug": "community-guidelines",
+    "category": "announcement",
+    "title": "Community Guidelines - Please Read Before Posting",
+    "views": 24,
+    "posts": [
+      {
+        "author": "Admin",
+        "initials": "AV",
+        "rank": "Member",
+        "date": "14/07/2026",
+        "content": "<p>Welcome to the Làng & Co. community! This is a space for people who care about craft villages, traditional products, and the artisans behind them. To keep things friendly and useful for everyone, please follow these simple rules:</p>\n                  <ol>\n                    <li><b>Be respectful.</b> Disagreements are fine — personal attacks, insults, or harassment are not.</li>\n                    <li><b>Stay on topic.</b> Keep posts relevant to craft village products, artisans, culture, or related discussions.</li>\n                    <li><b>No spam or self-promotion.</b>Don't use threads to advertise unrelated products or services.</li>\n                    <li><b>Give credit where it's due.</b>If you're sharing someone else's photos, stories, or work, credit the source.</li>\n                    <li><b>No harmful or misleading content.</b>This includes hate speech, false information, or anything that could damage the reputation of artisans or the community.</li>\n                    <li><b>Report, don't retaliate.</b>If you see a post that breaks these rules, use the report function instead of responding in kind.</li>\n                  </ol>\n                  <p>Violations may result in a warning, post removal, or account suspension depending on severity.\n                  Thanks for helping keep this community welcoming and genuine</p>",
+        "id": "e7c11d27-584b-45a4-b6d2-293a7bc417b6",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [
+          "user-huy-ba"
+        ],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-13T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "getting-started",
+    "category": "announcement",
+    "title": "Getting Started — How to Use This Forum",
+    "views": 31,
+    "posts": [
+      {
+        "author": "Admin",
+        "initials": "AV",
+        "rank": "Member",
+        "date": "14/07/2026",
+        "content": "<p>New here? Here's a quick guide to get you moving:</p>\n                <p><b>Creating a Post</b><br>Click \"New Thread\" at the top of any category. Give your post a clear title and choose the category that best fits your topic.</p>\n                <p><b>Replying</b><br>Found a thread you want to join? Scroll to the bottom and use the reply box. You can quote a specific comment by clicking \"Quote\" under that post.</p>\n                <p><b>Formatting Your Post</b><br>Our editor supports:</p>\n                <ul>\n                  <li>Bold, italics, and lists</li>\n                  <li>Inserting images (drag &amp; drop or use the image icon)</li>\n                  <li>Adding links to external sources</li>\n                </ul>\n                <p><b>Categories & Tags</b><br>Use tags to help others find your post (e.g., #bamboo-weaving, #question, #showcase). Browse by category from the sidebar.</p>\n                <p><b>Notifications</b><br>Turn on notifications for a thread to get updates when someone replies.</p>\n                <p>If you run into any issues, drop a note in the Feedback thread — we're always improving!</p>",
+        "id": "24b83729-a772-44d8-a364-056a08182e6e",
+        "authorId": null,
+        "likedBy": [
+          "user-huy-ba"
+        ],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-13T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "welcome-introductions",
+    "category": "announcement",
+    "title": "Say Hello! Introduce Yourself Here 👋",
+    "views": 27,
+    "posts": [
+      {
+        "author": "Admin",
+        "initials": "AV",
+        "rank": "Member",
+        "date": "14/07/2026",
+        "content": "<p>We're glad you found your way to Làng &amp; Co.! Whether you're an artisan, a collector, or just curious about craft villages, we'd love to know a bit about you.</p>\n                <p>Tell us:</p>\n                <ul>\n                  <li>Where are you from, and what's your connection to craft villages?</li>\n                  <li>What products or traditions are you most passionate about?</li>\n                  <li>What brought you to this community?</li>\n                </ul>\n                <p>No need to write an essay — a few sentences is plenty. This is just a friendly way to break the ice and get to know the faces (and stories) behind the posts.</p>\n                <p>Looking forward to hearing from you! 🌾</p>",
+        "id": "60c976dd-b451-4cef-ba8c-35ca93b223f6",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-13T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "qa-handmade-verification",
+    "category": "qa",
+    "title": "How do I know if a product is handmade vs. machine-assisted?",
+    "views": 38,
+    "posts": [
+      {
+        "author": "newbie_shopper",
+        "initials": "NS",
+        "rank": "Member",
+        "date": "18/07/2026",
+        "content": "<p>I'm new here and want to make sure I'm buying authentic handmade items. Is there a badge or filter for that, or do I need to check each artisan's profile manually?</p>",
+        "id": "d0de1df8-c184-4cd6-a298-9bb9092c1461",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "artisan_hoa",
+        "initials": "AH",
+        "rank": "Verified Artisan",
+        "date": "19/07/2026",
+        "content": "<p>Look for the \"Handcrafted\" badge on the product gallery — every item with that tag has been verified by our artisan verification team. You can also filter by \"Production Method\" in the Shop sidebar.</p>",
+        "id": "481a794f-d94a-4aa7-92f3-bca1add4b0b3",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-17T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "qa-battrang-chudau",
+    "category": "qa",
+    "title": "What's the difference between the Bát Tràng and Chu Đậu ceramic lines?",
+    "views": 29,
+    "posts": [
+      {
+        "author": "ceramics_fan_88",
+        "initials": "CF",
+        "rank": "Member",
+        "date": "15/07/2026",
+        "content": "<p>Both keep showing up in my recommendations and they look similar to me — can someone explain the difference in style/technique?</p>",
+        "id": "2242d496-bb83-4606-858c-798274cab478",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "minh_artisan",
+        "initials": "MA",
+        "rank": "Member",
+        "date": "16/07/2026",
+        "content": "<p>Bát Tràng tends toward cobalt-blue glazes and thicker stoneware, while Chu Đậu is known for its lighter porcelain and intricate hand-painted florals. Both are centuries-old traditions!</p>",
+        "id": "bd7ce956-72b2-4fb5-ba9e-584b8a15be87",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "id": "ab333c42-29ce-48b8-b6ff-e3dc94f1530d",
+        "author": "Forum Admin",
+        "authorId": "user-forum-admin",
+        "initials": "FA",
+        "rank": "Member",
+        "date": "18/08/2026",
+        "content": "http://localhost:3000/forum/thread/qa-battrang-chudau#post-2242d496-bb83-4606-858c-798274cab478<p><br /></p><p><br /></p><p>hay</p>",
+        "editedAt": null,
+        "parentPostId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-14T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "experience-bamboo-tea-set",
+    "category": "experience",
+    "title": "First-time order review: the bamboo tea set exceeded expectations",
+    "views": 26,
+    "posts": [
+      {
+        "author": "teahouse_ken",
+        "initials": "TK",
+        "rank": "Member",
+        "date": "13/07/2026",
+        "content": "<p>Was a little nervous ordering handmade ceramics online, but the bamboo-handled tea set arrived perfectly packaged and even more beautiful in person. The artisan included a handwritten note about the firing technique used. Highly recommend!</p>",
+        "id": "bcd643bb-12cf-4e5a-8faa-29d3774e04c0",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "khanh_admin",
+        "initials": "KA",
+        "rank": "Moderator",
+        "date": "14/07/2026",
+        "content": "<p>So happy to hear this! We'll pass your kind words along to the artisan. 💛</p>",
+        "id": "c916dc62-26c6-4e67-ab92-52f8d2618b81",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-12T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "experience-dongho-village",
+    "category": "experience",
+    "title": "My visit to the Đông Hồ painting village — and why I bought 5 prints",
+    "views": 33,
+    "posts": [
+      {
+        "author": "wanderlust_anh",
+        "initials": "WA",
+        "rank": "Top Contributor",
+        "date": "16/07/2026",
+        "content": "<p>Just got back from visiting the artisans behind the Đông Hồ woodblock prints featured on this site. Watching them carve and hand-print each layer was incredible. Ended up buying way more than I planned — attaching some photos of the workshop!</p>",
+        "id": "0f18875e-6246-426f-817a-6885a3d60b23",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "craft_lover_22",
+        "initials": "CL",
+        "rank": "Member",
+        "date": "17/07/2026",
+        "content": "<p>This made my day! Adding Đông Hồ village to my travel list now. Thanks for sharing the photos 😍</p>",
+        "id": "b768c652-ba57-4e6d-bd42-c4e5c6a7e173",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-15T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "feedback-checkout-mobile",
+    "category": "feedback",
+    "title": "Checkout page is a bit confusing on mobile",
+    "views": 22,
+    "posts": [
+      {
+        "author": "davidw_collector",
+        "initials": "DW",
+        "rank": "Member",
+        "date": "13/07/2026",
+        "content": "<p>Tried to check out on my phone yesterday and the shipping address fields overlapped with the payment section. Had to switch to desktop to finish my order. Anyone else run into this?</p>",
+        "id": "eb3a131f-21c4-4c13-b15a-72e93174b257",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "linh_nguyen",
+        "initials": "LN",
+        "rank": "Member",
+        "date": "14/07/2026",
+        "content": "<p>Yes! Same issue on my Android. Hoping it gets fixed soon since most of us browse on mobile.</p>",
+        "id": "f53c54a1-4cf6-49f3-be25-53f7dec8e752",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-12T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  },
+  {
+    "slug": "feedback-save-for-later",
+    "category": "feedback",
+    "title": "Suggestion: Add a \"Save for Later\" button on the Shop page",
+    "views": 35,
+    "posts": [
+      {
+        "author": "mai.tran92",
+        "initials": "MT",
+        "rank": "Member",
+        "date": "17/07/2026",
+        "content": "<p>Love browsing the craft village collections, but I keep losing track of items I want to come back to. Could we get a \"Save for Later\" heart icon next to Add to Cart? Would make it so much easier to compare handwoven baskets from different villages before deciding!</p>",
+        "id": "f49d49a2-84e5-4c95-8204-c292ddd77d12",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [
+          "user-huy-ba"
+        ],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      },
+      {
+        "author": "khanh_admin",
+        "initials": "KA",
+        "rank": "Moderator",
+        "date": "18/07/2026",
+        "content": "<p>Great suggestion! We've passed this along to the product team — a wishlist feature is actually already being scoped for next quarter. 🙌</p>",
+        "id": "ca5e455b-5468-4518-aa59-51dd4d8a98f8",
+        "authorId": null,
+        "likedBy": [],
+        "dislikedBy": [],
+        "bookmarkedBy": [],
+        "editedAt": null,
+        "parentPostId": null,
+        "reportedBy": []
+      }
+    ],
+    "authorId": null,
+    "status": "published",
+    "createdAt": "2026-07-16T17:00:00.000Z",
+    "tags": [],
+    "pinned": false,
+    "locked": false,
+    "hidden": false
+  }
+];
+
+module.exports = { categories, threads };

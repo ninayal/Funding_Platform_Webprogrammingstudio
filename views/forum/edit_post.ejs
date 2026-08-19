@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Edit Reply | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+  <div class="wave">
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum/thread/<%= thread.slug %>"><%= thread.title %></a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Edit Reply</span>
+    </div>
+
+    <div class="forum-title">
+      <h1>Edit Reply</h1>
+    </div>
+
+    <form class="create-thread-form" action="/forum/thread/<%= thread.slug %>/post/<%= post.id %>/edit" method="POST">
+
+      <%- include("../partials/forum/rich_editor", {
+        fieldName: "content",
+        placeholder: "Edit your reply...",
+        editorId: `editPostEditor-${post.id}`,
+        variant: "full",
+        maxTextLength: maxTextLength,
+        value: post.content
+      }) %>
+
+      <div class="create-thread-actions">
+        <a href="/forum/thread/<%= thread.slug %>#post-<%= post.id %>" class="draft-btn">Cancel</a>
+        <button type="submit" class="post-btn">Save Changes</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <%- include("../partials/footer") %>
+
+  <script src="/js/forum/rich_editor.js" defer></script>
+
+</body>
+
+</html>

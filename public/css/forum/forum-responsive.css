@@ -15,6 +15,26 @@ svg {
 }
 
 /* -----------------------------
+   HEADER SWAP
+   Forum pages show the pill nav (header_v2) on tablet/desktop and the
+   hamburger nav (header_mobile) on phones, instead of squeezing the pill
+   nav down to unreadable sizes.
+------------------------------ */
+.forum-header-mobile {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .forum-header-desktop {
+    display: none;
+  }
+
+  .forum-header-mobile {
+    display: block;
+  }
+}
+
+/* -----------------------------
    TABLET / SMALL LAPTOP
    1040px and below
 ------------------------------ */
@@ -94,16 +114,14 @@ svg {
     font-size: 11px;
   }
 
-  .forum-toolbar__search {
+  .forum-toolbar__search-form {
     margin-left: 0;
+    width: 100%;
   }
 
-  .topics-block {
-    padding-right: 0;
-  }
-
-  div.topics-block::after {
-    display: none;
+  .forum-toolbar__search-input {
+    flex: 1;
+    max-width: none;
   }
 
   .thread-card {
@@ -146,11 +164,6 @@ svg {
     flex-wrap: wrap;
     border-radius: 22px;
     padding: 12px 16px;
-  }
-
-  .comment-form__input {
-    flex-basis: 100%;
-    order: 1;
   }
 
   .comment-form__send {

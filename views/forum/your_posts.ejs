@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/forum/head", { pageTitle: "Your Posts | Lang & Co." }) %>
+</head>
+
+<body>
+
+  <%- include("../partials/forum/header") %>
+
+    <div class="forum-breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">&bull;</span>
+      <a href="/forum">Forum</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page">Your Posts</span>
+    </div>
+
+  <div class="wave">
+    <%- include("../partials/forum/toolbar", { activeTab: "your-posts" }) %>
+
+    <div class="new-post-header">
+      <h1 class="forum-section-title">Your Posts</h1>
+      <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>
+    </div>
+
+    <div class="forum-container new-post-list">
+
+      <!-- Your threads (published + draft) -->
+      <div class="thread-list">
+        <% if (threads.length === 0) { %>
+        <p class="forum-empty-message">You haven't created any threads yet.</p>
+        <% } else { %>
+        <% threads.forEach(t => {
+          const catMeta = categories.find(c => c.id === t.category);
+          const repliesCount = getRepliesCount(t);
+          const isDraft = t.status === "draft";
+        %>
+        <article class="thread-card thread-card--row">
+          <div class="thread-card__avatar"><%= t.posts[0].initials %></div>
+          <div class="thread-card__main">
+            <h3 class="thread-card__title">
+              <a href="/forum/category/<%= catMeta.id %>" class="topic-pill"><%= catMeta.pillLabel %></a>
+              <span class="status-pill status-pill--<%= isDraft ? "draft" : "published" %>"><%= isDraft ? "Draft" : "Published" %></span>
+              <% if (isDraft) { %>
+              <span class="thread-card__title-link"><%= t.title %></span>
+              <% } else { %>
+              <a href="/forum/thread/<%= t.slug %>" class="thread-card__title-link"><%= t.title %></a>
+              <% } %>
+            </h3>
+            <div class="thread-card__meta">
+              <span class="meta-author"><%= t.posts[0].author %></span>
+              <span class="meta-date"><%= t.posts[0].date %></span>
+            </div>
+          </div>
+          <div class="thread-card__stats">
+            <span class="stat-pill">Replies: <%= repliesCount %></span>
+            <span class="stat-pill">Views: <%= t.views %></span>
+            <% if (t.locked) { %><span class="status-pill status-pill--locked">Locked</span><% } %>
+            <% if (t.hidden) { %><span class="status-pill status-pill--hidden">Hidden by moderator</span><% } %>
+          </div>
+          <div class="thread-card__owner-actions">
+            <% if (isDraft) { %>
+            <form class="thread-card__publish-form" action="/forum/thread/<%= t.slug %>/publish" method="post">
+              <button type="submit" class="publish-btn">Publish</button>
+            </form>
+            <% } %>
+            <a href="/forum/thread/<%= t.slug %>/edit" class="edit-btn">Edit</a>
+            <form class="thread-card__delete-form" action="/forum/thread/<%= t.slug %>/delete" method="post" onsubmit="return confirm('Delete this whole thread? This cannot be undone.');">
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </div>
+        </article>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include("../partials/footer") %>
+
+</body>
+
+</html>

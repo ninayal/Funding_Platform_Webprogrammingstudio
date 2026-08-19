@@ -677,73 +677,49 @@ const updateAccount = (
   ) {
     updatedUser.passwordHash =
       hashPassword(
-        values.newPassword
-      );
-  }
-
-  users[index] =
-    updatedUser;
-
-  writeUsers(users);
-
-  return {
-    ok:
-      true,
-    user:
-      toPublicUser(
-        updatedUser
-      )
-  };
+        "Password123!",
+      ),
+    createdAt: now,
+    updatedAt: now,
+  });
 };
 
-const updatePreferences = (
-  userId,
-  preferences
-) => {
-  const users =
-    readUsers();
+seedDemoUser();
 
-  const index =
-    findIndexById(
-      users,
-      userId
-    );
-
-  if (
-    index === -1
-  ) {
-    return {
-      ok:
-        false,
-      reason:
-        "user-not-found"
-    };
+/*
+ * Temporary forum-moderation test account.
+ * NOTE: feature/admin branch is building its own admin/role infrastructure
+ * (middlewares/requireAdmin.js checks role === "admin", lowercase). This seed
+ * intentionally reuses that exact lowercase value so the two branches agree
+ * on what an "admin" role looks like once merged.
+ */
+const seedForumAdmin = () => {
+  if (findMutableByEmail("admin@langco.example")) {
+    return;
   }
 
-  users[index] = {
-    ...users[index],
+  const now = new Date().toISOString();
 
-    preferences: {
-      ...DEFAULT_PREFERENCES,
-      ...preferences
-    },
-
-    updatedAt:
-      new Date()
-        .toISOString()
-  };
-
-  writeUsers(users);
-
-  return {
-    ok:
-      true,
-    user:
-      toPublicUser(
-        users[index]
-      )
-  };
+  users.push({
+    id: "user-forum-admin",
+    firstname: "Forum",
+    lastname: "Admin",
+    name: "Forum Admin",
+    username: "forumadmin",
+    email: "admin@langco.example",
+    gender: "prefer_not",
+    description: "Forum moderator account (seeded for testing).",
+    initials: "FA",
+    role: "admin",
+    passwordHash: hashPassword("Password123!"),
+    createdAt: now,
+    updatedAt: now,
+  });
 };
+
+seedForumAdmin();
+
+const isAdminRole = (role) => String(role || "").trim().toLowerCase() === "admin";
 
 module.exports = {
   authenticate,
@@ -792,7 +768,6 @@ const updateUser = (id, updates) => {
 
 module.exports = {
   getAllUsers,
-  findUserByEmail,
-  findUserById,
-  updateUser,
+  toPublicUser,
+  isAdminRole,
 };
