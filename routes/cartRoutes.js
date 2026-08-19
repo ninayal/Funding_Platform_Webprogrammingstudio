@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+const { requireAuth } = require("../middlewares/authMiddleware");
+
 const {
     getProductsPage,
     getCartPage,
@@ -10,12 +13,22 @@ const {
     removeCartItem,
     submitCheckout
 } = require("../controllers/cartController");
+
 router.get("/products", getProductsPage);
-router.get("/", getCartPage);
-router.post("/add", addToCart);
-router.post("/update", updateCartItem);
-router.post("/remove", removeCartItem);
-router.get("/checkout", getCheckoutPage);
-router.post("/checkout", submitCheckout);
-router.get("/order-confirmation", getOrderConfirmationPage);
+
+router.get("/", requireAuth, getCartPage);
+
+router.post("/add", requireAuth, addToCart);
+router.post("/update", requireAuth, updateCartItem);
+router.post("/remove", requireAuth, removeCartItem);
+
+router.get("/checkout", requireAuth, getCheckoutPage);
+router.post("/checkout", requireAuth, submitCheckout);
+
+router.get(
+    "/order-confirmation",
+    requireAuth,
+    getOrderConfirmationPage
+);
+
 module.exports = router;
