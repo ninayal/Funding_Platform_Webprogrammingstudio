@@ -1,88 +1,53 @@
+"use strict";
+
 const fs = require("fs");
 const path = require("path");
+
 const userModel = require("../models/userModel");
+const adminProductModel = require("../models/adminProductModel");
 const passwordResetModel = require("../models/passwordResetModel");
-const productModel = require("../models/productModel");
-const { generateTempPassword, hashPassword, verifyPassword } = require("../utils/passwordUtils");
-const { validateProduct } = require("../utils/productValidation");
 
-const getLoginPage = (req, res) => {
-  res.render("shared/login", { error: null });
-};
+const {
+  generateTempPassword,
+  hashPassword,
+} = require("../utils/passwordUtils");
 
-const postLogin = (req, res, next) => {
-  const { email, password } = req.body;
-  const user = email ? userModel.findUserByEmail(email) : null;
+const {
+  validateProduct,
+} = require("../utils/productValidation");
 
-  if (!user || !verifyPassword(password || "", user.passwordHash)) {
-    return res.render("shared/login", { error: "Incorrect email or password." });
-  }
-
-  if (user.status === "blocked") {
-    return res.render("shared/login", { error: "This account has been blocked. Please contact support." });
-  }
-
-  // Regenerate the session id on login (prevents session fixation), matching
-  // the auth flow already in place on main for the login/register routes.
-  return req.session.regenerate((regenerateError) => {
-    if (regenerateError) {
-      return next(regenerateError);
-    }
-
-    req.session.user = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      role: user.role,
-    };
-
-    return req.session.save((saveError) => {
-      if (saveError) {
-        return next(saveError);
-      }
-
-      if (user.requiresPasswordChange) {
-        return res.redirect("/shared/reset-password");
-      }
-
-      return res.redirect(user.role === "admin" ? "/shared/admin" : "/shared/profile");
-    });
-  });
-};
-
-const postLogout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/shared/login");
-  });
-};
-
-const getRegisterPage = (req, res) => {
-  res.render("shared/register");
-};
+const UPLOADS_URL_PREFIX = "/images/uploads/products/";
+const IMAGE_SLOTS = ["image1", "image2", "image3"];
 
 const getForgotPasswordPage = (req, res) => {
-  res.render("shared/forgot_password", { submitted: false });
+  res.render("shared/forgot_password", {
+    submitted: false,
+  });
 };
 
 const postForgotPassword = (req, res) => {
-  const { email } = req.body;
-  const trimmedEmail = (email || "").trim();
+  const email = String(req.body.email || "").trim();
+  const user = email
+    ? userModel.findUserByEmail(email)
+    : null;
 
-  if (trimmedEmail) {
-    const user = userModel.findUserByEmail(trimmedEmail);
-    if (user) {
-      passwordResetModel.createRequest(user.email);
-    }
+  if (user) {
+    passwordResetModel.createRequest(user.email);
   }
 
-  res.render("shared/forgot_password", { submitted: true });
+  res.render("shared/forgot_password", {
+    submitted: true,
+  });
 };
 
 const getResetPasswordPage = (req, res) => {
   if (!req.session.user) {
     return res.redirect("/shared/login");
   }
-  res.render("shared/reset_password", { error: null });
+
+  return res.render("shared/reset_password", {
+    error: null,
+  });
 };
 
 const postResetPassword = (req, res) => {
@@ -90,136 +55,203 @@ const postResetPassword = (req, res) => {
     return res.redirect("/shared/login");
   }
 
-  const { newPassword, confirmNewPassword } = req.body;
+  const {
+    newPassword,
+    confirmNewPassword,
+  } = req.body;
 
   if (!newPassword || newPassword.length < 8) {
-    return res.render("shared/reset_password", { error: "Password must be at least 8 characters long." });
+    return res.render("shared/reset_password", {
+      error: "Password must be at least 8 characters long.",
+    });
   }
 
   if (newPassword !== confirmNewPassword) {
-    return res.render("shared/reset_password", { error: "Passwords do not match." });
+    return res.render("shared/reset_password", {
+      error: "Passwords do not match.",
+    });
   }
 
-  const updatedUser = userModel.updateUser(req.session.user.id, {
-    passwordHash: hashPassword(newPassword),
-    requiresPasswordChange: false,
-  });
+  const user = userModel.updateUser(
+    req.session.user.id,
+    {
+      passwordHash: hashPassword(newPassword),
+      requiresPasswordChange: false,
+    },
+  );
 
-  if (!updatedUser) {
+  if (!user) {
     return res.redirect("/shared/login");
   }
 
-  res.redirect(updatedUser.role === "admin" ? "/shared/admin" : "/shared/profile");
-};
-
-const getProfilePage = (req, res) => {
-  res.render("shared/profile");
+  return res.redirect(
+    user.role === "admin"
+      ? "/shared/admin"
+      : "/shared/profile",
+  );
 };
 
 const getAdminPage = (req, res) => {
-  const products = productModel.getAllProducts();
+  const products =
+    adminProductModel.getAllProducts();
 
   res.render("shared/admin/admin", {
-    pendingRequests: passwordResetModel.getPendingRequests(),
-    resolvedRequests: passwordResetModel.getResolvedRequests(),
+    pendingRequests:
+      passwordResetModel.getPendingRequests(),
+
+    resolvedRequests:
+      passwordResetModel.getResolvedRequests(),
+
     products,
+
     productStats: {
       total: products.length,
-      published: products.filter((product) => product.status === "published").length,
-      hidden: products.filter((product) => product.status === "hidden").length,
+
+      published: products.filter(
+        (product) =>
+          product.status === "published",
+      ).length,
+
+      hidden: products.filter(
+        (product) =>
+          product.status === "hidden",
+      ).length,
     },
-    categories: productModel.CATEGORIES,
-    activeTab: req.query.tab || "users",
-    productNotice: req.query.notice || null,
+
+    categories:
+      adminProductModel.CATEGORIES,
+
+    activeTab:
+      req.query.tab || "users",
+
+    productNotice:
+      req.query.notice || null,
   });
 };
 
-const buildProductsRedirect = (warnings) => {
-  if (warnings && warnings.length > 0) {
-    return `/shared/admin?tab=products&notice=${encodeURIComponent(warnings.join(" "))}`;
+const buildProductsRedirect = (warnings = []) => {
+  if (!warnings.length) {
+    return "/shared/admin?tab=products";
   }
-  return "/shared/admin?tab=products";
+
+  return (
+    "/shared/admin?tab=products&notice=" +
+    encodeURIComponent(warnings.join(" "))
+  );
 };
 
 const productFieldsFromBody = (body) => ({
-  title: (body.title || "").trim(),
+  title: String(body.title || "").trim(),
   category: body.category || "",
-  description: (body.description || "").trim(),
+  description: String(body.description || "").trim(),
   price: body.price,
   weightGram: body.weightGram,
   stock: body.stock,
 });
 
-const UPLOADS_URL_PREFIX = "/images/uploads/products/";
-const IMAGE_SLOTS = ["image1", "image2", "image3"];
+const buildImagePaths = (
+  existingImages = [],
+  files = {},
+) =>
+  IMAGE_SLOTS.map((slot, index) => {
+    const uploaded = files?.[slot]?.[0];
 
-// Fills each of the 3 image slots from a newly uploaded file, falling back to
-// the product's existing image (edit) or blank (create) when no file was chosen.
-const buildImagePaths = (existingImages, files) => {
-  return IMAGE_SLOTS.map((slot, index) => {
-    const uploaded = files && files[slot] && files[slot][0];
-    if (uploaded) {
-      return `${UPLOADS_URL_PREFIX}${uploaded.filename}`;
-    }
-    return (existingImages && existingImages[index]) || "";
+    return uploaded
+      ? `${UPLOADS_URL_PREFIX}${uploaded.filename}`
+      : existingImages[index] || "";
   });
-};
 
-// Only ever deletes files this app uploaded itself, never the seeded /images/landingpics assets.
 const deleteManagedImage = (imagePath) => {
-  if (!imagePath || !imagePath.startsWith(UPLOADS_URL_PREFIX)) {
+  if (
+    !imagePath ||
+    !imagePath.startsWith(UPLOADS_URL_PREFIX)
+  ) {
     return;
   }
-  const absolutePath = path.join(__dirname, "..", "public", imagePath);
-  fs.unlink(absolutePath, () => {});
+
+  const filePath = path.join(
+    __dirname,
+    "..",
+    "public",
+    imagePath,
+  );
+
+  fs.unlink(filePath, () => { });
 };
 
-const deleteUploadedFiles = (files) => {
+const deleteUploadedFiles = (files = {}) => {
   IMAGE_SLOTS.forEach((slot) => {
-    const uploaded = files && files[slot] && files[slot][0];
+    const uploaded = files?.[slot]?.[0];
+
     if (uploaded) {
-      deleteManagedImage(`${UPLOADS_URL_PREFIX}${uploaded.filename}`);
+      deleteManagedImage(
+        `${UPLOADS_URL_PREFIX}${uploaded.filename}`,
+      );
     }
   });
 };
 
 const getProductFormPage = (req, res) => {
-  const { id } = req.params;
-  const product = id ? productModel.findProductById(id) : null;
+  const product = req.params.id
+    ? adminProductModel.findProductById(
+      req.params.id,
+    )
+    : null;
 
-  if (id && !product) {
-    return res.redirect("/shared/admin?tab=products");
+  if (req.params.id && !product) {
+    return res.redirect(
+      "/shared/admin?tab=products",
+    );
   }
 
-  res.render("shared/admin/product_form", {
-    product,
-    categories: productModel.CATEGORIES,
-    errors: [],
-    warnings: [],
-    formValues: null,
-  });
+  return res.render(
+    "shared/admin/product_form",
+    {
+      product,
+      categories:
+        adminProductModel.CATEGORIES,
+      errors: [],
+      warnings: [],
+      formValues: null,
+    },
+  );
 };
 
 const postCreateProduct = (req, res) => {
-  const images = buildImagePaths([], req.files);
-  const fields = { ...productFieldsFromBody(req.body), images };
-  const { errors, warnings } = validateProduct(fields);
+  const images =
+    buildImagePaths([], req.files);
+
+  const fields = {
+    ...productFieldsFromBody(req.body),
+    images,
+  };
+
+  const {
+    errors,
+    warnings,
+  } = validateProduct(fields);
+
   if (req.uploadError) {
     errors.unshift(req.uploadError);
   }
 
-  if (errors.length > 0) {
+  if (errors.length) {
     deleteUploadedFiles(req.files);
-    return res.render("shared/admin/product_form", {
-      product: null,
-      categories: productModel.CATEGORIES,
-      errors,
-      warnings,
-      formValues: req.body,
-    });
+
+    return res.render(
+      "shared/admin/product_form",
+      {
+        product: null,
+        categories:
+          adminProductModel.CATEGORIES,
+        errors,
+        warnings,
+        formValues: req.body,
+      },
+    );
   }
 
-  productModel.createProduct({
+  adminProductModel.createProduct({
     title: fields.title,
     category: fields.category,
     description: fields.description,
@@ -227,47 +259,78 @@ const postCreateProduct = (req, res) => {
     price: Number(fields.price),
     weightGram: Number(fields.weightGram),
     stock: Number(fields.stock),
-    status: req.body.action === "publish" ? "published" : "hidden",
+    status:
+      req.body.action === "publish"
+        ? "published"
+        : "hidden",
   });
 
-  res.redirect(buildProductsRedirect(warnings));
+  return res.redirect(
+    buildProductsRedirect(warnings),
+  );
 };
 
 const postUpdateProduct = (req, res) => {
   const { id } = req.params;
-  const existing = productModel.findProductById(id);
+
+  const existing =
+    adminProductModel.findProductById(id);
 
   if (!existing) {
     deleteUploadedFiles(req.files);
-    return res.redirect("/shared/admin?tab=products");
+
+    return res.redirect(
+      "/shared/admin?tab=products",
+    );
   }
 
-  const images = buildImagePaths(existing.images, req.files);
-  const fields = { ...productFieldsFromBody(req.body), images };
-  const { errors, warnings } = validateProduct(fields);
+  const images = buildImagePaths(
+    existing.images,
+    req.files,
+  );
+
+  const fields = {
+    ...productFieldsFromBody(req.body),
+    images,
+  };
+
+  const {
+    errors,
+    warnings,
+  } = validateProduct(fields);
+
   if (req.uploadError) {
     errors.unshift(req.uploadError);
   }
 
-  if (errors.length > 0) {
+  if (errors.length) {
     deleteUploadedFiles(req.files);
-    return res.render("shared/admin/product_form", {
-      product: existing,
-      categories: productModel.CATEGORIES,
-      errors,
-      warnings,
-      formValues: req.body,
-    });
+
+    return res.render(
+      "shared/admin/product_form",
+      {
+        product: existing,
+        categories:
+          adminProductModel.CATEGORIES,
+        errors,
+        warnings,
+        formValues: req.body,
+      },
+    );
   }
 
-  // Replaced images are gone for good — clean up the old uploaded files (seeded assets are skipped).
-  existing.images.forEach((oldImage, index) => {
-    if (oldImage && oldImage !== images[index]) {
-      deleteManagedImage(oldImage);
-    }
-  });
+  existing.images.forEach(
+    (oldImage, index) => {
+      if (
+        oldImage &&
+        oldImage !== images[index]
+      ) {
+        deleteManagedImage(oldImage);
+      }
+    },
+  );
 
-  productModel.updateProduct(id, {
+  adminProductModel.updateProduct(id, {
     title: fields.title,
     category: fields.category,
     description: fields.description,
@@ -275,60 +338,109 @@ const postUpdateProduct = (req, res) => {
     price: Number(fields.price),
     weightGram: Number(fields.weightGram),
     stock: Number(fields.stock),
-    status: req.body.action === "publish" ? "published" : "hidden",
+    status:
+      req.body.action === "publish"
+        ? "published"
+        : "hidden",
   });
 
-  res.redirect(buildProductsRedirect(warnings));
+  return res.redirect(
+    buildProductsRedirect(warnings),
+  );
 };
 
 const postToggleProductStatus = (req, res) => {
-  const { id } = req.params;
-  const product = productModel.findProductById(id);
+  const product =
+    adminProductModel.findProductById(
+      req.params.id,
+    );
 
   if (product) {
-    productModel.updateProduct(id, {
-      status: product.status === "published" ? "hidden" : "published",
-    });
+    adminProductModel.updateProduct(
+      product.id,
+      {
+        status:
+          product.status === "published"
+            ? "hidden"
+            : "published",
+      },
+    );
   }
 
-  res.redirect("/shared/admin?tab=products");
+  return res.redirect(
+    "/shared/admin?tab=products",
+  );
 };
 
 const postDeleteProduct = (req, res) => {
-  const { id } = req.params;
-  const deleted = productModel.deleteProduct(id);
-  if (deleted) {
-    (deleted.images || []).forEach(deleteManagedImage);
+  const product =
+    adminProductModel.deleteProduct(
+      req.params.id,
+    );
+
+  if (product) {
+    (product.images || []).forEach(
+      deleteManagedImage,
+    );
   }
-  res.redirect("/shared/admin?tab=products");
+
+  return res.redirect(
+    "/shared/admin?tab=products",
+  );
 };
 
-const postResolvePasswordReset = (req, res) => {
-  const { requestId } = req.params;
-  const request = passwordResetModel.findRequestById(requestId);
+const postResolvePasswordReset = (
+  req,
+  res,
+) => {
+  const request =
+    passwordResetModel.findRequestById(
+      req.params.requestId,
+    );
 
-  if (request && request.status === "pending") {
-    const user = userModel.findUserByEmail(request.email);
+  if (
+    request &&
+    request.status === "pending"
+  ) {
+    const user =
+      userModel.findUserByEmail(
+        request.email,
+      );
 
     if (user) {
-      const tempPassword = generateTempPassword();
+      const tempPassword =
+        generateTempPassword();
+
       userModel.updateUser(user.id, {
-        passwordHash: hashPassword(tempPassword),
+        passwordHash:
+          hashPassword(tempPassword),
+
         requiresPasswordChange: true,
       });
-      passwordResetModel.resolveRequest(requestId, tempPassword);
+
+      passwordResetModel.resolveRequest(
+        request.id,
+        tempPassword,
+      );
     } else {
-      passwordResetModel.rejectRequest(requestId);
+      passwordResetModel.rejectRequest(
+        request.id,
+      );
     }
   }
 
-  res.redirect("/shared/admin");
+  return res.redirect("/shared/admin");
 };
 
-const postRejectPasswordReset = (req, res) => {
-  const { requestId } = req.params;
-  passwordResetModel.rejectRequest(requestId);
-  res.redirect("/shared/admin");
+const postRejectPasswordReset = (
+  req,
+  res,
+) => {
+  passwordResetModel.rejectRequest(
+    req.params.requestId,
+  );
+
+  return res.redirect("/shared/admin");
 };
 
 const getSitemapPage = (req, res) => {
@@ -336,15 +448,10 @@ const getSitemapPage = (req, res) => {
 };
 
 module.exports = {
-  getLoginPage,
-  postLogin,
-  postLogout,
-  getRegisterPage,
   getForgotPasswordPage,
   postForgotPassword,
   getResetPasswordPage,
   postResetPassword,
-  getProfilePage,
   getAdminPage,
   getProductFormPage,
   postCreateProduct,
