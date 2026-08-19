@@ -179,7 +179,7 @@ const verifyCurrentHash = (
 
   return (
     calculatedHash.length ===
-      storedHash.length &&
+    storedHash.length &&
     crypto.timingSafeEqual(
       calculatedHash,
       storedHash
@@ -221,7 +221,7 @@ const verifyLegacyHash = (
 
   return (
     calculatedHash.length ===
-      storedHash.length &&
+    storedHash.length &&
     crypto.timingSafeEqual(
       calculatedHash,
       storedHash
@@ -240,13 +240,13 @@ const verifyPassword = (
       "scrypt$"
     )
       ? verifyCurrentHash(
-          password,
-          storedValue
-        )
+        password,
+        storedValue
+      )
       : verifyLegacyHash(
-          password,
-          storedValue
-        );
+        password,
+        storedValue
+      );
   } catch {
     return false;
   }
@@ -373,8 +373,8 @@ const findById = (
   return index === -1
     ? null
     : toPublicUser(
-        users[index]
-      );
+      users[index]
+    );
 };
 
 const authenticate = (
@@ -677,11 +677,19 @@ const updateAccount = (
   ) {
     updatedUser.passwordHash =
       hashPassword(
-        "Password123!",
-      ),
-    createdAt: now,
-    updatedAt: now,
-  });
+        values.newPassword
+      );
+  }
+
+  users[index] = updatedUser;
+  writeUsers(users);
+
+  return {
+    ok:
+      true,
+    user:
+      toPublicUser(updatedUser)
+  };
 };
 
 seedDemoUser();

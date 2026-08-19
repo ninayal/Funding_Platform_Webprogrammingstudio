@@ -38,8 +38,7 @@
     "status": "active",
     "joinDate": "2026-01-01",
     "requiresPasswordChange": false
-  }
-][
+  },
   {
     "id": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
     "firstname": "nin",
@@ -126,5 +125,34 @@
     "passwordHash": "scrypt$cd42c759d8c139b086924c9a84178735$09ff5dc5fa0cd4538481db8cb60b5385f4a6aea5ad91bce8bbf305d7606781ab1304db79d590b0d70cf0325eede9474de5db4d1b02972e7ddbb69280f7789cd1",
     "createdAt": "2026-08-09T13:55:37.662Z",
     "updatedAt": "2026-08-09T13:55:37.662Z"
+  },
+  {
+    "id": "3a87df3c-9d1c-4120-bb7d-d53a16e99a25",
+    "firstname": "dcvvv",
+    "lastname": "dd",
+    "username": "ninayal198",
+    "email": "abcdef@gmail.com",
+    "gender": "female",
+    "description": "cfdsvsdvdcvnedsvjnedfjuhnrvgrfv",
+    "role": "User",
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "cfdsvsdvdcvnedsvjnedfjuhnrvgrfv",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$7507356611dca6354b4a0005928d594e$b64244ed6dcbdcef81d91014eb647ab4b58970916688d35416cb244c7f39d775d840a7267a9fcea3d28a9a409009efa5cad98f2775f476712ae829b673d61bc0",
+    "createdAt": "2026-08-19T05:56:08.829Z",
+    "updatedAt": "2026-08-19T05:56:08.829Z"
   }
 ]
