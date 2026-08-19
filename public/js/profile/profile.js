@@ -125,7 +125,7 @@
       const matches =
         !confirmPassword.value ||
         confirmPassword.value ===
-          newPassword.value;
+        newPassword.value;
 
       confirmPassword.setCustomValidity(
         matches
