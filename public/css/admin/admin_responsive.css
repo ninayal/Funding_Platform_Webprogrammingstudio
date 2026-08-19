@@ -524,6 +524,35 @@ body {
     font-size: 11px;
   }
 
+  /* Products table has different columns than the Users table above */
+  .admin-table--products td:nth-child(1)::before {
+    content: "Cover";
+  }
+
+  .admin-table--products td:nth-child(2)::before {
+    content: "Title";
+  }
+
+  .admin-table--products td:nth-child(3)::before {
+    content: "Category";
+  }
+
+  .admin-table--products td:nth-child(4)::before {
+    content: "Price";
+  }
+
+  .admin-table--products td:nth-child(5)::before {
+    content: "Stock";
+  }
+
+  .admin-table--products td:nth-child(6)::before {
+    content: "Status";
+  }
+
+  .admin-table--products td:nth-child(7)::before {
+    content: "Action";
+  }
+
 }
 
 

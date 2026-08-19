@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>Làng &amp; Co. — <%= product ? "Edit Product" : "Add Product" %></title>
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/admin/admin.css" />
+  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
+  <link rel="stylesheet" href="/css/forum/forum-base.css" />
+  <link rel="stylesheet" href="/css/forum/forum-utilities-toolbar.css" />
+  <link rel="stylesheet" href="/css/admin/admin_responsive.css" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
+  <div class="topbar">
+    <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
+      <a href="../cart/products.html" target="_top">Shop Now</a>
+    </p>
+    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
+  </div>
+  <nav class="nav nav--light nav--centered">
+
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
+
+    <div class="nav__left">
+      <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+          aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </label>
+      <button type="button" class="nav__icon-btn" aria-label="Search">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+          aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.8-3.8" />
+        </svg>
+      </button>
+    </div>
+
+    <a class="nav__logo nav__logo--center" href="/" target="_top">
+      <img src="/images/logo.png" alt="Lang & Co. logo" />
+    </a>
+
+    <div class="nav__icons">
+      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+          aria-hidden="true">
+          <circle cx="12" cy="8" r="3.6" />
+          <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
+        </svg>
+      </a>
+      <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+          aria-hidden="true">
+          <path d="M6 8h12l-1 13H7L6 8Z" />
+          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+        </svg>
+        <span class="nav__badge-count">4</span>
+      </a>
+    </div>
+
+    <div class="mobile-menu">
+      <ul>
+        <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
+        <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
+        <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
+        <li><a id="nav-forum" href="../forum/forum.html" target="_top">Forum</a></li>
+        <li><a id="nav-wishlist" href="/pages/giftcard/giftcard.html" target="_top">Giftcards</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="wave">
+    <div class="forum-breadcrumb">
+      <a href="/shared/admin?tab=products">Admin</a> <span aria-hidden="true">&bull;</span>
+      <span aria-current="page"><%= product ? "Edit Product" : "Add Product" %></span>
+    </div>
+  </div>
+
+  <!-- Product Form Page -->
+  <section class="admin-page">
+    <div class="admin-form-page">
+
+      <div class="admin-form-card">
+        <div class="panel-head panel-head--with-action">
+          <h2 class="panel-head__title"><%= product ? "Edit Product" : "Add Product" %></h2>
+          <a href="/shared/admin?tab=products" class="btn btn--outline">Cancel</a>
+        </div>
+
+        <% if (errors && errors.length > 0) { %>
+        <div class="admin-alert admin-alert--error" role="alert">
+          <p class="admin-alert__title">Please fix the following before saving:</p>
+          <ul>
+            <% errors.forEach(function (error) { %>
+            <li><%= error %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %>
+
+        <% if (warnings && warnings.length > 0) { %>
+        <div class="admin-alert admin-alert--warning" role="alert">
+          <ul>
+            <% warnings.forEach(function (warning) { %>
+            <li><%= warning %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <% }
+          var v = formValues || {};
+          var images = (product && product.images) || [];
+        %>
+
+        <form method="post" enctype="multipart/form-data"
+          action="<%= product ? '/shared/admin/products/' + product.id : '/shared/admin/products' %>"
+          class="admin-form">
+
+          <div class="admin-field">
+            <label class="admin-field__label" for="image1">Cover image <%= images[0] ? "" : "*" %></label>
+            <div class="admin-image-picker">
+              <img id="image1Preview" class="admin-image-picker__preview" src="<%= images[0] || '' %>" alt=""
+                style="<%= images[0] ? '' : 'display:none' %>" />
+              <div class="admin-image-picker__controls">
+                <input type="file" id="image1" name="image1" accept="image/jpeg,image/png,image/webp,image/gif"
+                  onchange="previewProductImage(this, 'image1Preview')" />
+                <p class="admin-field__hint">
+                  <% if (images[0]) { %>Current image shown above — choose a file only to replace it.<% } else { %>This
+                  is the first image customers see — shown as the product's cover.<% } %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-field-row">
+            <div class="admin-field">
+              <label class="admin-field__label" for="image2">Image 2 (optional)</label>
+              <div class="admin-image-picker">
+                <img id="image2Preview" class="admin-image-picker__preview admin-image-picker__preview--small"
+                  src="<%= images[1] || '' %>" alt="" style="<%= images[1] ? '' : 'display:none' %>" />
+                <input type="file" id="image2" name="image2" accept="image/jpeg,image/png,image/webp,image/gif"
+                  onchange="previewProductImage(this, 'image2Preview')" />
+              </div>
+            </div>
+            <div class="admin-field">
+              <label class="admin-field__label" for="image3">Image 3 (optional)</label>
+              <div class="admin-image-picker">
+                <img id="image3Preview" class="admin-image-picker__preview admin-image-picker__preview--small"
+                  src="<%= images[2] || '' %>" alt="" style="<%= images[2] ? '' : 'display:none' %>" />
+                <input type="file" id="image3" name="image3" accept="image/jpeg,image/png,image/webp,image/gif"
+                  onchange="previewProductImage(this, 'image3Preview')" />
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-field">
+            <label class="admin-field__label" for="title">Product title *</label>
+            <input type="text" id="title" name="title" class="admin-field__input" maxlength="120"
+              value="<%= v.title || '' %>" oninput="document.getElementById('titleCounter').textContent = this.value.length" />
+            <p class="admin-field__hint">
+              <span id="titleCounter"><%= (v.title || '').length %></span>/120 characters. Avoid ALL CAPS, prices, or
+              promotional words like "freeship" — describe the product itself.
+            </p>
+          </div>
+
+          <div class="admin-field">
+            <label class="admin-field__label" for="category">Category *</label>
+            <select id="category" name="category" class="admin-field__input">
+              <option value="">Select a category</option>
+              <% categories.forEach(function (cat) { %>
+              <option value="<%= cat.value %>" <%= v.category === cat.value ? "selected" : "" %>><%= cat.label %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="admin-field">
+            <label class="admin-field__label" for="description">Description *</label>
+            <textarea id="description" name="description" class="admin-field__input admin-field__textarea" rows="8"
+              oninput="document.getElementById('descCounter').textContent = this.value.trim().split(/\s+/).filter(Boolean).length"><%= v.description || '' %></textarea>
+            <p class="admin-field__hint">
+              <span id="descCounter"><%= (v.description || '').trim().split(/\s+/).filter(Boolean).length %></span>/3000
+              words. Cover what it's for, how to use/care for it, and your return policy. No phone numbers, Zalo,
+              Facebook, or outside links.
+            </p>
+          </div>
+
+          <div class="admin-field-row">
+            <div class="admin-field">
+              <label class="admin-field__label" for="price">Price (VND) *</label>
+              <input type="number" id="price" name="price" class="admin-field__input" min="1" step="1000"
+                value="<%= v.price || '' %>" />
+            </div>
+            <div class="admin-field">
+              <label class="admin-field__label" for="weightGram">Packed weight (grams) *</label>
+              <input type="number" id="weightGram" name="weightGram" class="admin-field__input" min="1"
+                value="<%= v.weightGram || '' %>" />
+            </div>
+            <div class="admin-field">
+              <label class="admin-field__label" for="stock">Stock *</label>
+              <input type="number" id="stock" name="stock" class="admin-field__input" min="0"
+                value="<%= v.stock === undefined ? '' : v.stock %>" />
+            </div>
+          </div>
+
+          <div class="admin-form__actions">
+            <button type="submit" name="action" value="hide" class="btn btn--outline">Save &amp; Hide</button>
+            <button type="submit" name="action" value="publish" class="btn btn--success">Save &amp; Publish</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!--  Footer  -->
+  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
+    scrolling="no"></iframe>
+
+  <script>
+    function previewProductImage(input, previewId) {
+      var preview = document.getElementById(previewId);
+      if (input.files && input.files[0]) {
+        preview.src = URL.createObjectURL(input.files[0]);
+        preview.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

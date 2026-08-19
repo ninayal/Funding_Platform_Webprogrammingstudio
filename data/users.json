@@ -1,5 +1,46 @@
 [
   {
+    "id": "u1",
+    "username": "minhvu123",
+    "email": "minhvu12@gmail.com",
+    "passwordHash": "scrypt$e78f865a7293547cd68fc47511cfb90a$fae913438787e03cfe02c06c24cf2a5c70872db9151908f93c531eee10897e53141b2a005e11c450ea0bae3196fa0dde6910dec6322c3879eaeb2778d1c020a7",
+    "role": "user",
+    "status": "active",
+    "joinDate": "2026-07-13",
+    "requiresPasswordChange": false
+  },
+  {
+    "id": "u2",
+    "username": "alex123",
+    "email": "alex12@gmail.com",
+    "passwordHash": "scrypt$4bd296ce9637f15768fce6819dfe1e3a$fbb9ddecaafade071d9ef4a7a33ae79fb2846ab2b632b0576a4252b5f55a6b8acb89460943e792cc2645b0578df113958814bd67a1f0cb98cc3c68f3bb99a3a7",
+    "role": "user",
+    "status": "active",
+    "joinDate": "2026-07-01",
+    "requiresPasswordChange": true
+  },
+  {
+    "id": "u3",
+    "username": "david123",
+    "email": "david12@gmail.com",
+    "passwordHash": "scrypt$302e754676e48abf7814ea0282357b03$9c88f5c2554b7da3e7c4d210e3e27dda80a0d2865769a2612f89a4ad3bfca6c8dc30135c2aedb8432afdd688f6e868505fc12a7359e7ca5fa84815d828fbc901",
+    "role": "user",
+    "status": "blocked",
+    "joinDate": "2026-07-02",
+    "requiresPasswordChange": true
+  },
+  {
+    "id": "admin1",
+    "username": "admin",
+    "email": "admin@langandco.com",
+    "passwordHash": "scrypt$b0af0d4bc3856c9658ed4dc7445a63a4$7cabf19adefcdde45cd496eb33343238a3356faceb63fa625f16e26ca2d528f66f302fc966c59419c9d3328bfe41cd5ae2cb58d43de74f69b33a5e7c389368a8",
+    "role": "admin",
+    "status": "active",
+    "joinDate": "2026-01-01",
+    "requiresPasswordChange": false
+  }
+][
+  {
     "id": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
     "firstname": "nin",
     "lastname": "lam",
