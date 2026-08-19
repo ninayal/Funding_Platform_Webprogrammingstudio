@@ -1,25 +1,28 @@
 <div
   class="product-review"
   data-product-id="<%= product.id %>"
-  data-form-mode="<%= formMode %>"
-  data-editing-review-id="<%= editingReviewId %>"
-  data-page-status="<%= pageStatus %>"
-  data-authenticated="<%= isAuthenticated %>"
+  data-form-mode="<%= reviewUi.formMode %>"
+  data-editing-review-id="<%= reviewUi.editingReviewId %>"
+  data-page-status="<%= reviewUi.pageStatus %>"
+  data-authenticated="<%= reviewUi.isAuthenticated %>"
 >
   <section
     class="pr-hero"
     aria-labelledby="review-section-title"
   >
-    <%- include("hero-intro") %>
-    <%- include("score-card") %>
+    <%- include("review-overview") %>
   </section>
 
-  <% if (isAuthenticated) { %>
+  <% if (reviewUi.isAuthenticated) { %>
     <div
       class="pr-review-modal"
       id="review-composer-panel"
-      aria-hidden="<%= formOpen ? 'false' : 'true' %>"
-      <%= formOpen ? "" : "hidden" %>
+      aria-hidden="<%= reviewUi.formOpen
+        ? 'false'
+        : 'true' %>"
+      <%= reviewUi.formOpen
+        ? ""
+        : "hidden" %>
     >
       <button
         class="pr-review-modal__backdrop"
@@ -87,7 +90,6 @@
     class="pr-list"
     id="customer-reviews"
   >
-    <%- include("review-toolbar") %>
     <%- include("review-list") %>
   </section>
 </div>

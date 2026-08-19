@@ -1,23 +1,13 @@
-<%
-  const reviewImages =
-    Array.isArray(review.images) &&
-    review.images.length
-      ? review.images
-      : review.image
-        ? [review.image]
-        : [];
-%>
-
 <article
   class="pr-card<%= review.isOwn
     ? ' pr-card--own'
     : '' %>"
   data-review-id="<%= review.id %>"
   data-rating="<%= review.rating %>"
-  data-title="<%= review.title.toLowerCase() %>"
-  data-reviewer="<%= review.name.toLowerCase() %>"
+  data-title="<%= review.searchTitle %>"
+  data-reviewer="<%= review.searchReviewer %>"
   data-date="<%= review.dateAdded %>"
-  data-description="<%= review.comment.toLowerCase() %>"
+  data-description="<%= review.searchDescription %>"
 >
   <header class="pr-card__header">
     <div class="pr-card__profile">
@@ -94,22 +84,22 @@
     </p>
   </div>
 
-  <% if (reviewImages.length) { %>
+  <% if (review.images.length) { %>
     <div
       class="pr-card__media"
-      aria-label="<%= reviewImages.length %> review photos"
+      aria-label="<%= review.images.length %> review photos"
     >
-      <% reviewImages.slice(0, 3).forEach((image, index) => { %>
+      <% review.images.forEach((image) => { %>
         <figure class="pr-card__gallery-item">
           <button
             class="pr-card__image-button"
             type="button"
             data-review-lightbox
-            aria-label="Open review photo <%= index + 1 %> in full screen"
+            aria-label="<%= image.openLabel %>"
           >
             <img
-              src="<%= image %>"
-              alt="Review photo <%= index + 1 %> for <%= productData.name %>"
+              src="<%= image.src %>"
+              alt="<%= image.alt %> for <%= productData.name %>"
               loading="lazy"
               decoding="async"
             />

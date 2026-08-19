@@ -1,11 +1,9 @@
 /* =====================================================
    REVIEW IMAGE LIGHTBOX
    ===================================================== */
-
 body.pr-lightbox-open {
   overflow: hidden;
 }
-
 .pr-card__image-button {
   display: block;
   width: 100%;
@@ -17,23 +15,19 @@ body.pr-lightbox-open {
   background: transparent;
   cursor: zoom-in;
 }
-
 .pr-card__image-button img {
   transition:
     transform 160ms ease,
     opacity 160ms ease;
 }
-
 .pr-card__image-button:hover img {
   transform: scale(1.03);
   opacity: 0.94;
 }
-
 .pr-card__image-button:focus-visible {
   outline: 3px solid var(--red);
   outline-offset: 3px;
 }
-
 .pr-image-lightbox {
   position: fixed;
   z-index: 7000;
@@ -44,11 +38,9 @@ body.pr-lightbox-open {
   padding: 20px;
   place-items: center;
 }
-
 .pr-image-lightbox[hidden] {
   display: none !important;
 }
-
 .pr-image-lightbox__backdrop {
   position: absolute;
   inset: 0;
@@ -60,7 +52,6 @@ body.pr-lightbox-open {
   backdrop-filter: blur(7px);
   cursor: zoom-out;
 }
-
 .pr-image-lightbox__dialog {
   position: relative;
   z-index: 1;
@@ -77,7 +68,6 @@ body.pr-lightbox-open {
   background: rgba(27, 20, 15, 0.96);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
 }
-
 .pr-image-lightbox__close {
   position: absolute;
   top: 14px;
@@ -96,17 +86,14 @@ body.pr-lightbox-open {
   line-height: 32px;
   cursor: pointer;
 }
-
 .pr-image-lightbox__close:hover {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.16);
 }
-
 .pr-image-lightbox__close:focus-visible {
   outline: 3px solid var(--red);
   outline-offset: 3px;
 }
-
 .pr-image-lightbox__image {
   display: block;
   max-width: 100%;
@@ -114,7 +101,6 @@ body.pr-lightbox-open {
   border-radius: 12px;
   object-fit: contain;
 }
-
 .pr-image-lightbox__caption {
   min-height: 20px;
   margin-top: 13px;
@@ -124,24 +110,20 @@ body.pr-lightbox-open {
   line-height: 20px;
   text-align: center;
 }
-
 @media (max-width: 760px) {
   .pr-image-lightbox {
     padding: 10px;
   }
-
   .pr-image-lightbox__dialog {
     width: 100%;
     height: calc(100% - 20px);
     padding: 52px 12px 18px;
     border-radius: 16px;
   }
-
   .pr-image-lightbox__close {
     top: 10px;
     right: 10px;
   }
-
   .pr-image-lightbox__caption {
     font-size: 12px;
     line-height: 18px;
