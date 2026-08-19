@@ -177,6 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
 
+                if (response.status === 401 && result.requiresAuth) {
+                    window.location.href = result.redirect;
+                    return;
+                }
+
                 if (!response.ok || !result.success) {
                     throw new Error(
                         result.message || "Unable to add product."

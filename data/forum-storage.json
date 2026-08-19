@@ -4,7 +4,7 @@
       "slug": "community-guidelines",
       "category": "announcement",
       "title": "Community Guidelines - Please Read Before Posting",
-      "views": 24,
+      "views": 25,
       "posts": [
         {
           "author": "Admin",
@@ -380,6 +380,36 @@
       "pinned": false,
       "locked": false,
       "hidden": false
+    },
+    {
+      "slug": "hihi",
+      "category": "qa",
+      "title": "hihi",
+      "tags": [],
+      "pinned": false,
+      "locked": false,
+      "hidden": false,
+      "views": 1,
+      "authorId": "084cf529-90c6-4f3d-a3e4-7dbe0780d20c",
+      "status": "published",
+      "createdAt": "2026-08-19T17:38:54.122Z",
+      "posts": [
+        {
+          "id": "4f7a3010-b98f-4b3e-bcd0-75fc597b82be",
+          "author": "NINA LAM",
+          "authorId": "084cf529-90c6-4f3d-a3e4-7dbe0780d20c",
+          "initials": "NL",
+          "rank": "Member",
+          "date": "20/08/2026",
+          "content": "huhu",
+          "editedAt": null,
+          "parentPostId": null,
+          "likedBy": [],
+          "dislikedBy": [],
+          "bookmarkedBy": [],
+          "reportedBy": []
+        }
+      ]
     }
   ],
   "deletedThreadSlugs": [],

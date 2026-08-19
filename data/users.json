@@ -154,5 +154,37 @@
     "passwordHash": "scrypt$7507356611dca6354b4a0005928d594e$b64244ed6dcbdcef81d91014eb647ab4b58970916688d35416cb244c7f39d775d840a7267a9fcea3d28a9a409009efa5cad98f2775f476712ae829b673d61bc0",
     "createdAt": "2026-08-19T05:56:08.829Z",
     "updatedAt": "2026-08-19T05:56:08.829Z"
+  },
+  {
+    "id": "084cf529-90c6-4f3d-a3e4-7dbe0780d20c",
+    "firstname": "NINA",
+    "lastname": "LAM",
+    "username": "ninayal__",
+    "email": "lamthinu@gmail.com",
+    "gender": "female",
+    "description": "vceskwajnvsewved",
+    "role": "user",
+    "status": "active",
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "vceskwajnvsewved",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$5a83220aaf3f2360b9b82be313478d3a$648c1228c2cbbcbd1571ffaf4c7a2f2f8097211b6ffa54751639a92ac432c34f0d429e5e698ab285406a0501255183e2fcbe53742c037b55c44192d9cb049253",
+    "requiresPasswordChange": false,
+    "joinDate": "2026-08-19",
+    "createdAt": "2026-08-19T17:35:17.103Z",
+    "updatedAt": "2026-08-19T17:35:17.103Z"
   }
 ]

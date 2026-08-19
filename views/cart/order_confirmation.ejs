@@ -188,13 +188,13 @@
                 </p>
 
                 <h3>
-                  <%= order.paymentMethod %>
+                  Credit / Debit Card
                 </h3>
 
                 <p>
                   Card ending in
                   <strong>
-                    <%= order.cardLastFour %>
+                    <%= order.payment?.cardLastFour || "" %>
                   </strong>
                 </p>
               </section>
