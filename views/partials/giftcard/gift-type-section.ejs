@@ -1,6 +1,14 @@
+<%
+  const giftTypeErrors =
+    typeof errors !== "undefined" && errors
+      ? errors
+      : {};
+%>
+
 <section
   class="flow-section flow-section--paper"
   id="gift-type"
+  data-giftcard-step="1"
 >
   <div class="section-shell">
     <div class="section-heading">
@@ -38,8 +46,18 @@
       <% }); %>
     </div>
 
+    <% if (giftTypeErrors.giftType) { %>
+      <p class="form-error step-form-error" role="alert">
+        <%= giftTypeErrors.giftType %>
+      </p>
+    <% } %>
+
     <div class="section-next">
-      <a class="btn btn-primary" href="#delivery-type">
+      <a
+        class="btn btn-primary"
+        href="#delivery-type"
+        data-giftcard-next
+      >
         Continue to Delivery
       </a>
     </div>

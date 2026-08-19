@@ -5,27 +5,82 @@
   <%- include("../partials/giftcard/head") %>
 </head>
 
-<body class="giftcard-page">
+<%
+  const isEditing =
+    typeof editGiftcard !== "undefined" &&
+    Boolean(editGiftcard);
+
+  const isSavedView =
+    typeof savedGift !== "undefined" &&
+    Boolean(savedGift);
+
+  const isReviewMode =
+    typeof reviewMode !== "undefined" &&
+    Boolean(reviewMode);
+
+  const hasServerErrors =
+    typeof errors !== "undefined" &&
+    errors &&
+    Object.keys(errors).length > 0;
+
+  const wasDeleted =
+    typeof deleted !== "undefined" &&
+    Boolean(deleted);
+%>
+
+<body
+  class="giftcard-page"
+  data-giftcard-review="<%= isReviewMode ? "true" : "false" %>"
+  data-giftcard-edit="<%= isEditing ? "true" : "false" %>"
+  data-giftcard-saved-view="<%= isSavedView ? "true" : "false" %>"
+  data-giftcard-server-errors="<%= hasServerErrors ? "true" : "false" %>"
+>
   <%- include("../partials/header", { activePage, cartCount }) %>
 
+  <% if (!isSavedView) { %>
     <%- include("../partials/giftcard/state-controls") %>
-      <%- include("../partials/giftcard/hero") %>
+    <%- include("../partials/giftcard/hero") %>
+  <% } %>
 
-        <main class="giftcard-wave">
-          <form id="gift-card-form" class="gift-card-form" action="/giftcard/review" method="post">
-            <%- include("../partials/giftcard/gift-type-section") %>
-              <%- include("../partials/giftcard/delivery-section") %>
-                <%- include("../partials/giftcard/design-section") %>
-                  <%- include("../partials/giftcard/amount-section") %>
-                    <%- include("../partials/giftcard/personalize-section") %>
-          </form>
+  <main class="giftcard-wave <%= isSavedView ? "giftcard-wave--standalone" : "" %>">
+    <% if (wasDeleted) { %>
+      <div class="section-shell">
+        <div class="giftcard-page-notice" role="status">
+          The gift card was deleted successfully.
+        </div>
+      </div>
+    <% } %>
 
-          <%- include("../partials/giftcard/review-section") %>
-            <%- include("../partials/giftcard/redeem-section") %>
-              <%- include("../partials/giftcard/gift-view-section") %>
-        </main>
+    <% if (isSavedView) { %>
+      <%- include("../partials/giftcard/gift-view-section") %>
+    <% } else { %>
+      <form
+        id="gift-card-form"
+        class="gift-card-form"
+        action="<%= isEditing
+          ? `/giftcard/${editGiftcard.id}/update`
+          : "/giftcard/review" %>"
+        method="post"
+        data-giftcard-mode="<%= isEditing ? "edit" : "create" %>"
+        data-giftcard-id="<%= isEditing ? editGiftcard.id : "" %>"
+      >
+        <%- include("../partials/giftcard/gift-type-section") %>
+        <%- include("../partials/giftcard/delivery-section") %>
+        <%- include("../partials/giftcard/design-section") %>
+        <%- include("../partials/giftcard/amount-section") %>
+        <%- include("../partials/giftcard/personalize-section") %>
+      </form>
 
-        <%- include("../partials/footer") %>
+      <% if (isReviewMode && !isEditing) { %>
+        <%- include("../partials/giftcard/review-section") %>
+      <% } %>
+
+      <%- include("../partials/giftcard/redeem-section") %>
+      <%- include("../partials/giftcard/gift-view-section") %>
+    <% } %>
+  </main>
+
+  <%- include("../partials/footer") %>
 </body>
 
 </html>

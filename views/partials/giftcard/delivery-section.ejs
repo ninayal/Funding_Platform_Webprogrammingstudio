@@ -1,6 +1,14 @@
+<%
+  const deliveryErrors =
+    typeof errors !== "undefined" && errors
+      ? errors
+      : {};
+%>
+
 <section
   class="flow-section flow-section--tint"
   id="delivery-type"
+  data-giftcard-step="2"
 >
   <div class="section-shell">
     <div class="section-heading section-heading--center">
@@ -37,8 +45,18 @@
       <% }); %>
     </div>
 
+    <% if (deliveryErrors.deliveryType) { %>
+      <p class="form-error step-form-error" role="alert">
+        <%= deliveryErrors.deliveryType %>
+      </p>
+    <% } %>
+
     <div class="section-next">
-      <a class="btn btn-primary" href="#design">
+      <a
+        class="btn btn-primary"
+        href="#design"
+        data-giftcard-next
+      >
         Continue to Design
       </a>
     </div>

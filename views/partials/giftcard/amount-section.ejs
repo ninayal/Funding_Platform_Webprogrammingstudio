@@ -1,6 +1,14 @@
+<%
+  const amountErrors =
+    typeof errors !== "undefined" && errors
+      ? errors
+      : {};
+%>
+
 <section
   class="flow-section flow-section--tint"
   id="amount"
+  data-giftcard-step="4"
 >
   <div class="section-shell">
     <div class="section-heading section-heading--center">
@@ -14,8 +22,8 @@
       </h2>
 
       <p>
-        There are no fixed presets. Enter any positive USD
-        amount that fits the giving moment.
+        Enter a quantity from 1 to 20 and an amount from
+        $5 to $10,000 per card.
       </p>
     </div>
 
@@ -29,13 +37,21 @@
             id="gift-quantity"
             name="quantity"
             min="1"
+            max="20"
             step="1"
-            value="<%= defaults.quantity %>"
+            value="<%= defaults.quantity ?? "" %>"
+            placeholder="1"
             inputmode="numeric"
             required
           />
 
-          <small>Number of gift cards.</small>
+          <small>Enter 1–20 gift cards.</small>
+
+          <% if (amountErrors.quantity) { %>
+            <span class="form-error">
+              <%= amountErrors.quantity %>
+            </span>
+          <% } %>
         </label>
 
         <label class="amount-field amount-field--wide">
@@ -49,17 +65,24 @@
               id="gift-amount"
               name="amountPerCard"
               min="5"
+              max="10000"
               step="1"
-              value="<%= defaults.amountPerCard %>"
-              placeholder="Enter any amount"
+              value="<%= defaults.amountPerCard ?? "" %>"
+              placeholder="50"
               inputmode="decimal"
               required
             />
           </span>
 
           <small>
-            Enter any positive amount. Example: 50 = $50.00.
+            Enter an amount from $5 to $10,000.
           </small>
+
+          <% if (amountErrors.amountPerCard) { %>
+            <span class="form-error">
+              <%= amountErrors.amountPerCard %>
+            </span>
+          <% } %>
         </label>
       </div>
 
@@ -69,12 +92,18 @@
           <small>Quantity × amount per card</small>
         </div>
 
-        <strong><%= totalDisplay %></strong>
+        <strong data-giftcard-total>
+          <%= totalDisplay %>
+        </strong>
       </div>
     </div>
 
     <div class="section-next">
-      <a class="btn btn-primary" href="#details">
+      <a
+        class="btn btn-primary"
+        href="#details"
+        data-giftcard-next
+      >
         Continue to Details
       </a>
     </div>

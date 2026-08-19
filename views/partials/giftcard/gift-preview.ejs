@@ -6,13 +6,23 @@
     </div>
 
     <div class="gift-preview__center">
-      <p>For <%= defaults.recipientName %></p>
-      <strong><%= amountPerCardDisplay %></strong>
-      <span><%= defaults.message %></span>
+      <p data-preview-recipient>
+        For <%= defaults.recipientName || "Recipient" %>
+      </p>
+
+      <strong data-preview-amount>
+        <%= amountPerCardDisplay %>
+      </strong>
+
+      <span data-preview-message>
+        <%= defaults.message || "Your message will appear here." %>
+      </span>
     </div>
 
     <div class="gift-preview__bottom">
-      <span>From <%= defaults.senderName %></span>
+      <span data-preview-sender>
+        From <%= defaults.senderName || "Sender" %>
+      </span>
 
       <span class="preview-design-name">
         <% designs.forEach((design) => { %>

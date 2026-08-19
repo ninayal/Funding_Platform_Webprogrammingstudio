@@ -1,3 +1,56 @@
 {
-  "giftcards": []
+  "giftcards": [
+    {
+      "id": "989e7439-4077-423a-87c3-6cfc73e6a6e2",
+      "code": "LANG-1F49-0EFB",
+      "createdByUserId": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "bat-trang-blue",
+      "quantity": 1,
+      "amountPerCard": 5,
+      "totalAmount": 5,
+      "recipientName": "huy",
+      "senderName": "kho",
+      "message": "ádf'hiadfadosfbnpasdbnfpbasdnf",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "canhkhoi42@gmail.com",
+        "emailTiming": "Send immediately",
+        "emailDeliveryDate": "2026-08-21"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-17T11:20:46.078Z",
+      "updatedAt": "2026-08-17T11:20:46.078Z"
+    },
+    {
+      "id": "c5aa7388-6755-4f83-b8e6-48a6d75f4f96",
+      "code": "LANG-BC6E-9ABB",
+      "createdByUserId": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
+      "giftType": "donation-in-honour",
+      "deliveryType": "digital",
+      "designType": "ho-tay-lotus",
+      "quantity": 1,
+      "amountPerCard": 90,
+      "totalAmount": 90,
+      "recipientName": "Truong Vivian",
+      "senderName": "Truong Vivian",
+      "message": "ưef,kasd,fglkash",
+      "causeCategory": "community-support",
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "canhkhoi42@gmail.com",
+        "emailTiming": "Send immediately",
+        "emailDeliveryDate": "2027-06-10"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Created",
+      "createdAt": "2026-08-17T11:26:24.608Z",
+      "updatedAt": "2026-08-17T11:26:24.608Z"
+    }
+  ]
 }

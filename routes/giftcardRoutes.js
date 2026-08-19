@@ -1,51 +1,91 @@
 "use strict";
 
-const express = require("express");
+const express =
+  require("express");
+
 const giftcardController =
-  require("../controllers/giftcardController");
+  require(
+    "../controllers/giftcardController",
+  );
 
-const router = express.Router();
+const {
+  requireAuth,
+} = require(
+  "../middlewares/authMiddleware",
+);
 
-/* Main page */
+const router =
+  express.Router();
+
+/* Main page: /giftcard */
 router.get(
   "/",
-  giftcardController.getGiftcardPage,
+  giftcardController
+    .getGiftcardPage,
 );
 
-/* Review */
+/*
+ * Compatibility for the old header URL:
+ * /giftcard/giftcard -> /giftcard
+ */
+router.get(
+  "/giftcard",
+  (req, res) =>
+    res.redirect(
+      301,
+      "/giftcard",
+    ),
+);
+
+/* Validate the creation form and open Review. */
 router.post(
   "/review",
-  giftcardController.reviewGiftcard,
+  giftcardController
+    .reviewGiftcard,
 );
 
-/* Create */
+/* Create the validated draft. */
 router.post(
   "/create",
-  giftcardController.createGiftcard,
+  giftcardController
+    .createGiftcard,
 );
 
-/* Redeem */
+/* Look up an existing gift code. */
 router.post(
   "/redeem",
-  giftcardController.redeemGiftcard,
+  giftcardController
+    .redeemGiftcard,
 );
 
-/* Edit page */
+/* Edit existing data owned by the logged-in user. */
 router.get(
   "/:id/edit",
-  giftcardController.getEditGiftcardPage,
+  requireAuth,
+  giftcardController
+    .getEditGiftcardPage,
 );
 
-/* Update */
 router.post(
   "/:id/update",
-  giftcardController.updateGiftcard,
+  requireAuth,
+  giftcardController
+    .updateGiftcard,
 );
 
-/* View saved gift */
+router.post(
+  "/:id/delete",
+  requireAuth,
+  giftcardController
+    .deleteGiftcard,
+);
+
+/* Retrieve a saved gift. */
 router.get(
   "/view/:code",
-  giftcardController.viewGiftcard,
+  giftcardController
+    .viewGiftcard,
 );
 
-module.exports = router;
+module.exports =
+  router;
