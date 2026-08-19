@@ -199,6 +199,17 @@ const getVisibleThreadBySlug = (slug, viewerId, isAdmin = false) => {
   return thread;
 };
 
+const incrementViews = (slug) => {
+  const thread = getThreadBySlug(slug);
+
+  if (!thread) {
+    return;
+  }
+
+  thread.views += 1;
+  saveThreadsToFile();
+};
+
 const getThreadsByAuthor = (authorId) =>
   threads
     .filter((t) => t.authorId === authorId)
@@ -830,6 +841,7 @@ module.exports = {
   getThreadsByCategory,
   getThreadBySlug,
   getVisibleThreadBySlug,
+  incrementViews,
   getThreadsByAuthor,
   findPost,
   decoratePost,

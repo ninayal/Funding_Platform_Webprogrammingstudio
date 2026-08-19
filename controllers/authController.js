@@ -152,7 +152,9 @@ const establishSession = (
           }
 
           return res.redirect(
-            redirectTarget
+            user.requiresPasswordChange
+              ? "/shared/reset-password"
+              : redirectTarget
           );
         }
       );
