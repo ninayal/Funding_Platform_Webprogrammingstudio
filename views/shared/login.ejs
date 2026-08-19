@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In | Làng & Co.</title>
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/login_register/login.css" />
 
   <meta
     name="viewport"
@@ -73,6 +77,11 @@
         Sign In
       </h2>
 
+      <% if (typeof error !== "undefined" && error) { %>
+      <p class="form-error" role="alert"><%= error %></p>
+      <% } %>
+
+      <form class="login-form" action="/shared/login" method="POST">
       <div
         class="<%= formErrorClass %>"
         id="login-form-error"

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "p1",
+    "title": "Bát Tràng Ceramic Vase with Hand-painted Lotus Motif",
+    "category": "ceramics",
+    "description": "Hand-thrown in Bát Tràng village and finished with a hand-painted lotus motif under a clear glaze. Each piece is fired individually, so subtle variations in glaze pooling are normal and part of its handmade character.\n\nCare: wipe with a soft damp cloth; avoid abrasive scrubbing on the painted surface. Not dishwasher safe.\n\nReturns: cracked or chipped on arrival is eligible for a full replacement within 7 days of delivery.",
+    "images": [
+      "/images/landingpics/product-ceramic-vase.png",
+      "",
+      ""
+    ],
+    "price": 450000,
+    "weightGram": 900,
+    "stock": 18,
+    "status": "published",
+    "createdAt": "2026-08-01T02:00:00.000Z",
+    "updatedAt": "2026-08-01T02:00:00.000Z"
+  },
+  {
+    "id": "p2",
+    "title": "Hand-woven Silk Scarf in Natural Indigo Dye",
+    "category": "brocade",
+    "description": "Woven on a traditional loom from mulberry silk and dyed with natural indigo. The tone deepens slightly with the first few washes as excess dye settles.\n\nCare: hand wash cold, separately, and hang to dry in shade. Avoid direct sunlight for long periods to preserve the indigo tone.\n\nReturns: unworn items with tags attached can be exchanged within 7 days.",
+    "images": [
+      "/images/landingpics/product-silk-scarf.png",
+      "",
+      ""
+    ],
+    "price": 320000,
+    "weightGram": 120,
+    "stock": 32,
+    "status": "published",
+    "createdAt": "2026-08-02T02:00:00.000Z",
+    "updatedAt": "2026-08-02T02:00:00.000Z"
+  },
+  {
+    "id": "p3",
+    "title": "Carved Rosewood Comb with Floral Detailing",
+    "category": "wood",
+    "description": "Carved from a single piece of rosewood and sanded smooth by hand, with floral detailing along the spine. The natural grain means no two combs look exactly alike.\n\nCare: keep dry and away from prolonged heat; an occasional light coat of natural oil keeps the wood from drying out.",
+    "images": [
+      "/images/landingpics/product-wood-comb.png",
+      "",
+      ""
+    ],
+    "price": 95000,
+    "weightGram": 60,
+    "stock": 54,
+    "status": "published",
+    "createdAt": "2026-08-03T02:00:00.000Z",
+    "updatedAt": "2026-08-03T02:00:00.000Z"
+  },
+  {
+    "id": "p4",
+    "title": "Bamboo Woven Lantern for Tabletop or Hanging Display",
+    "category": "bamboo",
+    "description": "Split and woven by hand from bamboo strips, finished with a light lacquer coat for durability. Suitable for LED candles or small string lights; not rated for open flame.\n\nCare: dust with a dry cloth; avoid soaking in water.",
+    "images": [
+      "/images/landingpics/product-bamboo-lantern.png",
+      "",
+      ""
+    ],
+    "price": 210000,
+    "weightGram": 380,
+    "stock": 22,
+    "status": "hidden",
+    "createdAt": "2026-08-04T02:00:00.000Z",
+    "updatedAt": "2026-08-05T02:00:00.000Z"
+  },
+  {
+    "id": "p5",
+    "title": "Natural Agarwood Incense Coils, Box of 20",
+    "category": "incense",
+    "description": "Rolled by hand from natural agarwood powder with no synthetic fragrance added. Each coil burns for approximately 45 minutes with a light, woody scent.\n\nUsage: place on a heatproof incense burner with the coil fully supported; keep away from drafts and flammable materials.\n\nQuantity: 20 coils per box.",
+    "images": [
+      "/images/landingpics/product-agarwood-incense.png",
+      "",
+      ""
+    ],
+    "price": 180000,
+    "weightGram": 150,
+    "stock": 40,
+    "status": "published",
+    "createdAt": "2026-08-05T02:00:00.000Z",
+    "updatedAt": "2026-08-05T02:00:00.000Z"
+  },
+  {
+    "id": "p6",
+    "title": "Đông Hồ Woodblock Print, Village Life Series",
+    "category": "painting",
+    "description": "Printed by hand from traditional carved woodblocks onto dó paper, using mineral and plant-based pigments in the Đông Hồ folk style. Framing not included.\n\nCare: keep away from direct sunlight and humidity to preserve the pigment colors long-term.",
+    "images": [
+      "/images/landingpics/product-dong-ho-painting.png",
+      "",
+      ""
+    ],
+    "price": 150000,
+    "weightGram": 40,
+    "stock": 0,
+    "status": "hidden",
+    "createdAt": "2026-08-06T02:00:00.000Z",
+    "updatedAt": "2026-08-07T02:00:00.000Z"
+  }
+]

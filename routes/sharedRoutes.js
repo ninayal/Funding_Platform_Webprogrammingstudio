@@ -18,89 +18,37 @@ const {
 } = require(
   "../middlewares/authMiddleware"
 );
+const uploadProductImages = require("../middlewares/uploadProductImages");
+const requireAdmin = require("../middlewares/requireAdmin");
 
 const router =
   express.Router();
 
-router.get(
-  "/login",
-  authController.getLoginPage
-);
+router.get("/login", sharedController.getLoginPage);
+router.post("/login", sharedController.postLogin);
+router.post("/logout", sharedController.postLogout);
 
-router.post(
-  "/login",
-  authController.login
-);
+router.get("/register", sharedController.getRegisterPage);
 
-router.get(
-  "/register",
-  authController.getRegisterPage
-);
+router.get("/forgot-password", sharedController.getForgotPasswordPage);
+router.post("/forgot-password", sharedController.postForgotPassword);
 
-router.post(
-  "/register",
-  authController.register
-);
+router.get("/reset-password", sharedController.getResetPasswordPage);
+router.post("/reset-password", sharedController.postResetPassword);
 
-router.post(
-  "/logout",
-  requireAuth,
-  authController.logout
-);
+router.get("/profile", sharedController.getProfilePage);
 
-router.get(
-  "/forgot-password",
-  (req, res) => {
-    const redirect =
-      safeRedirectPath(
-        req.query.redirect,
-        "/"
-      );
+router.get("/admin", requireAdmin, sharedController.getAdminPage);
+router.post("/admin/password-resets/:requestId/resolve", requireAdmin, sharedController.postResolvePasswordReset);
+router.post("/admin/password-resets/:requestId/reject", requireAdmin, sharedController.postRejectPasswordReset);
 
-    return res.render(
-      "shared/forgot_password",
-      {
-        redirect
-      }
-    );
-  }
-);
+router.get("/admin/products/new", requireAdmin, sharedController.getProductFormPage);
+router.get("/admin/products/:id/edit", requireAdmin, sharedController.getProductFormPage);
+router.post("/admin/products", requireAdmin, uploadProductImages, sharedController.postCreateProduct);
+router.post("/admin/products/:id", requireAdmin, uploadProductImages, sharedController.postUpdateProduct);
+router.post("/admin/products/:id/toggle", requireAdmin, sharedController.postToggleProductStatus);
+router.post("/admin/products/:id/delete", requireAdmin, sharedController.postDeleteProduct);
 
-router.get(
-  "/profile",
-  requireAuth,
-  profileController.getProfilePage
-);
-
-router.post(
-  "/profile",
-  requireAuth,
-  profileController.updateProfile
-);
-
-router.post(
-  "/profile/preferences",
-  requireAuth,
-  profileController.updatePreferences
-);
-
-router.get(
-  "/admin",
-  requireAuth,
-  (req, res) => {
-    return res.render(
-      "shared/admin/admin"
-    );
-  }
-);
-
-router.get(
-  "/sitemap",
-  (req, res) => {
-    return res.render(
-      "shared/sitemap"
-    );
-  }
-);
+router.get("/sitemap", sharedController.getSitemapPage);
 
 module.exports = router;

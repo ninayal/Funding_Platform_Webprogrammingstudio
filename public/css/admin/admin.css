@@ -334,7 +334,7 @@
 }
 
 .btn--outline {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(247, 246, 246, 0.78);
   color: var(--admin-text);
   border-color: rgba(116, 81, 45, 0.18);
 }
@@ -362,6 +362,17 @@
 
 .btn--success:hover {
   background: #175c27;
+}
+
+.btn--primary {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-strong);
+  border-color: rgba(163, 29, 29, 0.35);
+}
+
+.btn--primary:hover {
+  background: rgba(163, 29, 29, 0.18);
+  border-color: rgba(163, 29, 29, 0.5);
 }
 
 .btn--small {
@@ -482,4 +493,296 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ================================================
+   PANEL HEAD WITH ACTION BUTTON
+   ================================================ */
+.panel-head--with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ================================================
+   SELECT (category filter, form selects)
+   ================================================ */
+.admin-select {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 999px;
+  background: var(--admin-surface-strong);
+  color: var(--admin-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.admin-select:focus-visible {
+  outline: 3px solid rgba(163, 29, 29, 0.38);
+  outline-offset: 3px;
+}
+
+/* ================================================
+   PRODUCT TABLE EXTRAS
+   ================================================ */
+.admin-table__thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(116, 81, 45, 0.08);
+}
+
+.admin-table__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ================================================
+   CONFIRM OVERLAY (delete confirmation)
+   ================================================ */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.confirm-overlay:target {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.confirm-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(1, 1, 0, 0.55);
+  backdrop-filter: blur(5px);
+}
+
+.confirm-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(460px, 100%);
+  padding: 32px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  background: var(--admin-surface-strong);
+  box-shadow: var(--admin-shadow);
+  text-align: center;
+}
+
+.confirm-dialog__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--admin-text-muted);
+  text-decoration: none;
+  font-size: 22px;
+}
+
+.confirm-dialog__close:hover {
+  color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+}
+
+.confirm-dialog__kicker {
+  margin: 0 0 6px;
+  color: var(--admin-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.confirm-dialog h3 {
+  margin: 0;
+  color: var(--admin-text);
+  font-family: var(--ff-ui);
+  font-size: 1.4rem;
+}
+
+.confirm-dialog p:not(.confirm-dialog__kicker) {
+  margin: 12px 0 0;
+  color: var(--admin-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+/* ================================================
+   PRODUCT FORM PAGE
+   ================================================ */
+.admin-form-page {
+  position: relative;
+  z-index: 2;
+  width: min(760px, calc(100% - 48px));
+  margin: 24px auto 0;
+}
+
+.admin-form-card {
+  border: 1px solid var(--admin-border);
+  background: var(--admin-surface);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--admin-shadow);
+  border-radius: var(--admin-radius);
+  padding: 34px;
+}
+
+.admin-alert {
+  margin-bottom: 22px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.admin-alert ul {
+  margin: 6px 0 0;
+  padding-left: 20px;
+}
+
+.admin-alert__title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.admin-alert--error {
+  color: var(--admin-accent-strong);
+  border: 1px solid rgba(163, 29, 29, 0.32);
+  background: var(--admin-accent-soft);
+}
+
+.admin-alert--warning {
+  color: var(--admin-brown);
+  border: 1px solid rgba(175, 143, 111, 0.4);
+  background: rgba(175, 143, 111, 0.12);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.admin-field-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.admin-field-row .admin-field {
+  min-width: 160px;
+}
+
+.admin-field__label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.admin-field__input {
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  background: var(--admin-surface-strong);
+  color: var(--admin-text);
+  font-size: 0.92rem;
+  font-family: inherit;
+}
+
+.admin-field__input:focus-visible {
+  outline: 3px solid rgba(163, 29, 29, 0.38);
+  outline-offset: 2px;
+}
+
+.admin-field__textarea {
+  min-height: 160px;
+  padding: 14px 16px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.admin-image-picker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-image-picker__preview {
+  width: 96px;
+  height: 96px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+  background: rgba(116, 81, 45, 0.06);
+}
+
+.admin-image-picker__preview--small {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+}
+
+.admin-image-picker__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.admin-image-picker input[type="file"] {
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+}
+
+.admin-field__hint {
+  margin: 0;
+  color: var(--admin-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.admin-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(116, 81, 45, 0.14);
 }

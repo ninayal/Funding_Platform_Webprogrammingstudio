@@ -36,7 +36,7 @@
 
     gap: 22px;
 
-    align-items: stretch;
+    align-items: start;
 }
 
 
@@ -44,10 +44,14 @@
     display: grid;
 
     gap: 11px;
+
+    align-content: start;
+
+    align-self: start;
 }
 
 
-.amount-field>span {
+.amount-field > span:first-child {
     color:
         var(--red);
 
@@ -55,6 +59,30 @@
         var(--ff-script);
 
     font-size: 31px;
+}
+
+
+.amount-field > .form-error,
+.amount-field > .client-form-error {
+    margin: 0;
+
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-ui);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.45;
+
+    letter-spacing: 0;
+
+    text-transform: none;
+
+    text-align: left;
 }
 
 
