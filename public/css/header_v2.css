@@ -156,7 +156,7 @@ body {
     list-style: none;
     border: 1px solid rgba(254, 249, 225, 0.22);
     border-radius: 999px;
-    background: rgba(157, 154, 148, 0.92);
+    background: #dcd6cc;
     backdrop-filter: blur(10px);
 }
 
@@ -171,7 +171,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: rgba(254, 249, 225, 0.92);
+    color: var(--brown, #74512d);
     font-family: var(--ff-ui, Arial, sans-serif);
     font-size: 16px;
     font-weight: 700;
@@ -185,7 +185,7 @@ body {
 
 .header-v2__links a:hover,
 .header-v2__links a.is-active {
-    color: #a31d1d;
+    color: var(--red, #a31d1d);
 }
 
 .header-v2__links a:hover {
