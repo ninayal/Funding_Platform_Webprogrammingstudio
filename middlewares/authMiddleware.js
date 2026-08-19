@@ -94,8 +94,21 @@ const requireAuth = (
   );
 };
 
+const requestWantsJson = (req) => {
+  const acceptHeader =
+    req.get("accept") || "";
+
+  return (
+    req.xhr ||
+    acceptHeader.includes(
+      "application/json"
+    )
+  );
+};
+
 module.exports = {
   safeRedirectPath,
   attachCurrentUser,
-  requireAuth
+  requireAuth,
+  requestWantsJson
 };

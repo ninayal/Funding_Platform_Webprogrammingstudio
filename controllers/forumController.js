@@ -59,6 +59,8 @@ const getThreadContent = (req, res, next) => {
     return next();
   }
 
+  forumModel.incrementViews(thread.slug);
+
   const decoratedThread = {
     ...thread,
     posts: thread.posts.map((post) => forumModel.decoratePost(post, viewerId)),
