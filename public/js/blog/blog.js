@@ -45,6 +45,28 @@ document.addEventListener("DOMContentLoaded", () => {
     "[data-blog-sort]",
   );
 
+  const sortControl = document.querySelector(
+    "[data-blog-sort-control]",
+  );
+
+  const sortButton = document.querySelector(
+    "[data-blog-sort-button]",
+  );
+
+  const sortLabel = document.querySelector(
+    "[data-blog-sort-label]",
+  );
+
+  const sortMenu = document.querySelector(
+    "[data-blog-sort-menu]",
+  );
+
+  const sortOptions = [
+    ...document.querySelectorAll(
+      "[data-blog-sort-option]",
+    ),
+  ];
+
   const emptyMessage = document.querySelector(
     "#blog-search-empty",
   );
@@ -87,13 +109,140 @@ document.addEventListener("DOMContentLoaded", () => {
     sort: "langco.blog.sort",
   };
 
+
+  /* =========================================
+     CUSTOM SORT DROPDOWN
+  ========================================= */
+
+  const closeSortDropdown = () => {
+    if (
+      !sortControl ||
+      !sortButton ||
+      !sortMenu
+    ) {
+      return;
+    }
+
+    sortControl
+      .querySelector(
+        ".blog-sort-dropdown",
+      )
+      ?.classList.remove(
+        "is-open",
+      );
+
+    sortButton.setAttribute(
+      "aria-expanded",
+      "false",
+    );
+
+    sortMenu.hidden = true;
+  };
+
+
+  const openSortDropdown = () => {
+    if (
+      !sortControl ||
+      !sortButton ||
+      !sortMenu
+    ) {
+      return;
+    }
+
+    sortControl
+      .querySelector(
+        ".blog-sort-dropdown",
+      )
+      ?.classList.add(
+        "is-open",
+      );
+
+    sortButton.setAttribute(
+      "aria-expanded",
+      "true",
+    );
+
+    sortMenu.hidden = false;
+  };
+
+
+  const toggleSortDropdown = () => {
+    if (!sortMenu) {
+      return;
+    }
+
+    if (sortMenu.hidden) {
+      openSortDropdown();
+    } else {
+      closeSortDropdown();
+    }
+  };
+
+
+  const updateSortDropdown = (
+    value,
+  ) => {
+    if (
+      !sortSelect ||
+      !sortLabel
+    ) {
+      return;
+    }
+
+    const selectedOption =
+      sortOptions.find(
+        (option) =>
+          option.dataset
+            .blogSortOption ===
+          value,
+      );
+
+    if (!selectedOption) {
+      return;
+    }
+
+    sortLabel.textContent =
+      selectedOption
+        .querySelector("span")
+        ?.textContent
+        .trim() ||
+      "Newest first";
+
+    sortOptions.forEach(
+      (option) => {
+        const isSelected =
+          option.dataset
+            .blogSortOption ===
+          value;
+
+        option.classList.toggle(
+          "is-selected",
+          isSelected,
+        );
+
+        option.setAttribute(
+          "aria-selected",
+          String(isSelected),
+        );
+      },
+    );
+  };
+
+
+  /* =========================================
+     BLOG HELPERS
+  ========================================= */
+
   const getArchiveCards = () => [
     ...archiveList.querySelectorAll(
       "[data-blog-post]",
     ),
   ];
 
-  const getCategoryValue = (input) => {
+
+  const getCategoryValue = (
+    input,
+  ) => {
     if (!input) {
       return "all";
     }
@@ -108,15 +257,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return input.id
-      .replace("filter-", "")
+      .replace(
+        "filter-",
+        "",
+      )
       .trim()
       .toLowerCase();
   };
 
+
   const getActiveCategory = () => {
     const selectedInput =
       categoryInputs.find(
-        (input) => input.checked,
+        (input) =>
+          input.checked,
       );
 
     return getCategoryValue(
@@ -124,11 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  /*
-   * Inline !important keeps filtering reliable
-   * even if another stylesheet sets display.
-   */
-  const hideElement = (element) => {
+
+  const hideElement = (
+    element,
+  ) => {
     if (!element) {
       return;
     }
@@ -140,7 +293,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const showElement = (element) => {
+
+  const showElement = (
+    element,
+  ) => {
     if (!element) {
       return;
     }
@@ -150,12 +306,15 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const getMatchedArchiveCards = () =>
-    getArchiveCards().filter(
-      (card) =>
-        card.dataset.matchesFilter ===
-        "true",
-    );
+
+  const getMatchedArchiveCards =
+    () =>
+      getArchiveCards().filter(
+        (card) =>
+          card.dataset.matchesFilter ===
+          "true",
+      );
+
 
   const scrollToArchive = () => {
     allPostsSection?.scrollIntoView({
@@ -163,6 +322,11 @@ document.addEventListener("DOMContentLoaded", () => {
       block: "start",
     });
   };
+
+
+  /* =========================================
+     PAGINATION
+  ========================================= */
 
   const renderPageNumbers = (
     totalPages,
@@ -199,7 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
         `Go to page ${page}`,
       );
 
-      if (page === currentPage) {
+      if (
+        page === currentPage
+      ) {
         button.classList.add(
           "is-active",
         );
@@ -216,6 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+
   const applyPagination = () => {
     const archiveCards =
       getArchiveCards();
@@ -229,12 +396,16 @@ document.addEventListener("DOMContentLoaded", () => {
           POSTS_PER_PAGE,
       );
 
-    if (totalPages === 0) {
+    if (
+      totalPages === 0
+    ) {
       currentPage = 1;
     } else if (
-      currentPage > totalPages
+      currentPage >
+      totalPages
     ) {
-      currentPage = totalPages;
+      currentPage =
+        totalPages;
     }
 
     const firstIndex =
@@ -248,7 +419,10 @@ document.addEventListener("DOMContentLoaded", () => {
     archiveCards.forEach(
       (card) => {
         card.hidden = true;
-        hideElement(card);
+
+        hideElement(
+          card,
+        );
       },
     );
 
@@ -260,7 +434,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach(
         (card) => {
           card.hidden = false;
-          showElement(card);
+
+          showElement(
+            card,
+          );
         },
       );
 
@@ -287,7 +464,8 @@ document.addEventListener("DOMContentLoaded", () => {
       totalPages <= 1
     ) {
       if (pagination) {
-        pagination.hidden = true;
+        pagination.hidden =
+          true;
 
         hideElement(
           pagination,
@@ -297,26 +475,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    pagination.hidden = false;
+    pagination.hidden =
+      false;
 
     showElement(
       pagination,
     );
 
-    if (previousPageButton) {
+    if (
+      previousPageButton
+    ) {
       previousPageButton.disabled =
         currentPage === 1;
     }
 
-    if (nextPageButton) {
+    if (
+      nextPageButton
+    ) {
       nextPageButton.disabled =
-        currentPage === totalPages;
+        currentPage ===
+        totalPages;
     }
 
     renderPageNumbers(
       totalPages,
     );
   };
+
+
+  /* =========================================
+     PAGE SECTIONS
+  ========================================= */
 
   const sectionHasVisiblePost = (
     section,
@@ -332,59 +521,76 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     return cards.some(
-      (card) => !card.hidden,
+      (card) =>
+        !card.hidden,
     );
   };
 
-  const resetArchiveSpacing = () => {
-    if (!allPostsSection) {
-      return;
-    }
 
-    allPostsSection.style.removeProperty(
-      "margin-top",
-    );
+  const resetArchiveSpacing =
+    () => {
+      if (!allPostsSection) {
+        return;
+      }
 
-    allPostsSection.style.removeProperty(
-      "padding-top",
-    );
-  };
+      allPostsSection.style
+        .removeProperty(
+          "margin-top",
+        );
 
-  const compactArchiveSpacing = () => {
-    if (!allPostsSection) {
-      return;
-    }
+      allPostsSection.style
+        .removeProperty(
+          "padding-top",
+        );
+    };
 
-    allPostsSection.style.setProperty(
-      "margin-top",
-      "24px",
-      "important",
-    );
 
-    allPostsSection.style.setProperty(
-      "padding-top",
-      "0",
-      "important",
-    );
-  };
+  const compactArchiveSpacing =
+    () => {
+      if (!allPostsSection) {
+        return;
+      }
+
+      allPostsSection.style
+        .setProperty(
+          "margin-top",
+          "24px",
+          "important",
+        );
+
+      allPostsSection.style
+        .setProperty(
+          "padding-top",
+          "0",
+          "important",
+        );
+    };
+
 
   const updatePageSections = (
     activeCategory,
   ) => {
     const categoryIsFiltered =
-      activeCategory !== "all";
+      activeCategory !==
+      "all";
 
     const isLaterPage =
       currentPage > 1;
 
-    if (categoryIsFiltered) {
-      /*
-       * Category views show only matching
-       * archive cards.
-       */
-      hideElement(leadSection);
-      hideElement(featuredSection);
-      hideElement(archiveHeading);
+    if (
+      categoryIsFiltered
+    ) {
+      hideElement(
+        leadSection,
+      );
+
+      hideElement(
+        featuredSection,
+      );
+
+      hideElement(
+        archiveHeading,
+      );
 
       compactArchiveSpacing();
 
@@ -392,23 +598,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (isLaterPage) {
-      /*
-       * Later pages hide repeated lead and
-       * featured sections but retain sorting.
-       */
-      hideElement(leadSection);
-      hideElement(featuredSection);
-      showElement(archiveHeading);
+      hideElement(
+        leadSection,
+      );
+
+      hideElement(
+        featuredSection,
+      );
+
+      showElement(
+        archiveHeading,
+      );
 
       resetArchiveSpacing();
 
       return;
     }
 
-    /*
-     * Restore the complete page structure
-     * on page 1 when All is selected.
-     */
     if (
       sectionHasVisiblePost(
         leadSection,
@@ -443,6 +649,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resetArchiveSpacing();
   };
+
+
+  /* =========================================
+     FILTERING
+  ========================================= */
 
   const applyFilters = (
     {
@@ -480,7 +691,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .toLowerCase();
 
         const matchesCategory =
-          activeCategory === "all" ||
+          activeCategory ===
+            "all" ||
           cardCategory ===
             activeCategory;
 
@@ -498,10 +710,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ? "true"
             : "false";
 
-        /*
-         * Archive cards are handled by
-         * applyPagination().
-         */
         if (
           archiveList.contains(
             card,
@@ -542,6 +750,11 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
+
+  /* =========================================
+     SORTING
+  ========================================= */
+
   const applySort = () => {
     if (!sortSelect) {
       return;
@@ -551,7 +764,10 @@ document.addEventListener("DOMContentLoaded", () => {
       getArchiveCards();
 
     cards.sort(
-      (cardA, cardB) => {
+      (
+        cardA,
+        cardB,
+      ) => {
         const dateA =
           new Date(
             cardA.dataset.date ||
@@ -568,7 +784,10 @@ document.addEventListener("DOMContentLoaded", () => {
           sortSelect.value ===
           "oldest"
         ) {
-          return dateA - dateB;
+          return (
+            dateA -
+            dateB
+          );
         }
 
         if (
@@ -587,12 +806,16 @@ document.addEventListener("DOMContentLoaded", () => {
             titleB,
             "en",
             {
-              sensitivity: "base",
+              sensitivity:
+                "base",
             },
           );
         }
 
-        return dateB - dateA;
+        return (
+          dateB -
+          dateA
+        );
       },
     );
 
@@ -610,57 +833,74 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 
-  const restoreStoredState = () => {
-    const storedSearch =
-      localStorage.getItem(
-        storageKeys.search,
-      );
 
-    const storedCategory =
-      localStorage.getItem(
-        storageKeys.category,
-      );
+  /* =========================================
+     RESTORE STORED STATE
+  ========================================= */
 
-    const storedSort =
-      localStorage.getItem(
-        storageKeys.sort,
-      );
-
-    if (storedSearch !== null) {
-      searchInput.value =
-        storedSearch;
-    }
-
-    if (storedCategory) {
-      const matchingInput =
-        categoryInputs.find(
-          (input) =>
-            getCategoryValue(
-              input,
-            ) ===
-            storedCategory,
+  const restoreStoredState =
+    () => {
+      const storedSearch =
+        localStorage.getItem(
+          storageKeys.search,
         );
 
-      if (matchingInput) {
-        matchingInput.checked =
-          true;
-      }
-    }
+      const storedCategory =
+        localStorage.getItem(
+          storageKeys.category,
+        );
 
-    if (
-      sortSelect &&
-      [
-        "newest",
-        "oldest",
-        "title",
-      ].includes(
-        storedSort,
-      )
-    ) {
-      sortSelect.value =
-        storedSort;
-    }
-  };
+      const storedSort =
+        localStorage.getItem(
+          storageKeys.sort,
+        );
+
+      if (
+        storedSearch !== null
+      ) {
+        searchInput.value =
+          storedSearch;
+      }
+
+      if (
+        storedCategory
+      ) {
+        const matchingInput =
+          categoryInputs.find(
+            (input) =>
+              getCategoryValue(
+                input,
+              ) ===
+              storedCategory,
+          );
+
+        if (
+          matchingInput
+        ) {
+          matchingInput.checked =
+            true;
+        }
+      }
+
+      if (
+        sortSelect &&
+        [
+          "newest",
+          "oldest",
+          "title",
+        ].includes(
+          storedSort,
+        )
+      ) {
+        sortSelect.value =
+          storedSort;
+      }
+    };
+
+
+  /* =========================================
+     SEARCH EVENTS
+  ========================================= */
 
   searchForm?.addEventListener(
     "submit",
@@ -670,6 +910,7 @@ document.addEventListener("DOMContentLoaded", () => {
       applyFilters();
     },
   );
+
 
   searchForm?.addEventListener(
     "reset",
@@ -684,12 +925,18 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
+
   searchInput.addEventListener(
     "input",
     () => {
       applyFilters();
     },
   );
+
+
+  /* =========================================
+     CATEGORY EVENTS
+  ========================================= */
 
   categoryInputs.forEach(
     (input) => {
@@ -704,10 +951,19 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
+
+  /* =========================================
+     SORT EVENTS
+  ========================================= */
+
   sortSelect?.addEventListener(
     "change",
     () => {
       currentPage = 1;
+
+      updateSortDropdown(
+        sortSelect.value,
+      );
 
       applySort();
 
@@ -717,10 +973,110 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
+
+  sortButton?.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
+
+      toggleSortDropdown();
+    },
+  );
+
+
+  sortOptions.forEach(
+    (option) => {
+      option.addEventListener(
+        "click",
+        (event) => {
+          event.stopPropagation();
+
+          if (!sortSelect) {
+            return;
+          }
+
+          const value =
+            option.dataset
+              .blogSortOption;
+
+          if (!value) {
+            return;
+          }
+
+          /*
+           * Update the hidden
+           * real select.
+           */
+          sortSelect.value =
+            value;
+
+          /*
+           * Trigger the existing
+           * sorting logic.
+           */
+          sortSelect.dispatchEvent(
+            new Event(
+              "change",
+              {
+                bubbles: true,
+              },
+            ),
+          );
+
+          closeSortDropdown();
+        },
+      );
+    },
+  );
+
+
+  /*
+   * Close when clicking
+   * outside the dropdown.
+   */
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (
+        sortControl &&
+        !sortControl.contains(
+          event.target,
+        )
+      ) {
+        closeSortDropdown();
+      }
+    },
+  );
+
+
+  /*
+   * ESC closes dropdown.
+   */
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key ===
+        "Escape"
+      ) {
+        closeSortDropdown();
+
+        sortButton?.focus();
+      }
+    },
+  );
+
+
+  /* =========================================
+     PAGINATION EVENTS
+  ========================================= */
+
   previousPageButton?.addEventListener(
     "click",
     () => {
-      if (currentPage <= 1) {
+      if (
+        currentPage <= 1
+      ) {
         return;
       }
 
@@ -736,6 +1092,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
+
   nextPageButton?.addEventListener(
     "click",
     () => {
@@ -747,7 +1104,8 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
       if (
-        currentPage >= totalPages
+        currentPage >=
+        totalPages
       ) {
         return;
       }
@@ -763,6 +1121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollToArchive();
     },
   );
+
 
   pageNumbers?.addEventListener(
     "click",
@@ -803,13 +1162,25 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
+
+  /* =========================================
+     INITIAL LOAD
+  ========================================= */
+
   restoreStoredState();
+
+  updateSortDropdown(
+    sortSelect?.value ||
+    "newest",
+  );
+
+  closeSortDropdown();
 
   applySort();
 
   applyFilters();
 
   console.log(
-    "Blog filtering and pagination loaded successfully.",
+    "Blog filtering, custom sorting and pagination loaded successfully.",
   );
 });
