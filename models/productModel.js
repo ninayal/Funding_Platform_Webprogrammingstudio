@@ -1,672 +1,369 @@
 "use strict";
 
-const products = require(
-  "../data/products"
-);
+const products = require("../data/products");
+const reviewModel = require("./reviewModel");
 
-const reviewModel = require(
-  "./reviewModel"
-);
+const formatCurrency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(Number(value) || 0);
 
-const cloneProduct = (
-  product
-) => ({
-  ...product
-});
+const createStars = (rating) => {
+  const rounded = Math.max(
+    0,
+    Math.min(5, Math.round(Number(rating) || 0)),
+  );
 
-const toArray = (
-  value
-) => {
+  return "★".repeat(rounded) + "☆".repeat(5 - rounded);
+};
+
+const toArray = (value) => {
   if (!value) {
     return [];
   }
 
-  return (
-    Array.isArray(value)
-      ? value
-      : [value]
-  ).map(String);
+  return (Array.isArray(value) ? value : [value]).map(String);
 };
 
-const formatCurrency = (
-  value
-) =>
-  new Intl.NumberFormat(
-    "en-US",
-    {
-      style:
-        "currency",
-      currency:
-        "USD"
-    }
-  ).format(
-    Number(value) || 0
-  );
+const decorateProduct = (product, statsMap) => {
+  const stats = statsMap[String(product.id)] || {
+    averageRating: 0,
+    totalReviews: 0,
+  };
 
-const createStars = (
-  rating
-) => {
-  const roundedRating =
-    Math.max(
-      0,
-      Math.min(
-        5,
-        Math.round(
-          Number(rating) || 0
-        )
-      )
-    );
-
-  return (
-    "★".repeat(
-      roundedRating
-    ) +
-    "☆".repeat(
-      5 - roundedRating
-    )
-  );
-};
-
-const decorateProduct = (
-  product,
-  statsMap
-) => {
-  const reviewStats =
-    statsMap[
-      String(product.id)
-    ] || {
-      averageRating:
-        0,
-      totalReviews:
-        0
-    };
-
-  const href =
-    `/products/${product.slug}`;
+  const href = `/products/${product.slug}`;
 
   return {
-    ...cloneProduct(product),
-
+    ...product,
     href,
-
-    reviewHref:
-      `${href}?tab=review`,
-
-    priceDisplay:
-      formatCurrency(
-        product.price
-      ),
-
-    priceFormatted:
-      formatCurrency(
-        product.price
-      ),
-
+    reviewHref: `${href}?tab=review`,
+    priceDisplay: formatCurrency(product.price),
+    priceFormatted: formatCurrency(product.price),
     oldPriceDisplay:
       product.oldPrice == null
         ? ""
-        : formatCurrency(
-            product.oldPrice
-          ),
-
+        : formatCurrency(product.oldPrice),
     oldPriceFormatted:
       product.oldPrice == null
         ? null
-        : formatCurrency(
-            product.oldPrice
-          ),
-
-    rating:
-      reviewStats.averageRating,
-
-    reviewCount:
-      reviewStats.totalReviews,
-
-    ratingStars:
-      createStars(
-        reviewStats.averageRating
-      ),
-
-    imageAlt:
-      product.alt ||
-      product.name
+        : formatCurrency(product.oldPrice),
+    rating: stats.averageRating,
+    reviewCount: stats.totalReviews,
+    ratingStars: createStars(stats.averageRating),
+    imageAlt: product.alt || product.name,
   };
 };
 
 const getDecoratedProducts = () => {
-  const statsMap =
-    reviewModel.getAllReviewStats();
+  const statsMap = reviewModel.getAllReviewStats();
 
-  return products.map(
-    (product) =>
-      decorateProduct(
-        product,
-        statsMap
-      )
+  return products.map((product) =>
+    decorateProduct(product, statsMap),
   );
 };
 
-const getSelectedFilters = (
-  query = {}
-) => ({
-  price:
-    toArray(
-      query.price
-    ),
-
-  maker:
-    toArray(
-      query.maker
-    ),
-
-  material:
-    toArray(
-      query.material
-    ),
-
-  availability:
-    toArray(
-      query.availability
-    ),
-
-  rating:
-    toArray(
-      query.rating
-    )
+const getSelectedFilters = (query = {}) => ({
+  price: toArray(query.price),
+  maker: toArray(query.maker),
+  material: toArray(query.material),
+  availability: toArray(query.availability),
+  rating: toArray(query.rating),
 });
 
-const matchesPrice = (
-  price,
-  selectedPrices
-) => {
-  if (
-    !selectedPrices.length
-  ) {
+const matchesPrice = (price, selected) => {
+  if (!selected.length) {
     return true;
   }
 
-  return selectedPrices.some(
-    (range) => {
-      if (
-        range === "under-25"
-      ) {
-        return price < 25;
-      }
+  return selected.some((range) => {
+    if (range === "under-25") {
+      return price < 25;
+    }
 
-      if (
-        range === "25-50"
-      ) {
-        return (
-          price >= 25 &&
-          price < 50
-        );
-      }
+    if (range === "25-50") {
+      return price >= 25 && price < 50;
+    }
 
-      if (
-        range === "50-100"
-      ) {
-        return (
-          price >= 50 &&
-          price < 100
-        );
-      }
+    if (range === "50-100") {
+      return price >= 50 && price < 100;
+    }
 
-      if (
-        range === "100-plus"
-      ) {
-        return price >= 100;
-      }
+    if (range === "100-plus") {
+      return price >= 100;
+    }
 
+    return false;
+  });
+};
+
+const matchesAvailability = (stock, selected) => {
+  if (!selected.length) {
+    return true;
+  }
+
+  return selected.some((value) => {
+    if (value === "in-stock") {
+      return stock > 5;
+    }
+
+    if (value === "low-stock") {
+      return stock > 0 && stock <= 5;
+    }
+
+    return false;
+  });
+};
+
+const matchesRating = (rating, selected) => {
+  if (!selected.length) {
+    return true;
+  }
+
+  return selected.some((value) => {
+    const minimum = Number(value);
+
+    if (!Number.isFinite(minimum)) {
       return false;
     }
-  );
+
+    return minimum === 5
+      ? rating === 5
+      : rating >= minimum;
+  });
 };
 
-const matchesAvailability = (
-  stock,
-  selectedAvailability
-) => {
-  if (
-    !selectedAvailability.length
-  ) {
-    return true;
-  }
+const getFilteredProducts = (filters) =>
+  getDecoratedProducts().filter((product) => {
+    const makerMatches =
+      !filters.maker.length ||
+      filters.maker.includes(product.maker);
 
-  return selectedAvailability.some(
-    (availability) => {
-      if (
-        availability ===
-        "in-stock"
-      ) {
-        return stock > 5;
-      }
+    const materialMatches =
+      !filters.material.length ||
+      filters.material.includes(product.material);
 
-      if (
-        availability ===
-        "low-stock"
-      ) {
-        return (
-          stock > 0 &&
-          stock <= 5
-        );
-      }
-
-      return false;
-    }
-  );
-};
-
-const matchesRating = (
-  rating,
-  selectedRatings
-) => {
-  if (
-    !selectedRatings.length
-  ) {
-    return true;
-  }
-
-  return selectedRatings.some(
-    (value) => {
-      const minimumRating =
-        Number(value);
-
-      if (
-        !Number.isFinite(
-          minimumRating
-        )
-      ) {
-        return false;
-      }
-
-      if (
-        minimumRating === 5
-      ) {
-        return rating === 5;
-      }
-
-      return (
-        rating >=
-        minimumRating
-      );
-    }
-  );
-};
-
-const getFilteredProducts = (
-  selectedFilters
-) =>
-  getDecoratedProducts()
-    .filter(
-      (product) => {
-        const makerMatches =
-          !selectedFilters
-            .maker.length ||
-          selectedFilters
-            .maker.includes(
-              product.maker
-            );
-
-        const materialMatches =
-          !selectedFilters
-            .material.length ||
-          selectedFilters
-            .material.includes(
-              product.material
-            );
-
-        return (
-          matchesPrice(
-            product.price,
-            selectedFilters.price
-          ) &&
-          makerMatches &&
-          materialMatches &&
-          matchesAvailability(
-            product.stock,
-            selectedFilters
-              .availability
-          ) &&
-          matchesRating(
-            product.rating,
-            selectedFilters.rating
-          )
-        );
-      }
+    return (
+      matchesPrice(product.price, filters.price) &&
+      makerMatches &&
+      materialMatches &&
+      matchesAvailability(
+        product.stock,
+        filters.availability,
+      ) &&
+      matchesRating(product.rating, filters.rating)
     );
+  });
 
 const getAllProducts = () =>
   getDecoratedProducts();
 
-const getProductById = (
-  productId
-) =>
-  getDecoratedProducts()
-    .find(
-      (product) =>
-        String(product.id) ===
-        String(productId)
-    ) || null;
+const getProductById = (productId) =>
+  getDecoratedProducts().find(
+    (product) =>
+      String(product.id) === String(productId),
+  ) || null;
 
-const getProductBySlug = (
-  slug
-) =>
-  getDecoratedProducts()
-    .find(
-      (product) =>
-        String(product.slug) ===
-        String(slug)
-    ) || null;
+const getProductBySlug = (slug) =>
+  getDecoratedProducts().find(
+    (product) =>
+      String(product.slug) === String(slug),
+  ) || null;
 
-const getProductByLegacyNumber = (
-  legacyNumber
-) => {
-  const number =
-    Number(legacyNumber);
+const getProductByLegacyNumber = (legacyNumber) => {
+  const number = Number(legacyNumber);
 
-  if (
-    !Number.isInteger(number)
-  ) {
+  if (!Number.isInteger(number)) {
     return null;
   }
 
   return (
-    getDecoratedProducts()
-      .find(
-        (product) =>
-          product.featuredOrder ===
-          number
-      ) || null
+    getDecoratedProducts().find(
+      (product) => product.featuredOrder === number,
+    ) || null
   );
 };
 
 const getRecommendedProducts = (
   excludedIds = [],
-  limit = 4
+  limit = 4,
 ) => {
-  const excluded =
-    new Set(
-      excludedIds.map(String)
-    );
+  const excluded = new Set(
+    excludedIds.map(String),
+  );
 
   return getDecoratedProducts()
     .filter(
       (product) =>
         product.stock > 0 &&
-        !excluded.has(
-          String(product.id)
-        )
+        !excluded.has(String(product.id)),
     )
     .sort(
-      (first, second) =>
-        (
-          second.featuredOrder ||
-          0
-        ) -
-        (
-          first.featuredOrder ||
-          0
-        )
+      (a, b) =>
+        (b.featuredOrder || 0) -
+        (a.featuredOrder || 0),
     )
-    .slice(
-      0,
-      limit
-    );
+    .slice(0, limit);
 };
 
 const getCategories = () => {
-  const categoryMap =
-    new Map();
+  const categories = new Map();
 
-  products.forEach(
-    (product) => {
-      if (
-        !categoryMap.has(
-          product.category
-        )
-      ) {
-        categoryMap.set(
-          product.category,
-          {
-            id:
-              product.category,
-
-            label:
-              product.categoryLabel
-          }
-        );
-      }
+  products.forEach((product) => {
+    if (!categories.has(product.category)) {
+      categories.set(product.category, {
+        id: product.category,
+        label: product.categoryLabel,
+      });
     }
-  );
+  });
 
   return [
     {
-      id:
-        "all",
-      label:
-        "All"
+      id: "all",
+      label: "All",
     },
-    ...categoryMap.values()
+    ...categories.values(),
   ];
 };
 
 const getCategoryCounts = () => {
   const counts = {
-    all:
-      products.length
+    all: products.length,
   };
 
-  products.forEach(
-    (product) => {
-      counts[
-        product.category
-      ] =
-        (
-          counts[
-            product.category
-          ] || 0
-        ) + 1;
-    }
-  );
+  products.forEach((product) => {
+    counts[product.category] =
+      (counts[product.category] || 0) + 1;
+  });
 
   return counts;
 };
 
 const getFilterOptions = () => ({
   makers: [
-    ...new Set(
-      products.map(
-        (product) =>
-          product.maker
-      )
-    )
+    ...new Set(products.map((product) => product.maker)),
   ].sort(),
 
   materials: [
     ...new Set(
-      products.map(
-        (product) =>
-          product.material
-      )
-    )
+      products.map((product) => product.material),
+    ),
   ].sort(),
 
   availability: [
     {
-      value:
-        "in-stock",
-      label:
-        "In stock"
+      value: "in-stock",
+      label: "In stock",
     },
     {
-      value:
-        "low-stock",
-      label:
-        "Low stock"
-    }
+      value: "low-stock",
+      label: "Low stock",
+    },
   ],
 
   ratings: [
     {
-      value:
-        "1",
-      label:
-        "1 star & up"
+      value: "1",
+      label: "1 star & up",
     },
     {
-      value:
-        "2",
-      label:
-        "2 stars & up"
+      value: "2",
+      label: "2 stars & up",
     },
     {
-      value:
-        "3",
-      label:
-        "3 stars & up"
+      value: "3",
+      label: "3 stars & up",
     },
     {
-      value:
-        "4",
-      label:
-        "4 stars & up"
+      value: "4",
+      label: "4 stars & up",
     },
     {
-      value:
-        "5",
-      label:
-        "5 stars only"
-    }
-  ]
+      value: "5",
+      label: "5 stars only",
+    },
+  ],
 });
 
 const getSortOptions = () => [
   {
-    id:
-      "featured",
-    label:
-      "Best Sellers"
+    id: "featured",
+    label: "Best Sellers",
   },
   {
-    id:
-      "price-low",
-    label:
-      "Price: Low to high"
+    id: "price-low",
+    label: "Price: Low to high",
   },
   {
-    id:
-      "price-high",
-    label:
-      "Price: High to low"
+    id: "price-high",
+    label: "Price: High to low",
   },
   {
-    id:
-      "name",
-    label:
-      "Name: A–Z"
-  }
+    id: "name",
+    label: "Name: A–Z",
+  },
 ];
 
-const getProductsPageData = (
-  query = {}
-) => {
+const getProductsPageData = (query = {}) => {
   const selectedFilters =
-    getSelectedFilters(
-      query
-    );
+    getSelectedFilters(query);
 
   return {
-    pageTitle:
-      "Shop All",
-
+    pageTitle: "Shop All",
     products:
-      getFilteredProducts(
-        selectedFilters
-      ),
-
-    categories:
-      getCategories(),
-
-    categoryCounts:
-      getCategoryCounts(),
-
-    filterOptions:
-      getFilterOptions(),
-
-    sortOptions:
-      getSortOptions(),
-
-    selectedFilters
+      getFilteredProducts(selectedFilters),
+    categories: getCategories(),
+    categoryCounts: getCategoryCounts(),
+    filterOptions: getFilterOptions(),
+    sortOptions: getSortOptions(),
+    selectedFilters,
   };
 };
 
-const getFeaturedProducts = (
-  limit = 6
-) =>
+const getFeaturedProducts = (limit = 6) =>
   getDecoratedProducts()
-    .filter(
-      (product) =>
-        product.stock > 0
-    )
+    .filter((product) => product.stock > 0)
     .sort(
-      (first, second) =>
-        (
-          first.featuredOrder ||
-          999
-        ) -
-        (
-          second.featuredOrder ||
-          999
-        )
+      (a, b) =>
+        (a.featuredOrder || 999) -
+        (b.featuredOrder || 999),
     )
-    .slice(
-      0,
-      limit
-    );
+    .slice(0, limit);
 
 const getRelatedProducts = (
   currentProductId,
-  limit = 3
+  limit = 3,
 ) => {
   const allProducts =
     getDecoratedProducts();
 
-  const currentProduct =
-    allProducts.find(
-      (product) =>
-        String(product.id) ===
-        String(currentProductId)
-    );
+  const currentProduct = allProducts.find(
+    (product) =>
+      String(product.id) ===
+      String(currentProductId),
+  );
 
   if (!currentProduct) {
     return [];
   }
 
-  const sameCategory =
-    allProducts.filter(
-      (product) =>
-        product.id !==
-          currentProduct.id &&
-        product.category ===
-          currentProduct.category
-    );
+  const sameCategory = allProducts.filter(
+    (product) =>
+      product.id !== currentProduct.id &&
+      product.category === currentProduct.category,
+  );
 
-  const fallback =
-    allProducts.filter(
-      (product) =>
-        product.id !==
-          currentProduct.id &&
-        product.category !==
-          currentProduct.category
-    );
+  const fallback = allProducts.filter(
+    (product) =>
+      product.id !== currentProduct.id &&
+      product.category !== currentProduct.category,
+  );
 
   return [
     ...sameCategory,
-    ...fallback
-  ].slice(
-    0,
-    limit
-  );
+    ...fallback,
+  ].slice(0, limit);
 };
 
 module.exports = {
@@ -681,90 +378,5 @@ module.exports = {
   getProductsPageData,
   getRecommendedProducts,
   getRelatedProducts,
-  getSortOptions
-};
-const fs = require("fs");
-const path = require("path");
-
-const productsFilePath = path.join(__dirname, "..", "data", "products.json");
-
-const CATEGORIES = [
-  { value: "ceramics", label: "Ceramics" },
-  { value: "painting", label: "Painting" },
-  { value: "brocade", label: "Brocade" },
-  { value: "bamboo", label: "Bamboo" },
-  { value: "wood", label: "Wood" },
-  { value: "incense", label: "Incense" },
-  { value: "stone", label: "Fengshui Stone" },
-  { value: "waterpuppet", label: "Water Puppets" },
-];
-
-const readProducts = () => {
-  const raw = fs.readFileSync(productsFilePath, "utf-8");
-  return JSON.parse(raw);
-};
-
-const writeProducts = (products) => {
-  fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
-};
-
-const getAllProducts = () => {
-  return readProducts().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-};
-
-const findProductById = (id) => {
-  return readProducts().find((product) => product.id === id) || null;
-};
-
-const createProduct = (data) => {
-  const products = readProducts();
-  const now = new Date().toISOString();
-  const product = {
-    id: `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    ...data,
-    createdAt: now,
-    updatedAt: now,
-  };
-  products.push(product);
-  writeProducts(products);
-  return product;
-};
-
-const updateProduct = (id, updates) => {
-  const products = readProducts();
-  const index = products.findIndex((product) => product.id === id);
-
-  if (index === -1) {
-    return null;
-  }
-
-  products[index] = {
-    ...products[index],
-    ...updates,
-    updatedAt: new Date().toISOString(),
-  };
-  writeProducts(products);
-  return products[index];
-};
-
-const deleteProduct = (id) => {
-  const products = readProducts();
-  const index = products.findIndex((product) => product.id === id);
-
-  if (index === -1) {
-    return null;
-  }
-
-  const [deleted] = products.splice(index, 1);
-  writeProducts(products);
-  return deleted;
-};
-
-module.exports = {
-  CATEGORIES,
-  getAllProducts,
-  findProductById,
-  createProduct,
-  updateProduct,
-  deleteProduct,
+  getSortOptions,
 };
