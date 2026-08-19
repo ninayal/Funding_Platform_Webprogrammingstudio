@@ -1,77 +1,41 @@
 "use strict";
 
-const crypto = require(
-  "crypto"
-);
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const fs = require(
-  "fs"
-);
+const {
+  hashPassword,
+  verifyPassword,
+} = require("../utils/passwordUtils");
 
-const path = require(
-  "path"
+const USERS_FILE = path.join(
+  __dirname,
+  "../data/users.json",
 );
-
-const USERS_FILE =
-  path.join(
-    __dirname,
-    "../data/users.json"
-  );
 
 const DEFAULT_PREFERENCES = {
-  emailUpdates:
-    true,
-
-  orderNotifications:
-    true,
-
-  communityReplies:
-    false,
-
-  promotionalUpdates:
-    true,
-
-  saveShippingInformation:
-    true,
-
-  internationalShippingDefault:
-    false,
-
-  productCareGuides:
-    true
+  emailUpdates: true,
+  orderNotifications: true,
+  communityReplies: false,
+  promotionalUpdates: true,
+  saveShippingInformation: true,
+  internationalShippingDefault: false,
+  productCareGuides: true,
 };
 
-const clean = (
-  value
-) =>
-  String(value || "")
-    .trim();
+const clean = (value) =>
+  String(value || "").trim();
 
-const normalise = (
-  value
-) =>
-  clean(value)
-    .toLowerCase();
+const normalise = (value) =>
+  clean(value).toLowerCase();
 
 const ensureUsersFile = () => {
-  fs.mkdirSync(
-    path.dirname(
-      USERS_FILE
-    ),
-    {
-      recursive: true
-    }
-  );
-
-  if (
-    !fs.existsSync(
-      USERS_FILE
-    )
-  ) {
+  if (!fs.existsSync(USERS_FILE)) {
     fs.writeFileSync(
       USERS_FILE,
       "[]\n",
-      "utf8"
+      "utf8",
     );
   }
 };
@@ -80,496 +44,263 @@ const readUsers = () => {
   ensureUsersFile();
 
   try {
-    const users =
-      JSON.parse(
-        fs.readFileSync(
-          USERS_FILE,
-          "utf8"
-        )
-      );
+    const data = JSON.parse(
+      fs.readFileSync(USERS_FILE, "utf8"),
+    );
 
-    return Array.isArray(users)
-      ? users
-      : [];
+    return Array.isArray(data) ? data : [];
   } catch {
     return [];
   }
 };
 
-const writeUsers = (
-  users
-) => {
-  ensureUsersFile();
-
-  const temporaryFile =
-    `${USERS_FILE}.tmp`;
+const writeUsers = (users) => {
+  const tempFile = `${USERS_FILE}.tmp`;
 
   fs.writeFileSync(
-    temporaryFile,
-    `${JSON.stringify(
-      users,
-      null,
-      2
-    )}\n`,
-    "utf8"
+    tempFile,
+    `${JSON.stringify(users, null, 2)}\n`,
+    "utf8",
   );
 
-  fs.renameSync(
-    temporaryFile,
-    USERS_FILE
-  );
-};
-
-const hashPassword = (
-  password
-) => {
-  const salt =
-    crypto.randomBytes(16);
-
-  const hash =
-    crypto.scryptSync(
-      String(password),
-      salt,
-      64
-    );
-
-  return [
-    "scrypt",
-    salt.toString("hex"),
-    hash.toString("hex")
-  ].join("$");
-};
-
-const verifyCurrentHash = (
-  password,
-  storedValue
-) => {
-  const [
-    algorithm,
-    saltValue,
-    hashValue
-  ] =
-    String(
-      storedValue || ""
-    ).split("$");
-
-  if (
-    algorithm !== "scrypt" ||
-    !saltValue ||
-    !hashValue
-  ) {
-    return false;
-  }
-
-  const calculatedHash =
-    crypto.scryptSync(
-      String(password),
-      Buffer.from(
-        saltValue,
-        "hex"
-      ),
-      64
-    );
-
-  const storedHash =
-    Buffer.from(
-      hashValue,
-      "hex"
-    );
-
-  return (
-    calculatedHash.length ===
-    storedHash.length &&
-    crypto.timingSafeEqual(
-      calculatedHash,
-      storedHash
-    )
-  );
-};
-
-const verifyLegacyHash = (
-  password,
-  storedValue
-) => {
-  const [
-    saltValue,
-    hashValue
-  ] =
-    String(
-      storedValue || ""
-    ).split(":");
-
-  if (
-    !saltValue ||
-    !hashValue
-  ) {
-    return false;
-  }
-
-  const calculatedHash =
-    crypto.scryptSync(
-      String(password),
-      saltValue,
-      64
-    );
-
-  const storedHash =
-    Buffer.from(
-      hashValue,
-      "hex"
-    );
-
-  return (
-    calculatedHash.length ===
-    storedHash.length &&
-    crypto.timingSafeEqual(
-      calculatedHash,
-      storedHash
-    )
-  );
-};
-
-const verifyPassword = (
-  password,
-  storedValue
-) => {
-  try {
-    return String(
-      storedValue || ""
-    ).startsWith(
-      "scrypt$"
-    )
-      ? verifyCurrentHash(
-        password,
-        storedValue
-      )
-      : verifyLegacyHash(
-        password,
-        storedValue
-      );
-  } catch {
-    return false;
-  }
+  fs.renameSync(tempFile, USERS_FILE);
 };
 
 const createInitials = (
   firstname,
-  lastname
-) =>
-  [
+  lastname,
+  username,
+) => {
+  const initials = [
     clean(firstname)[0],
-    clean(lastname)[0]
+    clean(lastname)[0],
   ]
     .filter(Boolean)
     .join("")
     .toUpperCase();
 
-const toPublicUser = (
-  user
-) => {
+  return (
+    initials ||
+    clean(username)
+      .slice(0, 2)
+      .toUpperCase()
+  );
+};
+
+const isAdminRole = (role) =>
+  normalise(role) === "admin";
+
+const toPublicUser = (user) => {
   if (!user) {
     return null;
   }
 
+  const name =
+    `${user.firstname || ""} ${user.lastname || ""}`
+      .trim() ||
+    user.name ||
+    user.username ||
+    "";
+
   return {
-    id:
-      user.id,
-
-    firstname:
-      user.firstname || "",
-
-    lastname:
-      user.lastname || "",
-
-    name:
-      `${user.firstname || ""} ${user.lastname || ""}`
-        .trim(),
-
-    username:
-      user.username || "",
-
-    email:
-      user.email || "",
-
-    initials:
-      createInitials(
-        user.firstname,
-        user.lastname
-      ),
-
-    role:
-      user.role || "User",
-
-    gender:
-      user.gender || "",
-
-    description:
-      user.description || "",
-
-    phone:
-      user.phone || "",
-
-    location:
-      user.location || "",
-
-    postalCode:
-      user.postalCode || "",
-
-    address:
-      user.address || "",
-
+    id: user.id,
+    firstname: user.firstname || "",
+    lastname: user.lastname || "",
+    name,
+    username: user.username || "",
+    email: user.email || "",
+    initials: createInitials(
+      user.firstname,
+      user.lastname,
+      user.username,
+    ),
+    role: user.role || "user",
+    status: user.status || "active",
+    gender: user.gender || "",
+    description: user.description || "",
+    phone: user.phone || "",
+    location: user.location || "",
+    postalCode: user.postalCode || "",
+    address: user.address || "",
     about:
       user.about ||
       user.description ||
       "",
-
     avatar:
       user.avatar ||
       "/images/profile.png",
-
     tier:
       user.tier ||
       "Craft Collector",
-
     preferences: {
       ...DEFAULT_PREFERENCES,
-      ...(
-        user.preferences || {}
-      )
+      ...(user.preferences || {}),
     },
-
+    joinDate:
+      user.joinDate ||
+      user.createdAt ||
+      "",
+    requiresPasswordChange:
+      Boolean(user.requiresPasswordChange),
     createdAt:
-      user.createdAt || "",
-
+      user.createdAt ||
+      user.joinDate ||
+      "",
     updatedAt:
       user.updatedAt ||
       user.createdAt ||
-      ""
+      user.joinDate ||
+      "",
   };
 };
 
-const findIndexById = (
-  users,
-  userId
-) =>
-  users.findIndex(
+const findUserById = (id) =>
+  readUsers().find(
     (user) =>
-      String(user.id) ===
-      String(userId)
+      String(user.id) === String(id),
+  ) || null;
+
+const findUserByEmail = (email) => {
+  const target = normalise(email);
+
+  return (
+    readUsers().find(
+      (user) =>
+        normalise(user.email) === target,
+    ) || null
+  );
+};
+
+const findById = (id) =>
+  toPublicUser(
+    findUserById(id),
   );
 
-const findById = (
-  userId
-) => {
-  const users =
-    readUsers();
-
-  const index =
-    findIndexById(
-      users,
-      userId
-    );
-
-  return index === -1
-    ? null
-    : toPublicUser(
-      users[index]
-    );
-};
+const getAllUsers = () =>
+  readUsers().map(toPublicUser);
 
 const authenticate = (
   email,
-  password
+  password,
 ) => {
-  const user =
-    readUsers().find(
-      (candidate) =>
-        normalise(
-          candidate.email
-        ) ===
-        normalise(email)
-    );
+  const user = findUserByEmail(email);
 
   if (
     !user ||
+    user.status === "blocked" ||
     !verifyPassword(
       password,
-      user.passwordHash
+      user.passwordHash,
     )
   ) {
     return {
-      ok:
-        false,
-      reason:
-        "invalid-credentials"
+      ok: false,
+      reason: "invalid-credentials",
     };
   }
 
   return {
-    ok:
-      true,
-    user:
-      toPublicUser(user)
+    ok: true,
+    user: toPublicUser(user),
   };
 };
 
-const createUser = (
-  values
-) => {
-  const users =
-    readUsers();
+const createUser = (values) => {
+  const users = readUsers();
 
   const email =
-    normalise(
-      values.email
-    );
+    normalise(values.email);
 
   const username =
-    normalise(
-      values.username
-    );
+    clean(values.username);
 
   if (
     users.some(
       (user) =>
-        normalise(
-          user.email
-        ) === email
+        normalise(user.email) === email,
     )
   ) {
     return {
-      ok:
-        false,
-      reason:
-        "email-exists"
+      ok: false,
+      reason: "email-exists",
     };
   }
 
   if (
     users.some(
       (user) =>
-        normalise(
-          user.username
-        ) === username
+        normalise(user.username) ===
+        normalise(username),
     )
   ) {
     return {
-      ok:
-        false,
-      reason:
-        "username-exists"
+      ok: false,
+      reason: "username-exists",
     };
   }
 
   const now =
-    new Date()
-      .toISOString();
+    new Date().toISOString();
 
   const user = {
-    id:
-      crypto.randomUUID(),
-
+    id: crypto.randomUUID(),
     firstname:
-      clean(
-        values.firstname
-      ),
-
+      clean(values.firstname),
     lastname:
-      clean(
-        values.lastname
-      ),
-
-    username:
-      clean(
-        values.username
-      ),
-
+      clean(values.lastname),
+    username,
     email,
-
     gender:
-      clean(
-        values.gender
-      ),
-
+      clean(values.gender),
     description:
-      clean(
-        values.description
-      ),
-
-    role:
-      "User",
-
-    phone:
-      "",
-
-    location:
-      "",
-
-    postalCode:
-      "",
-
-    address:
-      "",
-
+      clean(values.description),
+    role: "user",
+    status: "active",
+    phone: "",
+    location: "",
+    postalCode: "",
+    address: "",
     about:
-      clean(
-        values.description
-      ),
-
-    avatar:
-      "/images/profile.png",
-
-    tier:
-      "Craft Collector",
-
+      clean(values.description),
+    avatar: "/images/profile.png",
+    tier: "Craft Collector",
     preferences: {
-      ...DEFAULT_PREFERENCES
+      ...DEFAULT_PREFERENCES,
     },
-
     passwordHash:
-      hashPassword(
-        values.password
-      ),
-
-    createdAt:
-      now,
-
-    updatedAt:
-      now
+      hashPassword(values.password),
+    requiresPasswordChange: false,
+    joinDate:
+      now.slice(0, 10),
+    createdAt: now,
+    updatedAt: now,
   };
 
   users.push(user);
   writeUsers(users);
 
   return {
-    ok:
-      true,
-    user:
-      toPublicUser(user)
+    ok: true,
+    user: toPublicUser(user),
   };
 };
 
 const updateAccount = (
   userId,
-  values
+  values,
 ) => {
-  const users =
-    readUsers();
+  const users = readUsers();
 
-  const index =
-    findIndexById(
-      users,
-      userId
-    );
+  const index = users.findIndex(
+    (user) =>
+      String(user.id) ===
+      String(userId),
+  );
 
-  if (
-    index === -1
-  ) {
+  if (index === -1) {
     return {
-      ok:
-        false,
-      reason:
-        "user-not-found"
+      ok: false,
+      reason: "user-not-found",
     };
   }
 
@@ -577,205 +308,153 @@ const updateAccount = (
     users.some(
       (user, userIndex) =>
         userIndex !== index &&
-        normalise(
-          user.email
-        ) ===
-        normalise(
-          values.email
-        )
+        normalise(user.email) ===
+        normalise(values.email),
     );
 
-  if (
-    duplicateEmail
-  ) {
+  if (duplicateEmail) {
     return {
-      ok:
-        false,
-      reason:
-        "email-exists"
+      ok: false,
+      reason: "email-exists",
     };
   }
 
-  const user =
-    users[index];
-
+  const user = users[index];
   const changingPassword =
-    Boolean(
-      values.newPassword
-    );
+    Boolean(values.newPassword);
 
   if (
     changingPassword &&
     !verifyPassword(
       values.currentPassword,
-      user.passwordHash
+      user.passwordHash,
     )
   ) {
     return {
-      ok:
-        false,
+      ok: false,
       reason:
-        "invalid-current-password"
+        "invalid-current-password",
     };
   }
 
   const updatedUser = {
     ...user,
-
     firstname:
-      clean(
-        values.firstname
-      ),
-
+      clean(values.firstname),
     lastname:
-      clean(
-        values.lastname
-      ),
-
+      clean(values.lastname),
     email:
-      normalise(
-        values.email
-      ),
-
+      normalise(values.email),
     phone:
-      clean(
-        values.phone
-      ),
-
+      clean(values.phone),
     location:
-      clean(
-        values.location
-      ),
-
+      clean(values.location),
     postalCode:
-      clean(
-        values.postalCode
-      ),
-
+      clean(values.postalCode),
     address:
-      clean(
-        values.address
-      ),
-
+      clean(values.address),
     about:
-      clean(
-        values.about
-      ),
-
+      clean(values.about),
     description:
-      clean(
-        values.about
-      ),
-
+      clean(values.about),
     updatedAt:
-      new Date()
-        .toISOString()
+      new Date().toISOString(),
   };
 
-  if (
-    changingPassword
-  ) {
+  if (changingPassword) {
     updatedUser.passwordHash =
       hashPassword(
-        values.newPassword
+        values.newPassword,
       );
+
+    updatedUser.requiresPasswordChange =
+      false;
   }
 
   users[index] = updatedUser;
   writeUsers(users);
 
   return {
-    ok:
-      true,
-    user:
-      toPublicUser(updatedUser)
+    ok: true,
+    user: toPublicUser(updatedUser),
   };
 };
 
-seedDemoUser();
+const updatePreferences = (
+  userId,
+  preferences,
+) => {
+  const users = readUsers();
 
-/*
- * Temporary forum-moderation test account.
- * NOTE: feature/admin branch is building its own admin/role infrastructure
- * (middlewares/requireAdmin.js checks role === "admin", lowercase). This seed
- * intentionally reuses that exact lowercase value so the two branches agree
- * on what an "admin" role looks like once merged.
- */
-const seedForumAdmin = () => {
-  if (findMutableByEmail("admin@langco.example")) {
-    return;
+  const index = users.findIndex(
+    (user) =>
+      String(user.id) ===
+      String(userId),
+  );
+
+  if (index === -1) {
+    return {
+      ok: false,
+      reason: "user-not-found",
+    };
   }
 
-  const now = new Date().toISOString();
+  users[index] = {
+    ...users[index],
+    preferences: {
+      ...DEFAULT_PREFERENCES,
+      ...preferences,
+    },
+    updatedAt:
+      new Date().toISOString(),
+  };
 
-  users.push({
-    id: "user-forum-admin",
-    firstname: "Forum",
-    lastname: "Admin",
-    name: "Forum Admin",
-    username: "forumadmin",
-    email: "admin@langco.example",
-    gender: "prefer_not",
-    description: "Forum moderator account (seeded for testing).",
-    initials: "FA",
-    role: "admin",
-    passwordHash: hashPassword("Password123!"),
-    createdAt: now,
-    updatedAt: now,
-  });
+  writeUsers(users);
+
+  return {
+    ok: true,
+    user: toPublicUser(users[index]),
+  };
 };
 
-seedForumAdmin();
-
-const isAdminRole = (role) => String(role || "").trim().toLowerCase() === "admin";
-
-module.exports = {
-  authenticate,
-  createUser,
-  findById,
-  updateAccount,
-  updatePreferences
-};
-const fs = require("fs");
-const path = require("path");
-
-const usersFilePath = path.join(__dirname, "..", "data", "users.json");
-
-const readUsers = () => {
-  const raw = fs.readFileSync(usersFilePath, "utf-8");
-  return JSON.parse(raw);
-};
-
-const writeUsers = (users) => {
-  fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
-};
-
-const getAllUsers = () => readUsers();
-
-const findUserByEmail = (email) => {
-  const normalized = email.trim().toLowerCase();
-  return readUsers().find((user) => user.email.toLowerCase() === normalized) || null;
-};
-
-const findUserById = (id) => {
-  return readUsers().find((user) => user.id === id) || null;
-};
-
-const updateUser = (id, updates) => {
+const updateUser = (
+  userId,
+  updates,
+) => {
   const users = readUsers();
-  const index = users.findIndex((user) => user.id === id);
+
+  const index = users.findIndex(
+    (user) =>
+      String(user.id) ===
+      String(userId),
+  );
 
   if (index === -1) {
     return null;
   }
 
-  users[index] = { ...users[index], ...updates };
+  users[index] = {
+    ...users[index],
+    ...updates,
+    updatedAt:
+      new Date().toISOString(),
+  };
+
   writeUsers(users);
+
   return users[index];
 };
 
 module.exports = {
+  authenticate,
+  createUser,
+  findById,
+  findUserByEmail,
+  findUserById,
   getAllUsers,
-  toPublicUser,
   isAdminRole,
+  toPublicUser,
+  updateAccount,
+  updatePreferences,
+  updateUser,
 };
