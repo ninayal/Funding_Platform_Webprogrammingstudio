@@ -209,7 +209,7 @@ body:has(#post-created:target) .created-post {
   min-width: 100px;
   height: 44px;
   margin: 0;
-  padding: 0 14px;
+  padding: 0 10px;
   border: 1px solid rgba(116, 81, 45, 0.25);
   border-radius: 999px;
   outline: none;
@@ -306,3 +306,264 @@ body:has(#post-created:target) .created-post {
   cursor: not-allowed;
 }
 
+/* =========================================
+   CUSTOM BLOG SORT DROPDOWN
+========================================= */
+
+.blog-sort-control {
+  justify-self: end;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+
+  position: relative;
+
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+
+.blog-sort-control__title {
+  color: #241a15;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   DROPDOWN CONTAINER
+========================================= */
+
+.blog-sort-dropdown {
+  position: relative;
+
+  min-width: 200px;
+}
+
+
+/* =========================================
+   MAIN BUTTON
+========================================= */
+
+.blog-sort-dropdown__button {
+  width: 100%;
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 0 20px 0 22px;
+
+  border: 1px solid #b42125;
+  border-radius: 999px;
+
+  background:
+    rgba(255, 253, 248, 0.96);
+
+  color: #211915;
+
+  font-family:
+    "DM Sans",
+    Arial,
+    sans-serif;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+
+.blog-sort-dropdown__button:hover {
+  background: #fffaf4;
+
+  border-color: #8f171b;
+}
+
+
+.blog-sort-dropdown__button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(180, 33, 37, 0.14);
+}
+
+
+.blog-sort-dropdown__button svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  transition:
+    transform 0.2s ease;
+}
+
+
+/* Rotate arrow when open */
+
+.blog-sort-dropdown.is-open
+.blog-sort-dropdown__button svg {
+  transform:
+    rotate(180deg);
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+.blog-sort-dropdown__menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  z-index: 100;
+
+  width: 100%;
+  min-width: 200px;
+
+  padding: 8px;
+
+  border:
+    1px solid
+    rgba(116, 81, 45, 0.18);
+
+  border-radius: 18px;
+
+  background: #fffdf8;
+
+  box-shadow:
+    0 16px 36px
+    rgba(56, 37, 24, 0.16);
+}
+
+
+/*
+ * Important:
+ * HTML hidden attribute should
+ * completely hide the menu.
+ */
+
+.blog-sort-dropdown__menu[hidden] {
+  display: none;
+}
+
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.blog-sort-dropdown__option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #34251e;
+
+  font-family:
+    "DM Sans",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+
+
+.blog-sort-dropdown__option:hover {
+  background:
+    rgba(163, 29, 29, 0.07);
+
+  color: #8f171b;
+}
+
+
+/* Selected option */
+
+.blog-sort-dropdown__option.is-selected {
+  background:
+    rgba(163, 29, 29, 0.1);
+
+  color: #8f171b;
+
+  font-weight: 700;
+}
+
+
+/* Check mark hidden normally */
+
+.blog-sort-dropdown__check {
+  opacity: 0;
+
+  color: #a31d1d;
+
+  font-weight: 700;
+}
+
+
+.blog-sort-dropdown__option.is-selected
+.blog-sort-dropdown__check {
+  opacity: 1;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .blog-sort-control {
+    width: 100%;
+
+    justify-content:
+      space-between;
+  }
+
+  .blog-sort-dropdown {
+    min-width: 170px;
+  }
+
+  .blog-sort-dropdown__button {
+    min-height: 48px;
+
+    padding:
+      0 16px;
+
+    font-size: 14px;
+  }
+}

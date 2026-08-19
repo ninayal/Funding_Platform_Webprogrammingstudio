@@ -402,50 +402,6 @@
           class="blog-toolbar__actions"
         >
 
-          <!-- SHARE JOURNAL -->
-
-          <a
-            class="blog-button"
-            href="mailto:?subject=L%C3%A0ng%20%26%20Co.%20Journal&amp;body=Explore%20stories%20from%20L%C3%A0ng%20%26%20Co.%20about%20Vietnamese%20craft%20and%20heritage."
-            aria-label="Share the journal by email"
-          >
-
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              aria-hidden="true"
-            >
-
-              <circle
-                cx="18"
-                cy="5"
-                r="3"
-              ></circle>
-
-              <circle
-                cx="6"
-                cy="12"
-                r="3"
-              ></circle>
-
-              <circle
-                cx="18"
-                cy="19"
-                r="3"
-              ></circle>
-
-              <path
-                d="m8.7 10.7 6.6-4.3M8.7 13.3l6.6 4.3"
-              ></path>
-
-            </svg>
-
-            Share Journal
-          </a>
-
-
           <!-- ================================================
                CREATE POST
 
@@ -849,32 +805,136 @@
                SORT
                ================================================ -->
 
-          <label>
-            <span class="visually-hidden">
-              Sort Blog posts
-            </span>
+         <div
+  class="blog-sort-control"
+  data-blog-sort-control
+>
+  <span class="blog-sort-control__title">
+    Sort stories
+  </span>
 
-            <select
-              data-blog-sort
-              aria-label="Sort Blog posts"
-            >
-              <option value="newest">
-                Newest
-              </option>
+  <!--
+    Keep the real select hidden.
+    Existing blog.js can still use
+    data-blog-sort without changing
+    the actual sorting logic.
+  -->
+  <select
+    id="blog-sort"
+    data-blog-sort
+    aria-label="Sort Blog posts"
+    hidden
+  >
+    <option value="newest">
+      Newest first
+    </option>
 
-              <option value="oldest">
-                Oldest
-              </option>
+    <option value="oldest">
+      Oldest first
+    </option>
 
-              <option value="title-asc">
-                Title A–Z
-              </option>
+    <option value="title">
+      Title A–Z
+    </option>
+  </select>
 
-              <option value="title-desc">
-                Title Z–A
-              </option>
-            </select>
-          </label>
+
+  <div class="blog-sort-dropdown">
+
+    <button
+      class="blog-sort-dropdown__button"
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      data-blog-sort-button
+    >
+      <span data-blog-sort-label>
+        Newest first
+      </span>
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </button>
+
+
+    <div
+      class="blog-sort-dropdown__menu"
+      role="listbox"
+      aria-label="Sort Blog posts"
+      data-blog-sort-menu
+      hidden
+    >
+
+      <button
+        class="blog-sort-dropdown__option is-selected"
+        type="button"
+        role="option"
+        aria-selected="true"
+        data-blog-sort-option="newest"
+      >
+        <span>
+          Newest first
+        </span>
+
+        <span
+          class="blog-sort-dropdown__check"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+      </button>
+
+
+      <button
+        class="blog-sort-dropdown__option"
+        type="button"
+        role="option"
+        aria-selected="false"
+        data-blog-sort-option="oldest"
+      >
+        <span>
+          Oldest first
+        </span>
+
+        <span
+          class="blog-sort-dropdown__check"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+      </button>
+
+
+      <button
+        class="blog-sort-dropdown__option"
+        type="button"
+        role="option"
+        aria-selected="false"
+        data-blog-sort-option="title"
+      >
+        <span>
+          Title A–Z
+        </span>
+
+        <span
+          class="blog-sort-dropdown__check"
+          aria-hidden="true"
+        >
+          ✓
+        </span>
+      </button>
+
+    </div>
+
+  </div>
+</div>
 
         </div>
 
