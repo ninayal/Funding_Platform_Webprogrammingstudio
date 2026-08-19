@@ -1,0 +1,238 @@
+<% const formErrors=typeof errors !=="undefined" && errors ? errors : {}; %>
+
+    <% giftTypes.forEach((item)=> { %>
+        <input class="ui-state" type="radio" name="giftType" id="<%= item.id %>" value="<%= item.value %>"
+            <%=item.value===defaults.giftType ? "checked" : "" %>
+        >
+        <% }); %>
+
+            <% deliveryTypes.forEach((item)=> { %>
+                <input class="ui-state" type="radio" name="deliveryType" id="<%= item.id %>" value="<%= item.value %>"
+                    <%=item.value===defaults.deliveryType ? "checked" : "" %>
+                >
+                <% }); %>
+
+                    <% designs.forEach((item)=> { %>
+                        <input class="ui-state" type="radio" name="designType" id="<%= item.id %>"
+                            value="<%= item.value %>" <%=item.value===defaults.designType ? "checked" : "" %>
+                        >
+                        <% }); %>
+
+                            <section class="flow-section flow-section--paper" id="gift-type" data-giftcard-step="1">
+                                <div class="section-shell">
+                                    <div class="section-heading">
+                                        <p class="section-kicker">
+                                            01 · Choose a type
+                                        </p>
+
+                                        <h2>
+                                            What kind of <em>giving moment</em> are you creating?
+                                        </h2>
+
+                                        <p>
+                                            Start with the intention. Choose the giving experience
+                                            that best matches the moment.
+                                        </p>
+                                    </div>
+
+                                    <div class="choice-grid choice-grid--two">
+                                        <% giftTypes.forEach((item)=> { %>
+                                            <label class="choice-card" for="<%= item.id %>">
+                                                <span class="choice-card__index">
+                                                    <%= item.index %>
+                                                </span>
+
+                                                <span class="choice-card__title">
+                                                    <%= item.title %>
+                                                </span>
+
+                                                <span class="choice-card__copy">
+                                                    <%= item.copy %>
+                                                </span>
+
+                                                <span class="choice-card__action">
+                                                    <%= item.action %>
+                                                </span>
+                                            </label>
+                                            <% }); %>
+                                    </div>
+
+                                    <% if (formErrors.giftType) { %>
+                                        <p class="form-error step-form-error" role="alert">
+                                            <%= formErrors.giftType %>
+                                        </p>
+                                        <% } %>
+
+                                            <div class="section-next">
+                                                <a class="btn btn-primary" href="#delivery-type" data-giftcard-next>
+                                                    Continue to Delivery
+                                                </a>
+                                            </div>
+                                </div>
+                            </section>
+
+                            <section class="flow-section flow-section--tint" id="delivery-type" data-giftcard-step="2">
+                                <div class="section-shell">
+                                    <div class="section-heading section-heading--center">
+                                        <p class="section-kicker">
+                                            02 · Choose delivery
+                                        </p>
+
+                                        <h2>
+                                            How should the gift <em>reach them?</em>
+                                        </h2>
+
+                                        <p>
+                                            Choose a delivery format. The Personalize section will
+                                            automatically show only the relevant fields.
+                                        </p>
+                                    </div>
+
+                                    <div class="choice-grid choice-grid--three">
+                                        <% deliveryTypes.forEach((item)=> { %>
+                                            <label class="delivery-card" for="<%= item.id %>">
+                                                <span class="delivery-card__icon" aria-hidden="true">
+                                                    <%= item.icon %>
+                                                </span>
+
+                                                <span class="delivery-card__title">
+                                                    <%= item.title %>
+                                                </span>
+
+                                                <span class="delivery-card__copy">
+                                                    <%= item.copy %>
+                                                </span>
+                                            </label>
+                                            <% }); %>
+                                    </div>
+
+                                    <% if (formErrors.deliveryType) { %>
+                                        <p class="form-error step-form-error" role="alert">
+                                            <%= formErrors.deliveryType %>
+                                        </p>
+                                        <% } %>
+
+                                            <div class="section-next">
+                                                <a class="btn btn-primary" href="#design" data-giftcard-next>
+                                                    Continue to Design
+                                                </a>
+                                            </div>
+                                </div>
+                            </section>
+
+                            <section class="flow-section flow-section--paper" id="design" data-giftcard-step="3">
+                                <div class="section-shell">
+                                    <div class="section-heading">
+                                        <p class="section-kicker">03 · Choose a design</p>
+
+                                        <h2>
+                                            Choose a card with a <em>Vietnamese soul.</em>
+                                        </h2>
+
+                                        <p>
+                                            The collection draws from Vietnamese craft villages,
+                                            materials, landscapes, and living traditions.
+                                        </p>
+                                    </div>
+
+                                    <div class="design-grid">
+                                        <% designs.forEach((design)=> { %>
+                                            <label class="design-card <%= design.cardClass %>" for="<%= design.id %>">
+                                                <span class="design-card__label">
+                                                    <%= design.title %>
+                                                </span>
+
+                                                <span class="design-card__meta">
+                                                    <%= design.meta %>
+                                                </span>
+                                            </label>
+                                            <% }); %>
+                                    </div>
+
+                                    <% if (formErrors.designType) { %>
+                                        <p class="form-error step-form-error" role="alert">
+                                            <%= formErrors.designType %>
+                                        </p>
+                                        <% } %>
+
+                                            <div class="section-next">
+                                                <a class="btn btn-primary" href="#amount" data-giftcard-next>
+                                                    Continue to Amount
+                                                </a>
+                                            </div>
+                                </div>
+                            </section>
+
+                            <section class="flow-section flow-section--tint" id="amount" data-giftcard-step="4">
+                                <div class="section-shell">
+                                    <div class="section-heading section-heading--center">
+                                        <p class="section-kicker">
+                                            04 · Choose quantity + amount
+                                        </p>
+
+                                        <h2>
+                                            How much would you like to
+                                            <em>put into the gift?</em>
+                                        </h2>
+
+                                        <p>
+                                            Enter a quantity from 1 to 20 and an amount from
+                                            $5 to $10,000 per card.
+                                        </p>
+                                    </div>
+
+                                    <div class="amount-panel">
+                                        <div class="amount-builder">
+
+                                            <label class="amount-field amount-field--quantity">
+                                                <span>Quantity</span>
+
+                                                <input type="number" id="gift-quantity" name="quantity" min="1" max="20"
+                                                    step="1" value="<%= defaults.quantity ?? "" %>" required>
+
+                                                <% if (formErrors.quantity) { %>
+                                                    <span class="form-error">
+                                                        <%= formErrors.quantity %>
+                                                    </span>
+                                                    <% } %>
+                                            </label>
+
+                                            <label class="amount-field amount-field--wide">
+                                                <span>Amount per card (USD)</span>
+
+                                                <span class="currency-input">
+                                                    <span aria-hidden="true">$</span>
+
+                                                    <input type="number" id="gift-amount" name="amountPerCard" min="5"
+                                                        max="10000" step="1" value="<%= defaults.amountPerCard ?? "" %>"
+                                                        required>
+                                                </span>
+
+                                                <% if (formErrors.amountPerCard) { %>
+                                                    <span class="form-error">
+                                                        <%= formErrors.amountPerCard %>
+                                                    </span>
+                                                    <% } %>
+                                            </label>
+
+                                        </div>
+
+                                        <div class="amount-total">
+                                            <div>
+                                                <span>Gift total</span>
+                                                <small>Quantity × amount per card</small>
+                                            </div>
+
+                                            <strong data-giftcard-total>
+                                                <%= totalDisplay %>
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-next">
+                                        <a class="btn btn-primary" href="#details" data-giftcard-next>
+                                            Continue to Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
