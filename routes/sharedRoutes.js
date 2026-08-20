@@ -80,6 +80,18 @@ router.post(
   sharedController.postRejectPasswordReset,
 );
 
+router.post(
+  "/admin/password-resets/:requestId/delete",
+  requireAdmin,
+  sharedController.postDeleteResolvedPasswordReset,
+);
+
+router.post(
+  "/admin/users/:id/status",
+  requireAdmin,
+  sharedController.postToggleUserStatus,
+);
+
 router.get(
   "/admin/products/new",
   requireAdmin,
