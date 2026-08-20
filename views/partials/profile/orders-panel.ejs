@@ -1,22 +1,16 @@
 <div class="profile-panel profile-panel--orders">
   <div class="panel-heading">
-    <p class="profile-kicker">
-      Tracking
-    </p>
+    <p class="profile-kicker">Orders</p>
 
-    <h2>
-      Order Status
-    </h2>
+    <h2>My Orders</h2>
 
     <p>
-      Follow each order from confirmation to delivery,
-      with a clear timeline and a quick overview of your
-      active purchases.
+      Review your recent purchases, delivery details and payment information.
     </p>
   </div>
 
   <div class="order-summary-grid">
-    <% orderSummary.forEach((item) => { %>
+    <% orderSummary.forEach((item)=> { %>
       <article class="order-summary-card">
         <span>
           <%= item.label %>
@@ -30,99 +24,135 @@
           <%= item.description %>
         </p>
       </article>
-    <% }); %>
+      <% }); %>
   </div>
 
-  <div class="order-card-list">
-    <% orders.forEach((order) => { %>
-      <article class="order-card">
-        <div class="order-card__head">
-          <div>
-            <p class="order-card__eyebrow">
-              Order #<%= order.id %>
-            </p>
+  <% if (orders.length) { %>
+    <div class="order-card-list">
+      <% orders.forEach((order)=> { %>
+        <article class="order-card">
+          <div class="order-card__head">
+            <div>
+              <p class="order-card__eyebrow">
+                Order #<%= order.id %>
+              </p>
 
-            <h3>
-              <%= order.name %>
-            </h3>
+              <h3>
+                <%= order.itemCount %>
+                  <%= order.itemCount===1 ? "piece" : "pieces" %>
+              </h3>
+            </div>
+
+            <span class="status-pill status-pill--confirmed">
+              <%= order.statusLabel %>
+            </span>
           </div>
 
-          <span
-            class="status-pill status-pill--<%= order.statusClass %>"
-          >
-            <%= order.status %>
-          </span>
-        </div>
+          <div class="order-card__meta">
+            <span>
+              Placed on <%= order.placedOn %>
+            </span>
 
-        <div class="order-card__meta">
-          <span>
-            Placed on <%= order.placedOn %>
-          </span>
+            <span>
+              Total: <strong>
+                <%= order.totalFormatted %>
+              </strong>
+            </span>
 
-          <span>
-            Estimated arrival:
-            <%= order.estimatedArrival %>
-          </span>
-
-          <span>
-            Total: <%= order.total %>
-          </span>
-        </div>
-
-        <div class="order-progress">
-          <div class="order-progress__bar">
-            <span
-              style="width: <%= order.progress %>%"
-            ></span>
-          </div>
-
-          <div class="order-progress__steps">
-            <% order.steps.forEach((step) => { %>
-              <span
-                class="<%= step.state
-                  ? `is-${step.state}`
-                  : '' %>"
-              >
-                <%= step.label %>
+            <% if (order.shipping?.method) { %>
+              <span>
+                Shipping:
+                <%= order.shipping.method==="express" ? "Express" : "Standard" %>
               </span>
-            <% }); %>
+              <% } %>
           </div>
-        </div>
 
-        <div class="order-timeline">
-          <% order.timeline.forEach((event) => { %>
-            <div
-              class="order-timeline__item <%= event.state
-                ? `is-${event.state}`
-                : '' %>"
-            >
+          <div class="order-card__items">
+            <% order.items.forEach((item)=> { %>
+              <div class="order-card__item">
+                <img src="<%= item.image %>" alt="<%= item.name %>" class="order-card__item-image">
+
+                <div class="order-card__item-info">
+                  <strong>
+                    <%= item.name %>
+                  </strong>
+
+                  <span>
+                    Qty <%= item.quantity %>
+                  </span>
+                </div>
+
+                <span class="order-card__item-price">
+                  <%= item.subtotalFormatted %>
+                </span>
+              </div>
+              <% }); %>
+          </div>
+
+          <div class="order-card__details">
+            <div>
+              <span>Delivery</span>
+
               <strong>
-                <%= event.title %>
+                <%= order.delivery?.firstName || "" %>
+                  <%= order.delivery?.lastName || "" %>
               </strong>
 
+              <% if (order.delivery?.city) { %>
+                <p>
+                  <%= order.delivery.city %>,
+                    <%= order.delivery.state %>
+                </p>
+                <% } %>
+            </div>
+
+            <div>
+              <span>Payment</span>
+
+              <strong>
+                Credit / Debit Card
+              </strong>
+
+              <% if (order.payment?.cardLastFour) { %>
+                <p>
+                  Card ending in
+                  <%= order.payment.cardLastFour %>
+                </p>
+                <% } %>
+            </div>
+          </div>
+
+          <% if (order.giftNote) { %>
+            <div class="order-card__gift">
+              <span>Gift Note</span>
+
               <p>
-                <%= event.description %>
+                <%= order.giftNote %>
               </p>
             </div>
-          <% }); %>
-        </div>
+            <% } %>
 
-        <div class="order-card__actions">
-          <a
-            class="order-action"
-            href="<%= order.primaryAction.href %>"
-          >
-            <%= order.primaryAction.label %>
-          </a>
+              <div class="order-card__actions">
+                <a class="order-action" href="<%= order.detailsUrl %>">
+                  View Order
+                </a>
+              </div>
+        </article>
+        <% }); %>
+    </div>
+    <% } else { %>
+      <div class="orders-empty">
+        <p class="profile-kicker">No orders yet</p>
 
-          <a
-            class="order-action order-action--ghost"
-            href="<%= order.secondaryAction.href %>"
-          >
-            <%= order.secondaryAction.label %>
-          </a>
-        </div>
-      </article>
-    <% }); %>
-  </div>
+        <h3>Your order history will appear here.</h3>
+
+        <p>
+          Once you complete a purchase, you can review it from this page.
+        </p>
+
+        <a class="order-action" href="/cart/products">
+          Shop Collection
+        </a>
+      </div>
+      <% } %>
 </div>

@@ -1,11 +1,7 @@
 <div class="profile-panel profile-panel--user">
   <div class="profile-hero">
     <div class="profile-avatar-wrap">
-      <img
-        class="profile-avatar"
-        src="<%= profile.avatar %>"
-        alt="Profile photo of <%= profile.name %>"
-      />
+      <img class="profile-avatar" src="<%= profile.avatar %>" alt="Profile photo of <%= profile.name %>" />
     </div>
 
     <div class="profile-hero__content">
@@ -18,8 +14,7 @@
       </h2>
 
       <p>
-        <%= profile.location ||
-          "Location not added yet" %>
+        <%= profile.location || "Location not added yet" %>
       </p>
 
       <div class="profile-badges">
@@ -28,18 +23,18 @@
         </span>
 
         <span>
-          <%= profile.tier %>
+          <%= profile.tier || "Craft Collector" %>
         </span>
 
         <span>
-          3 active orders
+          <%= profileStats[0]?.value || "00" %> orders
         </span>
       </div>
     </div>
   </div>
 
   <div class="profile-stats">
-    <% profileStats.forEach((stat) => { %>
+    <% profileStats.forEach((stat)=> { %>
       <article class="profile-stat-card">
         <span class="profile-stat-card__label">
           <%= stat.label %>
@@ -53,40 +48,22 @@
           <%= stat.description %>
         </small>
       </article>
-    <% }); %>
+      <% }); %>
   </div>
 
-  <form
-    class="profile-form"
-    action="/shared/profile"
-    method="post"
-    data-profile-form
-    novalidate
-  >
+  <form class="profile-form" action="/shared/profile" method="post" data-profile-form novalidate>
     <div class="profile-grid">
       <label class="profile-field">
         <span>
           First Name
         </span>
 
-        <input
-          type="text"
-          name="firstname"
-          value="<%= values.firstname %>"
-          autocomplete="given-name"
-          minlength="2"
-          maxlength="50"
-          aria-describedby="firstname-error"
-          aria-invalid="<%= errors.firstname
+        <input type="text" name="firstname" value="<%= values.firstname %>" autocomplete="given-name" minlength="2"
+          maxlength="50" aria-describedby="firstname-error" aria-invalid="<%= errors.firstname
             ? 'true'
-            : 'false' %>"
-          required
-        />
+            : 'false' %>" required />
 
-        <small
-          class="profile-field-error"
-          id="firstname-error"
-        >
+        <small class="profile-field-error" id="firstname-error">
           <%= errors.firstname || "" %>
         </small>
       </label>
@@ -96,24 +73,12 @@
           Last Name
         </span>
 
-        <input
-          type="text"
-          name="lastname"
-          value="<%= values.lastname %>"
-          autocomplete="family-name"
-          minlength="2"
-          maxlength="50"
-          aria-describedby="lastname-error"
-          aria-invalid="<%= errors.lastname
+        <input type="text" name="lastname" value="<%= values.lastname %>" autocomplete="family-name" minlength="2"
+          maxlength="50" aria-describedby="lastname-error" aria-invalid="<%= errors.lastname
             ? 'true'
-            : 'false' %>"
-          required
-        />
+            : 'false' %>" required />
 
-        <small
-          class="profile-field-error"
-          id="lastname-error"
-        >
+        <small class="profile-field-error" id="lastname-error">
           <%= errors.lastname || "" %>
         </small>
       </label>
@@ -123,23 +88,12 @@
           Email Address
         </span>
 
-        <input
-          type="email"
-          name="email"
-          value="<%= values.email %>"
-          autocomplete="email"
-          maxlength="254"
-          aria-describedby="profile-email-error"
-          aria-invalid="<%= errors.email
+        <input type="email" name="email" value="<%= values.email %>" autocomplete="email" maxlength="254"
+          aria-describedby="profile-email-error" aria-invalid="<%= errors.email
             ? 'true'
-            : 'false' %>"
-          required
-        />
+            : 'false' %>" required />
 
-        <small
-          class="profile-field-error"
-          id="profile-email-error"
-        >
+        <small class="profile-field-error" id="profile-email-error">
           <%= errors.email || "" %>
         </small>
       </label>
@@ -149,25 +103,12 @@
           Phone Number
         </span>
 
-        <input
-          type="tel"
-          name="phone"
-          value="<%= values.phone %>"
-          autocomplete="tel"
-          inputmode="tel"
-          minlength="7"
-          maxlength="20"
-          pattern="[0-9+() -]{7,20}"
-          aria-describedby="phone-error"
-          aria-invalid="<%= errors.phone
+        <input type="tel" name="phone" value="<%= values.phone %>" autocomplete="tel" inputmode="tel" minlength="7"
+          maxlength="20" pattern="[0-9+() -]{7,20}" aria-describedby="phone-error" aria-invalid="<%= errors.phone
             ? 'true'
-            : 'false' %>"
-        />
+            : 'false' %>" />
 
-        <small
-          class="profile-field-error"
-          id="phone-error"
-        >
+        <small class="profile-field-error" id="phone-error">
           <%= errors.phone || "" %>
         </small>
       </label>
@@ -177,22 +118,12 @@
           Location
         </span>
 
-        <input
-          type="text"
-          name="location"
-          value="<%= values.location %>"
-          autocomplete="address-level2"
-          maxlength="100"
-          aria-describedby="location-error"
-          aria-invalid="<%= errors.location
+        <input type="text" name="location" value="<%= values.location %>" autocomplete="address-level2" maxlength="100"
+          aria-describedby="location-error" aria-invalid="<%= errors.location
             ? 'true'
-            : 'false' %>"
-        />
+            : 'false' %>" />
 
-        <small
-          class="profile-field-error"
-          id="location-error"
-        >
+        <small class="profile-field-error" id="location-error">
           <%= errors.location || "" %>
         </small>
       </label>
@@ -202,22 +133,12 @@
           Postal Code
         </span>
 
-        <input
-          type="text"
-          name="postalCode"
-          value="<%= values.postalCode %>"
-          autocomplete="postal-code"
-          maxlength="20"
-          aria-describedby="postal-code-error"
-          aria-invalid="<%= errors.postalCode
+        <input type="text" name="postalCode" value="<%= values.postalCode %>" autocomplete="postal-code" maxlength="20"
+          aria-describedby="postal-code-error" aria-invalid="<%= errors.postalCode
             ? 'true'
-            : 'false' %>"
-        />
+            : 'false' %>" />
 
-        <small
-          class="profile-field-error"
-          id="postal-code-error"
-        >
+        <small class="profile-field-error" id="postal-code-error">
           <%= errors.postalCode || "" %>
         </small>
       </label>
@@ -227,22 +148,12 @@
           Address
         </span>
 
-        <input
-          type="text"
-          name="address"
-          value="<%= values.address %>"
-          autocomplete="street-address"
-          maxlength="180"
-          aria-describedby="address-error"
-          aria-invalid="<%= errors.address
+        <input type="text" name="address" value="<%= values.address %>" autocomplete="street-address" maxlength="180"
+          aria-describedby="address-error" aria-invalid="<%= errors.address
             ? 'true'
-            : 'false' %>"
-        />
+            : 'false' %>" />
 
-        <small
-          class="profile-field-error"
-          id="address-error"
-        >
+        <small class="profile-field-error" id="address-error">
           <%= errors.address || "" %>
         </small>
       </label>
@@ -252,32 +163,18 @@
           About
         </span>
 
-        <textarea
-          name="about"
-          rows="5"
-          maxlength="500"
-          aria-describedby="
+        <textarea name="about" rows="5" maxlength="500" aria-describedby="
             about-counter
             about-error
-          "
-          aria-invalid="<%= errors.about
+          " aria-invalid="<%= errors.about
             ? 'true'
-            : 'false' %>"
-          data-profile-about
-        ><%= values.about %></textarea>
+            : 'false' %>" data-profile-about><%= values.about %></textarea>
 
-        <small
-          class="profile-character-count"
-          id="about-counter"
-          data-about-counter
-        >
+        <small class="profile-character-count" id="about-counter" data-about-counter>
           0/500
         </small>
 
-        <small
-          class="profile-field-error"
-          id="about-error"
-        >
+        <small class="profile-field-error" id="about-error">
           <%= errors.about || "" %>
         </small>
       </label>
@@ -299,21 +196,12 @@
             Current Password
           </span>
 
-          <input
-            type="password"
-            name="currentPassword"
-            autocomplete="current-password"
-            maxlength="72"
-            aria-describedby="current-password-error"
-            aria-invalid="<%= errors.currentPassword
+          <input type="password" name="currentPassword" autocomplete="current-password" maxlength="72"
+            aria-describedby="current-password-error" aria-invalid="<%= errors.currentPassword
               ? 'true'
-              : 'false' %>"
-          />
+              : 'false' %>" />
 
-          <small
-            class="profile-field-error"
-            id="current-password-error"
-          >
+          <small class="profile-field-error" id="current-password-error">
             <%= errors.currentPassword || "" %>
           </small>
         </label>
@@ -323,26 +211,15 @@
             New Password
           </span>
 
-          <input
-            type="password"
-            name="newPassword"
-            autocomplete="new-password"
-            minlength="8"
-            maxlength="72"
+          <input type="password" name="newPassword" autocomplete="new-password" minlength="8" maxlength="72"
             aria-describedby="
               profile-password-help
               new-password-error
-            "
-            aria-invalid="<%= errors.newPassword
+            " aria-invalid="<%= errors.newPassword
               ? 'true'
-              : 'false' %>"
-            data-new-password
-          />
+              : 'false' %>" data-new-password />
 
-          <small
-            class="profile-field-error"
-            id="new-password-error"
-          >
+          <small class="profile-field-error" id="new-password-error">
             <%= errors.newPassword || "" %>
           </small>
         </label>
@@ -352,46 +229,27 @@
             Confirm New Password
           </span>
 
-          <input
-            type="password"
-            name="confirmNewPassword"
-            autocomplete="new-password"
-            minlength="8"
-            maxlength="72"
+          <input type="password" name="confirmNewPassword" autocomplete="new-password" minlength="8" maxlength="72"
             aria-describedby="
               profile-password-help
               confirm-password-error
-            "
-            aria-invalid="<%= errors.confirmNewPassword
+            " aria-invalid="<%= errors.confirmNewPassword
               ? 'true'
-              : 'false' %>"
-            data-confirm-password
-          />
+              : 'false' %>" data-confirm-password />
 
-          <small
-            class="profile-field-error"
-            id="confirm-password-error"
-            data-confirm-password-error
-          >
+          <small class="profile-field-error" id="confirm-password-error" data-confirm-password-error>
             <%= errors.confirmNewPassword || "" %>
           </small>
         </label>
       </div>
 
-      <p
-        id="profile-password-help"
-        class="profile-field-help"
-      >
+      <p id="profile-password-help" class="profile-field-help">
         Use at least 8 characters with uppercase,
         lowercase, number, and symbol.
       </p>
     </fieldset>
 
-    <button
-      class="profile-save"
-      type="submit"
-      data-profile-submit
-    >
+    <button class="profile-save" type="submit" data-profile-submit>
       <span data-profile-submit-label>
         Save Changes
       </span>

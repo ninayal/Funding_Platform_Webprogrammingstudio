@@ -4,11 +4,12 @@ const userModel = require(
   "../models/userModel"
 );
 
+const orderModel = require(
+  "../models/orderModel"
+);
+
 const {
-  notifications,
-  orders,
-  orderSummary,
-  profileStats
+  notifications
 } = require(
   "../data/profilePageData"
 );
@@ -60,6 +61,164 @@ const formatMemberSince = (
         "numeric"
     }
   ).format(date);
+};
+
+const formatOrderDate = (value) => {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Recently";
+  }
+
+  return new Intl.DateTimeFormat(
+    "en",
+    {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    }
+  ).format(date);
+};
+
+const formatMoney = (value) =>
+  `$${Number(value || 0).toFixed(2)}`;
+
+const buildOrderData = (userId) => {
+  const rawOrders =
+    orderModel
+      .getOrdersByUserId(
+        String(userId)
+      )
+      .slice()
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt) -
+          new Date(a.createdAt)
+      );
+
+  const orders = rawOrders.map(
+    (order) => {
+      const items =
+        Array.isArray(order.items)
+          ? order.items
+          : [];
+
+      const itemCount =
+        items.reduce(
+          (total, item) =>
+            total +
+            Number(item.quantity || 0),
+          0
+        );
+
+      const status =
+        String(
+          order.status || "confirmed"
+        ).toLowerCase();
+
+      return {
+        id: order.id,
+        status,
+        statusLabel:
+          status === "confirmed"
+            ? "Confirmed"
+            : status
+              .replace(/-/g, " ")
+              .replace(
+                /\b\w/g,
+                (letter) =>
+                  letter.toUpperCase()
+              ),
+
+        placedOn:
+          formatOrderDate(
+            order.createdAt
+          ),
+
+        total:
+          Number(order.total || 0),
+
+        totalFormatted:
+          formatMoney(order.total),
+
+        subtotal:
+          Number(order.subtotal || 0),
+
+        subtotalFormatted:
+          formatMoney(order.subtotal),
+
+        itemCount,
+        items,
+
+        delivery:
+          order.delivery || {},
+
+        shipping:
+          order.shipping || {},
+
+        payment:
+          order.payment || {},
+
+        giftNote:
+          order.giftNote || "",
+
+        detailsUrl:
+          `/cart/order-confirmation?orderId=${encodeURIComponent(
+            order.id
+          )}`
+      };
+    }
+  );
+
+  const totalItems =
+    orders.reduce(
+      (total, order) =>
+        total + order.itemCount,
+      0
+    );
+
+  const totalSpent =
+    orders.reduce(
+      (total, order) =>
+        total + order.total,
+      0
+    );
+
+  const orderSummary = [
+    {
+      label: "Orders placed",
+      value: String(
+        orders.length
+      ).padStart(2, "0"),
+
+      description:
+        "Orders linked to this account."
+    },
+    {
+      label: "Pieces ordered",
+      value: String(
+        totalItems
+      ).padStart(2, "0"),
+
+      description:
+        "Handcrafted pieces across your orders."
+    },
+    {
+      label: "Total spent",
+      value:
+        formatMoney(totalSpent),
+
+      description:
+        "Total value of confirmed orders."
+    }
+  ];
+
+  return {
+    orders,
+    orderSummary,
+    profileStats:
+      orderSummary
+  };
 };
 
 const toFormValues = (
@@ -116,60 +275,68 @@ const buildViewData = (
     activeTab,
     pageMessage = ""
   }
-) => ({
-  activePage:
-    "profile",
+) => {
+  const {
+    orders,
+    orderSummary,
+    profileStats
+  } = buildOrderData(user.id);
 
-  activeTab:
-    getActiveTab(
-      activeTab
-    ),
+  return {
+    activePage:
+      "profile",
 
-  cartCount:
-    Number(
-      res.locals.cartCount || 0
-    ),
+    activeTab:
+      getActiveTab(
+        activeTab
+      ),
 
-  currentUser:
-    req.currentUser,
+    cartCount:
+      Number(
+        res.locals.cartCount || 0
+      ),
 
-  errors,
+    currentUser:
+      req.currentUser,
 
-  isAdmin:
-    String(
-      user.role || ""
-    ).toLowerCase() ===
+    errors,
+
+    isAdmin:
+      String(
+        user.role || ""
+      ).toLowerCase() ===
       "admin",
 
-  memberSince:
-    formatMemberSince(
-      user.createdAt
-    ),
+    memberSince:
+      formatMemberSince(
+        user.createdAt
+      ),
 
-  notifications,
+    notifications,
 
-  orders,
+    orders,
 
-  orderSummary,
+    orderSummary,
 
-  pageMessage,
+    pageMessage,
 
-  preferences:
-    user.preferences,
+    preferences:
+      user.preferences,
 
-  profile:
-    user,
+    profile:
+      user,
 
-  profileStats,
+    profileStats,
 
-  tier:
-    user.tier ||
-    "Craft Collector",
+    tier:
+      user.tier ||
+      "Craft Collector",
 
-  values:
-    values ||
-    toFormValues(user)
-});
+    values:
+      values ||
+      toFormValues(user)
+  };
+};
 
 const getStoredUser = (
   req
