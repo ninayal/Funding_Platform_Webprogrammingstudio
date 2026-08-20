@@ -81,6 +81,19 @@ const rejectRequest = (id) => {
   return requests[index];
 };
 
+const deleteRequest = (id) => {
+  const requests = readRequests();
+  const index = requests.findIndex((request) => request.id === id);
+
+  if (index === -1) {
+    return null;
+  }
+
+  const [deleted] = requests.splice(index, 1);
+  writeRequests(requests);
+  return deleted;
+};
+
 module.exports = {
   getAllRequests,
   getPendingRequests,
@@ -89,4 +102,5 @@ module.exports = {
   findRequestById,
   resolveRequest,
   rejectRequest,
+  deleteRequest,
 };
