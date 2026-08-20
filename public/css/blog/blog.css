@@ -1,10 +1,4 @@
-@import url("./blog-base.css");
-@import url("./blog-header.css");
-@import url("./blog-hero.css");
-@import url("./blog-tools.css");
-@import url("./blog-lead-story.css");
-@import url("./blog-featured.css");
-@import url("./blog-all-posts.css");
-@import url("./blog-article.css");
-@import url("./blog-forms.css");
+@import url("/css/index.css");
+@import url("./blog-layout.css");
+@import url("./blog-posts.css");
 @import url("./blog-responsive.css");
