@@ -1,6 +1,4 @@
-/* -----------------------------
-   THREAD POSTS (thread_content.html — numbered post list)
------------------------------- */
+/* THREAD POSTS (thread_content.html — numbered post list) */
 .post-list {
   display: flex;
   flex-direction: column;

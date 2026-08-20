@@ -12,8 +12,6 @@ const generateTempPassword = (length = 10) => {
   return result;
 };
 
-// Same "scrypt$<saltHex>$<hashHex>" format as models/userModel.js on main,
-// so hashes stay interchangeable between the two user models.
 const hashPassword = (plainPassword) => {
   const salt = crypto.randomBytes(16);
   const hash = crypto.scryptSync(String(plainPassword), salt, SCRYPT_KEYLEN);

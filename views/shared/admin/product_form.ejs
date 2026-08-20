@@ -2,90 +2,26 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#A31D1D" />
-  <title>Làng &amp; Co. — <%= product ? "Edit Product" : "Add Product" %></title>
-  <!-- Shared styles -->
-  <link rel="stylesheet" href="/css/landingpage/index.css" />
-  <link rel="stylesheet" href="/css/header.css" />
-  <link rel="stylesheet" href="/css/shared-include.css" />
-  <link rel="stylesheet" href="/css/admin/admin.css" />
-  <link rel="stylesheet" href="/css/header_shoppingcart.css" />
-  <link rel="stylesheet" href="/css/forum/forum-base.css" />
-  <link rel="stylesheet" href="/css/forum/forum-utilities-toolbar.css" />
-  <link rel="stylesheet" href="/css/admin/admin_responsive.css" />
+  <%- include(
+    "../../partials/admin/head",
+    { pageTitle: "Làng & Co. — " + (product ? "Edit Product" : "Add Product") }
+  ) %>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <%- include(
+    "../../partials/header_v2",
+    {
+      activePage: null,
+      cartCount,
+      currentUser
+    }
+  ) %>
 
-  <input type="checkbox" id="topbar-dismiss" class="topbar-dismiss-input" />
-  <div class="topbar">
-    <p class="topbar__text">New Collection Available Now &nbsp;|&nbsp;
-      <a href="../cart/products.html" target="_top">Shop Now</a>
-    </p>
-    <label for="topbar-dismiss" class="topbar__close" aria-label="Dismiss banner">✕</label>
-  </div>
-  <nav class="nav nav--light nav--centered">
-
-    <input type="checkbox" id="menu-toggle" class="menu-toggle-input" />
-
-    <div class="nav__left">
-      <label for="menu-toggle" class="nav__icon-btn menu-btn" aria-label="Open menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M3 6h18M3 12h18M3 18h18" />
-        </svg>
-      </label>
-      <button type="button" class="nav__icon-btn" aria-label="Search">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.8-3.8" />
-        </svg>
-      </button>
-    </div>
-
-    <a class="nav__logo nav__logo--center" href="/" target="_top">
-      <img src="/images/logo.png" alt="Lang & Co. logo" />
-    </a>
-
-    <div class="nav__icons">
-      <a class="nav__icon-btn" href="../shared/profile.html" target="_top" aria-label="Account — Log in or sign up">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <circle cx="12" cy="8" r="3.6" />
-          <path d="M4.3 20c1.6-4.2 4.6-6.2 7.7-6.2s6.1 2 7.7 6.2" />
-        </svg>
-      </a>
-      <a class="nav__icon-btn" href="../cart/cart.html" target="_top" aria-label="Shopping bag, 4 items">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          aria-hidden="true">
-          <path d="M6 8h12l-1 13H7L6 8Z" />
-          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-        </svg>
-        <span class="nav__badge-count">4</span>
-      </a>
-    </div>
-
-    <div class="mobile-menu">
-      <ul>
-        <li><a id="nav-home" href="../../index.html" target="_top">Home</a></li>
-        <li><a id="nav-shop" href="../cart/products.html" target="_top">Shop</a></li>
-        <li><a id="nav-blog" href="../blog/blog.html" target="_top">Blog</a></li>
-        <li><a id="nav-forum" href="../forum/forum.html" target="_top">Forum</a></li>
-        <li><a id="nav-wishlist" href="/pages/giftcard/giftcard.html" target="_top">Giftcards</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="wave">
-    <div class="forum-breadcrumb">
-      <a href="/shared/admin?tab=products">Admin</a> <span aria-hidden="true">&bull;</span>
-      <span aria-current="page"><%= product ? "Edit Product" : "Add Product" %></span>
-    </div>
+  <div class="admin-breadcrumb">
+    <a href="/shared/admin?tab=products">Admin</a> <span aria-hidden="true">&bull;</span>
+    <span aria-current="page"><%= product ? "Edit Product" : "Add Product" %></span>
   </div>
 
   <!-- Product Form Page -->
@@ -118,7 +54,16 @@
           </ul>
         </div>
         <% }
-          var v = formValues || {};
+          var v = formValues || (product ? {
+            title: product.title,
+            category: product.category,
+            description: product.description,
+            price: product.price,
+            weightGram: product.weightGram,
+            stock: product.stock,
+            material: product.material,
+            craftVillage: product.maker,
+          } : {});
           var images = (product && product.images) || [];
         %>
 
@@ -196,8 +141,8 @@
 
           <div class="admin-field-row">
             <div class="admin-field">
-              <label class="admin-field__label" for="price">Price (VND) *</label>
-              <input type="number" id="price" name="price" class="admin-field__input" min="1" step="1000"
+              <label class="admin-field__label" for="price">Price (USD) *</label>
+              <input type="number" id="price" name="price" class="admin-field__input" min="0.01" step="0.01"
                 value="<%= v.price || '' %>" />
             </div>
             <div class="admin-field">
@@ -212,18 +157,40 @@
             </div>
           </div>
 
+          <div class="admin-field-row">
+            <div class="admin-field">
+              <label class="admin-field__label" for="material">Material</label>
+              <input type="text" id="material" name="material" class="admin-field__input" list="materialOptions"
+                value="<%= v.material || '' %>" />
+              <datalist id="materialOptions">
+                <% materials.forEach(function (material) { %>
+                <option value="<%= material %>"></option>
+                <% }) %>
+              </datalist>
+              <p class="admin-field__hint">Shown in the shop's Material filter. Leave blank to use a category default.</p>
+            </div>
+            <div class="admin-field">
+              <label class="admin-field__label" for="craftVillage">Craft village</label>
+              <input type="text" id="craftVillage" name="craftVillage" class="admin-field__input" list="craftVillageOptions"
+                value="<%= v.craftVillage || '' %>" />
+              <datalist id="craftVillageOptions">
+                <% craftVillages.forEach(function (village) { %>
+                <option value="<%= village %>"></option>
+                <% }) %>
+              </datalist>
+              <p class="admin-field__hint">Shown in the shop's Craft Village filter. Leave blank to use "Làng &amp; Co. Workshop".</p>
+            </div>
+          </div>
+
           <div class="admin-form__actions">
-            <button type="submit" name="action" value="hide" class="btn btn--outline">Save &amp; Hide</button>
-            <button type="submit" name="action" value="publish" class="btn btn--success">Save &amp; Publish</button>
+            <button type="submit" class="btn btn--success">Save</button>
           </div>
         </form>
       </div>
     </div>
   </section>
 
-  <!--  Footer  -->
-  <iframe src="../global/footer.html" title="Footer" class="shared-include shared-footer" loading="lazy"
-    scrolling="no"></iframe>
+  <%- include("../../partials/footer") %>
 
   <script>
     function previewProductImage(input, previewId) {

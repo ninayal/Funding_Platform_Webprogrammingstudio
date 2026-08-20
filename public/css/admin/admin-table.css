@@ -1,0 +1,130 @@
+.admin-table-wrap {
+  border: 1px solid var(--admin-border);
+  border-radius: 20px;
+  background: var(--admin-surface-strong);
+  max-height: 65vh;
+  overflow: auto;
+  scrollbar-width: auto;
+  scrollbar-color: var(--admin-sand) var(--admin-surface);
+  scrollbar-gutter: stable;
+}
+
+.admin-table-wrap::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+}
+
+.admin-table-wrap::-webkit-scrollbar-track {
+  background: var(--admin-surface);
+  border-radius: 20px;
+}
+
+.admin-table-wrap::-webkit-scrollbar-thumb {
+  background-color: var(--admin-sand);
+  border-radius: 20px;
+  border: 3px solid var(--admin-surface);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* table-layout:auto tries to squeeze every column into 100% width even when
+   there isn't room, which made header labels overlap the sticky Action
+   column below. Fixed layout with every column left at its default width
+   divides the table evenly across all 10 columns instead. */
+.admin-table--products {
+  table-layout: fixed;
+  min-width: 1320px;
+}
+
+.admin-table--products th,
+.admin-table--products td {
+  text-align: center;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 18px 22px;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.admin-table thead th {
+  background: #f7f3e9;
+  color: var(--admin-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--admin-border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid rgba(116, 81, 45, 0.12);
+}
+
+.admin-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(116, 81, 45, 0.035);
+}
+
+.admin-table td {
+  color: var(--admin-text);
+}
+
+.admin-table__id {
+  font-weight: 700;
+}
+
+/* PRODUCT TABLE EXTRAS */
+.admin-table__thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(116, 81, 45, 0.08);
+}
+
+.admin-table__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* TAGS / STATUS BADGES */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag--active {
+  color: var(--admin-success);
+  border: 1px solid rgba(30, 122, 52, 0.32);
+  background: var(--admin-success-soft);
+}
+
+.tag--blocked {
+  color: var(--admin-accent);
+  border: 1px solid rgba(163, 29, 29, 0.32);
+  background: var(--admin-accent-soft);
+}

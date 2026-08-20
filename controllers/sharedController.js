@@ -68,32 +68,60 @@ const postResetPassword = (req, res) => {
 
 const getAdminPage = (req, res) => {
   const products = adminProductModel.getAllProducts();
+  const users = userModel.getAllUsers();
 
   return res.render("shared/admin/admin", {
+    activePage: "admin",
     pendingRequests: passwordResetModel.getPendingRequests(),
     resolvedRequests: passwordResetModel.getResolvedRequests(),
     products,
     productStats: {
       total: products.length,
-      published: products.filter(
-        (product) => product.status === "published"
+      inStock: products.filter(
+        (product) => Number(product.stock) > 0
       ).length,
-      hidden: products.filter(
-        (product) => product.status === "hidden"
+      outOfStock: products.filter(
+        (product) => Number(product.stock) <= 0
       ).length,
     },
     categories: adminProductModel.CATEGORIES,
+    users,
+    userStats: {
+      total: users.length,
+      active: users.filter(
+        (user) => user.status !== "blocked"
+      ).length,
+      blocked: users.filter(
+        (user) => user.status === "blocked"
+      ).length,
+    },
     activeTab: req.query.tab || "users",
     productNotice: req.query.notice || null,
   });
 };
 
-const buildProductsRedirect = (warnings = []) =>
-  warnings.length
-    ? `/shared/admin?tab=products&notice=${encodeURIComponent(
-      warnings.join(" ")
-    )}`
-    : "/shared/admin?tab=products";
+const postToggleUserStatus = (req, res) => {
+  const targetUser = userModel.findById(req.params.id);
+
+  if (targetUser && targetUser.id !== req.currentUser.id) {
+    userModel.updateUser(targetUser.id, {
+      status: targetUser.status === "blocked" ? "active" : "blocked",
+    });
+  }
+
+  return res.redirect("/shared/admin?tab=users");
+};
+
+const buildProductsRedirect = (warnings = []) => {
+  if (!warnings.length) {
+    return "/shared/admin?tab=products";
+  }
+
+  return (
+    "/shared/admin?tab=products&notice=" +
+    encodeURIComponent(warnings.join(" "))
+  );
+};
 
 const productFieldsFromBody = (body) => ({
   title: String(body.title || "").trim(),
@@ -102,6 +130,8 @@ const productFieldsFromBody = (body) => ({
   price: body.price,
   weightGram: body.weightGram,
   stock: body.stock,
+  material: String(body.material || "").trim(),
+  craftVillage: String(body.craftVillage || "").trim(),
 });
 
 const buildImagePaths = (existingImages = [], files = {}) =>
@@ -149,6 +179,8 @@ const getProductFormPage = (req, res) => {
   return res.render("shared/admin/product_form", {
     product,
     categories: adminProductModel.CATEGORIES,
+    craftVillages: adminProductModel.CRAFT_VILLAGES,
+    materials: adminProductModel.MATERIALS,
     errors: [],
     warnings: [],
     formValues: null,
@@ -172,6 +204,8 @@ const postCreateProduct = (req, res) => {
     return res.render("shared/admin/product_form", {
       product: null,
       categories: adminProductModel.CATEGORIES,
+      craftVillages: adminProductModel.CRAFT_VILLAGES,
+      materials: adminProductModel.MATERIALS,
       errors,
       warnings,
       formValues: req.body,
@@ -186,9 +220,8 @@ const postCreateProduct = (req, res) => {
     price: Number(fields.price),
     weightGram: Number(fields.weightGram),
     stock: Number(fields.stock),
-    status: req.body.action === "publish"
-      ? "published"
-      : "hidden",
+    material: fields.material,
+    maker: fields.craftVillage,
   });
 
   return res.redirect(buildProductsRedirect(warnings));
@@ -219,6 +252,8 @@ const postUpdateProduct = (req, res) => {
     return res.render("shared/admin/product_form", {
       product: existing,
       categories: adminProductModel.CATEGORIES,
+      craftVillages: adminProductModel.CRAFT_VILLAGES,
+      materials: adminProductModel.MATERIALS,
       errors,
       warnings,
       formValues: req.body,
@@ -239,26 +274,11 @@ const postUpdateProduct = (req, res) => {
     price: Number(fields.price),
     weightGram: Number(fields.weightGram),
     stock: Number(fields.stock),
-    status: req.body.action === "publish"
-      ? "published"
-      : "hidden",
+    material: fields.material,
+    maker: fields.craftVillage,
   });
 
   return res.redirect(buildProductsRedirect(warnings));
-};
-
-const postToggleProductStatus = (req, res) => {
-  const product = adminProductModel.findProductById(req.params.id);
-
-  if (product) {
-    adminProductModel.updateProduct(product.id, {
-      status: product.status === "published"
-        ? "hidden"
-        : "published",
-    });
-  }
-
-  return res.redirect("/shared/admin?tab=products");
 };
 
 const postDeleteProduct = (req, res) => {
@@ -309,20 +329,6 @@ const postDeleteResolvedPasswordReset = (req, res) => {
   return res.redirect("/shared/admin");
 };
 
-const postToggleUserStatus = (req, res) => {
-  const user = userModel.findUserById(req.params.id);
-
-  if (user) {
-    userModel.updateUser(user.id, {
-      status: user.status === "blocked"
-        ? "active"
-        : "blocked",
-    });
-  }
-
-  return res.redirect("/shared/admin");
-};
-
 const getSitemapPage = (req, res) =>
   res.render("shared/sitemap");
 
@@ -332,14 +338,13 @@ module.exports = {
   getResetPasswordPage,
   postResetPassword,
   getAdminPage,
+  postToggleUserStatus,
   getProductFormPage,
   postCreateProduct,
   postUpdateProduct,
-  postToggleProductStatus,
   postDeleteProduct,
   postResolvePasswordReset,
   postRejectPasswordReset,
   postDeleteResolvedPasswordReset,
-  postToggleUserStatus,
   getSitemapPage,
 };

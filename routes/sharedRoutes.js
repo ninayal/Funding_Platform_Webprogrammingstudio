@@ -179,12 +179,6 @@ router.post(
 );
 
 router.post(
-  "/admin/products/:id/toggle",
-  requireAdmin,
-  sharedController.postToggleProductStatus
-);
-
-router.post(
   "/admin/products/:id/delete",
   requireAdmin,
   sharedController.postDeleteProduct
