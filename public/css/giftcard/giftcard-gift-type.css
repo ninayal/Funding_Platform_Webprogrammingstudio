@@ -1,0 +1,170 @@
+/* ================================================
+   STEP 1 — GIFT TYPE ALIGNMENT
+   ================================================ */
+
+.choice-grid {
+    display: grid;
+
+    gap: 22px;
+
+    margin-top: 42px;
+}
+
+
+.choice-grid--two {
+    grid-template-columns:
+        repeat(2,
+            minmax(0, 1fr));
+
+    grid-template-rows:
+        auto auto 1fr auto;
+}
+
+
+.choice-grid--three {
+    grid-template-columns:
+        repeat(3,
+            minmax(0, 1fr));
+
+    grid-template-rows:
+        auto auto 1fr;
+}
+
+
+/* ================================================
+   GIFT TYPE CARD
+   ================================================ */
+
+.choice-card {
+    grid-row:
+        span 4;
+
+    display: grid;
+
+    grid-template-rows:
+        subgrid;
+
+    min-height: 390px;
+
+    padding: 32px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .24);
+
+    color:
+        var(--ink);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow:
+        var(--shadow-soft);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+
+
+.choice-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(163,
+            29,
+            29,
+            .52);
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.choice-card__index {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 28px;
+
+    font-style: italic;
+}
+
+
+.choice-card__title {
+    display: flex;
+
+    align-items: flex-end;
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(34px,
+            4vw,
+            50px);
+
+    line-height: 1.04;
+}
+
+
+.choice-card__copy {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 19px;
+
+    line-height: 1.5;
+}
+
+
+.choice-card__action {
+    color:
+        var(--red);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: .07em;
+
+    text-transform: uppercase;
+}
+
+
+/* ================================================
+   GIFT TYPE ACTIVE STATE
+   ================================================ */
+
+#gift-lang:checked~main label[for="gift-lang"],
+
+#gift-honour:checked~main label[for="gift-honour"] {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        var(--shadow);
+
+    transform:
+        translateY(-4px);
+}
+
+

@@ -1,0 +1,119 @@
+/* ================================================
+   STEP 2 — DELIVERY
+   ================================================ */
+
+.delivery-card {
+    grid-row:
+        span 3;
+
+    display: grid;
+
+    grid-template-rows:
+        subgrid;
+
+    min-height: 300px;
+
+    place-items: center;
+
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .38);
+
+    color:
+        var(--ink);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease;
+}
+
+
+.delivery-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--red);
+
+    background:
+        rgba(254,
+            249,
+            225,
+            .95);
+}
+
+
+.delivery-card__icon {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 42px;
+}
+
+
+.delivery-card__title {
+    font-family:
+        var(--ff-script);
+
+    font-size: 37px;
+}
+
+
+.delivery-card__copy {
+    max-width: 280px;
+
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 17px;
+
+    line-height: 1.45;
+}
+
+
+/* ================================================
+   DELIVERY ACTIVE STATE
+   ================================================ */
+
+#delivery-digital:checked~main label[for="delivery-digital"],
+
+#delivery-printable:checked~main label[for="delivery-printable"],
+
+#delivery-physical:checked~main label[for="delivery-physical"] {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        var(--red);
+
+    background:
+        rgba(254,
+            249,
+            225,
+            .96);
+
+    box-shadow:
+        var(--shadow-soft);
+}
+
+

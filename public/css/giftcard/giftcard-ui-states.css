@@ -1,0 +1,54 @@
+/* ================================================
+   HIDDEN CSS UI STATES
+   ================================================ */
+
+.ui-state {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 1px;
+    height: 1px;
+
+    margin: 0;
+    padding: 0;
+
+    opacity: 0;
+
+    clip-path: inset(50%);
+
+    pointer-events: none;
+}
+/* ================================================
+   KEYBOARD FOCUS STATES
+   ================================================ */
+
+/* Gift type */
+#gift-lang:focus-visible ~ main label[for="gift-lang"],
+#gift-honour:focus-visible ~ main label[for="gift-honour"],
+
+/* Delivery type */
+#delivery-digital:focus-visible ~ main label[for="delivery-digital"],
+#delivery-printable:focus-visible ~ main label[for="delivery-printable"],
+#delivery-physical:focus-visible ~ main label[for="delivery-physical"],
+
+/* Gift card design */
+#design-lotus:focus-visible ~ main label[for="design-lotus"],
+#design-battrang:focus-visible ~ main label[for="design-battrang"],
+#design-vanphuc:focus-visible ~ main label[for="design-vanphuc"],
+#design-hathai:focus-visible ~ main label[for="design-hathai"],
+#design-hoian:focus-visible ~ main label[for="design-hoian"],
+#design-phuvinh:focus-visible ~ main label[for="design-phuvinh"] {
+    outline: 3px solid var(--red);
+    outline-offset: 5px;
+}
+.btn:focus-visible,
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible,
+.amount-field input:focus-visible {
+    outline: 3px solid var(--red);
+    outline-offset: 3px;
+}
+
