@@ -7,46 +7,35 @@
 
 <body>
 
-  <%- include(
-    "../../partials/header_v2",
-    {
-      activePage,
-      cartCount,
-      currentUser
-    }
-  ) %>
+  <%- include( "../../partials/header_v2" , { activePage, cartCount, currentUser } ) %>
 
-  <!-- Admin Page -->
-  <section class="admin-page">
+    <!-- Admin Page -->
+    <section class="admin-page">
 
-    <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
-    <% const currentTab = typeof activeTab !== "undefined" && activeTab ? activeTab : "users"; %>
-    <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab" <%= currentTab === "products" ? "checked" : "" %>>
-    <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab" <%= currentTab === "users" ? "checked" : "" %>>
+      <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
+      <% const currentTab=typeof activeTab !=="undefined" && activeTab ? activeTab : "users" ; %>
+        <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab"
+          <%=currentTab==="products" ? "checked" : "" %>>
+        <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab"
+          <%=currentTab==="users" ? "checked" : "" %>>
 
-    <div class="admin">
+        <div class="admin">
 
-      <%- include("./admin_index", { section: "sidebar" }) %>
+          <%- include("./admin_index", { section: "sidebar" }) %>
 
-      <!-- Content -->
-      <main class="admin__content">
-        <a id="admin-top"></a>
+            <!-- Content -->
+            <main class="admin__content">
+              <a id="admin-top"></a>
 
-        <%- include(
-          "./products-panel",
-          { products, productStats, categories, productNotice }
-        ) %>
+              <%- include( "./products-panel" , { products, productStats, categories, productNotice } ) %>
 
-        <%- include(
-          "./users-panel",
-          { users, userStats, currentUser, pendingRequests, resolvedRequests }
-        ) %>
+                <%- include( "./users-panel" , { users, userStats, currentUser, pendingRequests, resolvedRequests } ) %>
 
-      </main>
-    </div>
-  </section>
+            </main>
+        </div>
+    </section>
 
-  <%- include("../../partials/footer") %>
+    <%- include("../../partials/footer") %>
 
 </body>
 

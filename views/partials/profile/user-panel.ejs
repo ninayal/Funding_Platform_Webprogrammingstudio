@@ -1,38 +1,30 @@
 <div class="profile-panel profile-panel--user">
 
-  <!-- =====================================================
-       PROFILE HERO
-  ====================================================== -->
+  <!-- PROFILE HERO -->
 
   <div class="profile-hero">
-
     <div class="profile-avatar-section">
-
       <form class="profile-avatar-form" action="/shared/profile/avatar" method="post" enctype="multipart/form-data"
         data-avatar-form>
 
         <div class="profile-avatar-wrap">
-
           <img class="profile-avatar" src="<%= profile.avatar %>" alt="Profile photo of <%= profile.name %>"
             data-avatar-preview />
 
           <button type="button" class="profile-avatar-edit" aria-label="Change profile picture" data-avatar-upload>
             <span>✎</span>
           </button>
-
         </div>
 
         <input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" class="profile-avatar-input"
           data-avatar-input />
 
         <div class="profile-avatar-actions">
-
           <span class="profile-avatar-file-name" data-avatar-file-name>
             No new photo selected
           </span>
 
           <div class="profile-avatar-buttons">
-
             <button type="button" class="profile-avatar-button profile-avatar-button--cancel" data-avatar-cancel>
               Cancel
             </button>
@@ -40,25 +32,15 @@
             <button type="button" class="profile-avatar-button profile-avatar-button--save" data-avatar-save>
               Save
             </button>
-
           </div>
 
           <small class="profile-avatar-error" data-avatar-error></small>
-
         </div>
-
       </form>
-
     </div>
 
-
-    <!-- PROFILE INFORMATION -->
-
     <div class="profile-hero__content">
-
-      <p class="profile-kicker">
-        Member profile
-      </p>
+      <p class="profile-kicker">Member profile</p>
 
       <h2>
         <%= profile.name %>
@@ -69,71 +51,46 @@
       </p>
 
       <div class="profile-badges">
-
-        <span>
-          Verified account
-        </span>
-
+        <span>Verified account</span>
         <span>
           <%= profile.tier || "Craft Collector" %>
         </span>
-
         <span>
-          <%= profileStats[0]?.value || "00" %>
-            orders
+          <%= profileStats[0]?.value || "00" %> orders
         </span>
-
       </div>
-
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       PROFILE STATS
-  ====================================================== -->
+  <!-- PROFILE STATS -->
 
   <div class="profile-stats">
-
     <% profileStats.forEach((stat)=> { %>
-
       <article class="profile-stat-card">
-
         <span class="profile-stat-card__label">
           <%= stat.label %>
         </span>
-
         <strong>
           <%= stat.value %>
         </strong>
-
         <small>
           <%= stat.description %>
         </small>
-
       </article>
-
       <% }); %>
-
   </div>
 
 
-  <!-- =====================================================
-       PROFILE INFORMATION FORM
-  ====================================================== -->
+  <!-- PROFILE INFORMATION -->
 
-  <form class="profile-form" action="/shared/profile" method="post" data-profile-form novalidate>
+  <form class="profile-form" action="/shared/profile" method="post" data-profile-form
+    data-persist-form="profile-information" novalidate>
 
     <div class="profile-grid">
 
-      <!-- FIRST NAME -->
-
       <label class="profile-field">
-
-        <span>
-          First Name
-        </span>
+        <span>First Name</span>
 
         <input type="text" name="firstname" value="<%= values.firstname %>" autocomplete="given-name" minlength="2"
           maxlength="50" aria-describedby="firstname-error" aria-invalid="<%= errors.firstname ? 'true' : 'false' %>"
@@ -142,17 +99,10 @@
         <small class="profile-field-error" id="firstname-error">
           <%= errors.firstname || "" %>
         </small>
-
       </label>
 
-
-      <!-- LAST NAME -->
-
       <label class="profile-field">
-
-        <span>
-          Last Name
-        </span>
+        <span>Last Name</span>
 
         <input type="text" name="lastname" value="<%= values.lastname %>" autocomplete="family-name" minlength="2"
           maxlength="50" aria-describedby="lastname-error" aria-invalid="<%= errors.lastname ? 'true' : 'false' %>"
@@ -161,17 +111,10 @@
         <small class="profile-field-error" id="lastname-error">
           <%= errors.lastname || "" %>
         </small>
-
       </label>
 
-
-      <!-- EMAIL -->
-
       <label class="profile-field">
-
-        <span>
-          Email Address
-        </span>
+        <span>Email Address</span>
 
         <input type="email" name="email" value="<%= values.email %>" autocomplete="email" maxlength="254"
           aria-describedby="profile-email-error" aria-invalid="<%= errors.email ? 'true' : 'false' %>" required />
@@ -179,17 +122,10 @@
         <small class="profile-field-error" id="profile-email-error">
           <%= errors.email || "" %>
         </small>
-
       </label>
 
-
-      <!-- PHONE -->
-
       <label class="profile-field">
-
-        <span>
-          Phone Number
-        </span>
+        <span>Phone Number</span>
 
         <input type="tel" name="phone" value="<%= values.phone %>" autocomplete="tel" inputmode="tel" minlength="7"
           maxlength="20" pattern="[0-9+() -]{7,20}" aria-describedby="phone-error"
@@ -198,17 +134,10 @@
         <small class="profile-field-error" id="phone-error">
           <%= errors.phone || "" %>
         </small>
-
       </label>
 
-
-      <!-- LOCATION -->
-
       <label class="profile-field">
-
-        <span>
-          Location
-        </span>
+        <span>Location</span>
 
         <input type="text" name="location" value="<%= values.location %>" autocomplete="address-level2" maxlength="100"
           aria-describedby="location-error" aria-invalid="<%= errors.location ? 'true' : 'false' %>" />
@@ -216,17 +145,10 @@
         <small class="profile-field-error" id="location-error">
           <%= errors.location || "" %>
         </small>
-
       </label>
 
-
-      <!-- POSTAL CODE -->
-
       <label class="profile-field">
-
-        <span>
-          Postal Code
-        </span>
+        <span>Postal Code</span>
 
         <input type="text" name="postalCode" value="<%= values.postalCode %>" autocomplete="postal-code" maxlength="20"
           aria-describedby="postal-code-error" aria-invalid="<%= errors.postalCode ? 'true' : 'false' %>" />
@@ -234,17 +156,10 @@
         <small class="profile-field-error" id="postal-code-error">
           <%= errors.postalCode || "" %>
         </small>
-
       </label>
 
-
-      <!-- ADDRESS -->
-
       <label class="profile-field profile-field--full">
-
-        <span>
-          Address
-        </span>
+        <span>Address</span>
 
         <input type="text" name="address" value="<%= values.address %>" autocomplete="street-address" maxlength="180"
           aria-describedby="address-error" aria-invalid="<%= errors.address ? 'true' : 'false' %>" />
@@ -252,17 +167,10 @@
         <small class="profile-field-error" id="address-error">
           <%= errors.address || "" %>
         </small>
-
       </label>
 
-
-      <!-- ABOUT -->
-
       <label class="profile-field profile-field--full">
-
-        <span>
-          About
-        </span>
+        <span>About</span>
 
         <textarea name="about" rows="5" maxlength="500" aria-describedby="about-counter about-error"
           aria-invalid="<%= errors.about ? 'true' : 'false' %>" data-profile-about><%= values.about %></textarea>
@@ -274,34 +182,24 @@
         <small class="profile-field-error" id="about-error">
           <%= errors.about || "" %>
         </small>
-
       </label>
 
     </div>
 
 
-    <!-- =====================================================
-         CHANGE PASSWORD
-    ====================================================== -->
+    <!-- CHANGE PASSWORD -->
 
     <fieldset class="profile-password-group">
-
-      <legend>
-        Change Password
-      </legend>
+      <legend>Change Password</legend>
 
       <p class="profile-field-help">
-        Leave all password fields empty to keep
-        your current password.
+        Leave all password fields empty to keep your current password.
       </p>
 
       <div class="profile-grid">
 
         <label class="profile-field">
-
-          <span>
-            Current Password
-          </span>
+          <span>Current Password</span>
 
           <input type="password" name="currentPassword" autocomplete="current-password" maxlength="72"
             aria-describedby="current-password-error" aria-invalid="<%= errors.currentPassword ? 'true' : 'false' %>" />
@@ -309,15 +207,10 @@
           <small class="profile-field-error" id="current-password-error">
             <%= errors.currentPassword || "" %>
           </small>
-
         </label>
 
-
         <label class="profile-field">
-
-          <span>
-            New Password
-          </span>
+          <span>New Password</span>
 
           <input type="password" name="newPassword" autocomplete="new-password" minlength="8" maxlength="72"
             aria-describedby="profile-password-help new-password-error"
@@ -326,15 +219,10 @@
           <small class="profile-field-error" id="new-password-error">
             <%= errors.newPassword || "" %>
           </small>
-
         </label>
 
-
         <label class="profile-field profile-field--full">
-
-          <span>
-            Confirm New Password
-          </span>
+          <span>Confirm New Password</span>
 
           <input type="password" name="confirmNewPassword" autocomplete="new-password" minlength="8" maxlength="72"
             aria-describedby="profile-password-help confirm-password-error"
@@ -343,25 +231,17 @@
           <small class="profile-field-error" id="confirm-password-error" data-confirm-password-error>
             <%= errors.confirmNewPassword || "" %>
           </small>
-
         </label>
 
       </div>
 
       <p id="profile-password-help" class="profile-field-help">
-        Use at least 8 characters with uppercase,
-        lowercase, number, and symbol.
+        Use at least 8 characters with uppercase, lowercase, number, and symbol.
       </p>
-
     </fieldset>
 
-
     <button class="profile-save" type="submit" data-profile-submit>
-
-      <span data-profile-submit-label>
-        Save Changes
-      </span>
-
+      <span data-profile-submit-label>Save Changes</span>
     </button>
 
   </form>

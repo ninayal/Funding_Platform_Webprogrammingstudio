@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,37 +8,22 @@
   <link rel="stylesheet" href="/css/landingpage/index.css" />
   <link rel="stylesheet" href="/css/login_register/login.css" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
     <%= pageTitle %> | Làng &amp; Co.
   </title>
 
-  <link
-    rel="stylesheet"
-    href="/css/landingpage/index.css"
-  />
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
 
-  <link
-    rel="stylesheet"
-    href="/css/login_register/login.css"
-  />
+  <link rel="stylesheet" href="/css/login_register/login.css" />
 
-  <script
-    src="/js/login/login.js"
-    defer
-  ></script>
+  <script src="/js/login/login.js" defer></script>
 </head>
 
 <body>
   <main class="login-page">
-    <div
-      class="login-page__bg"
-      aria-hidden="true"
-    ></div>
+    <div class="login-page__bg" aria-hidden="true"></div>
 
     <!-- LEFT -->
     <div class="login-brand">
@@ -56,11 +42,7 @@
     <!-- RIGHT: original A1 glass panel -->
     <div class="login-glass">
       <div class="login-glass__logo">
-        <img
-          src="/images/logo.png"
-          alt=""
-          aria-hidden="true"
-        />
+        <img src="/images/logo.png" alt="" aria-hidden="true" />
 
         <div class="login-glass__logo-text">
           <span class="logo-name">
@@ -77,146 +59,91 @@
         Sign In
       </h2>
 
-      <% if (typeof error !== "undefined" && error) { %>
-      <p class="form-error" role="alert"><%= error %></p>
-      <% } %>
+      <% if (typeof error !=="undefined" && error) { %>
+        <p class="form-error" role="alert">
+          <%= error %>
+        </p>
+        <% } %>
 
-      <form class="login-form" action="/shared/login" method="POST">
-      <div
-        class="<%= formErrorClass %>"
-        id="login-form-error"
-        role="alert"
-        aria-hidden="<%= formErrorAriaHidden %>"
-      >
-        <%= formErrorText %>
-      </div>
+          <form class="login-form" action="/shared/login" method="POST">
+            <div class="<%= formErrorClass %>" id="login-form-error" role="alert"
+              aria-hidden="<%= formErrorAriaHidden %>">
+              <%= formErrorText %>
+            </div>
 
-      <form
-        class="login-form"
-        id="login-form"
-        action="/shared/login"
-        method="post"
-        data-login-form
-        novalidate
-      >
-        <input
-          type="hidden"
-          name="redirect"
-          value="<%= redirectValue %>"
-        />
+            <form class="login-form" id="login-form" action="/shared/login" method="post" data-login-form novalidate>
+              <input type="hidden" name="redirect" value="<%= redirectValue %>" />
 
-        <div class="form-group">
-          <label
-            class="form-label"
-            for="email"
-          >
-            E-mail
-          </label>
+              <div class="form-group">
+                <label class="form-label" for="email">
+                  E-mail
+                </label>
 
-          <input
-            class="<%= emailInputClass %>"
-            type="email"
-            id="email"
-            name="email"
-            value="<%= emailValue %>"
-            placeholder="E-mail Address"
-            autocomplete="email"
-            aria-describedby="email-message"
-            aria-invalid="<%= emailAriaInvalid %>"
-            data-login-email
-            required
-          />
+                <input class="<%= emailInputClass %>" type="email" id="email" name="email" value="<%= emailValue %>"
+                  placeholder="E-mail Address" autocomplete="email" aria-describedby="email-message"
+                  aria-invalid="<%= emailAriaInvalid %>" data-login-email required />
 
-          <small
-            class="<%= emailMessageClass %>"
-            id="email-message"
-            data-email-message
-          >
-            <%= emailMessageText %>
-          </small>
-        </div>
+                <small class="<%= emailMessageClass %>" id="email-message" data-email-message>
+                  <%= emailMessageText %>
+                </small>
+              </div>
 
-        <div class="form-group">
-          <label
-            class="form-label"
-            for="password"
-          >
-            Password
-          </label>
+              <div class="form-group">
+                <label class="form-label" for="password">
+                  Password
+                </label>
 
-          <input
-            class="<%= passwordInputClass %>"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="············"
-            autocomplete="current-password"
-            aria-describedby="password-message"
-            aria-invalid="<%= passwordAriaInvalid %>"
-            data-login-password
-            required
-          />
+                <input class="<%= passwordInputClass %>" type="password" id="password" name="password"
+                  placeholder="············" autocomplete="current-password" aria-describedby="password-message"
+                  aria-invalid="<%= passwordAriaInvalid %>" data-login-password required />
 
-          <small
-            class="<%= passwordMessageClass %>"
-            id="password-message"
-            data-password-message
-          >
-            <%= passwordMessageText %>
-          </small>
+                <small class="<%= passwordMessageClass %>" id="password-message" data-password-message>
+                  <%= passwordMessageText %>
+                </small>
 
-          <a
-            class="form-forgot"
-            href="<%= forgotPasswordUrl %>"
-          >
-            Forgot password?
-          </a>
-        </div>
+                <a class="form-forgot" href="<%= forgotPasswordUrl %>">
+                  Forgot password?
+                </a>
+              </div>
 
-        <button
-          class="login-btn"
-          type="submit"
-          data-login-submit
-        >
-          <span data-submit-label>
-            Sign In
-          </span>
-        </button>
-      </form>
+              <button class="login-btn" type="submit" data-login-submit>
+                <span data-submit-label>
+                  Sign In
+                </span>
+              </button>
+            </form>
 
-      <div class="login-divider">
-        <span class="login-divider__line"></span>
-        <span class="login-divider__text">Or</span>
-        <span class="login-divider__line"></span>
-      </div>
+            <div class="login-divider">
+              <span class="login-divider__line"></span>
+              <span class="login-divider__text">Or</span>
+              <span class="login-divider__line"></span>
+            </div>
 
-      <p class="login-signup-text">
-        Don't have an account?
-        <a href="<%= registerUrl %>">
-          Sign Up
-        </a>
-      </p>
+            <p class="login-signup-text">
+              Don't have an account?
+              <a href="<%= registerUrl %>">
+                Sign Up
+              </a>
+            </p>
 
-      <div class="login-divider">
-        <span class="login-divider__line"></span>
-        <span class="login-divider__line"></span>
-      </div>
+            <div class="login-divider">
+              <span class="login-divider__line"></span>
+              <span class="login-divider__line"></span>
+            </div>
 
-      <div>
-        <a
-          class="login-guest"
-          href="<%= guestUrl %>"
-        >
-          <span class="guest-icon">✦</span>
+            <div>
+              <a class="login-guest" href="<%= guestUrl %>">
+                <span class="guest-icon">✦</span>
 
-          <span class="guest-text">
-            Continue exploring as a guest
-          </span>
+                <span class="guest-text">
+                  Continue exploring as a guest
+                </span>
 
-          <span class="guest-arrow">→</span>
-        </a>
-      </div>
+                <span class="guest-arrow">→</span>
+              </a>
+            </div>
     </div>
   </main>
 </body>
+
 </html>

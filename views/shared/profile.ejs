@@ -1,164 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
     My Profile | Làng &amp; Co.
   </title>
 
-  <link
-    rel="stylesheet"
-    href="/css/header_v2.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/profile/profile.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/footer.css"
-  />
-
-  <script
-    src="/js/profile/profile.js"
-    defer
-  ></script>
+  <link rel="stylesheet" href="/css/header_v2.css" />
+  <link rel="stylesheet" href="/css/profile/profile.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <script src="/js/shared/formPersistence.js" defer></script>
+  <script src="/js/profile/profile.js" defer></script>
 </head>
 
 <body class="<%= isAdmin
   ? 'is-admin'
-  : '' %>"
->
-  <%- include(
-    "../partials/header_v2",
-    {
-      activePage,
-      cartCount,
-      currentUser
-    }
-  ) %>
+  : '' %>">
+  <%- include( "../partials/header_v2" , { activePage, cartCount, currentUser } ) %>
 
-  <main class="profile-page">
-    <input
-      class="profile-state"
-      type="radio"
-      name="profile-tab"
-      id="tab-user"
-      value="user"
-      <%= activeTab === "user"
-        ? "checked"
-        : "" %>
-    />
+    <main class="profile-page">
+      <input class="profile-state" type="radio" name="profile-tab" id="tab-user" value="user" <%=activeTab==="user"
+        ? "checked" : "" %>
+      />
 
-    <input
-      class="profile-state"
-      type="radio"
-      name="profile-tab"
-      id="tab-orders"
-      value="orders"
-      <%= activeTab === "orders"
-        ? "checked"
-        : "" %>
-    />
+      <input class="profile-state" type="radio" name="profile-tab" id="tab-orders" value="orders"
+        <%=activeTab==="orders" ? "checked" : "" %>
+      />
 
-    <input
-      class="profile-state"
-      type="radio"
-      name="profile-tab"
-      id="tab-settings"
-      value="settings"
-      <%= activeTab === "settings"
-        ? "checked"
-        : "" %>
-    />
+      <input class="profile-state" type="radio" name="profile-tab" id="tab-settings" value="settings"
+        <%=activeTab==="settings" ? "checked" : "" %>
+      />
 
-    <input
-      class="profile-state"
-      type="radio"
-      name="profile-tab"
-      id="tab-notifications"
-      value="notifications"
-      <%= activeTab === "notifications"
-        ? "checked"
-        : "" %>
-    />
+      <input class="profile-state" type="radio" name="profile-tab" id="tab-notifications" value="notifications"
+        <%=activeTab==="notifications" ? "checked" : "" %>
+      />
 
-    <section class="profile-shell">
-      <%- include(
-        "../partials/profile/sidebar",
-        {
-          isAdmin,
-          memberSince,
-          tier
-        }
-      ) %>
+      <section class="profile-shell">
+        <%- include( "../partials/profile/sidebar" , { isAdmin, memberSince, tier } ) %>
 
-      <section class="profile-content">
-        <% if (pageMessage) { %>
-          <div
-            class="profile-page-message"
-            role="status"
-            data-profile-message
-          >
-            <span>
-              <%= pageMessage %>
-            </span>
+          <section class="profile-content">
+            <% if (pageMessage) { %>
+              <div class="profile-page-message" role="status" data-profile-message>
+                <span>
+                  <%= pageMessage %>
+                </span>
 
-            <button
-              type="button"
-              aria-label="Dismiss message"
-              data-dismiss-profile-message
-            >
-              ×
-            </button>
-          </div>
-        <% } %>
+                <button type="button" aria-label="Dismiss message" data-dismiss-profile-message>
+                  ×
+                </button>
+              </div>
+              <% } %>
 
-        <%- include(
-          "../partials/profile/user-panel",
-          {
-            errors,
-            profile,
-            profileStats,
-            values
-          }
-        ) %>
+                <%- include( "../partials/profile/user-panel" , { errors, profile, profileStats, values } ) %>
 
-        <%- include(
-          "../partials/profile/orders-panel",
-          {
-            orders,
-            orderSummary
-          }
-        ) %>
+                  <%- include( "../partials/profile/orders-panel" , { orders, orderSummary } ) %>
 
-        <%- include(
-          "../partials/profile/settings-panel",
-          {
-            preferences
-          }
-        ) %>
+                    <%- include( "../partials/profile/settings-panel" , { preferences } ) %>
 
-        <%- include(
-          "../partials/profile/notifications-panel",
-          {
-            notifications
-          }
-        ) %>
+                      <%- include( "../partials/profile/notifications-panel" , { notifications } ) %>
+          </section>
       </section>
-    </section>
-  </main>
+    </main>
 
-  <%- include(
-    "../partials/footer"
-  ) %>
+    <%- include( "../partials/footer" ) %>
 </body>
+
 </html>

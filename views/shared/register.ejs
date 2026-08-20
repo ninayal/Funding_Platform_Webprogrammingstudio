@@ -1,48 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
     Sign Up | Làng &amp; Co.
   </title>
 
-  <link
-    rel="stylesheet"
-    href="/css/landingpage/index.css"
-  />
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
 
-  <link
-    rel="stylesheet"
-    href="/css/login_register/login.css"
-  />
+  <link rel="stylesheet" href="/css/login_register/login.css" />
 
-  <link
-    rel="stylesheet"
-    href="/css/login_register/register.css"
-  />
+  <link rel="stylesheet" href="/css/login_register/register.css" />
 </head>
 
 <body class="register-page-body">
   <main class="login-page register-page">
-    <div
-      class="login-page__bg"
-      aria-hidden="true"
-    ></div>
+    <div class="login-page__bg" aria-hidden="true"></div>
 
-    <section
-      class="login-brand"
-      aria-labelledby="register-brand-title"
-    >
-      <h1
-        class="login-brand__title"
-        id="register-brand-title"
-      >
+    <section class="login-brand" aria-labelledby="register-brand-title">
+      <h1 class="login-brand__title" id="register-brand-title">
         Authentic<br />
         Handcrafts<br />
         <em>Truly</em><br />
@@ -55,17 +35,10 @@
       </p>
     </section>
 
-    <section
-      class="login-glass login-glass--wide"
-      aria-labelledby="register-title"
-    >
+    <section class="login-glass login-glass--wide" aria-labelledby="register-title">
       <div class="login-glass__content">
         <div class="login-glass__logo">
-          <img
-            src="/images/logo.png"
-            alt=""
-            aria-hidden="true"
-          />
+          <img src="/images/logo.png" alt="" aria-hidden="true" />
 
           <div class="login-glass__logo-text">
             <span class="logo-name">
@@ -78,352 +51,179 @@
           </div>
         </div>
 
-        <h2
-          class="login-glass__title"
-          id="register-title"
-        >
+        <h2 class="login-glass__title" id="register-title">
           Sign Up
         </h2>
 
-        <form
-          class="login-form register-form"
-          action="/shared/register"
-          method="post"
-          novalidate
-        >
-          <input
-            type="hidden"
-            name="redirect"
-            value="<%= redirect %>"
-          />
+        <form class="login-form register-form" action="/shared/register" method="post" novalidate>
+          <input type="hidden" name="redirect" value="<%= redirect %>" />
 
           <div class="form-row-2">
             <div class="form-group">
-              <label
-                class="form-label"
-                for="firstname"
-              >
+              <label class="form-label" for="firstname">
                 First Name
               </label>
 
-              <input
-                class="form-input"
-                type="text"
-                id="firstname"
-                name="firstname"
-                value="<%= values.firstname || '' %>"
-                placeholder="First name"
-                autocomplete="given-name"
-                aria-describedby="firstname-error"
-                aria-invalid="<%= errors.firstname
+              <input class="form-input" type="text" id="firstname" name="firstname"
+                value="<%= values.firstname || '' %>" placeholder="First name" autocomplete="given-name"
+                aria-describedby="firstname-error" aria-invalid="<%= errors.firstname
                   ? 'true'
-                  : 'false' %>"
-                minlength="2"
-                maxlength="50"
-                required
-              />
+                  : 'false' %>" minlength="2" maxlength="50" required />
 
-              <small
-                class="register-field-error"
-                id="firstname-error"
-              >
+              <small class="register-field-error" id="firstname-error">
                 <%= errors.firstname || "" %>
               </small>
             </div>
 
             <div class="form-group">
-              <label
-                class="form-label"
-                for="lastname"
-              >
+              <label class="form-label" for="lastname">
                 Last Name
               </label>
 
-              <input
-                class="form-input"
-                type="text"
-                id="lastname"
-                name="lastname"
-                value="<%= values.lastname || '' %>"
-                placeholder="Last name"
-                autocomplete="family-name"
-                aria-describedby="lastname-error"
-                aria-invalid="<%= errors.lastname
+              <input class="form-input" type="text" id="lastname" name="lastname" value="<%= values.lastname || '' %>"
+                placeholder="Last name" autocomplete="family-name" aria-describedby="lastname-error" aria-invalid="<%= errors.lastname
                   ? 'true'
-                  : 'false' %>"
-                minlength="2"
-                maxlength="50"
-                required
-              />
+                  : 'false' %>" minlength="2" maxlength="50" required />
 
-              <small
-                class="register-field-error"
-                id="lastname-error"
-              >
+              <small class="register-field-error" id="lastname-error">
                 <%= errors.lastname || "" %>
               </small>
             </div>
           </div>
 
           <div class="form-group">
-            <label
-              class="form-label"
-              for="username"
-            >
+            <label class="form-label" for="username">
               Username
             </label>
 
-            <input
-              class="form-input"
-              type="text"
-              id="username"
-              name="username"
-              value="<%= values.username || '' %>"
-              placeholder="Choose a unique username"
-              autocomplete="username"
-              aria-describedby="username-error"
+            <input class="form-input" type="text" id="username" name="username" value="<%= values.username || '' %>"
+              placeholder="Choose a unique username" autocomplete="username" aria-describedby="username-error"
               aria-invalid="<%= errors.username
                 ? 'true'
-                : 'false' %>"
-              minlength="3"
-              maxlength="30"
-              required
-            />
+                : 'false' %>" minlength="3" maxlength="30" required />
 
-            <small
-              class="register-field-error"
-              id="username-error"
-            >
+            <small class="register-field-error" id="username-error">
               <%= errors.username || "" %>
             </small>
           </div>
 
           <div class="form-row-2">
             <div class="form-group">
-              <label
-                class="form-label"
-                for="email"
-              >
+              <label class="form-label" for="email">
                 E-mail
               </label>
 
-              <input
-                class="form-input"
-                type="email"
-                id="email"
-                name="email"
-                value="<%= values.email || '' %>"
-                placeholder="abc@gmail.com"
-                autocomplete="email"
-                aria-describedby="register-email-error"
-                aria-invalid="<%= errors.email
+              <input class="form-input" type="email" id="email" name="email" value="<%= values.email || '' %>"
+                placeholder="abc@gmail.com" autocomplete="email" aria-describedby="register-email-error" aria-invalid="<%= errors.email
                   ? 'true'
-                  : 'false' %>"
-                required
-              />
+                  : 'false' %>" required />
 
-              <small
-                class="register-field-error"
-                id="register-email-error"
-              >
+              <small class="register-field-error" id="register-email-error">
                 <%= errors.email || "" %>
               </small>
             </div>
 
             <div class="form-group">
-              <label
-                class="form-label"
-                for="gender"
-              >
+              <label class="form-label" for="gender">
                 Gender
               </label>
 
-              <select
-                class="form-input form-select"
-                id="gender"
-                name="gender"
-                aria-describedby="gender-error"
+              <select class="form-input form-select" id="gender" name="gender" aria-describedby="gender-error"
                 aria-invalid="<%= errors.gender
                   ? 'true'
-                  : 'false' %>"
-                required
-              >
-                <option
-                  value=""
-                  disabled
-                  <%= values.gender
-                    ? ""
-                    : "selected" %>
-                >
+                  : 'false' %>" required>
+                <option value="" disabled <%=values.gender ? "" : "selected" %>
+                  >
                   Select Gender
                 </option>
 
-                <option
-                  value="male"
-                  <%= values.gender === "male"
-                    ? "selected"
-                    : "" %>
-                >
+                <option value="male" <%=values.gender==="male" ? "selected" : "" %>
+                  >
                   Male
                 </option>
 
-                <option
-                  value="female"
-                  <%= values.gender === "female"
-                    ? "selected"
-                    : "" %>
-                >
+                <option value="female" <%=values.gender==="female" ? "selected" : "" %>
+                  >
                   Female
                 </option>
 
-                <option
-                  value="other"
-                  <%= values.gender === "other"
-                    ? "selected"
-                    : "" %>
-                >
+                <option value="other" <%=values.gender==="other" ? "selected" : "" %>
+                  >
                   Other
                 </option>
 
-                <option
-                  value="prefer_not"
-                  <%= values.gender === "prefer_not"
-                    ? "selected"
-                    : "" %>
-                >
+                <option value="prefer_not" <%=values.gender==="prefer_not" ? "selected" : "" %>
+                  >
                   Prefer not to say
                 </option>
               </select>
 
-              <small
-                class="register-field-error"
-                id="gender-error"
-              >
+              <small class="register-field-error" id="gender-error">
                 <%= errors.gender || "" %>
               </small>
             </div>
           </div>
 
           <div class="form-group">
-            <label
-              class="form-label"
-              for="description"
-            >
+            <label class="form-label" for="description">
               Short Description
             </label>
 
-            <textarea
-              class="form-input form-textarea"
-              id="description"
-              name="description"
-              rows="3"
-              minlength="10"
-              maxlength="200"
-              placeholder="Tell us briefly about yourself"
-              aria-describedby="description-error"
+            <textarea class="form-input form-textarea" id="description" name="description" rows="3" minlength="10"
+              maxlength="200" placeholder="Tell us briefly about yourself" aria-describedby="description-error"
               aria-invalid="<%= errors.description
                 ? 'true'
-                : 'false' %>"
-              required
-            ><%= values.description || "" %></textarea>
+                : 'false' %>" required><%= values.description || "" %></textarea>
 
-            <small
-              class="register-field-error"
-              id="description-error"
-            >
+            <small class="register-field-error" id="description-error">
               <%= errors.description || "" %>
             </small>
           </div>
 
           <div class="form-group">
-            <label
-              class="form-label"
-              for="password"
-            >
+            <label class="form-label" for="password">
               Password
             </label>
 
-            <input
-              class="form-input"
-              type="password"
-              id="password"
-              name="password"
-              placeholder="············"
-              autocomplete="new-password"
-              aria-describedby="
+            <input class="form-input" type="password" id="password" name="password" placeholder="············"
+              autocomplete="new-password" aria-describedby="
                 password-help
                 register-password-error
-              "
-              aria-invalid="<%= errors.password
+              " aria-invalid="<%= errors.password
                 ? 'true'
-                : 'false' %>"
-              minlength="8"
-              maxlength="72"
-              required
-            />
+                : 'false' %>" minlength="8" maxlength="72" required />
 
-            <small
-              class="form-help"
-              id="password-help"
-            >
+            <small class="form-help" id="password-help">
               Use uppercase, lowercase, and a number
               or special character.
             </small>
 
-            <small
-              class="register-field-error"
-              id="register-password-error"
-            >
+            <small class="register-field-error" id="register-password-error">
               <%= errors.password || "" %>
             </small>
           </div>
 
           <div class="form-group">
-            <label
-              class="form-label"
-              for="confirm_password"
-            >
+            <label class="form-label" for="confirm_password">
               Confirm Password
             </label>
 
-            <input
-              class="form-input"
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              placeholder="············"
-              autocomplete="new-password"
-              aria-describedby="confirm-password-error"
+            <input class="form-input" type="password" id="confirm_password" name="confirm_password"
+              placeholder="············" autocomplete="new-password" aria-describedby="confirm-password-error"
               aria-invalid="<%= errors.confirm_password
                 ? 'true'
-                : 'false' %>"
-              minlength="8"
-              maxlength="72"
-              required
-            />
+                : 'false' %>" minlength="8" maxlength="72" required />
 
-            <small
-              class="register-field-error"
-              id="confirm-password-error"
-            >
+            <small class="register-field-error" id="confirm-password-error">
               <%= errors.confirm_password || "" %>
             </small>
           </div>
 
           <div class="form-terms">
-            <label
-              class="terms-label"
-              for="terms"
-            >
-              <input
-                type="checkbox"
-                id="terms"
-                name="terms"
-                <%= values.terms
-                  ? "checked"
-                  : "" %>
-                aria-describedby="terms-error"
-                required
+            <label class="terms-label" for="terms">
+              <input type="checkbox" id="terms" name="terms" <%=values.terms ? "checked" : "" %>
+              aria-describedby="terms-error"
+              required
               />
 
               <span class="terms-copy">
@@ -438,18 +238,12 @@
               </span>
             </label>
 
-            <small
-              class="register-field-error"
-              id="terms-error"
-            >
+            <small class="register-field-error" id="terms-error">
               <%= errors.terms || "" %>
             </small>
           </div>
 
-          <button
-            class="login-btn"
-            type="submit"
-          >
+          <button class="login-btn" type="submit">
             Create Account
           </button>
         </form>
@@ -457,31 +251,20 @@
         <p class="login-signup-text">
           Already have an account?
 
-          <a
-            href="/shared/login?redirect=<%= encodeURIComponent(
+          <a href="/shared/login?redirect=<%= encodeURIComponent(
               redirect
-            ) %>"
-          >
+            ) %>">
             Sign In
           </a>
         </p>
 
-        <div
-          class="login-divider"
-          aria-hidden="true"
-        >
+        <div class="login-divider" aria-hidden="true">
           <span class="login-divider__line"></span>
           <span class="login-divider__line"></span>
         </div>
 
-        <a
-          class="login-guest"
-          href="<%= redirect %>"
-        >
-          <span
-            class="guest-icon"
-            aria-hidden="true"
-          >
+        <a class="login-guest" href="<%= redirect %>">
+          <span class="guest-icon" aria-hidden="true">
             ✦
           </span>
 
@@ -489,10 +272,7 @@
             Continue exploring as a guest
           </span>
 
-          <span
-            class="guest-arrow"
-            aria-hidden="true"
-          >
+          <span class="guest-arrow" aria-hidden="true">
             →
           </span>
         </a>
@@ -500,4 +280,5 @@
     </section>
   </main>
 </body>
+
 </html>
