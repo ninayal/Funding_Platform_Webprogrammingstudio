@@ -62,8 +62,8 @@ const buildLoginView = ({
 
   const safeRedirect =
     typeof redirect === "string" &&
-    redirect.startsWith("/") &&
-    !redirect.startsWith("//")
+      redirect.startsWith("/") &&
+      !redirect.startsWith("//")
       ? redirect
       : "/";
 

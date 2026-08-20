@@ -2,159 +2,115 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#A31D1D" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    <title>Sitemap — Làng &amp; Co.</title>
 
-  <meta
-    name="theme-color"
-    content="#A31D1D"
-  />
-
-  <title>Sitemap — Làng &amp; Co.</title>
-
-  <link
-    rel="stylesheet"
-    href="/css/index.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/header_v2.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/sitemap.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/footer.css"
-  />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/header_v2.css" />
+    <link rel="stylesheet" href="/css/sitemap.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
 </head>
 
 <body>
-  <%- include("../partials/header_v2", {
-    activePage: ""
-  }) %>
+    <%- include("../partials/header_v2", { activePage: "" }) %>
 
-  <main class="sitemap-page">
-    <div class="container">
-      <header class="sitemap-hero">
-        <p class="sitemap-kicker">
-          Explore Làng &amp; Co.
-        </p>
+        <main class="sitemap-page">
+            <div class="container">
+                <header class="sitemap-hero">
+                    <p class="sitemap-kicker">Explore Làng &amp; Co.</p>
 
-        <h1>Site Map</h1>
+                    <h1>Site Map</h1>
 
-        <p class="sitemap-intro">
-          Use the links below to move through the main sections
-          of the website.
-        </p>
+                    <p class="sitemap-intro">
+                        Use the links below to move through the main sections of the website.
+                    </p>
 
-        <a
-          class="sitemap-home-link"
-          href="/"
-        >
-          <span aria-hidden="true">&lt;</span>
-          Home page
-        </a>
-      </header>
+                    <a class="sitemap-home-link" href="/">
+                        <span aria-hidden="true">&lt;</span>
+                        Home page
+                    </a>
+                </header>
 
-      <section
-        class="sitemap-grid"
-        aria-label="Website sections"
-      >
-        <article class="sitemap-card">
-          <div class="sitemap-card__index">01</div>
+                <section class="sitemap-grid" aria-label="Website sections">
+                    <article class="sitemap-card">
+                        <div class="sitemap-card__index">01</div>
 
-          <h2>Shop</h2>
+                        <h2>Shop</h2>
 
-          <p>
-            Browse products and continue through the shopping flow.
-          </p>
+                        <p>Browse products and continue through the shopping flow.</p>
 
-          <nav aria-label="Shop pages">
-            <a href="/cart/products">Product Listing</a>
-            <a href="/cart">Cart</a>
-            <a href="/cart/checkout">Checkout</a>
-          </nav>
-        </article>
+                        <nav aria-label="Shop pages">
+                            <a href="/cart/products">Product Listing</a>
+                            <a href="/cart">Cart</a>
+                            <a href="/cart/checkout">Checkout</a>
+                        </nav>
+                    </article>
 
-        <article class="sitemap-card">
-          <div class="sitemap-card__index">02</div>
+                    <article class="sitemap-card">
+                        <div class="sitemap-card__index">02</div>
 
-          <h2>Blog</h2>
+                        <h2>Blog</h2>
 
-          <p>
-            Read journal posts or manage your own posts.
-          </p>
+                        <p>Read journal posts or manage your own posts.</p>
 
-          <nav aria-label="Blog pages">
-            <a href="/blog">Blog Home</a>
-            <a href="/blog/create">Create Blog Post</a>
-            <a href="/blog/my-posts">My Posts</a>
-          </nav>
-        </article>
+                        <nav aria-label="Blog pages">
+                            <a href="/blog">Blog Home</a>
+                            <a href="/blog/create">Create Blog Post</a>
+                            <a href="/blog/my-posts">My Posts</a>
+                        </nav>
+                    </article>
 
-        <article class="sitemap-card">
-          <div class="sitemap-card__index">03</div>
+                    <article class="sitemap-card">
+                        <div class="sitemap-card__index">03</div>
 
-          <h2>Forum</h2>
+                        <h2>Forum</h2>
 
-          <p>
-            Explore discussions and community activity.
-          </p>
+                        <p>Explore discussions and community activity.</p>
 
-          <nav aria-label="Forum pages">
-            <a href="/forum">Forum Home</a>
-            <a href="/forum/new-posts">New Posts</a>
-            <a href="/forum/search">Search</a>
-            <a href="/forum/create">Create Thread</a>
-            <a href="/forum/your-posts">Your Posts</a>
-            <a href="/forum/bookmarked">Bookmarked</a>
-          </nav>
-        </article>
+                        <nav aria-label="Forum pages">
+                            <a href="/forum">Forum Home</a>
+                            <a href="/forum/new-posts">New Posts</a>
+                            <a href="/forum/search">Search</a>
+                            <a href="/forum/create">Create Thread</a>
+                            <a href="/forum/your-posts">Your Posts</a>
+                            <a href="/forum/bookmarked">Bookmarked</a>
+                        </nav>
+                    </article>
 
-        <article class="sitemap-card">
-          <div class="sitemap-card__index">04</div>
+                    <article class="sitemap-card">
+                        <div class="sitemap-card__index">04</div>
 
-          <h2>Gift Card</h2>
+                        <h2>Gift Card</h2>
 
-          <p>
-            Create and manage a Làng &amp; Co. gift card.
-          </p>
+                        <p>Create and manage a Làng &amp; Co. gift card.</p>
 
-          <nav aria-label="Gift card pages">
-            <a href="/giftcard">Gift Card Home</a>
-          </nav>
-        </article>
+                        <nav aria-label="Gift card pages">
+                            <a href="/giftcard">Gift Card Home</a>
+                        </nav>
+                    </article>
 
-        <article class="sitemap-card">
-          <div class="sitemap-card__index">05</div>
+                    <article class="sitemap-card">
+                        <div class="sitemap-card__index">05</div>
 
-          <h2>Account</h2>
+                        <h2>Account</h2>
 
-          <p>
-            Access authentication and profile pages.
-          </p>
+                        <p>Access authentication and profile pages.</p>
 
-          <nav aria-label="Account pages">
-            <a href="/shared/login">Log In</a>
-            <a href="/shared/register">Register</a>
-            <a href="/shared/forgot-password">Forgot Password</a>
-            <a href="/shared/profile">Profile</a>
-          </nav>
-        </article>
-      </section>
-    </div>
-  </main>
+                        <nav aria-label="Account pages">
+                            <a href="/shared/login">Log In</a>
+                            <a href="/shared/register">Register</a>
+                            <a href="/shared/forgot-password">Forgot Password</a>
+                            <a href="/shared/profile">Profile</a>
+                        </nav>
+                    </article>
+                </section>
+            </div>
+        </main>
 
-  <%- include("../partials/footer") %>
+        <%- include("../partials/footer") %>
 </body>
 
 </html>

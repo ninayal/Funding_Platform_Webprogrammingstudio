@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
     <%- include("../partials/header", { activePage, currentUser, cartCount }) %>
 
         <section class="hero">
@@ -54,15 +53,13 @@
             </div>
 
             <main class="cart-page">
-                <%- include( "../partials/cart/cart-content" , { cart } ) %>
+                <%- include("../partials/cart/cart-content", { cart }) %>
 
                     <% if (recommendedProducts.length) { %>
                         <section class="also-like">
                             <div class="also-like__head">
                                 <div>
-                                    <p class="section-kicker">
-                                        Complete the collection
-                                    </p>
+                                    <p class="section-kicker">Complete the collection</p>
 
                                     <h2>
                                         You may also <em>like</em>
@@ -102,7 +99,6 @@
 
                                                 <form action="/cart/add" method="POST">
                                                     <input type="hidden" name="productId" value="<%= product.id %>">
-
                                                     <input type="hidden" name="quantity" value="1">
 
                                                     <button type="submit" class="product-card__add"
@@ -123,7 +119,6 @@
         <%- include("../partials/footer") %>
 
             <script src="/js/cart/cart.js" defer></script>
-
 </body>
 
 </html>

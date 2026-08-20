@@ -22,11 +22,9 @@ const quickNav = {
     ],
 };
 
-//Marquee text
 const marqueeText =
     "Heritage | Handmade | Authentic | Sustainable | Heritage | Handmade | Authentic | Sustainable |";
 
-//8 catogories
 const categories = [
     {
         name: "Ceramics",
@@ -86,9 +84,6 @@ const categories = [
     },
 ];
 
-
-
-//8 gallery images
 const galleryImages = [
     "/images/landingpics/gallery-1.png",
     "/images/landingpics/gallery-2.png",
@@ -122,69 +117,6 @@ const processSteps = [
         title: "Packed & Sent With Care",
         description:
             "Wrapped by the same hands that made it, boxed, and shipped straight to your door.",
-    },
-];
-
-const featuredProducts = [
-    {
-        reviewNumber: 1,
-        name: "Hand-Painted Blue Lotus Vase",
-        image: "/images/shopping_items/ceramic/ceramic1.png",
-        alt: "Hand-Painted Blue Lotus Vase",
-        rating: "★★★★★",
-        reviewCount: 86,
-        price: "$68.00",
-        badge: "Bestseller",
-    },
-    {
-        reviewNumber: 2,
-        name: "Ash Glaze Tea Cup Set (7-Piece)",
-        image: "/images/shopping_items/ceramic/ceramic2.png",
-        alt: "Ash Glaze Tea Cup Set, seven pieces",
-        rating: "★★★★★",
-        reviewCount: 243,
-        price: "$54.00",
-        badge: null,
-    },
-    {
-        reviewNumber: 3,
-        name: "Brocade Blanket",
-        image: "/images/shopping_items/brocade/brocade1.png",
-        alt: "Brocade blanket",
-        rating: "★★★★★",
-        reviewCount: 198,
-        price: "$56.00",
-        badge: null,
-    },
-    {
-        reviewNumber: 4,
-        name: "Handmade Horse Brocade",
-        image: "/images/shopping_items/brocade/brocade2.png",
-        alt: "Handmade Horse Brocade",
-        rating: "★★★★★",
-        reviewCount: 167,
-        price: "$45.00",
-        badge: null,
-    },
-    {
-        reviewNumber: 6,
-        name: "Agarwood Incense",
-        image: "/images/shopping_items/incense/incense2.png",
-        alt: "Hand-rolled agarwood incense",
-        rating: "★★★★★",
-        reviewCount: 112,
-        price: "$38.00",
-        badge: "New",
-    },
-    {
-        reviewNumber: 8,
-        name: "Đông Hồ Painting",
-        image: "/images/shopping_items/painting/painting_2.png",
-        alt: "Đông Hồ painting",
-        rating: "★★★★★",
-        reviewCount: 95,
-        price: "$16.00",
-        badge: null,
     },
 ];
 
@@ -256,59 +188,54 @@ const journalPosts = [
     },
 ];
 
-//faq section 
 const faqItems = [
-  {
-    question: "How do I know a piece is authentic?",
-    answer:
-      "Every listing names the workshop and village it came from. We visit each workshop in person before it joins the marketplace.",
-  },
-  {
-    question: "Do you ship internationally?",
-    answer:
-      "Yes, we ship across Việt Nam and to most international destinations. Rates are calculated at checkout.",
-  },
-  {
-    question: "What if a piece arrives damaged?",
-    answer:
-      "Contact us within 7 days with a photo and we will arrange a replacement or refund.",
-  },
-  {
-    question: "Can I request a custom commission?",
-    answer:
-      "Many of our workshops accept custom orders. Contact us through the product listing and we will pass your request to the maker.",
-  },
+    {
+        question: "How do I know a piece is authentic?",
+        answer:
+            "Every listing names the workshop and village it came from. We visit each workshop in person before it joins the marketplace.",
+    },
+    {
+        question: "Do you ship internationally?",
+        answer:
+            "Yes, we ship across Việt Nam and to most international destinations. Rates are calculated at checkout.",
+    },
+    {
+        question: "What if a piece arrives damaged?",
+        answer:
+            "Contact us within 7 days with a photo and we will arrange a replacement or refund.",
+    },
+    {
+        question: "Can I request a custom commission?",
+        answer:
+            "Many of our workshops accept custom orders. Contact us through the product listing and we will pass your request to the maker.",
+    },
 ];
 
-//community card
 const communityCards = [
-  {
-    modifier: "forum",
-    title: "The Round Table",
-    description:
-      "Talk technique, provenance and care with fellow collectors and makers.",
-    cta: "Visit the Forum →",
-    href: "#",  //FIX THIS WHEN HAVING FORUM
-  },
-  {
-    modifier: "cart",
-    title: "Your Curated Collection",
-    description:
-      "Save the pieces that speak to you, and return whenever you are ready.",
-    cta: "Open Cart →",
-    href: "/cart",
-  },
+    {
+        modifier: "forum",
+        title: "The Round Table",
+        description:
+            "Talk technique, provenance and care with fellow collectors and makers.",
+        cta: "Visit the Forum →",
+        href: "/forum",
+    },
+    {
+        modifier: "cart",
+        title: "Your Curated Collection",
+        description:
+            "Save the pieces that speak to you, and return whenever you are ready.",
+        cta: "Open Cart →",
+        href: "/cart",
+    },
 ];
 
-
-//direction
 const getLandingPageData = () => ({
     quickNav,
     marqueeText,
     categories,
     galleryImages,
     processSteps,
-    featuredProducts,
     testimonials,
     journalPosts,
     faqItems,

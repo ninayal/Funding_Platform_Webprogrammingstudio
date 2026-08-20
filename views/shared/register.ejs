@@ -3,18 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>
-    Sign Up | Làng &amp; Co.
-  </title>
+  <title>Sign Up | Làng &amp; Co.</title>
 
   <link rel="stylesheet" href="/css/landingpage/index.css" />
-
   <link rel="stylesheet" href="/css/login_register/login.css" />
-
   <link rel="stylesheet" href="/css/login_register/register.css" />
+
+  <script src="/js/shared/formPersistence.js" defer></script>
 </head>
 
 <body class="register-page-body">
@@ -41,34 +38,26 @@
           <img src="/images/logo.png" alt="" aria-hidden="true" />
 
           <div class="login-glass__logo-text">
-            <span class="logo-name">
-              Làng &amp; Co.
-            </span>
-
-            <span class="logo-sub">
-              Vietnamese Traditional Crafts
-            </span>
+            <span class="logo-name">Làng &amp; Co.</span>
+            <span class="logo-sub">Vietnamese Traditional Crafts</span>
           </div>
         </div>
 
-        <h2 class="login-glass__title" id="register-title">
-          Sign Up
-        </h2>
+        <h2 class="login-glass__title" id="register-title">Sign Up</h2>
 
-        <form class="login-form register-form" action="/shared/register" method="post" novalidate>
+        <form class="login-form register-form" action="/shared/register" method="post" data-persist-form="register"
+          novalidate>
+
           <input type="hidden" name="redirect" value="<%= redirect %>" />
 
           <div class="form-row-2">
             <div class="form-group">
-              <label class="form-label" for="firstname">
-                First Name
-              </label>
+              <label class="form-label" for="firstname">First Name</label>
 
               <input class="form-input" type="text" id="firstname" name="firstname"
                 value="<%= values.firstname || '' %>" placeholder="First name" autocomplete="given-name"
-                aria-describedby="firstname-error" aria-invalid="<%= errors.firstname
-                  ? 'true'
-                  : 'false' %>" minlength="2" maxlength="50" required />
+                aria-describedby="firstname-error" aria-invalid="<%= errors.firstname ? 'true' : 'false' %>"
+                minlength="2" maxlength="50" required />
 
               <small class="register-field-error" id="firstname-error">
                 <%= errors.firstname || "" %>
@@ -76,14 +65,11 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="lastname">
-                Last Name
-              </label>
+              <label class="form-label" for="lastname">Last Name</label>
 
               <input class="form-input" type="text" id="lastname" name="lastname" value="<%= values.lastname || '' %>"
-                placeholder="Last name" autocomplete="family-name" aria-describedby="lastname-error" aria-invalid="<%= errors.lastname
-                  ? 'true'
-                  : 'false' %>" minlength="2" maxlength="50" required />
+                placeholder="Last name" autocomplete="family-name" aria-describedby="lastname-error"
+                aria-invalid="<%= errors.lastname ? 'true' : 'false' %>" minlength="2" maxlength="50" required />
 
               <small class="register-field-error" id="lastname-error">
                 <%= errors.lastname || "" %>
@@ -92,15 +78,11 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="username">
-              Username
-            </label>
+            <label class="form-label" for="username">Username</label>
 
             <input class="form-input" type="text" id="username" name="username" value="<%= values.username || '' %>"
               placeholder="Choose a unique username" autocomplete="username" aria-describedby="username-error"
-              aria-invalid="<%= errors.username
-                ? 'true'
-                : 'false' %>" minlength="3" maxlength="30" required />
+              aria-invalid="<%= errors.username ? 'true' : 'false' %>" minlength="3" maxlength="30" required />
 
             <small class="register-field-error" id="username-error">
               <%= errors.username || "" %>
@@ -109,14 +91,11 @@
 
           <div class="form-row-2">
             <div class="form-group">
-              <label class="form-label" for="email">
-                E-mail
-              </label>
+              <label class="form-label" for="email">E-mail</label>
 
               <input class="form-input" type="email" id="email" name="email" value="<%= values.email || '' %>"
-                placeholder="abc@gmail.com" autocomplete="email" aria-describedby="register-email-error" aria-invalid="<%= errors.email
-                  ? 'true'
-                  : 'false' %>" required />
+                placeholder="abc@gmail.com" autocomplete="email" aria-describedby="register-email-error"
+                aria-invalid="<%= errors.email ? 'true' : 'false' %>" required />
 
               <small class="register-field-error" id="register-email-error">
                 <%= errors.email || "" %>
@@ -124,36 +103,28 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="gender">
-                Gender
-              </label>
+              <label class="form-label" for="gender">Gender</label>
 
               <select class="form-input form-select" id="gender" name="gender" aria-describedby="gender-error"
-                aria-invalid="<%= errors.gender
-                  ? 'true'
-                  : 'false' %>" required>
-                <option value="" disabled <%=values.gender ? "" : "selected" %>
-                  >
+                aria-invalid="<%= errors.gender ? 'true' : 'false' %>" required>
+
+                <option value="" disabled <%=values.gender ? "" : "selected" %>>
                   Select Gender
                 </option>
 
-                <option value="male" <%=values.gender==="male" ? "selected" : "" %>
-                  >
+                <option value="male" <%=values.gender==="male" ? "selected" : "" %>>
                   Male
                 </option>
 
-                <option value="female" <%=values.gender==="female" ? "selected" : "" %>
-                  >
+                <option value="female" <%=values.gender==="female" ? "selected" : "" %>>
                   Female
                 </option>
 
-                <option value="other" <%=values.gender==="other" ? "selected" : "" %>
-                  >
+                <option value="other" <%=values.gender==="other" ? "selected" : "" %>>
                   Other
                 </option>
 
-                <option value="prefer_not" <%=values.gender==="prefer_not" ? "selected" : "" %>
-                  >
+                <option value="prefer_not" <%=values.gender==="prefer_not" ? "selected" : "" %>>
                   Prefer not to say
                 </option>
               </select>
@@ -165,15 +136,12 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="description">
-              Short Description
-            </label>
+            <label class="form-label" for="description">Short Description</label>
 
             <textarea class="form-input form-textarea" id="description" name="description" rows="3" minlength="10"
               maxlength="200" placeholder="Tell us briefly about yourself" aria-describedby="description-error"
-              aria-invalid="<%= errors.description
-                ? 'true'
-                : 'false' %>" required><%= values.description || "" %></textarea>
+              aria-invalid="<%= errors.description ? 'true' : 'false' %>"
+              required><%= values.description || "" %></textarea>
 
             <small class="register-field-error" id="description-error">
               <%= errors.description || "" %>
@@ -181,21 +149,14 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="password">
-              Password
-            </label>
+            <label class="form-label" for="password">Password</label>
 
             <input class="form-input" type="password" id="password" name="password" placeholder="············"
-              autocomplete="new-password" aria-describedby="
-                password-help
-                register-password-error
-              " aria-invalid="<%= errors.password
-                ? 'true'
-                : 'false' %>" minlength="8" maxlength="72" required />
+              autocomplete="new-password" aria-describedby="password-help register-password-error"
+              aria-invalid="<%= errors.password ? 'true' : 'false' %>" minlength="8" maxlength="72" required />
 
             <small class="form-help" id="password-help">
-              Use uppercase, lowercase, and a number
-              or special character.
+              Use uppercase, lowercase, and a number or special character.
             </small>
 
             <small class="register-field-error" id="register-password-error">
@@ -204,15 +165,11 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="confirm_password">
-              Confirm Password
-            </label>
+            <label class="form-label" for="confirm_password">Confirm Password</label>
 
             <input class="form-input" type="password" id="confirm_password" name="confirm_password"
               placeholder="············" autocomplete="new-password" aria-describedby="confirm-password-error"
-              aria-invalid="<%= errors.confirm_password
-                ? 'true'
-                : 'false' %>" minlength="8" maxlength="72" required />
+              aria-invalid="<%= errors.confirm_password ? 'true' : 'false' %>" minlength="8" maxlength="72" required />
 
             <small class="register-field-error" id="confirm-password-error">
               <%= errors.confirm_password || "" %>
@@ -222,19 +179,13 @@
           <div class="form-terms">
             <label class="terms-label" for="terms">
               <input type="checkbox" id="terms" name="terms" <%=values.terms ? "checked" : "" %>
-              aria-describedby="terms-error"
-              required
-              />
+              aria-describedby="terms-error" required />
 
               <span class="terms-copy">
                 I agree to the
-                <a href="/terms-of-service">
-                  Terms of Service
-                </a>
+                <a href="/terms-of-service">Terms of Service</a>
                 and
-                <a href="/privacy-policy">
-                  Privacy Policy
-                </a>.
+                <a href="/privacy-policy">Privacy Policy</a>.
               </span>
             </label>
 
@@ -250,10 +201,7 @@
 
         <p class="login-signup-text">
           Already have an account?
-
-          <a href="/shared/login?redirect=<%= encodeURIComponent(
-              redirect
-            ) %>">
+          <a href="/shared/login?redirect=<%= encodeURIComponent(redirect) %>">
             Sign In
           </a>
         </p>
@@ -264,17 +212,9 @@
         </div>
 
         <a class="login-guest" href="<%= redirect %>">
-          <span class="guest-icon" aria-hidden="true">
-            ✦
-          </span>
-
-          <span class="guest-text">
-            Continue exploring as a guest
-          </span>
-
-          <span class="guest-arrow" aria-hidden="true">
-            →
-          </span>
+          <span class="guest-icon" aria-hidden="true">✦</span>
+          <span class="guest-text">Continue exploring as a guest</span>
+          <span class="guest-arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>

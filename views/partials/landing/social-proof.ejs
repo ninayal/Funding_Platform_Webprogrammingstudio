@@ -36,15 +36,13 @@
         </h2>
 
         <p class="section-sub">
-            Field notes on makers, materials and the villages that keep
-            tradition alive.
+            Field notes on makers, materials and the villages that keep tradition alive.
         </p>
     </div>
 
     <div class="journal-preview__grid">
         <% journalPosts.forEach((post)=> { %>
-            <a class="journal-card <%= post.featured ? 'journal-card--feature' : '' %>"
-                href="/blog/blog#<%= post.id %>">
+            <a class="journal-card <%= post.featured ? 'journal-card--feature' : '' %>" href="/blog">
                 <img src="<%= post.image %>" alt="<%= post.alt %>" loading="lazy" />
 
                 <div class="journal-card__body">
@@ -70,7 +68,7 @@
             <% }); %>
     </div>
 
-    <a class="section-more" href="/blog/blog">
+    <a class="section-more" href="/blog">
         Read the Full Journal <span>↗</span>
     </a>
 </section>
@@ -82,8 +80,7 @@
         <h2>Questions, <em>Answered</em></h2>
 
         <p>
-            Cannot find what you need? We reply to every message within one
-            business day.
+            Cannot find what you need? We reply to every message within one business day.
         </p>
 
         <a class="text-cta" href="mailto:ninayal198@gmail.com">
