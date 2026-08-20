@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include("../../partials/admin/head", { pageTitle: "Làng & Co. — Admin" }) %>
+  <%- include("./admin_index", { pageTitle: "Làng & Co. — Admin" }) %>
 </head>
 
 <body>
@@ -26,19 +26,19 @@
 
     <div class="admin">
 
-      <%- include("../../partials/admin/sidebar") %>
+      <%- include("./admin_index", { section: "sidebar" }) %>
 
       <!-- Content -->
       <main class="admin__content">
         <a id="admin-top"></a>
 
         <%- include(
-          "../../partials/admin/products-panel",
+          "./products-panel",
           { products, productStats, categories, productNotice }
         ) %>
 
         <%- include(
-          "../../partials/admin/users-panel",
+          "./users-panel",
           { users, userStats, currentUser, pendingRequests, resolvedRequests }
         ) %>
 

@@ -1,3 +1,20 @@
+<% var section = typeof section !== "undefined" ? section : "head"; %>
+<% if (section === "head") { %>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#A31D1D" />
+<title><%= pageTitle %></title>
+<!-- Shared styles -->
+<link rel="stylesheet" href="/css/landingpage/index.css" />
+<link rel="stylesheet" href="/css/header_v2.css" />
+<link rel="stylesheet" href="/css/shared-include.css" />
+<link rel="stylesheet" href="/css/admin/admin.css" />
+<% (typeof extraStyles !== "undefined" ? extraStyles : []).forEach(function (href) { %>
+<link rel="stylesheet" href="<%= href %>" />
+<% }) %>
+<link rel="stylesheet" href="/css/admin/admin_responsive.css" />
+<link rel="stylesheet" href="/css/footer.css" />
+<% } else if (section === "sidebar") { %>
 <!-- Sidebar -->
 <aside class="admin__sidebar">
   <div class="admin__header">
@@ -31,3 +48,4 @@
     </label>
   </nav>
 </aside>
+<% } %>
