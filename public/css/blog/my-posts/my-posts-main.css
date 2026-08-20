@@ -2,10 +2,7 @@
   font-family: var(--ff-ui);
 }
 
-/* =====================================================
-   MY POSTS — LAYOUT
-   ===================================================== */
-
+/* ---------- My Posts — Layout ---------- */
 .my-posts-page {
   position: relative;
   z-index: 2;
@@ -14,13 +11,11 @@
   padding: 18px 0 96px;
   background: transparent;
 }
-
 .my-posts-container {
   width: min(1240px, calc(100% - 48px));
   margin-right: auto;
   margin-left: auto;
 }
-
 .my-posts-breadcrumb {
   width: calc(100% - 48px);
   max-width: 1600px;
@@ -35,40 +30,32 @@
   font-weight: 500;
   line-height: 1.4;
 }
-
 .my-posts-breadcrumb a {
   color: var(--muted);
   text-decoration: none;
 }
-
 .my-posts-breadcrumb a:hover {
   color: var(--red);
 }
-
 .my-posts-breadcrumb span[aria-hidden="true"] {
   color: var(--sand);
 }
-
 .my-posts-breadcrumb span[aria-current="page"] {
   color: var(--deep);
   font-weight: 600;
 }
-
 .my-posts-layout {
   display: grid;
   grid-template-columns: 290px minmax(0, 1fr);
   gap: 30px;
   align-items: start;
 }
-
 .my-posts-content {
   min-width: 0;
 }
-
 .my-posts-return {
   margin-top: 42px;
 }
-
 .my-posts-return a {
   color: var(--red);
   font-family: var(--ff-ui);
@@ -78,27 +65,17 @@
   text-decoration: none;
   text-transform: uppercase;
 }
-
 .my-posts-return a:hover {
   text-decoration: underline;
 }
-
-.my-post-card__actions a.post-action,
-.my-post-card__actions a.post-action:link,
-.my-post-card__actions a.post-action:visited,
-.my-post-card__actions a.post-action:hover,
-.my-post-card__actions a.post-action:focus,
-.my-post-card__actions a.post-action:active {
+.my-post-card__actions a.post-action, .my-post-card__actions a.post-action:link, .my-post-card__actions a.post-action:visited, .my-post-card__actions a.post-action:hover, .my-post-card__actions a.post-action:focus, .my-post-card__actions a.post-action:active {
   text-decoration: none !important;
   text-decoration-line: none !important;
   border-bottom: none !important;
   background-image: none !important;
 }
 
-/* =====================================================
-   MY POSTS — HEADER
-   ===================================================== */
-
+/* ---------- My Posts — Header ---------- */
 .my-posts-header {
   display: flex;
   align-items: flex-end;
@@ -106,11 +83,9 @@
   gap: 30px;
   margin-bottom: 44px;
 }
-
-.my-posts-header>div {
+.my-posts-header > div {
   max-width: 850px;
 }
-
 .my-posts-kicker {
   margin: 0 0 10px;
   color: var(--red);
@@ -120,7 +95,6 @@
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-
 .my-posts-header h1 {
   margin: 0;
   color: var(--deep);
@@ -130,7 +104,6 @@
   line-height: 1;
   letter-spacing: -2px;
 }
-
 .my-posts-subtitle {
   max-width: 720px;
   margin: 18px 0 0;
@@ -140,7 +113,6 @@
   font-weight: 400;
   line-height: 1.7;
 }
-
 .my-posts-create-button {
   min-height: 46px;
   display: inline-flex;
@@ -162,21 +134,16 @@
   text-transform: uppercase;
   transition: transform 180ms ease, background 180ms ease;
 }
-
 .my-posts-create-button span {
   font-size: 16px;
   line-height: 1;
 }
-
 .my-posts-create-button:hover {
   transform: translateY(-2px);
   background: var(--darkred);
 }
 
-/* =====================================================
-   MY POSTS — AUTHOR PANEL
-   ===================================================== */
-
+/* ---------- My Posts — Author Panel ---------- */
 .author-panel {
   position: sticky;
   top: 24px;
@@ -187,13 +154,11 @@
   box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
   backdrop-filter: blur(4px);
 }
-
 .author-profile {
   display: flex;
   align-items: center;
   gap: 14px;
 }
-
 .author-profile__avatar {
   width: 62px;
   height: 62px;
@@ -210,14 +175,12 @@
   font-weight: 700;
   letter-spacing: 1px;
 }
-
 .author-profile h2 {
   margin: 0 0 4px;
   font-family: var(--ff-serif);
   font-size: 28px;
   font-weight: 400;
 }
-
 .author-profile p {
   margin: 0;
   color: var(--muted);
@@ -225,7 +188,6 @@
   font-size: 11px;
   font-weight: 400;
 }
-
 .author-profile__bio {
   margin: 22px 0 0;
   color: var(--muted);
@@ -234,14 +196,12 @@
   font-weight: 400;
   line-height: 1.65;
 }
-
 .author-statistics {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-top: 24px;
 }
-
 .author-stat {
   min-height: 82px;
   display: flex;
@@ -252,14 +212,12 @@
   border-radius: 14px;
   background: rgba(255, 255, 255, .34);
 }
-
 .author-stat strong {
   color: var(--darkred);
   font-family: var(--ff-serif);
   font-size: 28px;
   font-weight: 400;
 }
-
 .author-stat span {
   margin-top: 4px;
   color: var(--muted);
@@ -270,10 +228,7 @@
   text-transform: uppercase;
 }
 
-/* =====================================================
-   MY POSTS — FILTERS
-   ===================================================== */
-
+/* ---------- My Posts — Filters ---------- */
 .my-posts-filter-input {
   position: absolute;
   width: 1px;
@@ -281,7 +236,6 @@
   opacity: 0;
   pointer-events: none;
 }
-
 .my-posts-filters {
   display: flex;
   align-items: center;
@@ -291,7 +245,6 @@
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
-
 .my-posts-filters label {
   min-height: 38px;
   display: inline-flex;
@@ -311,28 +264,19 @@
   text-transform: uppercase;
   transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
 }
-
 .my-posts-filters label:hover {
   border-color: var(--red);
   color: var(--red);
 }
-
-#status-all:checked~.my-posts-layout .my-posts-filters label[for="status-all"],
-#status-published:checked~.my-posts-layout .my-posts-filters label[for="status-published"],
-#status-draft:checked~.my-posts-layout .my-posts-filters label[for="status-draft"],
-#status-archived:checked~.my-posts-layout .my-posts-filters label[for="status-archived"] {
+#status-all:checked ~ .my-posts-layout .my-posts-filters label[for="status-all"], #status-published:checked ~ .my-posts-layout .my-posts-filters label[for="status-published"], #status-draft:checked ~ .my-posts-layout .my-posts-filters label[for="status-draft"], #status-archived:checked ~ .my-posts-layout .my-posts-filters label[for="status-archived"] {
   border-color: var(--darkred);
   color: var(--cream);
   background: var(--darkred);
 }
-
-#status-published:checked~.my-posts-layout .my-post-card:not(.post-published),
-#status-draft:checked~.my-posts-layout .my-post-card:not(.post-draft),
-#status-archived:checked~.my-posts-layout .my-post-card:not(.post-archived) {
+#status-published:checked ~ .my-posts-layout .my-post-card:not(.post-published), #status-draft:checked ~ .my-posts-layout .my-post-card:not(.post-draft), #status-archived:checked ~ .my-posts-layout .my-post-card:not(.post-archived) {
   display: none;
 }
-
-.my-posts-filters label>span {
+.my-posts-filters label > span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -343,15 +287,11 @@
   letter-spacing: 0;
 }
 
-/* =====================================================
-   MY POSTS — CARDS
-   ===================================================== */
-
+/* ---------- My Posts — Cards ---------- */
 .my-posts-list {
   display: grid;
   gap: 20px;
 }
-
 .my-post-card {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
@@ -363,18 +303,15 @@
   box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
-
 .my-post-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 22px 48px rgba(73, 40, 22, .14);
 }
-
 .my-post-card__image {
   min-height: 100%;
   overflow: hidden;
   background: var(--tan);
 }
-
 .my-post-card__image img {
   display: block;
   width: 100%;
@@ -383,24 +320,19 @@
   object-fit: cover;
   transition: transform 450ms ease;
 }
-
 .my-post-card:hover .my-post-card__image img {
   transform: scale(1.03);
 }
-
 .post-draft .my-post-card__image img {
   filter: saturate(.72);
 }
-
 .post-archived .my-post-card__image img {
   filter: grayscale(.45) saturate(.5);
 }
-
 .my-post-card__content {
   min-width: 0;
   padding: 25px 27px;
 }
-
 .my-post-card__meta {
   display: flex;
   align-items: center;
@@ -413,14 +345,12 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .post-category {
   padding: 6px 9px;
   border-radius: 999px;
   color: var(--red);
   background: rgba(163, 29, 29, .08);
 }
-
 .post-status {
   margin-left: auto;
   padding: 6px 9px;
@@ -429,22 +359,18 @@
   font-weight: 700;
   letter-spacing: 1px;
 }
-
 .post-status--published {
   color: #3f704d;
   background: rgba(63, 112, 77, .1);
 }
-
 .post-status--draft {
   color: #9b641a;
   background: rgba(155, 100, 26, .11);
 }
-
 .post-status--archived {
   color: #746b62;
   background: rgba(116, 107, 98, .12);
 }
-
 .my-post-card h2 {
   margin: 18px 0 11px;
   color: var(--deep);
@@ -453,8 +379,7 @@
   font-weight: 400;
   line-height: 1.12;
 }
-
-.my-post-card__content>p {
+.my-post-card__content > p {
   margin: 0;
   color: var(--muted);
   font-family: var(--ff-ui);
@@ -462,7 +387,6 @@
   font-weight: 400;
   line-height: 1.7;
 }
-
 .my-post-card__information {
   display: flex;
   align-items: center;
@@ -476,17 +400,14 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .my-post-card__information span:not(:last-child)::after {
   content: "•";
   margin-left: 14px;
   color: var(--sand);
 }
-
 .draft-progress {
   margin-top: 20px;
 }
-
 .draft-progress__heading {
   display: flex;
   align-items: center;
@@ -499,25 +420,21 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 .draft-progress__heading strong {
   color: #9b641a;
 }
-
 .draft-progress__track {
   height: 7px;
   overflow: hidden;
   border-radius: 999px;
   background: rgba(116, 81, 45, .12);
 }
-
 .draft-progress__track span {
   display: block;
   height: 100%;
   border-radius: inherit;
   background: #9b641a;
 }
-
 .my-post-card__actions {
   display: flex;
   align-items: center;
@@ -527,7 +444,6 @@
   padding-top: 20px;
   border-top: 1px solid var(--line);
 }
-
 .post-action {
   min-height: 37px;
   display: inline-flex;
@@ -546,31 +462,25 @@
   text-transform: uppercase;
   transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
 }
-
 .post-action:hover {
   border-color: var(--red);
   color: var(--red);
 }
-
 .post-action--primary {
   border-color: var(--darkred);
   color: var(--cream);
   background: var(--darkred);
 }
-
 .post-action--primary:hover {
   border-color: var(--red);
   color: var(--cream);
   background: var(--red);
 }
-
 .my-post-card h2 a {
   color: inherit;
   text-decoration: none;
 }
-
-.my-post-card h2 a:hover,
-.my-post-card h2 a:focus-visible {
+.my-post-card h2 a:hover, .my-post-card h2 a:focus-visible {
   color: var(--red);
   text-decoration: none;
 }

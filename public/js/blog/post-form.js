@@ -12,18 +12,10 @@ document.addEventListener(
             return;
         }
 
-        const storageKey =
-            form.dataset.storageKey;
-
-        const isCreate =
-            form.dataset.mode ===
-            "create";
-
         const feedback =
             form.querySelector(
                 "[data-post-feedback]",
             );
-
         const getField = (
             name,
         ) =>
@@ -47,7 +39,6 @@ document.addEventListener(
 
             const error =
                 getError(name);
-
             field?.setAttribute(
                 "aria-invalid",
                 message
@@ -69,7 +60,6 @@ document.addEventListener(
         ) => {
             const field =
                 getField(name);
-
             if (!field) {
                 return true;
             }
@@ -78,7 +68,6 @@ document.addEventListener(
                 field.value.trim();
 
             let message = "";
-
             if (name === "title") {
                 if (!value) {
                     message =
@@ -96,7 +85,6 @@ document.addEventListener(
                         "Published titles require at least 5 characters.";
                 }
             }
-
             if (
                 name === "category"
             ) {
@@ -110,7 +98,6 @@ document.addEventListener(
                                 option.value === value,
                         )
                         : false;
-
                 if (
                     !value ||
                     !validCategory
@@ -119,7 +106,6 @@ document.addEventListener(
                         "Select a valid category.";
                 }
             }
-
             if (
                 name === "imageUrl"
             ) {
@@ -139,7 +125,6 @@ document.addEventListener(
                         "Published posts require an image URL.";
                 }
             }
-
             if (
                 name === "summary" &&
                 publishing &&
@@ -151,7 +136,6 @@ document.addEventListener(
                 message =
                     "Summary must contain between 20 and 400 characters.";
             }
-
             if (
                 name === "content" &&
                 publishing &&
@@ -163,7 +147,6 @@ document.addEventListener(
                 message =
                     "Content must contain between 50 and 20,000 characters.";
             }
-
             if (name === "tags") {
                 const tags =
                     value
@@ -181,7 +164,6 @@ document.addEventListener(
                         "Use no more than 12 tags.";
                 }
             }
-
             return setError(
                 name,
                 message,
@@ -199,7 +181,6 @@ document.addEventListener(
                 form.querySelector(
                     `[data-post-count="${name}"]`,
                 );
-
             if (
                 field &&
                 output
@@ -218,7 +199,6 @@ document.addEventListener(
             document.querySelector(
                 "[data-preview-placeholder]",
             );
-
         const previewTitle =
             document.querySelector(
                 "[data-preview-title]",
@@ -238,7 +218,6 @@ document.addEventListener(
             document.querySelector(
                 "[data-preview-status]",
             );
-
         const previewStatusText =
             document.querySelector(
                 "[data-preview-status-text]",
@@ -250,7 +229,6 @@ document.addEventListener(
                     getField("title")
                         ?.value.trim() ||
                     "Your story title";
-
                 const summary =
                     getField("summary")
                         ?.value.trim() ||
@@ -265,7 +243,6 @@ document.addEventListener(
                     getField("imageUrl")
                         ?.value.trim() ||
                     "";
-
                 if (previewTitle) {
                     previewTitle.textContent =
                         title;
@@ -280,7 +257,6 @@ document.addEventListener(
                     previewCategory.textContent =
                         category;
                 }
-
                 if (previewImage) {
                     if (imageUrl) {
                         previewImage.src =
@@ -288,7 +264,6 @@ document.addEventListener(
 
                         previewImage.hidden =
                             false;
-
                         if (
                             previewPlaceholder
                         ) {
@@ -302,7 +277,6 @@ document.addEventListener(
 
                         previewImage.hidden =
                             true;
-
                         if (
                             previewPlaceholder
                         ) {
@@ -318,7 +292,6 @@ document.addEventListener(
             () => {
                 previewImage.hidden =
                     true;
-
                 if (
                     previewPlaceholder
                 ) {
@@ -330,83 +303,6 @@ document.addEventListener(
                 }
             },
         );
-
-        const draftFields = [
-            "title",
-            "category",
-            "tags",
-            "imageUrl",
-            "summary",
-            "content",
-        ];
-
-        const saveLocalDraft =
-            () => {
-                if (!storageKey) {
-                    return;
-                }
-
-                const draft = {};
-
-                draftFields.forEach(
-                    (name) => {
-                        draft[name] =
-                            getField(name)
-                                ?.value ||
-                            "";
-                    },
-                );
-
-                localStorage.setItem(
-                    storageKey,
-                    JSON.stringify(
-                        draft,
-                    ),
-                );
-            };
-
-        const restoreLocalDraft =
-            () => {
-                if (
-                    !storageKey ||
-                    !isCreate
-                ) {
-                    return;
-                }
-
-                const saved =
-                    localStorage.getItem(
-                        storageKey,
-                    );
-
-                if (!saved) {
-                    return;
-                }
-
-                try {
-                    const draft =
-                        JSON.parse(saved);
-
-                    draftFields.forEach(
-                        (name) => {
-                            const field =
-                                getField(name);
-
-                            if (
-                                field &&
-                                draft[name]
-                            ) {
-                                field.value =
-                                    draft[name];
-                            }
-                        },
-                    );
-                } catch (error) {
-                    localStorage.removeItem(
-                        storageKey,
-                    );
-                }
-            };
 
         form.addEventListener(
             "input",
@@ -426,7 +322,6 @@ document.addEventListener(
                     "title",
                     150,
                 );
-
                 updateCount(
                     "summary",
                     400,
@@ -438,7 +333,6 @@ document.addEventListener(
                 );
 
                 updatePreview();
-                saveLocalDraft();
             },
         );
 
@@ -446,10 +340,8 @@ document.addEventListener(
             "change",
             () => {
                 updatePreview();
-                saveLocalDraft();
             },
         );
-
         form.addEventListener(
             "submit",
             (event) => {
@@ -467,7 +359,6 @@ document.addEventListener(
                         "title",
                         publishing,
                     ),
-
                     validateField(
                         "category",
                         publishing,
@@ -482,7 +373,6 @@ document.addEventListener(
                         "imageUrl",
                         publishing,
                     ),
-
                     validateField(
                         "summary",
                         publishing,
@@ -496,7 +386,6 @@ document.addEventListener(
 
                 if (!valid) {
                     event.preventDefault();
-
                     if (feedback) {
                         feedback.textContent =
                             "Correct the highlighted fields before continuing.";
@@ -510,7 +399,6 @@ document.addEventListener(
 
                     return;
                 }
-
                 if (previewStatus) {
                     previewStatus.textContent =
                         publishing
@@ -524,29 +412,19 @@ document.addEventListener(
                             ? "Published"
                             : "Draft";
                 }
-
                 if (feedback) {
                     feedback.textContent =
                         publishing
                             ? "Publishing post…"
                             : "Saving draft…";
                 }
-
-                if (storageKey) {
-                    localStorage.removeItem(
-                        storageKey,
-                    );
-                }
             },
         );
-
-        restoreLocalDraft();
 
         updateCount(
             "title",
             150,
         );
-
         updateCount(
             "summary",
             400,

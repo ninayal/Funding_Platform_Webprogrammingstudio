@@ -1,11 +1,5 @@
-/* =====================================================
-   BLOG LISTING — LAYOUT, HEADER & TOOLS
-   Global tokens/reset/background come from /css/index.css.
-   ===================================================== */
-
-.blog-state-input,
-.blog-delete-toggle,
-.blog-state-target {
+/* ---------- Blog layout, header and tools ---------- */
+.blog-state-input, .blog-delete-toggle, .blog-state-target {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -18,18 +12,15 @@
 }
 
 /* Blog page header */
-
 .blog-container {
   width: calc(100% - 48px);
   max-width: 1600px;
   margin: 0 auto;
 }
-
 .blog-page {
   position: relative;
   padding: 18px 0 92px;
 }
-
 .blog-breadcrumb {
   display: flex;
   align-items: center;
@@ -41,21 +32,17 @@
   font-size: 18px;
   font-weight: 500;
 }
-
 .blog-breadcrumb a {
   color: var(--muted);
   text-decoration: none;
 }
-
 .blog-breadcrumb a:hover {
   color: var(--red);
 }
-
 .blog-breadcrumb span[aria-current="page"] {
   color: var(--deep);
   font-weight: 600;
 }
-
 .blog-page-header {
   display: flex;
   align-items: flex-end;
@@ -63,7 +50,6 @@
   gap: 24px;
   margin-bottom: 22px;
 }
-
 .blog-page-header h1 {
   margin: 0;
   color: var(--deep);
@@ -73,7 +59,6 @@
   font-weight: 500;
   line-height: 1;
 }
-
 .blog-page-header__subtitle {
   max-width: 340px;
   margin: 0;
@@ -83,7 +68,6 @@
   line-height: 1.4;
   text-align: right;
 }
-
 .blog-category-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -92,7 +76,6 @@
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line);
 }
-
 .blog-category-tab {
   padding-bottom: 4px;
   border-bottom: 2px solid transparent;
@@ -104,28 +87,20 @@
   white-space: nowrap;
   transition: color 200ms ease, border-color 200ms ease;
 }
-
 .blog-category-tab:hover {
   color: var(--deep);
 }
-
-#filter-all:checked ~ .blog-category-tabs .blog-category-tab[for="filter-all"],
-#filter-mission:checked ~ .blog-category-tabs .blog-category-tab[for="filter-mission"],
-#filter-donation:checked ~ .blog-category-tabs .blog-category-tab[for="filter-donation"],
-#filter-places:checked ~ .blog-category-tabs .blog-category-tab[for="filter-places"],
-#filter-guide:checked ~ .blog-category-tabs .blog-category-tab[for="filter-guide"] {
+#filter-all:checked ~ .blog-category-tabs .blog-category-tab[for="filter-all"], #filter-mission:checked ~ .blog-category-tabs .blog-category-tab[for="filter-mission"], #filter-donation:checked ~ .blog-category-tabs .blog-category-tab[for="filter-donation"], #filter-places:checked ~ .blog-category-tabs .blog-category-tab[for="filter-places"], #filter-guide:checked ~ .blog-category-tabs .blog-category-tab[for="filter-guide"] {
   color: var(--deep);
   border-bottom-color: var(--red);
 }
 
 /* Blog toolbar */
-
 .blog-shell {
   position: relative;
   z-index: 3;
   padding-bottom: 100px;
 }
-
 .blog-toolbar {
   display: flex;
   align-items: center;
@@ -136,7 +111,6 @@
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
-
 .blog-toolbar__left {
   display: flex;
   align-items: center;
@@ -144,12 +118,10 @@
   flex: 1 1 600px;
   min-width: 0;
 }
-
 .blog-toolbar__left .blog-search {
   flex: 1 1 320px;
   max-width: 420px;
 }
-
 .blog-account-link {
   min-height: 48px;
   display: inline-flex;
@@ -165,20 +137,16 @@
   text-decoration: none;
   transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
-
 .blog-account-link:hover {
   transform: translateY(-1px);
   border-color: var(--brown);
   background: var(--brown);
   box-shadow: 0 14px 30px rgba(73, 40, 22, 0.22);
 }
-
-.blog-account-link:focus-visible,
-.blog-button:focus-visible {
+.blog-account-link:focus-visible, .blog-button:focus-visible {
   outline: 3px solid rgba(163, 29, 29, 0.32);
   outline-offset: 3px;
 }
-
 .blog-account-link__avatar {
   width: 34px;
   height: 34px;
@@ -191,13 +159,11 @@
   font-weight: 700;
   letter-spacing: 1px;
 }
-
 .blog-account-link__copy {
   display: grid;
   gap: 1px;
   min-width: 78px;
 }
-
 .blog-account-link__copy strong {
   color: var(--cream);
   font-size: 10px;
@@ -205,12 +171,10 @@
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
-
 .blog-account-link__copy small {
   color: rgba(254, 249, 225, 0.74);
   font-size: 9px;
 }
-
 .blog-account-link > svg {
   width: 15px;
   height: 15px;
@@ -218,7 +182,6 @@
 }
 
 /* Search */
-
 .blog-search {
   position: relative;
   display: flex;
@@ -226,7 +189,6 @@
   flex: 1 1 320px;
   max-width: 420px;
 }
-
 .blog-search svg {
   position: absolute;
   left: 15px;
@@ -236,7 +198,6 @@
   opacity: 0.72;
   pointer-events: none;
 }
-
 .blog-search input {
   width: 100%;
   height: 46px;
@@ -249,17 +210,14 @@
   font-size: 12px;
   transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
 }
-
 .blog-search input::placeholder {
   color: #806a55;
 }
-
 .blog-search input:focus {
   border-color: rgba(163, 29, 29, 0.68);
   background: rgba(255, 255, 255, 0.82);
   box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
 }
-
 .blog-search__clear {
   position: absolute;
   right: 11px;
@@ -274,14 +232,12 @@
 }
 
 /* Actions */
-
 .blog-toolbar__actions {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
-
 .blog-button {
   min-height: 48px;
   padding: 0 20px;
@@ -301,32 +257,24 @@
   text-transform: uppercase;
   transition: transform 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
-
 .blog-button svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
-
 .blog-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 30px rgba(109, 35, 35, 0.24);
 }
-
 .blog-button--primary {
   border-color: var(--red);
   background: var(--red);
   color: var(--cream);
 }
-
 .blog-button--primary:hover {
   border-color: var(--darkred);
   background: var(--darkred);
 }
-
-#filter-mission:checked ~ .blog-shell .post:not(.mission),
-#filter-donation:checked ~ .blog-shell .post:not(.donation),
-#filter-places:checked ~ .blog-shell .post:not(.places),
-#filter-guide:checked ~ .blog-shell .post:not(.guide) {
+#filter-mission:checked ~ .blog-shell .post:not(.mission), #filter-donation:checked ~ .blog-shell .post:not(.donation), #filter-places:checked ~ .blog-shell .post:not(.places), #filter-guide:checked ~ .blog-shell .post:not(.guide) {
   display: none;
 }

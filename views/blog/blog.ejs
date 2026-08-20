@@ -1,1162 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#A31D1D" />
+    <title>Làng &amp; Co. — <%= pageTitle %></title>
 
-<head>
-  <meta charset="UTF-8" />
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="/css/landingpage/index.css" />
+    <link rel="stylesheet" href="/css/header_v2.css" />
+    <link rel="stylesheet" href="/css/shared-include.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+    <!-- Blog Styles -->
+    <link rel="stylesheet" href="/css/blog/blog.css" />
+    <link rel="stylesheet" href="/css/blog/blog-dynamic.css" />
+    <link rel="stylesheet" href="/css/blog/blog-all-posts.css" />
 
-  <meta
-    name="theme-color"
-    content="#A31D1D"
-  />
+    <!-- Blog JavaScript -->
+    <script src="/js/blog/blog.js" defer></script>
+    <script src="/js/shared/formPersistence.js" defer></script>
+  </head>
+  <body>
 
-  <title>
-    Làng &amp; Co. — <%= pageTitle %>
-  </title>
+    <!-- Shared Header -->
+    <%- include("../partials/header_v2", { activePage: "blog", showAccountIcon: false }) %>
+    <!-- Blog Page -->
+    <main class="blog-page" id="journal">
 
-  <!-- ================================================
-       SHARED STYLES
-       ================================================ -->
+      <!-- Breadcrumb -->
+      <nav class="blog-breadcrumb blog-container" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">•</span>
+        <span aria-current="page">Journal</span>
+      </nav>
 
-  <link
-    rel="stylesheet"
-    href="/css/landingpage/index.css"
-  />
+      <!-- Page Heading -->
+      <header class="blog-page-header blog-container">
+        <h1><%= pageTitle %></h1>
+        <p class="blog-page-header__subtitle"><%= pageSubtitle %></p>
+      </header>
 
-  <link
-    rel="stylesheet"
-    href="/css/header_v2.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/shared-include.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/footer.css"
-  />
-
-  <!-- ================================================
-       BLOG STYLES
-       ================================================ -->
-
-  <link
-    rel="stylesheet"
-    href="/css/blog/blog.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/blog/blog-dynamic.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/blog/blog-all-posts.css"
-  />
-
-  <!-- ================================================
-       BLOG JAVASCRIPT
-       ================================================ -->
-
-  <script
-    src="/js/blog/blog.js"
-    defer
-  ></script>
-</head>
-
-
-<body>
-
-  <!-- ================================================
-       SHARED HEADER
-       ================================================ -->
-
-  <%- include("../partials/header_v2", {
-    activePage: "blog",
-    showAccountIcon: false
-  }) %>
-
-
-  <!-- ================================================
-       BLOG PAGE
-       ================================================ -->
-
-  <main
-    class="blog-page"
-    id="journal"
-  >
-
-    <!-- ================================================
-         BREADCRUMB
-         ================================================ -->
-
-    <nav
-      class="blog-breadcrumb blog-container"
-      aria-label="Breadcrumb"
-    >
-      <a href="/">
-        Home
-      </a>
-
-      <span aria-hidden="true">
-        •
-      </span>
-
-      <span aria-current="page">
-        Journal
-      </span>
-    </nav>
-
-
-    <!-- ================================================
-         PAGE HEADING
-         ================================================ -->
-
-    <header
-      class="blog-page-header blog-container"
-    >
-      <h1>
-        <%= pageTitle %>
-      </h1>
-
-      <p
-        class="blog-page-header__subtitle"
-      >
-        <%= pageSubtitle %>
-      </p>
-    </header>
-
-
-    <!-- ================================================
-         CATEGORY FILTER STATES
-         ================================================ -->
-
-    <input
-      class="blog-state-input"
-      type="radio"
-      name="post-filter"
-      id="filter-all"
-      value="all"
-      checked
-    />
-
-    <% categories.forEach((category) => { %>
-
-      <input
-        class="blog-state-input"
-        type="radio"
-        name="post-filter"
-        id="filter-<%= category.slug %>"
-        value="<%= category.slug %>"
-      />
-
-    <% }); %>
-
-
-    <!--
-      Keep this because some of the original
-      Blog CSS still references the delete state.
-    -->
-
-    <input
-      class="blog-delete-toggle"
-      type="checkbox"
-      id="delete-own-post"
-    />
-
-
-    <!-- ================================================
-         CATEGORY TABS
-         ================================================ -->
-
-    <nav
-      class="blog-category-tabs blog-container"
-      aria-label="Journal categories"
-    >
-
-      <label
-        class="blog-category-tab"
-        for="filter-all"
-      >
-        All
-      </label>
-
-
+      <!-- Category Filter States -->
+      <input class="blog-state-input" type="radio" name="post-filter" id="filter-all" value="all" checked />
       <% categories.forEach((category) => { %>
-
-        <label
-          class="blog-category-tab"
-          for="filter-<%= category.slug %>"
-        >
-          <%= category.name %>
-        </label>
-
+        <input class="blog-state-input" type="radio" name="post-filter" id="filter-<%= category.slug %>" value="<%= category.slug %>" />
       <% }); %>
+      <!-- Keep this because some of the original Blog CSS still references the delete state. -->
+      <input class="blog-delete-toggle" type="checkbox" id="delete-own-post" />
 
-    </nav>
+      <!-- Category Tabs -->
+      <nav class="blog-category-tabs blog-container" aria-label="Journal categories">
+        <label class="blog-category-tab" for="filter-all">All</label>
+        <% categories.forEach((category) => { %>
+          <label class="blog-category-tab" for="filter-<%= category.slug %>">
+            <%= category.name %>
+          </label>
+        <% }); %>
+      </nav>
+      <!-- Blog Main Shell -->
+      <div class="blog-shell blog-container">
 
-
-    <!-- ================================================
-         BLOG MAIN SHELL
-         ================================================ -->
-
-    <div
-      class="blog-shell blog-container"
-    >
-
-
-      <!-- ================================================
-           BLOG TOOLBAR
-           ================================================ -->
-
-      <div
-        class="blog-toolbar"
-      >
-
-        <!-- ================================================
-             SEARCH
-             ================================================ -->
-
-        <form
-          class="blog-search"
-          action="/blog"
-          method="get"
-          role="search"
-          aria-label="Search blog posts"
-          data-blog-search-form
-        >
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            aria-hidden="true"
-          >
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-            ></circle>
-
-            <path
-              d="m20 20-3.8-3.8"
-            ></path>
-          </svg>
-
-
-          <input
-            id="blog-search-input"
-            name="q"
-            type="search"
-            placeholder="Search title, author, date, tag, or story text..."
-            autocomplete="off"
-            data-blog-search-input
-          />
-
-
-          <button
-            class="blog-search__clear"
-            type="reset"
-            aria-label="Clear blog search"
-            data-blog-search-clear
-          >
-            ×
-          </button>
-
-        </form>
-
-
-        <!-- ================================================
-             BLOG ACCOUNT
-
-             IMPORTANT:
-             blogActor can be null when logged out.
-             Never use blogActor.initials without checking.
-             ================================================ -->
-
-        <div
-          class="blog-toolbar__left"
-        >
-
-          <% if (blogActor) { %>
-
-            <!-- ================================================
-                 LOGGED-IN REGISTERED USER
-                 ================================================ -->
-
-            <a
-              class="blog-account-link"
-              href="/blog/my-posts"
-              aria-label="Open My Blog Posts"
-            >
-
-              <span
-                class="blog-account-link__avatar"
-                aria-hidden="true"
-              >
-                <%= blogActor.initials || "U" %>
-              </span>
-
-
-              <span
-                class="blog-account-link__copy"
-              >
-
-                <strong>
-                  My Blog
-                </strong>
-
-                <small>
-                  <%= myPostCount %>
-                  <%= myPostCount === 1
-                    ? "story"
-                    : "stories"
-                  %>
-                </small>
-
-              </span>
-
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-              >
-                <path
-                  d="m9 18 6-6-6-6"
-                ></path>
-              </svg>
-
-            </a>
-
-
-          <% } else { %>
-
-            <!-- ================================================
-                 LOGGED-OUT VISITOR
-                 ================================================ -->
-
-            <a
-              class="blog-account-link"
-              href="/blog/my-posts"
-              aria-label="Sign in to manage Blog posts"
-            >
-
-              <span
-                class="blog-account-link__avatar"
-                aria-hidden="true"
-              >
-                ?
-              </span>
-
-
-              <span
-                class="blog-account-link__copy"
-              >
-
-                <strong>
-                  Blog Account
-                </strong>
-
-                <small>
-                  Sign in to manage posts
-                </small>
-
-              </span>
-
-
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                aria-hidden="true"
-              >
-                <path
-                  d="m9 18 6-6-6-6"
-                ></path>
-              </svg>
-
-            </a>
-
-          <% } %>
-
-        </div>
-
-
-        <!-- ================================================
-             TOOLBAR ACTIONS
-             ================================================ -->
-
-        <div
-          class="blog-toolbar__actions"
-        >
-
-          <!-- ================================================
-               CREATE POST
-
-               /blog/create should be protected by requireAuth.
-               Logged-out users will be redirected to Login.
-               ================================================ -->
-
-          <a
-            class="blog-button blog-button--primary"
-            href="/blog/create"
-          >
-
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              aria-hidden="true"
-            >
-              <path
-                d="M12 5v14M5 12h14"
-              ></path>
+        <!-- Blog Toolbar -->
+        <div class="blog-toolbar">
+          <!-- Search -->
+          <form class="blog-search" action="/blog" method="get" role="search" aria-label="Search blog posts" data-blog-search-form data-persist-form="blog-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-3.8-3.8"></path>
             </svg>
-
-            Create Post
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <!-- ================================================
-           LEAD STORY
-           ================================================ -->
-
-      <% if (leadStory) { %>
-
-        <section
-          class="lead-story-section"
-          aria-labelledby="lead-story-heading"
-        >
-
-          <p
-            class="section-kicker"
-          >
-            From the team
-          </p>
-
-
-          <article
-            class="lead-story post <%= leadStory.categorySlug %>"
-            data-blog-post
-            data-category="<%= leadStory.categorySlug %>"
-            data-search="<%= leadStory.searchableText %>"
-          >
-
-            <!-- ================================================
-                 LEAD IMAGE
-                 ================================================ -->
-
-            <a
-              class="lead-image"
-              href="<%= leadStory.url %>"
-              aria-label="Read <%= leadStory.title %>"
-            >
-
-              <% if (
-                leadStory.image &&
-                (
-                  leadStory.image.listUrl ||
-                  leadStory.image.url
-                )
-              ) { %>
-
-                <img
-                  src="<%= leadStory.image.listUrl || leadStory.image.url %>"
-                  alt="<%= leadStory.image.alt || leadStory.title %>"
-                />
-
-              <% } %>
-
-
-              <% if (
-                leadStory.image &&
-                leadStory.image.listCaption
-              ) { %>
-
-                <span
-                  class="image-caption"
-                >
-                  <%= leadStory.image.listCaption %>
+            <input id="blog-search-input" name="q" type="search" placeholder="Search title, author, date, tag, or story text..." autocomplete="off" data-blog-search-input />
+            <button class="blog-search__clear" type="reset" aria-label="Clear blog search" data-blog-search-clear data-clear-persist-form>×</button>
+          </form>
+          <!-- BLOG ACCOUNT IMPORTANT: blogActor can be null when logged out. Never use blogActor.initials without checking. -->
+          <div class="blog-toolbar__left">
+            <% if (blogActor) { %>
+              <!-- Logged-In Registered User -->
+              <a class="blog-account-link" href="/blog/my-posts" aria-label="Open My Blog Posts">
+                <span class="blog-account-link__avatar" aria-hidden="true"><%= blogActor.initials || "U" %></span>
+                <span class="blog-account-link__copy">
+                  <strong>My Blog</strong>
+                  <small><%= myPostCount %> <%= myPostCount === 1 ? "story" : "stories" %></small>
                 </span>
-
-              <% } %>
-
-            </a>
-
-
-            <!-- ================================================
-                 LEAD COPY
-                 ================================================ -->
-
-            <div
-              class="lead-copy"
-            >
-
-              <div
-                class="post-meta-line"
-              >
-
-                <span
-                  class="tag"
-                >
-                  <%= leadStory.category %>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            <% } else { %>
+              <!-- Logged-Out Visitor -->
+              <a class="blog-account-link" href="/blog/my-posts" aria-label="Sign in to manage Blog posts">
+                <span class="blog-account-link__avatar" aria-hidden="true">?</span>
+                <span class="blog-account-link__copy">
+                  <strong>Blog Account</strong>
+                  <small>Sign in to manage posts</small>
                 </span>
-
-
-                <time
-                  datetime="<%= leadStory.publishedAt || leadStory.updatedAt %>"
-                >
-                  <%= leadStory.displayDate %>
-                </time>
-
-              </div>
-
-
-              <h2
-                id="lead-story-heading"
-              >
-
-                <a
-                  href="<%= leadStory.url %>"
-                >
-                  <%= leadStory.title %>
-                </a>
-
-              </h2>
-
-
-              <p
-                class="lead-summary"
-              >
-                <%= leadStory.summary %>
-              </p>
-
-
-              <!-- AUTHOR -->
-
-              <div
-                class="author-row"
-              >
-
-                <div
-                  class="author-avatar"
-                  aria-hidden="true"
-                >
-                  <%= leadStory.author.initials %>
-                </div>
-
-
-                <div>
-
-                  <strong>
-                    <%= leadStory.author.name %>
-                  </strong>
-
-                  <span>
-                    <%= leadStory.readTime %>
-                    min read
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              <!-- ACTIONS -->
-
-              <div
-                class="lead-actions"
-              >
-
-                <a
-                  class="text-link"
-                  href="<%= leadStory.url %>"
-                >
-                  Read the full story
-
-                  <span
-                    aria-hidden="true"
-                  >
-                    ↗
-                  </span>
-                </a>
-
-
-                <a
-                  class="icon-link"
-                  href="<%= leadStory.shareEmailUrl %>"
-                  aria-label="Share this post by email"
-                >
-                  Share
-                </a>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        </section>
-
-      <% } %>
-
-
-      <!-- ================================================
-           FEATURED STORIES
-           ================================================ -->
-
-      <% if (featuredPosts.length > 0) { %>
-
-        <section
-          class="featured-section"
-          aria-labelledby="featured-heading"
-        >
-
-          <div
-            class="section-heading"
-          >
-
-            <div>
-
-              <p
-                class="section-kicker"
-              >
-                Selected reading
-              </p>
-
-
-              <h2
-                id="featured-heading"
-              >
-                Featured
-                <em>
-                  stories
-                </em>
-              </h2>
-
-            </div>
-
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            <% } %>
           </div>
 
+          <!-- Toolbar Actions -->
+          <div class="blog-toolbar__actions">
+            <!-- CREATE POST /blog/create should be protected by requireAuth. Logged-out users will be redirected to Login. -->
+            <a class="blog-button blog-button--primary" href="/blog/create">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M12 5v14M5 12h14"></path>
+              </svg>
+              Create Post
+            </a>
+          </div>
+        </div>
 
-          <div
-            class="featured-grid"
-          >
+        <!-- Lead Story -->
+        <% if (leadStory) { %>
+          <section class="lead-story-section" aria-labelledby="lead-story-heading">
+            <p class="section-kicker">From the team</p>
+            <article class="lead-story post <%= leadStory.categorySlug %>" data-blog-post data-category="<%= leadStory.categorySlug %>" data-search="<%= leadStory.searchableText %>">
+              <!-- Lead Image -->
+              <a class="lead-image" href="<%= leadStory.url %>" aria-label="Read <%= leadStory.title %>">
+                <% if (leadStory.image && (leadStory.image.listUrl || leadStory.image.url)) { %>
+                  <img src="<%= leadStory.image.listUrl || leadStory.image.url %>" alt="<%= leadStory.image.alt || leadStory.title %>" />
+                <% } %>
+                <% if (leadStory.image && leadStory.image.listCaption) { %>
+                  <span class="image-caption"><%= leadStory.image.listCaption %></span>
+                <% } %>
+              </a>
+              <!-- Lead Copy -->
+              <div class="lead-copy">
+                <div class="post-meta-line">
+                  <span class="tag"><%= leadStory.category %></span>
+                  <time datetime="<%= leadStory.publishedAt || leadStory.updatedAt %>">
+                    <%= leadStory.displayDate %>
+                  </time>
+                </div>
+                <h2 id="lead-story-heading">
+                  <a href="<%= leadStory.url %>">
+                    <%= leadStory.title %>
+                  </a>
+                </h2>
+                <p class="lead-summary"><%= leadStory.summary %></p>
+                <!-- Author -->
+                <div class="author-row">
+                  <div class="author-avatar" aria-hidden="true"><%= leadStory.author.initials %></div>
+                  <div>
+                    <strong><%= leadStory.author.name %></strong>
+                    <span><%= leadStory.readTime %> min read</span>
+                  </div>
+                </div>
+                <!-- Actions -->
+                <div class="lead-actions">
+                  <a class="text-link" href="<%= leadStory.url %>">
+                    Read the full story
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                  <a class="icon-link" href="<%= leadStory.shareEmailUrl %>" aria-label="Share this post by email">
+                    Share
+                  </a>
+                </div>
+              </div>
+            </article>
+          </section>
+        <% } %>
+        <!-- Featured Stories -->
+        <% if (featuredPosts.length > 0) { %>
+          <section class="featured-section" aria-labelledby="featured-heading">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Selected reading</p>
+                <h2 id="featured-heading">
+                  Featured
+                  <em>stories</em>
+                </h2>
+              </div>
+            </div>
+            <div class="featured-grid">
+              <% featuredPosts.forEach((post) => { %>
+                <article class="featured-card post <%= post.categorySlug %>" data-blog-post data-category="<%= post.categorySlug %>" data-search="<%= post.searchableText %>">
+                  <!-- Image -->
+                  <a class="card-image" href="<%= post.url %>">
+                    <% if (post.image && (post.image.listUrl || post.image.url)) { %>
+                      <img src="<%= post.image.listUrl || post.image.url %>" alt="<%= post.image.alt || post.title %>" />
+                    <% } %>
+                  </a>
+                  <!-- Body -->
+                  <div class="card-body">
+                    <div class="post-meta-line">
+                      <span class="tag"><%= post.category %></span>
+                      <time datetime="<%= post.publishedAt || post.updatedAt %>">
+                        <%= post.displayDate %>
+                      </time>
+                    </div>
+                    <h3>
+                      <a href="<%= post.url %>">
+                        <%= post.title %>
+                      </a>
+                    </h3>
+                    <p><%= post.archiveSummary || post.summary %></p>
+                    <div class="card-footer">
+                      <span>By <%= post.author.name %></span>
+                      <a href="<%= post.url %>">
+                        Read story
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              <% }); %>
+            </div>
+          </section>
+        <% } %>
 
-            <% featuredPosts.forEach((post) => { %>
-
-              <article
-                class="featured-card post <%= post.categorySlug %>"
-                data-blog-post
-                data-category="<%= post.categorySlug %>"
-                data-search="<%= post.searchableText %>"
-              >
-
-                <!-- IMAGE -->
-
-                <a
-                  class="card-image"
-                  href="<%= post.url %>"
-                >
-
-                  <% if (
-                    post.image &&
-                    (
-                      post.image.listUrl ||
-                      post.image.url
-                    )
-                  ) { %>
-
-                    <img
-                      src="<%= post.image.listUrl || post.image.url %>"
-                      alt="<%= post.image.alt || post.title %>"
-                    />
-
+        <!-- All Posts / Archive -->
+        <section class="all-posts-section" aria-labelledby="all-posts-heading">
+          <div class="section-heading all-heading">
+            <div>
+              <p class="section-kicker">The archive</p>
+              <h2 id="all-posts-heading">
+                All posted
+                <em>stories</em>
+              </h2>
+            </div>
+            <!-- Sort -->
+            <div class="blog-sort-control" data-blog-sort-control>
+              <span class="blog-sort-control__title">Sort stories</span>
+              <!-- Keep the real select hidden. Existing blog.js can still use data-blog-sort without changing the actual sorting logic. -->
+              <select id="blog-sort" data-blog-sort aria-label="Sort Blog posts" hidden>
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="title">Title A–Z</option>
+              </select>
+              <div class="blog-sort-dropdown">
+                <button class="blog-sort-dropdown__button" type="button" aria-haspopup="listbox" aria-expanded="false" data-blog-sort-button>
+                  <span data-blog-sort-label>Newest first</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </button>
+                <div class="blog-sort-dropdown__menu" role="listbox" aria-label="Sort Blog posts" data-blog-sort-menu hidden>
+                  <button class="blog-sort-dropdown__option is-selected" type="button" role="option" aria-selected="true" data-blog-sort-option="newest">
+                    <span>Newest first</span>
+                    <span class="blog-sort-dropdown__check" aria-hidden="true">✓</span>
+                  </button>
+                  <button class="blog-sort-dropdown__option" type="button" role="option" aria-selected="false" data-blog-sort-option="oldest">
+                    <span>Oldest first</span>
+                    <span class="blog-sort-dropdown__check" aria-hidden="true">✓</span>
+                  </button>
+                  <button class="blog-sort-dropdown__option" type="button" role="option" aria-selected="false" data-blog-sort-option="title">
+                    <span>Title A–Z</span>
+                    <span class="blog-sort-dropdown__check" aria-hidden="true">✓</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Post List -->
+          <div class="post-list" id="blog-post-list" aria-label="All Blog post previews">
+            <% posts.forEach((post) => { %>
+              <article class="post-row post <%= post.categorySlug %><%= (blogActor && String(blogActor.id) === String(post.author.id)) ? ' own-post' : '' %>" data-blog-post data-category="<%= post.categorySlug %>" data-search="<%= post.searchableText %>" data-date="<%= post.publishedAt || post.updatedAt || post.createdAt || '' %>" data-title="<%= String(post.title || '').toLowerCase() %>">
+                <!-- Post Thumbnail -->
+                <a class="row-thumb" href="<%= post.url %>">
+                  <% if (post.image && (post.image.listUrl || post.image.url)) { %>
+                    <img src="<%= post.image.listUrl || post.image.url %>" alt="<%= post.image.alt || post.title %>" loading="lazy" />
+                  <% } else { %>
+                    <span class="placeholder-thumb" aria-hidden="true">Story</span>
                   <% } %>
-
                 </a>
-
-
-                <!-- BODY -->
-
-                <div
-                  class="card-body"
-                >
-
-                  <div
-                    class="post-meta-line"
-                  >
-
-                    <span
-                      class="tag"
-                    >
-                      <%= post.category %>
-                    </span>
-
-
-                    <time
-                      datetime="<%= post.publishedAt || post.updatedAt %>"
-                    >
+                <!-- Post Content -->
+                <div class="row-main">
+                  <div class="post-meta-line">
+                    <span class="tag"><%= post.category %></span>
+                    <time datetime="<%= post.publishedAt || post.updatedAt %>">
                       <%= post.displayDate %>
                     </time>
-
+                    <!-- Current Account Owns This Post -->
+                    <% if (blogActor && String(blogActor.id) === String(post.author.id)) { %>
+                      <span class="owner-badge">Your post</span>
+                    <% } %>
                   </div>
-
-
                   <h3>
-
-                    <a
-                      href="<%= post.url %>"
-                    >
+                    <a href="<%= post.url %>">
                       <%= post.title %>
                     </a>
-
                   </h3>
-
-
-                  <p>
-                    <%= post.archiveSummary || post.summary %>
-                  </p>
-
-
-                  <div
-                    class="card-footer"
-                  >
-
-                    <span>
-                      By
-                      <%= post.author.name %>
-                    </span>
-
-
-                    <a
-                      href="<%= post.url %>"
-                    >
-                      Read story
-                    </a>
-
-                  </div>
-
+                  <p><%= post.archiveSummary || post.summary %></p>
+                  <span class="row-author"><%= post.author.name %></span>
                 </div>
-
+                <!-- Open Post -->
+                <a class="row-arrow" href="<%= post.url %>" aria-label="Open <%= post.title %>">
+                  ↗
+                </a>
               </article>
-
             <% }); %>
-
           </div>
 
+          <!-- Empty Search/Filter State -->
+          <p id="blog-search-empty" class="form-note" role="status" hidden>No stories match your search.</p>
+
+          <!-- PAGINATION public/js/blog/blog.js shows 9 matching archive posts per page. -->
+          <nav class="blog-pagination" aria-label="Journal pagination" data-blog-pagination hidden>
+            <button class="blog-pagination__button" type="button" data-blog-page-previous>← Previous</button>
+            <div class="blog-pagination__numbers" data-blog-page-numbers></div>
+            <button class="blog-pagination__button" type="button" data-blog-page-next>Next →</button>
+          </nav>
         </section>
-
-      <% } %>
-
-
-      <!-- ================================================
-           ALL POSTS / ARCHIVE
-           ================================================ -->
-
-      <section
-        class="all-posts-section"
-        aria-labelledby="all-posts-heading"
-      >
-
-        <div
-          class="section-heading all-heading"
-        >
-
-          <div>
-
-            <p
-              class="section-kicker"
-            >
-              The archive
-            </p>
-
-
-            <h2
-              id="all-posts-heading"
-            >
-              All posted
-              <em>
-                stories
-              </em>
-            </h2>
-
-          </div>
-
-
-          <!-- ================================================
-               SORT
-               ================================================ -->
-
-         <div
-  class="blog-sort-control"
-  data-blog-sort-control
->
-  <span class="blog-sort-control__title">
-    Sort stories
-  </span>
-
-  <!--
-    Keep the real select hidden.
-    Existing blog.js can still use
-    data-blog-sort without changing
-    the actual sorting logic.
-  -->
-  <select
-    id="blog-sort"
-    data-blog-sort
-    aria-label="Sort Blog posts"
-    hidden
-  >
-    <option value="newest">
-      Newest first
-    </option>
-
-    <option value="oldest">
-      Oldest first
-    </option>
-
-    <option value="title">
-      Title A–Z
-    </option>
-  </select>
-
-
-  <div class="blog-sort-dropdown">
-
-    <button
-      class="blog-sort-dropdown__button"
-      type="button"
-      aria-haspopup="listbox"
-      aria-expanded="false"
-      data-blog-sort-button
-    >
-      <span data-blog-sort-label>
-        Newest first
-      </span>
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        aria-hidden="true"
-      >
-        <path d="m6 9 6 6 6-6"></path>
-      </svg>
-    </button>
-
-
-    <div
-      class="blog-sort-dropdown__menu"
-      role="listbox"
-      aria-label="Sort Blog posts"
-      data-blog-sort-menu
-      hidden
-    >
-
-      <button
-        class="blog-sort-dropdown__option is-selected"
-        type="button"
-        role="option"
-        aria-selected="true"
-        data-blog-sort-option="newest"
-      >
-        <span>
-          Newest first
-        </span>
-
-        <span
-          class="blog-sort-dropdown__check"
-          aria-hidden="true"
-        >
-          ✓
-        </span>
-      </button>
-
-
-      <button
-        class="blog-sort-dropdown__option"
-        type="button"
-        role="option"
-        aria-selected="false"
-        data-blog-sort-option="oldest"
-      >
-        <span>
-          Oldest first
-        </span>
-
-        <span
-          class="blog-sort-dropdown__check"
-          aria-hidden="true"
-        >
-          ✓
-        </span>
-      </button>
-
-
-      <button
-        class="blog-sort-dropdown__option"
-        type="button"
-        role="option"
-        aria-selected="false"
-        data-blog-sort-option="title"
-      >
-        <span>
-          Title A–Z
-        </span>
-
-        <span
-          class="blog-sort-dropdown__check"
-          aria-hidden="true"
-        >
-          ✓
-        </span>
-      </button>
-
-    </div>
-
-  </div>
-</div>
-
-        </div>
-
-
-        <!-- ================================================
-             POST LIST
-             ================================================ -->
-
-        <div
-          class="post-list"
-          id="blog-post-list"
-          aria-label="All Blog post previews"
-        >
-
-          <% posts.forEach((post) => { %>
-
-            <article
-              class="post-row post <%= post.categorySlug %><%= (
-                blogActor &&
-                String(blogActor.id) === String(post.author.id)
-              ) ? ' own-post' : '' %>"
-              data-blog-post
-              data-category="<%= post.categorySlug %>"
-              data-search="<%= post.searchableText %>"
-              data-date="<%= post.publishedAt || post.updatedAt || post.createdAt || '' %>"
-              data-title="<%= String(post.title || '').toLowerCase() %>"
-            >
-
-              <!-- ================================================
-                   POST THUMBNAIL
-                   ================================================ -->
-
-              <a
-                class="row-thumb"
-                href="<%= post.url %>"
-              >
-
-                <% if (
-                  post.image &&
-                  (
-                    post.image.listUrl ||
-                    post.image.url
-                  )
-                ) { %>
-
-                  <img
-                    src="<%= post.image.listUrl || post.image.url %>"
-                    alt="<%= post.image.alt || post.title %>"
-                    loading="lazy"
-                  />
-
-                <% } else { %>
-
-                  <span
-                    class="placeholder-thumb"
-                    aria-hidden="true"
-                  >
-                    Story
-                  </span>
-
-                <% } %>
-
-              </a>
-
-
-              <!-- ================================================
-                   POST CONTENT
-                   ================================================ -->
-
-              <div
-                class="row-main"
-              >
-
-                <div
-                  class="post-meta-line"
-                >
-
-                  <span
-                    class="tag"
-                  >
-                    <%= post.category %>
-                  </span>
-
-
-                  <time
-                    datetime="<%= post.publishedAt || post.updatedAt %>"
-                  >
-                    <%= post.displayDate %>
-                  </time>
-
-
-                  <!-- ================================================
-                       CURRENT ACCOUNT OWNS THIS POST
-                       ================================================ -->
-
-                  <% if (
-                    blogActor &&
-                    String(blogActor.id) ===
-                    String(post.author.id)
-                  ) { %>
-
-                    <span
-                      class="owner-badge"
-                    >
-                      Your post
-                    </span>
-
-                  <% } %>
-
-                </div>
-
-
-                <h3>
-
-                  <a
-                    href="<%= post.url %>"
-                  >
-                    <%= post.title %>
-                  </a>
-
-                </h3>
-
-
-                <p>
-                  <%= post.archiveSummary || post.summary %>
-                </p>
-
-
-                <span
-                  class="row-author"
-                >
-                  <%= post.author.name %>
-                </span>
-
-              </div>
-
-
-              <!-- ================================================
-                   OPEN POST
-                   ================================================ -->
-
-              <a
-                class="row-arrow"
-                href="<%= post.url %>"
-                aria-label="Open <%= post.title %>"
-              >
-                ↗
-              </a>
-
-            </article>
-
-          <% }); %>
-
-        </div>
-
-
-        <!-- ================================================
-             EMPTY SEARCH/FILTER STATE
-             ================================================ -->
-
-        <p
-          id="blog-search-empty"
-          class="form-note"
-          role="status"
-          hidden
-        >
-          No stories match your search.
-        </p>
-
-
-        <!-- ================================================
-             PAGINATION
-
-             public/js/blog/blog.js
-             shows 9 matching archive posts per page.
-             ================================================ -->
-
-        <nav
-          class="blog-pagination"
-          aria-label="Journal pagination"
-          data-blog-pagination
-          hidden
-        >
-
-          <button
-            class="blog-pagination__button"
-            type="button"
-            data-blog-page-previous
-          >
-            ← Previous
-          </button>
-
-
-          <div
-            class="blog-pagination__numbers"
-            data-blog-page-numbers
-          ></div>
-
-
-          <button
-            class="blog-pagination__button"
-            type="button"
-            data-blog-page-next
-          >
-            Next →
-          </button>
-
-        </nav>
-
-      </section>
-
-    </div>
-
-  </main>
-
-
-  <!-- ================================================
-       FOOTER
-       ================================================ -->
-
-  <%- include("../partials/footer") %>
-
-</body>
-
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <%- include("../partials/footer") %>
+  </body>
 </html>
