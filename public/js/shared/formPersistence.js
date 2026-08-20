@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Restores form fields from sessionStorage after a page refresh.
+ * Restores form fields from localStorage after a page refresh.
  *
  * Usage: add data-persist-form="unique-name" to any <form>.
  * No other JS needed — this module handles every marked form
@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     Array.from(
       form.querySelectorAll("input, textarea, select")
     ).filter(
-      (field) => !SKIP_TYPES.includes(field.type)
+      (field) =>
+        field.name &&
+        !SKIP_TYPES.includes(field.type)
     );
 
   const storageKeyFor = (form, field) => {
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       form.id ||
       form.action;
 
-    return `formPersist:${formKey}:${field.name}`;
+    return `formPersist:${formKey}:${field.name}:${field.value}`;
   };
 
   document
@@ -44,41 +46,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
       fields.forEach((field) => {
         const key = storageKeyFor(form, field);
-        const saved = sessionStorage.getItem(key);
-
-        if (saved === null) {
-          return;
-        }
 
         const isCheckable =
           field.type === "checkbox" ||
           field.type === "radio";
 
-        // Don't override values the server already rendered
-        // (e.g. re-populated after a validation error).
-        if (isCheckable) {
-          if (!field.hasAttribute("checked")) {
-            field.checked = saved === "true";
+        // Restore saved value
+        const saved = localStorage.getItem(key);
+
+        if (saved !== null) {
+          // Don't override values the server already rendered
+          // e.g. after a validation error.
+          if (isCheckable) {
+            if (!field.hasAttribute("checked")) {
+              field.checked = saved === "true";
+            }
+          } else if (!field.value) {
+            field.value = saved;
           }
-        } else if (!field.value) {
-          field.value = saved;
         }
 
+        // Save text/select values while typing
         field.addEventListener("input", () => {
-          sessionStorage.setItem(key, field.value);
+          localStorage.setItem(
+            key,
+            isCheckable
+              ? String(field.checked)
+              : field.value
+          );
         });
 
+        // Save checkbox/radio/select changes
         field.addEventListener("change", () => {
-          sessionStorage.setItem(
+          localStorage.setItem(
             key,
-            isCheckable ? String(field.checked) : field.value
+            isCheckable
+              ? String(field.checked)
+              : field.value
           );
         });
       });
 
+      // Clear persisted data after form submission
       form.addEventListener("submit", () => {
         fields.forEach((field) => {
-          sessionStorage.removeItem(storageKeyFor(form, field));
+          localStorage.removeItem(
+            storageKeyFor(form, field)
+          );
         });
       });
     });

@@ -75,9 +75,7 @@
 
                     <% } else { %>
 
-                      <form id="gift-card-form" class="gift-card-form" action="<%= isEditing
-          ? `/giftcard/${editGiftcard.id}/update`
-          : " /giftcard/review" %>"
+                      <form id="gift-card-form" class="gift-card-form" action="<%= isEditing ? `/giftcard/${editGiftcard.id}/update` : " /giftcard/review" %>"
                         method="post"
                         data-giftcard-mode="<%= isEditing ? "edit" : "create" %>"
                           data-giftcard-id="<%= isEditing ? editGiftcard.id : "" %>"
