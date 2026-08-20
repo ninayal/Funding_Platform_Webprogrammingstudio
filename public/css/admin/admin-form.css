@@ -69,7 +69,7 @@
 .admin-product-form__header h1 {
   margin: 0;
   color: var(--deep);
-  font-family: var(--ff-display);
+  font-family: var(--ff-serif);
   font-size: clamp(34px, 4vw, 48px);
   font-weight: 500;
   line-height: 1.05;
@@ -103,7 +103,7 @@
 .admin-product-section__heading h2 {
   margin: 0;
   color: var(--deep);
-  font-family: var(--ff-display);
+  font-family: var(--ff-serif);
   font-size: 26px;
   font-weight: 500;
 }
