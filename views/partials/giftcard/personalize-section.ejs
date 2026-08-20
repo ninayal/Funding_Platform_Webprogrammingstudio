@@ -7,6 +7,10 @@
   const editingGift =
     typeof editGiftcard !== "undefined" &&
     Boolean(editGiftcard);
+
+  const loggedIn =
+    typeof currentUser !== "undefined" &&
+    Boolean(currentUser);
 %>
 
 <section
@@ -15,10 +19,9 @@
   data-giftcard-step="5"
 >
   <div class="section-shell">
+
     <div class="section-heading">
-      <p class="section-kicker">
-        05 · Personalize
-      </p>
+      <p class="section-kicker">05 · Personalize</p>
 
       <h2>
         Make the gift feel
@@ -32,9 +35,13 @@
     </div>
 
     <div class="details-layout">
+
       <div class="details-form">
+
+        <!-- Common -->
         <div class="common-fields">
           <div class="form-grid form-grid--two">
+
             <label class="field">
               <span>Recipient name</span>
 
@@ -47,10 +54,9 @@
                 minlength="2"
                 maxlength="60"
                 pattern=".*\S.*"
-                title="Enter the recipient's name."
                 autocomplete="name"
                 required
-              />
+              >
 
               <% if (formErrors.recipientName) { %>
                 <span class="form-error">
@@ -71,10 +77,9 @@
                 minlength="2"
                 maxlength="60"
                 pattern=".*\S.*"
-                title="Enter your name."
                 autocomplete="name"
                 required
-              />
+              >
 
               <% if (formErrors.senderName) { %>
                 <span class="form-error">
@@ -82,6 +87,7 @@
                 </span>
               <% } %>
             </label>
+
           </div>
 
           <label class="field">
@@ -105,10 +111,9 @@
           </label>
         </div>
 
+        <!-- Donation in Honour -->
         <div class="conditional-fields honour-fields">
-          <p class="conditional-title">
-            Donation cause
-          </p>
+          <p class="conditional-title">Donation cause</p>
 
           <label class="field">
             <span>Choose a cause</span>
@@ -163,80 +168,38 @@
           </label>
         </div>
 
+        <!-- Digital -->
         <div class="conditional-fields digital-fields">
           <p class="conditional-title">
             Digital delivery details
           </p>
 
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Recipient email</span>
-
-              <input
-                type="email"
-                name="recipientEmail"
-                value="<%= defaults.recipientEmail || "" %>"
-                placeholder="recipient@example.com"
-                autocomplete="email"
-              />
-
-              <% if (formErrors.recipientEmail) { %>
-                <span class="form-error">
-                  <%= formErrors.recipientEmail %>
-                </span>
-              <% } %>
-            </label>
-
-            <label class="field">
-              <span>Email delivery</span>
-
-              <select name="emailTiming">
-                <% [
-                  "Send immediately",
-                  "Schedule delivery"
-                ].forEach((option) => { %>
-                  <option
-                    value="<%= option %>"
-                    <%= option === defaults.emailTiming
-                      ? "selected"
-                      : "" %>
-                  >
-                    <%= option %>
-                  </option>
-                <% }); %>
-              </select>
-
-              <% if (formErrors.emailTiming) { %>
-                <span class="form-error">
-                  <%= formErrors.emailTiming %>
-                </span>
-              <% } %>
-            </label>
-          </div>
-
           <label class="field">
-            <span>Scheduled delivery date</span>
+            <span>Recipient email</span>
 
             <input
-              type="date"
-              name="emailDeliveryDate"
-              value="<%= defaults.emailDeliveryDate || "" %>"
-            />
+              type="email"
+              name="recipientEmail"
+              value="<%= defaults.recipientEmail || "" %>"
+              placeholder="minh@example.com"
+            >
 
-            <% if (formErrors.emailDeliveryDate) { %>
+            <% if (formErrors.recipientEmail) { %>
               <span class="form-error">
-                <%= formErrors.emailDeliveryDate %>
+                <%= formErrors.recipientEmail %>
               </span>
             <% } %>
           </label>
         </div>
 
+        <!-- Printable -->
         <div class="conditional-fields printable-fields">
           <p class="conditional-title">
             Printable card options
           </p>
 
           <div class="form-grid form-grid--two">
+
             <label class="field">
               <span>Card format</span>
 
@@ -282,6 +245,7 @@
                 </span>
               <% } %>
             </label>
+
           </div>
 
           <label class="field">
@@ -300,12 +264,14 @@
           </label>
         </div>
 
+        <!-- Physical -->
         <div class="conditional-fields physical-fields">
           <p class="conditional-title">
             Physical delivery address
           </p>
 
           <div class="form-grid form-grid--two">
+
             <label class="field">
               <span>Recipient phone</span>
 
@@ -315,7 +281,7 @@
                 value="<%= defaults.recipientPhone || "" %>"
                 placeholder="+84..."
                 autocomplete="tel"
-              />
+              >
 
               <% if (formErrors.recipientPhone) { %>
                 <span class="form-error">
@@ -331,7 +297,7 @@
                 type="date"
                 name="physicalDeliveryDate"
                 value="<%= defaults.physicalDeliveryDate || "" %>"
-              />
+              >
 
               <% if (formErrors.physicalDeliveryDate) { %>
                 <span class="form-error">
@@ -339,6 +305,7 @@
                 </span>
               <% } %>
             </label>
+
           </div>
 
           <label class="field">
@@ -351,7 +318,7 @@
               placeholder="123 Example Street"
               maxlength="120"
               autocomplete="street-address"
-            />
+            >
 
             <% if (formErrors.streetAddress) { %>
               <span class="form-error">
@@ -361,6 +328,7 @@
           </label>
 
           <div class="form-grid form-grid--two">
+
             <label class="field">
               <span>Ward / District</span>
 
@@ -370,7 +338,7 @@
                 value="<%= defaults.district || "" %>"
                 placeholder="District"
                 maxlength="80"
-              />
+              >
 
               <% if (formErrors.district) { %>
                 <span class="form-error">
@@ -389,7 +357,7 @@
                 placeholder="Ho Chi Minh City"
                 maxlength="80"
                 autocomplete="address-level1"
-              />
+              >
 
               <% if (formErrors.city) { %>
                 <span class="form-error">
@@ -397,6 +365,7 @@
                 </span>
               <% } %>
             </label>
+
           </div>
 
           <label class="field">
@@ -409,7 +378,7 @@
               placeholder="700000"
               maxlength="20"
               autocomplete="postal-code"
-            />
+            >
 
             <% if (formErrors.postalCode) { %>
               <span class="form-error">
@@ -418,21 +387,24 @@
             <% } %>
           </label>
         </div>
+
       </div>
 
-      <%- include("gift-preview") %>
+      <%- include("./gift-preview") %>
+
     </div>
 
     <div class="section-next">
       <button class="btn btn-primary" type="submit">
         <% if (editingGift) { %>
           Save Changes
-        <% } else if (currentUser) { %>
+        <% } else if (loggedIn) { %>
           Review Your Gift
         <% } else { %>
           Sign In &amp; Review
         <% } %>
       </button>
     </div>
+
   </div>
 </section>
