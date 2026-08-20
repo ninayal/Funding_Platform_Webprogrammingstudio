@@ -1,13 +1,3 @@
-<% productData.sizes.forEach((size) => { %>
-  <input
-    class="state-control"
-    type="radio"
-    name="pdsize"
-    id="size-<%= size.id %>"
-    <%= size.isDefault ? "checked" : "" %>
-  />
-<% }); %>
-
 <% tabs.forEach((tab) => { %>
   <input
     class="state-control"

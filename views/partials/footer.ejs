@@ -11,15 +11,31 @@
         across Việt Nam's craft villages and shipped to your door.
       </p>
 
-      <form class="site-footer__form" action="/newsletter" method="POST" novalidate>
-        <label class="visually-hidden" for="footer-email">
+      <form
+        class="site-footer__form"
+        action="/newsletter"
+        method="POST"
+        novalidate
+      >
+        <label
+          class="visually-hidden"
+          for="footer-email"
+        >
           Email address
         </label>
 
-        <input id="footer-email" name="email" type="email" placeholder="you@example.com" autocomplete="email"
-          required />
+        <input
+          id="footer-email"
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        />
 
-        <button type="submit">Subscribe</button>
+        <button type="submit">
+          Subscribe
+        </button>
       </form>
 
       <p class="site-footer__note">
@@ -27,53 +43,57 @@
       </p>
     </div>
 
-    <% footer.navigation.forEach((section)=> { %>
-      <nav class="site-footer__col" aria-label="<%= section.title %>">
-        <h4>
-          <%= section.title %>
-        </h4>
+    <% footer.navigation.forEach((section) => { %>
+      <nav
+        class="site-footer__col"
+        aria-label="<%= section.title %>"
+      >
+        <h4><%= section.title %></h4>
 
-        <% section.links.forEach((link)=> { %>
+        <% section.links.forEach((link) => { %>
           <a href="<%= link.href %>">
             <%= link.label %>
           </a>
-          <% }); %>
+        <% }); %>
       </nav>
-      <% }); %>
+    <% }); %>
   </div>
 
   <div class="site-footer__badges">
-    <% footer.badges.forEach((badge)=> { %>
+    <% footer.badges.forEach((badge) => { %>
       <span class="badge-item">
         <%= badge %>
       </span>
-      <% }); %>
+    <% }); %>
   </div>
 
   <div class="site-footer__bottom">
     <div class="site-footer__legal">
-      <% footer.legalLinks.forEach((link)=> { %>
+      <% footer.legalLinks.forEach((link) => { %>
         <a href="<%= link.href %>">
           <%= link.label %>
         </a>
-        <% }); %>
+      <% }); %>
     </div>
 
     <p class="site-footer__copy">
       &copy; <%= currentYear %>
-        Làng &amp; Co. — Vietnamese Traditional Crafts
+      Làng &amp; Co. — Vietnamese Traditional Crafts
     </p>
 
     <div class="site-footer__social">
-      <% footer.socialLinks.forEach((social)=> { %>
-        <a href="<%= social.href %>" aria-label="<%= social.label %>" <% if (social.external) { %>
-          target="_blank"
-          rel="noopener noreferrer"
+      <% footer.socialLinks.forEach((social) => { %>
+        <a
+          href="<%= social.href %>"
+          aria-label="<%= social.label %>"
+          <% if (social.external) { %>
+            target="_blank"
+            rel="noopener noreferrer"
           <% } %>
-            >
-            <%= social.text %>
+        >
+          <%= social.text %>
         </a>
-        <% }); %>
+      <% }); %>
     </div>
   </div>
 </footer>
