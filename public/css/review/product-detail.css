@@ -4,18 +4,6 @@
    and their responsive behaviour.
    ===================================================== */
 
-/* =====================================================
-   PRODUCT DETAIL PAGE BACKGROUND
-   Keep the page on the same linen surface as Header V2.
-   ===================================================== */
-body.product-detail-page {
-  background-color: #eee7dc;
-  background-image: url("/images/linen-beige.png");
-  background-repeat: repeat;
-  background-position: center;
-  background-size: auto;
-}
-
 /* ================================================
    PRODUCT DETAIL PAGE
    Reuses tokens & .shop-card / .shop-grid from products.css

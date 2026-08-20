@@ -82,7 +82,215 @@
     breadcrumb.before(nav);
   };
 
+  const initProductTabs = () => {
+    const section =
+      document.querySelector(
+        ".pd-tabs-section"
+      );
+
+    if (!section) {
+      return;
+    }
+
+    const buttons = [
+      ...section.querySelectorAll(
+        "[data-product-tab]"
+      )
+    ];
+
+    const panels = [
+      ...section.querySelectorAll(
+        "[data-product-panel]"
+      )
+    ];
+
+    if (!buttons.length || !panels.length) {
+      return;
+    }
+
+    const openTab = (
+      tabName,
+      {
+        focus = false,
+        scroll = false
+      } = {}
+    ) => {
+      const activeButton =
+        buttons.find(
+          (button) =>
+            button.dataset.productTab ===
+            tabName
+        );
+
+      const activePanel =
+        panels.find(
+          (panel) =>
+            panel.dataset.productPanel ===
+            tabName
+        );
+
+      if (!activeButton || !activePanel) {
+        return;
+      }
+
+      buttons.forEach((button) => {
+        const isActive =
+          button === activeButton;
+
+        button.classList.toggle(
+          "is-active",
+          isActive
+        );
+
+        button.setAttribute(
+          "aria-selected",
+          String(isActive)
+        );
+
+        button.tabIndex =
+          isActive ? 0 : -1;
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden =
+          panel !== activePanel;
+      });
+
+      if (focus) {
+        activeButton.focus();
+      }
+
+      if (scroll) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    };
+
+    buttons.forEach(
+      (button, index) => {
+        button.addEventListener(
+          "click",
+          () => {
+            openTab(
+              button.dataset.productTab
+            );
+          }
+        );
+
+        button.addEventListener(
+          "keydown",
+          (event) => {
+            const last =
+              buttons.length - 1;
+
+            let nextIndex = index;
+
+            if (
+              event.key === "ArrowRight"
+            ) {
+              nextIndex =
+                index === last
+                  ? 0
+                  : index + 1;
+            } else if (
+              event.key === "ArrowLeft"
+            ) {
+              nextIndex =
+                index === 0
+                  ? last
+                  : index - 1;
+            } else if (
+              event.key === "Home"
+            ) {
+              nextIndex = 0;
+            } else if (
+              event.key === "End"
+            ) {
+              nextIndex = last;
+            } else {
+              return;
+            }
+
+            event.preventDefault();
+
+            openTab(
+              buttons[nextIndex]
+                .dataset.productTab,
+              { focus: true }
+            );
+          }
+        );
+      }
+    );
+
+    document
+      .querySelectorAll(
+        "[data-open-product-tab]"
+      )
+      .forEach((trigger) => {
+        trigger.addEventListener(
+          "click",
+          () => {
+            openTab(
+              trigger.dataset
+                .openProductTab,
+              { scroll: true }
+            );
+          }
+        );
+      });
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const reviewModal =
+      document.querySelector(
+        "#review-composer-panel"
+      );
+
+    const shouldOpenReview =
+      params.get("tab") === "review" ||
+      params.get("compose") === "1" ||
+      params.has("status") ||
+      (
+        reviewModal &&
+        !reviewModal.hidden
+      );
+
+    openTab(
+      shouldOpenReview
+        ? "review"
+        : "description"
+    );
+
+    const syncHash = () => {
+      if (
+        [
+          "#customer-reviews",
+          "#review-composer",
+          "#review-composer-panel"
+        ].includes(
+          window.location.hash
+        )
+      ) {
+        openTab("review");
+      }
+    };
+
+    syncHash();
+
+    window.addEventListener(
+      "hashchange",
+      syncHash
+    );
+  };
+
   initProductBackNavigation();
+  initProductTabs();
 
   const lightbox =
     document.querySelector(
