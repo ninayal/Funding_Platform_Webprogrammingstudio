@@ -9,10 +9,12 @@
  * To explicitly exclude a field:
  *   Add data-no-persist to that input/select/textarea.
  *
+ * To clear a persisted form:
+ *   Add data-clear-persist-form to a button inside the form.
+ *
  * Skipped automatically:
  * password, file, hidden, submit, button and reset fields.
  */
-
 document.addEventListener("DOMContentLoaded", () => {
     const SKIP_TYPES = [
         "password",
@@ -49,22 +51,73 @@ document.addEventListener("DOMContentLoaded", () => {
         return `formPersist:${formKey}:${fieldKey}`;
     };
 
+    const dispatchRestoredValue = (field) => {
+        if (field.type === "radio") {
+            if (field.checked) {
+                field.dispatchEvent(
+                    new Event("change", {
+                        bubbles: true
+                    })
+                );
+            }
+
+            return;
+        }
+
+        if (field.type === "checkbox") {
+            field.dispatchEvent(
+                new Event("change", {
+                    bubbles: true
+                })
+            );
+
+            return;
+        }
+
+        field.dispatchEvent(
+            new Event("input", {
+                bubbles: true
+            })
+        );
+
+        field.dispatchEvent(
+            new Event("change", {
+                bubbles: true
+            })
+        );
+    };
+
     document
         .querySelectorAll("form[data-persist-form]")
         .forEach((form) => {
             const fields = persistableFields(form);
 
+            const clearPersistedFields = () => {
+                fields.forEach((field) => {
+                    localStorage.removeItem(
+                        storageKeyFor(form, field)
+                    );
+                });
+            };
+
+            const syncFieldsAfterReset = () => {
+                fields.forEach(
+                    dispatchRestoredValue
+                );
+            };
+
             fields.forEach((field) => {
                 const key = storageKeyFor(form, field);
                 const saved = localStorage.getItem(key);
 
-                // Restore previously saved value.
                 if (saved !== null) {
                     if (isCheckable(field)) {
                         field.checked = saved === "true";
                     } else {
                         field.value = saved;
                     }
+
+                    dispatchRestoredValue(field);
                 }
 
                 const saveField = () => {
@@ -80,6 +133,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 field.addEventListener("change", saveField);
             });
 
+            form
+                .querySelectorAll(
+                    "[data-clear-persist-form]"
+                )
+                .forEach((button) => {
+                    button.addEventListener(
+                        "click",
+                        () => {
+                            clearPersistedFields();
+                            form.reset();
+
+                            queueMicrotask(
+                                syncFieldsAfterReset
+                            );
+                        }
+                    );
+                });
+
             /*
              * Only clear persisted data when the submission
              * is actually allowed to continue.
@@ -93,11 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    fields.forEach((field) => {
-                        localStorage.removeItem(
-                            storageKeyFor(form, field)
-                        );
-                    });
+                    clearPersistedFields();
                 });
             });
         });
