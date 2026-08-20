@@ -6,76 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!form) return;
 
-    const STORAGE_KEY = "langco-checkout-draft";
-
-    const draftFields = [
-        "email",
-        "first_name",
-        "last_name",
-        "address1",
-        "address2",
-        "city",
-        "state",
-        "postal_code",
-        "country",
-        "phone",
-        "gift_note"
-    ];
-
-    const draftCheckboxes = ["newsletter", "billing_same"];
-
-    const saveDraft = () => {
-        const draft = {};
-
-        draftFields.forEach((name) => {
-            const field = form.elements.namedItem(name);
-            if (field) draft[name] = field.value;
-        });
-
-        draftCheckboxes.forEach((name) => {
-            const field = form.elements.namedItem(name);
-            if (field) draft[name] = field.checked;
-        });
-
-        const shipping = form.elements.namedItem("shipping");
-        draft.shipping = shipping?.value || "standard";
-
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
-    };
-
-    const restoreDraft = () => {
-        const saved = sessionStorage.getItem(STORAGE_KEY);
-        if (!saved) return;
-
-        try {
-            const draft = JSON.parse(saved);
-
-            draftFields.forEach((name) => {
-                const field = form.elements.namedItem(name);
-
-                if (field && draft[name] !== undefined) {
-                    field.value = draft[name];
-                }
-            });
-
-            draftCheckboxes.forEach((name) => {
-                const field = form.elements.namedItem(name);
-
-                if (field && draft[name] !== undefined) {
-                    field.checked = draft[name];
-                }
-            });
-
-            if (draft.shipping) {
-                form.querySelectorAll('input[name="shipping"]').forEach((radio) => {
-                    radio.checked = radio.value === draft.shipping;
-                });
-            }
-        } catch {
-            sessionStorage.removeItem(STORAGE_KEY);
-        }
-    };
-
     const formatCardNumber = () => {
         const digits = cardNumber.value.replace(/\D/g, "").slice(0, 16);
         cardNumber.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
@@ -161,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const showFieldError = (field, message) => {
         const group = field.closest(".form-group");
+
         if (!group) return;
 
         let error = group.querySelector(".field-error");
@@ -208,11 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
             'input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), select, textarea'
         )
     ];
-
-    restoreDraft();
-
-    form.addEventListener("input", saveDraft);
-    form.addEventListener("change", saveDraft);
 
     liveFields
         .filter((field) => ![cardNumber, cardExpiry, cardCvv].includes(field))
@@ -263,9 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const firstInvalid = form.querySelector('[aria-invalid="true"]');
             firstInvalid?.focus();
-            return;
         }
-
-        sessionStorage.removeItem(STORAGE_KEY);
     });
 });
