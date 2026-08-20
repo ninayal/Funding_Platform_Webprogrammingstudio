@@ -1,0 +1,38 @@
+<% giftTypes.forEach((giftType) => { %>
+  <input
+    class="ui-state"
+    type="radio"
+    name="giftType"
+    id="<%= giftType.id %>"
+    value="<%= giftType.value %>"
+    form="gift-card-form"
+    <%= giftType.value === defaults.giftType ? "checked" : "" %>
+    required
+  />
+<% }); %>
+
+<% deliveryTypes.forEach((deliveryType) => { %>
+  <input
+    class="ui-state"
+    type="radio"
+    name="deliveryType"
+    id="<%= deliveryType.id %>"
+    value="<%= deliveryType.value %>"
+    form="gift-card-form"
+    <%= deliveryType.value === defaults.deliveryType ? "checked" : "" %>
+    required
+  />
+<% }); %>
+
+<% designs.forEach((design) => { %>
+  <input
+    class="ui-state"
+    type="radio"
+    name="designType"
+    id="<%= design.id %>"
+    value="<%= design.value %>"
+    form="gift-card-form"
+    <%= design.value === defaults.designType ? "checked" : "" %>
+    required
+  />
+<% }); %>

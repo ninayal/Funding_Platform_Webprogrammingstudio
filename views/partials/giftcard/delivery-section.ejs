@@ -1,0 +1,64 @@
+<%
+  const deliveryErrors =
+    typeof errors !== "undefined" && errors
+      ? errors
+      : {};
+%>
+
+<section
+  class="flow-section flow-section--tint"
+  id="delivery-type"
+  data-giftcard-step="2"
+>
+  <div class="section-shell">
+    <div class="section-heading section-heading--center">
+      <p class="section-kicker">02 · Choose delivery</p>
+
+      <h2>
+        How should the gift <em>reach them?</em>
+      </h2>
+
+      <p>
+        Choose a delivery format. The Personalize section will
+        automatically show only the relevant fields.
+      </p>
+    </div>
+
+    <div class="choice-grid choice-grid--three">
+      <% deliveryTypes.forEach((deliveryType) => { %>
+        <label
+          class="delivery-card"
+          for="<%= deliveryType.id %>"
+        >
+          <span class="delivery-card__icon" aria-hidden="true">
+            <%= deliveryType.icon %>
+          </span>
+
+          <span class="delivery-card__title">
+            <%= deliveryType.title %>
+          </span>
+
+          <span class="delivery-card__copy">
+            <%= deliveryType.copy %>
+          </span>
+        </label>
+      <% }); %>
+    </div>
+
+    <% if (deliveryErrors.deliveryType) { %>
+      <p class="form-error step-form-error" role="alert">
+        <%= deliveryErrors.deliveryType %>
+      </p>
+    <% } %>
+
+    <div class="section-next">
+      <a
+        class="btn btn-primary"
+        href="#design"
+        data-giftcard-next
+      >
+        Continue to Design
+      </a>
+    </div>
+  </div>
+</section>

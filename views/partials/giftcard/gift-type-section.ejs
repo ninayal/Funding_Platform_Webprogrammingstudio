@@ -1,0 +1,65 @@
+<%
+  const giftTypeErrors =
+    typeof errors !== "undefined" && errors
+      ? errors
+      : {};
+%>
+
+<section
+  class="flow-section flow-section--paper"
+  id="gift-type"
+  data-giftcard-step="1"
+>
+  <div class="section-shell">
+    <div class="section-heading">
+      <p class="section-kicker">01 · Choose a type</p>
+
+      <h2>
+        What kind of <em>giving moment</em> are you creating?
+      </h2>
+
+      <p>
+        Start with the intention. Choose the giving experience
+        that best matches the moment.
+      </p>
+    </div>
+
+    <div class="choice-grid choice-grid--two">
+      <% giftTypes.forEach((giftType) => { %>
+        <label class="choice-card" for="<%= giftType.id %>">
+          <span class="choice-card__index">
+            <%= giftType.index %>
+          </span>
+
+          <span class="choice-card__title">
+            <%= giftType.title %>
+          </span>
+
+          <span class="choice-card__copy">
+            <%= giftType.copy %>
+          </span>
+
+          <span class="choice-card__action">
+            <%= giftType.action %>
+          </span>
+        </label>
+      <% }); %>
+    </div>
+
+    <% if (giftTypeErrors.giftType) { %>
+      <p class="form-error step-form-error" role="alert">
+        <%= giftTypeErrors.giftType %>
+      </p>
+    <% } %>
+
+    <div class="section-next">
+      <a
+        class="btn btn-primary"
+        href="#delivery-type"
+        data-giftcard-next
+      >
+        Continue to Delivery
+      </a>
+    </div>
+  </div>
+</section>
