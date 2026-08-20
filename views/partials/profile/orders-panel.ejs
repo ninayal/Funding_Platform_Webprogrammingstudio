@@ -43,7 +43,7 @@
               </h3>
             </div>
 
-            <span class="status-pill status-pill--confirmed">
+            <span class="status-pill status-pill--<%= order.status %>">
               <%= order.statusLabel %>
             </span>
           </div>
@@ -54,7 +54,8 @@
             </span>
 
             <span>
-              Total: <strong>
+              Total:
+              <strong>
                 <%= order.totalFormatted %>
               </strong>
             </span>

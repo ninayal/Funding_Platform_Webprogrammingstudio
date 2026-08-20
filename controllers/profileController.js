@@ -9,12 +9,6 @@ const orderModel = require(
 );
 
 const {
-  notifications
-} = require(
-  "../data/profilePageData"
-);
-
-const {
   validatePreferences,
   validateProfile
 } = require(
@@ -63,27 +57,43 @@ const formatMemberSince = (
   ).format(date);
 };
 
-const formatOrderDate = (value) => {
-  const date = new Date(value);
+const formatOrderDate = (
+  value
+) => {
+  const date =
+    new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
     return "Recently";
   }
 
   return new Intl.DateTimeFormat(
     "en",
     {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
+      day:
+        "2-digit",
+      month:
+        "short",
+      year:
+        "numeric"
     }
   ).format(date);
 };
 
-const formatMoney = (value) =>
-  `$${Number(value || 0).toFixed(2)}`;
+const formatMoney = (
+  value
+) =>
+  `$${Number(
+    value || 0
+  ).toFixed(2)}`;
 
-const buildOrderData = (userId) => {
+const buildOrderData = (
+  userId
+) => {
   const rawOrders =
     orderModel
       .getOrdersByUserId(
@@ -92,121 +102,180 @@ const buildOrderData = (userId) => {
       .slice()
       .sort(
         (a, b) =>
-          new Date(b.createdAt) -
-          new Date(a.createdAt)
+          new Date(
+            b.createdAt
+          ) -
+          new Date(
+            a.createdAt
+          )
       );
 
-  const orders = rawOrders.map(
-    (order) => {
-      const items =
-        Array.isArray(order.items)
-          ? order.items
-          : [];
+  const orders =
+    rawOrders.map(
+      (order) => {
+        const items =
+          Array.isArray(
+            order.items
+          )
+            ? order.items
+            : [];
 
-      const itemCount =
-        items.reduce(
-          (total, item) =>
-            total +
-            Number(item.quantity || 0),
-          0
-        );
-
-      const status =
-        String(
-          order.status || "confirmed"
-        ).toLowerCase();
-
-      return {
-        id: order.id,
-        status,
-        statusLabel:
-          status === "confirmed"
-            ? "Confirmed"
-            : status
-              .replace(/-/g, " ")
-              .replace(
-                /\b\w/g,
-                (letter) =>
-                  letter.toUpperCase()
+        const itemCount =
+          items.reduce(
+            (
+              total,
+              item
+            ) =>
+              total +
+              Number(
+                item.quantity || 0
               ),
+            0
+          );
 
-        placedOn:
-          formatOrderDate(
-            order.createdAt
-          ),
+        const status =
+          String(
+            order.status ||
+            "confirmed"
+          ).toLowerCase();
 
-        total:
-          Number(order.total || 0),
+        return {
+          id:
+            order.id,
 
-        totalFormatted:
-          formatMoney(order.total),
+          status,
 
-        subtotal:
-          Number(order.subtotal || 0),
+          statusLabel:
+            status ===
+              "confirmed"
+              ? "Confirmed"
+              : status
+                .replace(
+                  /-/g,
+                  " "
+                )
+                .replace(
+                  /\b\w/g,
+                  (letter) =>
+                    letter.toUpperCase()
+                ),
 
-        subtotalFormatted:
-          formatMoney(order.subtotal),
+          placedOn:
+            formatOrderDate(
+              order.createdAt
+            ),
 
-        itemCount,
-        items,
+          total:
+            Number(
+              order.total || 0
+            ),
 
-        delivery:
-          order.delivery || {},
+          totalFormatted:
+            formatMoney(
+              order.total
+            ),
 
-        shipping:
-          order.shipping || {},
+          subtotal:
+            Number(
+              order.subtotal || 0
+            ),
 
-        payment:
-          order.payment || {},
+          subtotalFormatted:
+            formatMoney(
+              order.subtotal
+            ),
 
-        giftNote:
-          order.giftNote || "",
+          itemCount,
 
-        detailsUrl:
-          `/cart/order-confirmation?orderId=${encodeURIComponent(
-            order.id
-          )}`
-      };
-    }
-  );
+          items,
+
+          delivery:
+            order.delivery ||
+            {},
+
+          shipping:
+            order.shipping ||
+            {},
+
+          payment:
+            order.payment ||
+            {},
+
+          giftNote:
+            order.giftNote ||
+            "",
+
+          detailsUrl:
+            `/cart/order-confirmation?orderId=${encodeURIComponent(
+              order.id
+            )}`
+        };
+      }
+    );
 
   const totalItems =
     orders.reduce(
-      (total, order) =>
-        total + order.itemCount,
+      (
+        total,
+        order
+      ) =>
+        total +
+        order.itemCount,
       0
     );
 
   const totalSpent =
     orders.reduce(
-      (total, order) =>
-        total + order.total,
+      (
+        total,
+        order
+      ) =>
+        total +
+        order.total,
       0
     );
 
   const orderSummary = [
     {
-      label: "Orders placed",
-      value: String(
-        orders.length
-      ).padStart(2, "0"),
+      label:
+        "Orders placed",
+
+      value:
+        String(
+          orders.length
+        ).padStart(
+          2,
+          "0"
+        ),
 
       description:
         "Orders linked to this account."
     },
+
     {
-      label: "Pieces ordered",
-      value: String(
-        totalItems
-      ).padStart(2, "0"),
+      label:
+        "Pieces ordered",
+
+      value:
+        String(
+          totalItems
+        ).padStart(
+          2,
+          "0"
+        ),
 
       description:
         "Handcrafted pieces across your orders."
     },
+
     {
-      label: "Total spent",
+      label:
+        "Total spent",
+
       value:
-        formatMoney(totalSpent),
+        formatMoney(
+          totalSpent
+        ),
 
       description:
         "Total value of confirmed orders."
@@ -215,10 +284,101 @@ const buildOrderData = (userId) => {
 
   return {
     orders,
+
     orderSummary,
+
     profileStats:
       orderSummary
   };
+};
+
+const buildNotifications = (
+  orders,
+  user
+) => {
+  const preferences =
+    user.preferences ||
+    {};
+
+  if (
+    preferences.orderNotifications ===
+    false
+  ) {
+    return [];
+  }
+
+  return orders.map(
+    (order) => {
+      const firstItem =
+        order.items?.[0];
+
+      const itemName =
+        firstItem?.product?.name ||
+        "Your order";
+
+      const orderId =
+        order.id;
+
+      if (
+        order.status ===
+        "confirmed"
+      ) {
+        return {
+          type:
+            "Order",
+
+          title:
+            `${itemName} has been confirmed.`,
+
+          description:
+            `Order ${orderId} is being prepared.`
+        };
+      }
+
+      if (
+        order.status ===
+        "shipped"
+      ) {
+        return {
+          type:
+            "Order",
+
+          title:
+            `${itemName} is now in transit.`,
+
+          description:
+            `Order ${orderId} has been shipped and is on the way.`
+        };
+      }
+
+      if (
+        order.status ===
+        "delivered"
+      ) {
+        return {
+          type:
+            "Order",
+
+          title:
+            `${itemName} has been delivered.`,
+
+          description:
+            `Order ${orderId} was successfully delivered.`
+        };
+      }
+
+      return {
+        type:
+          "Order",
+
+        title:
+          `${itemName} order update.`,
+
+        description:
+          `Order ${orderId} has a new status: ${order.status}.`
+      };
+    }
+  );
 };
 
 const toFormValues = (
@@ -280,7 +440,16 @@ const buildViewData = (
     orders,
     orderSummary,
     profileStats
-  } = buildOrderData(user.id);
+  } =
+    buildOrderData(
+      user.id
+    );
+
+  const notifications =
+    buildNotifications(
+      orders,
+      user
+    );
 
   return {
     activePage:
@@ -293,7 +462,8 @@ const buildViewData = (
 
     cartCount:
       Number(
-        res.locals.cartCount || 0
+        res.locals.cartCount ||
+        0
       ),
 
     currentUser:
@@ -334,7 +504,9 @@ const buildViewData = (
 
     values:
       values ||
-      toFormValues(user)
+      toFormValues(
+        user
+      )
   };
 };
 
@@ -363,7 +535,9 @@ const getProfilePage = (
   res
 ) => {
   const user =
-    getStoredUser(req);
+    getStoredUser(
+      req
+    );
 
   if (!user) {
     return redirectStaleSession(
@@ -379,8 +553,10 @@ const getProfilePage = (
       res,
       {
         user,
+
         activeTab:
           req.query.tab,
+
         pageMessage:
           getPageMessage(
             req.query.status
@@ -397,7 +573,9 @@ const updateProfile = (
 ) => {
   try {
     const user =
-      getStoredUser(req);
+      getStoredUser(
+        req
+      );
 
     if (!user) {
       return redirectStaleSession(
@@ -415,8 +593,9 @@ const updateProfile = (
       );
 
     if (
-      Object.keys(errors)
-        .length > 0
+      Object.keys(
+        errors
+      ).length > 0
     ) {
       return res
         .status(422)
@@ -500,8 +679,12 @@ const updateProfile = (
     };
 
     return req.session.save(
-      (saveError) => {
-        if (saveError) {
+      (
+        saveError
+      ) => {
+        if (
+          saveError
+        ) {
           return next(
             saveError
           );
@@ -513,7 +696,9 @@ const updateProfile = (
       }
     );
   } catch (error) {
-    return next(error);
+    return next(
+      error
+    );
   }
 };
 
