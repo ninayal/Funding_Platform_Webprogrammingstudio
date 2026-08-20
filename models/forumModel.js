@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const sanitizeHtml = require("sanitize-html");
 const userModel = require("./userModel");
 const { categories, threads: seedThreads } = require("../data/forum.js");
 
@@ -124,32 +123,6 @@ const buildSnippet = (text, query, radius = 80) => {
 
   return `${start > 0 ? "…" : ""}${text.slice(start, end).trim()}${end < text.length ? "…" : ""}`;
 };
-
-const sanitizeContent = (html) =>
-  sanitizeHtml(String(html || ""), {
-    allowedTags: [
-      "p", "br", "b", "strong", "i", "em", "u", "s", "strike",
-      "ul", "ol", "li", "a", "img", "blockquote", "h1", "h2", "h3", "div", "span",
-    ],
-    allowedAttributes: {
-      a: ["href", "target", "rel", "class"],
-      img: ["src", "alt"],
-      blockquote: ["class"],
-      span: ["class"],
-    },
-    allowedClasses: {
-      blockquote: ["forum-quote-embed"],
-      a: ["forum-quote-embed__link"],
-      span: ["forum-quote-embed__author", "forum-quote-embed__snippet"],
-    },
-    allowedSchemes: ["http", "https", "mailto"],
-    allowedSchemesByTag: {
-      img: ["http", "https", "data"],
-    },
-    transformTags: {
-      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
-    },
-  }).trim();
 
 const isContentEmpty = (html) => !/<img\b/i.test(html) && !stripHtml(html);
 
@@ -403,16 +376,15 @@ const editThread = (slug, userId, { title, category, tags, content }) => {
   }
 
   const categoryMeta = getCategoryMeta(category);
-  const sanitizedContent = sanitizeContent(content);
 
-  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(sanitizedContent)) {
+  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(content)) {
     return null;
   }
 
   thread.title = String(title).trim();
   thread.category = category;
   thread.tags = parseTags(tags);
-  thread.posts[0].content = sanitizedContent;
+  thread.posts[0].content = content;
   thread.posts[0].editedAt = new Date().toISOString();
 
   saveThreadsToFile();
@@ -427,13 +399,11 @@ const editPost = (slug, postId, userId, content) => {
     return null;
   }
 
-  const sanitizedContent = sanitizeContent(content);
-
-  if (isContentEmpty(sanitizedContent)) {
+  if (isContentEmpty(content)) {
     return null;
   }
 
-  found.post.content = sanitizedContent;
+  found.post.content = content;
   found.post.editedAt = new Date().toISOString();
 
   saveThreadsToFile();
@@ -876,7 +846,6 @@ module.exports = {
   getAllTags,
   addThread,
   addPost,
-  sanitizeContent,
   isContentEmpty,
   searchThreads,
   addNotification,
