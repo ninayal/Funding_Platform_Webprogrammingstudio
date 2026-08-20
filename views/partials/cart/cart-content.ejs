@@ -1,24 +1,19 @@
 <% if (cart.hasItems) { %>
 
     <div class="cart-shell">
-
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-default" checked>
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-title">
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-qty">
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-price">
 
         <section class="cart-items" aria-label="Items in your cart">
-
             <div class="cart-items__head">
                 <h2>
                     In your bag
-                    <span class="cart-count">
-                        (<%= cart.totalQuantity %> items)
-                    </span>
+                    <span class="cart-count">(<%= cart.totalQuantity %> items)</span>
                 </h2>
 
                 <div class="cart-items__actions">
-
                     <details class="cart-sort-menu">
                         <summary aria-label="Choose item order">
                             Sort by
@@ -39,14 +34,11 @@
                     <a href="/cart/products" class="continue-link">
                         Continue shopping
                     </a>
-
                 </div>
             </div>
 
             <ul class="cart-list">
-
                 <% cart.items.forEach((item, index)=> { %>
-
                     <li class="cart-row item-<%= index + 1 %>" data-product-id="<%= item.productId %>"
                         data-title="<%= item.searchTitle %>" data-quantity="<%= item.quantity %>"
                         data-price="<%= item.price %>">
@@ -56,7 +48,6 @@
                         </a>
 
                         <div class="cart-row__body">
-
                             <p class="cart-row__maker">
                                 <%= item.maker %>
                             </p>
@@ -78,7 +69,6 @@
                                 <% } %>
 
                                     <div class="cart-row__controls">
-
                                         <div class="qty-stepper">
                                             <button type="button" class="qty-btn qty-decrease"
                                                 aria-label="Decrease quantity">
@@ -102,12 +92,10 @@
                                                 Remove
                                             </button>
                                         </form>
-
                                     </div>
                         </div>
 
                         <div class="cart-row__price">
-
                             <% if (item.oldPriceFormatted) { %>
                                 <span class="price-was">
                                     <%= item.oldPriceFormatted %>
@@ -117,13 +105,9 @@
                                     <span class="price-now">
                                         <%= item.subtotalFormatted %>
                                     </span>
-
                         </div>
-
                     </li>
-
                     <% }); %>
-
             </ul>
 
             <div class="cart-note">
@@ -137,11 +121,9 @@
                     Add a personal gift note at checkout — free of charge.
                 </p>
             </div>
-
         </section>
 
         <%- include("./order-summary", { cart }) %>
-
     </div>
 
     <% } else { %>
@@ -149,9 +131,7 @@
         <section class="empty-cart">
             <h2>Your cart is empty.</h2>
 
-            <p>
-                Looks like you haven't added any products yet.
-            </p>
+            <p>Looks like you haven't added any products yet.</p>
 
             <a href="/cart/products" class="checkout-btn">
                 Continue Shopping

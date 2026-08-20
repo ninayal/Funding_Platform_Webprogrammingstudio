@@ -21,7 +21,7 @@
     <%- include("../partials/header") %>
 
       <div class="hero__title">
-        <a class="hero__kicker" href="/blog/blog">
+        <a class="hero__kicker" href="/blog">
           Việt Nam · Est. 2019
           <span class="hero__kicker-arrow">→</span>
         </a>
@@ -31,21 +31,15 @@
       </div>
 
       <div class="hero__cta">
-        <a
-          class="hero__cta-primary"
-          href="/cart/products"
-        >
+        <a class="hero__cta-primary" href="/cart/products">
           Explore the Collection →
         </a>
 
         <% if (!currentUser) { %>
-          <a
-            class="hero__cta-ghost"
-            href="/shared/login"
-          >
+          <a class="hero__cta-ghost" href="/shared/login">
             Already have an account? Sign In →
           </a>
-        <% } %>
+          <% } %>
       </div>
   </section>
 
@@ -53,6 +47,7 @@
     <%- include("../partials/landing/shop-sections") %>
       <%- include("../partials/landing/brand-story") %>
         <%- include("../partials/landing/social-proof") %>
+
 
           <section class="finder-cta">
             <div class="finder-cta__media">

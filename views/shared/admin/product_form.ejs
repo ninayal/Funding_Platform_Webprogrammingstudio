@@ -1,553 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <%- include(
-    "./admin_index",
-    {
-      pageTitle:
-        "Làng & Co. — " +
-        (product ? "Edit Product" : "Add Product")
-    }
-  ) %>
+  <%- include( "./admin_index" , { pageTitle: "Làng & Co. — " + (product ? "Edit Product" : "Add Product" ) } ) %>
 </head>
-
 <body>
-  <%- include(
-    "../../partials/header_v2",
-    {
-      activePage: null,
-      cartCount,
-      currentUser
-    }
-  ) %>
+  <%- include( "../../partials/header_v2" , { activePage: null, cartCount, currentUser } ) %>
+    <% if (errors && errors.length> 0) { %>
+      <div class="admin-alert admin-alert--error admin-form-alert" role="alert">
+        <p class="admin-alert__title">
+          Please fix the following before saving:
+        </p>
 
-  <% if (errors && errors.length > 0) { %>
-    <div
-      class="admin-alert admin-alert--error admin-form-alert"
-      role="alert"
-    >
-      <p class="admin-alert__title">
-        Please fix the following before saving:
-      </p>
-
-      <ul>
-        <% errors.forEach(function (error) { %>
-          <li><%= error %></li>
-        <% }) %>
-      </ul>
-    </div>
-  <% } %>
-
-  <% if (warnings && warnings.length > 0) { %>
-    <div
-      class="admin-alert admin-alert--warning admin-form-alert"
-      role="status"
-    >
-      <ul>
-        <% warnings.forEach(function (warning) { %>
-          <li><%= warning %></li>
-        <% }) %>
-      </ul>
-    </div>
-  <% } %>
-
-  <%
-    var v =
-      formValues ||
-      (product
-        ? {
-            title: product.title,
-            category: product.category,
-            description: product.description,
-            price: product.price,
-            weightGram: product.weightGram,
-            stock: product.stock,
-            material: product.material,
-            craftVillage: product.maker
-          }
-        : {});
-
-    var images =
-      (product && product.images) || [];
-  %>
-
-  <main class="admin-page admin-product-form">
-    <form
-      method="post"
-      enctype="multipart/form-data"
-      action="<%= product
-        ? '/shared/admin/products/' + product.id
-        : '/shared/admin/products' %>"
-      class="admin-product-form__inner"
-    >
-      <header class="admin-product-form__header">
-        <a
-          class="admin-product-form__back"
-          href="/shared/admin?tab=products"
-          aria-label="Back to products"
-        >
-          &lt;
-        </a>
-
-        <div>
-          <p class="admin-product-form__eyebrow">
-            Product management
-          </p>
-
-          <h1>
-            <%= product ? "Edit product" : "Add a product" %>
-          </h1>
-
-          <p class="admin-product-form__intro">
-            Add the information customers need on the shop,
-            product detail, and review pages.
-          </p>
-        </div>
-      </header>
-
-      <section
-        class="admin-product-section admin-product-section--media"
-        aria-labelledby="admin-product-media-title"
-      >
-        <div class="admin-product-section__heading">
-          <div>
-            <p class="admin-product-section__kicker">
-              Product Images
-            </p>
-
-            <h2 id="admin-product-media-title">
-              Media
-            </h2>
-          </div>
-
-          <p>
-            JPG, PNG, WEBP or GIF · up to 5MB each
-          </p>
-        </div>
-
-        <div class="admin-upload-grid">
-          <label
-            class="admin-upload admin-upload--cover<%= images[0]
-              ? ' has-image'
-              : '' %>"
-            for="image1"
-          >
-            <img
-              id="image1Preview"
-              class="admin-upload__preview"
-              src="<%= images[0] || '' %>"
-              alt=""
-              <%= images[0] ? "" : "hidden" %>
-            />
-
-            <span class="admin-upload__content">
-              <span
-                class="admin-upload__icon"
-                aria-hidden="true"
-              >
-                +
-              </span>
-
-              <strong>
-                <%= images[0]
-                  ? "Replace cover image"
-                  : "Upload cover image" %>
-              </strong>
-
-              <span>
-                Main image used across shop and product detail
-              </span>
-            </span>
-
-            <input
-              class="admin-file-input"
-              type="file"
-              id="image1"
-              name="image1"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              data-preview="image1Preview"
-              <%= images[0] ? "" : "required" %>
-            />
-          </label>
-
-          <div class="admin-upload-grid__aside">
-            <label
-              class="admin-upload admin-upload--gallery<%= images[1]
-                ? ' has-image'
-                : '' %>"
-              for="image2"
-            >
-              <img
-                id="image2Preview"
-                class="admin-upload__preview"
-                src="<%= images[1] || '' %>"
-                alt=""
-                <%= images[1] ? "" : "hidden" %>
-              />
-
-              <span class="admin-upload__content">
-                <span
-                  class="admin-upload__icon"
-                  aria-hidden="true"
-                >
-                  +
-                </span>
-
-                <strong>
-                  <%= images[1]
-                    ? "Replace image"
-                    : "Gallery image" %>
-                </strong>
-
-                <span>Optional</span>
-              </span>
-
-              <input
-                class="admin-file-input"
-                type="file"
-                id="image2"
-                name="image2"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                data-preview="image2Preview"
-              />
-            </label>
-
-            <label
-              class="admin-upload admin-upload--gallery<%= images[2]
-                ? ' has-image'
-                : '' %>"
-              for="image3"
-            >
-              <img
-                id="image3Preview"
-                class="admin-upload__preview"
-                src="<%= images[2] || '' %>"
-                alt=""
-                <%= images[2] ? "" : "hidden" %>
-              />
-
-              <span class="admin-upload__content">
-                <span
-                  class="admin-upload__icon"
-                  aria-hidden="true"
-                >
-                  +
-                </span>
-
-                <strong>
-                  <%= images[2]
-                    ? "Replace image"
-                    : "Gallery image" %>
-                </strong>
-
-                <span>Optional</span>
-              </span>
-
-              <input
-                class="admin-file-input"
-                type="file"
-                id="image3"
-                name="image3"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                data-preview="image3Preview"
-              />
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section
-        class="admin-product-section"
-        aria-labelledby="admin-basic-title"
-      >
-        <div class="admin-product-section__heading">
-          <div>
-            <p class="admin-product-section__kicker">
-              Basic Information
-            </p>
-
-            <h2 id="admin-basic-title">
-              Product identity
-            </h2>
-          </div>
-        </div>
-
-        <div class="admin-form-grid">
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="title"
-            >
-              Product name *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="text"
-              id="title"
-              name="title"
-              maxlength="120"
-              value="<%= v.title || '' %>"
-              required
-            />
-          </div>
-
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="category"
-            >
-              Product category *
-            </label>
-
-            <select
-              class="admin-field__input"
-              id="category"
-              name="category"
-              required
-            >
-              <option value="">
-                Select a category
-              </option>
-
-              <% categories.forEach(function (cat) { %>
-                <option
-                  value="<%= cat.value %>"
-                  <%= v.category === cat.value
-                    ? "selected"
-                    : "" %>
-                >
-                  <%= cat.label %>
-                </option>
-              <% }) %>
-            </select>
-          </div>
-
-          <div class="admin-field admin-field--full">
-            <label
-              class="admin-field__label"
-              for="description"
-            >
-              Product description *
-            </label>
-
-            <textarea
-              class="admin-field__input admin-field__textarea"
-              id="description"
-              name="description"
-              rows="7"
-              required
-            ><%= v.description || '' %></textarea>
-
-            <p class="admin-field__hint">
-              The opening text is used beside the price;
-              the full copy appears in the Description tab.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        class="admin-product-section"
-        aria-labelledby="admin-details-title"
-      >
-        <div class="admin-product-section__heading">
-          <div>
-            <p class="admin-product-section__kicker">
-              Product Details
-            </p>
-
-            <h2 id="admin-details-title">
-              Price, stock &amp; craft
-            </h2>
-          </div>
-        </div>
-
-        <div class="admin-form-grid admin-form-grid--three">
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="price"
-            >
-              Price (USD) *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="number"
-              id="price"
-              name="price"
-              min="0.01"
-              step="0.01"
-              value="<%= v.price || '' %>"
-              required
-            />
-          </div>
-
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="stock"
-            >
-              Available quantity *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="number"
-              id="stock"
-              name="stock"
-              min="0"
-              step="1"
-              value="<%= v.stock === undefined
-                ? ''
-                : v.stock %>"
-              required
-            />
-          </div>
-
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="weightGram"
-            >
-              Product weight (g) *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="number"
-              id="weightGram"
-              name="weightGram"
-              min="1"
-              step="1"
-              value="<%= v.weightGram || '' %>"
-              required
-            />
-
-            <p class="admin-field__hint">
-              Shown in Additional Info.
-            </p>
-          </div>
-        </div>
-
-        <div class="admin-form-grid admin-form-grid--two">
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="material"
-            >
-              Material *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="text"
-              id="material"
-              name="material"
-              list="materialOptions"
-              value="<%= v.material || '' %>"
-              required
-            />
-
-            <datalist id="materialOptions">
-              <% materials.forEach(function (material) { %>
-                <option value="<%= material %>"></option>
-              <% }) %>
-            </datalist>
-          </div>
-
-          <div class="admin-field">
-            <label
-              class="admin-field__label"
-              for="craftVillage"
-            >
-              Craft village *
-            </label>
-
-            <input
-              class="admin-field__input"
-              type="text"
-              id="craftVillage"
-              name="craftVillage"
-              list="craftVillageOptions"
-              value="<%= v.craftVillage || '' %>"
-              required
-            />
-
-            <datalist id="craftVillageOptions">
-              <% craftVillages.forEach(function (village) { %>
-                <option value="<%= village %>"></option>
-              <% }) %>
-            </datalist>
-
-            <p class="admin-field__hint">
-              Appears with the maker on product detail
-              and in the shop filter.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="admin-product-form__actions">
-        <a
-          href="/shared/admin?tab=products"
-          class="btn btn--outline"
-        >
-          Cancel
-        </a>
-
-        <button
-          type="submit"
-          class="btn btn--success"
-        >
-          <%= product ? "Save changes" : "Add product" %>
-        </button>
+        <ul>
+          <% errors.forEach(function (error) { %>
+            <li>
+              <%= error %>
+            </li>
+            <% }) %>
+        </ul>
       </div>
-    </form>
-  </main>
+      <% } %>
 
-  <%- include("../../partials/footer") %>
+        <% if (warnings && warnings.length> 0) { %>
+          <div class="admin-alert admin-alert--warning admin-form-alert" role="status">
+            <ul>
+              <% warnings.forEach(function (warning) { %>
+                <li>
+                  <%= warning %>
+                </li>
+                <% }) %>
+            </ul>
+          </div>
+          <% } %>
 
-  <script>
-    document
-      .querySelectorAll(".admin-file-input")
-      .forEach((input) => {
-        input.addEventListener(
-          "change",
-          () => {
-            const file =
-              input.files &&
-              input.files[0];
+            <% var v=formValues || (product ? { title: product.title, category: product.category, description:
+              product.description, price: product.price, weightGram: product.weightGram, stock: product.stock, material:
+              product.material, craftVillage: product.maker } : {}); var images=(product && product.images) || []; %>
 
-            if (!file) {
-              return;
-            }
+              <main class="admin-page admin-product-form">
+                <form method="post" enctype="multipart/form-data" action="<%= product
+        ? '/shared/admin/products/' + product.id
+        : '/shared/admin/products' %>" class="admin-product-form__inner">
+                  <header class="admin-product-form__header">
+                    <a class="admin-product-form__back" href="/shared/admin?tab=products" aria-label="Back to products">
+                      &lt;
+                    </a>
 
-            const preview =
-              document.getElementById(
-                input.dataset.preview
-              );
+                    <div>
+                      <p class="admin-product-form__eyebrow">
+                        Product management
+                      </p>
 
-            if (!preview) {
-              return;
-            }
+                      <h1>
+                        <%= product ? "Edit product" : "Add a product" %>
+                      </h1>
 
-            preview.src =
-              URL.createObjectURL(file);
+                      <p class="admin-product-form__intro">
+                        Add the information customers need on the shop,
+                        product detail, and review pages.
+                      </p>
+                    </div>
+                  </header>
 
-            preview.hidden = false;
+                  <section class="admin-product-section admin-product-section--media"
+                    aria-labelledby="admin-product-media-title">
+                    <div class="admin-product-section__heading">
+                      <div>
+                        <p class="admin-product-section__kicker">
+                          Product Images
+                        </p>
 
-            input
-              .closest(".admin-upload")
-              ?.classList.add(
-                "has-image"
-              );
-          }
-        );
-      });
-  </script>
+                        <h2 id="admin-product-media-title">
+                          Media
+                        </h2>
+                      </div>
+
+                      <p>
+                        JPG, PNG, WEBP or GIF · up to 5MB each
+                      </p>
+                    </div>
+
+                    <div class="admin-upload-grid">
+                      <label class="admin-upload admin-upload--cover<%= images[0]
+              ? ' has-image'
+              : '' %>" for="image1">
+                        <img id="image1Preview" class="admin-upload__preview" src="<%= images[0] || '' %>" alt=""
+                          <%=images[0] ? "" : "hidden" %>
+                        />
+
+                        <span class="admin-upload__content">
+                          <span class="admin-upload__icon" aria-hidden="true">
+                            +
+                          </span>
+
+                          <strong>
+                            <%= images[0] ? "Replace cover image" : "Upload cover image" %>
+                          </strong>
+
+                          <span>
+                            Main image used across shop and product detail
+                          </span>
+                        </span>
+
+                        <input class="admin-file-input" type="file" id="image1" name="image1"
+                          accept="image/jpeg,image/png,image/webp,image/gif" data-preview="image1Preview" <%=images[0]
+                          ? "" : "required" %>
+                        />
+                      </label>
+
+                      <div class="admin-upload-grid__aside">
+                        <label class="admin-upload admin-upload--gallery<%= images[1]
+                ? ' has-image'
+                : '' %>" for="image2">
+                          <img id="image2Preview" class="admin-upload__preview" src="<%= images[1] || '' %>" alt=""
+                            <%=images[1] ? "" : "hidden" %>
+                          />
+
+                          <span class="admin-upload__content">
+                            <span class="admin-upload__icon" aria-hidden="true">
+                              +
+                            </span>
+
+                            <strong>
+                              <%= images[1] ? "Replace image" : "Gallery image" %>
+                            </strong>
+
+                            <span>Optional</span>
+                          </span>
+
+                          <input class="admin-file-input" type="file" id="image2" name="image2"
+                            accept="image/jpeg,image/png,image/webp,image/gif" data-preview="image2Preview" />
+                        </label>
+
+                        <label class="admin-upload admin-upload--gallery<%= images[2]
+                ? ' has-image'
+                : '' %>" for="image3">
+                          <img id="image3Preview" class="admin-upload__preview" src="<%= images[2] || '' %>" alt=""
+                            <%=images[2] ? "" : "hidden" %>
+                          />
+
+                          <span class="admin-upload__content">
+                            <span class="admin-upload__icon" aria-hidden="true">
+                              +
+                            </span>
+
+                            <strong>
+                              <%= images[2] ? "Replace image" : "Gallery image" %>
+                            </strong>
+
+                            <span>Optional</span>
+                          </span>
+
+                          <input class="admin-file-input" type="file" id="image3" name="image3"
+                            accept="image/jpeg,image/png,image/webp,image/gif" data-preview="image3Preview" />
+                        </label>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="admin-product-section" aria-labelledby="admin-basic-title">
+                    <div class="admin-product-section__heading">
+                      <div>
+                        <p class="admin-product-section__kicker">
+                          Basic Information
+                        </p>
+
+                        <h2 id="admin-basic-title">
+                          Product identity
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div class="admin-form-grid">
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="title">
+                          Product name *
+                        </label>
+
+                        <input class="admin-field__input" type="text" id="title" name="title" maxlength="120"
+                          value="<%= v.title || '' %>" required />
+                      </div>
+
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="category">
+                          Product category *
+                        </label>
+
+                        <select class="admin-field__input" id="category" name="category" required>
+                          <option value="">
+                            Select a category
+                          </option>
+
+                          <% categories.forEach(function (cat) { %>
+                            <option value="<%= cat.value %>" <%=v.category===cat.value ? "selected" : "" %>
+                              >
+                              <%= cat.label %>
+                            </option>
+                            <% }) %>
+                        </select>
+                      </div>
+
+                      <div class="admin-field admin-field--full">
+                        <label class="admin-field__label" for="description">
+                          Product description *
+                        </label>
+
+                        <textarea class="admin-field__input admin-field__textarea" id="description" name="description"
+                          rows="7" required><%= v.description || '' %></textarea>
+
+                        <p class="admin-field__hint">
+                          The opening text is used beside the price;
+                          the full copy appears in the Description tab.
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="admin-product-section" aria-labelledby="admin-details-title">
+                    <div class="admin-product-section__heading">
+                      <div>
+                        <p class="admin-product-section__kicker">
+                          Product Details
+                        </p>
+
+                        <h2 id="admin-details-title">
+                          Price, stock &amp; craft
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div class="admin-form-grid admin-form-grid--three">
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="price">
+                          Price (USD) *
+                        </label>
+
+                        <input class="admin-field__input" type="number" id="price" name="price" min="0.01" step="0.01"
+                          value="<%= v.price || '' %>" required />
+                      </div>
+
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="stock">
+                          Available quantity *
+                        </label>
+
+                        <input class="admin-field__input" type="number" id="stock" name="stock" min="0" step="1" value="<%= v.stock === undefined
+                ? ''
+                : v.stock %>" required />
+                      </div>
+
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="weightGram">
+                          Product weight (g) *
+                        </label>
+
+                        <input class="admin-field__input" type="number" id="weightGram" name="weightGram" min="1"
+                          step="1" value="<%= v.weightGram || '' %>" required />
+
+                        <p class="admin-field__hint">
+                          Shown in Additional Info.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="admin-form-grid admin-form-grid--two">
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="material">
+                          Material *
+                        </label>
+
+                        <input class="admin-field__input" type="text" id="material" name="material"
+                          list="materialOptions" value="<%= v.material || '' %>" required />
+
+                        <datalist id="materialOptions">
+                          <% materials.forEach(function (material) { %>
+                            <option value="<%= material %>"></option>
+                            <% }) %>
+                        </datalist>
+                      </div>
+
+                      <div class="admin-field">
+                        <label class="admin-field__label" for="craftVillage">
+                          Craft village *
+                        </label>
+
+                        <input class="admin-field__input" type="text" id="craftVillage" name="craftVillage"
+                          list="craftVillageOptions" value="<%= v.craftVillage || '' %>" required />
+
+                        <datalist id="craftVillageOptions">
+                          <% craftVillages.forEach(function (village) { %>
+                            <option value="<%= village %>"></option>
+                            <% }) %>
+                        </datalist>
+
+                        <p class="admin-field__hint">
+                          Appears with the maker on product detail
+                          and in the shop filter.
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <div class="admin-product-form__actions">
+                    <a href="/shared/admin?tab=products" class="btn btn--outline">
+                      Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn--success">
+                      <%= product ? "Save changes" : "Add product" %>
+                    </button>
+                  </div>
+                </form>
+              </main>
+
+              <%- include("../../partials/footer") %>
+
+                <script>
+                  document
+                    .querySelectorAll(".admin-file-input")
+                    .forEach((input) => {
+                      input.addEventListener(
+                        "change",
+                        () => {
+                          const file =
+                            input.files &&
+                            input.files[0];
+
+                          if (!file) {
+                            return;
+                          }
+
+                          const preview =
+                            document.getElementById(
+                              input.dataset.preview
+                            );
+
+                          if (!preview) {
+                            return;
+                          }
+
+                          preview.src =
+                            URL.createObjectURL(file);
+
+                          preview.hidden = false;
+
+                          input
+                            .closest(".admin-upload")
+                            ?.classList.add(
+                              "has-image"
+                            );
+                        }
+                      );
+                    });
+                </script>
 </body>
 
 </html>

@@ -6,37 +6,34 @@
 </head>
 
 <body>
+  <%- include("../../partials/header_v2", { activePage, cartCount, currentUser }) %>
 
-  <%- include( "../../partials/header_v2" , { activePage, cartCount, currentUser } ) %>
-
-    <!-- Admin Page -->
     <section class="admin-page">
-
-      <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
+      <!-- CSS-only tab controllers -->
       <% const currentTab=typeof activeTab !=="undefined" && activeTab ? activeTab : "users" ; %>
+
         <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab"
           <%=currentTab==="products" ? "checked" : "" %>>
+
         <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab"
           <%=currentTab==="users" ? "checked" : "" %>>
 
         <div class="admin">
-
           <%- include("./admin_index", { section: "sidebar" }) %>
 
-            <!-- Content -->
             <main class="admin__content">
               <a id="admin-top"></a>
 
-              <%- include( "./products-panel" , { products, productStats, categories, productNotice } ) %>
+              <%- include("./products-panel", { products, productStats, categories, productNotice }) %>
 
-                <%- include( "./users-panel" , { users, userStats, currentUser, pendingRequests, resolvedRequests } ) %>
-
+                <%- include("./users-panel", { users, userStats, currentUser, pendingRequests, resolvedRequests }) %>
             </main>
         </div>
     </section>
 
     <%- include("../../partials/footer") %>
 
+      <script src="/js/shared/formPersistence.js" defer></script>
 </body>
 
 </html>
