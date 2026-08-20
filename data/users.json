@@ -37,7 +37,9 @@
     "role": "admin",
     "status": "active",
     "joinDate": "2026-01-01",
-    "requiresPasswordChange": false
+    "requiresPasswordChange": false,
+    "avatar": "/uploads/profile/profile-1787211795323.jpeg",
+    "updatedAt": "2026-08-20T07:43:15.330Z"
   },
   {
     "id": "e9bb7323-2fa9-492f-b869-0cbbbd720fce",
@@ -170,7 +172,7 @@
     "postalCode": "",
     "address": "",
     "about": "vceskwajnvsewved",
-    "avatar": "/images/profile.png",
+    "avatar": "/uploads/profile/profile-1787212254752.jpeg",
     "tier": "Craft Collector",
     "preferences": {
       "emailUpdates": true,
@@ -185,6 +187,6 @@
     "requiresPasswordChange": false,
     "joinDate": "2026-08-19",
     "createdAt": "2026-08-19T17:35:17.103Z",
-    "updatedAt": "2026-08-19T17:35:17.103Z"
+    "updatedAt": "2026-08-20T07:50:54.755Z"
   }
 ]

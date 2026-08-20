@@ -11,7 +11,7 @@ const {
 
 const USERS_FILE = path.join(
   __dirname,
-  "../data/users.json",
+  "../data/users.json"
 );
 
 const DEFAULT_PREFERENCES = {
@@ -35,7 +35,7 @@ const ensureUsersFile = () => {
     fs.writeFileSync(
       USERS_FILE,
       "[]\n",
-      "utf8",
+      "utf8"
     );
   }
 };
@@ -45,31 +45,44 @@ const readUsers = () => {
 
   try {
     const data = JSON.parse(
-      fs.readFileSync(USERS_FILE, "utf8"),
+      fs.readFileSync(
+        USERS_FILE,
+        "utf8"
+      )
     );
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+      ? data
+      : [];
   } catch {
     return [];
   }
 };
 
 const writeUsers = (users) => {
-  const tempFile = `${USERS_FILE}.tmp`;
+  const tempFile =
+    `${USERS_FILE}.tmp`;
 
   fs.writeFileSync(
     tempFile,
-    `${JSON.stringify(users, null, 2)}\n`,
-    "utf8",
+    `${JSON.stringify(
+      users,
+      null,
+      2
+    )}\n`,
+    "utf8"
   );
 
-  fs.renameSync(tempFile, USERS_FILE);
+  fs.renameSync(
+    tempFile,
+    USERS_FILE
+  );
 };
 
 const createInitials = (
   firstname,
   lastname,
-  username,
+  username
 ) => {
   const initials = [
     clean(firstname)[0],
@@ -91,9 +104,7 @@ const isAdminRole = (role) =>
   normalise(role) === "admin";
 
 const toPublicUser = (user) => {
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   const name =
     `${user.firstname || ""} ${user.lastname || ""}`
@@ -112,7 +123,7 @@ const toPublicUser = (user) => {
     initials: createInitials(
       user.firstname,
       user.lastname,
-      user.username,
+      user.username
     ),
     role: user.role || "user",
     status: user.status || "active",
@@ -141,7 +152,9 @@ const toPublicUser = (user) => {
       user.createdAt ||
       "",
     requiresPasswordChange:
-      Boolean(user.requiresPasswordChange),
+      Boolean(
+        user.requiresPasswordChange
+      ),
     createdAt:
       user.createdAt ||
       user.joinDate ||
@@ -157,23 +170,26 @@ const toPublicUser = (user) => {
 const findUserById = (id) =>
   readUsers().find(
     (user) =>
-      String(user.id) === String(id),
+      String(user.id) ===
+      String(id)
   ) || null;
 
 const findUserByEmail = (email) => {
-  const target = normalise(email);
+  const target =
+    normalise(email);
 
   return (
     readUsers().find(
       (user) =>
-        normalise(user.email) === target,
+        normalise(user.email) ===
+        target
     ) || null
   );
 };
 
 const findById = (id) =>
   toPublicUser(
-    findUserById(id),
+    findUserById(id)
   );
 
 const getAllUsers = () =>
@@ -181,16 +197,17 @@ const getAllUsers = () =>
 
 const authenticate = (
   email,
-  password,
+  password
 ) => {
-  const user = findUserByEmail(email);
+  const user =
+    findUserByEmail(email);
 
   if (
     !user ||
     user.status === "blocked" ||
     !verifyPassword(
       password,
-      user.passwordHash,
+      user.passwordHash
     )
   ) {
     return {
@@ -217,7 +234,8 @@ const createUser = (values) => {
   if (
     users.some(
       (user) =>
-        normalise(user.email) === email,
+        normalise(user.email) ===
+        email
     )
   ) {
     return {
@@ -230,7 +248,7 @@ const createUser = (values) => {
     users.some(
       (user) =>
         normalise(user.username) ===
-        normalise(username),
+        normalise(username)
     )
   ) {
     return {
@@ -268,7 +286,9 @@ const createUser = (values) => {
       ...DEFAULT_PREFERENCES,
     },
     passwordHash:
-      hashPassword(values.password),
+      hashPassword(
+        values.password
+      ),
     requiresPasswordChange: false,
     joinDate:
       now.slice(0, 10),
@@ -287,15 +307,16 @@ const createUser = (values) => {
 
 const updateAccount = (
   userId,
-  values,
+  values
 ) => {
   const users = readUsers();
 
-  const index = users.findIndex(
-    (user) =>
-      String(user.id) ===
-      String(userId),
-  );
+  const index =
+    users.findIndex(
+      (user) =>
+        String(user.id) ===
+        String(userId)
+    );
 
   if (index === -1) {
     return {
@@ -309,7 +330,7 @@ const updateAccount = (
       (user, userIndex) =>
         userIndex !== index &&
         normalise(user.email) ===
-        normalise(values.email),
+        normalise(values.email)
     );
 
   if (duplicateEmail) {
@@ -320,6 +341,7 @@ const updateAccount = (
   }
 
   const user = users[index];
+
   const changingPassword =
     Boolean(values.newPassword);
 
@@ -327,7 +349,7 @@ const updateAccount = (
     changingPassword &&
     !verifyPassword(
       values.currentPassword,
-      user.passwordHash,
+      user.passwordHash
     )
   ) {
     return {
@@ -364,7 +386,7 @@ const updateAccount = (
   if (changingPassword) {
     updatedUser.passwordHash =
       hashPassword(
-        values.newPassword,
+        values.newPassword
       );
 
     updatedUser.requiresPasswordChange =
@@ -376,21 +398,63 @@ const updateAccount = (
 
   return {
     ok: true,
-    user: toPublicUser(updatedUser),
+    user:
+      toPublicUser(
+        updatedUser
+      ),
+  };
+};
+
+const updateAvatar = (
+  userId,
+  avatar
+) => {
+  const users = readUsers();
+
+  const index =
+    users.findIndex(
+      (user) =>
+        String(user.id) ===
+        String(userId)
+    );
+
+  if (index === -1) {
+    return {
+      ok: false,
+      reason: "user-not-found",
+    };
+  }
+
+  users[index] = {
+    ...users[index],
+    avatar,
+    updatedAt:
+      new Date().toISOString(),
+  };
+
+  writeUsers(users);
+
+  return {
+    ok: true,
+    user:
+      toPublicUser(
+        users[index]
+      ),
   };
 };
 
 const updatePreferences = (
   userId,
-  preferences,
+  preferences
 ) => {
   const users = readUsers();
 
-  const index = users.findIndex(
-    (user) =>
-      String(user.id) ===
-      String(userId),
-  );
+  const index =
+    users.findIndex(
+      (user) =>
+        String(user.id) ===
+        String(userId)
+    );
 
   if (index === -1) {
     return {
@@ -413,21 +477,25 @@ const updatePreferences = (
 
   return {
     ok: true,
-    user: toPublicUser(users[index]),
+    user:
+      toPublicUser(
+        users[index]
+      ),
   };
 };
 
 const updateUser = (
   userId,
-  updates,
+  updates
 ) => {
   const users = readUsers();
 
-  const index = users.findIndex(
-    (user) =>
-      String(user.id) ===
-      String(userId),
-  );
+  const index =
+    users.findIndex(
+      (user) =>
+        String(user.id) ===
+        String(userId)
+    );
 
   if (index === -1) {
     return null;
@@ -455,6 +523,7 @@ module.exports = {
   isAdminRole,
   toPublicUser,
   updateAccount,
+  updateAvatar,
   updatePreferences,
   updateUser,
 };

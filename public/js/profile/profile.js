@@ -1,260 +1,361 @@
-(() => {
-  "use strict";
+"use strict";
 
-  const tabInputs =
-    document.querySelectorAll(
-      ".profile-state"
-    );
+document.addEventListener("DOMContentLoaded", () => {
+  /* =========================================================
+     PROFILE MESSAGE
+  ========================================================= */
 
-  const setTabInUrl = (
-    tab
-  ) => {
-    const url =
-      new URL(
-        window.location.href
-      );
+  const message = document.querySelector(
+    "[data-profile-message]"
+  );
 
-    url.searchParams.set(
-      "tab",
-      tab
-    );
+  const dismissMessage = document.querySelector(
+    "[data-dismiss-profile-message]"
+  );
 
-    url.searchParams.delete(
-      "status"
-    );
+  if (dismissMessage && message) {
+    dismissMessage.addEventListener("click", () => {
+      message.remove();
+    });
+  }
 
-    window.history.replaceState(
-      {},
-      "",
-      url
-    );
+  /* =========================================================
+     ABOUT CHARACTER COUNTER
+  ========================================================= */
+
+  const aboutInput = document.querySelector(
+    "[data-profile-about]"
+  );
+
+  const aboutCounter = document.querySelector(
+    "[data-about-counter]"
+  );
+
+  const updateAboutCounter = () => {
+    if (!aboutInput || !aboutCounter) {
+      return;
+    }
+
+    aboutCounter.textContent =
+      `${aboutInput.value.length}/500`;
   };
 
-  tabInputs.forEach(
-    (input) => {
-      input.addEventListener(
-        "change",
-        () => {
-          if (
-            input.checked
-          ) {
-            setTabInUrl(
-              input.value
-            );
-          }
-        }
-      );
-    }
+  if (aboutInput) {
+    updateAboutCounter();
+
+    aboutInput.addEventListener(
+      "input",
+      updateAboutCounter
+    );
+  }
+
+  /* =========================================================
+     PASSWORD CONFIRMATION
+  ========================================================= */
+
+  const newPassword = document.querySelector(
+    "[data-new-password]"
   );
 
-  const pageMessage =
-    document.querySelector(
-      "[data-profile-message]"
-    );
-
-  document
-    .querySelector(
-      "[data-dismiss-profile-message]"
-    )
-    ?.addEventListener(
-      "click",
-      () => {
-        pageMessage?.remove();
-      }
-    );
-
-  const aboutInput =
-    document.querySelector(
-      "[data-profile-about]"
-    );
-
-  const aboutCounter =
-    document.querySelector(
-      "[data-about-counter]"
-    );
-
-  const updateAboutCounter =
-    () => {
-      if (
-        !aboutInput ||
-        !aboutCounter
-      ) {
-        return;
-      }
-
-      aboutCounter.textContent =
-        `${aboutInput.value.length}/500`;
-    };
-
-  aboutInput?.addEventListener(
-    "input",
-    updateAboutCounter
+  const confirmPassword = document.querySelector(
+    "[data-confirm-password]"
   );
 
-  updateAboutCounter();
-
-  const profileForm =
-    document.querySelector(
-      "[data-profile-form]"
-    );
-
-  const newPassword =
-    document.querySelector(
-      "[data-new-password]"
-    );
-
-  const confirmPassword =
-    document.querySelector(
-      "[data-confirm-password]"
-    );
-
-  const confirmError =
+  const confirmPasswordError =
     document.querySelector(
       "[data-confirm-password-error]"
     );
 
-  const validatePasswordMatch =
-    () => {
-      if (
-        !newPassword ||
-        !confirmPassword
-      ) {
-        return true;
-      }
+  const checkPasswords = () => {
+    if (
+      !newPassword ||
+      !confirmPassword ||
+      !confirmPasswordError
+    ) {
+      return true;
+    }
 
-      const matches =
-        !confirmPassword.value ||
-        confirmPassword.value ===
-        newPassword.value;
+    if (
+      confirmPassword.value &&
+      newPassword.value !==
+      confirmPassword.value
+    ) {
+      confirmPasswordError.textContent =
+        "Passwords do not match.";
 
-      confirmPassword.setCustomValidity(
-        matches
-          ? ""
-          : "The new passwords do not match."
+      confirmPassword.setAttribute(
+        "aria-invalid",
+        "true"
       );
 
-      if (
-        confirmError
-      ) {
-        confirmError.textContent =
-          matches
-            ? ""
-            : "The new passwords do not match.";
+      return false;
+    }
+
+    confirmPasswordError.textContent = "";
+
+    confirmPassword.setAttribute(
+      "aria-invalid",
+      "false"
+    );
+
+    return true;
+  };
+
+  if (newPassword) {
+    newPassword.addEventListener(
+      "input",
+      checkPasswords
+    );
+  }
+
+  if (confirmPassword) {
+    confirmPassword.addEventListener(
+      "input",
+      checkPasswords
+    );
+  }
+
+  /* =========================================================
+     PROFILE FORM
+  ========================================================= */
+
+  const profileForm = document.querySelector(
+    "[data-profile-form]"
+  );
+
+  if (profileForm) {
+    profileForm.addEventListener(
+      "submit",
+      (event) => {
+        if (!checkPasswords()) {
+          event.preventDefault();
+
+          confirmPassword?.focus();
+        }
+      }
+    );
+  }
+
+  /* =========================================================
+     AVATAR UPLOAD
+  ========================================================= */
+
+  const avatarForm = document.querySelector(
+    "[data-avatar-form]"
+  );
+
+  const avatarInput = document.querySelector(
+    "[data-avatar-input]"
+  );
+
+  const avatarPreview = document.querySelector(
+    "[data-avatar-preview]"
+  );
+
+  const avatarUploadButton =
+    document.querySelector(
+      "[data-avatar-upload]"
+    );
+
+  const avatarSaveButton =
+    document.querySelector(
+      "[data-avatar-save]"
+    );
+
+  const avatarCancelButton =
+    document.querySelector(
+      "[data-avatar-cancel]"
+    );
+
+  const avatarFileName =
+    document.querySelector(
+      "[data-avatar-file-name]"
+    );
+
+  const avatarError =
+    document.querySelector(
+      "[data-avatar-error]"
+    );
+
+  if (
+    avatarForm &&
+    avatarInput &&
+    avatarPreview
+  ) {
+    let currentAvatar =
+      avatarPreview.getAttribute("src");
+
+    const resetAvatar = () => {
+      avatarInput.value = "";
+
+      avatarPreview.src =
+        currentAvatar;
+
+      if (avatarFileName) {
+        avatarFileName.textContent =
+          "No new photo selected";
       }
 
-      return matches;
+      if (avatarError) {
+        avatarError.textContent = "";
+      }
+
+      avatarForm.classList.remove(
+        "has-preview"
+      );
     };
 
-  newPassword?.addEventListener(
-    "input",
-    validatePasswordMatch
-  );
-
-  confirmPassword?.addEventListener(
-    "input",
-    validatePasswordMatch
-  );
-
-  profileForm?.addEventListener(
-    "submit",
-    (event) => {
-      const passwordsMatch =
-        validatePasswordMatch();
-
-      if (
-        !passwordsMatch ||
-        !profileForm.checkValidity()
-      ) {
-        event.preventDefault();
-        profileForm.reportValidity();
-        return;
+    const showError = (message) => {
+      if (avatarError) {
+        avatarError.textContent =
+          message;
       }
+    };
 
-      const submitButton =
-        profileForm.querySelector(
-          "[data-profile-submit]"
-        );
+    avatarInput.addEventListener(
+      "change",
+      () => {
+        const file =
+          avatarInput.files?.[0];
 
-      const submitLabel =
-        profileForm.querySelector(
-          "[data-profile-submit-label]"
-        );
+        if (!file) {
+          resetAvatar();
+          return;
+        }
 
-      if (
-        submitButton &&
-        submitLabel
-      ) {
-        submitButton.disabled =
-          true;
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+        ];
 
-        submitLabel.textContent =
-          "Saving...";
+        if (
+          !allowedTypes.includes(
+            file.type
+          )
+        ) {
+          showError(
+            "Please choose a JPG, PNG or WEBP image."
+          );
+
+          resetAvatar();
+          return;
+        }
+
+        const maxSize =
+          5 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+          showError(
+            "Image must be smaller than 5MB."
+          );
+
+          resetAvatar();
+          return;
+        }
+
+        const reader =
+          new FileReader();
+
+        reader.onload = (event) => {
+          avatarPreview.src =
+            event.target.result;
+
+          avatarForm.classList.add(
+            "has-preview"
+          );
+
+          if (avatarFileName) {
+            avatarFileName.textContent =
+              file.name;
+          }
+
+          showError("");
+        };
+
+        reader.readAsDataURL(file);
       }
-    }
-  );
-
-  const deactivateConfirm =
-    document.querySelector(
-      "[data-deactivate-confirm]"
     );
 
-  const deactivateButton =
-    document.querySelector(
-      "[data-deactivate-button]"
-    );
-
-  const deactivateStatus =
-    document.querySelector(
-      "[data-deactivate-status]"
-    );
-
-  deactivateConfirm?.addEventListener(
-    "change",
-    () => {
-      if (
-        deactivateButton
-      ) {
-        deactivateButton.disabled =
-          !deactivateConfirm.checked;
-      }
+    if (avatarUploadButton) {
+      avatarUploadButton.addEventListener(
+        "click",
+        () => {
+          avatarInput.click();
+        }
+      );
     }
-  );
 
-  deactivateButton?.addEventListener(
-    "click",
-    () => {
-      if (
-        deactivateStatus
-      ) {
-        deactivateStatus.textContent =
-          "Account deactivation is not enabled in this demonstration.";
-      }
+    if (avatarCancelButton) {
+      avatarCancelButton.addEventListener(
+        "click",
+        resetAvatar
+      );
     }
-  );
 
-  window.addEventListener(
-    "pageshow",
-    () => {
-      const submitButton =
-        document.querySelector(
-          "[data-profile-submit]"
-        );
+    if (avatarSaveButton) {
+      avatarSaveButton.addEventListener(
+        "click",
+        async () => {
+          const file =
+            avatarInput.files?.[0];
 
-      const submitLabel =
-        document.querySelector(
-          "[data-profile-submit-label]"
-        );
+          if (!file) {
+            showError(
+              "Choose a new photo first."
+            );
 
-      if (
-        submitButton &&
-        submitLabel
-      ) {
-        submitButton.disabled =
-          false;
+            return;
+          }
 
-        submitLabel.textContent =
-          "Save Changes";
-      }
+          const formData =
+            new FormData(avatarForm);
+
+          avatarSaveButton.disabled = true;
+
+          if (avatarCancelButton) {
+            avatarCancelButton.disabled = true;
+          }
+
+          try {
+            const response = await fetch(
+              avatarForm.action,
+              {
+                method: "POST",
+                body: formData,
+                headers: {
+                  Accept: "application/json"
+                }
+              }
+            );
+
+            const data =
+              await response.json();
+
+            if (!response.ok || !data.ok) {
+              showError(
+                data.message ||
+                "Could not update your photo. Try again."
+              );
+
+              return;
+            }
+
+            currentAvatar = data.avatar;
+            resetAvatar();
+          } catch {
+            showError(
+              "Network error. Please try again."
+            );
+          } finally {
+            avatarSaveButton.disabled = false;
+
+            if (avatarCancelButton) {
+              avatarCancelButton.disabled = false;
+            }
+          }
+        }
+      );
     }
-  );
-})();
+  }
+});

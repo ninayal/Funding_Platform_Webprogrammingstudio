@@ -731,8 +731,80 @@ const updatePreferences = (
   }
 };
 
+const wantsJson = (req) =>
+  req.xhr ||
+  (req.get("Accept") || "").includes("application/json");
+
+const updateAvatar = (req, res, next) => {
+  try {
+    const user = getStoredUser(req);
+
+    if (!user) {
+      if (wantsJson(req)) {
+        return res.status(401).json({
+          ok: false,
+          message: "Your session has expired."
+        });
+      }
+
+      return redirectStaleSession(req, res);
+    }
+
+    if (!req.file) {
+      if (wantsJson(req)) {
+        return res.status(400).json({
+          ok: false,
+          message: "Choose a new photo first."
+        });
+      }
+
+      return res.redirect(
+        "/shared/profile?tab=user&status=avatar-error"
+      );
+    }
+
+    const result = userModel.updateAvatar(
+      user.id,
+      `/uploads/profile/${req.file.filename}`
+    );
+
+    if (!result.ok) {
+      if (wantsJson(req)) {
+        return res.status(409).json({
+          ok: false,
+          message: "Could not update your photo. Try again."
+        });
+      }
+
+      return redirectStaleSession(req, res);
+    }
+
+    req.session.user = {
+      ...req.session.user,
+      avatar: result.user.avatar,
+      initials: result.user.initials
+    };
+
+    return req.session.save(() => {
+      if (wantsJson(req)) {
+        return res.json({
+          ok: true,
+          avatar: result.user.avatar
+        });
+      }
+
+      return res.redirect(
+        "/shared/profile?tab=user&status=avatar-saved"
+      );
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getProfilePage,
   updatePreferences,
-  updateProfile
+  updateProfile,
+  updateAvatar
 };
