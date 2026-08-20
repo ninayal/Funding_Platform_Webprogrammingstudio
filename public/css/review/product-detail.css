@@ -4,12 +4,10 @@
    and their responsive behaviour.
    ===================================================== */
 
-
 /* =====================================================
    PRODUCT DETAIL PAGE BACKGROUND
    Keep the page on the same linen surface as Header V2.
    ===================================================== */
-
 body.product-detail-page {
   background-color: #eee7dc;
   background-image: url("/images/linen-beige.png");
@@ -22,21 +20,17 @@ body.product-detail-page {
    PRODUCT DETAIL PAGE
    Reuses tokens & .shop-card / .shop-grid from products.css
    ================================================ */
-
 .pd-wrap {
   padding: 18px 0 24px;
 }
-
 
 /* =====================================================
    BACK NAVIGATION
    Compact, high-contrast control.
    ===================================================== */
-
 .pd-back-nav {
   margin-bottom: 12px;
 }
-
 .pd-back-btn {
   display: inline-grid;
   place-items: center;
@@ -51,26 +45,23 @@ body.product-detail-page {
   background: var(--deep);
   border: 1px solid var(--deep);
   border-radius: 50%;
-  box-shadow: 0 6px 18px rgba(45, 31, 20, .16);
+  box-shadow: 0 6px 18px rgba(45, 31, 20, 0.16);
   cursor: pointer;
   transition:
-    transform .18s ease,
-    background-color .18s ease,
-    border-color .18s ease,
-    box-shadow .18s ease;
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
-
 .pd-back-btn:hover {
   background: var(--red);
   border-color: var(--red);
   transform: translateX(-2px);
-  box-shadow: 0 8px 20px rgba(45, 31, 20, .22);
+  box-shadow: 0 8px 20px rgba(45, 31, 20, 0.22);
 }
-
 .pd-back-btn:active {
-  transform: translateX(-1px) scale(.96);
+  transform: translateX(-1px) scale(0.96);
 }
-
 .pd-back-btn:focus-visible {
   outline: 3px solid var(--red);
   outline-offset: 3px;
@@ -80,7 +71,6 @@ body.product-detail-page {
    BREADCRUMB
    Product Detail owns this styling now.
    ===================================================== */
-
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -91,20 +81,18 @@ body.product-detail-page {
   font-size: 18px;
   font-weight: 500;
 }
-
 .breadcrumb a {
   color: var(--muted);
   text-decoration: none;
 }
-
 .breadcrumb a:hover {
   color: var(--red);
 }
-
 .breadcrumb span[aria-current] {
   color: var(--deep);
   font-weight: 600;
 }
+
 /* ================================================
    PRODUCT MAIN — thumbs | media | detail
    ================================================ */
@@ -115,6 +103,7 @@ body.product-detail-page {
   align-items: start;
   margin-top: 8px;
 }
+
 /* ---- thumbnails ---- */
 .pd-thumbs {
   display: flex;
@@ -141,6 +130,7 @@ body.product-detail-page {
 .pd-thumb:hover {
   border-color: var(--red);
 }
+
 /* ---- main media ---- */
 .pd-media {
   position: relative;
@@ -171,6 +161,7 @@ body.product-detail-page {
   padding: 6px 12px;
   border-radius: 20px;
 }
+
 /* ---- detail panel ---- */
 .pd-detail__maker {
   font-family: var(--ff-ui);
@@ -296,6 +287,7 @@ body.product-detail-page {
   border-color: var(--red);
   transform: scale(1.05);
 }
+
 @media (max-width: 960px) {
   .pd-main {
     grid-template-columns: 72px minmax(0, 1fr);
@@ -312,11 +304,13 @@ body.product-detail-page {
     margin-top: 28px;
   }
 }
+
 @media (max-width: 640px) {
   .pd-main {
     grid-template-columns: 60px minmax(0, 1fr);
   }
 }
+
 /* Product main font alignment */
 .pd-detail__title {
   font-family: var(--ff-display);
@@ -334,7 +328,6 @@ body.product-detail-page {
 .pd-detail__desc {
   font-family: var(--ff-body);
 }
-
 .pd-meta {
   list-style: none;
   margin: 0 0 24px;
@@ -358,6 +351,7 @@ body.product-detail-page {
   color: var(--sand);
   font-weight: 700;
 }
+
 /* ---- signature: maker's note ---- */
 .pd-maker-note {
   position: relative;
@@ -439,7 +433,7 @@ body.product-detail-page {
   padding: 12px 18px;
   cursor: pointer;
   text-align: center;
-  transition: color .2s, border-color .2s;
+  transition: color 0.2s, border-color 0.2s;
 }
 .pd-tab-btn:hover {
   color: var(--deep);
@@ -496,6 +490,7 @@ body.product-detail-page {
   outline-offset: 3px;
   border-radius: 6px;
 }
+
 @media (max-width: 700px) {
   .pd-spec-table th,
   .pd-spec-table td {
@@ -507,6 +502,7 @@ body.product-detail-page {
     padding-top: 16px;
   }
 }
+
 @media (max-width: 640px) {
   .pd-tabs {
     justify-content: flex-start;
@@ -538,11 +534,13 @@ body.product-detail-page {
 .pd-related__grid {
   grid-template-columns: repeat(3, 1fr);
 }
+
 @media (max-width: 640px) {
   .pd-related__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 460px) {
   .pd-related__grid {
     grid-template-columns: 1fr;
@@ -557,17 +555,14 @@ body.product-detail-page {
    Local to Product Detail so this page no longer needs
    the complete cart/products.css bundle.
    ===================================================== */
-
 .pd-related .shop-grid {
   display: grid;
   gap: 34px 28px;
 }
-
 .pd-related .shop-card {
   display: flex;
   flex-direction: column;
 }
-
 .pd-related .shop-card__media {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -580,13 +575,11 @@ body.product-detail-page {
       var(--sand) 100%
     );
 }
-
 .pd-related .shop-card__media a:first-child {
   display: block;
   width: 100%;
   height: 100%;
 }
-
 .pd-related .shop-card__media img {
   width: 100%;
   height: 100%;
@@ -596,13 +589,11 @@ body.product-detail-page {
     0.6s
     cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .pd-related
 .shop-card:hover
 .shop-card__media img {
   transform: scale(1.05);
 }
-
 .pd-related .quickadd-btn {
   position: absolute;
   right: 12px;
@@ -624,16 +615,13 @@ body.product-detail-page {
     0 3px 10px
     rgba(0, 0, 0, 0.18);
 }
-
 .pd-related .quickadd-btn:hover {
   background: var(--red);
   transform: translateY(-2px);
 }
-
 .pd-related .shop-card__body p {
   margin: 0;
 }
-
 .pd-related .shop-card__maker {
   margin-bottom: 6px;
   color: var(--sand);
@@ -643,7 +631,6 @@ body.product-detail-page {
   letter-spacing: 1.3px;
   text-transform: uppercase;
 }
-
 .pd-related .shop-card__title {
   margin: 0 0 8px;
   font-family: var(--ff-ui);
@@ -651,16 +638,13 @@ body.product-detail-page {
   font-weight: 700;
   line-height: 1.35;
 }
-
 .pd-related .shop-card__title a {
   color: var(--deep);
   text-decoration: none;
 }
-
 .pd-related .shop-card__title a:hover {
   color: var(--red);
 }
-
 .pd-related .shop-card__price {
   margin-bottom: 6px;
   color: var(--deep);
@@ -668,7 +652,6 @@ body.product-detail-page {
   font-size: 16px;
   font-weight: 700;
 }
-
 .shop-card__price-was {
   margin-left: 6px;
   color: var(--muted);
@@ -676,7 +659,6 @@ body.product-detail-page {
   font-weight: 500;
   text-decoration: line-through;
 }
-
 .pd-related .shop-card__rating {
   margin: 0 0 5px;
   color: var(--red);
@@ -684,7 +666,6 @@ body.product-detail-page {
   font-size: 13px;
   letter-spacing: 1px;
 }
-
 .pd-related .shop-card__rating span {
   color: var(--sand);
   font-size: 12px;

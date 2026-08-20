@@ -10,35 +10,15 @@
 >
   <div class="pr-form__head">
     <div>
-      <p class="pr-form__eyebrow">
-        <%= reviewForm.eyebrow %>
-      </p>
-
-      <h2 id="review-dialog-title">
-        <%= reviewForm.title %>
-      </h2>
-
-      <p>
-        <%= reviewForm.description %>
-      </p>
+      <p class="pr-form__eyebrow"><%= reviewForm.eyebrow %></p>
+      <h2 id="review-dialog-title"><%= reviewForm.title %></h2>
+      <p><%= reviewForm.description %></p>
     </div>
-    <button
-      class="pr-form__close"
-      id="close-review-composer"
-      type="button"
-      aria-label="Close review form"
-    >
-      ×
-    </button>
+    <button class="pr-form__close" id="close-review-composer" type="button" aria-label="Close review form">×</button>
   </div>
 
-  <fieldset
-    class="pr-rating-fieldset"
-    aria-describedby="rating-error"
-  >
-    <legend class="pr-field-label">
-      Your rating
-    </legend>
+  <fieldset class="pr-rating-fieldset" aria-describedby="rating-error">
+    <legend class="pr-field-label">Your rating</legend>
     <div class="pr-form__rating">
       <% reviewForm.ratingOptions.forEach((rating) => { %>
         <input
@@ -48,40 +28,23 @@
           id="rating-<%= rating.value %>"
           value="<%= rating.value %>"
           aria-label="<%= rating.label %>"
-          <%= rating.checked
-            ? "checked"
-            : "" %>
-          <%= rating.required
-            ? "required"
-            : "" %>
+          <%= rating.checked ? "checked" : "" %>
+          <%= rating.required ? "required" : "" %>
         />
         <label
           class="pr-rating-label"
           for="rating-<%= rating.value %>"
           data-form-rating="<%= rating.value %>"
           title="<%= rating.label %>"
-        >
-          ★
-        </label>
+        >★</label>
       <% }); %>
     </div>
-
-    <small
-      class="pr-field-error"
-      id="rating-error"
-    >
-      <%= reviewForm.errors.rating || "" %>
-    </small>
+    <small class="pr-field-error" id="rating-error"><%= reviewForm.errors.rating || "" %></small>
   </fieldset>
+
   <div class="pr-form__identity-grid">
     <div class="pr-form__row">
-      <label
-        class="pr-field-label"
-        for="review-name"
-      >
-        Reviewer
-      </label>
-
+      <label class="pr-field-label" for="review-name">Reviewer</label>
       <input
         class="pr-input"
         type="text"
@@ -90,18 +53,11 @@
         readonly
         data-no-persist
       />
-
-      <small class="pr-file-note">
-        This name comes from your signed-in account.
-      </small>
+      <small class="pr-file-note">This name comes from your signed-in account.</small>
     </div>
+
     <div class="pr-form__row">
-      <label
-        class="pr-field-label"
-        for="review-title"
-      >
-        Review title
-      </label>
+      <label class="pr-field-label" for="review-title">Review title</label>
       <input
         class="pr-input"
         type="text"
@@ -112,33 +68,16 @@
         minlength="4"
         maxlength="80"
         autocomplete="off"
-        aria-describedby="
-          review-title-counter
-          review-title-error
-        "
+        aria-describedby="review-title-counter review-title-error"
         required
       />
-
-      <small
-        class="pr-character-count"
-        id="review-title-counter"
-      >0/80</small>
-      <small
-        class="pr-field-error"
-        id="review-title-error"
-      >
-        <%= reviewForm.errors.reviewTitle || "" %>
-      </small>
+      <small class="pr-character-count" id="review-title-counter">0/80</small>
+      <small class="pr-field-error" id="review-title-error"><%= reviewForm.errors.reviewTitle || "" %></small>
     </div>
   </div>
 
   <div class="pr-form__row pr-form__row--review">
-    <label
-      class="pr-field-label"
-      for="review-content"
-    >
-      Your review
-    </label>
+    <label class="pr-field-label" for="review-content">Your review</label>
     <textarea
       class="pr-textarea"
       id="review-content"
@@ -147,29 +86,15 @@
       minlength="10"
       maxlength="600"
       placeholder="Describe the quality, materials, details, packaging, or how the product felt in person..."
-      aria-describedby="
-        review-content-counter
-        review-content-error
-      "
+      aria-describedby="review-content-counter review-content-error"
       required
     ><%= reviewForm.reviewValue %></textarea>
-
-    <small
-      class="pr-character-count"
-      id="review-content-counter"
-    >0/600</small>
-    <small
-      class="pr-field-error"
-      id="review-content-error"
-    >
-      <%= reviewForm.errors.review || "" %>
-    </small>
+    <small class="pr-character-count" id="review-content-counter">0/600</small>
+    <small class="pr-field-error" id="review-content-error"><%= reviewForm.errors.review || "" %></small>
   </div>
 
   <div class="pr-form__row pr-form__row--photo">
-    <span class="pr-field-label">
-      Product photos
-    </span>
+    <span class="pr-field-label">Product photos</span>
     <div class="pr-multi-upload">
       <input
         class="pr-upload__input"
@@ -179,136 +104,54 @@
         accept="image/jpeg,image/png,image/webp"
         multiple
         data-no-persist
-        aria-describedby="
-          review-images-note
-          review-images-error
-        "
-        <%= reviewForm.imageRequired
-          ? "required"
-          : "" %>
+        aria-describedby="review-images-note review-images-error"
+        <%= reviewForm.imageRequired ? "required" : "" %>
       />
-      <label
-        class="pr-multi-upload__dropzone"
-        for="review-images"
-      >
-        <span
-          class="pr-upload__icon"
-          aria-hidden="true"
-        >
-          +
-        </span>
-
+      <label class="pr-multi-upload__dropzone" for="review-images">
+        <span class="pr-upload__icon" aria-hidden="true">+</span>
         <span class="pr-upload__copy">
           <strong>Add product photos</strong>
           <small>Choose up to 3 images</small>
         </span>
-
-        <span class="pr-upload__formats">
-          JPG, PNG, or WEBP · 1 MB each
-        </span>
+        <span class="pr-upload__formats">JPG, PNG, or WEBP · 1 MB each</span>
       </label>
-      <div
-        class="pr-multi-upload__gallery"
-        id="review-image-gallery"
-        aria-live="polite"
-      >
-        <% reviewForm.existingImages.forEach((image) => { %>
-          <article
-            class="pr-multi-upload__item"
-            data-existing-image
-          >
-            <img
-              src="<%= image.src %>"
-              alt="<%= image.alt %>"
-            />
-            <input
-              type="hidden"
-              name="keepImageIndexes"
-              value="<%= image.index %>"
-            />
 
-            <button
-              type="button"
-              data-remove-existing-image
-              aria-label="<%= image.removeLabel %>"
-            >
-              ×
-            </button>
+      <div class="pr-multi-upload__gallery" id="review-image-gallery" aria-live="polite">
+        <% reviewForm.existingImages.forEach((image) => { %>
+          <article class="pr-multi-upload__item" data-existing-image>
+            <img src="<%= image.src %>" alt="<%= image.alt %>" />
+            <input type="hidden" name="keepImageIndexes" value="<%= image.index %>" />
+            <button type="button" data-remove-existing-image aria-label="<%= image.removeLabel %>">×</button>
           </article>
         <% }); %>
-
-        <div
-          class="pr-multi-upload__new-items"
-          id="review-new-image-previews"
-        ></div>
-        <p
-          class="pr-multi-upload__empty"
-          id="review-image-empty"
-          <%= reviewForm.existingImageCount
-            ? "hidden"
-            : "" %>
-        >
+        <div class="pr-multi-upload__new-items" id="review-new-image-previews"></div>
+        <p class="pr-multi-upload__empty" id="review-image-empty" <%= reviewForm.existingImageCount ? "hidden" : "" %>>
           No photos selected yet.
         </p>
       </div>
     </div>
 
     <div class="pr-multi-upload__status-row">
-      <small
-        class="pr-file-note"
-        id="review-images-note"
-      >
-        At least 1 photo is required.
-      </small>
-      <small
-        class="pr-multi-upload__count"
-        id="review-image-count"
-      >
-        <%= reviewForm.existingImageCount %>/3 photos
-      </small>
+      <small class="pr-file-note" id="review-images-note">At least 1 photo is required.</small>
+      <small class="pr-multi-upload__count" id="review-image-count"><%= reviewForm.existingImageCount %>/3 photos</small>
     </div>
-
-    <small
-      class="pr-field-error"
-      id="review-images-error"
-    >
-      <%= reviewForm.errors.reviewImages || "" %>
-    </small>
+    <small class="pr-field-error" id="review-images-error"><%= reviewForm.errors.reviewImages || "" %></small>
   </div>
 
   <div class="pr-form__actions">
-    <button
-      class="pr-submit"
-      id="review-submit"
-      type="submit"
-    >
-      <%= reviewForm.submitLabel %>
-    </button>
+    <button class="pr-submit" id="review-submit" type="submit"><%= reviewForm.submitLabel %></button>
     <button
       class="pr-secondary-button"
       id="clear-review-draft"
       type="button"
       data-clear-persist-form
-    >
-      Clear Draft
-    </button>
-
+    >Clear Draft</button>
     <% if (reviewForm.showCancel) { %>
-      <a
-        class="pr-secondary-button"
-        href="<%= reviewForm.cancelUrl %>"
-      >
-        Cancel Edit
-      </a>
+      <a class="pr-secondary-button" href="<%= reviewForm.cancelUrl %>">Cancel Edit</a>
     <% } %>
   </div>
 
-  <p
-    class="pr-draft-status"
-    id="review-draft-status"
-    role="status"
-  >
-    Rating, title, and review text are saved
-    automatically in this browser. Photos are not stored.
+  <p class="pr-draft-status" id="review-draft-status" role="status">
+    Rating, title, and review text are saved automatically in this browser. Photos are not stored.
   </p>
 </form>

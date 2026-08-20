@@ -218,7 +218,6 @@ body.pr-modal-open {
   color: var(--red);
   font-weight: 600;
 }
-
 .pr-multi-upload {
   display: grid;
   grid-template-columns: 30% 68%;
@@ -394,16 +393,13 @@ body.pr-modal-open {
   .pr-review-modal__dialog {
     width: 96%;
   }
-
   .pr-form {
     padding: 18px 24px 20px;
   }
-
   .pr-form__head h2 {
     font-size: 36px;
     line-height: 40px;
   }
-
   .pr-textarea {
     height: 115px;
     min-height: 115px;
@@ -418,32 +414,26 @@ body.pr-modal-open {
     padding: 10px;
     place-items: start center;
   }
-
   body.pr-modal-open {
     overflow: auto;
   }
-
   .pr-review-modal__dialog {
     width: 100%;
     max-height: none;
   }
-
   .pr-form__identity-grid,
   .pr-multi-upload {
     grid-template-columns: 100%;
     column-gap: 0;
     row-gap: 10px;
   }
-
   .pr-form__head h2 {
     font-size: 32px;
     line-height: 37px;
   }
-
   .pr-form__rating {
     gap: 5px;
   }
-
   .pr-rating-label {
     width: 39px;
     height: 39px;

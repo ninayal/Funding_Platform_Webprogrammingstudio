@@ -1,18 +1,7 @@
-<section
-  class="pd-tabs-section container"
-  aria-label="Product information"
->
-  <nav
-    class="pd-tabs"
-    aria-label="Product detail tabs"
-  >
+<section class="pd-tabs-section container" aria-label="Product information">
+  <nav class="pd-tabs" aria-label="Product detail tabs">
     <% tabs.forEach((tab) => { %>
-      <label
-        class="pd-tab-btn"
-        for="tab-<%= tab.id %>"
-      >
-        <%= tab.label %>
-      </label>
+      <label class="pd-tab-btn" for="tab-<%= tab.id %>"><%= tab.label %></label>
     <% }); %>
   </nav>
 
@@ -27,12 +16,8 @@
       <tbody>
         <% productData.specifications.forEach((specification) => { %>
           <tr>
-            <th>
-              <%= specification.label %>
-            </th>
-            <td>
-              <%= specification.value %>
-            </td>
+            <th><%= specification.label %></th>
+            <td><%= specification.value %></td>
           </tr>
         <% }); %>
       </tbody>
