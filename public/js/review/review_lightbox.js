@@ -1,6 +1,89 @@
 (() => {
   "use strict";
 
+  const initProductBackNavigation = () => {
+    const breadcrumb =
+      document.querySelector(
+        ".breadcrumb"
+      );
+
+    if (
+      !breadcrumb ||
+      document.querySelector(
+        ".pd-back-nav"
+      )
+    ) {
+      return;
+    }
+
+    const nav =
+      document.createElement(
+        "nav"
+      );
+
+    nav.className =
+      "pd-back-nav container";
+
+    nav.setAttribute(
+      "aria-label",
+      "Back navigation"
+    );
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+    button.type = "button";
+    button.className =
+      "pd-back-btn";
+
+    button.textContent =
+      "<";
+
+    button.setAttribute(
+      "aria-label",
+      "Go back"
+    );
+
+    button.title =
+      "Go back";
+
+    button.addEventListener(
+      "click",
+      () => {
+        const referrer =
+          document.referrer;
+
+        if (referrer) {
+          try {
+            const previousUrl =
+              new URL(referrer);
+
+            if (
+              previousUrl.origin ===
+              window.location.origin
+            ) {
+              window.history.back();
+              return;
+            }
+          } catch {
+            // Fall through to the safe Shop page.
+          }
+        }
+
+        window.location.assign(
+          "/cart/products"
+        );
+      }
+    );
+
+    nav.append(button);
+    breadcrumb.before(nav);
+  };
+
+  initProductBackNavigation();
+
   const lightbox =
     document.querySelector(
       "#review-image-lightbox"

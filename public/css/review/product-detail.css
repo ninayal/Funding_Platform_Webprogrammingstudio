@@ -29,6 +29,54 @@ body.product-detail-page {
 
 
 /* =====================================================
+   BACK NAVIGATION
+   Compact, high-contrast control.
+   ===================================================== */
+
+.pd-back-nav {
+  margin-bottom: 12px;
+}
+
+.pd-back-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-family: var(--ff-ui);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cream);
+  background: var(--deep);
+  border: 1px solid var(--deep);
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(45, 31, 20, .16);
+  cursor: pointer;
+  transition:
+    transform .18s ease,
+    background-color .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.pd-back-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateX(-2px);
+  box-shadow: 0 8px 20px rgba(45, 31, 20, .22);
+}
+
+.pd-back-btn:active {
+  transform: translateX(-1px) scale(.96);
+}
+
+.pd-back-btn:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* =====================================================
    BREADCRUMB
    Product Detail owns this styling now.
    ===================================================== */
@@ -146,12 +194,15 @@ body.product-detail-page {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
+  margin: 0 0 14px;
+  padding: 0;
   color: var(--muted);
   font-family: var(--ff-ui);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  background: transparent;
+  border: 0;
   cursor: pointer;
 }
 .pd-detail__rating:hover {
@@ -365,7 +416,7 @@ body.product-detail-page {
 
 /* ================================================
    TABS — Description / Additional Info / Review
-   CSS-only, active layer driven by radio inputs
+   Active state is controlled by JavaScript
    ================================================ */
 .pd-tabs-section {
   margin-top: 56px;
@@ -396,20 +447,21 @@ body.product-detail-page {
 .pd-tab-btn:hover {
   color: var(--deep);
 }
-.pd-panel {
-  display: none;
-  text-align: left;
-}
-#tab-description:checked~.pd-wrap .pd-tab-btn[for="tab-description"],
-#tab-info:checked~.pd-wrap .pd-tab-btn[for="tab-info"],
-#tab-review:checked~.pd-wrap .pd-tab-btn[for="tab-review"] {
+.pd-tab-btn.is-active {
   color: var(--red);
   border-bottom-color: var(--red);
 }
-#tab-description:checked~.pd-wrap .pd-panel--description,
-#tab-info:checked~.pd-wrap .pd-panel--info,
-#tab-review:checked~.pd-wrap .pd-panel--review {
-  display: block;
+.pd-tab-btn:focus-visible,
+.pd-detail__rating:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.pd-panel {
+  text-align: left;
+}
+.pd-panel[hidden] {
+  display: none;
 }
 .pd-panel--description p {
   font-family: var(--ff-body);
@@ -442,11 +494,6 @@ body.product-detail-page {
 .pd-spec-table td {
   font-weight: 500;
   color: var(--deep);
-}
-#tab-review:focus-visible ~ .pd-wrap .pd-detail__rating {
-  outline: 3px solid var(--red);
-  outline-offset: 3px;
-  border-radius: 6px;
 }
 @media (max-width: 700px) {
   .pd-spec-table th,
