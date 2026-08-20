@@ -16,12 +16,12 @@
       <%= reviewList.initialResultLabel %>
     </p>
   </div>
-
   <div class="pr-sort">
     <form
       class="pr-search"
       id="review-search-form"
       role="search"
+      data-persist-form="review-search-<%= product.id %>"
     >
       <label
         class="pr-search__label"
@@ -29,11 +29,11 @@
       >
         Search Reviews
       </label>
-
       <div class="pr-search__controls">
         <select
           class="pr-search__select"
           id="review-search-field"
+          name="searchField"
           aria-label="Choose review field"
         >
           <% reviewList.searchFields.forEach((field) => { %>
@@ -42,10 +42,10 @@
             </option>
           <% }); %>
         </select>
-
         <input
           class="pr-search__input"
           id="review-search-query"
+          name="searchQuery"
           type="search"
           placeholder="Search reviews..."
           autocomplete="off"
@@ -67,10 +67,11 @@
       >
         Sort Reviews
       </label>
-
       <select
         class="pr-search__select"
         id="review-sort"
+        name="sort"
+        form="review-search-form"
       >
         <option value="newest">
           Newest first
@@ -89,7 +90,6 @@
         </option>
       </select>
     </div>
-
     <div>
       <p class="pr-sort__label">
         Filter by Rating
@@ -107,7 +107,6 @@
         >
           All
         </button>
-
         <% reviewList.filterRatings.forEach((rating) => { %>
           <button
             class="pr-sort__chip"
@@ -132,7 +131,6 @@
     }) %>
   <% }); %>
 </div>
-
 <p
   class="pr-empty-state"
   id="review-empty-state"

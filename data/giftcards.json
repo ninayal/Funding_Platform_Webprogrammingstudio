@@ -51,6 +51,30 @@
       "status": "Created",
       "createdAt": "2026-08-17T11:26:24.608Z",
       "updatedAt": "2026-08-17T11:26:24.608Z"
+    },
+    {
+      "id": "e89d61dd-ebf1-4fd2-956d-c8540e1d5efb",
+      "code": "LANG-BA7B-2868",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "hoi-an-glow",
+      "quantity": 1,
+      "amountPerCard": 4567,
+      "totalAmount": 4567,
+      "recipientName": "Khoi",
+      "senderName": "Nguyen",
+      "message": "happy birthday",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-19T07:34:46.308Z",
+      "updatedAt": "2026-08-19T07:34:46.308Z"
     }
   ]
 }

@@ -1,182 +1,292 @@
-/* =====================================================
-   SITEMAP
-   Base tokens/reset/fonts come from /css/index.css.
-   ===================================================== */
 
-.sitemap-page {
-  padding: 54px 0 72px;
+.site-footer {
+  position: relative;
+  width: 100%;
+  background: var(--darkred, #6D2323);
+  color: var(--tan);
+  font-family: var(--ff-ui);
+  padding: 36px 40px 0;
+  box-sizing: border-box;
 }
 
-.sitemap-hero {
-  max-width: 760px;
-  margin-bottom: 36px;
+
+.site-footer__top {
+  display: flex;
+  gap: 56px;
+  padding-bottom: 28px;
 }
 
-.sitemap-kicker {
-  margin-bottom: 10px;
-  color: var(--red);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
+.site-footer__brand {
+  flex: 1 1 38%;
 }
 
-.sitemap-hero h1 {
-  margin-bottom: 14px;
-  color: var(--deep);
-  font-family: var(--ff-display);
-  font-size: clamp(42px, 5vw, 68px);
-  font-weight: 500;
-  line-height: 1;
-}
-
-.sitemap-intro {
-  max-width: 620px;
-  color: var(--muted);
-  font-size: var(--text-lg);
-  line-height: 1.6;
-}
-
-.sitemap-home-link {
-  display: inline-flex;
+.site-footer__mark {
+  display: flex;
   align-items: center;
-  gap: 9px;
-  margin-top: 22px;
-  color: var(--deep);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.sitemap-home-link span {
+  justify-content: center;
   width: 30px;
   height: 30px;
-  display: grid;
-  place-items: center;
   border-radius: 50%;
-  background: var(--deep);
+  border: 1px solid rgba(229, 208, 172, .45);
+  color: var(--tan);
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+.site-footer__tagline {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 1.2;
   color: var(--cream);
-  font-size: 18px;
-  line-height: 1;
-  transition:
-    transform .18s ease,
-    background-color .18s ease;
+  margin-bottom: 14px;
 }
 
-.sitemap-home-link:hover span {
+.site-footer__tagline em {
+  color: var(--tan);
+}
+
+.site-footer__desc {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+  color:rgb(229, 208, 172);
+  max-width: 340px;
+  margin-bottom: 18px;
+}
+
+.site-footer__form {
+  display: flex;
+  max-width: 320px;
+  border: 1px solid rgba(229, 208, 172, .35);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.site-footer__form input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 10px 16px;
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 12px;
+}
+
+.site-footer__form input::placeholder {
+  color: rgb(229, 208, 172);
+}
+
+.site-footer__form input:focus {
+  outline: none;
+}
+
+.site-footer__form button {
+  border: none;
   background: var(--red);
-  transform: translateX(-3px);
-}
-
-.sitemap-grid {
-  display: grid;
-  grid-template-columns:
-    repeat(5, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.sitemap-card {
-  min-height: 340px;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
-}
-
-.sitemap-card__index {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 28px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  color: var(--red);
+  color: var(--cream);
+  padding: 0 18px;
+  font-family: var(--ff-ui);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .06em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .3s cubic-bezier(.4, 0, .2, 1);
 }
 
-.sitemap-card h2 {
-  margin-bottom: 10px;
-  color: var(--deep);
-  font-family: var(--ff-display);
-  font-size: 28px;
-  font-weight: 500;
+.site-footer__form button:hover {
+  background: var(--deep);
 }
 
-.sitemap-card > p {
-  margin-bottom: 24px;
-  color: var(--muted);
-  font-size: var(--text-sm);
-  line-height: 1.55;
+.site-footer__note {
+  margin-top: 10px;
+  font-size: 14px;
+  color: rgb(229, 208, 172);
+  max-width: 280px;
+  line-height: 1.5;
 }
 
-.sitemap-card nav {
+.site-footer__col {
+  flex: 1 1 18%;
   display: flex;
   flex-direction: column;
-  margin-top: auto;
 }
 
-.sitemap-card nav a {
+.site-footer__col h4 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.site-footer__col a {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 9px;
+  width: fit-content;
+  transition: color .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.site-footer__col a:hover {
+  color: var(--cream);
+}
+
+/* ── BADGES ── */
+.site-footer__badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 36px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(229, 208, 172, .18);
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.badge-item__icon {
   display: flex;
   align-items: center;
-  min-height: 42px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--brown);
-  font-size: var(--text-sm);
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 208, 172, .3);
+  color: var(--tan);
+  font-size: 10px;
+}
+
+.badge-item__label {
+  font-size: 9px;
   font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: rgba(229, 208, 172, .85);
+}
+
+/* ── BOTTOM BAR ── */
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(229, 208, 172, .18);
+  font-size: 10px;
+}
+
+.site-footer__legal {
+  display: flex;
+  gap: 16px;
+}
+
+.site-footer__legal a {
+  color: rgb(229, 208, 172);
   text-decoration: none;
-  transition:
-    color .18s ease,
-    padding-left .18s ease;
+  font-size: 15px;
 }
 
-.sitemap-card nav a:last-child {
-  border-bottom: 0;
+.site-footer__legal a:hover {
+  color: var(--cream);
 }
 
-.sitemap-card nav a::after {
-  content: "›";
-  margin-left: auto;
-  color: var(--sand);
-  font-size: 20px;
-  line-height: 1;
+.site-footer__copy {
+  color: rgb(229, 208, 172);
+  letter-spacing: .5px;
+  font-size: 15px;
 }
 
-.sitemap-card nav a:hover {
-  padding-left: 5px;
-  color: var(--red);
+.site-footer__social {
+  display: flex;
+  gap: 10px;
 }
 
-@media (max-width: 1200px) {
-  .sitemap-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
+.site-footer__social a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 208, 172, .35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  transition: background .3s cubic-bezier(.4, 0, .2, 1), border-color .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.site-footer__social a:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 900px) {
+  .site-footer {
+    padding: 32px 24px 0;
+  }
+
+  .site-footer__top {
+    flex-wrap: wrap;
+    gap: 28px;
+  }
+
+  .site-footer__brand {
+    flex: 1 1 100%;
+  }
+
+  .site-footer__col {
+    flex: 1 1 28%;
+  }
+
+  .site-footer__badges {
+    gap: 26px;
   }
 }
 
-@media (max-width: 800px) {
-  .sitemap-page {
-    padding: 40px 0 56px;
+@media (max-width: 640px) {
+  .site-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .sitemap-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .sitemap-grid {
-    grid-template-columns: 1fr;
+  .site-footer__tagline {
+    font-size: 23px;
   }
 
-  .sitemap-card {
-    min-height: 0;
+  .site-footer__form {
+    max-width: 100%;
+  }
+
+  .site-footer__badges {
+    gap: 20px;
+    justify-content: flex-start;
   }
 }

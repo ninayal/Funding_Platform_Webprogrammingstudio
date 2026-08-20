@@ -1,53 +1,72 @@
-<% var section=typeof section !=="undefined" ? section : "head" ; %>
-  <% if (section==="head" ) { %>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#A31D1D" />
-    <title>
-      <%= pageTitle %>
-    </title>
-    <!-- Shared styles -->
-    <link rel="stylesheet" href="/css/landingpage/index.css" />
-    <link rel="stylesheet" href="/css/header_v2.css" />
-    <link rel="stylesheet" href="/css/shared-include.css" />
-    <link rel="stylesheet" href="/css/admin/admin.css" />
-    <% (typeof extraStyles !=="undefined" ? extraStyles : []).forEach(function (href) { %>
-      <link rel="stylesheet" href="<%= href %>" />
-      <% }) %>
-        <link rel="stylesheet" href="/css/admin/admin_responsive.css" />
-        <link rel="stylesheet" href="/css/footer.css" />
-        <% } else if (section==="sidebar" ) { %>
-          <!-- Sidebar -->
-          <aside class="admin__sidebar">
-            <div class="admin__header">
-              <h1 class="admin__title">Admin</h1>
-            </div>
+<% var section = typeof section !== "undefined" ? section : "head"; %>
+<% if (section === "head") { %>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#A31D1D" />
+<title><%= pageTitle %></title>
 
-            <nav class="admin__nav" aria-label="Admin sections">
-              <label for="admin-tab-products" class="admin__item">
-                <span class="admin__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                    stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"></path>
-                    <path d="M3 8l9 5 9-5"></path>
-                    <line x1="12" y1="13" x2="12" y2="22"></line>
-                  </svg>
-                </span>
-                Products
-              </label>
+<!-- Global design system -->
+<link rel="stylesheet" href="/css/index.css" />
 
-              <label for="admin-tab-users" class="admin__item">
-                <span class="admin__icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                    stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="9" cy="8" r="3.4"></circle>
-                    <path d="M2.6 20c.9-3.6 3.6-5.6 6.4-5.6s5.5 2 6.4 5.6"></path>
-                    <circle cx="17.5" cy="8.6" r="2.6"></circle>
-                    <path d="M15.8 14.7c2.3.3 4.1 2 4.8 4.7"></path>
-                  </svg>
-                </span>
-                Users
-              </label>
-            </nav>
-          </aside>
-          <% } %>
+<!-- Shared layout -->
+<link rel="stylesheet" href="/css/header_v2.css" />
+<link rel="stylesheet" href="/css/shared-include.css" />
+
+<!-- Admin -->
+<link rel="stylesheet" href="/css/admin/admin.css" />
+
+<% (typeof extraStyles !== "undefined" ? extraStyles : []).forEach(function (href) { %>
+<link rel="stylesheet" href="<%= href %>" />
+<% }) %>
+
+<link rel="stylesheet" href="/css/admin/admin_responsive.css" />
+<link rel="stylesheet" href="/css/footer.css" />
+
+<% } else if (section === "sidebar") { %>
+<aside class="admin__sidebar">
+  <div class="admin__header">
+    <h1 class="admin__title">Admin</h1>
+  </div>
+
+  <nav class="admin__nav" aria-label="Admin sections">
+    <label for="admin-tab-products" class="admin__item">
+      <span class="admin__icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"></path>
+          <path d="M3 8l9 5 9-5"></path>
+          <line x1="12" y1="13" x2="12" y2="22"></line>
+        </svg>
+      </span>
+      Products
+    </label>
+
+    <label for="admin-tab-users" class="admin__item">
+      <span class="admin__icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="8" r="3.4"></circle>
+          <path d="M2.6 20c.9-3.6 3.6-5.6 6.4-5.6s5.5 2 6.4 5.6"></path>
+          <circle cx="17.5" cy="8.6" r="2.6"></circle>
+          <path d="M15.8 14.7c2.3.3 4.1 2 4.8 4.7"></path>
+        </svg>
+      </span>
+      Users
+    </label>
+  </nav>
+</aside>
+<% } %>

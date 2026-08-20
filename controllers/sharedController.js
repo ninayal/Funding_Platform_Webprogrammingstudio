@@ -12,7 +12,8 @@ const {
   hashPassword,
 } = require("../utils/passwordUtils");
 
-const { validateProduct } = require("../utils/productValidation");
+const { validateProduct } =
+  require("../validators/productValidation");
 
 const UPLOADS_URL_PREFIX = "/images/uploads/products/";
 const IMAGE_SLOTS = ["image1", "image2", "image3"];

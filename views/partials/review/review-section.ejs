@@ -1,7 +1,7 @@
 <div
   class="product-review"
   data-product-id="<%= product.id %>"
-  data-form-mode="<%= reviewUi.formMode %>"
+  data-form-mode="shared"
   data-editing-review-id="<%= reviewUi.editingReviewId %>"
   data-page-status="<%= reviewUi.pageStatus %>"
   data-authenticated="<%= reviewUi.isAuthenticated %>"
@@ -12,7 +12,6 @@
   >
     <%- include("review-overview") %>
   </section>
-
   <% if (reviewUi.isAuthenticated) { %>
     <div
       class="pr-review-modal"
@@ -31,7 +30,6 @@
         aria-label="Close review form"
         tabindex="-1"
       ></button>
-
       <div
         class="pr-review-modal__dialog"
         role="dialog"
@@ -42,7 +40,6 @@
       </div>
     </div>
   <% } %>
-
   <div
     class="pr-image-lightbox"
     id="review-image-lightbox"
@@ -56,7 +53,6 @@
       aria-label="Close enlarged review photo"
       tabindex="-1"
     ></button>
-
     <figure
       class="pr-image-lightbox__dialog"
       role="dialog"
@@ -78,7 +74,6 @@
         id="review-lightbox-image"
         alt=""
       />
-
       <figcaption
         class="pr-image-lightbox__caption"
         id="review-lightbox-caption"

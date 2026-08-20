@@ -5,6 +5,7 @@
   method="post"
   enctype="multipart/form-data"
   data-existing-image-count="<%= reviewForm.existingImageCount %>"
+  data-persist-form="review-<%= currentUser.id %>-<%= product.id %>-<%= reviewUi.formMode %>-<%= reviewUi.editingReviewId || 'new' %>"
   novalidate
 >
   <div class="pr-form__head">
@@ -21,7 +22,6 @@
         <%= reviewForm.description %>
       </p>
     </div>
-
     <button
       class="pr-form__close"
       id="close-review-composer"
@@ -39,7 +39,6 @@
     <legend class="pr-field-label">
       Your rating
     </legend>
-
     <div class="pr-form__rating">
       <% reviewForm.ratingOptions.forEach((rating) => { %>
         <input
@@ -56,7 +55,6 @@
             ? "required"
             : "" %>
         />
-
         <label
           class="pr-rating-label"
           for="rating-<%= rating.value %>"
@@ -75,7 +73,6 @@
       <%= reviewForm.errors.rating || "" %>
     </small>
   </fieldset>
-
   <div class="pr-form__identity-grid">
     <div class="pr-form__row">
       <label
@@ -91,13 +88,13 @@
         id="review-name"
         value="<%= reviewForm.reviewerName %>"
         readonly
+        data-no-persist
       />
 
       <small class="pr-file-note">
         This name comes from your signed-in account.
       </small>
     </div>
-
     <div class="pr-form__row">
       <label
         class="pr-field-label"
@@ -105,7 +102,6 @@
       >
         Review title
       </label>
-
       <input
         class="pr-input"
         type="text"
@@ -127,7 +123,6 @@
         class="pr-character-count"
         id="review-title-counter"
       >0/80</small>
-
       <small
         class="pr-field-error"
         id="review-title-error"
@@ -144,7 +139,6 @@
     >
       Your review
     </label>
-
     <textarea
       class="pr-textarea"
       id="review-content"
@@ -164,7 +158,6 @@
       class="pr-character-count"
       id="review-content-counter"
     >0/600</small>
-
     <small
       class="pr-field-error"
       id="review-content-error"
@@ -177,7 +170,6 @@
     <span class="pr-field-label">
       Product photos
     </span>
-
     <div class="pr-multi-upload">
       <input
         class="pr-upload__input"
@@ -186,6 +178,7 @@
         name="reviewImages"
         accept="image/jpeg,image/png,image/webp"
         multiple
+        data-no-persist
         aria-describedby="
           review-images-note
           review-images-error
@@ -194,7 +187,6 @@
           ? "required"
           : "" %>
       />
-
       <label
         class="pr-multi-upload__dropzone"
         for="review-images"
@@ -215,7 +207,6 @@
           JPG, PNG, or WEBP · 1 MB each
         </span>
       </label>
-
       <div
         class="pr-multi-upload__gallery"
         id="review-image-gallery"
@@ -230,7 +221,6 @@
               src="<%= image.src %>"
               alt="<%= image.alt %>"
             />
-
             <input
               type="hidden"
               name="keepImageIndexes"
@@ -251,7 +241,6 @@
           class="pr-multi-upload__new-items"
           id="review-new-image-previews"
         ></div>
-
         <p
           class="pr-multi-upload__empty"
           id="review-image-empty"
@@ -271,7 +260,6 @@
       >
         At least 1 photo is required.
       </small>
-
       <small
         class="pr-multi-upload__count"
         id="review-image-count"
@@ -296,11 +284,11 @@
     >
       <%= reviewForm.submitLabel %>
     </button>
-
     <button
       class="pr-secondary-button"
       id="clear-review-draft"
       type="button"
+      data-clear-persist-form
     >
       Clear Draft
     </button>
@@ -319,5 +307,8 @@
     class="pr-draft-status"
     id="review-draft-status"
     role="status"
-  ></p>
+  >
+    Rating, title, and review text are saved
+    automatically in this browser. Photos are not stored.
+  </p>
 </form>
