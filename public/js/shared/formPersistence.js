@@ -3,97 +3,102 @@
 /**
  * Restores form fields from localStorage after a page refresh.
  *
- * Usage: add data-persist-form="unique-name" to any <form>.
- * No other JS needed — this module handles every marked form
- * on every page automatically.
+ * Usage:
+ *   Add data-persist-form="unique-name" to any <form>.
  *
- * Skipped automatically: password, file, hidden, submit,
- * button and reset fields are never read or written.
+ * To explicitly exclude a field:
+ *   Add data-no-persist to that input/select/textarea.
+ *
+ * Skipped automatically:
+ * password, file, hidden, submit, button and reset fields.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const SKIP_TYPES = [
-    "password",
-    "file",
-    "hidden",
-    "submit",
-    "button",
-    "reset"
-  ];
+    const SKIP_TYPES = [
+        "password",
+        "file",
+        "hidden",
+        "submit",
+        "button",
+        "reset"
+    ];
 
-  const persistableFields = (form) =>
-    Array.from(
-      form.querySelectorAll("input, textarea, select")
-    ).filter(
-      (field) =>
-        field.name &&
-        !SKIP_TYPES.includes(field.type)
-    );
+    const isCheckable = (field) =>
+        field.type === "checkbox" ||
+        field.type === "radio";
 
-  const storageKeyFor = (form, field) => {
-    const formKey =
-      form.dataset.persistForm ||
-      form.id ||
-      form.action;
+    const persistableFields = (form) =>
+        Array.from(form.elements).filter(
+            (field) =>
+                field.matches?.("input, textarea, select") &&
+                field.name &&
+                !SKIP_TYPES.includes(field.type) &&
+                !field.hasAttribute("data-no-persist")
+        );
 
-    return `formPersist:${formKey}:${field.name}:${field.value}`;
-  };
+    const storageKeyFor = (form, field) => {
+        const formKey =
+            form.dataset.persistForm ||
+            form.id ||
+            form.action;
 
-  document
-    .querySelectorAll("[data-persist-form]")
-    .forEach((form) => {
-      const fields = persistableFields(form);
+        const fieldKey = isCheckable(field)
+            ? `${field.name}:${field.value}`
+            : field.name;
 
-      fields.forEach((field) => {
-        const key = storageKeyFor(form, field);
+        return `formPersist:${formKey}:${fieldKey}`;
+    };
 
-        const isCheckable =
-          field.type === "checkbox" ||
-          field.type === "radio";
+    document
+        .querySelectorAll("form[data-persist-form]")
+        .forEach((form) => {
+            const fields = persistableFields(form);
 
-        // Restore saved value
-        const saved = localStorage.getItem(key);
+            fields.forEach((field) => {
+                const key = storageKeyFor(form, field);
+                const saved = localStorage.getItem(key);
 
-        if (saved !== null) {
-          // Don't override values the server already rendered
-          // e.g. after a validation error.
-          if (isCheckable) {
-            if (!field.hasAttribute("checked")) {
-              field.checked = saved === "true";
-            }
-          } else if (!field.value) {
-            field.value = saved;
-          }
-        }
+                // Restore previously saved value.
+                if (saved !== null) {
+                    if (isCheckable(field)) {
+                        field.checked = saved === "true";
+                    } else {
+                        field.value = saved;
+                    }
+                }
 
-        // Save text/select values while typing
-        field.addEventListener("input", () => {
-          localStorage.setItem(
-            key,
-            isCheckable
-              ? String(field.checked)
-              : field.value
-          );
+                const saveField = () => {
+                    localStorage.setItem(
+                        key,
+                        isCheckable(field)
+                            ? String(field.checked)
+                            : field.value
+                    );
+                };
+
+                field.addEventListener("input", saveField);
+                field.addEventListener("change", saveField);
+            });
+
+            /*
+             * Only clear persisted data when the submission
+             * is actually allowed to continue.
+             *
+             * This prevents custom validation code using
+             * event.preventDefault() from destroying the draft.
+             */
+            form.addEventListener("submit", (event) => {
+                queueMicrotask(() => {
+                    if (event.defaultPrevented) {
+                        return;
+                    }
+
+                    fields.forEach((field) => {
+                        localStorage.removeItem(
+                            storageKeyFor(form, field)
+                        );
+                    });
+                });
+            });
         });
-
-        // Save checkbox/radio/select changes
-        field.addEventListener("change", () => {
-          localStorage.setItem(
-            key,
-            isCheckable
-              ? String(field.checked)
-              : field.value
-          );
-        });
-      });
-
-      // Clear persisted data after form submission
-      form.addEventListener("submit", () => {
-        fields.forEach((field) => {
-          localStorage.removeItem(
-            storageKeyFor(form, field)
-          );
-        });
-      });
-    });
 });
