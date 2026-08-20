@@ -24,8 +24,7 @@
         <label for="sortSelect" class="forum-sort-form__label">Sort by</label>
         <select name="sort" id="sortSelect" class="forum-sort-form__select" onchange="this.form.submit()">
           <option value="new" <%= sortBy === "new" ? "selected" : "" %>>Newest activity</option>
-          <option value="top" <%= sortBy === "top" ? "selected" : "" %>>Top liked</option>
-          <option value="hot" <%= sortBy === "hot" ? "selected" : "" %>>Hot</option>
+          <option value="top" <%= sortBy === "top" ? "selected" : "" %>>Top viewed</option>
         </select>
       </form>
       <a href="/forum/create" class="create-thread-btn">+ Create Threads</a>

@@ -5,7 +5,7 @@ const { requestWantsJson } = require("../middlewares/authMiddleware");
 const MAX_CONTENT_LENGTH = 3_000_000;
 const MAX_TITLE_LENGTH = 150;
 const MAX_TEXT_LENGTH = 10_000;
-const SORT_OPTIONS = ["new", "top", "hot"];
+const SORT_OPTIONS = ["new", "top"];
 
 const isAdminUser = (user) => userModel.isAdminRole(user?.role);
 

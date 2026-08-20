@@ -55,6 +55,11 @@ const threads = mergeThreads(deletedThreadSlugs, initialStorage.threads);
 const reports = initialStorage.reports;
 const notifications = initialStorage.notifications;
 
+const parseDate = (ddmmyyyy) => {
+  const [day, month, year] = ddmmyyyy.split("/").map(Number);
+  return new Date(year, month - 1, day);
+};
+
 // Normalize older thread/post records so newly-added fields always exist.
 threads.forEach((thread) => {
   if (thread.tags === undefined) thread.tags = [];
@@ -62,19 +67,20 @@ threads.forEach((thread) => {
   if (thread.locked === undefined) thread.locked = false;
   if (thread.hidden === undefined) thread.hidden = false;
 
-  thread.posts.forEach((post) => {
+  thread.posts.forEach((post, index) => {
     if (post.editedAt === undefined) post.editedAt = null;
     if (post.parentPostId === undefined) post.parentPostId = null;
     if (post.reportedBy === undefined) post.reportedBy = [];
+    // Legacy posts only recorded a day-level date, so same-day posts couldn't
+    // be ordered against each other. Fall back to that date plus the post's
+    // position in the thread so existing order is at least preserved.
+    if (post.createdAt === undefined) {
+      post.createdAt = new Date(parseDate(post.date).getTime() + index).toISOString();
+    }
   });
 });
 
 const MAX_REPORT_REASON_LENGTH = 500;
-
-const parseDate = (ddmmyyyy) => {
-  const [day, month, year] = ddmmyyyy.split("/").map(Number);
-  return new Date(year, month - 1, day);
-};
 
 const getCategoryMeta = (categoryId) => categories.find((c) => c.id === categoryId);
 
@@ -86,10 +92,9 @@ const getThreadBySlug = (slug) => threads.find((t) => t.slug === slug);
 
 const getLatestPost = (thread) => thread.posts[thread.posts.length - 1];
 
-const getRepliesCount = (thread) => thread.posts.length - 1;
+const getLatestPostTime = (thread) => new Date(getLatestPost(thread).createdAt).getTime();
 
-const getThreadLikeTotal = (thread) =>
-  thread.posts.reduce((sum, post) => sum + post.likedBy.length, 0);
+const getRepliesCount = (thread) => thread.posts.length - 1;
 
 const getThreadEngagementScore = (thread) => {
   const reactionTotal = thread.posts.reduce(
@@ -162,9 +167,8 @@ const parseTags = (rawTags) => {
 };
 
 const SORT_COMPARATORS = {
-  new: (a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date),
-  top: (a, b) => getThreadLikeTotal(b) - getThreadLikeTotal(a),
-  hot: (a, b) => getThreadEngagementScore(b) - getThreadEngagementScore(a),
+  new: (a, b) => getLatestPostTime(b) - getLatestPostTime(a),
+  top: (a, b) => b.views - a.views,
 };
 
 const getThreadsByCategory = (categoryId, sortBy = "new") => {
@@ -618,7 +622,7 @@ const getForumSummary = () =>
     const totalViews = catThreads.reduce((sum, t) => sum + t.views, 0);
     const latestThread = catThreads.reduce((best, t) => {
       if (!best) return t;
-      return parseDate(getLatestPost(t).date) >= parseDate(getLatestPost(best).date) ? t : best;
+      return getLatestPostTime(t) >= getLatestPostTime(best) ? t : best;
     }, null);
     return {
       ...cat,
@@ -639,7 +643,7 @@ const getLatestThreads = (limit = 5) =>
   threads
     .filter(isPubliclyVisible)
     .slice()
-    .sort((a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date))
+    .sort((a, b) => getLatestPostTime(b) - getLatestPostTime(a))
     .slice(0, limit);
 
 const getForumTotals = () => {
@@ -776,6 +780,7 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
         initials,
         rank,
         date: formatDate(now),
+        createdAt: now.toISOString(),
         content,
         editedAt: null,
         parentPostId: null,
@@ -800,13 +805,16 @@ const addPost = (slug, { author, authorId, initials, rank, content, parentPostId
     return null;
   }
 
+  const now = new Date();
+
   const post = {
     id: crypto.randomUUID(),
     author,
     authorId: authorId || null,
     initials,
     rank,
-    date: formatDate(new Date()),
+    date: formatDate(now),
+    createdAt: now.toISOString(),
     content,
     editedAt: null,
     parentPostId: parentPostId || null,
