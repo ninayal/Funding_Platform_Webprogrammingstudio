@@ -10,7 +10,7 @@ const getCurrentUser = (req, res) => {
 };
 
 const getCurrentUserId = (req) => {
-  return req.session?.user?.id ? String(req.session.user.id) : "demo-user";
+  return req.cartUserId || null;
 };
 
 const wantsJson = (req) => {

@@ -1,8 +1,5 @@
-<%
-  const formErrors =
-    typeof errors !== "undefined" && errors
-      ? errors
-      : {};
+<% const formErrors=typeof errors !=="undefined" && errors ? errors : {}; const editingGift=typeof editGiftcard
+  !=="undefined" && Boolean(editGiftcard); %>
 
   const editingGift =
     typeof editGiftcard !== "undefined" &&

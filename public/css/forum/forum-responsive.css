@@ -1,8 +1,6 @@
-/* -----------------------------
-   RESPONSIVE
+/* RESPONSIVE
    All forum responsive rules live here (loaded last, after every
-   other forum-*.css import) so breakpoints stay in one place.
------------------------------- */
+   other forum-*.css import) so breakpoints stay in one place. */
 
 html,
 body {
@@ -14,12 +12,7 @@ svg {
   max-width: 100%;
 }
 
-/* -----------------------------
-   HEADER SWAP
-   Forum pages show the pill nav (header_v2) on tablet/desktop and the
-   hamburger nav (header_mobile) on phones, instead of squeezing the pill
-   nav down to unreadable sizes.
------------------------------- */
+/* HEADER SWAP */
 .forum-header-mobile {
   display: none;
 }
@@ -34,10 +27,8 @@ svg {
   }
 }
 
-/* -----------------------------
-   TABLET / SMALL LAPTOP
-   1040px and below
------------------------------- */
+/* TABLET / SMALL LAPTOP
+   1040px and below */
 @media (max-width: 1040px) {
   .forum-container,
   .forum-toolbar,
@@ -61,10 +52,8 @@ svg {
   }
 }
 
-/* -----------------------------
-   SIDEBAR COLLAPSE
-   900px and below
------------------------------- */
+/* SIDEBAR COLLAPSE
+   900px and below */
 @media (max-width: 900px) {
   .forum-layout,
   .thread-layout {
@@ -81,10 +70,8 @@ svg {
   }
 }
 
-/* -----------------------------
-   MOBILE / TABLET
-   640px and below
------------------------------- */
+/* MOBILE / TABLET
+   640px and below */
 @media (max-width: 640px) {
   .forum-container,
   .forum-toolbar,
@@ -201,10 +188,8 @@ svg {
   }
 }
 
-/* -----------------------------
-   SMALL MOBILE
-   480px and below
------------------------------- */
+/* SMALL MOBILE
+   480px and below */
 @media (max-width: 480px) {
   .forum-title {
     padding: 32px 16px 6px;
@@ -236,10 +221,8 @@ svg {
   }
 }
 
-/* -----------------------------
-   EXTRA SMALL MOBILE
-   380px and below
------------------------------- */
+/* EXTRA SMALL MOBILE
+   380px and below */
 @media (max-width: 380px) {
   .thread-card__title {
     font-size: 20px;

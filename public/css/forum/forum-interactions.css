@@ -155,8 +155,6 @@
   cursor: default;
 }
 
-/* Share popover: link icon opens this panel with social icons + a
-   copy-link field posts use to paste a permalink into a reply as a quote. */
 .forum-post__share-wrap {
   position: relative;
 }
@@ -333,9 +331,7 @@
   width: auto;
 }
 
-/* -----------------------------
-   TAG CHIPS
------------------------------- */
+/* TAG CHIPS */
 .tag-chip {
   display: inline-flex;
   align-items: center;
@@ -362,9 +358,7 @@ a.tag-chip:hover {
   margin: 4px 0;
 }
 
-/* -----------------------------
-   THREAD-LEVEL SHARE (whole-thread share panel)
------------------------------- */
+/* THREAD-LEVEL SHARE (whole-thread share panel) */
 .thread-content-tools {
   display: flex;
   align-items: center;
@@ -395,9 +389,7 @@ a.tag-chip:hover {
   color: var(--ink);
 }
 
-/* -----------------------------
-   QUOTED POST EMBED (inserted via the reply editor's link tool)
------------------------------- */
+/* QUOTED POST EMBED (inserted via the reply editor's link tool) */
 .forum-quote-embed {
   display: block;
   margin: 10px 0;
@@ -438,9 +430,7 @@ a.tag-chip:hover {
   opacity: .85;
 }
 
-/* -----------------------------
-   ADMIN MODERATION PAGE
------------------------------- */
+/* ADMIN MODERATION PAGE */
 .admin-moderation__section {
   margin-bottom: 40px;
 }
@@ -529,9 +519,6 @@ a.tag-chip:hover {
   width: 100%;
 }
 
-/* All Threads rows only render avatar + title + actions (no stats/latest-reply
-   columns), so they need their own 3-track grid instead of the 4-track one
-   .thread-card--row uses on the public thread-listing pages. */
 .thread-card--row.admin-thread-row {
   grid-template-columns: 46px minmax(0, 1fr) auto;
 }

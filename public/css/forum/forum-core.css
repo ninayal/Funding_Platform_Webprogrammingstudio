@@ -1,6 +1,4 @@
-/* -----------------------------
-   PAGE TITLE
------------------------------- */
+/*    PAGE TITLE  */
 .forum-title {
   padding: 46px 24px 8px;
   text-align: center;
@@ -16,9 +14,7 @@
   color: var(--red);
 }
 
-/* -----------------------------
-   CREATE THREAD BUTTON
------------------------------- */
+/* CREATE THREAD BUTTON */
 .create-thread-btn {
   display: inline-flex;
   align-items: center;
@@ -42,18 +38,14 @@
   transform: translateY(-1px);
 }
 
-/* -----------------------------
-   THREAD SECTIONS
------------------------------- */
+/* THREAD SECTIONS */
 .thread-list {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--line);
 }
 
-/* -----------------------------
-   PAGINATION
------------------------------- */
+/* PAGINATION */
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -104,9 +96,7 @@
   padding: 0 16px;
 }
 
-/* -----------------------------
-   THREAD CARD
------------------------------- */
+/* THREAD CARD */
 .thread-card {
   padding: 24px 28px;
   border: 1px solid var(--line);

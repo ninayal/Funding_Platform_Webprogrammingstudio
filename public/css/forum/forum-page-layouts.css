@@ -1,6 +1,4 @@
-/* -----------------------------
-   FORUM LAYOUT (forum.html — main index)
------------------------------- */
+/* FORUM LAYOUT (forum.html — main index) */
 .forum-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
@@ -147,9 +145,7 @@
   text-decoration: underline;
 }
 
-/* -----------------------------
-   THREAD CONTENT PAGE
------------------------------- */
+/* THREAD CONTENT PAGE */
 
 /* Two-column layout: thread body + sidebar (mirrors .forum-layout) */
 .thread-layout {

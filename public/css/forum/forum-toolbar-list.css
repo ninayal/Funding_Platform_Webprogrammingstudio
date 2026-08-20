@@ -1,14 +1,10 @@
-/* -----------------------------
-   LAYOUT UTILITY
------------------------------- */
+/* LAYOUT UTILITY */
 .forum-container {
   width: min(1600px, calc(100% - 48px));
   margin: 0 auto;
 }
 
-/* -----------------------------
-   FORUM TOOLBAR (New Posts / Your Posts / Bookmarked + search)
------------------------------- */
+/* FORUM TOOLBAR (New Posts / Your Posts / Bookmarked + search) */
 .forum-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -101,9 +97,7 @@
   padding: 24px 4px;
 }
 
-/* -----------------------------
-   BREADCRUMB
------------------------------- */
+/* BREADCRUMB */
 .forum-breadcrumb {
   width: min(1600px, calc(100% - 48px));
   margin: 18px auto 22px;
@@ -159,9 +153,7 @@
   text-align: right;
 }
 
-/* -----------------------------
-   NEW POSTS PAGE (new_post.html)
------------------------------- */
+/* NEW POSTS PAGE (new_post.html) */
 .new-post-header {
   display: flex;
   flex-wrap: wrap;
@@ -224,9 +216,7 @@
   font-size: 11px;
 }
 
-/* -----------------------------
-   NOTIFICATIONS BELL + ADMIN TAB
------------------------------- */
+/* NOTIFICATIONS BELL + ADMIN TAB */
 .forum-toolbar__bell {
   position: relative;
   display: inline-flex;

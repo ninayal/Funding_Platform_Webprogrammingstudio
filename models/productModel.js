@@ -1,7 +1,17 @@
 "use strict";
 
-const products = require("../data/products");
+const adminProductModel = require("./adminProductModel");
 const reviewModel = require("./reviewModel");
+
+// All products (including the original static catalog, which has been
+// migrated into data/products.json) live in the admin-managed store so the
+// admin panel and the shopping cart/shop pages share one live product list.
+// Recomputed on every call (rather than once at module load) since admin CRUD
+// can happen while the server is running.
+const getBaseProducts = () =>
+  adminProductModel
+    .getAvailableStorefrontProducts()
+    .sort((a, b) => (a.featuredOrder || 999) - (b.featuredOrder || 999));
 
 const formatCurrency = (value) =>
   new Intl.NumberFormat("en-US", {
@@ -58,7 +68,7 @@ const decorateProduct = (product, statsMap) => {
 const getDecoratedProducts = () => {
   const statsMap = reviewModel.getAllReviewStats();
 
-  return products.map((product) =>
+  return getBaseProducts().map((product) =>
     decorateProduct(product, statsMap),
   );
 };
@@ -209,7 +219,7 @@ const getRecommendedProducts = (
 const getCategories = () => {
   const categories = new Map();
 
-  products.forEach((product) => {
+  getBaseProducts().forEach((product) => {
     if (!categories.has(product.category)) {
       categories.set(product.category, {
         id: product.category,
@@ -228,11 +238,12 @@ const getCategories = () => {
 };
 
 const getCategoryCounts = () => {
+  const baseProducts = getBaseProducts();
   const counts = {
-    all: products.length,
+    all: baseProducts.length,
   };
 
-  products.forEach((product) => {
+  baseProducts.forEach((product) => {
     counts[product.category] =
       (counts[product.category] || 0) + 1;
   });
@@ -242,12 +253,12 @@ const getCategoryCounts = () => {
 
 const getFilterOptions = () => ({
   makers: [
-    ...new Set(products.map((product) => product.maker)),
+    ...new Set(getBaseProducts().map((product) => product.maker)),
   ].sort(),
 
   materials: [
     ...new Set(
-      products.map((product) => product.material),
+      getBaseProducts().map((product) => product.material),
     ),
   ].sort(),
 

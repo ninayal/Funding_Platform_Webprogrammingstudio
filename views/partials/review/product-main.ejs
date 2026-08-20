@@ -1,11 +1,21 @@
+<nav
+  class="breadcrumb container"
+  aria-label="Breadcrumb"
+>
+  <a href="/">Home</a>
+  <span aria-hidden="true">•</span>
+  <a href="/cart/products">Shop All</a>
+  <span aria-hidden="true">•</span>
+  <span aria-current="page">
+    <%= productData.name %>
+  </span>
+</nav>
 <section
   class="pd-main container"
   aria-label="Product"
 >
   <div class="pd-thumbs">
-    <% productData.thumbnails.forEach(
-      (thumbnail, index) => {
-    %>
+    <% productData.thumbnails.forEach((thumbnail, index) => { %>
       <label
         class="pd-thumb<%= index === 0
           ? ' is-active'
@@ -18,7 +28,6 @@
       </label>
     <% }); %>
   </div>
-
   <div class="pd-media">
     <% if (productData.tag) { %>
       <p class="pd-media__tag">
@@ -40,7 +49,6 @@
     <h1 class="pd-detail__title">
       <%= productData.name %>
     </h1>
-
     <label
       class="pd-detail__rating"
       for="tab-review"
@@ -48,21 +56,17 @@
     >
       <span
         class="pd-stars"
-        aria-label="Rated <%= productData.rating %> out of 5 stars"
+        aria-label="Rated <%= productData.ratingDisplay %> out of 5 stars"
       ><%= productStars %></span>
 
       <span>
-        <%= productData.rating.toFixed(1) %>
-        (<%= productData.reviewCount %>
-        review<%= productData.reviewCount === 1
-          ? ''
-          : 's' %>)
+        <%= productData.ratingDisplay %>
+        (<%= productData.reviewCountLabel %>)
       </span>
     </label>
 
     <p class="pd-detail__price">
       <%= productData.priceDisplay %>
-
       <% if (productData.oldPriceDisplay) { %>
         <span class="shop-card__price-was">
           <%= productData.oldPriceDisplay %>
@@ -75,28 +79,12 @@
     </p>
 
     <div class="pd-option">
-      <p class="pd-option__label">Size</p>
-
-      <div class="pd-size-options">
-        <% productData.sizes.forEach(
-          (size) => {
-        %>
-          <label
-            class="pd-size-btn"
-            for="size-<%= size.id %>"
-          ><%= size.label %></label>
-        <% }); %>
-      </div>
-    </div>
-
-    <div class="pd-option">
       <label
         class="pd-option__label"
         for="product-quantity"
       >
         Quantity
       </label>
-
       <input
         class="pd-qty"
         id="product-quantity"
@@ -115,7 +103,6 @@
       >
         Add to Cart
       </a>
-
       <button
         type="button"
         class="pd-wish-btn"
@@ -136,11 +123,8 @@
         </svg>
       </button>
     </div>
-
     <ul class="pd-meta">
-      <% productData.meta.forEach(
-        (item) => {
-      %>
+      <% productData.meta.forEach((item) => { %>
         <li><%= item %></li>
       <% }); %>
     </ul>

@@ -1,3 +1,692 @@
-@import url("./product-detail_part_01.css");
-@import url("./product-detail_part_02.css");
-@import url("./product-detail_part_03.css");
+/* =====================================================
+   PRODUCT DETAIL FEATURE
+   Main product, metadata, tabs, related products,
+   and their responsive behaviour.
+   ===================================================== */
+
+
+/* =====================================================
+   PRODUCT DETAIL PAGE BACKGROUND
+   Keep the page on the same linen surface as Header V2.
+   ===================================================== */
+
+body.product-detail-page {
+  background-color: #eee7dc;
+  background-image: url("/images/linen-beige.png");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: auto;
+}
+
+/* ================================================
+   PRODUCT DETAIL PAGE
+   Reuses tokens & .shop-card / .shop-grid from products.css
+   ================================================ */
+
+.pd-wrap {
+  padding: 18px 0 24px;
+}
+
+
+/* =====================================================
+   BACK NAVIGATION
+   Compact, high-contrast control.
+   ===================================================== */
+
+.pd-back-nav {
+  margin-bottom: 12px;
+}
+
+.pd-back-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-family: var(--ff-ui);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cream);
+  background: var(--deep);
+  border: 1px solid var(--deep);
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(45, 31, 20, .16);
+  cursor: pointer;
+  transition:
+    transform .18s ease,
+    background-color .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.pd-back-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateX(-2px);
+  box-shadow: 0 8px 20px rgba(45, 31, 20, .22);
+}
+
+.pd-back-btn:active {
+  transform: translateX(-1px) scale(.96);
+}
+
+.pd-back-btn:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   BREADCRUMB
+   Product Detail owns this styling now.
+   ===================================================== */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-family: var(--ff-ui);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--red);
+}
+
+.breadcrumb span[aria-current] {
+  color: var(--deep);
+  font-weight: 600;
+}
+/* ================================================
+   PRODUCT MAIN — thumbs | media | detail
+   ================================================ */
+.pd-main {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 420px;
+  gap: 28px;
+  align-items: start;
+  margin-top: 8px;
+}
+/* ---- thumbnails ---- */
+.pd-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pd-thumb {
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  transition: none;
+}
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pd-thumb.is-active,
+.pd-thumb:hover {
+  border-color: var(--red);
+}
+/* ---- main media ---- */
+.pd-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--tan) 0%, var(--sand) 100%);
+  box-shadow: var(--shadow);
+}
+.pd-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pd-media__tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-family: var(--ff-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--red);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+/* ---- detail panel ---- */
+.pd-detail__maker {
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin: 0 0 8px;
+}
+.pd-detail__title {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.15;
+  color: var(--deep);
+  margin: 0 0 12px;
+}
+.pd-detail__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pd-detail__rating:hover {
+  color: var(--red);
+}
+.pd-stars {
+  color: var(--red);
+  letter-spacing: 1px;
+  font-size: 15px;
+}
+.pd-stars--lg {
+  font-size: 26px;
+  margin: 6px 0;
+}
+.pd-detail__price {
+  font-family: var(--ff-ui);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--deep);
+  margin: 0 0 14px;
+}
+.pd-detail__desc {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--deep);
+  margin: 0 0 22px;
+  max-width: 46ch;
+}
+.pd-option {
+  margin-bottom: 20px;
+}
+.pd-option__label {
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--deep);
+  margin: 0 0 10px;
+}
+.pd-qty {
+  width: 84px;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--deep);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: var(--white);
+}
+.pd-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.pd-add-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--deep);
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 15px 20px;
+  transition: none;
+}
+.pd-add-btn:hover {
+  background: var(--red);
+}
+.pd-wish-btn {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--deep);
+  cursor: pointer;
+  transition: none;
+}
+.pd-wish-btn:hover {
+  color: var(--red);
+  border-color: var(--red);
+  transform: scale(1.05);
+}
+@media (max-width: 960px) {
+  .pd-main {
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-areas: "thumbs media" "detail detail";
+  }
+  .pd-thumbs {
+    grid-area: thumbs;
+  }
+  .pd-media {
+    grid-area: media;
+  }
+  .pd-detail {
+    grid-area: detail;
+    margin-top: 28px;
+  }
+}
+@media (max-width: 640px) {
+  .pd-main {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+}
+/* Product main font alignment */
+.pd-detail__title {
+  font-family: var(--ff-display);
+}
+.pd-detail__maker,
+.pd-detail__rating,
+.pd-detail__price,
+.pd-option__label,
+.pd-qty,
+.pd-add-btn,
+.pd-wish-btn {
+  font-family: var(--ff-body);
+}
+.breadcrumb,
+.pd-detail__desc {
+  font-family: var(--ff-body);
+}
+
+.pd-meta {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.pd-meta li {
+  font-family: var(--ff-ui);
+  font-size: 14px;
+  color: var(--deep);
+  padding-left: 18px;
+  position: relative;
+}
+.pd-meta li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--sand);
+  font-weight: 700;
+}
+/* ---- signature: maker's note ---- */
+.pd-maker-note {
+  position: relative;
+  margin: 0;
+  padding: 22px 22px 20px 78px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.pd-maker-note__seal {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 50%;
+  border: 1.5px dashed var(--sand);
+  font-family: var(--ff-ui);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: var(--darkred);
+  line-height: 1.1;
+}
+.pd-maker-note p {
+  font-family: var(--ff-body);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--deep);
+  margin: 0 0 8px;
+}
+.pd-maker-note cite {
+  font-family: var(--ff-ui);
+  font-style: normal;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.pd-meta li,
+.pd-maker-note__seal,
+.pd-maker-note cite {
+  font-family: var(--ff-body);
+}
+.pd-maker-note p {
+  font-family: var(--ff-display);
+}
+
+/* ================================================
+   TABS — Description / Additional Info / Review
+   CSS-only, active layer driven by radio inputs
+   ================================================ */
+.pd-tabs-section {
+  margin-top: 56px;
+}
+.pd-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 42px;
+  width: 100%;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.pd-tab-btn {
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 18px;
+  cursor: pointer;
+  text-align: center;
+  transition: color .2s, border-color .2s;
+}
+.pd-tab-btn:hover {
+  color: var(--deep);
+}
+.pd-panel {
+  display: none;
+  text-align: left;
+}
+#tab-description:checked~.pd-wrap .pd-tab-btn[for="tab-description"],
+#tab-info:checked~.pd-wrap .pd-tab-btn[for="tab-info"],
+#tab-review:checked~.pd-wrap .pd-tab-btn[for="tab-review"] {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+#tab-description:checked~.pd-wrap .pd-panel--description,
+#tab-info:checked~.pd-wrap .pd-panel--info,
+#tab-review:checked~.pd-wrap .pd-panel--review {
+  display: block;
+}
+.pd-panel--description p {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--deep);
+  max-width: 780px;
+  margin: 0 0 16px;
+}
+.pd-spec-table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+}
+.pd-spec-table tr {
+  border-bottom: 1px solid var(--line);
+}
+.pd-spec-table th,
+.pd-spec-table td {
+  text-align: left;
+  padding: 16px 12px;
+  font-family: var(--ff-body);
+  font-size: 15px;
+}
+.pd-spec-table th {
+  width: 260px;
+  font-weight: 700;
+  color: var(--deep);
+}
+.pd-spec-table td {
+  font-weight: 500;
+  color: var(--deep);
+}
+#tab-review:focus-visible ~ .pd-wrap .pd-detail__rating {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+@media (max-width: 700px) {
+  .pd-spec-table th,
+  .pd-spec-table td {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+  }
+  .pd-spec-table th {
+    padding-top: 16px;
+  }
+}
+@media (max-width: 640px) {
+  .pd-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  .pd-tab-btn {
+    white-space: nowrap;
+  }
+}
+
+/* ================================================
+   RELATED PRODUCTS
+   ================================================ */
+.pd-related {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  padding-bottom: 40px;
+}
+.pd-related h2 {
+  font-family: var(--ff-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--deep);
+  margin: 0 0 24px;
+}
+.pd-related__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 640px) {
+  .pd-related__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 460px) {
+  .pd-related__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.pd-related h2 {
+  font-family: var(--ff-display);
+}
+
+/* =====================================================
+   RELATED PRODUCT CARDS
+   Local to Product Detail so this page no longer needs
+   the complete cart/products.css bundle.
+   ===================================================== */
+
+.pd-related .shop-grid {
+  display: grid;
+  gap: 34px 28px;
+}
+
+.pd-related .shop-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.pd-related .shop-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      160deg,
+      var(--tan) 0%,
+      var(--sand) 100%
+    );
+}
+
+.pd-related .shop-card__media a:first-child {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pd-related .shop-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform
+    0.6s
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pd-related
+.shop-card:hover
+.shop-card__media img {
+  transform: scale(1.05);
+}
+
+.pd-related .quickadd-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--cream);
+  font-family: var(--ff-ui);
+  font-size: 22px;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow:
+    0 3px 10px
+    rgba(0, 0, 0, 0.18);
+}
+
+.pd-related .quickadd-btn:hover {
+  background: var(--red);
+  transform: translateY(-2px);
+}
+
+.pd-related .shop-card__body p {
+  margin: 0;
+}
+
+.pd-related .shop-card__maker {
+  margin-bottom: 6px;
+  color: var(--sand);
+  font-family: var(--ff-ui);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.pd-related .shop-card__title {
+  margin: 0 0 8px;
+  font-family: var(--ff-ui);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pd-related .shop-card__title a {
+  color: var(--deep);
+  text-decoration: none;
+}
+
+.pd-related .shop-card__title a:hover {
+  color: var(--red);
+}
+
+.pd-related .shop-card__price {
+  margin-bottom: 6px;
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.shop-card__price-was {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: line-through;
+}
+
+.pd-related .shop-card__rating {
+  margin: 0 0 5px;
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.pd-related .shop-card__rating span {
+  color: var(--sand);
+  font-size: 12px;
+  letter-spacing: normal;
+}

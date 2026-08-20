@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const sanitizeHtml = require("sanitize-html");
 const userModel = require("./userModel");
 const { categories, threads: seedThreads } = require("../data/forum.js");
 
@@ -55,6 +54,11 @@ const threads = mergeThreads(deletedThreadSlugs, initialStorage.threads);
 const reports = initialStorage.reports;
 const notifications = initialStorage.notifications;
 
+const parseDate = (ddmmyyyy) => {
+  const [day, month, year] = ddmmyyyy.split("/").map(Number);
+  return new Date(year, month - 1, day);
+};
+
 // Normalize older thread/post records so newly-added fields always exist.
 threads.forEach((thread) => {
   if (thread.tags === undefined) thread.tags = [];
@@ -62,19 +66,20 @@ threads.forEach((thread) => {
   if (thread.locked === undefined) thread.locked = false;
   if (thread.hidden === undefined) thread.hidden = false;
 
-  thread.posts.forEach((post) => {
+  thread.posts.forEach((post, index) => {
     if (post.editedAt === undefined) post.editedAt = null;
     if (post.parentPostId === undefined) post.parentPostId = null;
     if (post.reportedBy === undefined) post.reportedBy = [];
+    // Legacy posts only recorded a day-level date, so same-day posts couldn't
+    // be ordered against each other. Fall back to that date plus the post's
+    // position in the thread so existing order is at least preserved.
+    if (post.createdAt === undefined) {
+      post.createdAt = new Date(parseDate(post.date).getTime() + index).toISOString();
+    }
   });
 });
 
 const MAX_REPORT_REASON_LENGTH = 500;
-
-const parseDate = (ddmmyyyy) => {
-  const [day, month, year] = ddmmyyyy.split("/").map(Number);
-  return new Date(year, month - 1, day);
-};
 
 const getCategoryMeta = (categoryId) => categories.find((c) => c.id === categoryId);
 
@@ -86,10 +91,9 @@ const getThreadBySlug = (slug) => threads.find((t) => t.slug === slug);
 
 const getLatestPost = (thread) => thread.posts[thread.posts.length - 1];
 
-const getRepliesCount = (thread) => thread.posts.length - 1;
+const getLatestPostTime = (thread) => new Date(getLatestPost(thread).createdAt).getTime();
 
-const getThreadLikeTotal = (thread) =>
-  thread.posts.reduce((sum, post) => sum + post.likedBy.length, 0);
+const getRepliesCount = (thread) => thread.posts.length - 1;
 
 const getThreadEngagementScore = (thread) => {
   const reactionTotal = thread.posts.reduce(
@@ -120,32 +124,6 @@ const buildSnippet = (text, query, radius = 80) => {
   return `${start > 0 ? "…" : ""}${text.slice(start, end).trim()}${end < text.length ? "…" : ""}`;
 };
 
-const sanitizeContent = (html) =>
-  sanitizeHtml(String(html || ""), {
-    allowedTags: [
-      "p", "br", "b", "strong", "i", "em", "u", "s", "strike",
-      "ul", "ol", "li", "a", "img", "blockquote", "h1", "h2", "h3", "div", "span",
-    ],
-    allowedAttributes: {
-      a: ["href", "target", "rel", "class"],
-      img: ["src", "alt"],
-      blockquote: ["class"],
-      span: ["class"],
-    },
-    allowedClasses: {
-      blockquote: ["forum-quote-embed"],
-      a: ["forum-quote-embed__link"],
-      span: ["forum-quote-embed__author", "forum-quote-embed__snippet"],
-    },
-    allowedSchemes: ["http", "https", "mailto"],
-    allowedSchemesByTag: {
-      img: ["http", "https", "data"],
-    },
-    transformTags: {
-      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
-    },
-  }).trim();
-
 const isContentEmpty = (html) => !/<img\b/i.test(html) && !stripHtml(html);
 
 const parseTags = (rawTags) => {
@@ -162,9 +140,8 @@ const parseTags = (rawTags) => {
 };
 
 const SORT_COMPARATORS = {
-  new: (a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date),
-  top: (a, b) => getThreadLikeTotal(b) - getThreadLikeTotal(a),
-  hot: (a, b) => getThreadEngagementScore(b) - getThreadEngagementScore(a),
+  new: (a, b) => getLatestPostTime(b) - getLatestPostTime(a),
+  top: (a, b) => b.views - a.views,
 };
 
 const getThreadsByCategory = (categoryId, sortBy = "new") => {
@@ -197,6 +174,17 @@ const getVisibleThreadBySlug = (slug, viewerId, isAdmin = false) => {
   }
 
   return thread;
+};
+
+const incrementViews = (slug) => {
+  const thread = getThreadBySlug(slug);
+
+  if (!thread) {
+    return;
+  }
+
+  thread.views += 1;
+  saveThreadsToFile();
 };
 
 const getThreadsByAuthor = (authorId) =>
@@ -388,16 +376,15 @@ const editThread = (slug, userId, { title, category, tags, content }) => {
   }
 
   const categoryMeta = getCategoryMeta(category);
-  const sanitizedContent = sanitizeContent(content);
 
-  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(sanitizedContent)) {
+  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(content)) {
     return null;
   }
 
   thread.title = String(title).trim();
   thread.category = category;
   thread.tags = parseTags(tags);
-  thread.posts[0].content = sanitizedContent;
+  thread.posts[0].content = content;
   thread.posts[0].editedAt = new Date().toISOString();
 
   saveThreadsToFile();
@@ -412,13 +399,11 @@ const editPost = (slug, postId, userId, content) => {
     return null;
   }
 
-  const sanitizedContent = sanitizeContent(content);
-
-  if (isContentEmpty(sanitizedContent)) {
+  if (isContentEmpty(content)) {
     return null;
   }
 
-  found.post.content = sanitizedContent;
+  found.post.content = content;
   found.post.editedAt = new Date().toISOString();
 
   saveThreadsToFile();
@@ -607,7 +592,7 @@ const getForumSummary = () =>
     const totalViews = catThreads.reduce((sum, t) => sum + t.views, 0);
     const latestThread = catThreads.reduce((best, t) => {
       if (!best) return t;
-      return parseDate(getLatestPost(t).date) >= parseDate(getLatestPost(best).date) ? t : best;
+      return getLatestPostTime(t) >= getLatestPostTime(best) ? t : best;
     }, null);
     return {
       ...cat,
@@ -628,7 +613,7 @@ const getLatestThreads = (limit = 5) =>
   threads
     .filter(isPubliclyVisible)
     .slice()
-    .sort((a, b) => parseDate(getLatestPost(b).date) - parseDate(getLatestPost(a).date))
+    .sort((a, b) => getLatestPostTime(b) - getLatestPostTime(a))
     .slice(0, limit);
 
 const getForumTotals = () => {
@@ -765,6 +750,7 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
         initials,
         rank,
         date: formatDate(now),
+        createdAt: now.toISOString(),
         content,
         editedAt: null,
         parentPostId: null,
@@ -789,13 +775,16 @@ const addPost = (slug, { author, authorId, initials, rank, content, parentPostId
     return null;
   }
 
+  const now = new Date();
+
   const post = {
     id: crypto.randomUUID(),
     author,
     authorId: authorId || null,
     initials,
     rank,
-    date: formatDate(new Date()),
+    date: formatDate(now),
+    createdAt: now.toISOString(),
     content,
     editedAt: null,
     parentPostId: parentPostId || null,
@@ -830,6 +819,7 @@ module.exports = {
   getThreadsByCategory,
   getThreadBySlug,
   getVisibleThreadBySlug,
+  incrementViews,
   getThreadsByAuthor,
   findPost,
   decoratePost,
@@ -856,7 +846,6 @@ module.exports = {
   getAllTags,
   addThread,
   addPost,
-  sanitizeContent,
   isContentEmpty,
   searchThreads,
   addNotification,

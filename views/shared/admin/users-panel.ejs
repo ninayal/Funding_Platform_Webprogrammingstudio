@@ -1,0 +1,194 @@
+<!-- Users panel -->
+<section class="panel panel--users">
+  <div class="panel-head">
+    <h2 class="panel-head__title">Users Management</h2>
+  </div>
+
+  <!-- Stats -->
+  <div class="admin-stats">
+    <div class="admin-stat">
+      <span class="admin-stat__label">Total Users</span>
+      <span class="admin-stat__value">
+        <%= userStats.total %>
+      </span>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat__label">Active Users</span>
+      <span class="admin-stat__value admin-stat__value--active">
+        <%= userStats.active %>
+      </span>
+    </div>
+    <div class="admin-stat">
+      <span class="admin-stat__label">Blocked Users</span>
+      <span class="admin-stat__value admin-stat__value--blocked">
+        <%= userStats.blocked %>
+      </span>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="admin-toolbar">
+    <label class="admin-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" name="userSearch" placeholder="Find by email" aria-label="Search users by email"
+        autocomplete="off" />
+    </label>
+    <button type="button" class="btn btn--outline" aria-label="Filter user accounts">Filter</button>
+  </div>
+
+  <!-- Table -->
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <caption class="sr-only">User accounts and account status</caption>
+      <thead>
+        <tr>
+          <th scope="col">User ID</th>
+          <th scope="col">Email</th>
+          <th scope="col">Join Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function (user) { const isBlocked=user.status==="blocked" ; %>
+          <tr data-email="<%= user.email.toLowerCase() %>">
+            <td class="admin-table__id">
+              <%= user.username %>
+            </td>
+            <td>
+              <%= user.email %>
+            </td>
+            <td>
+              <% if (user.joinDate) { %>
+                <time datetime="<%= user.joinDate %>">
+                  <%= user.joinDate %>
+                </time>
+                <% } else { %>
+                  &mdash;
+                  <% } %>
+            </td>
+            <td>
+              <% if (isBlocked) { %>
+                <span class="tag tag--blocked">Blocked</span>
+                <% } else { %>
+                  <span class="tag tag--active">Active</span>
+                  <% } %>
+            </td>
+            <td>
+              <% if (user.id===currentUser.id) { %>
+                <span aria-hidden="true">—</span>
+                <% } else { %>
+                  <form method="post" action="/shared/admin/users/<%= user.id %>/status" class="admin-inline-form">
+                    <button type="submit" class="btn btn--small <%= isBlocked ? 'btn--success' : 'btn--danger' %>"
+                      aria-label="<%= isBlocked ? 'Unblock' : 'Block' %> user <%= user.username %>">
+                      <%= isBlocked ? "Unblock" : "Block" %>
+                    </button>
+                  </form>
+                  <% } %>
+            </td>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Password Reset Requests -->
+  <div class="panel-head panel-head--gap-lg">
+    <h2 class="panel-head__title">Password Reset Requests</h2>
+  </div>
+
+  <% if (pendingRequests.length===0) { %>
+    <p class="empty-state">No pending password reset requests.</p>
+    <% } else { %>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <caption class="sr-only">Pending password reset requests</caption>
+          <thead>
+            <tr>
+              <th scope="col">Requested At</th>
+              <th scope="col">Email</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% pendingRequests.forEach(function (resetRequest) { %>
+              <tr>
+                <td><time datetime="<%= resetRequest.requestedAt %>">
+                    <%= new Date(resetRequest.requestedAt).toLocaleString() %>
+                  </time></td>
+                <td>
+                  <%= resetRequest.email %>
+                </td>
+                <td>
+                  <form method="post" action="/shared/admin/password-resets/<%= resetRequest.id %>/resolve"
+                    class="admin-inline-form">
+                    <button type="submit" class="btn btn--success btn--small">Approve &amp; Issue Temp Password</button>
+                  </form>
+                  <form method="post" action="/shared/admin/password-resets/<%= resetRequest.id %>/reject"
+                    class="admin-inline-form">
+                    <button type="submit" class="btn btn--danger btn--small">Reject</button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+
+        <% if (resolvedRequests.length> 0) { %>
+          <div class="panel-head panel-head--gap-md">
+            <h2 class="panel-head__title">Recently Resolved</h2>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <caption class="sr-only">Recently resolved password reset requests</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Email</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Temporary Password</th>
+                  <th scope="col">Resolved At</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% resolvedRequests.forEach(function (resetRequest) { %>
+                  <tr>
+                    <td>
+                      <%= resetRequest.email %>
+                    </td>
+                    <td>
+                      <% if (resetRequest.status==="resolved" ) { %>
+                        <span class="tag tag--active">Resolved</span>
+                        <% } else { %>
+                          <span class="tag tag--blocked">Rejected</span>
+                          <% } %>
+                    </td>
+                    <td>
+                      <%= resetRequest.tempPassword || "—" %>
+                    </td>
+                    <td><time datetime="<%= resetRequest.resolvedAt %>">
+                        <%= new Date(resetRequest.resolvedAt).toLocaleString() %>
+                      </time></td>
+                    <td>
+                      <form method="post" action="/shared/admin/password-resets/<%= resetRequest.id %>/delete"
+                        class="admin-inline-form">
+                        <button type="submit" class="btn btn--danger btn--small">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+          </div>
+          <p class="empty-state empty-state--gap-sm">
+            Simulated email: copy the temporary password above and send it to the user (e.g. email or chat) so they can
+            sign in and set a new password.
+          </p>
+          <% } %>
+</section>

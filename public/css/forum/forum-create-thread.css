@@ -1,6 +1,4 @@
-/* -----------------------------
-   CREATE THREAD PAGE
------------------------------- */
+/* CREATE THREAD PAGE */
 .create-thread-form {
   display: flex;
   flex-direction: column;
@@ -141,9 +139,7 @@ a.draft-btn {
   transform: translateY(-1px);
 }
 
-/* -----------------------------
-   RICH TEXT EDITOR (Create Thread / Reply)
------------------------------- */
+/* RICH TEXT EDITOR (Create Thread / Reply) */
 .rich-editor {
   display: flex;
   flex-direction: column;

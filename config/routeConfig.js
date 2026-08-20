@@ -32,6 +32,10 @@ const giftcardRoutes = require(
   "../routes/giftcardRoutes"
 );
 
+const forumRoutes = require(
+  "../routes/forumRoutes"
+);
+
 const router =
   express.Router();
 
@@ -68,6 +72,11 @@ router.use(
 router.use(
   "/giftcard",
   giftcardRoutes
+);
+
+router.use(
+  "/forum",
+  forumRoutes
 );
 
 module.exports = router;

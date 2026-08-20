@@ -39,8 +39,10 @@
       </svg>
     </button>
     <input type="file" accept="image/*" class="rich-editor__image-input" data-rich-editor-image-input hidden>
+    <% if (variant !== "compact") { %>
     <span class="rich-editor__divider" aria-hidden="true"></span>
     <button type="button" class="rich-editor__btn rich-editor__btn--preview" data-preview-toggle aria-label="Preview" title="Preview">Preview</button>
+    <% } %>
   </div>
   <div
     class="rich-editor__content"
@@ -52,7 +54,9 @@
     aria-multiline="true"
     aria-label="<%= placeholder %>"
   ><%- typeof value !== "undefined" ? value : "" %></div>
+<% if (variant !== "compact") { %>
   <div class="rich-editor__preview" data-rich-editor-preview hidden></div>
+  <% } %>
   <textarea name="<%= fieldName %>" class="rich-editor__hidden-input" data-rich-editor-input hidden><%- typeof value !== "undefined" ? value : "" %></textarea>
   <% if (typeof maxTextLength !== "undefined" && maxTextLength) { %>
   <span class="rich-editor__counter" data-rich-editor-counter>0/<%= maxTextLength %></span>

@@ -8,120 +8,187 @@ const sharedController = require("../controllers/sharedController");
 
 const { requireAuth } = require("../middlewares/authMiddleware");
 const requireAdmin = require("../middlewares/requireAdmin");
-const uploadProductImages =
-  require("../middlewares/uploadProductImages");
+
+const uploadProductImages = require(
+  "../middlewares/uploadProductImages"
+);
+
+const uploadProfileImage = require(
+  "../middlewares/uploadProfileImage"
+);
+
+console.log({
+  uploadProfileImage: typeof uploadProfileImage,
+  updateAvatar: typeof profileController.updateAvatar
+});
 
 const router = express.Router();
 
 /* Auth */
-router.get("/login", authController.getLoginPage);
-router.post("/login", authController.login);
-router.post("/logout", authController.logout);
 
-router.get("/register", authController.getRegisterPage);
-router.post("/register", authController.register);
+router.get(
+  "/login",
+  authController.getLoginPage
+);
+
+router.post(
+  "/login",
+  authController.login
+);
+
+router.post(
+  "/logout",
+  authController.logout
+);
+
+router.get(
+  "/register",
+  authController.getRegisterPage
+);
+
+router.post(
+  "/register",
+  authController.register
+);
 
 /* Password */
+
 router.get(
   "/forgot-password",
-  sharedController.getForgotPasswordPage,
+  sharedController.getForgotPasswordPage
 );
 
 router.post(
   "/forgot-password",
-  sharedController.postForgotPassword,
+  sharedController.postForgotPassword
 );
 
 router.get(
   "/reset-password",
-  sharedController.getResetPasswordPage,
+  sharedController.getResetPasswordPage
 );
 
 router.post(
   "/reset-password",
-  sharedController.postResetPassword,
+  sharedController.postResetPassword
 );
 
 /* Profile */
+
 router.get(
   "/profile",
   requireAuth,
-  profileController.getProfilePage,
+  profileController.getProfilePage
 );
 
 router.post(
   "/profile",
   requireAuth,
-  profileController.updateProfile,
+  profileController.updateProfile
 );
 
 router.post(
   "/profile/preferences",
   requireAuth,
-  profileController.updatePreferences,
+  profileController.updatePreferences
+);
+
+router.post(
+  "/profile/avatar",
+  requireAuth,
+  (req, res, next) => {
+    uploadProfileImage(req, res, (err) => {
+      if (!err) {
+        return next();
+      }
+
+      const wantsJson =
+        req.xhr ||
+        (req.get("Accept") || "").includes(
+          "application/json"
+        );
+
+      if (wantsJson) {
+        return res
+          .status(400)
+          .json({ ok: false, message: err.message });
+      }
+
+      return next(err);
+    });
+  },
+  profileController.updateAvatar
 );
 
 /* Admin */
+
 router.get(
   "/admin",
   requireAdmin,
-  sharedController.getAdminPage,
+  sharedController.getAdminPage
 );
 
 router.post(
   "/admin/password-resets/:requestId/resolve",
   requireAdmin,
-  sharedController.postResolvePasswordReset,
+  sharedController.postResolvePasswordReset
 );
 
 router.post(
   "/admin/password-resets/:requestId/reject",
   requireAdmin,
-  sharedController.postRejectPasswordReset,
+  sharedController.postRejectPasswordReset
+);
+
+router.post(
+  "/admin/password-resets/:requestId/delete",
+  requireAdmin,
+  sharedController.postDeleteResolvedPasswordReset
+);
+
+router.post(
+  "/admin/users/:id/status",
+  requireAdmin,
+  sharedController.postToggleUserStatus
 );
 
 router.get(
   "/admin/products/new",
   requireAdmin,
-  sharedController.getProductFormPage,
+  sharedController.getProductFormPage
 );
 
 router.get(
   "/admin/products/:id/edit",
   requireAdmin,
-  sharedController.getProductFormPage,
+  sharedController.getProductFormPage
 );
 
 router.post(
   "/admin/products",
   requireAdmin,
   uploadProductImages,
-  sharedController.postCreateProduct,
+  sharedController.postCreateProduct
 );
 
 router.post(
   "/admin/products/:id",
   requireAdmin,
   uploadProductImages,
-  sharedController.postUpdateProduct,
-);
-
-router.post(
-  "/admin/products/:id/toggle",
-  requireAdmin,
-  sharedController.postToggleProductStatus,
+  sharedController.postUpdateProduct
 );
 
 router.post(
   "/admin/products/:id/delete",
   requireAdmin,
-  sharedController.postDeleteProduct,
+  sharedController.postDeleteProduct
 );
 
 /* Sitemap */
+
 router.get(
   "/sitemap",
-  sharedController.getSitemapPage,
+  sharedController.getSitemapPage
 );
 
 module.exports = router;

@@ -17,9 +17,7 @@
   </nav>
 
   <div class="pd-panel pd-panel--description">
-    <% productData.longDescription.forEach(
-      (paragraph) => {
-    %>
+    <% productData.longDescription.forEach((paragraph) => { %>
       <p><%= paragraph %></p>
     <% }); %>
   </div>
@@ -27,14 +25,11 @@
   <div class="pd-panel pd-panel--info">
     <table class="pd-spec-table">
       <tbody>
-        <% productData.specifications.forEach(
-          (specification) => {
-        %>
+        <% productData.specifications.forEach((specification) => { %>
           <tr>
             <th>
               <%= specification.label %>
             </th>
-
             <td>
               <%= specification.value %>
             </td>
@@ -45,6 +40,6 @@
   </div>
 
   <div class="pd-panel pd-panel--review">
-    <%- include("../product_review/section") %>
+    <%- include("review-section") %>
   </div>
 </section>

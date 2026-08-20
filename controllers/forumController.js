@@ -5,7 +5,7 @@ const { requestWantsJson } = require("../middlewares/authMiddleware");
 const MAX_CONTENT_LENGTH = 3_000_000;
 const MAX_TITLE_LENGTH = 150;
 const MAX_TEXT_LENGTH = 10_000;
-const SORT_OPTIONS = ["new", "top", "hot"];
+const SORT_OPTIONS = ["new", "top"];
 
 const isAdminUser = (user) => userModel.isAdminRole(user?.role);
 
@@ -58,6 +58,8 @@ const getThreadContent = (req, res, next) => {
   if (!thread) {
     return next();
   }
+
+  forumModel.incrementViews(thread.slug);
 
   const decoratedThread = {
     ...thread,
@@ -131,9 +133,7 @@ const createThread = (req, res) => {
     return res.redirect("/forum/create");
   }
 
-  const sanitizedContent = forumModel.sanitizeContent(content);
-
-  if (!categoryMeta || !String(title || "").trim() || forumModel.isContentEmpty(sanitizedContent)) {
+  if (!categoryMeta || !String(title || "").trim() || forumModel.isContentEmpty(content)) {
     return res.redirect("/forum/create");
   }
 
@@ -142,7 +142,7 @@ const createThread = (req, res) => {
   const thread = forumModel.addThread({
     category,
     title: String(title).trim(),
-    content: sanitizedContent,
+    content,
     author: author.name,
     authorId: author.id,
     initials: author.initials || "GU",
@@ -289,9 +289,7 @@ const replyToThread = (req, res) => {
     return res.redirect(`/forum/thread/${thread.slug}`);
   }
 
-  const sanitizedContent = forumModel.sanitizeContent(content);
-
-  if (forumModel.isContentEmpty(sanitizedContent)) {
+  if (forumModel.isContentEmpty(content)) {
     return res.redirect(`/forum/thread/${thread.slug}`);
   }
 
@@ -302,7 +300,7 @@ const replyToThread = (req, res) => {
     authorId: author.id,
     initials: author.initials || "GU",
     rank: "Member",
-    content: sanitizedContent,
+    content,
     parentPostId: parentPostId || null,
   });
 

@@ -16,16 +16,13 @@
 </head>
 
 <body>
-
   <%- include("../partials/header_v2", { activePage, currentUser, cartCount }) %>
 
     <input class="state-control" type="radio" name="category" id="filter-all" checked>
 
     <% categories .filter((category)=> category.id !== "all")
       .forEach((category) => { %>
-
       <input class="state-control" type="radio" name="category" id="filter-<%= category.id %>">
-
       <% }); %>
 
         <input class="state-control" type="radio" name="sort" id="sort-featured" checked>
@@ -34,71 +31,93 @@
         <input class="state-control" type="radio" name="sort" id="sort-name">
 
         <div class="shop-wrap">
-
           <nav class="breadcrumb container" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span aria-hidden="true">•</span>
             <span aria-current="page">Shop All</span>
           </nav>
 
-          <div class="shop-header container">
+          <header class="shop-header container">
             <h1>Shop All</h1>
-
             <p class="shop-header__sub">
               Unlock the story behind every weave, glaze and carving.
             </p>
+          </header>
+
+          <nav class="category-tabs container" aria-label="Shop by category">
+            <% categories.forEach((category)=> { %>
+              <label class="tab" for="filter-<%= category.id %>">
+                <%= category.label %>
+              </label>
+              <% }); %>
+          </nav>
+
+          <div class="shop-shell container">
+            <%- include("../partials/products/filters", { filterOptions, selectedFilters }) %>
+
+              <div class="shop-content">
+                <div class="shop-toolbar">
+                  <p class="results-count">
+                    <span id="results-count">
+                      <%= products.length %>
+                    </span> results
+                  </p>
+
+                  <details class="sort-menu">
+                    <summary aria-label="Choose product order">
+                      Sort by
+                      <span class="sort-current sort-current-featured">Best Sellers</span>
+                      <span class="sort-current sort-current-low">Price: Low to high</span>
+                      <span class="sort-current sort-current-high">Price: High to low</span>
+                      <span class="sort-current sort-current-name">Name: A–Z</span>
+                    </summary>
+
+                    <div class="sort-options" role="group" aria-label="Sort products">
+                      <label for="sort-featured">Best Sellers</label>
+                      <label for="sort-low">Price: Low to high</label>
+                      <label for="sort-high">Price: High to low</label>
+                      <label for="sort-name">Name: A–Z</label>
+                    </div>
+                  </details>
+                </div>
+
+                <%- include("../partials/products/product-grid", { products }) %>
+
+                  <p id="products-empty-state" class="empty-state" hidden>
+                    No pieces match this filter yet. Try another category.
+                  </p>
+
+                  <nav class="pagination" aria-label="Pagination">
+                    <p class="pagination__info">
+                      Showing all <%= products.length %> products
+                    </p>
+
+                    <ul class="pagination__pages">
+                      <li>
+                        <span class="is-current" aria-current="page">1</span>
+                      </li>
+                    </ul>
+                  </nav>
+              </div>
           </div>
 
-          <%- include("../partials/products/category-tabs", { categories, categoryCounts }) %>
+          <section class="shop-seo container">
+            <h2>Vietnamese Craft, Curated</h2>
 
-            <div class="shop-shell container">
-
-              <%- include("../partials/products/filters", { filterOptions }) %>
-
-                <div class="shop-content">
-
-                  <%- include("../partials/products/toolbar", { productCount: products.length, sortOptions }) %>
-
-                    <%- include("../partials/products/product-grid", { products }) %>
-
-                      <p id="products-empty-state" class="empty-state" hidden>
-                        No pieces match this filter yet. Try another category.
-                      </p>
-
-                      <nav class="pagination" aria-label="Pagination">
-                        <p class="pagination__info">
-                          Showing all <%= products.length %> products
-                        </p>
-
-                        <ul class="pagination__pages">
-                          <li>
-                            <span class="is-current" aria-current="page">1</span>
-                          </li>
-                        </ul>
-                      </nav>
-
-                </div>
-            </div>
-
-            <section class="shop-seo container">
-              <h2>Vietnamese Craft, Curated</h2>
-
-              <p>
-                Discover Làng &amp; Co.'s collection of handmade pieces from
-                craft villages across Việt Nam — from Bát Tràng ceramics and
-                Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving,
-                Phú Vinh bamboo weaving, and sandalwood incense. Every piece
-                is made by hand, sourced directly from the artisans who made
-                it, and shipped worldwide with care.
-              </p>
-            </section>
-
+            <p>
+              Discover Làng &amp; Co.'s collection of handmade pieces from
+              craft villages across Việt Nam — from Bát Tràng ceramics and
+              Vạn Phúc silk to Hạ Thái lacquerware, Đồng Kỵ woodcarving,
+              Phú Vinh bamboo weaving, and sandalwood incense. Every piece
+              is made by hand, sourced directly from the artisans who made
+              it, and shipped worldwide with care.
+            </p>
+          </section>
         </div>
 
         <%- include("../partials/footer") %>
 
           <script src="/js/cart/products.js" defer></script>
-
 </body>
 
 </html>

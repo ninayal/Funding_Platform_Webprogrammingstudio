@@ -61,8 +61,8 @@ const attachCurrentUser = (
   res.locals.currentUserId =
     currentUser
       ? String(
-          currentUser.id
-        )
+        currentUser.id
+      )
       : null;
 
   res.locals.currentUrl =
@@ -71,11 +71,7 @@ const attachCurrentUser = (
   return next();
 };
 
-const requireAuth = (
-  req,
-  res,
-  next
-) => {
+const requireAuth = (req, res, next) => {
   const currentUser =
     req.currentUser ||
     req.session?.user;
@@ -84,18 +80,41 @@ const requireAuth = (
     return next();
   }
 
-  const redirectPath =
-    encodeURIComponent(
-      req.originalUrl || "/"
-    );
+  const returnTo =
+    req.get("referer") ||
+    req.originalUrl ||
+    "/";
 
-  return res.redirect(
-    `/shared/login?redirect=${redirectPath}`
+  const loginUrl =
+    `/shared/login?redirect=${encodeURIComponent(returnTo)}`;
+
+  if (requestWantsJson(req)) {
+    return res.status(401).json({
+      success: false,
+      requiresAuth: true,
+      redirect: loginUrl,
+      message: "Please sign in to add items to your cart."
+    });
+  }
+
+  return res.redirect(loginUrl);
+};
+
+const requestWantsJson = (req) => {
+  const acceptHeader =
+    req.get("accept") || "";
+
+  return (
+    req.xhr ||
+    acceptHeader.includes(
+      "application/json"
+    )
   );
 };
 
 module.exports = {
   safeRedirectPath,
   attachCurrentUser,
-  requireAuth
+  requireAuth,
+  requestWantsJson
 };

@@ -1,0 +1,135 @@
+/* TOOLBAR / SEARCH */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.admin-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 999px;
+  background: var(--admin-surface-strong);
+  color: var(--admin-text-muted);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-search:focus-within {
+  border-color: rgba(163, 29, 29, 0.5);
+  box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
+}
+
+.admin-search svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.admin-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--admin-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+/* SELECT (category filter, form selects) */
+.admin-select {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 999px;
+  background: var(--admin-surface-strong);
+  color: var(--admin-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.admin-select:focus-visible {
+  outline: 3px solid rgba(163, 29, 29, 0.38);
+  outline-offset: 3px;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0 22px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--outline {
+  background: rgba(247, 246, 246, 0.78);
+  color: var(--admin-text);
+  border-color: rgba(116, 81, 45, 0.18);
+}
+
+.btn--outline:hover {
+  background: var(--admin-surface-strong);
+  border-color: rgba(116, 81, 45, 0.3);
+}
+
+.btn--danger {
+  background: var(--admin-accent);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(163, 29, 29, 0.18);
+}
+
+.btn--danger:hover {
+  background: var(--admin-accent-strong);
+}
+
+.btn--success {
+  background: var(--admin-success);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(30, 122, 52, 0.18);
+}
+
+.btn--success:hover {
+  background: #175c27;
+}
+
+.btn--primary {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent-strong);
+  border-color: rgba(163, 29, 29, 0.35);
+}
+
+.btn--primary:hover {
+  background: rgba(163, 29, 29, 0.18);
+  border-color: rgba(163, 29, 29, 0.5);
+}
+
+.btn--small {
+  min-height: 36px;
+  padding: 0 16px;
+  font-size: 0.76rem;
+}

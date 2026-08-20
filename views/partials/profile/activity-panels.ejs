@@ -1,0 +1,134 @@
+<div class="profile-panel profile-panel--orders">
+    <div class="panel-heading">
+        <p class="profile-kicker">Tracking</p>
+
+        <h2>Order Status</h2>
+
+        <p>
+            Follow each order from confirmation to delivery,
+            with a clear timeline and a quick overview of your
+            active purchases.
+        </p>
+    </div>
+
+    <div class="order-summary-grid">
+        <% orderSummary.forEach((item)=> { %>
+            <article class="order-summary-card">
+                <span>
+                    <%= item.label %>
+                </span>
+                <strong>
+                    <%= item.value %>
+                </strong>
+                <p>
+                    <%= item.description %>
+                </p>
+            </article>
+            <% }); %>
+    </div>
+
+    <div class="order-card-list">
+        <% orders.forEach((order)=> { %>
+            <article class="order-card">
+                <div class="order-card__head">
+                    <div>
+                        <p class="order-card__eyebrow">
+                            Order #<%= order.id %>
+                        </p>
+
+                        <h3>
+                            <%= order.name %>
+                        </h3>
+                    </div>
+
+                    <span class="status-pill status-pill--<%= order.statusClass %>">
+                        <%= order.status %>
+                    </span>
+                </div>
+
+                <div class="order-card__meta">
+                    <span>Placed on <%= order.placedOn %></span>
+
+                    <span>
+                        Estimated arrival:
+                        <%= order.estimatedArrival %>
+                    </span>
+
+                    <span>Total: <%= order.total %></span>
+                </div>
+
+                <div class="order-progress">
+                    <div class="order-progress__bar">
+                        <span data-order-progress="<%= order.progress %>"></span>
+                    </div>
+
+                    <div class="order-progress__steps">
+                        <% order.steps.forEach((step)=> { %>
+                            <span class="<%= step.state ? `is-${step.state}` : "" %>">
+                                <%= step.label %>
+                            </span>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <div class="order-timeline">
+                    <% order.timeline.forEach((event)=> { %>
+                        <div class="order-timeline__item <%= event.state
+                ? `is-${event.state}`
+                : "" %>">
+                            <strong>
+                                <%= event.title %>
+                            </strong>
+                            <p>
+                                <%= event.description %>
+                            </p>
+                        </div>
+                        <% }); %>
+                </div>
+
+                <div class="order-card__actions">
+                    <a class="order-action" href="<%= order.primaryAction.href %>">
+                        <%= order.primaryAction.label %>
+                    </a>
+
+                    <a class="order-action order-action--ghost" href="<%= order.secondaryAction.href %>">
+                        <%= order.secondaryAction.label %>
+                    </a>
+                </div>
+            </article>
+            <% }); %>
+    </div>
+</div>
+
+<div class="profile-panel profile-panel--notifications">
+    <div class="panel-heading">
+        <p class="profile-kicker">Activity</p>
+
+        <h2>Notifications</h2>
+
+        <p>
+            Important updates from your account,
+            orders, and the wider Làng &amp; Co.
+            community.
+        </p>
+    </div>
+
+    <div class="notification-list">
+        <% notifications.forEach((notification)=> { %>
+            <div class="notification-card">
+                <span class="notification-chip">
+                    <%= notification.type %>
+                </span>
+
+                <div>
+                    <strong>
+                        <%= notification.title %>
+                    </strong>
+                    <p>
+                        <%= notification.description %>
+                    </p>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+</div>
