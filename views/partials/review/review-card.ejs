@@ -1,7 +1,5 @@
 <article
-  class="pr-card<%= review.isOwn
-    ? ' pr-card--own'
-    : '' %>"
+  class="pr-card<%= review.isOwn ? ' pr-card--own' : '' %>"
   data-review-id="<%= review.id %>"
   data-rating="<%= review.rating %>"
   data-title="<%= review.searchTitle %>"
@@ -11,63 +9,28 @@
 >
   <header class="pr-card__header">
     <div class="pr-card__profile">
-      <div
-        class="pr-card__avatar"
-        aria-hidden="true"
-      >
-        <%= review.avatar %>
-      </div>
-
+      <div class="pr-card__avatar" aria-hidden="true"><%= review.avatar %></div>
       <div class="pr-card__profile-text">
-        <p class="pr-card__user">
-          <%= review.name %>
-        </p>
-
-        <p
-          class="pr-card__stars"
-          aria-label="<%= review.rating %> out of 5 stars"
-        >
-          <%= review.stars %>
-        </p>
+        <p class="pr-card__user"><%= review.name %></p>
+        <p class="pr-card__stars" aria-label="<%= review.rating %> out of 5 stars"><%= review.stars %></p>
       </div>
     </div>
 
     <div class="pr-card__meta">
-      <time
-        class="pr-card__date"
-        datetime="<%= review.dateValue %>"
-      >
-        <%= review.dateLabel %>
-      </time>
-
+      <time class="pr-card__date" datetime="<%= review.dateValue %>"><%= review.dateLabel %></time>
       <% if (review.isOwn) { %>
         <div class="pr-card__owner-tools">
-          <span class="pr-card__owner-badge">
-            Your review
-          </span>
-
+          <span class="pr-card__owner-badge">Your review</span>
           <a
             class="pr-card__owner-action"
             href="/products/<%= productData.slug %>/reviews/<%= review.id %>/edit#review-form"
-          >
-            Edit
-          </a>
-
+          >Edit</a>
           <form
             class="pr-delete-form"
             action="/products/<%= productData.slug %>/reviews/<%= review.id %>/delete"
             method="post"
           >
-            <button
-              class="
-                pr-card__owner-action
-                pr-card__owner-action--delete
-              "
-              type="submit"
-              data-delete-review
-            >
-              Delete
-            </button>
+            <button class="pr-card__owner-action pr-card__owner-action--delete" type="submit" data-delete-review>Delete</button>
           </form>
         </div>
       <% } %>
@@ -75,20 +38,12 @@
   </header>
 
   <div class="pr-card__content">
-    <h3 class="pr-card__title">
-      <%= review.title %>
-    </h3>
-
-    <p class="pr-card__comment">
-      <%= review.comment %>
-    </p>
+    <h3 class="pr-card__title"><%= review.title %></h3>
+    <p class="pr-card__comment"><%= review.comment %></p>
   </div>
 
   <% if (review.images.length) { %>
-    <div
-      class="pr-card__media"
-      aria-label="<%= review.images.length %> review photos"
-    >
+    <div class="pr-card__media" aria-label="<%= review.images.length %> review photos">
       <% review.images.forEach((image) => { %>
         <figure class="pr-card__gallery-item">
           <button
@@ -97,12 +52,7 @@
             data-review-lightbox
             aria-label="<%= image.openLabel %>"
           >
-            <img
-              src="<%= image.src %>"
-              alt="<%= image.alt %> for <%= productData.name %>"
-              loading="lazy"
-              decoding="async"
-            />
+            <img src="<%= image.src %>" alt="<%= image.alt %> for <%= productData.name %>" loading="lazy" decoding="async" />
           </button>
         </figure>
       <% }); %>

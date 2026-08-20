@@ -1,88 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <meta
-    name="theme-color"
-    content="#A31D1D"
-  />
-
-  <title>
-    <%= pageTitle %> — Làng &amp; Co.
-  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title><%= pageTitle %> — Làng &amp; Co.</title>
 
   <!-- Global design system -->
-  <link
-    rel="stylesheet"
-    href="/css/index.css"
-  />
-
+  <link rel="stylesheet" href="/css/index.css" />
   <!-- Shared layout -->
-  <link
-    rel="stylesheet"
-    href="/css/header_v2.css"
-  />
-  <!-- Product Detail feature -->
-  <link
-    rel="stylesheet"
-    href="/css/review/product-detail.css"
-  />
+  <link rel="stylesheet" href="/css/header_v2.css" />
+  <!-- Product detail -->
+  <link rel="stylesheet" href="/css/review/product-detail.css" />
+  <!-- Customer reviews -->
+  <link rel="stylesheet" href="/css/review/review-overview.css" />
+  <link rel="stylesheet" href="/css/review/review-form.css" />
+  <link rel="stylesheet" href="/css/review/review-list.css" />
+  <link rel="stylesheet" href="/css/review/review-lightbox.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
 
-  <!-- Customer Review functions -->
-  <link
-    rel="stylesheet"
-    href="/css/review/review-overview.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/review/review-form.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/review/review-list.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="/css/review/review-lightbox.css"
-  />
-  <link
-    rel="stylesheet"
-    href="/css/footer.css"
-  />
-
-  <script
-    src="/js/shared/formPersistence.js"
-    defer
-  ></script>
-
-  <script
-    src="/js/review/review.js"
-    defer
-  ></script>
-
-  <script
-    src="/js/review/review_lightbox.js"
-    defer
-  ></script>
+  <script src="/js/shared/formPersistence.js" defer></script>
+  <script src="/js/review/review.js" defer></script>
+  <script src="/js/review/review_lightbox.js" defer></script>
 </head>
-
 <body class="product-detail-page">
-  <%- include("../partials/header_v2", {
-    activePage,
-    cartCount
-  }) %>
-
+  <%- include("../partials/header_v2", { activePage, cartCount }) %>
   <%- include("../partials/review/state-controls") %>
+
   <main class="pd-wrap">
     <%- include("../partials/review/product-main") %>
     <%- include("../partials/review/product-tabs") %>
@@ -91,5 +35,4 @@
 
   <%- include("../partials/footer") %>
 </body>
-
 </html>

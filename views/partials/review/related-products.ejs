@@ -1,7 +1,4 @@
-<section
-  class="pd-related container"
-  aria-label="You may also like"
->
+<section class="pd-related container" aria-label="You may also like">
   <h2>You May Also Like</h2>
 
   <div class="shop-grid pd-related__grid">
@@ -9,41 +6,16 @@
       <article class="shop-card">
         <div class="shop-card__media">
           <a href="<%= relatedProduct.href %>">
-            <img
-              src="<%= relatedProduct.image %>"
-              alt="<%= relatedProduct.alt %>"
-              loading="lazy"
-            />
+            <img src="<%= relatedProduct.image %>" alt="<%= relatedProduct.alt %>" loading="lazy" />
           </a>
-
-          <a
-            href="/cart"
-            class="quickadd-btn"
-            aria-label="Quick add <%= relatedProduct.name %> to cart"
-          >+</a>
+          <a href="/cart" class="quickadd-btn" aria-label="Quick add <%= relatedProduct.name %> to cart">+</a>
         </div>
 
         <div class="shop-card__body">
-          <p class="shop-card__maker">
-            <%= relatedProduct.maker %>
-          </p>
-
-          <h3 class="shop-card__title">
-            <a href="<%= relatedProduct.href %>">
-              <%= relatedProduct.name %>
-            </a>
-          </h3>
-
-          <p class="shop-card__price">
-            <%= relatedProduct.priceDisplay %>
-          </p>
-
-          <p class="shop-card__rating">
-            <%= relatedProduct.ratingStars %>
-            <span>
-              (<%= relatedProduct.reviewCount %>)
-            </span>
-          </p>
+          <p class="shop-card__maker"><%= relatedProduct.maker %></p>
+          <h3 class="shop-card__title"><a href="<%= relatedProduct.href %>"><%= relatedProduct.name %></a></h3>
+          <p class="shop-card__price"><%= relatedProduct.priceDisplay %></p>
+          <p class="shop-card__rating"><%= relatedProduct.ratingStars %> <span>(<%= relatedProduct.reviewCount %>)</span></p>
         </div>
       </article>
     <% }); %>

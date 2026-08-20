@@ -26,6 +26,7 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
 /* ---------- Intro ---------- */
 .pr-hero {
   width: 100%;
@@ -76,6 +77,7 @@
   font-weight: 600;
   line-height: 20px;
 }
+
 /* ---------- Overview ---------- */
 .pr-overview {
   display: grid;
@@ -261,6 +263,7 @@
   font-weight: 700;
   text-decoration: none;
 }
+
 /* ---------- Guest rating links ---------- */
 .pr-rating-launch__star--login {
   display: grid;
@@ -296,13 +299,11 @@
     grid-template-columns:
       40% 24% 32%;
   }
-
   .pr-overview__title,
   .pr-overview__action-title {
     font-size: 32px;
     line-height: 38px;
   }
-
   .pr-distribution__row {
     grid-template-columns:
       45px 55% 82px;
@@ -314,7 +315,6 @@
     grid-template-columns: 100%;
     row-gap: 28px;
   }
-
   .pr-overview__overall,
   .pr-overview__action {
     align-items: flex-start;
@@ -327,7 +327,6 @@
     font-size: 38px;
     line-height: 45px;
   }
-
   .pr-overview {
     padding: 26px 20px;
   }

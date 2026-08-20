@@ -1,53 +1,26 @@
 <div class="pr-hero__intro">
-  <p class="pr-hero__kicker">
-    Customer Reviews
-  </p>
-
-  <h2
-    class="pr-hero__title"
-    id="review-section-title"
-  >
-    Real experiences with
-    <em><%= reviewOverview.productName %></em>
+  <p class="pr-hero__kicker">Customer Reviews</p>
+  <h2 class="pr-hero__title" id="review-section-title">
+    Real experiences with <em><%= reviewOverview.productName %></em>
   </h2>
-
   <p class="pr-hero__desc">
-    Rate the product, describe the details
-    that mattered, and upload 1 to 3 photos
-    of the item you received.
+    Rate the product, describe the details that mattered, and upload 1 to 3 photos of the item you received.
   </p>
 </div>
 
 <% if (reviewOverview.pageMessage) { %>
-  <p
-    class="pr-page-message"
-    role="status"
-  >
-    <%= reviewOverview.pageMessage %>
-  </p>
+  <p class="pr-page-message" role="status"><%= reviewOverview.pageMessage %></p>
 <% } %>
 
-<section
-  class="pr-overview"
-  aria-label="Customer review overview"
->
+<section class="pr-overview" aria-label="Customer review overview">
   <div class="pr-overview__distribution">
-    <h3 class="pr-overview__title">
-      Rating Distribution
-    </h3>
-
-    <div
-      class="pr-distribution"
-      aria-label="Rating distribution"
-    >
+    <h3 class="pr-overview__title">Rating Distribution</h3>
+    <div class="pr-distribution" aria-label="Rating distribution">
       <% reviewOverview.ratingBreakdown.forEach((item) => { %>
         <div class="pr-distribution__row">
           <span class="pr-distribution__stars">
-            <%= item.rating %>
-            <span aria-hidden="true">★</span>
-            <span class="sr-only">stars</span>
+            <%= item.rating %> <span aria-hidden="true">★</span><span class="sr-only">stars</span>
           </span>
-
           <span
             class="pr-distribution__track"
             role="progressbar"
@@ -56,17 +29,10 @@
             aria-valuemax="100"
             aria-valuenow="<%= item.percentage %>"
           >
-            <span
-              class="pr-distribution__fill"
-              style="width: <%= item.percentage %>%"
-            ></span>
+            <span class="pr-distribution__fill" style="width: <%= item.percentage %>%"></span>
           </span>
-
           <span class="pr-distribution__reviews">
-            <%= item.count %>
-            <%= item.count === 1
-              ? "review"
-              : "reviews" %>
+            <%= item.count %> <%= item.count === 1 ? "review" : "reviews" %>
           </span>
         </div>
       <% }); %>
@@ -74,10 +40,7 @@
   </div>
 
   <div class="pr-overview__overall">
-    <p class="pr-overview__section-label">
-      Overall Rating
-    </p>
-
+    <p class="pr-overview__section-label">Overall Rating</p>
     <div
       class="pr-overall-ring"
       style="--rating-progress: <%= reviewOverview.overallPercent %>%"
@@ -85,56 +48,28 @@
       aria-label="Overall rating <%= reviewOverview.overallRating %> out of 5"
     >
       <div class="pr-overall-ring__inner">
-        <strong class="pr-overall-ring__score">
-          <%= reviewOverview.overallRating %>
-        </strong>
-
-        <span class="pr-overall-ring__maximum">
-          / 5
-        </span>
+        <strong class="pr-overall-ring__score"><%= reviewOverview.overallRating %></strong>
+        <span class="pr-overall-ring__maximum">/ 5</span>
       </div>
     </div>
 
-    <div
-      class="pr-overall-stars"
-      aria-label="<%= reviewOverview.overallRating %> out of 5 stars"
-    >
-      <span class="pr-overall-stars__base">
-        ★★★★★
-      </span>
-
+    <div class="pr-overall-stars" aria-label="<%= reviewOverview.overallRating %> out of 5 stars">
+      <span class="pr-overall-stars__base">★★★★★</span>
       <span
         class="pr-overall-stars__fill"
         style="width: <%= reviewOverview.overallPercent %>%"
         aria-hidden="true"
-      >
-        ★★★★★
-      </span>
+      >★★★★★</span>
     </div>
-
-    <p class="pr-overview__review-total">
-      Based on <%= reviewOverview.totalReviewLabel %>
-    </p>
+    <p class="pr-overview__review-total">Based on <%= reviewOverview.totalReviewLabel %></p>
   </div>
 
-  <div
-    class="pr-overview__action"
-    id="review-composer"
-  >
-    <p class="pr-overview__section-label">
-      Rate This Product
-    </p>
-
-    <h3 class="pr-overview__action-title">
-      How was your experience?
-    </h3>
+  <div class="pr-overview__action" id="review-composer">
+    <p class="pr-overview__section-label">Rate This Product</p>
+    <h3 class="pr-overview__action-title">How was your experience?</h3>
 
     <% if (reviewOverview.isAuthenticated) { %>
-      <div
-        class="pr-rating-launch"
-        role="group"
-        aria-label="Choose a rating and open the review form"
-      >
+      <div class="pr-rating-launch" role="group" aria-label="Choose a rating and open the review form">
         <% reviewOverview.ratingOptions.forEach((rating) => { %>
           <button
             class="pr-rating-launch__star"
@@ -142,50 +77,27 @@
             data-open-review
             data-rating-value="<%= rating.value %>"
             aria-controls="review-composer-panel"
-            aria-expanded="<%= reviewOverview.formOpen
-              ? 'true'
-              : 'false' %>"
+            aria-expanded="<%= reviewOverview.formOpen ? 'true' : 'false' %>"
             aria-label="<%= rating.label %>"
             title="<%= rating.label %>"
-          >
-            ★
-          </button>
+          >★</button>
         <% }); %>
       </div>
-
-      <p class="pr-overview__hint">
-        Select a star to open the review form.
-        Upload 1 to 3 product photos.
-      </p>
+      <p class="pr-overview__hint">Select a star to open the review form. Upload 1 to 3 product photos.</p>
     <% } else { %>
-      <div
-        class="pr-rating-launch"
-        role="group"
-        aria-label="Sign in to rate this product"
-      >
+      <div class="pr-rating-launch" role="group" aria-label="Sign in to rate this product">
         <% reviewOverview.ratingOptions.forEach((rating) => { %>
           <a
-            class="
-              pr-rating-launch__star
-              pr-rating-launch__star--login
-            "
+            class="pr-rating-launch__star pr-rating-launch__star--login"
             href="<%= reviewOverview.loginUrl %>"
             data-rating-value="<%= rating.value %>"
             aria-label="<%= rating.loginLabel %>"
             title="Sign in to write a review"
-          >
-            ★
-          </a>
+          >★</a>
         <% }); %>
       </div>
-
       <p class="pr-overview__hint pr-overview__hint--login">
-        <a
-          class="pr-overview__signin-link"
-          href="<%= reviewOverview.loginUrl %>"
-        >
-          Sign in
-        </a>
+        <a class="pr-overview__signin-link" href="<%= reviewOverview.loginUrl %>">Sign in</a>
         before rating or reviewing this product.
       </p>
     <% } %>
