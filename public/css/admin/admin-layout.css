@@ -79,20 +79,16 @@
 }
 
 /* ACTIVE TAB STATE */
-#admin-tab-dashboard:checked~.admin .admin__sidebar label[for="admin-tab-dashboard"],
 #admin-tab-products:checked~.admin .admin__sidebar label[for="admin-tab-products"],
-#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"],
-#admin-tab-settings:checked~.admin .admin__sidebar label[for="admin-tab-settings"] {
+#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"] {
   background: var(--admin-accent-soft);
   border-color: rgba(163, 29, 29, 0.18);
   color: var(--admin-accent-strong);
   box-shadow: inset 0 0 0 1px rgba(163, 29, 29, 0.04);
 }
 
-#admin-tab-dashboard:checked~.admin .admin__sidebar label[for="admin-tab-dashboard"] .admin__icon,
 #admin-tab-products:checked~.admin .admin__sidebar label[for="admin-tab-products"] .admin__icon,
-#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"] .admin__icon,
-#admin-tab-settings:checked~.admin .admin__sidebar label[for="admin-tab-settings"] .admin__icon {
+#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"] .admin__icon {
   background: var(--admin-accent);
   color: #ffffff;
   transform: translateX(1px);
@@ -110,10 +106,8 @@
   animation: adminPanelIn 0.22s ease-out;
 }
 
-#admin-tab-dashboard:checked~.admin .admin__content .panel--dashboard,
 #admin-tab-products:checked~.admin .admin__content .panel--products,
-#admin-tab-users:checked~.admin .admin__content .panel--users,
-#admin-tab-settings:checked~.admin .admin__content .panel--settings {
+#admin-tab-users:checked~.admin .admin__content .panel--users {
   display: block;
 }
 

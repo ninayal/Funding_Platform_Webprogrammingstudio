@@ -21,10 +21,8 @@
 
     <!-- CSS-only tab controllers (must stay before .admin for ~ sibling selectors to work) -->
     <% const currentTab = typeof activeTab !== "undefined" && activeTab ? activeTab : "users"; %>
-    <input type="radio" name="admin-tab" id="admin-tab-dashboard" class="admin-tab-radio" aria-label="Dashboard tab" <%= currentTab === "dashboard" ? "checked" : "" %>>
     <input type="radio" name="admin-tab" id="admin-tab-products" class="admin-tab-radio" aria-label="Products tab" <%= currentTab === "products" ? "checked" : "" %>>
     <input type="radio" name="admin-tab" id="admin-tab-users" class="admin-tab-radio" aria-label="Users tab" <%= currentTab === "users" ? "checked" : "" %>>
-    <input type="radio" name="admin-tab" id="admin-tab-settings" class="admin-tab-radio" aria-label="Settings tab" <%= currentTab === "settings" ? "checked" : "" %>>
 
     <div class="admin">
 
@@ -33,8 +31,6 @@
       <!-- Content -->
       <main class="admin__content">
         <a id="admin-top"></a>
-
-        <%- include("../../partials/admin/dashboard-panel") %>
 
         <%- include(
           "../../partials/admin/products-panel",
@@ -45,8 +41,6 @@
           "../../partials/admin/users-panel",
           { users, userStats, currentUser, pendingRequests, resolvedRequests }
         ) %>
-
-        <%- include("../../partials/admin/settings-panel") %>
 
       </main>
     </div>
