@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
   <section class="hero">
     <div class="hero__bg"></div>
 
@@ -32,13 +31,21 @@
       </div>
 
       <div class="hero__cta">
-        <a class="hero__cta-primary" href="/shared/register">
+        <a
+          class="hero__cta-primary"
+          href="/cart/products"
+        >
           Explore the Collection →
         </a>
 
-        <a class="hero__cta-ghost" href="/shared/login">
-          Already have an account? Sign In →
-        </a>
+        <% if (!currentUser) { %>
+          <a
+            class="hero__cta-ghost"
+            href="/shared/login"
+          >
+            Already have an account? Sign In →
+          </a>
+        <% } %>
       </div>
   </section>
 
@@ -46,9 +53,14 @@
     <%- include("../partials/landing/shop-sections") %>
       <%- include("../partials/landing/brand-story") %>
         <%- include("../partials/landing/social-proof") %>
+
           <section class="finder-cta">
             <div class="finder-cta__media">
-              <img src="/images/landingpics/finder-bg.png" alt="A workbench of tools mid-craft" loading="lazy">
+              <img
+                src="/images/landingpics/finder-bg.png"
+                alt="A workbench of tools mid-craft"
+                loading="lazy"
+              >
             </div>
 
             <div class="finder-cta__content">
@@ -63,15 +75,24 @@
                 We will point you to the tradition that fits.
               </p>
 
-              <a class="finder-cta__btn" href="/cart/products">
+              <a
+                class="finder-cta__btn"
+                href="/cart/products"
+              >
                 Take the Craft Finder <span>→</span>
               </a>
             </div>
           </section>
 
-          <section class="community-split" aria-label="Community and wishlist">
+          <section
+            class="community-split"
+            aria-label="Community and wishlist"
+          >
             <% communityCards.forEach((card)=> { %>
-              <a class="split-card split-card--<%= card.modifier %>" href="<%= card.href %>">
+              <a
+                class="split-card split-card--<%= card.modifier %>"
+                href="<%= card.href %>"
+              >
                 <span class="split-card__title">
                   <%= card.title %>
                 </span>
@@ -84,12 +105,11 @@
                   <%= card.cta %>
                 </span>
               </a>
-              <% }); %>
+            <% }); %>
           </section>
   </div>
 
   <%- include("../partials/footer") %>
-
 </body>
 
 </html>
