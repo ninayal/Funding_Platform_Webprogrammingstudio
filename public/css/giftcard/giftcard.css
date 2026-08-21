@@ -3256,3 +3256,158 @@ video {
     }
 
 }
+
+/* ================================================
+   GIFTCARD DROPDOWN CONSISTENCY
+   Match shared sort dropdown style
+   ================================================ */
+
+.field select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    min-height: 48px;
+    padding: 13px 42px 13px 14px;
+
+    border: 1px solid var(--line);
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, .64)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236D2323' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+        no-repeat right 16px center;
+
+    color: var(--deep);
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background-color .2s ease;
+}
+
+.field select:hover {
+    border-color: rgba(163, 29, 29, .45);
+}
+
+.field select:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 4px rgba(163, 29, 29, .06);
+}
+/* ================================================
+   CAUSE DROPDOWN (custom select, mirrors the
+   blog "Sort stories" dropdown for a consistent
+   look across pages)
+================================================ */
+
+.cause-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.cause-dropdown__button {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    outline: 0;
+    background: rgba(255, 255, 255, .64);
+    color: var(--deep);
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.cause-dropdown__button:hover {
+    border-color: rgba(163, 29, 29, .5);
+}
+
+.cause-dropdown__button:focus-visible {
+    border-color: var(--red);
+    box-shadow: 0 0 0 4px rgba(163, 29, 29, .06);
+}
+
+.cause-dropdown__button svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    color: var(--brown);
+    transition: transform 180ms ease;
+}
+
+.cause-dropdown.is-open .cause-dropdown__button svg {
+    transform: rotate(180deg);
+}
+
+.cause-dropdown__button[aria-invalid="true"] {
+    border-color: var(--red);
+    box-shadow: 0 0 0 4px rgba(163, 29, 29, .06);
+}
+
+.cause-dropdown__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 50;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: 0 16px 36px rgba(56, 37, 24, .16);
+}
+
+.cause-dropdown__menu[hidden] {
+    display: none;
+}
+
+.cause-dropdown__option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    padding: 11px 12px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--deep);
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+}
+
+.cause-dropdown__option:hover,
+.cause-dropdown__option.is-selected {
+    background: rgba(163, 29, 29, .08);
+    color: var(--red);
+}
+
+.cause-dropdown__option.is-selected {
+    font-weight: 700;
+}
+
+.cause-dropdown__check {
+    opacity: 0;
+    color: var(--red);
+    font-weight: 700;
+}
+
+.cause-dropdown__option.is-selected .cause-dropdown__check {
+    opacity: 1;
+}

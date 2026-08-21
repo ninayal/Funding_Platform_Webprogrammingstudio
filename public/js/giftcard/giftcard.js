@@ -1494,4 +1494,258 @@
       );
     }
   }
+
+  /* =========================================
+     CUSTOM CAUSE DROPDOWN
+     Mirrors the blog "Sort stories" dropdown so
+     both selects look and behave the same way.
+  ========================================= */
+
+  const causeSelect =
+    document.getElementById(
+      "cause-category",
+    );
+
+  const causeControl =
+    document.querySelector(
+      "[data-cause-dropdown-control]",
+    );
+
+  const causeButton =
+    document.querySelector(
+      "[data-cause-dropdown-button]",
+    );
+
+  const causeLabel =
+    document.querySelector(
+      "[data-cause-dropdown-label]",
+    );
+
+  const causeMenu =
+    document.querySelector(
+      "[data-cause-dropdown-menu]",
+    );
+
+  const causeOptions = [
+    ...document.querySelectorAll(
+      "[data-cause-dropdown-option]",
+    ),
+  ];
+
+  if (
+    causeSelect &&
+    causeControl &&
+    causeButton &&
+    causeLabel &&
+    causeMenu &&
+    causeOptions.length
+  ) {
+    const closeCauseDropdown = () => {
+      causeControl.classList.remove(
+        "is-open",
+      );
+
+      causeButton.setAttribute(
+        "aria-expanded",
+        "false",
+      );
+
+      causeMenu.hidden = true;
+    };
+
+    const openCauseDropdown = () => {
+      causeControl.classList.add(
+        "is-open",
+      );
+
+      causeButton.setAttribute(
+        "aria-expanded",
+        "true",
+      );
+
+      causeMenu.hidden = false;
+    };
+
+    const toggleCauseDropdown = () => {
+      if (causeMenu.hidden) {
+        openCauseDropdown();
+      } else {
+        closeCauseDropdown();
+      }
+    };
+
+    const updateCauseDropdown = (
+      value,
+    ) => {
+      const selectedOption =
+        causeOptions.find(
+          (option) =>
+            option.dataset
+              .causeDropdownOption ===
+            value,
+        );
+
+      causeLabel.textContent =
+        selectedOption
+          ?.querySelector("span")
+          ?.textContent
+          .trim() ||
+        "Select a cause";
+
+      causeOptions.forEach(
+        (option) => {
+          const isSelected =
+            option.dataset
+              .causeDropdownOption ===
+            value;
+
+          option.classList.toggle(
+            "is-selected",
+            isSelected,
+          );
+
+          option.setAttribute(
+            "aria-selected",
+            String(isSelected),
+          );
+        },
+      );
+    };
+
+    /*
+     * Keep the button's error state in sync with the hidden
+     * select, since shared validation sets aria-invalid on
+     * the (now hidden) select rather than the visible button.
+     */
+    const syncCauseInvalidState = () => {
+      if (
+        causeSelect.getAttribute(
+          "aria-invalid",
+        ) === "true"
+      ) {
+        causeButton.setAttribute(
+          "aria-invalid",
+          "true",
+        );
+      } else {
+        causeButton.removeAttribute(
+          "aria-invalid",
+        );
+      }
+    };
+
+    new MutationObserver(
+      syncCauseInvalidState,
+    ).observe(causeSelect, {
+      attributes: true,
+      attributeFilter: [
+        "aria-invalid",
+      ],
+    });
+
+    causeButton.addEventListener(
+      "click",
+      (event) => {
+        event.stopPropagation();
+
+        toggleCauseDropdown();
+      },
+    );
+
+    causeOptions.forEach(
+      (option) => {
+        option.addEventListener(
+          "click",
+          (event) => {
+            event.stopPropagation();
+
+            const value =
+              option.dataset
+                .causeDropdownOption;
+
+            if (!value) {
+              return;
+            }
+
+            /*
+             * Update the hidden real select so existing
+             * validation/preview/draft logic keeps working
+             * unchanged.
+             */
+            causeSelect.value =
+              value;
+
+            causeSelect.dispatchEvent(
+              new Event(
+                "change",
+                {
+                  bubbles: true,
+                },
+              ),
+            );
+
+            updateCauseDropdown(
+              value,
+            );
+
+            closeCauseDropdown();
+
+            causeButton.focus();
+          },
+        );
+      },
+    );
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (
+          !causeControl.contains(
+            event.target,
+          )
+        ) {
+          closeCauseDropdown();
+        }
+      },
+    );
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Escape" &&
+          !causeMenu.hidden
+        ) {
+          closeCauseDropdown();
+
+          causeButton.focus();
+        }
+      },
+    );
+
+    /*
+     * A native form reset clears the hidden select back to
+     * its default; mirror that onto the custom dropdown too.
+     */
+    form?.addEventListener(
+      "reset",
+      () => {
+        window.requestAnimationFrame(
+          () => {
+            updateCauseDropdown(
+              causeSelect.value,
+            );
+
+            syncCauseInvalidState();
+          },
+        );
+      },
+    );
+
+    updateCauseDropdown(
+      causeSelect.value,
+    );
+
+    syncCauseInvalidState();
+  }
 })();

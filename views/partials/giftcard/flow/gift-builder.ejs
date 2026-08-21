@@ -297,7 +297,9 @@
                     <label class="field">
                         <span>Choose a cause</span>
 
-                        <select id="cause-category" name="causeCategory">
+                        <!-- Keep the real select for form submission/validation/preview; the custom
+                             dropdown below drives it, same pattern as the blog sort dropdown. -->
+                        <select id="cause-category" name="causeCategory" hidden>
                             <option value="" disabled <%=!defaults.causeCategory ? "selected" : "" %>>
                                 Select a cause
                             </option>
@@ -310,6 +312,33 @@
                                 </option>
                                 <% }); %>
                         </select>
+
+                        <div class="cause-dropdown" data-cause-dropdown-control>
+                            <button type="button" class="cause-dropdown__button" aria-haspopup="listbox"
+                                aria-expanded="false" data-cause-dropdown-button>
+                                <span data-cause-dropdown-label>
+                                    <% var selectedCause=causes.find(function(cause) { return cause.value===defaults.causeCategory; }); %>
+                                    <%= selectedCause ? selectedCause.label : "Select a cause" %>
+                                </span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"></path>
+                                </svg>
+                            </button>
+
+                            <div class="cause-dropdown__menu" role="listbox" aria-label="Choose a cause"
+                                data-cause-dropdown-menu hidden>
+                                <% causes.forEach(function(cause) { %>
+                                    <button type="button" class="cause-dropdown__option <%=cause.value===defaults.causeCategory ? 'is-selected' : '' %>"
+                                        role="option"
+                                        aria-selected="<%=cause.value===defaults.causeCategory ? 'true' : 'false' %>"
+                                        data-cause-dropdown-option="<%= cause.value %>">
+                                        <span><%= cause.label %></span>
+                                        <span class="cause-dropdown__check" aria-hidden="true">✓</span>
+                                    </button>
+                                    <% }); %>
+                            </div>
+                        </div>
 
                         <% if (errors.causeCategory) { %>
                             <span class="form-error">
