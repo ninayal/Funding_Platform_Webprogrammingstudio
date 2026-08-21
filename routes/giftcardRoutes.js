@@ -51,12 +51,6 @@ router.post(
     .createGiftcard,
 );
 
-/* Look up an existing gift code. */
-router.post(
-  "/redeem",
-  giftcardController
-    .redeemGiftcard,
-);
 
 /* Edit existing data owned by the logged-in user. */
 router.get(
@@ -78,13 +72,6 @@ router.post(
   requireAuth,
   giftcardController
     .deleteGiftcard,
-);
-
-/* Retrieve a saved gift. */
-router.get(
-  "/view/:code",
-  giftcardController
-    .viewGiftcard,
 );
 
 module.exports =

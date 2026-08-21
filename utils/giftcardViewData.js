@@ -64,7 +64,6 @@ const buildGiftcardPageData = (
     reviewMode = false,
     editGiftcard = null,
     savedGift = null,
-    redeemError = "",
     deleted = false,
     currentUser = null,
     canManageSavedGift = false,
@@ -110,7 +109,6 @@ const buildGiftcardPageData = (
     paperSizes,
     defaults,
     errors,
-    redeemError,
     form,
     giftView,
     ...selection,
@@ -122,7 +120,6 @@ const buildGiftcardPageData = (
       wasDeleted: Boolean(deleted),
       showHero: !isSavedView,
       showReview: isReviewMode,
-      showRedeem: !isSavedView,
       waveClass: isSavedView
         ? "giftcard-wave giftcard-wave--standalone"
         : "giftcard-wave",

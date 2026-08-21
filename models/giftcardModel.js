@@ -115,26 +115,6 @@ const createGiftcard = (
   return { ...giftcard };
 };
 
-const getGiftcardByCode = (giftCode) => {
-  const code = String(giftCode || "")
-    .trim()
-    .toUpperCase();
-
-  if (!code) {
-    return null;
-  }
-
-  const giftcard =
-    readGiftcards().giftcards.find(
-      (item) =>
-        String(item.code).toUpperCase() === code,
-    );
-
-  return giftcard
-    ? { ...giftcard }
-    : null;
-};
-
 const getGiftcardById = (giftcardId) => {
   const id = String(giftcardId || "").trim();
 
@@ -328,7 +308,6 @@ const deleteGiftcard = (
 
 module.exports = {
   createGiftcard,
-  getGiftcardByCode,
   getGiftcardById,
   getGiftcardsByUserId,
   updateGiftcard,

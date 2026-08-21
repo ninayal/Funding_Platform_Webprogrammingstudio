@@ -15,11 +15,6 @@
       "gift-card-form",
     );
 
-  const redeemInput =
-    document.getElementById(
-      "gift-code",
-    );
-
   const savedView =
     body?.dataset
       .giftcardSavedView === "true";
@@ -31,18 +26,6 @@
   const hasServerErrors =
     body?.dataset
       .giftcardServerErrors === "true";
-
-  if (redeemInput) {
-    redeemInput.addEventListener(
-      "input",
-      () => {
-        redeemInput.value =
-          redeemInput.value
-            .toUpperCase()
-            .replace(/\s+/g, "");
-      },
-    );
-  }
 
   document
     .querySelectorAll(

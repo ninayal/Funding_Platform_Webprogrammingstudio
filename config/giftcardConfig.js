@@ -173,9 +173,6 @@ const giftViewDemo = {
     "approved individuals, or priority causes.",
 };
 
-const giftCodePattern =
-  /^LANG-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
-
 const emailTimings = [
   "Send immediately",
   "Schedule delivery",
@@ -192,5 +189,4 @@ module.exports = {
   downloadFormats,
   giftcardDefaults,
   giftViewDemo,
-  giftCodePattern,
 };

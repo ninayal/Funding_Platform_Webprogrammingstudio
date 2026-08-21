@@ -3,7 +3,7 @@
 const giftcardModel = require("../models/giftcardModel");
 const cartModel = require("../models/cartModel");
 const { validateGiftcard } = require("../validators/giftcardValidators");
-const { giftcardDefaults, giftCodePattern } = require("../config/giftcardConfig");
+const { giftcardDefaults } = require("../config/giftcardConfig");
 const { toFormValues } = require("../utils/giftcardMapper");
 const { buildGiftcardPageData } = require("../utils/giftcardViewData");
 
@@ -163,70 +163,6 @@ const createGiftcard = (req, res, next) => {
   }
 };
 
-const viewGiftcard = (req, res, next) => {
-  try {
-    const giftcard = giftcardModel.getGiftcardByCode(req.params.code);
-
-    if (!giftcard) {
-      return res.status(404).send("Gift card not found.");
-    }
-
-    const currentUser = getCurrentUser(req);
-
-    return renderGiftcard(
-      req,
-      res,
-      toFormValues(giftcard),
-      {
-        pageTitle: "Your Impact Gift",
-        savedGift: giftcard,
-        canManageSavedGift: isOwner(giftcard, currentUser),
-      },
-    );
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const redeemGiftcard = (req, res, next) => {
-  try {
-    const code = String(req.body.giftCode || "").trim().toUpperCase();
-    const values = req.session?.giftcardDraft || giftcardDefaults;
-
-    if (!giftCodePattern.test(code)) {
-      return renderGiftcard(
-        req,
-        res,
-        values,
-        {
-          redeemError: "Enter a gift code in the format LANG-XXXX-XXXX.",
-        },
-        422,
-      );
-    }
-
-    const giftcard = giftcardModel.getGiftcardByCode(code);
-
-    if (!giftcard) {
-      return renderGiftcard(
-        req,
-        res,
-        values,
-        { redeemError: "Gift code not found." },
-        404,
-      );
-    }
-
-    return res.redirect(
-      `/shared/profile?tab=orders&giftCode=${encodeURIComponent(
-        giftcard.code
-      )}`
-    );
-  } catch (error) {
-    return next(error);
-  }
-};
-
 const getEditGiftcardPage = (req, res, next) => {
   try {
     const currentUser = getCurrentUser(req);
@@ -347,8 +283,6 @@ module.exports = {
   getGiftcardPage,
   reviewGiftcard,
   createGiftcard,
-  viewGiftcard,
-  redeemGiftcard,
   getEditGiftcardPage,
   updateGiftcard,
   deleteGiftcard,
