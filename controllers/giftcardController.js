@@ -1,45 +1,48 @@
 "use strict";
 
-const giftcardModel =
+const giftcardModel=
   require("../models/giftcardModel");
+
+const cartModel=
+  require("../models/cartModel");
 
 const {
   validateGiftcard,
-} = require("../validators/giftcardValidators");
+}=require("../validators/giftcardValidators");
 
 const {
   giftcardDefaults,
   giftCodePattern,
-} = require("../config/giftcardConfig");
+}=require("../config/giftcardConfig");
 
 const {
   toFormValues,
-} = require("../utils/giftcardMapper");
+}=require("../utils/giftcardMapper");
 
 const {
   buildGiftcardPageData,
   formatSavedGift,
-} = require("../utils/giftcardViewData");
+}=require("../utils/giftcardViewData");
 
-const getCurrentUser = (req) =>
-  req.currentUser ||
-  req.session?.user ||
+const getCurrentUser=(req)=>
+  req.currentUser||
+  req.session?.user||
   null;
 
-const isOwner = (
+const isOwner=(
   giftcard,
   currentUser,
-) =>
+)=>
   Boolean(
-    giftcard &&
-    currentUser &&
-    giftcard.createdByUserId &&
-    String(giftcard.createdByUserId) ===
+    giftcard&&
+    currentUser&&
+    giftcard.createdByUserId&&
+    String(giftcard.createdByUserId)===
       String(currentUser.id),
   );
 
-const loginRedirect = (res) => {
-  const redirect =
+const loginRedirect=(res)=>{
+  const redirect=
     encodeURIComponent(
       "/giftcard#details",
     );
@@ -49,26 +52,26 @@ const loginRedirect = (res) => {
   );
 };
 
-const buildViewLocals = (
+const buildViewLocals=(
   values,
-  extras = {},
-) => ({
+  extras={},
+)=>({
   ...buildGiftcardPageData(values),
-  errors: {},
-  reviewMode: false,
-  editGiftcard: null,
-  savedGift: null,
-  redeemError: "",
-  deleted: false,
+  errors:{},
+  reviewMode:false,
+  editGiftcard:null,
+  savedGift:null,
+  redeemError:"",
+  deleted:false,
   ...extras,
 });
 
-const renderGiftcard = (
+const renderGiftcard=(
   res,
   values,
-  extras = {},
-  status = 200,
-) =>
+  extras={},
+  status=200,
+)=>
   res
     .status(status)
     .render(
@@ -79,96 +82,134 @@ const renderGiftcard = (
       ),
     );
 
-const getGiftcardPage = (
+const getGiftcardPage=(
   req,
   res,
   next,
-) => {
-  try {
-    const currentUser =
+)=>{
+  try{
+    const currentUser=
       getCurrentUser(req);
 
-    const draft =
-      req.session?.giftcardDraft ||
+    const cartItemId=
+      String(
+        req.query.cartItem||"",
+      ).trim();
+
+    if(cartItemId){
+      if(!currentUser){
+        return loginRedirect(res);
+      }
+
+      const cartItem=
+        cartModel.getGiftcardDraftItem(
+          req.cartUserId,
+          cartItemId,
+        );
+
+      if(!cartItem){
+        return res
+          .status(404)
+          .send(
+            "Gift Card cart item not found.",
+          );
+      }
+
+      req.session.giftcardDraft={
+        ...cartItem.giftcardDraft,
+      };
+
+      req.session.giftcardCartItemId=
+        cartItem.productId;
+    }else if(
+      req.query.review!=="1"&&
+      req.session?.giftcardCartItemId
+    ){
+      delete req.session
+        .giftcardCartItemId;
+    }
+
+    const draft=
+      req.session?.giftcardDraft||
       null;
 
-    const reviewMode =
+    const reviewMode=
       Boolean(
-        currentUser &&
-        draft &&
-        req.query.review === "1",
+        currentUser&&
+        draft&&
+        req.query.review==="1",
       );
 
     return renderGiftcard(
       res,
-      draft || giftcardDefaults,
+      draft||giftcardDefaults,
       {
         reviewMode,
         deleted:
-          req.query.deleted === "1",
+          req.query.deleted==="1",
       },
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const reviewGiftcard = (
+const reviewGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
+)=>{
+  try{
     const {
       values,
       errors,
       valid,
-    } = validateGiftcard(req.body);
+    }=validateGiftcard(req.body);
 
-    if (!valid) {
+    if(!valid){
       return renderGiftcard(
         res,
         values,
-        { errors },
+        {errors},
         422,
       );
     }
 
-    const currentUser =
+    const currentUser=
       getCurrentUser(req);
 
-    if (!currentUser) {
+    if(!currentUser){
       return loginRedirect(res);
     }
 
-    req.session.giftcardDraft =
+    req.session.giftcardDraft=
       values;
 
     return res.redirect(
       "/giftcard?review=1#review",
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const createGiftcard = (
+const createGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
-    const currentUser =
+)=>{
+  try{
+    const currentUser=
       getCurrentUser(req);
 
-    if (!currentUser) {
+    if(!currentUser){
       return loginRedirect(res);
     }
 
-    const draft =
+    const draft=
       req.session?.giftcardDraft;
 
-    if (!draft) {
+    if(!draft){
       return res.redirect(
         "/giftcard#details",
       );
@@ -178,83 +219,95 @@ const createGiftcard = (
       values,
       errors,
       valid,
-    } = validateGiftcard(draft);
+    }=validateGiftcard(draft);
 
-    if (!valid) {
+    if(!valid){
       return renderGiftcard(
         res,
         values,
-        { errors },
+        {errors},
         422,
       );
     }
 
-    const giftcard =
-      giftcardModel.createGiftcard(
+    const result=
+      cartModel.addGiftcardDraftToCart(
+        req.cartUserId||
+          currentUser.id,
         values,
-        currentUser.id,
+        req.session
+          ?.giftcardCartItemId||
+          null,
       );
 
-    delete req.session.giftcardDraft;
+    if(!result.success){
+      return res
+        .status(400)
+        .send(result.message);
+    }
 
-    return res.redirect(
-      `/giftcard/view/${encodeURIComponent(
-        giftcard.code,
-      )}`,
-    );
-  } catch (error) {
+    delete req.session
+      .giftcardDraft;
+
+    delete req.session
+      .giftcardCartItemId;
+
+    return res.redirect("/cart");
+  }catch(error){
     return next(error);
   }
 };
 
-const viewGiftcard = (
+const viewGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
-    const giftcard =
+)=>{
+  try{
+    const giftcard=
       giftcardModel.getGiftcardByCode(
         req.params.code,
       );
 
-    if (!giftcard) {
+    if(!giftcard){
       return res
         .status(404)
-        .send("Gift card not found.");
+        .send(
+          "Gift card not found.",
+        );
     }
 
     return renderGiftcard(
       res,
       toFormValues(giftcard),
       {
-        pageTitle: "Your Impact Gift",
+        pageTitle:"Your Impact Gift",
         savedGift:
           formatSavedGift(giftcard),
       },
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const redeemGiftcard = (
+const redeemGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
-    const code = String(
-      req.body.giftCode || "",
+)=>{
+  try{
+    const code=String(
+      req.body.giftCode||"",
     )
       .trim()
       .toUpperCase();
 
-    const values =
-      req.session?.giftcardDraft ||
+    const values=
+      req.session?.giftcardDraft||
       giftcardDefaults;
 
-    if (!giftCodePattern.test(code)) {
+    if(!giftCodePattern.test(code)){
       return renderGiftcard(
         res,
         values,
@@ -266,12 +319,12 @@ const redeemGiftcard = (
       );
     }
 
-    const giftcard =
+    const giftcard=
       giftcardModel.getGiftcardByCode(
         code,
       );
 
-    if (!giftcard) {
+    if(!giftcard){
       return renderGiftcard(
         res,
         values,
@@ -288,32 +341,37 @@ const redeemGiftcard = (
         giftcard.code,
       )}`,
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const getEditGiftcardPage = (
+const getEditGiftcardPage=(
   req,
   res,
   next,
-) => {
-  try {
-    const currentUser =
+)=>{
+  try{
+    const currentUser=
       getCurrentUser(req);
 
-    const giftcard =
+    const giftcard=
       giftcardModel.getGiftcardById(
         req.params.id,
       );
 
-    if (!giftcard) {
+    if(!giftcard){
       return res
         .status(404)
-        .send("Gift card not found.");
+        .send(
+          "Gift card not found.",
+        );
     }
 
-    if (!isOwner(giftcard, currentUser)) {
+    if(!isOwner(
+      giftcard,
+      currentUser,
+    )){
       return res
         .status(403)
         .send(
@@ -325,36 +383,41 @@ const getEditGiftcardPage = (
       res,
       toFormValues(giftcard),
       {
-        pageTitle: "Edit Gift Card",
-        editGiftcard: giftcard,
+        pageTitle:"Edit Gift Card",
+        editGiftcard:giftcard,
       },
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const updateGiftcard = (
+const updateGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
-    const currentUser =
+)=>{
+  try{
+    const currentUser=
       getCurrentUser(req);
 
-    const giftcard =
+    const giftcard=
       giftcardModel.getGiftcardById(
         req.params.id,
       );
 
-    if (!giftcard) {
+    if(!giftcard){
       return res
         .status(404)
-        .send("Gift card not found.");
+        .send(
+          "Gift card not found.",
+        );
     }
 
-    if (!isOwner(giftcard, currentUser)) {
+    if(!isOwner(
+      giftcard,
+      currentUser,
+    )){
       return res
         .status(403)
         .send(
@@ -366,40 +429,40 @@ const updateGiftcard = (
       values,
       errors,
       valid,
-    } = validateGiftcard(req.body);
+    }=validateGiftcard(req.body);
 
-    if (!valid) {
+    if(!valid){
       return renderGiftcard(
         res,
         values,
         {
-          pageTitle: "Edit Gift Card",
-          editGiftcard: giftcard,
+          pageTitle:"Edit Gift Card",
+          editGiftcard:giftcard,
           errors,
         },
         422,
       );
     }
 
-    const result =
+    const result=
       giftcardModel.updateGiftcard(
         req.params.id,
         values,
         currentUser.id,
       );
 
-    if (!result.ok) {
-      const status =
-        result.reason === "not-found"
-          ? 404
-          : result.reason === "forbidden"
-            ? 403
-            : 400;
+    if(!result.ok){
+      const status=
+        result.reason==="not-found"
+          ?404
+          :result.reason==="forbidden"
+            ?403
+            :400;
 
-      const message =
-        result.reason === "forbidden"
-          ? "You cannot update this gift card."
-          : "Unable to update gift card.";
+      const message=
+        result.reason==="forbidden"
+          ?"You cannot update this gift card."
+          :"Unable to update gift card.";
 
       return res
         .status(status)
@@ -411,38 +474,38 @@ const updateGiftcard = (
         result.giftcard.code,
       )}`,
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-const deleteGiftcard = (
+const deleteGiftcard=(
   req,
   res,
   next,
-) => {
-  try {
-    const currentUser =
+)=>{
+  try{
+    const currentUser=
       getCurrentUser(req);
 
-    const result =
+    const result=
       giftcardModel.deleteGiftcard(
         req.params.id,
         currentUser?.id,
       );
 
-    if (!result.ok) {
-      const status =
-        result.reason === "not-found"
-          ? 404
-          : result.reason === "forbidden"
-            ? 403
-            : 400;
+    if(!result.ok){
+      const status=
+        result.reason==="not-found"
+          ?404
+          :result.reason==="forbidden"
+            ?403
+            :400;
 
-      const message =
-        result.reason === "forbidden"
-          ? "You cannot delete this gift card."
-          : "Unable to delete gift card.";
+      const message=
+        result.reason==="forbidden"
+          ?"You cannot delete this gift card."
+          :"Unable to delete gift card.";
 
       return res
         .status(status)
@@ -452,12 +515,12 @@ const deleteGiftcard = (
     return res.redirect(
       "/giftcard?deleted=1",
     );
-  } catch (error) {
+  }catch(error){
     return next(error);
   }
 };
 
-module.exports = {
+module.exports={
   getGiftcardPage,
   reviewGiftcard,
   createGiftcard,

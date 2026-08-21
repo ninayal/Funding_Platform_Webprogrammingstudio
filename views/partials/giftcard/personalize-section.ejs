@@ -7,6 +7,10 @@
   const editingGift =
     typeof editGiftcard !== "undefined" &&
     Boolean(editGiftcard);
+
+  const loggedIn =
+    typeof currentUser !== "undefined" &&
+    Boolean(currentUser);
 %>
 
 <section
@@ -168,51 +172,46 @@
             Digital delivery details
           </p>
 
-          <div class="form-grid form-grid--two">
-            <label class="field">
-              <span>Recipient email</span>
+          <label class="field">
+            <span>Recipient email</span>
 
-              <input
-                type="email"
-                name="recipientEmail"
-                value="<%= defaults.recipientEmail || "" %>"
-                placeholder="recipient@example.com"
-                autocomplete="email"
-              />
+            <input
+              type="email"
+              name="recipientEmail"
+              value="<%= defaults.recipientEmail || "" %>"
+              placeholder="minh@example.com"
+              autocomplete="email"
+            />
 
-              <% if (formErrors.recipientEmail) { %>
-                <span class="form-error">
-                  <%= formErrors.recipientEmail %>
-                </span>
-              <% } %>
-            </label>
+            <% if (formErrors.recipientEmail) { %>
+              <span class="form-error">
+                <%= formErrors.recipientEmail %>
+              </span>
+            <% } %>
+          </label>
 
-            <label class="field">
-              <span>Email delivery</span>
+          <label class="field">
+            <span>Delivery timing</span>
 
-              <select name="emailTiming">
-                <% [
-                  "Send immediately",
-                  "Schedule delivery"
-                ].forEach((option) => { %>
-                  <option
-                    value="<%= option %>"
-                    <%= option === defaults.emailTiming
-                      ? "selected"
-                      : "" %>
-                  >
-                    <%= option %>
-                  </option>
-                <% }); %>
-              </select>
-
-              <% if (formErrors.emailTiming) { %>
-                <span class="form-error">
-                  <%= formErrors.emailTiming %>
-                </span>
-              <% } %>
-            </label>
-          </div>
+            <select name="emailTiming">
+              <option
+                value="Send now"
+                <%= defaults.emailTiming === "Send now"
+                  ? "selected"
+                  : "" %>
+              >
+                Send now
+              </option>
+              <option
+                value="Schedule delivery"
+                <%= defaults.emailTiming === "Schedule delivery"
+                  ? "selected"
+                  : "" %>
+              >
+                Schedule delivery
+              </option>
+            </select>
+          </label>
 
           <label class="field">
             <span>Scheduled delivery date</span>
@@ -427,7 +426,7 @@
       <button class="btn btn-primary" type="submit">
         <% if (editingGift) { %>
           Save Changes
-        <% } else if (currentUser) { %>
+        <% } else if (loggedIn) { %>
           Review Your Gift
         <% } else { %>
           Sign In &amp; Review
@@ -435,4 +434,3 @@
       </button>
     </div>
   </div>
-</section>

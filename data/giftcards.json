@@ -75,6 +75,104 @@
       "status": "Awaiting allocation",
       "createdAt": "2026-08-19T07:34:46.308Z",
       "updatedAt": "2026-08-19T07:34:46.308Z"
+    },
+    {
+      "id": "a2c1bbc0-3ea2-453c-b874-99a87f1ec4b8",
+      "code": "LANG-1AF0-7E1E",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "donation-in-honour",
+      "deliveryType": "digital",
+      "designType": "ha-thai-lacquer",
+      "quantity": 1,
+      "amountPerCard": 5000,
+      "totalAmount": 5000,
+      "recipientName": "Khang",
+      "senderName": "Khoi",
+      "message": "Giftt",
+      "causeCategory": "craft-preservation",
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Created",
+      "createdAt": "2026-08-20T18:01:41.315Z",
+      "updatedAt": "2026-08-20T18:01:41.315Z"
+    },
+    {
+      "id": "81c01513-f25e-41a0-97e8-c4573c44e85c",
+      "code": "LANG-9309-2D96",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "ho-tay-lotus",
+      "quantity": 1,
+      "amountPerCard": 5000,
+      "totalAmount": 5000,
+      "recipientName": "Khang",
+      "senderName": "Khoi",
+      "message": "Giftt",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-20T18:19:33.987Z",
+      "updatedAt": "2026-08-20T18:19:33.987Z"
+    },
+    {
+      "id": "6d82344e-cf48-4cf3-b757-08fcf621ed74",
+      "code": "LANG-2E83-2608",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "printable",
+      "designType": "ha-thai-lacquer",
+      "quantity": 1,
+      "amountPerCard": 50,
+      "totalAmount": 50,
+      "recipientName": "Khang",
+      "senderName": "Khoi",
+      "message": "asfasfas",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": null,
+      "printable": {
+        "printFormat": "Flat Card",
+        "paperSize": "A4",
+        "downloadFormat": "PDF — Print Ready"
+      },
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-20T18:25:13.016Z",
+      "updatedAt": "2026-08-20T18:25:13.016Z"
+    },
+    {
+      "id": "1b2ba2d0-5ac4-4030-8719-2df8199b2bd5",
+      "code": "LANG-CF3A-3168",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "bat-trang-blue",
+      "quantity": 1,
+      "amountPerCard": 50,
+      "totalAmount": 50,
+      "recipientName": "khang",
+      "senderName": "khoi",
+      "message": "asffasfsafa",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-20T18:37:58.360Z",
+      "updatedAt": "2026-08-20T18:37:58.360Z"
     }
   ]
 }

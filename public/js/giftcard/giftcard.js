@@ -185,8 +185,8 @@
       new Date(
         now.getTime() -
         now.getTimezoneOffset() *
-          60 *
-          1000,
+        60 *
+        1000,
       );
 
     return local
@@ -376,7 +376,8 @@
         "donation-in-honour";
 
       const digital =
-        deliveryType === "digital";
+        deliveryType ===
+        "digital";
 
       const printable =
         deliveryType ===
@@ -385,11 +386,6 @@
       const physical =
         deliveryType ===
         "physical";
-
-      setGroupEnabled(
-        ".honour-fields",
-        honour,
-      );
 
       setGroupEnabled(
         ".digital-fields",
@@ -593,9 +589,9 @@
     if (
       (
         name ===
-          "emailDeliveryDate" ||
+        "emailDeliveryDate" ||
         name ===
-          "physicalDeliveryDate"
+        "physicalDeliveryDate"
       ) &&
       value &&
       value < todayIso()
@@ -691,7 +687,7 @@
 
     if (
       stepId ===
-        "delivery-type"
+      "delivery-type"
     ) {
       return validateRadioGroup(
         "deliveryType",
@@ -711,28 +707,28 @@
     const names =
       stepId === "amount"
         ? [
-            "quantity",
-            "amountPerCard",
-          ]
+          "quantity",
+          "amountPerCard",
+        ]
         : [
-            "recipientName",
-            "senderName",
-            "message",
-            "causeCategory",
-            "causeNote",
-            "recipientEmail",
-            "emailTiming",
-            "emailDeliveryDate",
-            "printFormat",
-            "paperSize",
-            "downloadFormat",
-            "recipientPhone",
-            "physicalDeliveryDate",
-            "streetAddress",
-            "district",
-            "city",
-            "postalCode",
-          ];
+          "recipientName",
+          "senderName",
+          "message",
+          "causeCategory",
+          "causeNote",
+          "recipientEmail",
+          "emailTiming",
+          "emailDeliveryDate",
+          "printFormat",
+          "paperSize",
+          "downloadFormat",
+          "recipientPhone",
+          "physicalDeliveryDate",
+          "streetAddress",
+          "district",
+          "city",
+          "postalCode",
+        ];
 
     let valid = true;
 
@@ -1099,8 +1095,7 @@
           ).trim();
 
         previewRecipient.textContent =
-          `For ${
-            name || "Recipient"
+          `For ${name || "Recipient"
           }`;
       }
 
@@ -1113,8 +1108,7 @@
           ).trim();
 
         previewSender.textContent =
-          `From ${
-            name || "Sender"
+          `From ${name || "Sender"
           }`;
       }
 
@@ -1122,7 +1116,7 @@
         const message =
           String(
             valueOf("message") ||
-              "",
+            "",
           ).trim();
 
         previewMessage.textContent =
@@ -1471,7 +1465,7 @@
     if (
       requestedHash &&
       target !==
-        requestedHash
+      requestedHash
     ) {
       window.history.replaceState(
         {},
@@ -1485,7 +1479,7 @@
         requestedHash,
       ) &&
       target ===
-        requestedHash
+      requestedHash
     ) {
       window.requestAnimationFrame(
         () => {

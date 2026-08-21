@@ -10,8 +10,6 @@ const {
   downloadFormats,
 } = require("../config/giftcardConfig");
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const allowedGiftTypes = new Set(
   giftTypes.map((item) => item.value),
 );
@@ -31,6 +29,8 @@ const allowedCauses = new Set(
 const allowedPrintFormats = new Set(printFormats);
 const allowedPaperSizes = new Set(paperSizes);
 const allowedDownloadFormats = new Set(downloadFormats);
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const cleanText = (value) =>
   String(value || "").trim();
@@ -74,7 +74,8 @@ const validateGiftcard = (body = {}) => {
   const errors = {};
 
   if (!allowedGiftTypes.has(values.giftType)) {
-    errors.giftType = "Choose a valid gift type.";
+    errors.giftType =
+      "Choose a valid gift type.";
   }
 
   if (!allowedDeliveryTypes.has(values.deliveryType)) {
@@ -83,7 +84,8 @@ const validateGiftcard = (body = {}) => {
   }
 
   if (!allowedDesignTypes.has(values.designType)) {
-    errors.designType = "Choose a valid design.";
+    errors.designType =
+      "Choose a valid design.";
   }
 
   if (
@@ -139,6 +141,7 @@ const validateGiftcard = (body = {}) => {
         "Cause note cannot exceed 180 characters.";
     }
   }
+
 
   if (values.deliveryType === "digital") {
     if (!EMAIL_PATTERN.test(values.recipientEmail)) {

@@ -1,18 +1,15 @@
 <% if (cart.hasItems) { %>
-
     <div class="cart-shell">
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-default" checked>
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-title">
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-qty">
         <input class="state-control" type="radio" name="cart-sort" id="cart-sort-price">
-
         <section class="cart-items" aria-label="Items in your cart">
             <div class="cart-items__head">
                 <h2>
                     In your bag
                     <span class="cart-count">(<%= cart.totalQuantity %> items)</span>
                 </h2>
-
                 <div class="cart-items__actions">
                     <details class="cart-sort-menu">
                         <summary aria-label="Choose item order">
@@ -22,7 +19,6 @@
                             <span class="sort-current sort-current-qty">Quantity</span>
                             <span class="sort-current sort-current-price">Price</span>
                         </summary>
-
                         <div class="cart-sort-options" role="group" aria-label="Sort cart items">
                             <label for="cart-sort-default">Order Added</label>
                             <label for="cart-sort-title">Product Title (A–Z)</label>
@@ -30,20 +26,18 @@
                             <label for="cart-sort-price">Price (Low to High)</label>
                         </div>
                     </details>
-
                     <a href="/cart/products" class="continue-link">
                         Continue shopping
                     </a>
                 </div>
             </div>
-
             <ul class="cart-list">
                 <% cart.items.forEach((item, index)=> { %>
                     <li class="cart-row item-<%= index + 1 %>" data-product-id="<%= item.productId %>"
                         data-title="<%= item.searchTitle %>" data-quantity="<%= item.quantity %>"
                         data-price="<%= item.price %>">
-
-                        <a href="/cart/products" class="cart-row__media">
+                        <a href="<%= item.itemType === 'giftcard' ? item.href : '/cart/products' %>"
+                            class="cart-row__media">
                             <img src="<%= item.image %>" alt="<%= item.name %>">
                         </a>
 
@@ -51,9 +45,8 @@
                             <p class="cart-row__maker">
                                 <%= item.maker %>
                             </p>
-
                             <h3 class="cart-row__title">
-                                <a href="#">
+                                <a href="<%= item.itemType === 'giftcard' ? item.href : '#' %>">
                                     <%= item.name %>
                                 </a>
                             </h3>
@@ -62,37 +55,40 @@
                                 <%= item.material %> · <%= item.variant %>
                             </p>
 
-                            <% if (item.stock <=3) { %>
+                            <% if (item.itemType !== "giftcard" && item.stock <= 3) { %>
                                 <p class="cart-row__stock">
                                     Only <%= item.stock %> left
                                 </p>
+                            <% } %>
+
+                            <div class="cart-row__controls">
+                                <% if (item.itemType === "giftcard") { %>
+                                    <a href="<%= item.href %>" class="text-action giftcard-edit-action">
+                                        Edit Gift
+                                    </a>
+                                <% } else { %>
+                                    <div class="qty-stepper">
+                                        <button type="button" class="qty-btn qty-decrease"
+                                            aria-label="Decrease quantity">
+                                            −
+                                        </button>
+                                        <input type="number" class="qty-input cart-quantity-input"
+                                            value="<%= item.quantity %>" min="1" max="<%= item.stock %>"
+                                            aria-label="Quantity">
+                                        <button type="button" class="qty-btn qty-increase"
+                                            aria-label="Increase quantity">
+                                            +
+                                        </button>
+                                    </div>
                                 <% } %>
 
-                                    <div class="cart-row__controls">
-                                        <div class="qty-stepper">
-                                            <button type="button" class="qty-btn qty-decrease"
-                                                aria-label="Decrease quantity">
-                                                −
-                                            </button>
-
-                                            <input type="number" class="qty-input cart-quantity-input"
-                                                value="<%= item.quantity %>" min="1" max="<%= item.stock %>"
-                                                aria-label="Quantity">
-
-                                            <button type="button" class="qty-btn qty-increase"
-                                                aria-label="Increase quantity">
-                                                +
-                                            </button>
-                                        </div>
-
-                                        <form class="cart-remove-form" action="/cart/remove" method="POST">
-                                            <input type="hidden" name="productId" value="<%= item.productId %>">
-
-                                            <button type="submit" class="text-action text-action--remove">
-                                                Remove
-                                            </button>
-                                        </form>
-                                    </div>
+                                <form class="cart-remove-form" action="/cart/remove" method="POST">
+                                    <input type="hidden" name="productId" value="<%= item.productId %>">
+                                    <button type="submit" class="text-action text-action--remove">
+                                        Remove
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
                         <div class="cart-row__price">
@@ -100,22 +96,19 @@
                                 <span class="price-was">
                                     <%= item.oldPriceFormatted %>
                                 </span>
-                                <% } %>
-
-                                    <span class="price-now">
-                                        <%= item.subtotalFormatted %>
-                                    </span>
+                            <% } %>
+                            <span class="price-now">
+                                <%= item.subtotalFormatted %>
+                            </span>
                         </div>
                     </li>
-                    <% }); %>
+                <% }); %>
             </ul>
-
             <div class="cart-note">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     aria-hidden="true">
                     <path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7C10 3 6 3 6 6s4 3 6 1M12 7c2-4 6-4 6-1s-4 3-6 1" />
                 </svg>
-
                 <p>
                     Every order is wrapped in hand-stamped tissue paper.
                     Add a personal gift note at checkout — free of charge.
@@ -125,18 +118,13 @@
 
         <%- include("./order-summary", { cart }) %>
     </div>
-
-    <% } else { %>
-
-        <section class="empty-cart">
-            <h2>Your cart is empty.</h2>
-
-            <p>Looks like you haven't added any products yet.</p>
-
-            <a href="/cart/products" class="checkout-btn">
-                Continue Shopping
-                <span>→</span>
-            </a>
-        </section>
-
-        <% } %>
+<% } else { %>
+    <section class="empty-cart">
+        <h2>Your cart is empty.</h2>
+        <p>Looks like you haven't added any products yet.</p>
+        <a href="/cart/products" class="checkout-btn">
+            Continue Shopping
+            <span>→</span>
+        </a>
+    </section>
+<% } %>

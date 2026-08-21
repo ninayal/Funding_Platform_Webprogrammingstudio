@@ -812,6 +812,17 @@
     transform: none;
 }
 
+.giftcard-edit-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    min-height: 44px;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1;
+}
+
 /* =========================================
    RESPONSIVE
 ========================================= */
