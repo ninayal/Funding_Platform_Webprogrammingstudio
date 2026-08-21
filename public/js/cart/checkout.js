@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("#checkout-form-id");
     if (!form) return;
 
+    const STORAGE_KEY = "checkoutFormData";
+
     const cardNumber = form.querySelector("#card_number");
     const cardExpiry = form.querySelector("#card_expiry");
     const cardCvv = form.querySelector("#card_cvv");
@@ -19,6 +21,35 @@ document.addEventListener("DOMContentLoaded", () => {
         card_name: "Enter the name shown on the card.",
         card_number: "Enter a valid 16-digit card number.",
         card_cvv: "Enter a valid 3 or 4 digit security code."
+    };
+
+    const saveFormData = () => {
+        const data = {};
+
+        fields.forEach((field) => {
+            if (field.name) {
+                data[field.name] = field.value;
+            }
+        });
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    };
+
+    const restoreFormData = () => {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (!savedData) return;
+
+        const data = JSON.parse(savedData);
+
+        fields.forEach((field) => {
+            if (field.name && data[field.name] !== undefined) {
+                field.value = data[field.name];
+            }
+        });
+    };
+
+    const clearFormData = () => {
+        localStorage.removeItem(STORAGE_KEY);
     };
 
     const formatCardNumber = () => {
@@ -139,26 +170,39 @@ document.addEventListener("DOMContentLoaded", () => {
         )
     ];
 
-    fields
-        .filter((field) => ![cardNumber, cardExpiry, cardCvv].includes(field))
-        .forEach((field) => {
-            field.addEventListener("input", () => validateField(field));
-            field.addEventListener("change", () => validateField(field));
-            field.addEventListener("blur", () => validateField(field));
+    restoreFormData();
+
+    fields.forEach((field) => {
+        field.addEventListener("input", () => {
+            saveFormData();
+            validateField(field);
         });
+
+        field.addEventListener("change", () => {
+            saveFormData();
+            validateField(field);
+        });
+
+        field.addEventListener("blur", () => {
+            validateField(field);
+        });
+    });
 
     cardNumber?.addEventListener("input", () => {
         formatCardNumber();
+        saveFormData();
         validateField(cardNumber);
     });
 
     cardExpiry?.addEventListener("input", () => {
         formatCardExpiry();
+        saveFormData();
         validateField(cardExpiry);
     });
 
     cardCvv?.addEventListener("input", () => {
         formatCvv();
+        saveFormData();
         validateField(cardCvv);
     });
 
@@ -169,7 +213,10 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (event) => {
         const isValid = fields.every(validateField);
 
-        if (isValid && form.checkValidity()) return;
+        if (isValid && form.checkValidity()) {
+            clearFormData();
+            return;
+        }
 
         event.preventDefault();
         form.querySelector('[aria-invalid="true"]')?.focus();

@@ -1,6 +1,507 @@
-@import url("./post-edit-layout.css");
-@import url("./post-edit-header.css");
 @import url("./post-edit-form.css");
-@import url("./post-edit-preview.css");
-@import url("./post-edit-delete.css");
-@import url("./post-edit-responsive.css");
+@import url("/css/index.css");
+
+/* ---------- Post Edit — Page & Container ---------- */
+.post-edit-page {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    margin-top: -46px;
+    padding: 18px 0 96px;
+}
+
+.post-edit-container {
+    width: calc(100% - 48px);
+    max-width: 1240px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* ---------- Post Edit — Breadcrumb ---------- */
+.post-edit-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 auto 18px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.post-edit-breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.post-edit-breadcrumb a:hover {
+    color: var(--red);
+}
+
+.post-edit-breadcrumb span[aria-current="page"] {
+    color: var(--deep);
+    font-weight: 600;
+}
+
+/* ---------- Post Edit — Two Column Layout ---------- */
+.post-edit-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 30px;
+    align-items: start;
+}
+
+/* ---------- Post Edit — Return Link ---------- */
+.post-edit-return {
+    margin-top: 42px;
+}
+
+.post-edit-return a {
+    color: var(--red);
+    font-family: var(--ff-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.post-edit-return a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Post Edit — Page Header ---------- */
+.post-edit-header {
+    margin-bottom: 44px;
+}
+
+.post-edit-header__copy {
+    max-width: 720px;
+}
+
+/* Shared kicker label — reused in panel heading & sidebar sections */
+.post-edit-kicker {
+    margin: 0 0 10px;
+    color: var(--red);
+    font-family: var(--ff-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.post-edit-header h1 {
+    margin: 0;
+    color: var(--deep);
+    font-family: var(--ff-serif);
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.post-edit-header__copy p {
+    max-width: 640px;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* ---------- Post Edit — Sidebar ---------- */
+.post-edit-sidebar {
+    display: grid;
+    gap: 20px;
+}
+
+/* ---------- Post Edit — Live Preview Card ---------- */
+.post-edit-preview {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .38);
+    box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
+}
+
+.post-edit-preview__image {
+    height: 200px;
+    overflow: hidden;
+    background: var(--tan);
+}
+
+.post-edit-preview__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-preview-placeholder {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: var(--brown);
+    font-family: var(--ff-serif);
+    font-style: italic;
+    font-size: 15px;
+}
+
+.post-edit-preview__body {
+    padding: 24px;
+}
+
+.post-edit-preview__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.post-edit-preview__meta span:first-child {
+    padding: 6px 9px;
+    border-radius: 999px;
+    color: var(--red);
+    background: rgba(163, 29, 29, .08);
+}
+
+.post-edit-preview__body h2 {
+    margin: 16px 0 10px;
+    color: var(--deep);
+    font-family: var(--ff-serif);
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.12;
+}
+
+.post-edit-preview__body>p {
+    margin: 0;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.post-edit-preview__statistics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+}
+
+.post-edit-preview__statistics div {
+    padding: 12px;
+    border: 1px solid rgba(116, 81, 45, .14);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .34);
+}
+
+.post-edit-preview__statistics dt {
+    margin: 0 0 4px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.post-edit-preview__statistics dd {
+    margin: 0;
+    color: var(--darkred);
+    font-family: var(--ff-serif);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.post-edit-preview__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    color: var(--red);
+    font-family: var(--ff-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.post-edit-preview__link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Post Edit — Sidebar Info Cards (help / danger) ---------- */
+.post-edit-help,
+.post-edit-danger {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .38);
+    box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
+}
+
+.post-edit-help h2,
+.post-edit-danger h2 {
+    margin: 8px 0 12px;
+    color: var(--deep);
+    font-family: var(--ff-serif);
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.post-edit-help ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.post-edit-help li {
+    margin-bottom: 6px;
+}
+
+.post-edit-help li:last-child {
+    margin-bottom: 0;
+}
+
+.post-edit-danger {
+    border-color: rgba(163, 29, 29, .22);
+    background: rgba(163, 29, 29, .05);
+}
+
+.post-edit-danger p {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.post-edit-delete-button {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border: 1px solid var(--red);
+    border-radius: 999px;
+    color: var(--red);
+    background: transparent;
+    font-family: var(--ff-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease, background 180ms ease;
+}
+
+.post-edit-delete-button:hover {
+    color: var(--cream);
+    background: var(--red);
+}
+
+/* ---------- Post Edit — Delete Confirmation Overlay ---------- */
+body:has(.post-delete-overlay:target) {
+    overflow: hidden;
+}
+
+.post-delete-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.post-delete-overlay:target {
+    display: flex;
+}
+
+.post-delete-overlay__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 12, 6, .55);
+    backdrop-filter: blur(2px);
+}
+
+.post-delete-dialog {
+    position: relative;
+    z-index: 2;
+    width: min(420px, 100%);
+    padding: 36px 32px 32px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--cream);
+    box-shadow: 0 26px 60px rgba(20, 12, 6, .28);
+    text-align: center;
+}
+
+.post-delete-dialog__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--brown);
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+    transition: color 180ms ease, background 180ms ease;
+}
+
+.post-delete-dialog__close:hover {
+    color: var(--red);
+    background: rgba(163, 29, 29, .08);
+}
+
+.post-delete-dialog__icon {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 18px;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--red);
+    background: rgba(163, 29, 29, .09);
+}
+
+.post-delete-dialog__icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.post-delete-dialog .post-edit-kicker {
+    justify-content: center;
+}
+
+.post-delete-dialog h2 {
+    margin: 0 0 10px;
+    color: var(--deep);
+    font-family: var(--ff-serif);
+    font-size: 26px;
+    font-weight: 400;
+}
+
+.post-delete-dialog p {
+    margin: 0 0 26px;
+    color: var(--muted);
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.post-delete-dialog__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.post-delete-dialog__actions form {
+    margin: 0;
+}
+
+
+/* ---------- Post Edit — Responsive ---------- */
+@media (max-width: 1080px) {
+    .post-edit-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-sidebar {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .post-edit-header h1 {
+        font-size: 44px;
+    }
+
+    .post-edit-panel {
+        padding: 26px;
+    }
+}
+
+@media (max-width: 760px) {
+    .post-edit-container {
+        width: calc(100% - 32px);
+    }
+
+    .post-edit-page {
+        padding-top: 14px;
+    }
+
+    .post-edit-breadcrumb {
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .post-edit-header h1 {
+        font-size: 36px;
+    }
+
+    .post-edit-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-grid--two {
+        grid-template-columns: 1fr;
+    }
+
+    .post-edit-panel {
+        padding: 22px;
+    }
+
+    .post-edit-panel__heading {
+        flex-wrap: wrap;
+    }
+
+    .post-edit-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .post-edit-actions .post-edit-button {
+        width: 100%;
+        margin-right: 0 !important;
+    }
+
+    .post-delete-dialog {
+        padding: 30px 22px 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-edit-container {
+        width: calc(100% - 24px);
+    }
+
+    .post-edit-header h1 {
+        font-size: 30px;
+    }
+
+    .post-edit-preview__statistics {
+        grid-template-columns: 1fr;
+    }
+}
