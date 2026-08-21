@@ -423,11 +423,10 @@
 .draft-progress__heading strong {
   color: #9b641a;
 }
-.draft-progress__track {
-  height: 7px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(116, 81, 45, .12);
+.draft-progress__fill {
+    display: block;
+    width: var(--progress-width);
+    height: 100%;
 }
 .draft-progress__track span {
   display: block;
