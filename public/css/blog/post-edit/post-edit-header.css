@@ -1,0 +1,36 @@
+/* ---------- Post Edit — Page Header ---------- */
+.post-edit-header {
+  margin-bottom: 44px;
+}
+.post-edit-header__copy {
+  max-width: 720px;
+}
+
+/* Shared kicker label — reused in panel heading & sidebar sections */
+.post-edit-kicker {
+  margin: 0 0 10px;
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.post-edit-header h1 {
+  margin: 0;
+  color: var(--deep);
+  font-family: var(--ff-serif);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.post-edit-header__copy p {
+  max-width: 640px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-family: var(--ff-ui);
+  font-size: 15px;
+  line-height: 1.7;
+}

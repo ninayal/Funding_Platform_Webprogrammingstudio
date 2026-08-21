@@ -1,0 +1,65 @@
+@import url("/css/index.css");
+
+/* ---------- Post Edit — Page & Container ---------- */
+.post-edit-page {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  margin-top: -46px;
+  padding: 18px 0 96px;
+}
+.post-edit-container {
+  width: calc(100% - 48px);
+  max-width: 1240px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ---------- Post Edit — Breadcrumb ---------- */
+.post-edit-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 auto 18px;
+  color: var(--muted);
+  font-family: var(--ff-ui);
+  font-size: 18px;
+  font-weight: 500;
+}
+.post-edit-breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.post-edit-breadcrumb a:hover {
+  color: var(--red);
+}
+.post-edit-breadcrumb span[aria-current="page"] {
+  color: var(--deep);
+  font-weight: 600;
+}
+
+/* ---------- Post Edit — Two Column Layout ---------- */
+.post-edit-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 30px;
+  align-items: start;
+}
+
+/* ---------- Post Edit — Return Link ---------- */
+.post-edit-return {
+  margin-top: 42px;
+}
+.post-edit-return a {
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.post-edit-return a:hover {
+  text-decoration: underline;
+}

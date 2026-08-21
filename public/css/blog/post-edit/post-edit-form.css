@@ -1,0 +1,233 @@
+/* ---------- Post Edit — Form Panel ---------- */
+.post-edit-panel {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .38);
+  box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
+}
+.post-edit-panel__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.post-edit-panel__heading h2 {
+  margin: 0;
+  color: var(--deep);
+  font-family: var(--ff-serif);
+  font-size: 30px;
+  font-weight: 400;
+}
+.post-edit-status {
+  padding: 7px 13px;
+  border-radius: 999px;
+  color: #9b641a;
+  background: rgba(155, 100, 26, .11);
+  font-family: var(--ff-ui);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.post-form-error {
+  margin: 0 0 22px;
+  padding: 14px 18px;
+  border: 1px solid rgba(163, 29, 29, .25);
+  border-radius: 12px;
+  background: rgba(163, 29, 29, .06);
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+}
+
+/* ---------- Post Edit — Fieldsets ---------- */
+.post-edit-section {
+  margin: 0 0 34px;
+  padding: 0;
+  border: 0;
+}
+.post-edit-section:last-of-type {
+  margin-bottom: 0;
+}
+.post-edit-section legend {
+  margin-bottom: 18px;
+  padding: 0;
+  color: var(--brown);
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ---------- Post Edit — Field Grid ---------- */
+.post-edit-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.post-edit-grid--two {
+  grid-template-columns: 2fr 1fr;
+}
+
+/* ---------- Post Edit — Fields ---------- */
+.post-edit-field {
+  display: grid;
+  gap: 8px;
+  color: var(--deep);
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.post-edit-field input,
+.post-edit-field select,
+.post-edit-field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(116, 81, 45, .18);
+  border-radius: 12px;
+  outline: none;
+  color: var(--deep);
+  background: rgba(255, 255, 255, .6);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  resize: vertical;
+}
+.post-edit-field input {
+  height: 46px;
+}
+.post-edit-field input:focus,
+.post-edit-field select:focus,
+.post-edit-field textarea:focus {
+  border-color: rgba(163, 29, 29, .58);
+  box-shadow: 0 0 0 4px rgba(163, 29, 29, .08);
+}
+.post-edit-field input[readonly] {
+  color: var(--muted);
+  background: rgba(229, 208, 172, .28);
+  cursor: not-allowed;
+}
+.post-edit-field input[aria-invalid="true"],
+.post-edit-field select[aria-invalid="true"],
+.post-edit-field textarea[aria-invalid="true"] {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(163, 29, 29, .08);
+}
+
+/* ---------- Post Edit — Field Meta (errors / counters) ---------- */
+.post-field-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.post-field-meta [data-post-count] {
+  margin-left: auto;
+  color: var(--muted);
+}
+.post-field-error {
+  display: block;
+  min-height: 15px;
+  color: var(--red);
+  font-weight: 500;
+}
+.post-field-error:empty {
+  display: none;
+}
+.post-form-help {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* ---------- Post Edit — Submit Feedback ---------- */
+.post-form-feedback {
+  margin: 0 0 20px;
+  color: #3f704d;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 600;
+}
+.post-form-feedback:empty {
+  display: none;
+}
+
+/* ---------- Post Edit — Actions ---------- */
+.post-edit-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.post-edit-actions .post-edit-button:first-child {
+  margin-right: auto;
+}
+.post-edit-button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--brown);
+  background: transparent;
+  font-family: var(--ff-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.post-edit-button:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+.post-edit-button--secondary {
+  border-color: rgba(116, 81, 45, .38);
+  color: var(--deep);
+  background: rgba(229, 208, 172, .38);
+}
+.post-edit-button--secondary:hover {
+  border-color: var(--red);
+  background: rgba(229, 208, 172, .6);
+  color: var(--red);
+}
+.post-edit-button--primary {
+  border-color: var(--darkred);
+  color: var(--cream);
+  background: var(--darkred);
+}
+.post-edit-button--primary:hover {
+  border-color: var(--red);
+  background: var(--red);
+  transform: translateY(-1px);
+}
+.post-edit-button--danger {
+  border-color: var(--red);
+  color: var(--cream);
+  background: var(--red);
+}
+.post-edit-button--danger:hover {
+  border-color: var(--darkred);
+  background: var(--darkred);
+}
