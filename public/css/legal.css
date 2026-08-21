@@ -1,25 +1,5 @@
 /*Terms of Service and Privacy Policy */
 
-:root {
-    --legal-cream: #fef9e1;
-    --legal-tan: #e5d0ac;
-    --legal-sand: #af8f6f;
-    --legal-brown: #74512d;
-    --legal-deep: #010100;
-    --legal-red: #a31d1d;
-    --legal-white: rgba(255, 255, 255, 0.82);
-    --legal-border: rgba(116, 81, 45, 0.2);
-    --legal-shadow: 0 24px 70px rgba(44, 28, 15, 0.14);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
     min-height: 100vh;
