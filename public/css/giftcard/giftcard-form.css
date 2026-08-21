@@ -1,0 +1,926 @@
+/* ================================================
+   STEP 1 — GIFT TYPE
+   ================================================ */
+
+.choice-grid {
+    display: grid;
+
+    gap: 22px;
+
+    margin-top: 42px;
+}
+
+.choice-grid--two {
+    grid-template-columns:
+        repeat(2,
+            minmax(0, 1fr));
+
+    grid-template-rows:
+        auto auto 1fr auto;
+}
+
+.choice-grid--three {
+    grid-template-columns:
+        repeat(3,
+            minmax(0, 1fr));
+
+    grid-template-rows:
+        auto auto 1fr;
+}
+
+/* ================================================
+   GIFT TYPE CARD
+   ================================================ */
+
+.choice-card {
+    grid-row:
+        span 4;
+
+    display: grid;
+
+    grid-template-rows:
+        subgrid;
+
+    min-height: 390px;
+
+    padding: 32px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .24);
+
+    color:
+        var(--ink);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow:
+        var(--shadow-soft);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+    opacity: .82;
+}
+
+.choice-card:hover {
+    opacity: 1;
+    transform: translateY(-4px);
+    border-color: rgba(163, 29, 29, .52);
+    box-shadow: var(--shadow);
+}
+
+.choice-card__index {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 28px;
+
+    font-style: italic;
+}
+
+.choice-card__title {
+    display: flex;
+
+    align-items: flex-end;
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(34px,
+            4vw,
+            50px);
+
+    line-height: 1.04;
+}
+
+.choice-card__copy {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 19px;
+
+    line-height: 1.5;
+}
+
+.choice-card__action {
+    color:
+        var(--red);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: .07em;
+
+    text-transform: uppercase;
+}
+
+/* ================================================
+   GIFT TYPE ACTIVE STATE
+   ================================================ */
+
+#gift-lang:checked~main label[for="gift-lang"],
+#gift-honour:checked~main label[for="gift-honour"] {
+    opacity: 1;
+    transform: translateY(-4px);
+    border: 2px solid var(--red);
+    background: rgba(254, 249, 225, .96);
+    box-shadow: 0 18px 42px rgba(163, 29, 29, .14);
+}
+
+/* ================================================
+   STEP 2 — DELIVERY
+   ================================================ */
+
+.delivery-card {
+    grid-row:
+        span 3;
+
+    display: grid;
+
+    grid-template-rows:
+        subgrid;
+
+    min-height: 300px;
+
+    place-items: center;
+
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .38);
+
+    color:
+        var(--ink);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        background .22s ease;
+    opacity: .82;
+}
+
+.delivery-card:hover {
+    opacity: 1;
+    transform: translateY(-4px);
+    border-color: var(--red);
+    background: rgba(254, 249, 225, .95);
+}
+
+.delivery-card__icon {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 42px;
+}
+
+.delivery-card__title {
+    font-family:
+        var(--ff-script);
+
+    font-size: 37px;
+}
+
+.delivery-card__copy {
+    max-width: 280px;
+
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 17px;
+
+    line-height: 1.45;
+}
+
+/* ================================================
+   DELIVERY ACTIVE STATE
+   ================================================ */
+
+#delivery-digital:checked~main label[for="delivery-digital"],
+#delivery-printable:checked~main label[for="delivery-printable"],
+#delivery-physical:checked~main label[for="delivery-physical"] {
+    opacity: 1;
+    transform: translateY(-4px);
+    border: 2px solid var(--red);
+    background: rgba(254, 249, 225, .96);
+    box-shadow: 0 18px 42px rgba(163, 29, 29, .14);
+}
+
+/* ================================================
+   STEP 3 — DESIGN
+   ================================================ */
+
+.design-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,
+            minmax(0, 1fr));
+
+    gap: 22px;
+
+    margin-top: 42px;
+}
+
+.design-card {
+    position: relative;
+
+    min-height: 255px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    align-items: flex-start;
+
+    padding: 24px;
+
+    border:
+        2px solid transparent;
+
+    border-radius: 22px;
+
+    color:
+        var(--cream);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow:
+        var(--shadow-soft);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease;
+    opacity: .82;
+}
+
+.design-card:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    border-color: rgba(163, 29, 29, .45);
+}
+
+.design-card::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(254, 249, 225, .6);
+    border-radius: 50%;
+    background: rgba(1, 1, 0, .22);
+}
+
+.design-card::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(180deg,
+            transparent 32%,
+            rgba(1, 1, 0, .62));
+}
+
+.design-card__label,
+.design-card__meta {
+    position: relative;
+
+    z-index: 2;
+}
+
+.design-card__label {
+    font-family:
+        var(--ff-script);
+
+    font-size: 35px;
+
+    line-height: 1;
+}
+
+.design-card__meta {
+    margin-top: 7px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: .09em;
+
+    text-transform: uppercase;
+
+    opacity: .84;
+}
+
+/* HỒ TÂY */
+.design-card--lotus {
+    background:
+        radial-gradient(circle at 30% 30%,
+            rgba(254, 249, 225, .18),
+            transparent 22%),
+        linear-gradient(145deg,
+            #A31D1D,
+            #6D2323);
+}
+
+/* BÁT TRÀNG */
+.design-card--ceramic {
+    background:
+        radial-gradient(circle at 75% 25%,
+            rgba(254, 249, 225, .18),
+            transparent 20%),
+        linear-gradient(145deg,
+            #5A7CA0,
+            #233A55);
+}
+
+/* VẠN PHÚC */
+.design-card--silk {
+    background:
+        linear-gradient(130deg,
+            rgba(254, 249, 225, .18),
+            transparent 34%),
+        linear-gradient(145deg,
+            #D3AB7C,
+            #81563C);
+}
+
+/* HẠ THÁI */
+.design-card--lacquer {
+    background:
+        radial-gradient(circle at 70% 30%,
+            rgba(211, 171, 124, .18),
+            transparent 20%),
+        linear-gradient(145deg,
+            #21140F,
+            #6D2323);
+}
+
+/* HỘI AN */
+.design-card--hoian {
+    background:
+        linear-gradient(135deg,
+            rgba(254, 249, 225, .14),
+            transparent 40%),
+        linear-gradient(145deg,
+            #C66B2B,
+            #6D2323);
+}
+
+/* PHÚ VINH */
+.design-card--bamboo {
+    background:
+        linear-gradient(120deg,
+            rgba(254, 249, 225, .12),
+            transparent 36%),
+        linear-gradient(145deg,
+            #7A8250,
+            #34442D);
+}
+
+/* ================================================
+   DESIGN ACTIVE STATE
+   ================================================ */
+
+#design-lotus:checked~main label[for="design-lotus"],
+#design-battrang:checked~main label[for="design-battrang"],
+#design-vanphuc:checked~main label[for="design-vanphuc"],
+#design-hathai:checked~main label[for="design-hathai"],
+#design-hoian:checked~main label[for="design-hoian"],
+#design-phuvinh:checked~main label[for="design-phuvinh"] {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.015);
+    border-color: var(--red);
+    box-shadow:
+        0 0 0 3px rgba(254, 249, 225, .9),
+        0 16px 36px rgba(163, 29, 29, .24);
+}
+
+#design-lotus:checked~main label[for="design-lotus"]::before,
+#design-battrang:checked~main label[for="design-battrang"]::before,
+#design-vanphuc:checked~main label[for="design-vanphuc"]::before,
+#design-hathai:checked~main label[for="design-hathai"]::before,
+#design-hoian:checked~main label[for="design-hoian"]::before,
+#design-phuvinh:checked~main label[for="design-phuvinh"]::before {
+    content: "✓";
+    display: grid;
+    place-items: center;
+    border-color: var(--cream);
+    background: var(--cream);
+    color: var(--red);
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* ================================================
+   STEP 4 — AMOUNT
+   ================================================ */
+
+.amount-panel {
+    width:
+        min(980px,
+            100%);
+
+    margin:
+        48px auto 0;
+
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 26px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .42);
+
+    box-shadow:
+        var(--shadow-soft);
+}
+
+.amount-builder {
+    display: grid;
+
+    grid-template-columns:
+        minmax(190px, .52fr) minmax(360px, 1.48fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+.amount-field {
+    display: grid;
+
+    gap: 11px;
+
+    align-content: start;
+
+    align-self: start;
+}
+
+.amount-field>span:first-child {
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 31px;
+}
+
+.amount-field>.form-error,
+.amount-field>.client-form-error {
+    margin: 0;
+
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-ui);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.45;
+
+    letter-spacing: 0;
+
+    text-transform: none;
+
+    text-align: left;
+}
+
+.amount-field input {
+    width: 100%;
+
+    height: 120px;
+
+    padding:
+        0 24px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 18px;
+
+    outline: 0;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .74);
+
+    color:
+        var(--deep);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 43px;
+}
+
+.amount-field input:focus {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0 0 0 4px rgba(163,
+            29,
+            29,
+            .07);
+}
+
+.amount-field small {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 15px;
+
+    font-style: italic;
+
+    line-height: 1.4;
+}
+
+.amount-field--quantity input {
+    text-align: center;
+}
+
+.amount-field--quantity small {
+    text-align: center;
+}
+
+.currency-input {
+    position: relative;
+}
+
+.currency-input>span {
+    position: absolute;
+
+    left: 24px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 42px;
+}
+
+.currency-input input {
+    padding-left: 62px;
+}
+
+.amount-total {
+    width: 100%;
+
+    margin:
+        26px 0 0;
+
+    padding:
+        24px 0 0;
+
+    display: flex;
+
+    align-items: end;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+.amount-total>div {
+    display: grid;
+
+    gap: 5px;
+}
+
+.amount-total span {
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: .07em;
+
+    text-transform: uppercase;
+}
+
+.amount-total small {
+    color:
+        var(--muted);
+
+    font-family:
+        var(--ff-body);
+
+    font-size: 15px;
+
+    font-style: italic;
+}
+
+.amount-total strong {
+    color:
+        var(--darkred);
+
+    font-family:
+        var(--ff-script);
+
+    font-size:
+        clamp(25px,
+            3vw,
+            40px);
+
+    font-weight: 500;
+
+    text-align: right;
+}
+
+/* ================================================
+   STEP 5 — DETAILS
+   ================================================ */
+
+.details-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.1fr) minmax(320px, .9fr);
+
+    gap: 34px;
+
+    align-items: start;
+
+    margin-top: 42px;
+}
+
+.details-form {
+    padding: 30px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .28);
+
+    box-shadow:
+        var(--shadow-soft);
+}
+
+/* ================================================
+   COMMON FIELDS
+   ================================================ */
+
+.common-fields {
+    display: grid;
+
+    gap: 14px;
+}
+
+/* ================================================
+   CONDITIONAL DELIVERY FIELDS
+   Hidden by default
+   ================================================ */
+
+.conditional-fields {
+    display: none;
+
+    gap: 14px;
+
+    margin-top: 26px;
+
+    padding-top: 24px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+.conditional-title {
+    margin: 0 0 4px;
+
+    color:
+        var(--red);
+
+    font-family:
+        var(--ff-script);
+
+    font-size: 25px;
+}
+
+/* ================================================
+   SHOW DIGITAL FIELDS
+   ================================================ */
+
+#delivery-digital:checked~main .digital-fields {
+    display: grid;
+}
+
+/* ================================================
+   SHOW PRINTABLE FIELDS
+   ================================================ */
+
+#delivery-printable:checked~main .printable-fields {
+    display: grid;
+}
+
+/* ================================================
+   SHOW PHYSICAL FIELDS
+   ================================================ */
+
+#delivery-physical:checked~main .physical-fields {
+    display: grid;
+}
+
+/* ================================================
+   SHOW DONATION IN HONOUR FIELDS
+   ================================================ */
+
+#gift-honour:checked~main .honour-fields {
+    display: grid;
+}
+
+/* ================================================
+   FORM GRID
+   ================================================ */
+
+.form-grid {
+    display: grid;
+
+    gap: 14px;
+}
+
+.form-grid--two {
+    grid-template-columns:
+        repeat(2,
+            minmax(0, 1fr));
+
+    align-items: start;
+}
+
+.form-grid+.form-grid,
+.form-grid+.field {
+    margin-top: 14px;
+}
+
+.field {
+    display: grid;
+
+    gap: 7px;
+
+    align-content: start;
+    align-self: start;
+}
+
+.field>span:not(.form-error):not(.client-form-error) {
+    color:
+        var(--brown);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.35;
+
+    letter-spacing: .07em;
+
+    text-transform: uppercase;
+}
+
+.field>.form-error,
+.field>.client-form-error {
+    margin: 0;
+
+    color: var(--red);
+
+    font-family: var(--ff-ui);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.field input,
+.field textarea,
+.field select {
+    width: 100%;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 14px;
+
+    outline: 0;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            .64);
+
+    color:
+        var(--deep);
+
+    padding:
+        13px 14px;
+
+    font-size: 14px;
+}
+
+.field input,
+.field select {
+    min-height: 48px;
+}
+
+.field textarea {
+    resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0 0 0 4px rgba(163,
+            29,
+            29,
+            .06);
+}
+

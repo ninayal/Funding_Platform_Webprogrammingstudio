@@ -188,5 +188,37 @@
     "joinDate": "2026-08-19",
     "createdAt": "2026-08-19T17:35:17.103Z",
     "updatedAt": "2026-08-21T05:22:57.462Z"
+  },
+  {
+    "id": "0783d24b-43e3-4fe9-8fdd-875e4128b60f",
+    "firstname": "òm",
+    "lastname": "ám",
+    "username": "nunanuni",
+    "email": "lamthinu123@gmail.com",
+    "gender": "female",
+    "description": "ỉngkuesnvbjkdf. svjnvjsvd",
+    "role": "user",
+    "status": "active",
+    "phone": "",
+    "location": "",
+    "postalCode": "",
+    "address": "",
+    "about": "ỉngkuesnvbjkdf. svjnvjsvd",
+    "avatar": "/images/profile.png",
+    "tier": "Craft Collector",
+    "preferences": {
+      "emailUpdates": true,
+      "orderNotifications": true,
+      "communityReplies": false,
+      "promotionalUpdates": true,
+      "saveShippingInformation": true,
+      "internationalShippingDefault": false,
+      "productCareGuides": true
+    },
+    "passwordHash": "scrypt$e26d19e616ebf49bb0806830d409f10c$79ee9d53e3ea3e768e225f64f90a1ac90b502b10dc61e6d05341d5980641e77962f34601522462217ac49add7fcff55ebcca9c399c5b543ff0e5ec078ffb794f",
+    "requiresPasswordChange": false,
+    "joinDate": "2026-08-21",
+    "createdAt": "2026-08-21T07:36:20.256Z",
+    "updatedAt": "2026-08-21T07:36:20.256Z"
   }
 ]
