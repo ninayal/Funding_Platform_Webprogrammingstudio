@@ -381,18 +381,22 @@
                     <label class="field">
                         <span>Delivery timing</span>
 
-                        <select name="emailTiming">
-                            <option value="Send now" <%=defaults.emailTiming==="Send now" ? "selected" : "" %>
-                                >
-                                Send now
-                            </option>
+                        
+<select name="emailTiming" hidden data-custom-select-source>
+    <option value="Send now">Send now</option>
+    <option value="Schedule delivery">Schedule delivery</option>
+</select>
 
-                            <option value="Schedule delivery" <%=defaults.emailTiming==="Schedule delivery" ? "selected"
-                                : "" %>
-                                >
-                                Schedule delivery
-                            </option>
-                        </select>
+<div class="custom-dropdown" data-custom-dropdown>
+    <button type="button" class="custom-dropdown__button" data-custom-dropdown-button>
+        <span data-custom-dropdown-label></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+        </svg>
+    </button>
+    <div class="custom-dropdown__menu" role="listbox" hidden data-custom-dropdown-menu></div>
+</div>
+
                     </label>
 
                     <label class="field">
@@ -416,14 +420,23 @@
                         <label class="field">
                             <span>Card format</span>
 
-                            <select name="printFormat">
-                                <% printFormats.forEach((format)=> { %>
-                                    <option value="<%= format %>" <%=format===defaults.printFormat ? "selected" : "" %>
-                                        >
-                                        <%= format %>
-                                    </option>
-                                    <% }); %>
-                            </select>
+                            
+<select name="printFormat" hidden data-custom-select-source>
+<% printFormats.forEach((format)=> { %>
+    <option value="<%= format %>"><%= format %></option>
+<% }); %>
+</select>
+
+<div class="custom-dropdown" data-custom-dropdown>
+    <button type="button" class="custom-dropdown__button" data-custom-dropdown-button>
+        <span data-custom-dropdown-label></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+        </svg>
+    </button>
+    <div class="custom-dropdown__menu" role="listbox" hidden data-custom-dropdown-menu></div>
+</div>
+
 
                             <% if (errors.printFormat) { %>
                                 <span class="form-error">
@@ -435,14 +448,23 @@
                         <label class="field">
                             <span>Paper size</span>
 
-                            <select name="paperSize">
-                                <% paperSizes.forEach((size)=> { %>
-                                    <option value="<%= size %>" <%=size===defaults.paperSize ? "selected" : "" %>
-                                        >
-                                        <%= size %>
-                                    </option>
-                                    <% }); %>
-                            </select>
+                            
+<select name="paperSize" hidden data-custom-select-source>
+<% paperSizes.forEach((size)=> { %>
+    <option value="<%= size %>"><%= size %></option>
+<% }); %>
+</select>
+
+<div class="custom-dropdown" data-custom-dropdown>
+    <button type="button" class="custom-dropdown__button" data-custom-dropdown-button>
+        <span data-custom-dropdown-label></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+        </svg>
+    </button>
+    <div class="custom-dropdown__menu" role="listbox" hidden data-custom-dropdown-menu></div>
+</div>
+
 
                             <% if (errors.paperSize) { %>
                                 <span class="form-error">
@@ -455,13 +477,21 @@
                     <label class="field">
                         <span>Download format</span>
 
-                        <select name="downloadFormat">
-                            <option value="PDF — Print Ready" <%=defaults.downloadFormat==="PDF — Print Ready"
-                                ? "selected" : "" %>
-                                >
-                                PDF — Print Ready
-                            </option>
-                        </select>
+                        
+<select name="downloadFormat" hidden data-custom-select-source>
+<option value="PDF — Print Ready">PDF — Print Ready</option>
+</select>
+
+<div class="custom-dropdown" data-custom-dropdown>
+    <button type="button" class="custom-dropdown__button" data-custom-dropdown-button>
+        <span data-custom-dropdown-label></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+        </svg>
+    </button>
+    <div class="custom-dropdown__menu" role="listbox" hidden data-custom-dropdown-menu></div>
+</div>
+
                     </label>
                 </div>
 

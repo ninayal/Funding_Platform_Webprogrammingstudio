@@ -3411,3 +3411,84 @@ video {
 .cause-dropdown__option.is-selected .cause-dropdown__check {
     opacity: 1;
 }
+
+/* ================================================
+   GENERIC GIFT CARD DROPDOWN
+   ================================================ */
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.custom-dropdown__button {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255,255,255,.64);
+    color: var(--deep);
+    font-family: var(--ff-ui);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.custom-dropdown__button svg {
+    width: 18px;
+    height: 18px;
+    color: var(--brown);
+    transition: transform .18s ease;
+}
+
+.custom-dropdown.is-open .custom-dropdown__button svg {
+    transform: rotate(180deg);
+}
+
+.custom-dropdown__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 60;
+    width: 100%;
+    padding: 7px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: 0 16px 36px rgba(56,37,24,.16);
+}
+
+.custom-dropdown__menu[hidden] {
+    display: none;
+}
+
+.custom-dropdown__option {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 12px;
+    border-radius: 11px;
+    background: transparent;
+    color: var(--deep);
+    font-family: var(--ff-ui);
+    cursor: pointer;
+    text-align: left;
+}
+
+.custom-dropdown__option:hover,
+.custom-dropdown__option.is-selected {
+    background: rgba(163,29,29,.08);
+    color: var(--red);
+}
+
+.custom-dropdown__check {
+    opacity: 0;
+}
+
+.custom-dropdown__option.is-selected .custom-dropdown__check {
+    opacity: 1;
+}

@@ -1749,3 +1749,54 @@
     syncCauseInvalidState();
   }
 })();
+
+/* =========================================
+   GENERIC GIFT CARD DROPDOWNS
+   Match cause dropdown UI
+========================================= */
+document.querySelectorAll("[data-custom-dropdown]").forEach((dropdown) => {
+  const select = dropdown.previousElementSibling;
+  const button = dropdown.querySelector("[data-custom-dropdown-button]");
+  const label = dropdown.querySelector("[data-custom-dropdown-label]");
+  const menu = dropdown.querySelector("[data-custom-dropdown-menu]");
+
+  if (!select || !button || !label || !menu) return;
+
+  [...select.options].forEach((option) => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "custom-dropdown__option";
+    item.dataset.value = option.value;
+    item.innerHTML = `<span>${option.textContent}</span><span class="custom-dropdown__check">✓</span>`;
+
+    item.addEventListener("click", () => {
+      select.value = option.value;
+      label.textContent = option.textContent;
+      dropdown.querySelectorAll(".custom-dropdown__option")
+        .forEach((x) => x.classList.toggle("is-selected", x === item));
+      menu.hidden = true;
+      dropdown.classList.remove("is-open");
+      button.setAttribute("aria-expanded", "false");
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    menu.appendChild(item);
+  });
+
+  const current = select.options[select.selectedIndex];
+  label.textContent = current ? current.textContent : "";
+
+  button.addEventListener("click", () => {
+    const open = dropdown.classList.toggle("is-open");
+    menu.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!dropdown.contains(event.target)) {
+      menu.hidden = true;
+      dropdown.classList.remove("is-open");
+      button.setAttribute("aria-expanded", "false");
+    }
+  });
+});
