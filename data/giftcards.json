@@ -254,6 +254,35 @@
       "status": "Awaiting allocation",
       "createdAt": "2026-08-21T03:35:13.043Z",
       "updatedAt": "2026-08-21T03:35:13.043Z"
+    },
+    {
+      "id": "8405238b-b14c-4f30-b4fc-4d02f64ec243",
+      "code": "LANG-7C39-82BE",
+      "createdByUserId": "admin1",
+      "giftType": "lang-impact",
+      "deliveryType": "physical",
+      "designType": "bat-trang-blue",
+      "quantity": 1,
+      "amountPerCard": 100,
+      "totalAmount": 100,
+      "recipientName": "cafe",
+      "senderName": "ewww",
+      "message": "ewewcesc sec wdecweds c",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": null,
+      "printable": null,
+      "physical": {
+        "recipientPhone": "0919383920",
+        "physicalDeliveryDate": "2026-08-21",
+        "streetAddress": "23842919hjwbfejvebqce",
+        "district": "sdcev",
+        "city": "hhciwehc",
+        "postalCode": "7000000"
+      },
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-21T05:26:32.764Z",
+      "updatedAt": "2026-08-21T05:26:32.764Z"
     }
   ]
 }
