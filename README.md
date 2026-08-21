@@ -553,25 +553,6 @@ Sign in first, then retry the route. Blog authoring, forum account features, car
 
 ---
 
-## Submission Checklist
-
-- [ ] `npm install` completes successfully.
-- [ ] `npm start` starts the project without errors.
-- [ ] Landing page loads at `http://localhost:3000`.
-- [ ] All four assessed modules can be reached and tested.
-- [ ] Authentication-dependent actions work after sign-in.
-- [ ] Forms show validation feedback correctly.
-- [ ] No broken image, CSS, JavaScript, or EJS include paths remain.
-- [ ] No placeholder `href="#"` links remain where a real route exists.
-- [ ] Cart and checkout flow completes successfully.
-- [ ] Blog CRUD and comments work.
-- [ ] Forum thread/post interactions work.
-- [ ] Product review CRUD and ratings work.
-- [ ] Desktop and mobile layouts have been checked.
-- [ ] Team responsibilities in this README match the submitted code.
-
----
-
 <p align="center">
   <strong>Làng &amp; Co.</strong><br>
   <sub>Craft lives in the hands that make it.</sub>
