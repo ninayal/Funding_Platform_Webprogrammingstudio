@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * Restores form fields from localStorage after a page refresh.
  *
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "button",
         "reset"
     ];
-
     const isCheckable = (field) =>
         field.type === "checkbox" ||
         field.type === "radio";
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 !SKIP_TYPES.includes(field.type) &&
                 !field.hasAttribute("data-no-persist")
         );
-
     const storageKeyFor = (form, field) => {
         const formKey =
             form.dataset.persistForm ||
@@ -50,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return `formPersist:${formKey}:${fieldKey}`;
     };
-
     const dispatchRestoredValue = (field) => {
         if (field.type === "radio") {
             if (field.checked) {
@@ -70,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     bubbles: true
                 })
             );
-
             return;
         }
 
@@ -91,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll("form[data-persist-form]")
         .forEach((form) => {
             const fields = persistableFields(form);
-
             const clearPersistedFields = () => {
                 fields.forEach((field) => {
                     localStorage.removeItem(
@@ -105,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     dispatchRestoredValue
                 );
             };
-
             fields.forEach((field) => {
                 const key = storageKeyFor(form, field);
                 const saved = localStorage.getItem(key);
@@ -119,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     dispatchRestoredValue(field);
                 }
-
                 const saveField = () => {
                     localStorage.setItem(
                         key,
@@ -132,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 field.addEventListener("input", saveField);
                 field.addEventListener("change", saveField);
             });
-
             form
                 .querySelectorAll(
                     "[data-clear-persist-form]"
@@ -143,14 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         () => {
                             clearPersistedFields();
                             form.reset();
-
                             queueMicrotask(
                                 syncFieldsAfterReset
                             );
                         }
                     );
                 });
-
             /*
              * Only clear persisted data when the submission
              * is actually allowed to continue.
@@ -163,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (event.defaultPrevented) {
                         return;
                     }
-
                     clearPersistedFields();
                 });
             });

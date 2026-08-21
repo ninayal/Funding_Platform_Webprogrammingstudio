@@ -173,6 +173,58 @@
       "status": "Awaiting allocation",
       "createdAt": "2026-08-20T18:37:58.360Z",
       "updatedAt": "2026-08-20T18:37:58.360Z"
+    },
+    {
+      "id": "82bb504e-a343-44cb-93b9-01ecf81669eb",
+      "code": "LANG-B075-41ED",
+      "createdByUserId": "084cf529-90c6-4f3d-a3e4-7dbe0780d20c",
+      "giftType": "donation-in-honour",
+      "deliveryType": "printable",
+      "designType": "bat-trang-blue",
+      "quantity": 1,
+      "amountPerCard": 50,
+      "totalAmount": 50,
+      "recipientName": "Minh",
+      "senderName": "Huy",
+      "message": "Wishing you a meaningful birthday.",
+      "causeCategory": "craft-preservation",
+      "causeNote": "",
+      "digital": null,
+      "printable": {
+        "printFormat": "Flat Card",
+        "paperSize": "A4",
+        "downloadFormat": "PDF — Print Ready"
+      },
+      "physical": null,
+      "status": "Created",
+      "createdAt": "2026-08-20T23:36:07.971Z",
+      "updatedAt": "2026-08-20T23:36:07.971Z"
+    },
+    {
+      "id": "1997dfca-6ffa-42e8-bde6-11c4317af38f",
+      "code": "LANG-597A-709D",
+      "createdByUserId": "084cf529-90c6-4f3d-a3e4-7dbe0780d20c",
+      "giftType": "donation-in-honour",
+      "deliveryType": "printable",
+      "designType": "bat-trang-blue",
+      "quantity": 1,
+      "amountPerCard": 100,
+      "totalAmount": 100,
+      "recipientName": "jn",
+      "senderName": "jjjj",
+      "message": "kjnkjnk",
+      "causeCategory": "community-support",
+      "causeNote": "",
+      "digital": null,
+      "printable": {
+        "printFormat": "Flat Card",
+        "paperSize": "A4",
+        "downloadFormat": "PDF — Print Ready"
+      },
+      "physical": null,
+      "status": "Created",
+      "createdAt": "2026-08-20T23:39:38.824Z",
+      "updatedAt": "2026-08-20T23:39:38.824Z"
     }
   ]
 }

@@ -1,8 +1,3 @@
-@import url("./lead-base.css");
-@import url("./lead-layout.css");
-@import url("./lead-header.css");
+@import url("/css/index.css");
 @import url("./lead-article.css");
-@import url("./lead-share.css");
-@import url("./lead-related.css");
 @import url("./lead-comments.css");
-@import url("./lead-responsive.css");

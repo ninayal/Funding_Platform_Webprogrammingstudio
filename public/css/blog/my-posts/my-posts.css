@@ -1,33 +1,3 @@
-@import url("../blog-base.css");
-@import url("./my-posts-layout.css");
-@import url("./my-posts-header.css");
-@import url("./my-posts-account.css");
-@import url("./my-posts-filters.css");
-@import url("./my-posts-cards.css");
+@import url("/css/index.css");
+@import url("./my-posts-main.css");
 @import url("./my-posts-responsive.css");
-
-/* Two-font system only:
-   Serif: Playfair Display
-   Sans-serif: DM Sans */
-:root {
-    --my-posts-serif: var(--ff-serif,
-            "Playfair Display",
-            Georgia,
-            "Times New Roman",
-            serif);
-
-    --my-posts-sans: var(--ff-sans,
-            "DM Sans",
-            Arial,
-            Helvetica,
-            sans-serif);
-
-    /* Compatibility with the rest of the Blog styles */
-    --ff-script: var(--my-posts-serif);
-    --ff-body: var(--my-posts-serif);
-    --ff-ui: var(--my-posts-sans);
-}
-
-.my-posts-page {
-    font-family: var(--my-posts-sans);
-}

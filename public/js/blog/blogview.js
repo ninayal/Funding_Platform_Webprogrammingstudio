@@ -26,7 +26,6 @@ document.addEventListener(
       document.querySelector(
         "[data-share-feedback]",
       );
-
     const showShareFeedback = (
       message,
     ) => {
@@ -53,7 +52,6 @@ document.addEventListener(
           2400,
         );
     };
-
     const copyArticleLink =
       async () => {
         const url =
@@ -80,7 +78,6 @@ document.addEventListener(
           return false;
         }
       };
-
     shareButton?.addEventListener(
       "click",
       async () => {
@@ -100,7 +97,6 @@ document.addEventListener(
               .shareUrl ||
             window.location.href,
         };
-
         if (
           typeof navigator.share ===
           "function"
@@ -113,7 +109,6 @@ document.addEventListener(
             showShareFeedback(
               "Share menu opened",
             );
-
             return;
           } catch (error) {
             /*
@@ -137,7 +132,6 @@ document.addEventListener(
       "click",
       copyArticleLink,
     );
-
     const validateTextArea = (
       textarea,
       errorElement,
@@ -164,7 +158,6 @@ document.addEventListener(
           ? "true"
           : "false",
       );
-
       if (errorElement) {
         errorElement.textContent =
           message;
@@ -188,7 +181,6 @@ document.addEventListener(
         commentForm.querySelector(
           "[data-comment-count]",
         );
-
       const errorElement =
         commentForm.querySelector(
           '[data-error-for="comment"]',
@@ -199,18 +191,10 @@ document.addEventListener(
           "[data-comment-feedback]",
         );
 
-      const postId =
-        commentForm.dataset
-          .postId || "post";
-
-      const storageKey =
-        `langco.blog.commentDraft.${postId}`;
-
       const updateComment = () => {
         if (!textarea) {
           return;
         }
-
         if (count) {
           count.textContent =
             `${textarea.value.length} / 1000`;
@@ -235,32 +219,12 @@ document.addEventListener(
               "";
           }
         }
-
-        localStorage.setItem(
-          storageKey,
-          textarea.value,
-        );
       };
-
-      const storedDraft =
-        localStorage.getItem(
-          storageKey,
-        );
-
-      if (
-        storedDraft &&
-        textarea &&
-        !textarea.value
-      ) {
-        textarea.value =
-          storedDraft;
-      }
 
       textarea?.addEventListener(
         "input",
         updateComment,
       );
-
       commentForm.addEventListener(
         "submit",
         (event) => {
@@ -283,10 +247,6 @@ document.addEventListener(
 
             return;
           }
-
-          localStorage.removeItem(
-            storageKey,
-          );              
           if (feedback) {
             feedback.textContent =
               "Posting comment…";
@@ -309,19 +269,10 @@ document.addEventListener(
         form.querySelector(
           "[data-reply-count]",
         );
-
       const errorElement =
         form.querySelector(
           '[data-error-for="reply"]',
         );
-
-      const commentId =
-        form.dataset
-          .commentId ||
-        "comment";
-
-      const storageKey =
-        `langco.blog.replyDraft.${commentId}`;
 
       const updateReply = () => {
         if (!textarea) {
@@ -332,52 +283,17 @@ document.addEventListener(
           count.textContent =
             `${textarea.value.length} / 1000`;
         }
-
         validateTextArea(
           textarea,
           errorElement,
           "Reply",
         );
-
-        localStorage.setItem(
-          storageKey,
-          textarea.value,
-        );
       };
-
-      const query =
-        new URLSearchParams(
-          window.location.search,
-        );
-
-      if (
-        query.get("reply") ===
-        "added"
-      ) {
-        localStorage.removeItem(
-          storageKey,
-        );
-      } else {
-        const storedDraft =
-          localStorage.getItem(
-            storageKey,
-          );
-
-        if (
-          storedDraft &&
-          textarea &&
-          !textarea.value
-        ) {
-          textarea.value =
-            storedDraft;
-        }
-      }
 
       textarea?.addEventListener(
         "input",
         updateReply,
       );
-
       form.addEventListener(
         "submit",
         (event) => {
@@ -405,7 +321,6 @@ document.addEventListener(
       .forEach(
         initialiseReplyForm,
       );
-
     document
       .querySelectorAll(
         "[data-reply-toggle]",
@@ -427,7 +342,6 @@ document.addEventListener(
             if (!panel) {
               return;
             }
-
             const willOpen =
               panel.hidden;
 
@@ -449,7 +363,6 @@ document.addEventListener(
           },
         );
       });
-
     document
       .querySelectorAll(
         "[data-reply-cancel]",
@@ -471,7 +384,6 @@ document.addEventListener(
 
             const panelId =
               panel.id;
-
             const toggle =
               document.querySelector(
                 `[aria-controls="${CSS.escape(
@@ -486,7 +398,6 @@ document.addEventListener(
           },
         );
       });
-
     document
       .querySelectorAll(
         "[data-like-form]",
@@ -523,7 +434,6 @@ document.addEventListener(
                   form.action,
                   {
                     method: "POST",
-
                     headers: {
                       Accept:
                         "application/json",
@@ -543,7 +453,6 @@ document.addEventListener(
                   "Like could not be updated.",
                 );
               }
-
               button?.classList.toggle(
                 "is-liked",
                 result.liked,
@@ -555,7 +464,6 @@ document.addEventListener(
                     ? "Liked"
                     : "Like";
               }
-
               if (count) {
                 count.textContent =
                   String(
@@ -576,7 +484,6 @@ document.addEventListener(
           },
         );
       });
-
     document
       .querySelectorAll(
         "[data-delete-comment-form]",
