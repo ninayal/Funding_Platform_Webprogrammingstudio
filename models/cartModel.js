@@ -64,29 +64,82 @@ const getCartByUserId=(userId)=>{
 
 const buildGiftcardCartItem=(item)=>{
   const draft=item.giftcardDraft||{};
-  const quantity=Math.max(1,Number(draft.quantity)||Number(item.quantity)||1);
-  const amountPerCard=Number(draft.amountPerCard)||0;
-  const giftType=getOption(giftTypes,draft.giftType,giftTypes[0]);
-  const delivery=getOption(deliveryTypes,draft.deliveryType,deliveryTypes[0]);
-  const design=getOption(designs,draft.designType,designs[0]);
+
+  const quantity=Math.max(
+    1,
+    Number(draft.quantity)||Number(item.quantity)||1
+  );
+
+  const amountPerCard=
+    Number(draft.amountPerCard)||0;
+
+  const giftType=
+    getOption(
+      giftTypes,
+      draft.giftType,
+      giftTypes[0]
+    );
+
+  const delivery=
+    getOption(
+      deliveryTypes,
+      draft.deliveryType,
+      deliveryTypes[0]
+    );
+
+  const design=
+    getOption(
+      designs,
+      draft.designType,
+      designs[0]
+    );
+
+  const giftCode=
+    draft.code || "Pending checkout";
 
   return{
     productId:item.productId,
     itemType:GIFTCARD_ITEM_TYPE,
     quantity,
+
     product:{
       id:item.productId,
-      name:giftType?.title||"Gift Card",
-      image:buildGiftcardThumbnail(draft.designType),
-      maker:"Làng & Co.",
-      material:delivery?.title||"Gift Card",
-      variant:design?.title||"Gift Design",
-      price:amountPerCard,
+
+      name:
+        giftType?.title ||
+        "Gift Card",
+
+      image:
+        buildGiftcardThumbnail(
+          draft.designType
+        ),
+
+      maker:
+        "Làng & Co.",
+
+      material:
+        delivery?.title ||
+        "Gift Card",
+
+      variant:
+        `${design?.title || "Gift Design"} | Code: ${giftCode}`,
+
+      giftCode,
+
+      price:
+        amountPerCard,
+
       oldPrice:null,
-      stock:quantity,
-      href:`/giftcard?cartItem=${encodeURIComponent(item.productId)}#details`
+
+      stock:
+        quantity,
+
+      href:
+        `/giftcard?cartItem=${encodeURIComponent(item.productId)}#details`
     },
-    subtotal:amountPerCard*quantity
+
+    subtotal:
+      amountPerCard*quantity
   };
 };
 

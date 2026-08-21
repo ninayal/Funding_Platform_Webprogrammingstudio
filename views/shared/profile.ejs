@@ -58,7 +58,7 @@
 
                 <%- include( "../partials/profile/user-panel" , { errors, profile, profileStats, values } ) %>
 
-                  <%- include( "../partials/profile/orders-panel" , { orders, orderSummary } ) %>
+                  <%- include("../partials/profile/orders-panel", { orders, orderSummary, highlightedGift }) %>
 
                     <%- include( "../partials/profile/settings-panel" , { preferences } ) %>
 

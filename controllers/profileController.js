@@ -1,5 +1,8 @@
 "use strict";
 
+const giftcardModel =
+  require("../models/giftcardModel");
+
 const userModel = require(
   "../models/userModel"
 );
@@ -433,7 +436,8 @@ const buildViewData = (
     values,
     errors = {},
     activeTab,
-    pageMessage = ""
+    pageMessage = "",
+    giftCode = ""
   }
 ) => {
   const {
@@ -450,7 +454,12 @@ const buildViewData = (
       orders,
       user
     );
-
+  const highlightedGift =
+    giftCode
+      ? giftcardModel.getGiftcardByCode(
+        giftCode
+      )
+      : null;
   return {
     activePage:
       "profile",
@@ -487,6 +496,8 @@ const buildViewData = (
     orders,
 
     orderSummary,
+
+    highlightedGift,
 
     pageMessage,
 
@@ -529,7 +540,7 @@ const redirectStaleSession = (
     }
   );
 };
-
+  
 const getProfilePage = (
   req,
   res
@@ -560,7 +571,14 @@ const getProfilePage = (
         pageMessage:
           getPageMessage(
             req.query.status
+          ),
+
+        giftCode:
+          String(
+            req.query.giftCode || ""
           )
+            .trim()
+            .toUpperCase()
       }
     )
   );

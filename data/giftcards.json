@@ -335,6 +335,54 @@
       "status": "Awaiting allocation",
       "createdAt": "2026-08-21T09:04:01.352Z",
       "updatedAt": "2026-08-21T09:04:01.352Z"
+    },
+    {
+      "id": "6c844806-273a-40a5-b547-1df524f0f980",
+      "code": "LANG-6F07-591D",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "ho-tay-lotus",
+      "quantity": 1,
+      "amountPerCard": 50,
+      "totalAmount": 50,
+      "recipientName": "fasfsdaffasf",
+      "senderName": "fsfsdafas",
+      "message": "fasfas",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-21T10:08:29.395Z",
+      "updatedAt": "2026-08-21T10:08:29.395Z"
+    },
+    {
+      "id": "f06f718e-243b-47ed-b330-a7a0984dab24",
+      "code": "LANG-8730-D2B5",
+      "createdByUserId": "a71570f4-7258-4f3b-a1af-6be794f32924",
+      "giftType": "lang-impact",
+      "deliveryType": "digital",
+      "designType": "ho-tay-lotus",
+      "quantity": 1,
+      "amountPerCard": 50,
+      "totalAmount": 50,
+      "recipientName": "fasfsdaffasf",
+      "senderName": "fsfsdafas",
+      "message": "fasfas",
+      "causeCategory": null,
+      "causeNote": "",
+      "digital": {
+        "recipientEmail": "phuckhangg14@gmail.com"
+      },
+      "printable": null,
+      "physical": null,
+      "status": "Awaiting allocation",
+      "createdAt": "2026-08-21T10:18:52.195Z",
+      "updatedAt": "2026-08-21T10:18:52.195Z"
     }
   ]
 }

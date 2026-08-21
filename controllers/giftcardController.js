@@ -101,25 +101,57 @@ const reviewGiftcard = (req, res, next) => {
 const createGiftcard = (req, res, next) => {
   try {
     const currentUser = getCurrentUser(req);
-    if (!currentUser) return loginRedirect(res);
 
-    const draft = req.session?.giftcardDraft;
-    if (!draft) return res.redirect("/giftcard#details");
-
-    const { values, errors, valid } = validateGiftcard(draft);
-
-    if (!valid) {
-      return renderGiftcard(req, res, values, { errors }, 422);
+    if (!currentUser) {
+      return loginRedirect(res);
     }
 
-    const result = cartModel.addGiftcardDraftToCart(
-      req.cartUserId || currentUser.id,
+    const draft = req.session?.giftcardDraft;
+
+    if (!draft) {
+      return res.redirect("/giftcard#details");
+    }
+
+    const {
       values,
-      req.session?.giftcardCartItemId || null,
-    );
+      errors,
+      valid,
+    } = validateGiftcard(draft);
+
+    if (!valid) {
+      return renderGiftcard(
+        req,
+        res,
+        values,
+        { errors },
+        422,
+      );
+    }
+
+    const savedGiftcard =
+      giftcardModel.createGiftcard(
+        values,
+        currentUser.id,
+      );
+
+    const cartValues = {
+      ...values,
+      code: savedGiftcard.code,
+    };
+
+    const result =
+      cartModel.addGiftcardDraftToCart(
+        req.cartUserId ||
+          currentUser.id,
+        cartValues,
+        req.session?.giftcardCartItemId ||
+          null,
+      );
 
     if (!result.success) {
-      return res.status(400).send(result.message);
+      return res
+        .status(400)
+        .send(result.message);
     }
 
     delete req.session.giftcardDraft;
@@ -186,7 +218,9 @@ const redeemGiftcard = (req, res, next) => {
     }
 
     return res.redirect(
-      `/giftcard/view/${encodeURIComponent(giftcard.code)}`,
+      `/shared/profile?tab=orders&giftCode=${encodeURIComponent(
+        giftcard.code
+      )}`
     );
   } catch (error) {
     return next(error);
