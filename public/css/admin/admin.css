@@ -309,6 +309,43 @@
 /* =========================================
    DASHBOARD
 ========================================= */
+/*column*/
+.admin-table__col--cover {
+    width: 90px;
+}
+
+.admin-table__col--title {
+    width: 210px;
+}
+
+.admin-table__col--category {
+    width: 140px;
+}
+
+.admin-table__col--material {
+    width: 130px;
+}
+
+.admin-table__col--village {
+    width: 160px;
+}
+
+.admin-table__col--price {
+    width: 110px;
+}
+
+.admin-table__col--stock {
+    width: 90px;
+}
+
+.admin-table__col--status {
+    width: 170px;
+}
+
+.admin-table__col--action,
+.admin-table__col--delete {
+    width: 110px;
+}
 
 /* DASHBOARD STATS */
 .admin-stats {
@@ -356,6 +393,8 @@
 /* =========================================
    CONTROLS
 ========================================= */
+
+
 
 /* TOOLBAR / SEARCH */
 .admin-toolbar {
@@ -845,6 +884,8 @@
 }
 
 /* ---------- Upload area ---------- */
+
+
 
 .admin-upload-grid {
     display: grid;
