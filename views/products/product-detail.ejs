@@ -25,7 +25,11 @@
 </head>
 <body class="product-detail-page">
   <%- include("../partials/header_v2", { activePage, cartCount }) %>
-  <%- include("../partials/review/state-controls") %>
+  
+  <% tabs.forEach((tab) => { %>
+    <input class="state-control" type="radio" name="pdtab" id="tab-<%= tab.id %>" <%= tab.isDefault ? "checked" : "" %> />
+  <% }); %>
+
 
   <main class="pd-wrap">
     <%- include("../partials/review/product-main") %>
