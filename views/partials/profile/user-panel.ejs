@@ -92,11 +92,11 @@
       <label class="profile-field">
         <span>First Name</span>
 
-        <input type="text" name="firstname" value="<%= values.firstname %>" autocomplete="given-name" minlength="2"
-          maxlength="50" aria-describedby="firstname-error" aria-invalid="<%= errors.firstname ? 'true' : 'false' %>"
-          required />
+        <input type="text" name="firstname" data-profile-field value="<%= values.firstname %>" autocomplete="given-name"
+          minlength="2" maxlength="50" aria-describedby="firstname-error"
+          aria-invalid="<%= errors.firstname ? 'true' : 'false' %>" required />
 
-        <small class="profile-field-error" id="firstname-error">
+        <small class="profile-field-error" id="firstname-error" data-field-error="firstname">
           <%= errors.firstname || "" %>
         </small>
       </label>
@@ -104,11 +104,11 @@
       <label class="profile-field">
         <span>Last Name</span>
 
-        <input type="text" name="lastname" value="<%= values.lastname %>" autocomplete="family-name" minlength="2"
-          maxlength="50" aria-describedby="lastname-error" aria-invalid="<%= errors.lastname ? 'true' : 'false' %>"
-          required />
+        <input type="text" name="lastname" data-profile-field value="<%= values.lastname %>" autocomplete="family-name"
+          minlength="2" maxlength="50" aria-describedby="lastname-error"
+          aria-invalid="<%= errors.lastname ? 'true' : 'false' %>" required />
 
-        <small class="profile-field-error" id="lastname-error">
+        <small class="profile-field-error" id="lastname-error" data-field-error="lastname">
           <%= errors.lastname || "" %>
         </small>
       </label>
@@ -116,10 +116,11 @@
       <label class="profile-field">
         <span>Email Address</span>
 
-        <input type="email" name="email" value="<%= values.email %>" autocomplete="email" maxlength="254"
-          aria-describedby="profile-email-error" aria-invalid="<%= errors.email ? 'true' : 'false' %>" required />
+        <input type="email" name="email" data-profile-field value="<%= values.email %>" autocomplete="email"
+          maxlength="254" aria-describedby="profile-email-error" aria-invalid="<%= errors.email ? 'true' : 'false' %>"
+          required />
 
-        <small class="profile-field-error" id="profile-email-error">
+        <small class="profile-field-error" id="profile-email-error" data-field-error="email">
           <%= errors.email || "" %>
         </small>
       </label>
@@ -127,11 +128,11 @@
       <label class="profile-field">
         <span>Phone Number</span>
 
-        <input type="tel" name="phone" value="<%= values.phone %>" autocomplete="tel" inputmode="tel" minlength="7"
-          maxlength="20" pattern="[0-9+() -]{7,20}" aria-describedby="phone-error"
+        <input type="tel" name="phone" data-profile-field value="<%= values.phone %>" autocomplete="tel" inputmode="tel"
+          minlength="7" maxlength="20" pattern="[0-9+() -]{7,20}" aria-describedby="phone-error"
           aria-invalid="<%= errors.phone ? 'true' : 'false' %>" />
 
-        <small class="profile-field-error" id="phone-error">
+        <small class="profile-field-error" id="phone-error" data-field-error="phone">
           <%= errors.phone || "" %>
         </small>
       </label>
@@ -139,10 +140,10 @@
       <label class="profile-field">
         <span>Location</span>
 
-        <input type="text" name="location" value="<%= values.location %>" autocomplete="address-level2" maxlength="100"
+        <input type="text" name="location" data-profile-field value="<%= values.location %>" autocomplete="address-level2" maxlength="100"
           aria-describedby="location-error" aria-invalid="<%= errors.location ? 'true' : 'false' %>" />
 
-        <small class="profile-field-error" id="location-error">
+        <small class="profile-field-error" id="location-error" data-field-error="location">
           <%= errors.location || "" %>
         </small>
       </label>
@@ -150,10 +151,10 @@
       <label class="profile-field">
         <span>Postal Code</span>
 
-        <input type="text" name="postalCode" value="<%= values.postalCode %>" autocomplete="postal-code" maxlength="20"
+        <input type="text" name="postalCode" data-profile-field value="<%= values.postalCode %>" autocomplete="postal-code" maxlength="20"
           aria-describedby="postal-code-error" aria-invalid="<%= errors.postalCode ? 'true' : 'false' %>" />
 
-        <small class="profile-field-error" id="postal-code-error">
+        <small class="profile-field-error" id="postal-code-error" data-field-error="postalCode">
           <%= errors.postalCode || "" %>
         </small>
       </label>
@@ -161,10 +162,10 @@
       <label class="profile-field profile-field--full">
         <span>Address</span>
 
-        <input type="text" name="address" value="<%= values.address %>" autocomplete="street-address" maxlength="180"
+        <input type="text" name="address" data-profile-field value="<%= values.address %>" autocomplete="street-address" maxlength="180"
           aria-describedby="address-error" aria-invalid="<%= errors.address ? 'true' : 'false' %>" />
 
-        <small class="profile-field-error" id="address-error">
+        <small class="profile-field-error" id="address-error" data-field-error="address">
           <%= errors.address || "" %>
         </small>
       </label>

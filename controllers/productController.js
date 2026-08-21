@@ -64,11 +64,11 @@ const getCurrentUser = (req) => {
 const getCartCount = (req) =>
   Array.isArray(req.session?.cart)
     ? req.session.cart.reduce(
-        (total, item) =>
-          total +
-          Number(item.quantity || 0),
-        0
-      )
+      (total, item) =>
+        total +
+        Number(item.quantity || 0),
+      0
+    )
     : 0;
 
 const createStars = (rating) => {
@@ -206,7 +206,7 @@ const buildReviewCards = (
         isOwn:
           Boolean(currentUser?.id) &&
           review.userId ===
-            currentUser.id,
+          currentUser.id,
 
         avatar:
           String(
@@ -549,7 +549,7 @@ const buildReviewData = (
         currentUser,
         formMode,
         options.editingReviewId ||
-          "",
+        "",
         formValues,
         serverErrors
       ),

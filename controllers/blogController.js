@@ -255,11 +255,11 @@ const getPostFormValues = (
 
   displayDate:
     post.publishedAt ||
-    post.updatedAt
+      post.updatedAt
       ? formatDate(
-          post.publishedAt ||
-          post.updatedAt
-        )
+        post.publishedAt ||
+        post.updatedAt
+      )
       : "Not published",
 });
 
@@ -332,7 +332,7 @@ const prepareMyPostForView = (
 
   const status =
     post.status ===
-    "published"
+      "published"
       ? "published"
       : "draft";
 
@@ -385,8 +385,8 @@ const prepareMyPostForView = (
     draftCompletion:
       status === "draft"
         ? calculateDraftCompletion(
-            post
-          )
+          post
+        )
         : 100,
   };
 };
@@ -417,16 +417,16 @@ const prepareCommentsForView = (
             String(
               comment.author.id
             ) ===
-              String(
-                currentUser.id
-              ) ||
+            String(
+              currentUser.id
+            ) ||
 
             String(
               post.author.id
             ) ===
-              String(
-                currentUser.id
-              )
+            String(
+              currentUser.id
+            )
           )
         ),
 
@@ -447,16 +447,16 @@ const prepareCommentsForView = (
                   String(
                     reply.author.id
                   ) ===
-                    String(
-                      currentUser.id
-                    ) ||
+                  String(
+                    currentUser.id
+                  ) ||
 
                   String(
                     post.author.id
                   ) ===
-                    String(
-                      currentUser.id
-                    )
+                  String(
+                    currentUser.id
+                  )
                 )
               ),
           })
@@ -490,9 +490,9 @@ const getSharedViewData = (
     myPostCount:
       currentUser
         ? blogModel
-            .countPostsByAuthorId(
-              currentUser.id
-            )
+          .countPostsByAuthorId(
+            currentUser.id
+          )
         : 0,
 
     blogActor:
@@ -1150,7 +1150,7 @@ const deleteComment = (
       return res
         .status(
           result?.reason ===
-          "forbidden"
+            "forbidden"
             ? 403
             : 404
         )
@@ -1290,9 +1290,9 @@ const renderPostForm = (
   const preparedPost =
     post
       ? preparePostForView(
-          req,
-          post
-        )
+        req,
+        post
+      )
       : null;
 
   const formValues = {
@@ -1321,9 +1321,9 @@ const renderPostForm = (
     commentCount:
       post
         ? blogCommentModel
-            .countCommentsByPostId(
-              post.id
-            )
+          .countCommentsByPostId(
+            post.id
+          )
         : 0,
 
     viewCount:
@@ -1335,8 +1335,8 @@ const renderPostForm = (
     lastEdited:
       post?.updatedAt
         ? formatDate(
-            post.updatedAt
-          )
+          post.updatedAt
+        )
         : "Not saved yet",
   };
 
@@ -1688,7 +1688,7 @@ const updatePost = (
       return res
         .status(
           result?.reason ===
-          "forbidden"
+            "forbidden"
             ? 403
             : 404
         )
@@ -1746,7 +1746,7 @@ const deletePost = (
       return res
         .status(
           result?.reason ===
-          "forbidden"
+            "forbidden"
             ? 403
             : 404
         )

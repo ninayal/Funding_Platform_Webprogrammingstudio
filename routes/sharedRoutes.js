@@ -17,12 +17,8 @@ const uploadProfileImage = require(
   "../middlewares/uploadProfileImage"
 );
 
-console.log({
-  uploadProfileImage: typeof uploadProfileImage,
-  updateAvatar: typeof profileController.updateAvatar
-});
-
 const router = express.Router();
+
 
 /* Auth */
 
@@ -51,6 +47,7 @@ router.post(
   authController.register
 );
 
+
 /* Password */
 
 router.get(
@@ -72,6 +69,7 @@ router.post(
   "/reset-password",
   sharedController.postResetPassword
 );
+
 
 /* Profile */
 
@@ -97,28 +95,39 @@ router.post(
   "/profile/avatar",
   requireAuth,
   (req, res, next) => {
-    uploadProfileImage(req, res, (err) => {
-      if (!err) {
-        return next();
+    uploadProfileImage(
+      req,
+      res,
+      (err) => {
+        if (!err) {
+          return next();
+        }
+
+        const wantsJson =
+          req.xhr ||
+          (req.get("Accept") || "")
+            .includes("application/json");
+
+        if (wantsJson) {
+          return res.status(400).json({
+            ok: false,
+            message: err.message,
+          });
+        }
+
+        return next(err);
       }
-
-      const wantsJson =
-        req.xhr ||
-        (req.get("Accept") || "").includes(
-          "application/json"
-        );
-
-      if (wantsJson) {
-        return res
-          .status(400)
-          .json({ ok: false, message: err.message });
-      }
-
-      return next(err);
-    });
+    );
   },
   profileController.updateAvatar
 );
+
+router.post(
+  "/profile/deactivate",
+  requireAuth,
+  profileController.deactivateAccount
+);
+
 
 /* Admin */
 
@@ -184,11 +193,13 @@ router.post(
   sharedController.postDeleteProduct
 );
 
+
 /* Sitemap */
 
 router.get(
   "/sitemap",
   sharedController.getSitemapPage
 );
+
 
 module.exports = router;

@@ -731,6 +731,45 @@ const updatePreferences = (
   }
 };
 
+const deactivateAccount = (
+  req,
+  res,
+  next
+) => {
+  try {
+    const userId =
+      req.currentUser?.id ||
+      req.session?.user?.id;
+
+    if (!userId) {
+      return res.redirect(
+        "/shared/login"
+      );
+    }
+
+    const result =
+      userModel.deactivateUser(
+        userId
+      );
+
+    if (!result.ok) {
+      return res.status(400).send(
+        "Unable to deactivate account."
+      );
+    }
+
+    req.session.destroy(
+      () => {
+        res.redirect(
+          "/shared/login?deactivated=1"
+        );
+      }
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
 const wantsJson = (req) =>
   req.xhr ||
   (req.get("Accept") || "").includes("application/json");
@@ -805,6 +844,7 @@ const updateAvatar = (req, res, next) => {
 module.exports = {
   getProfilePage,
   updatePreferences,
+  deactivateAccount,
   updateProfile,
   updateAvatar
 };

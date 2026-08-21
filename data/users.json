@@ -166,7 +166,7 @@
     "gender": "female",
     "description": "vceskwajnvsewved",
     "role": "user",
-    "status": "active",
+    "status": "deactivated",
     "phone": "",
     "location": "",
     "postalCode": "",
@@ -187,6 +187,6 @@
     "requiresPasswordChange": false,
     "joinDate": "2026-08-19",
     "createdAt": "2026-08-19T17:35:17.103Z",
-    "updatedAt": "2026-08-21T00:21:31.347Z"
+    "updatedAt": "2026-08-21T05:22:57.462Z"
   }
 ]

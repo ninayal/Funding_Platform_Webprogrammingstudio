@@ -1,11 +1,16 @@
 <div class="profile-panel profile-panel--settings">
+
   <form class="settings-form" action="/shared/profile/preferences" method="post" data-preferences-form
     data-persist-form="profile-preferences">
 
     <div class="panel-heading">
-      <p class="profile-kicker">Preferences</p>
+      <p class="profile-kicker">
+        Preferences
+      </p>
 
-      <h2>Account Settings</h2>
+      <h2>
+        Account Settings
+      </h2>
 
       <p>
         Customize how Làng &amp; Co. reaches you,
@@ -14,88 +19,140 @@
       </p>
     </div>
 
+
     <fieldset class="setting-group">
-      <legend>Communication</legend>
+      <legend>
+        Communication
+      </legend>
 
       <div class="setting-list">
-        <label>
-          <span>Email updates</span>
-
-          <input type="checkbox" name="emailUpdates" <%=preferences.emailUpdates ? "checked" : "" %> />
-        </label>
 
         <label>
-          <span>Order notifications</span>
+          <span>
+            Email updates
+          </span>
 
-          <input type="checkbox" name="orderNotifications" <%=preferences.orderNotifications ? "checked" : "" %> />
+          <input type="checkbox" name="emailUpdates" <%=preferences.emailUpdates ? "checked" : "" %>
+          />
         </label>
+
 
         <label>
-          <span>Community replies</span>
+          <span>
+            Order notifications
+          </span>
 
-          <input type="checkbox" name="communityReplies" <%=preferences.communityReplies ? "checked" : "" %> />
+          <input type="checkbox" name="orderNotifications" <%=preferences.orderNotifications ? "checked" : "" %>
+          />
         </label>
+
 
         <label>
-          <span>Promotions and new collections</span>
+          <span>
+            Community replies
+          </span>
 
-          <input type="checkbox" name="promotionalUpdates" <%=preferences.promotionalUpdates ? "checked" : "" %> />
+          <input type="checkbox" name="communityReplies" <%=preferences.communityReplies ? "checked" : "" %>
+          />
         </label>
+
+
+        <label>
+          <span>
+            Promotions and new collections
+          </span>
+
+          <input type="checkbox" name="promotionalUpdates" <%=preferences.promotionalUpdates ? "checked" : "" %>
+          />
+        </label>
+
       </div>
     </fieldset>
 
+
     <fieldset class="setting-group">
-      <legend>Account Preferences</legend>
+      <legend>
+        Account Preferences
+      </legend>
 
       <div class="setting-list">
+
         <label>
-          <span>Save shipping information</span>
+          <span>
+            Save shipping information
+          </span>
 
           <input type="checkbox" name="saveShippingInformation" <%=preferences.saveShippingInformation ? "checked" : ""
-            %> />
+            %>
+          />
         </label>
 
+
         <label>
-          <span>Default to international shipping</span>
+          <span>
+            Default to international shipping
+          </span>
 
           <input type="checkbox" name="internationalShippingDefault" <%=preferences.internationalShippingDefault
-            ? "checked" : "" %> />
+            ? "checked" : "" %>
+          />
         </label>
+
 
         <label>
-          <span>Receive product care guides</span>
+          <span>
+            Receive product care guides
+          </span>
 
-          <input type="checkbox" name="productCareGuides" <%=preferences.productCareGuides ? "checked" : "" %> />
+          <input type="checkbox" name="productCareGuides" <%=preferences.productCareGuides ? "checked" : "" %>
+          />
         </label>
+
       </div>
     </fieldset>
 
-    <fieldset class="account-danger-zone">
-      <legend>Danger Zone</legend>
+
+    <button class="profile-save" type="submit" data-preferences-submit>
+      Save Preferences
+    </button>
+
+  </form>
+
+
+  <form class="account-danger-zone" action="/shared/profile/deactivate" method="post" data-deactivate-form>
+
+    <fieldset>
+      <legend>
+        Danger Zone
+      </legend>
 
       <p class="account-danger-zone__warning">
-        Account deactivation is displayed for the
-        interface demonstration but is not enabled.
+        Deactivating your account will remove access
+        until the account is restored.
       </p>
 
+
       <label class="account-danger-zone__confirm">
-        <input type="checkbox" name="confirmAccountDeactivation" data-deactivate-confirm data-no-persist />
+
+        <input type="checkbox" data-deactivate-confirm data-no-persist />
 
         <span>
           I understand that this action affects
           my account access.
         </span>
+
       </label>
 
-      <button class="account-deactivate" type="button" data-deactivate-button disabled>
+
+      <button class="account-deactivate" type="submit" data-deactivate-button disabled>
         Deactivate Account
       </button>
 
+
       <p class="profile-danger-status" role="status" data-deactivate-status></p>
+
     </fieldset>
 
-    <button class="profile-save" type="submit" data-preferences-submit>
-      Save Preferences
-    </button>
   </form>
+
 </div>

@@ -1,27 +1,19 @@
 "use strict";
-
-const userModel = require(
-  "../models/userModel"
-);
+const userModel =
+  require("../models/userModel");
 
 const {
   validateLogin,
-  validateRegistration
-} = require(
-  "../validators/authValidators"
-);
+  validateRegistration,
+} = require("../validators/authValidators");
 
 const {
-  safeRedirectPath
-} = require(
-  "../middlewares/authMiddleware"
-);
+  safeRedirectPath,
+} = require("../middlewares/authMiddleware");
 
 const {
-  buildLoginView
-} = require(
-  "../utils/loginViewModel"
-);
+  buildLoginView,
+} = require("../utils/loginViewModel");
 
 const removeSensitiveValues = (
   values = {}
@@ -45,7 +37,7 @@ const removeSensitiveValues = (
     values.description || "",
 
   terms:
-    values.terms || ""
+    values.terms || "",
 });
 
 const getRedirectTarget = (
@@ -64,7 +56,7 @@ const renderLogin = (
     status = 200,
     values = {},
     errors = {},
-    redirect = "/"
+    redirect = "/",
   } = {}
 ) =>
   res.status(status).render(
@@ -72,7 +64,7 @@ const renderLogin = (
     buildLoginView({
       values,
       errors,
-      redirect
+      redirect,
     })
   );
 
@@ -93,7 +85,7 @@ const getLoginPage = (
     res,
     {
       redirect:
-        redirectTarget
+        redirectTarget,
     }
   );
 };
@@ -112,7 +104,7 @@ const getRegisterPage = (
       values: {},
       errors: {},
       redirect:
-        getRedirectTarget(req)
+        getRedirectTarget(req),
     }
   );
 };
@@ -137,10 +129,12 @@ const establishSession = (
         name: user.name,
         username:
           user.username,
-        email: user.email,
+        email:
+          user.email,
         initials:
           user.initials,
-        role: user.role
+        role:
+          user.role,
       };
 
       return req.session.save(
@@ -170,7 +164,7 @@ const login = (
   try {
     const {
       values,
-      errors
+      errors,
     } = validateLogin(
       req.body
     );
@@ -188,11 +182,11 @@ const login = (
           status: 422,
           values: {
             email:
-              values.email
+              values.email,
           },
           errors,
           redirect:
-            redirectTarget
+            redirectTarget,
         }
       );
     }
@@ -204,20 +198,29 @@ const login = (
       );
 
     if (!result.ok) {
+      const message =
+        result.reason ===
+          "deactivated"
+          ? "This account has been deactivated."
+          : result.reason ===
+            "blocked"
+            ? "This account has been blocked."
+            : "The email or password is incorrect.";
+
       return renderLogin(
         res,
         {
           status: 401,
           values: {
             email:
-              values.email
+              values.email,
           },
           errors: {
             form:
-              "The email or password is incorrect."
+              message,
           },
           redirect:
-            redirectTarget
+            redirectTarget,
         }
       );
     }
@@ -242,7 +245,7 @@ const register = (
   try {
     const {
       values,
-      errors
+      errors,
     } = validateRegistration(
       req.body
     );
@@ -265,7 +268,7 @@ const register = (
               ),
             errors,
             redirect:
-              redirectTarget
+              redirectTarget,
           }
         );
     }
@@ -306,7 +309,7 @@ const register = (
             errors:
               modelErrors,
             redirect:
-              redirectTarget
+              redirectTarget,
           }
         );
     }
@@ -348,5 +351,5 @@ module.exports = {
   getRegisterPage,
   login,
   register,
-  logout
+  logout,
 };

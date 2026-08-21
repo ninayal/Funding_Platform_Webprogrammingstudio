@@ -9,10 +9,11 @@ const {
   verifyPassword,
 } = require("../utils/passwordUtils");
 
-const USERS_FILE = path.join(
-  __dirname,
-  "../data/users.json"
-);
+const USERS_FILE =
+  path.join(
+    __dirname,
+    "../data/users.json"
+  );
 
 const DEFAULT_PREFERENCES = {
   emailUpdates: true,
@@ -24,11 +25,17 @@ const DEFAULT_PREFERENCES = {
   productCareGuides: true,
 };
 
-const clean = (value) =>
-  String(value || "").trim();
+const clean = (
+  value
+) =>
+  String(value || "")
+    .trim();
 
-const normalise = (value) =>
-  clean(value).toLowerCase();
+const normalise = (
+  value
+) =>
+  clean(value)
+    .toLowerCase();
 
 const ensureUsersFile = () => {
   if (!fs.existsSync(USERS_FILE)) {
@@ -44,12 +51,13 @@ const readUsers = () => {
   ensureUsersFile();
 
   try {
-    const data = JSON.parse(
-      fs.readFileSync(
-        USERS_FILE,
-        "utf8"
-      )
-    );
+    const data =
+      JSON.parse(
+        fs.readFileSync(
+          USERS_FILE,
+          "utf8"
+        )
+      );
 
     return Array.isArray(data)
       ? data
@@ -59,7 +67,9 @@ const readUsers = () => {
   }
 };
 
-const writeUsers = (users) => {
+const writeUsers = (
+  users
+) => {
   const tempFile =
     `${USERS_FILE}.tmp`;
 
@@ -84,13 +94,14 @@ const createInitials = (
   lastname,
   username
 ) => {
-  const initials = [
-    clean(firstname)[0],
-    clean(lastname)[0],
-  ]
-    .filter(Boolean)
-    .join("")
-    .toUpperCase();
+  const initials =
+    [
+      clean(firstname)[0],
+      clean(lastname)[0],
+    ]
+      .filter(Boolean)
+      .join("")
+      .toUpperCase();
 
   return (
     initials ||
@@ -100,11 +111,17 @@ const createInitials = (
   );
 };
 
-const isAdminRole = (role) =>
+const isAdminRole = (
+  role
+) =>
   normalise(role) === "admin";
 
-const toPublicUser = (user) => {
-  if (!user) return null;
+const toPublicUser = (
+  user
+) => {
+  if (!user) {
+    return null;
+  }
 
   const name =
     `${user.firstname || ""} ${user.lastname || ""}`
@@ -115,24 +132,37 @@ const toPublicUser = (user) => {
 
   return {
     id: user.id,
-    firstname: user.firstname || "",
-    lastname: user.lastname || "",
+    firstname:
+      user.firstname || "",
+    lastname:
+      user.lastname || "",
     name,
-    username: user.username || "",
-    email: user.email || "",
-    initials: createInitials(
-      user.firstname,
-      user.lastname,
-      user.username
-    ),
-    role: user.role || "user",
-    status: user.status || "active",
-    gender: user.gender || "",
-    description: user.description || "",
-    phone: user.phone || "",
-    location: user.location || "",
-    postalCode: user.postalCode || "",
-    address: user.address || "",
+    username:
+      user.username || "",
+    email:
+      user.email || "",
+    initials:
+      createInitials(
+        user.firstname,
+        user.lastname,
+        user.username
+      ),
+    role:
+      user.role || "user",
+    status:
+      user.status || "active",
+    gender:
+      user.gender || "",
+    description:
+      user.description || "",
+    phone:
+      user.phone || "",
+    location:
+      user.location || "",
+    postalCode:
+      user.postalCode || "",
+    address:
+      user.address || "",
     about:
       user.about ||
       user.description ||
@@ -167,14 +197,18 @@ const toPublicUser = (user) => {
   };
 };
 
-const findUserById = (id) =>
+const findUserById = (
+  id
+) =>
   readUsers().find(
     (user) =>
       String(user.id) ===
       String(id)
   ) || null;
 
-const findUserByEmail = (email) => {
+const findUserByEmail = (
+  email
+) => {
   const target =
     normalise(email);
 
@@ -187,13 +221,16 @@ const findUserByEmail = (email) => {
   );
 };
 
-const findById = (id) =>
+const findById = (
+  id
+) =>
   toPublicUser(
     findUserById(id)
   );
 
 const getAllUsers = () =>
-  readUsers().map(toPublicUser);
+  readUsers()
+    .map(toPublicUser);
 
 const authenticate = (
   email,
@@ -202,9 +239,35 @@ const authenticate = (
   const user =
     findUserByEmail(email);
 
+  if (!user) {
+    return {
+      ok: false,
+      reason:
+        "invalid-credentials",
+    };
+  }
+
   if (
-    !user ||
-    user.status === "blocked" ||
+    user.status === "blocked"
+  ) {
+    return {
+      ok: false,
+      reason:
+        "blocked",
+    };
+  }
+
+  if (
+    user.status === "deactivated"
+  ) {
+    return {
+      ok: false,
+      reason:
+        "deactivated",
+    };
+  }
+
+  if (
     !verifyPassword(
       password,
       user.passwordHash
@@ -212,18 +275,23 @@ const authenticate = (
   ) {
     return {
       ok: false,
-      reason: "invalid-credentials",
+      reason:
+        "invalid-credentials",
     };
   }
 
   return {
     ok: true,
-    user: toPublicUser(user),
+    user:
+      toPublicUser(user),
   };
 };
 
-const createUser = (values) => {
-  const users = readUsers();
+const createUser = (
+  values
+) => {
+  const users =
+    readUsers();
 
   const email =
     normalise(values.email);
@@ -240,7 +308,8 @@ const createUser = (values) => {
   ) {
     return {
       ok: false,
-      reason: "email-exists",
+      reason:
+        "email-exists",
     };
   }
 
@@ -253,15 +322,18 @@ const createUser = (values) => {
   ) {
     return {
       ok: false,
-      reason: "username-exists",
+      reason:
+        "username-exists",
     };
   }
 
   const now =
-    new Date().toISOString();
+    new Date()
+      .toISOString();
 
   const user = {
-    id: crypto.randomUUID(),
+    id:
+      crypto.randomUUID(),
     firstname:
       clean(values.firstname),
     lastname:
@@ -272,36 +344,50 @@ const createUser = (values) => {
       clean(values.gender),
     description:
       clean(values.description),
-    role: "user",
-    status: "active",
-    phone: "",
-    location: "",
-    postalCode: "",
-    address: "",
+    role:
+      "user",
+    status:
+      "active",
+    phone:
+      "",
+    location:
+      "",
+    postalCode:
+      "",
+    address:
+      "",
     about:
       clean(values.description),
-    avatar: "/images/profile.png",
-    tier: "Craft Collector",
-    preferences: {
+    avatar:
+      "/images/profile.png",
+    tier:
+      "Craft Collector",
+    preferences:
+    {
       ...DEFAULT_PREFERENCES,
     },
     passwordHash:
       hashPassword(
         values.password
       ),
-    requiresPasswordChange: false,
+    requiresPasswordChange:
+      false,
     joinDate:
       now.slice(0, 10),
-    createdAt: now,
-    updatedAt: now,
+    createdAt:
+      now,
+    updatedAt:
+      now,
   };
 
   users.push(user);
+
   writeUsers(users);
 
   return {
     ok: true,
-    user: toPublicUser(user),
+    user:
+      toPublicUser(user),
   };
 };
 
@@ -309,7 +395,8 @@ const updateAccount = (
   userId,
   values
 ) => {
-  const users = readUsers();
+  const users =
+    readUsers();
 
   const index =
     users.findIndex(
@@ -321,7 +408,8 @@ const updateAccount = (
   if (index === -1) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
@@ -336,11 +424,13 @@ const updateAccount = (
   if (duplicateEmail) {
     return {
       ok: false,
-      reason: "email-exists",
+      reason:
+        "email-exists",
     };
   }
 
-  const user = users[index];
+  const user =
+    users[index];
 
   const changingPassword =
     Boolean(values.newPassword);
@@ -380,7 +470,8 @@ const updateAccount = (
     description:
       clean(values.about),
     updatedAt:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
   };
 
   if (changingPassword) {
@@ -393,7 +484,9 @@ const updateAccount = (
       false;
   }
 
-  users[index] = updatedUser;
+  users[index] =
+    updatedUser;
+
   writeUsers(users);
 
   return {
@@ -409,7 +502,8 @@ const updateAvatar = (
   userId,
   avatar
 ) => {
-  const users = readUsers();
+  const users =
+    readUsers();
 
   const index =
     users.findIndex(
@@ -421,7 +515,8 @@ const updateAvatar = (
   if (index === -1) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
@@ -429,7 +524,8 @@ const updateAvatar = (
     ...users[index],
     avatar,
     updatedAt:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
   };
 
   writeUsers(users);
@@ -447,7 +543,8 @@ const updatePreferences = (
   userId,
   preferences
 ) => {
-  const users = readUsers();
+  const users =
+    readUsers();
 
   const index =
     users.findIndex(
@@ -459,7 +556,8 @@ const updatePreferences = (
   if (index === -1) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
@@ -470,7 +568,49 @@ const updatePreferences = (
       ...preferences,
     },
     updatedAt:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
+  };
+
+  writeUsers(users);
+
+  return {
+    ok: true,
+    user:
+      toPublicUser(
+        users[index]
+      ),
+  };
+};
+
+const deactivateUser = (
+  userId
+) => {
+  const users =
+    readUsers();
+
+  const index =
+    users.findIndex(
+      (user) =>
+        String(user.id) ===
+        String(userId)
+    );
+
+  if (index === -1) {
+    return {
+      ok: false,
+      reason:
+        "user-not-found",
+    };
+  }
+
+  users[index] = {
+    ...users[index],
+    status:
+      "deactivated",
+    updatedAt:
+      new Date()
+        .toISOString(),
   };
 
   writeUsers(users);
@@ -488,7 +628,8 @@ const updateUser = (
   userId,
   updates
 ) => {
-  const users = readUsers();
+  const users =
+    readUsers();
 
   const index =
     users.findIndex(
@@ -505,7 +646,8 @@ const updateUser = (
     ...users[index],
     ...updates,
     updatedAt:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
   };
 
   writeUsers(users);
@@ -525,5 +667,6 @@ module.exports = {
   updateAccount,
   updateAvatar,
   updatePreferences,
+  deactivateUser,
   updateUser,
 };

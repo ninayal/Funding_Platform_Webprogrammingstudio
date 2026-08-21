@@ -1,38 +1,162 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const setFieldState = (
+    field,
+    message = ""
+  ) => {
+    const error =
+      document.querySelector(
+        `[data-field-error="${field.name}"]`
+      );
+
+    field.setAttribute(
+      "aria-invalid",
+      message ? "true" : "false"
+    );
+
+    if (error) {
+      error.textContent = message;
+    }
+
+    return !message;
+  };
+
+  const validateProfileField = (field) => {
+    const value =
+      field.value.trim();
+
+    let message = "";
+
+    if (field.required && !value) {
+      message = "This field is required.";
+    }
+
+    if (
+      !message &&
+      field.minLength > 0 &&
+      value.length < field.minLength
+    ) {
+      message =
+        `${field.labels?.[0]?.textContent || "Value"} must contain at least ${field.minLength} characters.`;
+    }
+
+    if (
+      !message &&
+      field.maxLength > 0 &&
+      value.length > field.maxLength
+    ) {
+      message =
+        `Maximum ${field.maxLength} characters allowed.`;
+    }
+
+    if (
+      !message &&
+      field.type === "email" &&
+      value &&
+      !field.validity.valid
+    ) {
+      message =
+        "Enter a valid email address.";
+    }
+
+    if (
+      !message &&
+      field.type === "tel" &&
+      value &&
+      !field.validity.valid
+    ) {
+      message =
+        "Enter a valid phone number.";
+    }
+
+    return setFieldState(
+      field,
+      message
+    );
+  };
+
+
+  /* =========================================================
+     PROFILE LIVE VALIDATION
+  ========================================================= */
+
+  const profileForm =
+    document.querySelector(
+      "[data-profile-form]"
+    );
+
+  const profileFields =
+    profileForm
+      ? [
+        ...profileForm.querySelectorAll(
+          "[data-profile-field]"
+        )
+      ]
+      : [];
+
+  const validateProfileForm = () =>
+    profileFields.every(
+      validateProfileField
+    );
+
+  profileFields.forEach((field) => {
+    field.addEventListener(
+      "input",
+      () => validateProfileField(field)
+    );
+
+    field.addEventListener(
+      "blur",
+      () => validateProfileField(field)
+    );
+  });
+
+
   /* =========================================================
      PROFILE MESSAGE
   ========================================================= */
 
-  const message = document.querySelector(
-    "[data-profile-message]"
-  );
+  const message =
+    document.querySelector(
+      "[data-profile-message]"
+    );
 
-  const dismissMessage = document.querySelector(
-    "[data-dismiss-profile-message]"
-  );
+  const dismissMessage =
+    document.querySelector(
+      "[data-dismiss-profile-message]"
+    );
 
-  if (dismissMessage && message) {
-    dismissMessage.addEventListener("click", () => {
-      message.remove();
-    });
+  if (
+    dismissMessage &&
+    message
+  ) {
+    dismissMessage.addEventListener(
+      "click",
+      () => message.remove()
+    );
   }
+
 
   /* =========================================================
      ABOUT CHARACTER COUNTER
   ========================================================= */
 
-  const aboutInput = document.querySelector(
-    "[data-profile-about]"
-  );
+  const aboutInput =
+    document.querySelector(
+      "[data-profile-about]"
+    );
 
-  const aboutCounter = document.querySelector(
-    "[data-about-counter]"
-  );
+  const aboutCounter =
+    document.querySelector(
+      "[data-about-counter]"
+    );
 
   const updateAboutCounter = () => {
-    if (!aboutInput || !aboutCounter) {
+    if (
+      !aboutInput ||
+      !aboutCounter
+    ) {
       return;
     }
 
@@ -49,17 +173,20 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+
   /* =========================================================
      PASSWORD CONFIRMATION
   ========================================================= */
 
-  const newPassword = document.querySelector(
-    "[data-new-password]"
-  );
+  const newPassword =
+    document.querySelector(
+      "[data-new-password]"
+    );
 
-  const confirmPassword = document.querySelector(
-    "[data-confirm-password]"
-  );
+  const confirmPassword =
+    document.querySelector(
+      "[data-confirm-password]"
+    );
 
   const confirmPasswordError =
     document.querySelector(
@@ -75,82 +202,80 @@ document.addEventListener("DOMContentLoaded", () => {
       return true;
     }
 
-    if (
+    const mismatch =
       confirmPassword.value &&
       newPassword.value !==
-      confirmPassword.value
-    ) {
-      confirmPasswordError.textContent =
-        "Passwords do not match.";
+      confirmPassword.value;
 
-      confirmPassword.setAttribute(
-        "aria-invalid",
-        "true"
-      );
-
-      return false;
-    }
-
-    confirmPasswordError.textContent = "";
+    confirmPasswordError.textContent =
+      mismatch
+        ? "Passwords do not match."
+        : "";
 
     confirmPassword.setAttribute(
       "aria-invalid",
-      "false"
+      mismatch
+        ? "true"
+        : "false"
     );
 
-    return true;
+    return !mismatch;
   };
 
-  if (newPassword) {
-    newPassword.addEventListener(
-      "input",
-      checkPasswords
-    );
-  }
-
-  if (confirmPassword) {
-    confirmPassword.addEventListener(
-      "input",
-      checkPasswords
-    );
-  }
-
-  /* =========================================================
-     PROFILE FORM
-  ========================================================= */
-
-  const profileForm = document.querySelector(
-    "[data-profile-form]"
+  newPassword?.addEventListener(
+    "input",
+    checkPasswords
   );
 
-  if (profileForm) {
-    profileForm.addEventListener(
-      "submit",
-      (event) => {
-        if (!checkPasswords()) {
-          event.preventDefault();
+  confirmPassword?.addEventListener(
+    "input",
+    checkPasswords
+  );
 
-          confirmPassword?.focus();
-        }
+
+  /* =========================================================
+     PROFILE SUBMIT
+  ========================================================= */
+
+  profileForm?.addEventListener(
+    "submit",
+    (event) => {
+      const valid =
+        validateProfileForm() &&
+        checkPasswords();
+
+      if (!valid) {
+        event.preventDefault();
+
+        const firstError =
+          profileForm.querySelector(
+            '[aria-invalid="true"]'
+          );
+
+        firstError?.focus();
       }
-    );
-  }
+    }
+  );
+
 
   /* =========================================================
      AVATAR UPLOAD
   ========================================================= */
 
-  const avatarForm = document.querySelector(
-    "[data-avatar-form]"
-  );
+  const avatarForm =
+    document.querySelector(
+      "[data-avatar-form]"
+    );
 
-  const avatarInput = document.querySelector(
-    "[data-avatar-input]"
-  );
+  const avatarInput =
+    document.querySelector(
+      "[data-avatar-input]"
+    );
 
-  const avatarPreview = document.querySelector(
-    "[data-avatar-preview]"
-  );
+  const avatarPreview =
+    document.querySelector(
+      "[data-avatar-preview]"
+    );
 
   const avatarUploadButton =
     document.querySelector(
@@ -183,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     avatarPreview
   ) {
     let currentAvatar =
-      avatarPreview.getAttribute("src");
+      avatarPreview.src;
 
     const resetAvatar = () => {
       avatarInput.value = "";
@@ -205,12 +330,13 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     };
 
-    const showError = (message) => {
-      if (avatarError) {
-        avatarError.textContent =
-          message;
-      }
-    };
+    const showAvatarError =
+      (text) => {
+        if (avatarError) {
+          avatarError.textContent =
+            text;
+        }
+      };
 
     avatarInput.addEventListener(
       "change",
@@ -223,18 +349,19 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        const allowedTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp",
-        ];
+        const allowed =
+          [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+          ];
 
         if (
-          !allowedTypes.includes(
+          !allowed.includes(
             file.type
           )
         ) {
-          showError(
+          showAvatarError(
             "Please choose a JPG, PNG or WEBP image."
           );
 
@@ -242,11 +369,11 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        const maxSize =
-          5 * 1024 * 1024;
-
-        if (file.size > maxSize) {
-          showError(
+        if (
+          file.size >
+          5 * 1024 * 1024
+        ) {
+          showAvatarError(
             "Image must be smaller than 5MB."
           );
 
@@ -265,97 +392,111 @@ document.addEventListener("DOMContentLoaded", () => {
             "has-preview"
           );
 
-          if (avatarFileName) {
-            avatarFileName.textContent =
-              file.name;
-          }
+          avatarFileName.textContent =
+            file.name;
 
-          showError("");
+          showAvatarError("");
         };
 
         reader.readAsDataURL(file);
       }
     );
 
-    if (avatarUploadButton) {
-      avatarUploadButton.addEventListener(
-        "click",
-        () => {
-          avatarInput.click();
+    avatarUploadButton?.addEventListener(
+      "click",
+      () => avatarInput.click()
+    );
+
+    avatarCancelButton?.addEventListener(
+      "click",
+      resetAvatar
+    );
+
+    avatarSaveButton?.addEventListener(
+      "click",
+      async () => {
+        const file =
+          avatarInput.files?.[0];
+
+        if (!file) {
+          showAvatarError(
+            "Choose a new photo first."
+          );
+
+          return;
         }
-      );
-    }
 
-    if (avatarCancelButton) {
-      avatarCancelButton.addEventListener(
-        "click",
-        resetAvatar
-      );
-    }
+        avatarSaveButton.disabled =
+          true;
 
-    if (avatarSaveButton) {
-      avatarSaveButton.addEventListener(
-        "click",
-        async () => {
-          const file =
-            avatarInput.files?.[0];
+        const formData =
+          new FormData(
+            avatarForm
+          );
 
-          if (!file) {
-            showError(
-              "Choose a new photo first."
-            );
-
-            return;
-          }
-
-          const formData =
-            new FormData(avatarForm);
-
-          avatarSaveButton.disabled = true;
-
-          if (avatarCancelButton) {
-            avatarCancelButton.disabled = true;
-          }
-
-          try {
-            const response = await fetch(
+        try {
+          const response =
+            await fetch(
               avatarForm.action,
               {
                 method: "POST",
                 body: formData,
                 headers: {
-                  Accept: "application/json"
-                }
+                  Accept:
+                    "application/json",
+                },
               }
             );
 
-            const data =
-              await response.json();
+          const data =
+            await response.json();
 
-            if (!response.ok || !data.ok) {
-              showError(
-                data.message ||
-                "Could not update your photo. Try again."
-              );
-
-              return;
-            }
-
-            currentAvatar = data.avatar;
-            resetAvatar();
-          } catch {
-            showError(
-              "Network error. Please try again."
+          if (
+            !response.ok ||
+            !data.ok
+          ) {
+            throw new Error(
+              data.message ||
+              "Could not update photo."
             );
-          } finally {
-            avatarSaveButton.disabled = false;
-
-            if (avatarCancelButton) {
-              avatarCancelButton.disabled = false;
-            }
           }
+
+          currentAvatar =
+            data.avatar;
+
+          resetAvatar();
+        } catch (error) {
+          showAvatarError(
+            error.message
+          );
+        } finally {
+          avatarSaveButton.disabled =
+            false;
         }
-      );
-    }
+      }
+    );
   }
+
+
+  /* =========================================================
+     DEACTIVATE ACCOUNT
+  ========================================================= */
+
+  const deactivateConfirm =
+    document.querySelector(
+      "[data-deactivate-confirm]"
+    );
+
+  const deactivateButton =
+    document.querySelector(
+      "[data-deactivate-button]"
+    );
+
+  deactivateConfirm?.addEventListener(
+    "change",
+    () => {
+      deactivateButton.disabled =
+        !deactivateConfirm.checked;
+    }
+  );
 });
