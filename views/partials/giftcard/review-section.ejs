@@ -1,16 +1,7 @@
-<section
-  class="flow-section flow-section--review"
-  id="review"
->
+<section class="flow-section flow-section--review" id="review">
   <div class="section-shell">
-    <div class="
-      section-heading
-      section-heading--center
-      section-heading--light
-    ">
-      <p class="section-kicker">
-        06 · Review
-      </p>
+    <div class="section-heading section-heading--center section-heading--light">
+      <p class="section-kicker">06 · Review</p>
 
       <h2>
         Your gift is ready to
@@ -18,8 +9,7 @@
       </h2>
 
       <p>
-        Review the server-validated information before creating
-        the gift.
+        Review the server-validated information before creating the gift.
       </p>
     </div>
 
@@ -27,47 +17,65 @@
       <div class="review-card">
         <div>
           <span>Gift type</span>
-          <strong><%= selectedGiftType.title %></strong>
+          <strong>
+            <%= selectedGiftType.title %>
+          </strong>
         </div>
 
         <div>
           <span>Delivery</span>
-          <strong><%= selectedDelivery.title %></strong>
+          <strong>
+            <%= selectedDelivery.title %>
+          </strong>
         </div>
 
         <div>
           <span>Design</span>
-          <strong><%= selectedDesign.title %></strong>
+          <strong>
+            <%= selectedDesign.title %>
+          </strong>
         </div>
 
         <div>
           <span>Recipient</span>
-          <strong><%= defaults.recipientName %></strong>
+          <strong>
+            <%= defaults.recipientName %>
+          </strong>
         </div>
 
         <div>
           <span>From</span>
-          <strong><%= defaults.senderName %></strong>
+          <strong>
+            <%= defaults.senderName %>
+          </strong>
         </div>
 
         <div class="review-card__message">
           <span>Message</span>
-          <strong><%= defaults.message %></strong>
+          <strong>
+            <%= defaults.message %>
+          </strong>
         </div>
 
         <div>
           <span>Quantity</span>
-          <strong><%= defaults.quantity %></strong>
+          <strong>
+            <%= defaults.quantity %>
+          </strong>
         </div>
 
         <div>
           <span>Amount per card</span>
-          <strong><%= amountPerCardDisplay %></strong>
+          <strong>
+            <%= amountPerCardDisplay %>
+          </strong>
         </div>
 
         <div class="review-card__total">
           <span>Total</span>
-          <strong><%= totalDisplay %></strong>
+          <strong>
+            <%= totalDisplay %>
+          </strong>
         </div>
       </div>
 
@@ -78,11 +86,7 @@
         </p>
 
         <div class="giftcard-review-buttons">
-          <a
-            class="btn btn-ghost"
-            href="#details"
-            data-giftcard-review-edit
-          >
+          <a class="btn btn-ghost" href="#details" data-giftcard-review-edit>
             Edit Details
           </a>
 

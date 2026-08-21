@@ -1,33 +1,10 @@
-<%
-  const hasSavedGift =
-    typeof savedGift !== "undefined" &&
-    Boolean(savedGift);
-
-  const displayGift =
-    hasSavedGift
-      ? savedGift
-      : giftViewDemo;
-
-  const canManageGift =
-    hasSavedGift &&
-    currentUser &&
-    displayGift.createdByUserId &&
-    String(currentUser.id) ===
-      String(displayGift.createdByUserId);
-%>
-
-<section
-  class="
-    flow-section
-    flow-section--paper
-    gift-view-demo
-  "
-  id="<%= hasSavedGift ? "gift-view" : "gift-view-demo" %>"
->
+<section class="flow-section flow-section--paper gift-view-demo" id="<%= page.isSavedView ? " gift-view"
+  : "gift-view-demo" %>"
+  >
   <div class="section-shell">
     <div class="section-heading">
       <p class="section-kicker">
-        <%= hasSavedGift ? "Your Impact Gift" : "Impact Gift View" %>
+        <%= page.isSavedView ? "Your Impact Gift" : "Impact Gift View" %>
       </p>
 
       <h2>
@@ -36,108 +13,127 @@
       </h2>
 
       <p>
-        <% if (hasSavedGift) { %>
+        <% if (page.isSavedView) { %>
           This gift was retrieved dynamically from the Gift Card data.
-        <% } else { %>
-          This is a frontend example of what a recipient could
-          see after entering a valid gift code.
-        <% } %>
+          <% } else { %>
+            This is a frontend example of what a recipient could
+            see after entering a valid gift code.
+            <% } %>
       </p>
     </div>
 
     <div class="gift-view-card">
       <div class="gift-view-card__main">
-        <p class="gift-view-card__eyebrow">
-          <%= hasSavedGift
-            ? displayGift.giftTypeLabel
-            : displayGift.giftType %>
-        </p>
+        <% if (page.isSavedView) { %>
+          <p class="gift-view-card__eyebrow">
+            <%= giftView.giftTypeLabel %>
+          </p>
 
-        <h3>
-          <%= hasSavedGift
-            ? displayGift.totalDisplay
-            : displayGift.amountDisplay %>
-        </h3>
+          <h3>
+            <%= giftView.totalDisplay %>
+          </h3>
 
-        <% if (hasSavedGift) { %>
           <p>
             <strong>Gift code:</strong>
-            <%= displayGift.code %>
+            <%= giftView.code %>
           </p>
 
           <p>
             <strong>Delivery:</strong>
-            <%= displayGift.deliveryLabel %>
+            <%= giftView.deliveryLabel %>
           </p>
 
           <p>
             <strong>Design:</strong>
-            <%= displayGift.designLabel %>
+            <%= giftView.designLabel %>
           </p>
 
           <p>
             <strong>Quantity:</strong>
-            <%= displayGift.quantity %>
+            <%= giftView.quantity %>
           </p>
-        <% } %>
 
-        <p>
-          <strong>From:</strong>
-          <%= displayGift.senderName %>
-        </p>
+          <p>
+            <strong>From:</strong>
+            <%= giftView.senderName %>
+          </p>
 
-        <p>
-          <strong>For:</strong>
-          <%= displayGift.recipientName %>
-        </p>
+          <p>
+            <strong>For:</strong>
+            <%= giftView.recipientName %>
+          </p>
 
-        <blockquote>
-          “<%= displayGift.message %>”
-        </blockquote>
+          <blockquote>“<%= giftView.message %>”</blockquote>
+          <% } else { %>
+            <p class="gift-view-card__eyebrow">
+              <%= giftViewDemo.giftType %>
+            </p>
+
+            <h3>
+              <%= giftViewDemo.amountDisplay %>
+            </h3>
+
+            <p>
+              <strong>From:</strong>
+              <%= giftViewDemo.senderName %>
+            </p>
+
+            <p>
+              <strong>For:</strong>
+              <%= giftViewDemo.recipientName %>
+            </p>
+
+            <blockquote>“<%= giftViewDemo.message %>”</blockquote>
+            <% } %>
       </div>
 
       <div class="gift-view-card__status">
         <span>Impact status</span>
-        <strong><%= displayGift.status %></strong>
 
-        <% if (hasSavedGift) { %>
-          <p>
-            Saved in the Gift Card module.
-          </p>
-        <% } else { %>
-          <p><%= displayGift.statusCopy %></p>
-        <% } %>
+        <% if (page.isSavedView) { %>
+          <strong>
+            <%= giftView.status %>
+          </strong>
+
+          <% if (giftView.createdAtDisplay) { %>
+            <p>Created on <%= giftView.createdAtDisplay %>
+            </p>
+            <% } else { %>
+              <p>Saved in the Gift Card module.</p>
+              <% } %>
+                <% } else { %>
+                  <strong>
+                    <%= giftViewDemo.status %>
+                  </strong>
+                  <p>
+                    <%= giftViewDemo.statusCopy %>
+                  </p>
+                  <% } %>
       </div>
     </div>
 
-    <% if (hasSavedGift) { %>
+    <% if (page.isSavedView) { %>
       <div class="gift-view-actions">
         <a class="btn btn-primary" href="/giftcard">
           Create Another Gift
         </a>
 
-        <% if (canManageGift) { %>
-          <a
-            class="btn btn-outline"
-            href="/giftcard/<%= displayGift.id %>/edit"
-          >
+        <a class="btn btn-outline" href="/">
+          Back to Home
+        </a>
+
+        <% if (giftView.canManage) { %>
+          <a class="btn btn-outline" href="<%= giftView.editUrl %>">
             Edit Gift
           </a>
 
-          <form
-            action="/giftcard/<%= displayGift.id %>/delete"
-            method="post"
-            data-giftcard-delete
-          >
-            <button
-              class="btn btn-danger"
-              type="submit"
-            >
+          <form action="<%= giftView.deleteUrl %>" method="post" data-giftcard-delete>
+            <button class="btn btn-danger" type="submit">
               Delete Gift
             </button>
           </form>
-        <% } %>
+          <% } %>
       </div>
-    <% } %>
+      <% } %>
   </div>
 </section>

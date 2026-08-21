@@ -1,0 +1,575 @@
+<!-- =========================================
+     STEP 1 — GIFT TYPE
+========================================= -->
+
+<section class="flow-section flow-section--paper" id="gift-type" data-giftcard-step="1">
+    <div class="section-shell">
+        <div class="section-heading">
+            <p class="section-kicker">01 · Choose a type</p>
+
+            <h2>
+                What kind of <em>giving moment</em> are you creating?
+            </h2>
+
+            <p>
+                Start with the intention. Choose the giving experience
+                that best matches the moment.
+            </p>
+        </div>
+
+        <div class="choice-grid choice-grid--two">
+            <% giftTypes.forEach((giftType)=> { %>
+                <label class="choice-card" for="<%= giftType.id %>">
+                    <span class="choice-card__index">
+                        <%= giftType.index %>
+                    </span>
+                    <span class="choice-card__title">
+                        <%= giftType.title %>
+                    </span>
+                    <span class="choice-card__copy">
+                        <%= giftType.copy %>
+                    </span>
+                    <span class="choice-card__action">
+                        <%= giftType.action %>
+                    </span>
+                </label>
+                <% }); %>
+        </div>
+
+        <% if (errors.giftType) { %>
+            <p class="form-error step-form-error" role="alert">
+                <%= errors.giftType %>
+            </p>
+            <% } %>
+
+                <div class="section-next">
+                    <a class="btn btn-primary" href="#delivery-type" data-giftcard-next>
+                        Continue to Delivery
+                    </a>
+                </div>
+    </div>
+</section>
+
+<!-- =========================================
+     STEP 2 — DELIVERY
+========================================= -->
+
+<section class="flow-section flow-section--tint" id="delivery-type" data-giftcard-step="2">
+    <div class="section-shell">
+        <div class="section-heading section-heading--center">
+            <p class="section-kicker">02 · Choose delivery</p>
+
+            <h2>
+                How should the gift <em>reach them?</em>
+            </h2>
+
+            <p>
+                Choose a delivery format. The Personalize section will
+                automatically show only the relevant fields.
+            </p>
+        </div>
+
+        <div class="choice-grid choice-grid--three">
+            <% deliveryTypes.forEach((deliveryType)=> { %>
+                <label class="delivery-card" for="<%= deliveryType.id %>">
+                    <span class="delivery-card__icon" aria-hidden="true">
+                        <%= deliveryType.icon %>
+                    </span>
+                    <span class="delivery-card__title">
+                        <%= deliveryType.title %>
+                    </span>
+                    <span class="delivery-card__copy">
+                        <%= deliveryType.copy %>
+                    </span>
+                </label>
+                <% }); %>
+        </div>
+
+        <% if (errors.deliveryType) { %>
+            <p class="form-error step-form-error" role="alert">
+                <%= errors.deliveryType %>
+            </p>
+            <% } %>
+
+                <div class="section-next">
+                    <a class="btn btn-primary" href="#design" data-giftcard-next>
+                        Continue to Design
+                    </a>
+                </div>
+    </div>
+</section>
+
+<!-- =========================================
+     STEP 3 — DESIGN
+========================================= -->
+
+<section class="flow-section flow-section--paper" id="design" data-giftcard-step="3">
+    <div class="section-shell">
+        <div class="section-heading">
+            <p class="section-kicker">03 · Choose a design</p>
+
+            <h2>
+                Choose a card with a <em>Vietnamese soul.</em>
+            </h2>
+
+            <p>
+                The collection draws from Vietnamese craft villages,
+                materials, landscapes, and living traditions.
+            </p>
+        </div>
+
+        <div class="design-grid">
+            <% designs.forEach((design)=> { %>
+                <label class="design-card <%= design.cardClass %>" for="<%= design.id %>">
+                    <span class="design-card__label">
+                        <%= design.title %>
+                    </span>
+                    <span class="design-card__meta">
+                        <%= design.meta %>
+                    </span>
+                </label>
+                <% }); %>
+        </div>
+
+        <% if (errors.designType) { %>
+            <p class="form-error step-form-error" role="alert">
+                <%= errors.designType %>
+            </p>
+            <% } %>
+
+                <div class="section-next">
+                    <a class="btn btn-primary" href="#amount" data-giftcard-next>
+                        Continue to Amount
+                    </a>
+                </div>
+    </div>
+</section>
+
+<!-- =========================================
+     STEP 4 — AMOUNT
+========================================= -->
+
+<section class="flow-section flow-section--tint" id="amount" data-giftcard-step="4">
+    <div class="section-shell">
+        <div class="section-heading section-heading--center">
+            <p class="section-kicker">04 · Choose quantity + amount</p>
+
+            <h2>
+                How much would you like to
+                <em>put into the gift?</em>
+            </h2>
+
+            <p>
+                Enter a quantity from 1 to 20 and an amount from
+                $5 to $10,000 per card.
+            </p>
+        </div>
+
+        <div class="amount-panel">
+            <div class="amount-builder">
+                <label class="amount-field amount-field--quantity">
+                    <span>Quantity</span>
+
+                    <input type="number" id="gift-quantity" name="quantity" min="1" max="20" step="1"
+                        value="<%= defaults.quantity ?? "" %>" placeholder="1" inputmode="numeric" required>
+
+                    <small>Enter 1–20 gift cards.</small>
+
+                    <% if (errors.quantity) { %>
+                        <span class="form-error">
+                            <%= errors.quantity %>
+                        </span>
+                        <% } %>
+                </label>
+
+                <label class="amount-field amount-field--wide">
+                    <span>Amount per card (USD)</span>
+
+                    <span class="currency-input">
+                        <span aria-hidden="true">$</span>
+
+                        <input type="number" id="gift-amount" name="amountPerCard" min="5" max="10000" step="1"
+                            value="<%= defaults.amountPerCard ?? "" %>" placeholder="50" inputmode="decimal" required>
+                    </span>
+
+                    <small>Enter an amount from $5 to $10,000.</small>
+
+                    <% if (errors.amountPerCard) { %>
+                        <span class="form-error">
+                            <%= errors.amountPerCard %>
+                        </span>
+                        <% } %>
+                </label>
+            </div>
+
+            <div class="amount-total">
+                <div>
+                    <span>Gift total</span>
+                    <small>Quantity × amount per card</small>
+                </div>
+
+                <strong data-giftcard-total>
+                    <%= totalDisplay %>
+                </strong>
+            </div>
+        </div>
+
+        <div class="section-next">
+            <a class="btn btn-primary" href="#details" data-giftcard-next>
+                Continue to Details
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+     STEP 5 — PERSONALIZE
+========================================= -->
+
+<section class="flow-section flow-section--paper" id="details" data-giftcard-step="5">
+    <div class="section-shell">
+        <div class="section-heading">
+            <p class="section-kicker">05 · Personalize</p>
+
+            <h2>
+                Make the gift feel
+                <em>like it came from you.</em>
+            </h2>
+
+            <p>
+                Complete the required information. Delivery-specific
+                fields adapt to the option selected in Step 2.
+            </p>
+        </div>
+
+        <div class="details-layout">
+            <div class="details-form">
+                <div class="common-fields">
+                    <div class="form-grid form-grid--two">
+                        <label class="field">
+                            <span>Recipient name</span>
+
+                            <input type="text" id="recipient-name" name="recipientName"
+                                value="<%= defaults.recipientName || "" %>" placeholder="Recipient name" minlength="2"
+                                maxlength="60" pattern=".*\S.*" title="Enter the recipient's name." autocomplete="name"
+                                required>
+
+                            <% if (errors.recipientName) { %>
+                                <span class="form-error">
+                                    <%= errors.recipientName %>
+                                </span>
+                                <% } %>
+                        </label>
+
+                        <label class="field">
+                            <span>Your name</span>
+
+                            <input type="text" id="sender-name" name="senderName"
+                                value="<%= defaults.senderName || "" %>" placeholder="Your name" minlength="2"
+                                maxlength="60" pattern=".*\S.*" title="Enter your name." autocomplete="name" required>
+
+                            <% if (errors.senderName) { %>
+                                <span class="form-error">
+                                    <%= errors.senderName %>
+                                </span>
+                                <% } %>
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Personal message</span>
+
+                        <textarea id="gift-message" name="message" rows="6" minlength="5" maxlength="280"
+                            placeholder="Write a personal message." required><%= defaults.message || "" %></textarea>
+
+                        <% if (errors.message) { %>
+                            <span class="form-error">
+                                <%= errors.message %>
+                            </span>
+                            <% } %>
+                    </label>
+                </div>
+
+                <!-- Donation -->
+                <div class="conditional-fields honour-fields">
+                    <p class="conditional-title">Donation cause</p>
+
+                    <label class="field">
+                        <span>Choose a cause</span>
+
+                        <select id="cause-category" name="causeCategory">
+                            <option value="" disabled <%=!defaults.causeCategory ? "selected" : "" %>>
+                                Select a cause
+                            </option>
+
+                            <% causes.forEach((cause)=> { %>
+                                <option value="<%= cause.value %>" <%=cause.value===defaults.causeCategory ? "selected"
+                                    : "" %>
+                                    >
+                                    <%= cause.label %>
+                                </option>
+                                <% }); %>
+                        </select>
+
+                        <% if (errors.causeCategory) { %>
+                            <span class="form-error">
+                                <%= errors.causeCategory %>
+                            </span>
+                            <% } %>
+                    </label>
+
+                    <label class="field">
+                        <span>Cause note</span>
+
+                        <textarea id="cause-note" name="causeNote" rows="4" maxlength="180"
+                            placeholder="Optional note about why this cause matters."><%= defaults.causeNote || "" %></textarea>
+
+                        <% if (errors.causeNote) { %>
+                            <span class="form-error">
+                                <%= errors.causeNote %>
+                            </span>
+                            <% } %>
+                    </label>
+                </div>
+
+                <!-- Digital -->
+                <div class="conditional-fields digital-fields">
+                    <p class="conditional-title">Digital delivery details</p>
+
+                    <label class="field">
+                        <span>Recipient email</span>
+
+                        <input type="email" name="recipientEmail" value="<%= defaults.recipientEmail || "" %>"
+                            placeholder="minh@example.com" autocomplete="email">
+
+                        <% if (errors.recipientEmail) { %>
+                            <span class="form-error">
+                                <%= errors.recipientEmail %>
+                            </span>
+                            <% } %>
+                    </label>
+
+                    <label class="field">
+                        <span>Delivery timing</span>
+
+                        <select name="emailTiming">
+                            <option value="Send now" <%=defaults.emailTiming==="Send now" ? "selected" : "" %>
+                                >
+                                Send now
+                            </option>
+
+                            <option value="Schedule delivery" <%=defaults.emailTiming==="Schedule delivery" ? "selected"
+                                : "" %>
+                                >
+                                Schedule delivery
+                            </option>
+                        </select>
+                    </label>
+
+                    <label class="field">
+                        <span>Scheduled delivery date</span>
+
+                        <input type="date" name="emailDeliveryDate" value="<%= defaults.emailDeliveryDate || "" %>">
+
+                        <% if (errors.emailDeliveryDate) { %>
+                            <span class="form-error">
+                                <%= errors.emailDeliveryDate %>
+                            </span>
+                            <% } %>
+                    </label>
+                </div>
+
+                <!-- Printable -->
+                <div class="conditional-fields printable-fields">
+                    <p class="conditional-title">Printable card options</p>
+
+                    <div class="form-grid form-grid--two">
+                        <label class="field">
+                            <span>Card format</span>
+
+                            <select name="printFormat">
+                                <% printFormats.forEach((format)=> { %>
+                                    <option value="<%= format %>" <%=format===defaults.printFormat ? "selected" : "" %>
+                                        >
+                                        <%= format %>
+                                    </option>
+                                    <% }); %>
+                            </select>
+
+                            <% if (errors.printFormat) { %>
+                                <span class="form-error">
+                                    <%= errors.printFormat %>
+                                </span>
+                                <% } %>
+                        </label>
+
+                        <label class="field">
+                            <span>Paper size</span>
+
+                            <select name="paperSize">
+                                <% paperSizes.forEach((size)=> { %>
+                                    <option value="<%= size %>" <%=size===defaults.paperSize ? "selected" : "" %>
+                                        >
+                                        <%= size %>
+                                    </option>
+                                    <% }); %>
+                            </select>
+
+                            <% if (errors.paperSize) { %>
+                                <span class="form-error">
+                                    <%= errors.paperSize %>
+                                </span>
+                                <% } %>
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Download format</span>
+
+                        <select name="downloadFormat">
+                            <option value="PDF — Print Ready" <%=defaults.downloadFormat==="PDF — Print Ready"
+                                ? "selected" : "" %>
+                                >
+                                PDF — Print Ready
+                            </option>
+                        </select>
+                    </label>
+                </div>
+
+                <!-- Physical -->
+                <div class="conditional-fields physical-fields">
+                    <p class="conditional-title">Physical delivery address</p>
+
+                    <div class="form-grid form-grid--two">
+                        <label class="field">
+                            <span>Recipient phone</span>
+
+                            <input type="tel" name="recipientPhone" value="<%= defaults.recipientPhone || "" %>"
+                                placeholder="+84..." autocomplete="tel">
+
+                            <% if (errors.recipientPhone) { %>
+                                <span class="form-error">
+                                    <%= errors.recipientPhone %>
+                                </span>
+                                <% } %>
+                        </label>
+
+                        <label class="field">
+                            <span>Preferred delivery date</span>
+
+                            <input type="date" name="physicalDeliveryDate"
+                                value="<%= defaults.physicalDeliveryDate || "" %>">
+
+                            <% if (errors.physicalDeliveryDate) { %>
+                                <span class="form-error">
+                                    <%= errors.physicalDeliveryDate %>
+                                </span>
+                                <% } %>
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Street address</span>
+
+                        <input type="text" name="streetAddress" value="<%= defaults.streetAddress || "" %>"
+                            placeholder="123 Example Street" maxlength="120" autocomplete="street-address">
+
+                        <% if (errors.streetAddress) { %>
+                            <span class="form-error">
+                                <%= errors.streetAddress %>
+                            </span>
+                            <% } %>
+                    </label>
+
+                    <div class="form-grid form-grid--two">
+                        <label class="field">
+                            <span>Ward / District</span>
+
+                            <input type="text" name="district" value="<%= defaults.district || "" %>"
+                                placeholder="District" maxlength="80">
+
+                            <% if (errors.district) { %>
+                                <span class="form-error">
+                                    <%= errors.district %>
+                                </span>
+                                <% } %>
+                        </label>
+
+                        <label class="field">
+                            <span>City / Province</span>
+
+                            <input type="text" name="city" value="<%= defaults.city || "" %>"
+                                placeholder="Ho Chi Minh City" maxlength="80" autocomplete="address-level1">
+
+                            <% if (errors.city) { %>
+                                <span class="form-error">
+                                    <%= errors.city %>
+                                </span>
+                                <% } %>
+                        </label>
+                    </div>
+
+                    <label class="field">
+                        <span>Postal code</span>
+
+                        <input type="text" name="postalCode" value="<%= defaults.postalCode || "" %>"
+                            placeholder="700000" maxlength="20" autocomplete="postal-code">
+
+                        <% if (errors.postalCode) { %>
+                            <span class="form-error">
+                                <%= errors.postalCode %>
+                            </span>
+                            <% } %>
+                    </label>
+                </div>
+            </div>
+
+            <!-- =========================================
+           LIVE PREVIEW
+      ========================================== -->
+
+            <aside class="mini-preview" aria-label="Gift card preview">
+                <div class="gift-preview">
+                    <div class="gift-preview__top">
+                        <span>Làng &amp; Co.</span>
+                        <small>Impact Gift</small>
+                    </div>
+
+                    <div class="gift-preview__center">
+                        <p data-preview-recipient>
+                            For <%= defaults.recipientName || "Recipient" %>
+                        </p>
+
+                        <strong data-preview-amount>
+                            <%= amountPerCardDisplay %>
+                        </strong>
+
+                        <span data-preview-message>
+                            <%= defaults.message || "Your message will appear here." %>
+                        </span>
+                    </div>
+
+                    <div class="gift-preview__bottom">
+                        <span data-preview-sender>
+                            From <%= defaults.senderName || "Sender" %>
+                        </span>
+
+                        <span class="preview-design-name">
+                            <% designs.forEach((design)=> { %>
+                                <span class="preview-name <%= design.previewClass %>">
+                                    <%= design.title %>
+                                </span>
+                                <% }); %>
+                        </span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div class="section-next">
+            <button class="btn btn-primary" type="submit">
+                <%= form.submitLabel %>
+            </button>
+        </div>
+    </div>
+</section>
