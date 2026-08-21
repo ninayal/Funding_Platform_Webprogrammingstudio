@@ -6,40 +6,56 @@
   </div>
 
   <div class="pr-sort">
-    <form
-      class="pr-search"
-      id="review-search-form"
-      role="search"
-      data-persist-form="review-search-<%= product.id %>"
-    >
-      <label class="pr-search__label" for="review-search-query">Search Reviews</label>
+    <form class="pr-search" id="review-search-form" role="search" data-persist-form="review-search-<%= product.id %>">
+      <label class="pr-search__label" for="review-search-field">Search Reviews</label>
       <div class="pr-search__controls">
-        <select class="pr-search__select" id="review-search-field" name="searchField" aria-label="Choose review field">
-          <% reviewList.searchFields.forEach((field) => { %>
-            <option value="<%= field.value %>"><%= field.label %></option>
-          <% }); %>
-        </select>
-        <input
-          class="pr-search__input"
-          id="review-search-query"
-          name="searchQuery"
-          type="search"
-          placeholder="Search reviews..."
-          autocomplete="off"
-        />
+        <div class="pr-dropdown" data-dropdown>
+          <button type="button" class="pr-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span class="pr-dropdown__value"><%= reviewList.searchFields[0].label %></span>
+            <svg class="pr-dropdown__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="pr-dropdown__list" role="listbox" hidden>
+            <% reviewList.searchFields.forEach((field, i) => { %>
+              <li class="pr-dropdown__option<%= i === 0 ? " is-selected" : "" %>" role="option" data-value="<%= field.value %>" aria-selected="<%= i === 0 %>">
+                <span><%= field.label %></span>
+                <span class="pr-dropdown__check">✓</span>
+              </li>
+            <% }); %>
+          </ul>
+          <select id="review-search-field" name="searchField" class="pr-dropdown__native" tabindex="-1" aria-hidden="true">
+            <% reviewList.searchFields.forEach((field) => { %>
+              <option value="<%= field.value %>"><%= field.label %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <input class="pr-search__input" id="review-search-query" name="searchQuery" type="search" placeholder="Search reviews..." autocomplete="off" />
         <button class="pr-search__button" type="submit">Search</button>
       </div>
     </form>
 
     <div class="pr-sort__group">
       <label class="pr-sort__label" for="review-sort">Sort Reviews</label>
-      <select class="pr-search__select" id="review-sort" name="sort" form="review-search-form">
-        <option value="newest">Newest first</option>
-        <option value="oldest">Oldest first</option>
-        <option value="rating-high">Highest rating</option>
-        <option value="rating-low">Lowest rating</option>
-        <option value="title">Title A–Z</option>
-      </select>
+      <div class="pr-dropdown" data-dropdown>
+        <button type="button" class="pr-dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span class="pr-dropdown__value">Newest first</span>
+          <svg class="pr-dropdown__chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="pr-dropdown__list" role="listbox" hidden>
+          <li class="pr-dropdown__option is-selected" role="option" data-value="newest" aria-selected="true"><span>Newest first</span><span class="pr-dropdown__check">✓</span></li>
+          <li class="pr-dropdown__option" role="option" data-value="oldest" aria-selected="false"><span>Oldest first</span><span class="pr-dropdown__check">✓</span></li>
+          <li class="pr-dropdown__option" role="option" data-value="rating-high" aria-selected="false"><span>Highest rating</span><span class="pr-dropdown__check">✓</span></li>
+          <li class="pr-dropdown__option" role="option" data-value="rating-low" aria-selected="false"><span>Lowest rating</span><span class="pr-dropdown__check">✓</span></li>
+          <li class="pr-dropdown__option" role="option" data-value="title" aria-selected="false"><span>Title A–Z</span><span class="pr-dropdown__check">✓</span></li>
+        </ul>
+        <select id="review-sort" name="sort" class="pr-dropdown__native" form="review-search-form" tabindex="-1" aria-hidden="true">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="rating-high">Highest rating</option>
+          <option value="rating-low">Lowest rating</option>
+          <option value="title">Title A–Z</option>
+        </select>
+      </div>
     </div>
 
     <div>
@@ -60,7 +76,5 @@
   <% }); %>
 </div>
 
-<p class="pr-empty-state" id="review-empty-state" hidden>
-  No reviews match the selected search, sort and filter settings.
-</p>
+<p class="pr-empty-state" id="review-empty-state" hidden>No reviews match the selected search, sort and filter settings.</p>
 <nav class="pr-pagination" id="review-pagination" aria-label="Review pagination"></nav>
