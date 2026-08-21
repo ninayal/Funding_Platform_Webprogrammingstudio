@@ -271,20 +271,6 @@ const submitCheckout = (req, res, next) => {
 
     const createdGiftcards = new Map();
 
-    cartModel
-      .getPendingGiftcardDrafts(userId)
-      .forEach((item) => {
-        const giftcard = giftcardModel.createGiftcard(
-          item.values,
-          userId
-        );
-
-        createdGiftcards.set(
-          item.productId,
-          giftcard
-        );
-      });
-
     const orderItems = cart.items.map((item) => {
       const giftcard = createdGiftcards.get(item.productId);
 
@@ -330,7 +316,19 @@ const submitCheckout = (req, res, next) => {
       subtotal: cart.subtotal,
       total: cart.subtotal + shippingFee
     });
+    cartModel
+  .getPendingGiftcardDrafts(userId)
+  .forEach((item) => {
+    const giftcard = giftcardModel.createGiftcard(
+      item.values,
+      userId
+    );
 
+    createdGiftcards.set(
+      item.productId,
+      giftcard
+    );
+  });
     cartModel.clearCart(userId);
 
     return res.redirect(
