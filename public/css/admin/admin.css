@@ -185,9 +185,11 @@
     transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
 }
 
-.admin__icon svg {
+.admin__icon svg,
+.admin__icon img {
     width: 19px;
     height: 19px;
+    object-fit: contain;
 }
 
 /* ACTIVE TAB STATE */
@@ -204,6 +206,11 @@
     background: var(--admin-accent);
     color: #ffffff;
     transform: translateX(1px);
+}
+
+#admin-tab-products:checked~.admin .admin__sidebar label[for="admin-tab-products"] .admin__icon img,
+#admin-tab-users:checked~.admin .admin__sidebar label[for="admin-tab-users"] .admin__icon img {
+    filter: brightness(0) invert(1);
 }
 
 /* PANEL CONTENT */
@@ -377,10 +384,12 @@
     box-shadow: 0 0 0 4px rgba(163, 29, 29, 0.08);
 }
 
-.admin-search svg {
+.admin-search svg,
+.admin-search img {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
+    object-fit: contain;
 }
 
 .admin-search input {

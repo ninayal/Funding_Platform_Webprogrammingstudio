@@ -10,7 +10,7 @@
   <a href="/forum/bookmarked" class="forum-toolbar__tab<%= (typeof activeTab !== "undefined" && activeTab === "bookmarked") ? " is-active" : "" %>">Bookmarked</a>
   <form class="forum-toolbar__search-form" action="/forum/search" method="GET" role="search" aria-label="Search forum">
     <input type="search" name="q" class="forum-toolbar__search-input" placeholder="Search threads and posts..." value="<%= typeof searchQuery !== "undefined" ? searchQuery : "" %>" autocomplete="off" />
-    <button type="submit" class="forum-toolbar__search" aria-label="Search"></button>
+    <button type="submit" class="forum-toolbar__search" aria-label="Search"><img src="/images/forum_icon/search.png" alt="" class="forum-toolbar__search-icon" /></button>
   </form>
   <a href="/forum/notifications" class="forum-toolbar__bell" aria-label="Notifications">
     <img src="/images/forum_icon/notification.png" alt="" class="forum-toolbar__bell-icon"><% if (forumUnreadCount > 0) { %><span class="forum-toolbar__badge"><%= forumUnreadCount %></span><% } %>
