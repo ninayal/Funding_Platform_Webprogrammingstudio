@@ -4,15 +4,15 @@ async function connectDB() {
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    console.error("[DB] Thiếu MONGODB_URI trong .env");
+    console.error("[DB] Missing MONGODB_URI in .env");
     process.exit(1);
   }
 
   try {
     await mongoose.connect(uri);
-    console.log("[DB] Đã kết nối MongoDB Atlas");
+    console.log("[DB] Connected to MongoDB Atlas");
   } catch (err) {
-    console.error("[DB] Kết nối thất bại:", err.message);
+    console.error("[DB] Connection Failed:", err.message);
     process.exit(1);
   }
 }
