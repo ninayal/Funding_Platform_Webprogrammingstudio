@@ -15,9 +15,10 @@
       "gift-card-form",
     );
 
-  const savedView =
-    body?.dataset
-      .giftcardSavedView === "true";
+  const redeemInput =
+    document.getElementById(
+      "gift-code",
+    );
 
   const reviewMode =
     body?.dataset
@@ -27,62 +28,18 @@
     body?.dataset
       .giftcardServerErrors === "true";
 
-  document
-    .querySelectorAll(
-      "[data-giftcard-delete]",
-    )
-    .forEach((deleteForm) => {
-      deleteForm.addEventListener(
-        "submit",
-        (event) => {
-          const confirmed =
-            window.confirm(
-              "Delete this gift card? This action cannot be undone.",
-            );
-
-          if (!confirmed) {
-            event.preventDefault();
-          }
-        },
-      );
-    });
-
-  /*
-   * Successful create/update redirects to a saved gift view.
-   * Clear stale create/edit Web Storage there.
-   */
-  if (savedView) {
-    try {
-      localStorage.removeItem(
-        CREATE_DRAFT_KEY,
-      );
-
-      localStorage.removeItem(
-        CREATE_PROGRESS_KEY,
-      );
-
-      for (
-        let index =
-          localStorage.length - 1;
-        index >= 0;
-        index -= 1
-      ) {
-        const key =
-          localStorage.key(index);
-
-        if (
-          key &&
-          key.startsWith(
-            "langco.giftcard.edit.",
-          )
-        ) {
-          localStorage.removeItem(key);
-        }
-      }
-    } catch {
-      /* Storage is optional. */
-    }
+  if (redeemInput) {
+    redeemInput.addEventListener(
+      "input",
+      () => {
+        redeemInput.value =
+          redeemInput.value
+            .toUpperCase()
+            .replace(/\s+/g, "");
+      },
+    );
   }
+
 
   if (!form) {
     return;
@@ -104,22 +61,8 @@
         ))
       .filter(Boolean);
 
-  const mode =
-    form.dataset.giftcardMode ||
-    "create";
-
-  const giftcardId =
-    form.dataset.giftcardId || "";
-
-  const draftKey =
-    mode === "edit"
-      ? `langco.giftcard.edit.${giftcardId}.v3`
-      : CREATE_DRAFT_KEY;
-
-  const progressKey =
-    mode === "edit"
-      ? `langco.giftcard.edit.${giftcardId}.progress.v3`
-      : CREATE_PROGRESS_KEY;
+  const draftKey=CREATE_DRAFT_KEY;
+  const progressKey=CREATE_PROGRESS_KEY;
 
   const allControls = () =>
     Array.from(form.elements).filter(

@@ -1,3 +1,5 @@
+"use strict";
+
 const crypto=require("crypto");
 const carts=require("../data/carts");
 const productModel=require("./productModel");
@@ -34,21 +36,21 @@ const buildGiftcardThumbnail=(designType)=>{
       </defs>
       <rect width="108" height="132" rx="10" fill="url(#giftcard-gradient)"/>
       <circle cx="88" cy="24" r="34" fill="rgba(254,249,225,.10)"/>
-      <text x="12" y="26" fill="#FEF9E1" font-family="Georgia, serif" font-size="11" font-style="italic">Làng &amp; Co.</text>
-      <text x="12" y="108" fill="#FEF9E1" font-family="Arial, sans-serif" font-size="7" font-weight="700" letter-spacing="1">IMPACT GIFT</text>
+      <text x="12" y="26" fill="#FEF9E1" font-family="Georgia,serif" font-size="11" font-style="italic">Làng &amp; Co.</text>
+      <text x="12" y="108" fill="#FEF9E1" font-family="Arial,sans-serif" font-size="7" font-weight="700" letter-spacing="1">IMPACT GIFT</text>
     </svg>
   `;
 
   return`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
 
-const getOption=(items,value,fallback)=>{
-  return items.find((item)=>item.value===value)||fallback;
-};
+const getOption=(items,value,fallback)=>
+  items.find((item)=>item.value===value)||fallback;
 
 const getCartByUserId=(userId)=>{
   const normalizedUserId=String(userId);
   let cart=carts.find((item)=>item.userId===normalizedUserId);
+
   if(!cart){
     cart={
       id:`cart-${Date.now()}`,
@@ -57,94 +59,45 @@ const getCartByUserId=(userId)=>{
       createdAt:new Date(),
       updatedAt:new Date()
     };
+
     carts.push(cart);
   }
+
   return cart;
 };
 
 const buildGiftcardCartItem=(item)=>{
   const draft=item.giftcardDraft||{};
-
-  const quantity=Math.max(
-    1,
-    Number(draft.quantity)||Number(item.quantity)||1
-  );
-
-  const amountPerCard=
-    Number(draft.amountPerCard)||0;
-
-  const giftType=
-    getOption(
-      giftTypes,
-      draft.giftType,
-      giftTypes[0]
-    );
-
-  const delivery=
-    getOption(
-      deliveryTypes,
-      draft.deliveryType,
-      deliveryTypes[0]
-    );
-
-  const design=
-    getOption(
-      designs,
-      draft.designType,
-      designs[0]
-    );
-
-  const giftCode=
-    draft.code || "Pending checkout";
+  const quantity=Math.max(1,Number(draft.quantity)||Number(item.quantity)||1);
+  const amountPerCard=Number(draft.amountPerCard)||0;
+  const giftType=getOption(giftTypes,draft.giftType,giftTypes[0]);
+  const delivery=getOption(deliveryTypes,draft.deliveryType,deliveryTypes[0]);
+  const design=getOption(designs,draft.designType,designs[0]);
 
   return{
     productId:item.productId,
     itemType:GIFTCARD_ITEM_TYPE,
     quantity,
-
     product:{
       id:item.productId,
-
-      name:
-        giftType?.title ||
-        "Gift Card",
-
-      image:
-        buildGiftcardThumbnail(
-          draft.designType
-        ),
-
-      maker:
-        "Làng & Co.",
-
-      material:
-        delivery?.title ||
-        "Gift Card",
-
-      variant:
-        `${design?.title || "Gift Design"} | Code: ${giftCode}`,
-
-      giftCode,
-
-      price:
-        amountPerCard,
-
+      name:giftType?.title||"Gift Card",
+      image:buildGiftcardThumbnail(draft.designType),
+      maker:"Làng & Co.",
+      material:delivery?.title||"Gift Card",
+      variant:`${design?.title||"Gift Design"} | Code: Pending checkout`,
+      giftCode:"Pending checkout",
+      price:amountPerCard,
       oldPrice:null,
-
-      stock:
-        quantity,
-
-      href:
-        `/giftcard?cartItem=${encodeURIComponent(item.productId)}#details`
+      stock:quantity,
+      href:`/giftcard?cartItem=${encodeURIComponent(item.productId)}#details`
     },
-
-    subtotal:
-      amountPerCard*quantity
+    subtotal:amountPerCard*quantity
   };
 };
 
 const getCartItems=(userId)=>{
   const cart=getCartByUserId(userId);
+
   return cart.items.map((item)=>{
     if(item.itemType===GIFTCARD_ITEM_TYPE){
       return buildGiftcardCartItem(item);
@@ -165,18 +118,21 @@ const getCartItems=(userId)=>{
 
 const validateQuantity=(quantity,stock)=>{
   const parsedQuantity=Number(quantity);
+
   if(!Number.isInteger(parsedQuantity)||parsedQuantity<1){
     return{
       success:false,
       message:"Quantity must be a whole number of at least 1."
     };
   }
+
   if(parsedQuantity>stock){
     return{
       success:false,
       message:`Only ${stock} item(s) available.`
     };
   }
+
   return{
     success:true,
     quantity:parsedQuantity
@@ -186,6 +142,7 @@ const validateQuantity=(quantity,stock)=>{
 const addItemToCart=(userId,productId,quantity=1)=>{
   const cart=getCartByUserId(userId);
   const product=productModel.getProductById(productId);
+
   if(!product){
     return{
       success:false,
@@ -196,15 +153,20 @@ const addItemToCart=(userId,productId,quantity=1)=>{
   const validation=validateQuantity(quantity,product.stock);
   if(!validation.success)return validation;
 
-  const existingItem=cart.items.find((item)=>item.productId===String(productId));
+  const existingItem=cart.items.find(
+    (item)=>item.productId===String(productId)
+  );
+
   if(existingItem){
     const newQuantity=existingItem.quantity+validation.quantity;
+
     if(newQuantity>product.stock){
       return{
         success:false,
         message:`Only ${product.stock} item(s) available.`
       };
     }
+
     existingItem.quantity=newQuantity;
   }else{
     cart.items.push({
@@ -214,6 +176,7 @@ const addItemToCart=(userId,productId,quantity=1)=>{
   }
 
   cart.updatedAt=new Date();
+
   return{
     success:true,
     cart
@@ -225,7 +188,12 @@ const addGiftcardDraftToCart=(userId,values,cartItemId=null)=>{
   const quantity=Number(values?.quantity);
   const amountPerCard=Number(values?.amountPerCard);
 
-  if(!Number.isInteger(quantity)||quantity<1||!Number.isFinite(amountPerCard)||amountPerCard<=0){
+  if(
+    !Number.isInteger(quantity)||
+    quantity<1||
+    !Number.isFinite(amountPerCard)||
+    amountPerCard<=0
+  ){
     return{
       success:false,
       message:"Gift Card details are invalid."
@@ -234,7 +202,9 @@ const addGiftcardDraftToCart=(userId,values,cartItemId=null)=>{
 
   if(cartItemId){
     const existingItem=cart.items.find(
-      (item)=>item.productId===String(cartItemId)&&item.itemType===GIFTCARD_ITEM_TYPE
+      (item)=>
+        item.productId===String(cartItemId)&&
+        item.itemType===GIFTCARD_ITEM_TYPE
     );
 
     if(!existingItem){
@@ -256,12 +226,14 @@ const addGiftcardDraftToCart=(userId,values,cartItemId=null)=>{
   }
 
   const productId=`${GIFTCARD_ID_PREFIX}${crypto.randomUUID()}`;
+
   cart.items.push({
     productId,
     itemType:GIFTCARD_ITEM_TYPE,
     quantity,
     giftcardDraft:{...values}
   });
+
   cart.updatedAt=new Date();
 
   return{
@@ -273,6 +245,7 @@ const addGiftcardDraftToCart=(userId,values,cartItemId=null)=>{
 
 const getGiftcardDraftItem=(userId,productId)=>{
   const cart=getCartByUserId(userId);
+
   const item=cart.items.find(
     (cartItem)=>
       cartItem.productId===String(productId)&&
@@ -290,6 +263,7 @@ const getGiftcardDraftItem=(userId,productId)=>{
 
 const getPendingGiftcardDrafts=(userId)=>{
   const cart=getCartByUserId(userId);
+
   return cart.items
     .filter((item)=>item.itemType===GIFTCARD_ITEM_TYPE)
     .map((item)=>({
@@ -300,7 +274,10 @@ const getPendingGiftcardDrafts=(userId)=>{
 
 const updateCartItem=(userId,productId,quantity)=>{
   const cart=getCartByUserId(userId);
-  const cartItem=cart.items.find((item)=>item.productId===String(productId));
+
+  const cartItem=cart.items.find(
+    (item)=>item.productId===String(productId)
+  );
 
   if(!cartItem){
     return{
@@ -317,6 +294,7 @@ const updateCartItem=(userId,productId,quantity)=>{
   }
 
   const product=productModel.getProductById(productId);
+
   if(!product){
     return{
       success:false,
@@ -338,15 +316,19 @@ const updateCartItem=(userId,productId,quantity)=>{
 
 const removeCartItem=(userId,productId)=>{
   const cart=getCartByUserId(userId);
-  const itemIndex=cart.items.findIndex((item)=>item.productId===String(productId));
-  if(itemIndex===-1){
+
+  const index=cart.items.findIndex(
+    (item)=>item.productId===String(productId)
+  );
+
+  if(index===-1){
     return{
       success:false,
       message:"Cart item not found."
     };
   }
 
-  cart.items.splice(itemIndex,1);
+  cart.items.splice(index,1);
   cart.updatedAt=new Date();
 
   return{
