@@ -1,705 +1,321 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
+const BlogPost=require("./schemas/BlogPost");
 
-const {
-  posts: seedPosts,
-} = require("../data/blog");
+const allowedStatuses=new Set([
+  "draft",
+  "published"
+]);
 
-const HUY_BA_USER_ID =
-  "user-huy-ba";
+const normaliseId=(value)=>
+  String(value||"").trim();
 
-const storagePath = path.join(
-  __dirname,
-  "../data/posts.json",
-);
+const toRuntimePost=(post)=>{
+  if(!post)return null;
 
-const clone = (value) => {
-  if (value === undefined) {
-    return undefined;
-  }
+  const data=post.toObject
+    ?post.toObject()
+    :post;
 
-  return JSON.parse(
-    JSON.stringify(value),
-  );
+  return{
+    ...data,
+    id:String(data._id),
+    _id:String(data._id)
+  };
 };
 
-const createEmptyStorage = () => ({
-  posts: [],
-  deletedPostIds: [],
-});
+const sortNewestFirst=(postA,postB)=>{
+  const dateA=new Date(
+    postA.publishedAt||
+    postA.updatedAt||
+    postA.createdAt||
+    0
+  ).getTime();
 
-const ensureStorageFile = () => {
-  if (fs.existsSync(storagePath)) {
-    return;
-  }
+  const dateB=new Date(
+    postB.publishedAt||
+    postB.updatedAt||
+    postB.createdAt||
+    0
+  ).getTime();
 
-  fs.writeFileSync(
-    storagePath,
-    JSON.stringify(
-      createEmptyStorage(),
-      null,
-      2,
-    ),
-    "utf8",
-  );
+  return dateB-dateA;
 };
 
-const readStorage = () => {
-  ensureStorageFile();
-
-  try {
-    const content = fs.readFileSync(
-      storagePath,
-      "utf8",
-    );
-
-    const parsed = JSON.parse(content);
-
-    return {
-      posts: Array.isArray(parsed.posts)
-        ? parsed.posts
-        : [],
-
-      deletedPostIds:
-        Array.isArray(
-          parsed.deletedPostIds,
-        )
-          ? parsed.deletedPostIds
-          : [],
-    };
-  } catch (error) {
-    console.error(
-      "Could not read Blog JSON storage:",
-      error,
-    );
-
-    return createEmptyStorage();
-  }
-};
-
-const writeStorage = (storage) => {
-  fs.writeFileSync(
-    storagePath,
-    JSON.stringify(
-      storage,
-      null,
-      2,
-    ),
-    "utf8",
-  );
-};
-
-const isHuyBaPost = (post) =>
-  post?.author?.id ===
-  HUY_BA_USER_ID;
-
-const mergeStoredPosts = () => {
-  const storage = readStorage();
-
-  const deletedIds = new Set(
-    storage.deletedPostIds,
-  );
-
-  const postsById = new Map();
-
-  seedPosts.forEach((post) => {
-    if (
-      post?.id &&
-      !deletedIds.has(post.id)
-    ) {
-      postsById.set(
-        post.id,
-        clone(post),
-      );
-    }
-  });
-
-  storage.posts.forEach((post) => {
-    if (
-      post?.id &&
-      isHuyBaPost(post) &&
-      !deletedIds.has(post.id)
-    ) {
-      postsById.set(
-        post.id,
-        clone(post),
-      );
-    }
-  });
-
-  return [
-    ...postsById.values(),
-  ];
-};
-
-const saveHuyBaPost = (post) => {
-  if (!isHuyBaPost(post)) {
-    return false;
-  }
-
-  const storage = readStorage();
-
-  const existingIndex =
-    storage.posts.findIndex(
-      (storedPost) =>
-        storedPost.id === post.id,
-    );
-
-  if (existingIndex === -1) {
-    storage.posts.push(
-      clone(post),
-    );
-  } else {
-    storage.posts[existingIndex] =
-      clone(post);
-  }
-
-  storage.deletedPostIds =
-    storage.deletedPostIds.filter(
-      (postId) =>
-        postId !== post.id,
-    );
-
-  writeStorage(storage);
-
-  return true;
-};
-
-const deleteStoredHuyBaPost = (
-  post,
-) => {
-  if (!isHuyBaPost(post)) {
-    return false;
-  }
-
-  const storage = readStorage();
-
-  storage.posts =
-    storage.posts.filter(
-      (storedPost) =>
-        storedPost.id !== post.id,
-    );
-
-  if (
-    !storage.deletedPostIds.includes(
-      post.id,
-    )
-  ) {
-    storage.deletedPostIds.push(
-      post.id,
-    );
-  }
-
-  writeStorage(storage);
-
-  return true;
-};
-
-const posts = mergeStoredPosts();
-
-const allowedStatuses =
-  new Set([
-    "draft",
-    "published",
-  ]);
-
-const normaliseId = (value) =>
-  String(value || "").trim();
-
-const findPostIndex = (
-  postId,
-) => {
-  const id =
-    normaliseId(postId);
-
-  return posts.findIndex(
-    (post) =>
-      post.id === id,
-  );
-};
-
-const getMutablePost = (
-  postId,
-) => {
-  const index =
-    findPostIndex(postId);
-
-  return index === -1
-    ? null
-    : posts[index];
-};
-
-const sortNewestFirst = (
-  postA,
-  postB,
-) => {
-  const dateA =
-    new Date(
-      postA.publishedAt ||
-      postA.updatedAt ||
-      postA.createdAt ||
-      0,
-    ).getTime();
-
-  const dateB =
-    new Date(
-      postB.publishedAt ||
-      postB.updatedAt ||
-      postB.createdAt ||
-      0,
-    ).getTime();
-
-  return dateB - dateA;
-};
-
-const createSlug = (
-  title,
-) => {
-  const baseSlug =
-    String(
-      title || "post",
-    )
+const createSlug=async(title)=>{
+  const baseSlug=
+    String(title||"post")
       .normalize("NFD")
-      .replace(
-        /[\u0300-\u036f]/g,
-        "",
-      )
+      .replace(/[\u0300-\u036f]/g,"")
       .toLowerCase()
-      .replace(
-        /[^a-z0-9]+/g,
-        "-",
-      )
-      .replace(
-        /^-+|-+$/g,
-        "",
-      ) || "post";
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"")||
+    "post";
 
-  let slug =
-    baseSlug;
+  let slug=baseSlug;
+  let counter=2;
 
-  let counter =
-    2;
-
-  while (
-    posts.some(
-      (post) =>
-        post.id === slug,
-    )
-  ) {
-    slug =
-      `${baseSlug}-${counter}`;
-
-    counter += 1;
+  while(await BlogPost.exists({_id:slug})){
+    slug=`${baseSlug}-${counter}`;
+    counter+=1;
   }
 
   return slug;
 };
 
-const getInitials = (
-  name,
-) =>
-  String(
-    name || "User",
-  )
+const getInitials=(name)=>
+  String(name||"User")
     .split(/\s+/)
     .filter(Boolean)
-    .map(
-      (part) =>
-        part[0],
-    )
+    .map((part)=>part[0])
     .join("")
-    .slice(0, 2)
+    .slice(0,2)
     .toUpperCase();
 
-const getPublishedPosts = () =>
-  clone(
-    posts
-      .filter(
-        (post) =>
-          post.status ===
-          "published",
-      )
-      .sort(
-        sortNewestFirst,
-      ),
-  );
+const getPublishedPosts=async()=>{
+  const posts=await BlogPost.find({
+    status:"published"
+  }).lean();
 
-const getPostById = (
-  postId,
-) => {
-  const post =
-    getMutablePost(postId);
-
-  return post
-    ? clone(post)
-    : null;
+  return posts
+    .map(toRuntimePost)
+    .sort(sortNewestFirst);
 };
 
-const getVisiblePostById = (
+const getPostById=async(postId)=>{
+  const post=await BlogPost.findById(
+    normaliseId(postId)
+  ).lean();
+
+  return toRuntimePost(post);
+};
+
+const getVisiblePostById=async(
   postId,
-  viewerId = null,
-) => {
-  const post =
-    getMutablePost(postId);
+  viewerId=null
+)=>{
+  const post=await getPostById(postId);
 
-  if (!post) {
-    return null;
-  }
+  if(!post)return null;
 
-  const canViewDraft =
-    post.status ===
-      "draft" &&
-    normaliseId(viewerId) &&
-    normaliseId(
-      viewerId,
-    ) ===
-      normaliseId(
-        post.author?.id,
-      );
+  const canViewDraft=
+    post.status==="draft"&&
+    normaliseId(viewerId)&&
+    normaliseId(viewerId)===
+      normaliseId(post.author?.id);
 
-  if (
-    post.status !==
-      "published" &&
+  if(
+    post.status!=="published"&&
     !canViewDraft
-  ) {
+  ){
     return null;
   }
 
-  return clone(post);
+  return post;
 };
 
-const getLeadStory = () => {
-  const post =
-    posts.find(
-      (item) =>
-        item.status ===
-          "published" &&
-        item.isLead,
-    );
+const getLeadStory=async()=>{
+  const post=await BlogPost.findOne({
+    status:"published",
+    isLead:true
+  }).lean();
 
-  return post
-    ? clone(post)
-    : null;
+  return toRuntimePost(post);
 };
 
-const getFeaturedPosts = () =>
-  clone(
-    posts
-      .filter(
-        (post) =>
-          post.status ===
-            "published" &&
-          post.isFeatured,
-      )
-      .sort(
-        sortNewestFirst,
-      ),
-  );
+const getFeaturedPosts=async()=>{
+  const posts=await BlogPost.find({
+    status:"published",
+    isFeatured:true
+  }).lean();
 
-const getRelatedPosts = (
+  return posts
+    .map(toRuntimePost)
+    .sort(sortNewestFirst);
+};
+
+const getRelatedPosts=async(
   postId,
-  limit = 3,
-) => {
-  const sourcePost =
-    getMutablePost(postId);
+  limit=3
+)=>{
+  const sourcePost=await getPostById(postId);
 
-  if (!sourcePost) {
-    return [];
-  }
+  if(!sourcePost)return[];
 
-  const sameCategory =
-    posts.filter(
-      (post) =>
-        post.status ===
-          "published" &&
-        post.id !==
-          sourcePost.id &&
-        post.category ===
-          sourcePost.category,
+  const posts=await BlogPost.find({
+    status:"published",
+    _id:{$ne:sourcePost.id}
+  }).lean();
+
+  const runtimePosts=
+    posts.map(toRuntimePost);
+
+  const sameCategory=
+    runtimePosts.filter(
+      (post)=>
+        post.category===sourcePost.category
     );
 
-  const otherCategories =
-    posts.filter(
-      (post) =>
-        post.status ===
-          "published" &&
-        post.id !==
-          sourcePost.id &&
-        post.category !==
-          sourcePost.category,
+  const otherCategories=
+    runtimePosts.filter(
+      (post)=>
+        post.category!==sourcePost.category
     );
 
-  return clone(
-    [
-      ...sameCategory,
-      ...otherCategories,
-    ]
-      .sort(
-        sortNewestFirst,
-      )
-      .slice(
-        0,
-        Number(limit) || 3,
-      ),
-  );
+  return[
+    ...sameCategory,
+    ...otherCategories
+  ]
+    .sort(sortNewestFirst)
+    .slice(0,Number(limit)||3);
 };
 
-const getPostsByAuthorId = (
-  authorId,
-) => {
-  const id =
-    normaliseId(authorId);
+const getPostsByAuthorId=async(authorId)=>{
+  const posts=await BlogPost.find({
+    "author.id":normaliseId(authorId)
+  }).lean();
 
-  return clone(
-    posts
-      .filter(
-        (post) =>
-          normaliseId(
-            post.author?.id,
-          ) === id,
-      )
-      .sort(
-        sortNewestFirst,
-      ),
-  );
+  return posts
+    .map(toRuntimePost)
+    .sort(sortNewestFirst);
 };
 
-const countPostsByAuthorId = (
-  authorId,
-) => {
-  const id =
-    normaliseId(authorId);
+const countPostsByAuthorId=async(authorId)=>
+  BlogPost.countDocuments({
+    "author.id":normaliseId(authorId)
+  });
 
-  return posts.filter(
-    (post) =>
-      normaliseId(
-        post.author?.id,
-      ) === id,
-  ).length;
-};
-
-const getCategories = () =>
-  [
-    ...new Set(
-      posts
-        .map(
-          (post) =>
-            String(
-              post.category ||
-              "",
-            ).trim(),
-        )
-        .filter(Boolean),
-    ),
-  ].sort(
-    (
-      categoryA,
-      categoryB,
-    ) =>
-      categoryA.localeCompare(
-        categoryB,
-      ),
+const getCategories=async()=>{
+  const categories=await BlogPost.distinct(
+    "category"
   );
 
-const createPost = (
-  postData = {},
-  owner,
-) => {
-  if (
-    !owner ||
-    !normaliseId(owner.id)
-  ) {
-    throw new Error(
-      "An owner is required to create a post.",
-    );
-  }
-
-  const now =
-    new Date()
-      .toISOString();
-
-  const status =
-    allowedStatuses.has(
-      postData.status,
+  return categories
+    .map((category)=>
+      String(category||"").trim()
     )
-      ? postData.status
-      : "draft";
+    .filter(Boolean)
+    .sort((a,b)=>a.localeCompare(b));
+};
 
-  const title =
+const createPost=async(
+  postData={},
+  owner
+)=>{
+  if(!owner||!normaliseId(owner.id)){
+    throw new Error(
+      "An owner is required to create a post."
+    );
+  }
+
+  const status=allowedStatuses.has(
+    postData.status
+  )
+    ?postData.status
+    :"draft";
+
+  const title=
     String(
-      postData.title ||
-      "Untitled draft",
-    ).trim() ||
+      postData.title||
+      "Untitled draft"
+    ).trim()||
     "Untitled draft";
 
-  const imageUrl =
+  const imageUrl=
+    String(postData.imageUrl||"").trim();
+
+  const imageCaption=
     String(
-      postData.imageUrl ||
-      "",
+      postData.imageCaption||""
     ).trim();
 
-  const imageCaption =
-    String(
-      postData.imageCaption ||
-      "",
-    ).trim();
-
-  const post = {
-    id:
-      createSlug(title),
-
+  const post=await BlogPost.create({
+    _id:await createSlug(title),
     title,
-
-    category:
-      String(
-        postData.category ||
-        "Guide",
+    category:String(
+      postData.category||"Guide"
+    ).trim(),
+    author:{
+      id:normaliseId(owner.id),
+      name:String(
+        owner.name||"Current user"
       ).trim(),
-
-    author: {
-      id:
-        normaliseId(
-          owner.id,
-        ),
-
-      name:
-        String(
-          owner.name ||
-          "Current user",
-        ).trim(),
-
-      initials:
-        String(
-          owner.initials ||
-          getInitials(
-            owner.name,
-          ),
-        ).trim(),
-
-      role:
-        String(
-          owner.role ||
-          "Author",
-        ).trim(),
+      initials:String(
+        owner.initials||
+        getInitials(owner.name)
+      ).trim(),
+      role:String(
+        owner.role||"Author"
+      ).trim()
     },
-
-    createdAt:
-      now,
-
     publishedAt:
-      status ===
-      "published"
-        ? now
-        : null,
-
-    updatedAt:
-      now,
-
+      status==="published"
+        ?new Date()
+        :null,
     readTime:
-      Number(
-        postData.readTime,
-      ) || 1,
-
-    summary:
-      String(
-        postData.summary ||
-        "",
+      Number(postData.readTime)||1,
+    summary:String(
+      postData.summary||""
+    ).trim(),
+    archiveSummary:String(
+      postData.archiveSummary||
+      postData.summary||
+      ""
+    ).trim(),
+    image:{
+      url:imageUrl,
+      listUrl:imageUrl,
+      alt:String(
+        postData.imageAlt||
+        title||
+        "Blog image"
       ).trim(),
-
-    archiveSummary:
-      String(
-        postData.archiveSummary ||
-        postData.summary ||
-        "",
-      ).trim(),
-
-    image: {
-      url:
-        imageUrl,
-
-      listUrl:
-        imageUrl,
-
-      alt:
-        String(
-          postData.imageAlt ||
-          title ||
-          "Blog image",
-        ).trim(),
-
-      caption:
-        imageCaption,
-
-      listCaption:
-        imageCaption,
+      caption:imageCaption,
+      listCaption:imageCaption
     },
-
-    tags:
-      Array.isArray(
-        postData.tags,
-      )
-        ? clone(
-            postData.tags,
-          )
-        : [],
-
+    tags:Array.isArray(postData.tags)
+      ?postData.tags
+      :[],
     status,
+    isLead:Boolean(postData.isLead),
+    isFeatured:Boolean(
+      postData.isFeatured
+    ),
+    content:Array.isArray(postData.content)
+      ?postData.content
+      :[]
+  });
 
-    isLead:
-      Boolean(
-        postData.isLead,
-      ),
-
-    isFeatured:
-      Boolean(
-        postData.isFeatured,
-      ),
-
-    content:
-      Array.isArray(
-        postData.content,
-      )
-        ? clone(
-            postData.content,
-          )
-        : [],
-  };
-
-  posts.push(post);
-  saveHuyBaPost(post);
-  return clone(post);
+  return toRuntimePost(post);
 };
 
-const updatePost = (
+const updatePost=async(
   postId,
   ownerId,
-  updates = {},
-) => {
-  const post =
-    getMutablePost(postId);
+  updates={}
+)=>{
+  const post=await BlogPost.findById(
+    normaliseId(postId)
+  );
 
-  if (!post) {
-    return {
-      ok: false,
-      reason: "not-found",
+  if(!post){
+    return{
+      ok:false,
+      reason:"not-found"
     };
   }
 
-  if (
-    normaliseId(
-      post.author?.id,
-    ) !==
+  if(
+    normaliseId(post.author?.id)!==
     normaliseId(ownerId)
-  ) {
-    return {
-      ok: false,
-      reason: "forbidden",
+  ){
+    return{
+      ok:false,
+      reason:"forbidden"
     };
   }
 
-  const editableFields = [
+  const editableFields=[
     "title",
     "category",
     "summary",
@@ -708,121 +324,92 @@ const updatePost = (
     "tags",
     "content",
     "isLead",
-    "isFeatured",
+    "isFeatured"
   ];
 
-  editableFields.forEach(
-    (field) => {
-      if (
-        Object.prototype
-          .hasOwnProperty
-          .call(
-            updates,
-            field,
-          )
-      ) {
-        post[field] =
-          clone(
-            updates[field],
-          );
-      }
-    },
-  );
+  editableFields.forEach((field)=>{
+    if(
+      Object.prototype
+        .hasOwnProperty
+        .call(updates,field)
+    ){
+      post[field]=updates[field];
+    }
+  });
 
-  if (
-    updates.image &&
-    typeof updates.image ===
-      "object"
-  ) {
-    post.image = {
-      ...post.image,
-      ...clone(
-        updates.image,
-      ),
+  if(
+    updates.image&&
+    typeof updates.image==="object"
+  ){
+    const currentImage=
+      post.image?.toObject
+        ?post.image.toObject()
+        :post.image||{};
+
+    post.image={
+      ...currentImage,
+      ...updates.image
     };
   }
 
-  if (
-    allowedStatuses.has(
-      updates.status,
-    )
-  ) {
-    const wasDraft =
-      post.status ===
-      "draft";
+  if(allowedStatuses.has(updates.status)){
+    const wasDraft=post.status==="draft";
 
-    post.status =
-      updates.status;
+    post.status=updates.status;
 
-    if (
-      wasDraft &&
-      updates.status ===
-        "published" &&
+    if(
+      wasDraft&&
+      updates.status==="published"&&
       !post.publishedAt
-    ) {
-      post.publishedAt =
-        new Date()
-          .toISOString();
+    ){
+      post.publishedAt=new Date();
     }
   }
 
-  post.updatedAt =
-  new Date().toISOString();
+  await post.save();
 
-/*
- * Save the updated Huy Ba post
- * into huy-blog-posts.json.
- */
-saveHuyBaPost(post);
-
-return {
-  ok: true,
-  post: clone(post),
-};
-};
-
-const deletePost = (
-  postId,
-  ownerId,
-) => {
-  const index =
-    findPostIndex(postId);
-
-  if (index === -1) {
-    return {
-      ok: false,
-      reason: "not-found",
-    };
-  }
-
-  if (
-    posts[index].author.id !==
-    normaliseId(ownerId)
-  ) {
-    return {
-      ok: false,
-      reason: "forbidden",
-    };
-  }
-
-  const [deletedPost] =
-    posts.splice(index, 1);
-
-  /*
-   * Remove the post from JSON
-   * and remember its deleted ID.
-   */
-  deleteStoredHuyBaPost(
-    deletedPost,
-  );
-
-  return {
-    ok: true,
-    post: clone(deletedPost),
+  return{
+    ok:true,
+    post:toRuntimePost(post)
   };
 };
 
-module.exports = {
+const deletePost=async(
+  postId,
+  ownerId
+)=>{
+  const post=await BlogPost.findById(
+    normaliseId(postId)
+  );
+
+  if(!post){
+    return{
+      ok:false,
+      reason:"not-found"
+    };
+  }
+
+  if(
+    normaliseId(post.author?.id)!==
+    normaliseId(ownerId)
+  ){
+    return{
+      ok:false,
+      reason:"forbidden"
+    };
+  }
+
+  const deletedPost=toRuntimePost(post);
+
+  await post.deleteOne();
+
+  return{
+    ok:true,
+    post:deletedPost
+  };
+};
+
+module.exports={
   getPublishedPosts,
   getPostById,
   getVisiblePostById,
@@ -834,5 +421,5 @@ module.exports = {
   getCategories,
   createPost,
   updatePost,
-  deletePost,
+  deletePost
 };
