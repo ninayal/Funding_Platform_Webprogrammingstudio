@@ -1,33 +1,30 @@
 "use strict";
 
-const giftcardModel =
-  require("../models/giftcardModel");
-
-const userModel =
-  require("../models/userModel");
-
-const orderModel =
-  require("../models/orderModel");
+const giftcardModel = require("../models/giftcardModel");
+const userModel = require("../models/userModel");
+const orderModel = require("../models/orderModel");
 
 const {
   validatePreferences,
-  validateProfile
-}=require("../validators/profileValidators");
+  validateProfile,
+} = require("../validators/profileValidators");
 
-const ALLOWED_TABS=new Set([
+const ALLOWED_TABS = new Set([
   "user",
   "orders",
   "settings",
-  "notifications"
+  "notifications",
 ]);
 
-const getActiveTab=(value)=>
-  ALLOWED_TABS.has(String(value||""))?String(value):"user";
+const getActiveTab = (value) =>
+  ALLOWED_TABS.has(String(value || ""))
+    ? String(value)
+    : "user";
 
 const formatMemberSince = (value) => {
   const date = new Date(value);
 
-  if(Number.isNaN(date.getTime()))return"Recently";
+  if (Number.isNaN(date.getTime())) return "Recently";
 
   return new Intl.DateTimeFormat("en", {
     month: "long",
@@ -38,9 +35,7 @@ const formatMemberSince = (value) => {
 const formatOrderDate = (value) => {
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
-    return "Recently";
-  }
+  if (Number.isNaN(date.getTime())) return "Recently";
 
   return new Intl.DateTimeFormat("en", {
     day: "2-digit",
@@ -49,13 +44,12 @@ const formatOrderDate = (value) => {
   }).format(date);
 };
 
-const formatMoney=(value)=>`$${Number(value||0).toFixed(2)}`;
+const formatMoney = (value) =>
+  `$${Number(value || 0).toFixed(2)}`;
 
 const buildOrderData = async (userId) => {
   const rawOrders =
-    await orderModel.getOrdersByUserId(
-      String(userId)
-    );
+    await orderModel.getOrdersByUserId(String(userId));
 
   const orders = rawOrders.map((order) => {
     const items = Array.isArray(order.items)
@@ -85,21 +79,13 @@ const buildOrderData = async (userId) => {
       id: order.id,
       status,
       statusLabel,
-      placedOn: formatOrderDate(
-        order.createdAt
-      ),
+      placedOn: formatOrderDate(order.createdAt),
 
       total: Number(order.total || 0),
-      totalFormatted: formatMoney(
-        order.total
-      ),
+      totalFormatted: formatMoney(order.total),
 
-      subtotal: Number(
-        order.subtotal || 0
-      ),
-      subtotalFormatted: formatMoney(
-        order.subtotal
-      ),
+      subtotal: Number(order.subtotal || 0),
+      subtotalFormatted: formatMoney(order.subtotal),
 
       itemCount,
       items,
@@ -117,27 +103,26 @@ const buildOrderData = async (userId) => {
   });
 
   const totalItems = orders.reduce(
-    (total, order) =>
-      total + order.itemCount,
+    (total, order) => total + order.itemCount,
     0
   );
 
   const totalSpent = orders.reduce(
-    (total, order) =>
-      total + order.total,
+    (total, order) => total + order.total,
     0
   );
 
-  const orderSummary=[
+  const orderSummary = [
     {
-      label:"Orders placed",
-      value:String(orders.length).padStart(2,"0"),
-      description:"Orders linked to this account."
+      label: "Orders placed",
+      value: String(orders.length).padStart(2, "0"),
+      description: "Orders linked to this account.",
     },
     {
-      label:"Pieces ordered",
-      value:String(totalItems).padStart(2,"0"),
-      description:"Handcrafted pieces across your orders."
+      label: "Pieces ordered",
+      value: String(totalItems).padStart(2, "0"),
+      description:
+        "Handcrafted pieces across your orders.",
     },
     {
       label: "Total spent",
@@ -147,19 +132,22 @@ const buildOrderData = async (userId) => {
     },
   ];
 
-  return{
+  return {
     orders,
     orderSummary,
     profileStats: orderSummary,
   };
 };
 
-const buildNotifications=(orders,user)=>{
-  if(user.preferences?.orderNotifications===false)return[];
+const buildNotifications = (orders, user) => {
+  if (
+    user.preferences?.orderNotifications === false
+  ) {
+    return [];
+  }
 
   return orders.map((order) => {
-    const firstItem =
-      order.items?.[0];
+    const firstItem = order.items?.[0];
 
     const itemName =
       firstItem?.name ||
@@ -169,8 +157,7 @@ const buildNotifications=(orders,user)=>{
     if (order.status === "confirmed") {
       return {
         type: "Order",
-        title:
-          `${itemName} has been confirmed.`,
+        title: `${itemName} has been confirmed.`,
         description:
           `Order ${order.id} is being prepared.`,
       };
@@ -179,8 +166,7 @@ const buildNotifications=(orders,user)=>{
     if (order.status === "shipped") {
       return {
         type: "Order",
-        title:
-          `${itemName} is now in transit.`,
+        title: `${itemName} is now in transit.`,
         description:
           `Order ${order.id} has been shipped and is on the way.`,
       };
@@ -189,8 +175,7 @@ const buildNotifications=(orders,user)=>{
     if (order.status === "delivered") {
       return {
         type: "Order",
-        title:
-          `${itemName} has been delivered.`,
+        title: `${itemName} has been delivered.`,
         description:
           `Order ${order.id} was successfully delivered.`,
       };
@@ -198,17 +183,12 @@ const buildNotifications=(orders,user)=>{
 
     return {
       type: "Order",
-      title:
-        `${itemName} order update.`,
+      title: `${itemName} order update.`,
       description:
         `Order ${order.id} has a new status: ${order.status}.`,
     };
   });
 };
-
-/* =========================
-   PROFILE DATA
-========================= */
 
 const toFormValues = (user) => ({
   firstname: user.firstname || "",
@@ -225,28 +205,25 @@ const getPageMessage = (status) => {
   const messages = {
     "profile-saved":
       "Your account information has been saved.",
-
     "preferences-saved":
       "Your account preferences have been saved.",
   };
 
-  return (
-    messages[String(status || "")] ||
-    ""
-  );
+  return messages[String(status || "")] || "";
 };
 
-const buildViewData=async (
+const buildViewData = async (
   req,
   res,
   {
     user,
     values,
-    errors={},
+    errors = {},
     activeTab,
-    pageMessage=""
+    pageMessage = "",
+    giftCode = "",
   }
-)=>{
+) => {
   const {
     orders,
     orderSummary,
@@ -256,67 +233,55 @@ const buildViewData=async (
   const notifications =
     buildNotifications(orders, user);
 
-  const highlightedGift =
-    giftCode
-      ? giftcardModel.getGiftcardByCode(
-        giftCode
-      )
-      : null;
+  const highlightedGift = giftCode
+    ? giftcardModel.getGiftcardByCode(giftCode)
+    : null;
 
   return {
     activePage: "profile",
-    activeTab:
-      getActiveTab(activeTab),
+    activeTab: getActiveTab(activeTab),
 
     cartCount:
-      Number(
-        res.locals.cartCount || 0
-      ),
+      Number(res.locals.cartCount || 0),
 
     currentUser: req.currentUser,
     errors,
 
     isAdmin:
-      String(
-        user.role || ""
-      ).toLowerCase() === "admin",
+      String(user.role || "").toLowerCase() ===
+      "admin",
 
     memberSince:
-      formatMemberSince(
-        user.createdAt
-      ),
+      formatMemberSince(user.createdAt),
 
     notifications,
     orders,
     orderSummary,
+    highlightedGift,
     pageMessage,
-    preferences:user.preferences,
-    profile:user,
+
+    preferences: user.preferences,
+    profile: user,
     profileStats,
-    tier:user.tier||"Craft Collector",
-    values:values||toFormValues(user)
+
+    tier:
+      user.tier || "Craft Collector",
+
+    values:
+      values || toFormValues(user),
   };
 };
 
-const getStoredUser = (req) =>
-  userModel.findById(
-    req.currentUser?.id
-  );
+const getStoredUser = async (req) =>
+  userModel.findById(req.currentUser?.id);
 
-const redirectStaleSession = (
-  req,
-  res
-) => {
+const redirectStaleSession = (req, res) => {
   req.session.destroy(() => {
     res.redirect(
       "/shared/login?redirect=%2Fshared%2Fprofile"
     );
   });
 };
-
-/* =========================
-   PROFILE PAGE
-========================= */
 
 const getProfilePage = async (
   req,
@@ -325,36 +290,26 @@ const getProfilePage = async (
 ) => {
   try {
     const user =
-      getStoredUser(req);
+      await getStoredUser(req);
 
     if (!user) {
-      return redirectStaleSession(
-        req,
-        res
-      );
+      return redirectStaleSession(req, res);
     }
 
     const viewData =
-      await buildViewData(
-        req,
-        res,
-        {
-          user,
-          activeTab:
-            req.query.tab,
+      await buildViewData(req, res, {
+        user,
+        activeTab: req.query.tab,
 
-          pageMessage:
-            getPageMessage(
-              req.query.status
-            ),
+        pageMessage:
+          getPageMessage(req.query.status),
 
-          giftCode: String(
-            req.query.giftCode || ""
-          )
-            .trim()
-            .toUpperCase(),
-        }
-      );
+        giftCode: String(
+          req.query.giftCode || ""
+        )
+          .trim()
+          .toUpperCase(),
+      });
 
     return res.render(
       "shared/profile",
@@ -365,10 +320,6 @@ const getProfilePage = async (
   }
 };
 
-/* =========================
-   UPDATE PROFILE
-========================= */
-
 const updateProfile = async (
   req,
   res,
@@ -376,13 +327,10 @@ const updateProfile = async (
 ) => {
   try {
     const user =
-      getStoredUser(req);
+      await getStoredUser(req);
 
     if (!user) {
-      return redirectStaleSession(
-        req,
-        res
-      );
+      return redirectStaleSession(req, res);
     }
 
     const {
@@ -390,20 +338,14 @@ const updateProfile = async (
       values,
     } = validateProfile(req.body);
 
-    if (
-      Object.keys(errors).length > 0
-    ) {
+    if (Object.keys(errors).length) {
       const viewData =
-        await buildViewData(
-          req,
-          res,
-          {
-            user,
-            values,
-            errors,
-            activeTab: "user",
-          }
-        );
+        await buildViewData(req, res, {
+          user,
+          values,
+          errors,
+          activeTab: "user",
+        });
 
       return res
         .status(422)
@@ -414,31 +356,34 @@ const updateProfile = async (
     }
 
     const result =
-      userModel.updateAccount(
+      await userModel.updateAccount(
         user.id,
         values
       );
 
-    if(!result.ok){
-      if(result.reason==="email-exists"){
-        errors.email="Another account already uses this email.";
+    if (!result.ok) {
+      if (
+        result.reason === "email-exists"
+      ) {
+        errors.email =
+          "Another account already uses this email.";
       }
 
-      if(result.reason==="invalid-current-password"){
-        errors.currentPassword="The current password is incorrect.";
+      if (
+        result.reason ===
+        "invalid-current-password"
+      ) {
+        errors.currentPassword =
+          "The current password is incorrect.";
       }
 
       const viewData =
-        await buildViewData(
-          req,
-          res,
-          {
-            user,
-            values,
-            errors,
-            activeTab: "user",
-          }
-        );
+        await buildViewData(req, res, {
+          user,
+          values,
+          errors,
+          activeTab: "user",
+        });
 
       return res
         .status(409)
@@ -448,15 +393,13 @@ const updateProfile = async (
         );
     }
 
-    req.session.user={
+    req.session.user = {
       ...req.session.user,
       id: result.user.id,
       name: result.user.name,
-      username:
-        result.user.username,
+      username: result.user.username,
       email: result.user.email,
-      initials:
-        result.user.initials,
+      initials: result.user.initials,
       role: result.user.role,
     };
 
@@ -466,38 +409,30 @@ const updateProfile = async (
           return next(saveError);
         }
 
-      return res.redirect(
-        "/shared/profile?tab=user&status=profile-saved"
-      );
-    });
-  }catch(error){
+        return res.redirect(
+          "/shared/profile?tab=user&status=profile-saved"
+        );
+      }
+    );
+  } catch (error) {
     return next(error);
   }
 };
 
-/* =========================
-   PREFERENCES
-========================= */
-
-const updatePreferences = (
+const updatePreferences = async (
   req,
   res,
   next
 ) => {
   try {
     const result =
-      userModel.updatePreferences(
+      await userModel.updatePreferences(
         req.currentUser.id,
-        validatePreferences(
-          req.body
-        )
+        validatePreferences(req.body)
       );
 
     if (!result.ok) {
-      return redirectStaleSession(
-        req,
-        res
-      );
+      return redirectStaleSession(req, res);
     }
 
     return res.redirect(
@@ -508,11 +443,7 @@ const updatePreferences = (
   }
 };
 
-/* =========================
-   DEACTIVATE
-========================= */
-
-const deactivateAccount = (
+const deactivateAccount = async (
   req,
   res,
   next
@@ -529,7 +460,7 @@ const deactivateAccount = (
     }
 
     const result =
-      userModel.deactivateUser(
+      await userModel.deactivateUser(
         userId
       );
 
@@ -541,7 +472,7 @@ const deactivateAccount = (
         );
     }
 
-    req.session.destroy(() => {
+    return req.session.destroy(() => {
       res.redirect(
         "/shared/login?deactivated=1"
       );
@@ -551,42 +482,44 @@ const deactivateAccount = (
   }
 };
 
-/* =========================
-   AVATAR
-========================= */
-
 const wantsJson = (req) =>
   req.xhr ||
   (req.get("Accept") || "").includes(
     "application/json"
   );
 
-const updateAvatar = (
+const updateAvatar = async (
   req,
   res,
   next
 ) => {
   try {
     const user =
-      getStoredUser(req);
+      await getStoredUser(req);
 
-    if(!user){
-      if(wantsJson(req)){
-        return res.status(401).json({
-          ok:false,
-          message:"Your session has expired."
-        });
+    if (!user) {
+      if (wantsJson(req)) {
+        return res
+          .status(401)
+          .json({
+            ok: false,
+            message:
+              "Your session has expired.",
+          });
       }
 
-      return redirectStaleSession(req,res);
+      return redirectStaleSession(req, res);
     }
 
-    if(!req.file){
-      if(wantsJson(req)){
-        return res.status(400).json({
-          ok:false,
-          message:"Choose a new photo first."
-        });
+    if (!req.file) {
+      if (wantsJson(req)) {
+        return res
+          .status(400)
+          .json({
+            ok: false,
+            message:
+              "Choose a new photo first.",
+          });
       }
 
       return res.redirect(
@@ -595,28 +528,29 @@ const updateAvatar = (
     }
 
     const result =
-      userModel.updateAvatar(
+      await userModel.updateAvatar(
         user.id,
         `/uploads/profile/${req.file.filename}`
       );
 
-    if(!result.ok){
-      if(wantsJson(req)){
-        return res.status(409).json({
-          ok:false,
-          message:"Could not update your photo. Try again."
-        });
+    if (!result.ok) {
+      if (wantsJson(req)) {
+        return res
+          .status(409)
+          .json({
+            ok: false,
+            message:
+              "Could not update your photo. Try again.",
+          });
       }
 
-      return redirectStaleSession(req,res);
+      return redirectStaleSession(req, res);
     }
 
-    req.session.user={
+    req.session.user = {
       ...req.session.user,
-      avatar:
-        result.user.avatar,
-      initials:
-        result.user.initials,
+      avatar: result.user.avatar,
+      initials: result.user.initials,
     };
 
     return req.session.save(() => {
@@ -637,10 +571,10 @@ const updateAvatar = (
   }
 };
 
-module.exports={
+module.exports = {
   getProfilePage,
   updatePreferences,
   deactivateAccount,
   updateProfile,
-  updateAvatar
+  updateAvatar,
 };

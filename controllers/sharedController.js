@@ -33,11 +33,12 @@ const getForgotPasswordPage = (
   req,
   res
 ) =>
-  res.render("shared/forgot_password", {
-    submitted: false,
-  });
+  res.render(
+    "shared/forgot_password",
+    { submitted: false }
+  );
 
-const postForgotPassword = (
+const postForgotPassword = async (
   req,
   res
 ) => {
@@ -46,7 +47,9 @@ const postForgotPassword = (
   ).trim();
 
   const user = email
-    ? userModel.findUserByEmail(email)
+    ? await userModel.findUserByEmail(
+      email
+    )
     : null;
 
   if (user) {
@@ -77,7 +80,7 @@ const getResetPasswordPage = (
   );
 };
 
-const postResetPassword = (
+const postResetPassword = async (
   req,
   res
 ) => {
@@ -119,11 +122,13 @@ const postResetPassword = (
   }
 
   const user =
-    userModel.updateUser(
+    await userModel.updateUser(
       req.session.user.id,
       {
         passwordHash:
-          hashPassword(newPassword),
+          hashPassword(
+            newPassword
+          ),
         requiresPasswordChange:
           false,
       }
@@ -150,11 +155,13 @@ const getAdminPage = async (
   req,
   res
 ) => {
-  const products =
-    await adminProductModel.getAllProducts();
-
-  const users =
-    userModel.getAllUsers();
+  const [
+    products,
+    users,
+  ] = await Promise.all([
+    adminProductModel.getAllProducts(),
+    userModel.getAllUsers(),
+  ]);
 
   return res.render(
     "shared/admin/admin",
@@ -215,12 +222,12 @@ const getAdminPage = async (
   );
 };
 
-const postToggleUserStatus = (
+const postToggleUserStatus = async (
   req,
   res
 ) => {
   const targetUser =
-    userModel.findById(
+    await userModel.findById(
       req.params.id
     );
 
@@ -229,7 +236,7 @@ const postToggleUserStatus = (
     targetUser.id !==
     req.currentUser.id
   ) {
-    userModel.updateUser(
+    await userModel.updateUser(
       targetUser.id,
       {
         status:
@@ -303,8 +310,7 @@ const buildImagePaths = (
 
       return uploaded
         ? `${UPLOADS_URL_PREFIX}${uploaded.filename}`
-        : existingImages[index] ||
-        "";
+        : existingImages[index] || "";
     }
   );
 
@@ -628,56 +634,54 @@ const postDeleteProduct = async (
    PASSWORD RESET ADMIN
 ========================= */
 
-const postResolvePasswordReset = (
-  req,
-  res
-) => {
-  const request =
-    passwordResetModel.findRequestById(
-      req.params.requestId
-    );
-
-  if (
-    request?.status ===
-    "pending"
-  ) {
-    const user =
-      userModel.findUserByEmail(
-        request.email
+const postResolvePasswordReset =
+  async (req, res) => {
+    const request =
+      passwordResetModel.findRequestById(
+        req.params.requestId
       );
 
-    if (user) {
-      const tempPassword =
-        generateTempPassword();
+    if (
+      request?.status ===
+      "pending"
+    ) {
+      const user =
+        await userModel.findUserByEmail(
+          request.email
+        );
 
-      userModel.updateUser(
-        user.id,
-        {
-          passwordHash:
-            hashPassword(
-              tempPassword
-            ),
+      if (user) {
+        const tempPassword =
+          generateTempPassword();
 
-          requiresPasswordChange:
-            true,
-        }
-      );
+        await userModel.updateUser(
+          user._id,
+          {
+            passwordHash:
+              hashPassword(
+                tempPassword
+              ),
 
-      passwordResetModel.resolveRequest(
-        request.id,
-        tempPassword
-      );
-    } else {
-      passwordResetModel.rejectRequest(
-        request.id
-      );
+            requiresPasswordChange:
+              true,
+          }
+        );
+
+        passwordResetModel.resolveRequest(
+          request.id,
+          tempPassword
+        );
+      } else {
+        passwordResetModel.rejectRequest(
+          request.id
+        );
+      }
     }
-  }
 
-  return res.redirect(
-    "/shared/admin"
-  );
-};
+    return res.redirect(
+      "/shared/admin"
+    );
+  };
 
 const postRejectPasswordReset = (
   req,
