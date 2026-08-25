@@ -5,156 +5,322 @@ const reviewModel = require("../models/reviewModel");
 const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const giftcardModel = require("../models/giftcardModel");
-const { validateCheckout } = require("../validators/cartValidators");
+
+const {
+  validateCheckout,
+} = require("../validators/cartValidators");
 
 const EXPRESS_SHIPPING_FEE = 12;
 
 const getCurrentUser = (req, res) =>
-  res.locals.currentUser || req.session?.user || null;
+  res.locals.currentUser ||
+  req.session?.user ||
+  null;
 
 const getCurrentUserId = (req) =>
   req.cartUserId || null;
 
 const wantsJson = (req) =>
-  req.get("accept")?.includes("application/json");
+  req.get("accept")?.includes(
+    "application/json"
+  );
 
 const prepareCartView = (cart) => {
   const items = cart.items.map((item) => ({
     productId: item.productId,
     itemType: item.itemType || "product",
-    href: item.product.href || "/cart/products",
+
+    href:
+      item.product.href ||
+      "/cart/products",
+
     name: item.product.name,
     image: item.product.image,
     maker: item.product.maker,
     material: item.product.material,
     variant: item.product.variant,
+
     price: item.product.price,
-    priceFormatted: `$${item.product.price.toFixed(2)}`,
-    oldPriceFormatted: item.product.oldPrice
-      ? `$${item.product.oldPrice.toFixed(2)}`
-      : null,
+
+    priceFormatted:
+      `$${item.product.price.toFixed(2)}`,
+
+    oldPriceFormatted:
+      item.product.oldPrice
+        ? `$${item.product.oldPrice.toFixed(2)}`
+        : null,
+
     quantity: item.quantity,
     stock: item.product.stock,
+
     subtotal: item.subtotal,
-    subtotalFormatted: `$${item.subtotal.toFixed(2)}`,
-    searchTitle: item.product.name.toLowerCase()
+
+    subtotalFormatted:
+      `$${item.subtotal.toFixed(2)}`,
+
+    searchTitle:
+      item.product.name.toLowerCase(),
   }));
 
   return {
     items,
     hasItems: items.length > 0,
-    totalQuantity: cart.totalQuantity,
-    subtotal: cart.subtotal,
-    subtotalFormatted: `$${cart.subtotal.toFixed(2)}`,
-    expressTotal: cart.subtotal + EXPRESS_SHIPPING_FEE,
-    expressTotalFormatted: `$${(cart.subtotal + EXPRESS_SHIPPING_FEE).toFixed(2)}`
+
+    totalQuantity:
+      cart.totalQuantity,
+
+    subtotal:
+      cart.subtotal,
+
+    subtotalFormatted:
+      `$${cart.subtotal.toFixed(2)}`,
+
+    expressTotal:
+      cart.subtotal +
+      EXPRESS_SHIPPING_FEE,
+
+    expressTotalFormatted:
+      `$${(
+        cart.subtotal +
+        EXPRESS_SHIPPING_FEE
+      ).toFixed(2)}`,
   };
 };
 
-const getProductsPage = async (req, res, next) => {
+const getProductsPage = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
-    const statsMap = await reviewModel.getAllReviewStats();
-    const productsPageData = productModel.getProductsPageData(req.query, statsMap);
+    const userId =
+      getCurrentUserId(req);
 
-    return res.render("cart/products", {
-      ...productsPageData,
-      activePage: "shop",
-      currentUser: getCurrentUser(req, res),
-      cartCount: cart.totalQuantity
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const getCartPage = async (req, res, next) => {
-  try {
-    const userId = getCurrentUserId(req);
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
-    const excludedIds = cart.items
-      .filter((item) => item.itemType === "product")
-      .map((item) => item.productId);
-    const statsMap = await reviewModel.getAllReviewStats();
-    const recommendedProducts = productModel.getRecommendedProducts(
-      excludedIds,
-      4,
-      statsMap
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
     );
 
-    return res.render("cart/cart", {
-      pageTitle: "Shopping Cart",
-      activePage: "shop",
-      currentUser: getCurrentUser(req, res),
-      cartCount: cart.totalQuantity,
-      cart,
-      recommendedProducts
-    });
+    const statsMap =
+      await reviewModel.getAllReviewStats();
+
+    const productsPageData =
+      productModel.getProductsPageData(
+        req.query,
+        statsMap
+      );
+
+    return res.render(
+      "cart/products",
+      {
+        ...productsPageData,
+        activePage: "shop",
+        currentUser:
+          getCurrentUser(req, res),
+        cartCount:
+          cart.totalQuantity,
+      }
+    );
   } catch (error) {
     return next(error);
   }
 };
 
-const getCheckoutPage = (req, res, next) => {
+const getCartPage = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const userId =
+      getCurrentUserId(req);
 
-    if (!cart.hasItems) return res.redirect("/cart");
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
-    return res.render("cart/checkout", {
-      pageTitle: "Checkout",
-      activePage: "shop",
-      currentUser: getCurrentUser(req, res),
-      cartCount: cart.totalQuantity,
-      cart,
-      errors: {},
-      formData: {}
-    });
+    const excludedIds =
+      cart.items
+        .filter(
+          (item) =>
+            item.itemType === "product"
+        )
+        .map(
+          (item) =>
+            item.productId
+        );
+
+    const statsMap =
+      await reviewModel.getAllReviewStats();
+
+    const recommendedProducts =
+      productModel.getRecommendedProducts(
+        excludedIds,
+        4,
+        statsMap
+      );
+
+    return res.render(
+      "cart/cart",
+      {
+        pageTitle:
+          "Shopping Cart",
+
+        activePage:
+          "shop",
+
+        currentUser:
+          getCurrentUser(req, res),
+
+        cartCount:
+          cart.totalQuantity,
+
+        cart,
+        recommendedProducts,
+      }
+    );
   } catch (error) {
     return next(error);
   }
 };
 
-const getOrderConfirmationPage = (req, res, next) => {
+const getCheckoutPage = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const orderId = String(req.query.orderId || "");
-    const order = orderModel.getOrderById(orderId);
+    const userId =
+      getCurrentUserId(req);
 
-    if (!order || order.userId !== userId) return res.redirect("/cart");
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
-    return res.render("cart/order_confirmation", {
-      pageTitle: "Order Confirmation",
-      activePage: "shop",
-      currentUser: getCurrentUser(req, res),
-      cartCount: 0,
-      order
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-const addToCart = (req, res, next) => {
-  try {
-    const userId = getCurrentUserId(req);
-    const { productId, quantity = 1 } = req.body;
-    const result = cartModel.addItemToCart(userId, productId, quantity);
-
-    if (!result.success) {
-      if (wantsJson(req)) return res.status(400).json(result);
-      return res.status(400).send(result.message);
+    if (!cart.hasItems) {
+      return res.redirect("/cart");
     }
 
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
+    return res.render(
+      "cart/checkout",
+      {
+        pageTitle: "Checkout",
+        activePage: "shop",
+
+        currentUser:
+          getCurrentUser(req, res),
+
+        cartCount:
+          cart.totalQuantity,
+
+        cart,
+        errors: {},
+        formData: {},
+      }
+    );
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const getOrderConfirmationPage =
+  async (
+    req,
+    res,
+    next
+  ) => {
+    try {
+      const userId =
+        getCurrentUserId(req);
+
+      const orderId =
+        String(
+          req.query.orderId || ""
+        );
+
+      const order =
+        await orderModel.getOrderById(
+          orderId
+        );
+
+      if (
+        !order ||
+        order.userId !== userId
+      ) {
+        return res.redirect("/cart");
+      }
+
+      return res.render(
+        "cart/order_confirmation",
+        {
+          pageTitle:
+            "Order Confirmation",
+
+          activePage:
+            "shop",
+
+          currentUser:
+            getCurrentUser(req, res),
+
+          cartCount: 0,
+          order,
+        }
+      );
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+const addToCart = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const userId =
+      getCurrentUserId(req);
+
+    const {
+      productId,
+      quantity = 1,
+    } = req.body;
+
+    const result =
+      await cartModel.addItemToCart(
+        userId,
+        productId,
+        quantity
+      );
+
+    if (!result.success) {
+      if (wantsJson(req)) {
+        return res
+          .status(400)
+          .json(result);
+      }
+
+      return res
+        .status(400)
+        .send(result.message);
+    }
+
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
     if (wantsJson(req)) {
       return res.json({
         success: true,
-        message: "Product added to cart.",
-        cart
+        message:
+          "Product added to cart.",
+        cart,
       });
     }
 
@@ -164,24 +330,50 @@ const addToCart = (req, res, next) => {
   }
 };
 
-const updateCartItem = (req, res, next) => {
+const updateCartItem = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const { productId, quantity } = req.body;
-    const result = cartModel.updateCartItem(userId, productId, quantity);
+    const userId =
+      getCurrentUserId(req);
+
+    const {
+      productId,
+      quantity,
+    } = req.body;
+
+    const result =
+      await cartModel.updateCartItem(
+        userId,
+        productId,
+        quantity
+      );
 
     if (!result.success) {
-      if (wantsJson(req)) return res.status(400).json(result);
-      return res.status(400).send(result.message);
+      if (wantsJson(req)) {
+        return res
+          .status(400)
+          .json(result);
+      }
+
+      return res
+        .status(400)
+        .send(result.message);
     }
 
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
     if (wantsJson(req)) {
       return res.json({
         success: true,
         message: "Cart updated.",
-        cart
+        cart,
       });
     }
 
@@ -191,24 +383,49 @@ const updateCartItem = (req, res, next) => {
   }
 };
 
-const removeCartItem = (req, res, next) => {
+const removeCartItem = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const { productId } = req.body;
-    const result = cartModel.removeCartItem(userId, productId);
+    const userId =
+      getCurrentUserId(req);
+
+    const {
+      productId,
+    } = req.body;
+
+    const result =
+      await cartModel.removeCartItem(
+        userId,
+        productId
+      );
 
     if (!result.success) {
-      if (wantsJson(req)) return res.status(400).json(result);
-      return res.status(400).send(result.message);
+      if (wantsJson(req)) {
+        return res
+          .status(400)
+          .json(result);
+      }
+
+      return res
+        .status(400)
+        .send(result.message);
     }
 
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
     if (wantsJson(req)) {
       return res.json({
         success: true,
-        message: "Product removed from cart.",
-        cart
+        message:
+          "Product removed from cart.",
+        cart,
       });
     }
 
@@ -218,82 +435,202 @@ const removeCartItem = (req, res, next) => {
   }
 };
 
-const submitCheckout = (req, res, next) => {
+const submitCheckout = async (
+  req,
+  res,
+  next
+) => {
   try {
-    const userId = getCurrentUserId(req);
-    const cart = prepareCartView(cartModel.getCartSummary(userId));
+    const userId =
+      getCurrentUserId(req);
 
-    if (!cart.hasItems) return res.redirect("/cart");
+    const cart = prepareCartView(
+      await cartModel.getCartSummary(
+        userId
+      )
+    );
 
-    const validation = validateCheckout(req.body);
+    if (!cart.hasItems) {
+      return res.redirect("/cart");
+    }
+
+    const validation =
+      validateCheckout(req.body);
 
     if (!validation.isValid) {
-      return res.status(400).render("cart/checkout", {
-        pageTitle: "Checkout",
-        activePage: "shop",
-        currentUser: getCurrentUser(req, res),
-        cartCount: cart.totalQuantity,
-        cart,
-        errors: validation.errors,
-        formData: req.body
-      });
+      return res
+        .status(400)
+        .render(
+          "cart/checkout",
+          {
+            pageTitle:
+              "Checkout",
+
+            activePage:
+              "shop",
+
+            currentUser:
+              getCurrentUser(
+                req,
+                res
+              ),
+
+            cartCount:
+              cart.totalQuantity,
+
+            cart,
+
+            errors:
+              validation.errors,
+
+            formData:
+              req.body,
+          }
+        );
     }
 
     const shippingFee =
-      req.body.shipping === "express" ? EXPRESS_SHIPPING_FEE : 0;
+      req.body.shipping ===
+        "express"
+        ? EXPRESS_SHIPPING_FEE
+        : 0;
 
-    const createdGiftcards = new Map();
+    const createdGiftcards =
+      new Map();
 
-    cartModel.getPendingGiftcardDrafts(userId).forEach((item) => {
-      const giftcard = giftcardModel.createGiftcard(item.values, userId);
-      createdGiftcards.set(item.productId, giftcard);
-    });
+    const giftcardDrafts =
+      await cartModel
+        .getPendingGiftcardDrafts(
+          userId
+        );
 
-    const orderItems = cart.items.map((item) => {
-      const giftcard = createdGiftcards.get(item.productId);
+    giftcardDrafts.forEach(
+      (item) => {
+        const giftcard =
+          giftcardModel.createGiftcard(
+            item.values,
+            userId
+          );
 
-      if (!giftcard) return item;
+        createdGiftcards.set(
+          item.productId,
+          giftcard
+        );
+      }
+    );
 
-      return {
-        ...item,
-        giftcardId: giftcard.id,
-        giftcardCode: giftcard.code,
-        giftcardHref: `/giftcard/view/${encodeURIComponent(giftcard.code)}`
-      };
-    });
+    const orderItems =
+      cart.items.map(
+        (item) => {
+          const giftcard =
+            createdGiftcards.get(
+              item.productId
+            );
 
-    const order = orderModel.createOrder({
-      userId,
-      items: orderItems,
-      delivery: {
-        email: req.body.email.trim(),
-        firstName: req.body.first_name.trim(),
-        lastName: req.body.last_name.trim(),
-        address1: req.body.address1.trim(),
-        address2: String(req.body.address2 || "").trim(),
-        city: req.body.city.trim(),
-        state: req.body.state.trim(),
-        postalCode: req.body.postal_code.trim(),
-        country: req.body.country,
-        phone: req.body.phone.trim()
-      },
-      shipping: {
-        method: req.body.shipping,
-        fee: shippingFee
-      },
-      payment: {
-        method: "card",
-        cardName: req.body.card_name.trim(),
-        cardLastFour: String(req.body.card_number).replace(/\s/g, "").slice(-4)
-      },
-      giftNote: String(req.body.gift_note || "").trim(),
-      subtotal: cart.subtotal,
-      total: cart.subtotal + shippingFee
-    });
+          if (!giftcard) {
+            return item;
+          }
 
-    cartModel.clearCart(userId);
+          return {
+            ...item,
 
-    return res.redirect(`/cart/order-confirmation?orderId=${order.id}`);
+            giftcardId:
+              giftcard.id,
+
+            giftcardCode:
+              giftcard.code,
+
+            giftcardHref:
+              `/giftcard/view/${encodeURIComponent(
+                giftcard.code
+              )}`,
+          };
+        }
+      );
+
+    const order =
+      await orderModel.createOrder({
+        userId,
+        items: orderItems,
+
+        delivery: {
+          email:
+            req.body.email.trim(),
+
+          firstName:
+            req.body.first_name.trim(),
+
+          lastName:
+            req.body.last_name.trim(),
+
+          address1:
+            req.body.address1.trim(),
+
+          address2:
+            String(
+              req.body.address2 || ""
+            ).trim(),
+
+          city:
+            req.body.city.trim(),
+
+          state:
+            req.body.state.trim(),
+
+          postalCode:
+            req.body.postal_code.trim(),
+
+          country:
+            req.body.country,
+
+          phone:
+            req.body.phone.trim(),
+        },
+
+        shipping: {
+          method:
+            req.body.shipping,
+
+          fee:
+            shippingFee,
+        },
+
+        payment: {
+          method: "card",
+
+          cardName:
+            req.body.card_name.trim(),
+
+          cardLastFour:
+            String(
+              req.body.card_number
+            )
+              .replace(/\s/g, "")
+              .slice(-4),
+        },
+
+        giftNote:
+          String(
+            req.body.gift_note || ""
+          ).trim(),
+
+        subtotal:
+          cart.subtotal,
+
+        total:
+          cart.subtotal +
+          shippingFee,
+      });
+
+    await cartModel.clearCart(
+      userId
+    );
+
+    return res.redirect(
+      `/cart/order-confirmation?orderId=${encodeURIComponent(
+        order.id
+      )}`
+    );
   } catch (error) {
     return next(error);
   }
@@ -307,5 +644,5 @@ module.exports = {
   addToCart,
   updateCartItem,
   removeCartItem,
-  submitCheckout
+  submitCheckout,
 };
