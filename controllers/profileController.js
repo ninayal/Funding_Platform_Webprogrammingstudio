@@ -194,6 +194,7 @@ const buildNotifications=(orders,user)=>{
         description:
           `Order ${order.id} was successfully delivered.`,
       };
+    }
 
     return {
       type: "Order",
@@ -235,7 +236,7 @@ const getPageMessage = (status) => {
   );
 };
 
-const buildViewData=(
+const buildViewData=async (
   req,
   res,
   {
