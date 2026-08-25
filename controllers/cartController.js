@@ -21,9 +21,9 @@ const getCurrentUserId = (req) =>
   req.cartUserId || null;
 
 const wantsJson = (req) =>
-  req.get("accept")?.includes(
-    "application/json"
-  );
+  req
+    .get("accept")
+    ?.includes("application/json");
 
 const prepareCartView = (cart) => {
   const items = cart.items.map((item) => ({
@@ -41,7 +41,6 @@ const prepareCartView = (cart) => {
     variant: item.product.variant,
 
     price: item.product.price,
-
     priceFormatted:
       `$${item.product.price.toFixed(2)}`,
 
@@ -54,7 +53,6 @@ const prepareCartView = (cart) => {
     stock: item.product.stock,
 
     subtotal: item.subtotal,
-
     subtotalFormatted:
       `$${item.subtotal.toFixed(2)}`,
 
@@ -87,6 +85,10 @@ const prepareCartView = (cart) => {
   };
 };
 
+/* =========================
+   PRODUCTS
+========================= */
+
 const getProductsPage = async (
   req,
   res,
@@ -106,7 +108,7 @@ const getProductsPage = async (
       await reviewModel.getAllReviewStats();
 
     const productsPageData =
-      productModel.getProductsPageData(
+      await productModel.getProductsPageData(
         req.query,
         statsMap
       );
@@ -116,8 +118,10 @@ const getProductsPage = async (
       {
         ...productsPageData,
         activePage: "shop",
+
         currentUser:
           getCurrentUser(req, res),
+
         cartCount:
           cart.totalQuantity,
       }
@@ -126,6 +130,10 @@ const getProductsPage = async (
     return next(error);
   }
 };
+
+/* =========================
+   CART
+========================= */
 
 const getCartPage = async (
   req,
@@ -157,11 +165,12 @@ const getCartPage = async (
       await reviewModel.getAllReviewStats();
 
     const recommendedProducts =
-      productModel.getRecommendedProducts(
-        excludedIds,
-        4,
-        statsMap
-      );
+      await productModel
+        .getRecommendedProducts(
+          excludedIds,
+          4,
+          statsMap
+        );
 
     return res.render(
       "cart/cart",
@@ -186,6 +195,10 @@ const getCartPage = async (
     return next(error);
   }
 };
+
+/* =========================
+   CHECKOUT
+========================= */
 
 const getCheckoutPage = async (
   req,
@@ -228,6 +241,10 @@ const getCheckoutPage = async (
   }
 };
 
+/* =========================
+   ORDER CONFIRMATION
+========================= */
+
 const getOrderConfirmationPage =
   async (
     req,
@@ -238,10 +255,9 @@ const getOrderConfirmationPage =
       const userId =
         getCurrentUserId(req);
 
-      const orderId =
-        String(
-          req.query.orderId || ""
-        );
+      const orderId = String(
+        req.query.orderId || ""
+      );
 
       const order =
         await orderModel.getOrderById(
@@ -275,6 +291,10 @@ const getOrderConfirmationPage =
       return next(error);
     }
   };
+
+/* =========================
+   ADD
+========================= */
 
 const addToCart = async (
   req,
@@ -330,6 +350,10 @@ const addToCart = async (
   }
 };
 
+/* =========================
+   UPDATE
+========================= */
+
 const updateCartItem = async (
   req,
   res,
@@ -383,6 +407,10 @@ const updateCartItem = async (
   }
 };
 
+/* =========================
+   REMOVE
+========================= */
+
 const removeCartItem = async (
   req,
   res,
@@ -435,6 +463,10 @@ const removeCartItem = async (
   }
 };
 
+/* =========================
+   SUBMIT CHECKOUT
+========================= */
+
 const submitCheckout = async (
   req,
   res,
@@ -479,7 +511,6 @@ const submitCheckout = async (
               cart.totalQuantity,
 
             cart,
-
             errors:
               validation.errors,
 
@@ -520,33 +551,25 @@ const submitCheckout = async (
     );
 
     const orderItems =
-      cart.items.map(
-        (item) => {
-          const giftcard =
-            createdGiftcards.get(
-              item.productId
-            );
+      cart.items.map((item) => {
+        const giftcard =
+          createdGiftcards.get(
+            item.productId
+          );
 
-          if (!giftcard) {
-            return item;
-          }
-
-          return {
-            ...item,
-
-            giftcardId:
-              giftcard.id,
-
-            giftcardCode:
-              giftcard.code,
-
-            giftcardHref:
-              `/giftcard/view/${encodeURIComponent(
-                giftcard.code
-              )}`,
-          };
+        if (!giftcard) {
+          return item;
         }
-      );
+
+        return {
+          ...item,
+          giftcardId:
+            giftcard.id,
+
+          giftcardCode:
+            giftcard.code,
+        };
+      });
 
     const order =
       await orderModel.createOrder({
