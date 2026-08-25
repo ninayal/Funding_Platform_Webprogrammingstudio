@@ -1,6 +1,6 @@
 "use strict";
-const userModel =
-  require("../models/userModel");
+
+const userModel = require("../models/userModel");
 
 const {
   validateLogin,
@@ -18,26 +18,13 @@ const {
 const removeSensitiveValues = (
   values = {}
 ) => ({
-  firstname:
-    values.firstname || "",
-
-  lastname:
-    values.lastname || "",
-
-  username:
-    values.username || "",
-
-  email:
-    values.email || "",
-
-  gender:
-    values.gender || "",
-
-  description:
-    values.description || "",
-
-  terms:
-    values.terms || "",
+  firstname: values.firstname || "",
+  lastname: values.lastname || "",
+  username: values.username || "",
+  email: values.email || "",
+  gender: values.gender || "",
+  description: values.description || "",
+  terms: values.terms || "",
 });
 
 const getRedirectTarget = (
@@ -68,26 +55,64 @@ const renderLogin = (
     })
   );
 
+const establishSession = (
+  req,
+  res,
+  next,
+  user,
+  redirectTarget
+) => {
+  req.session.regenerate(
+    (regenerateError) => {
+      if (regenerateError) {
+        return next(
+          regenerateError
+        );
+      }
+
+      req.session.user = {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        initials: user.initials,
+        role: user.role,
+        avatar: user.avatar,
+      };
+
+      return req.session.save(
+        (saveError) => {
+          if (saveError) {
+            return next(saveError);
+          }
+
+          return res.redirect(
+            user.requiresPasswordChange
+              ? "/shared/reset-password"
+              : redirectTarget
+          );
+        }
+      );
+    }
+  );
+};
+
 const getLoginPage = (
   req,
   res
 ) => {
-  const redirectTarget =
+  const redirect =
     getRedirectTarget(req);
 
   if (req.currentUser) {
     return res.redirect(
-      redirectTarget
+      redirect
     );
   }
 
-  return renderLogin(
-    res,
-    {
-      redirect:
-        redirectTarget,
-    }
-  );
+  return renderLogin(res, {
+    redirect,
+  });
 };
 
 const getRegisterPage = (
@@ -109,54 +134,7 @@ const getRegisterPage = (
   );
 };
 
-const establishSession = (
-  req,
-  res,
-  next,
-  user,
-  redirectTarget
-) => {
-  req.session.regenerate(
-    (regenerateError) => {
-      if (regenerateError) {
-        return next(
-          regenerateError
-        );
-      }
-
-      req.session.user = {
-        id: user.id,
-        name: user.name,
-        username:
-          user.username,
-        email:
-          user.email,
-        initials:
-          user.initials,
-        role:
-          user.role,
-      };
-
-      return req.session.save(
-        (saveError) => {
-          if (saveError) {
-            return next(
-              saveError
-            );
-          }
-
-          return res.redirect(
-            user.requiresPasswordChange
-              ? "/shared/reset-password"
-              : redirectTarget
-          );
-        }
-      );
-    }
-  );
-};
-
-const login = (
+const login = async (
   req,
   res,
   next
@@ -169,12 +147,12 @@ const login = (
       req.body
     );
 
-    const redirectTarget =
+    const redirect =
       getRedirectTarget(req);
 
     if (
       Object.keys(errors)
-        .length > 0
+        .length
     ) {
       return renderLogin(
         res,
@@ -185,27 +163,24 @@ const login = (
               values.email,
           },
           errors,
-          redirect:
-            redirectTarget,
+          redirect,
         }
       );
     }
 
     const result =
-      userModel.authenticate(
+      await userModel.authenticate(
         values.email,
         values.password
       );
 
     if (!result.ok) {
-      const message =
-        result.reason ===
-          "deactivated"
-          ? "This account has been deactivated."
-          : result.reason ===
-            "blocked"
-            ? "This account has been blocked."
-            : "The email or password is incorrect.";
+      const messages = {
+        deactivated:
+          "This account has been deactivated.",
+        blocked:
+          "This account has been blocked.",
+      };
 
       return renderLogin(
         res,
@@ -217,10 +192,12 @@ const login = (
           },
           errors: {
             form:
-              message,
+              messages[
+              result.reason
+              ] ||
+              "The email or password is incorrect.",
           },
-          redirect:
-            redirectTarget,
+          redirect,
         }
       );
     }
@@ -230,14 +207,14 @@ const login = (
       res,
       next,
       result.user,
-      redirectTarget
+      redirect
     );
   } catch (error) {
     return next(error);
   }
 };
 
-const register = (
+const register = async (
   req,
   res,
   next
@@ -246,16 +223,17 @@ const register = (
     const {
       values,
       errors,
-    } = validateRegistration(
-      req.body
-    );
+    } =
+      validateRegistration(
+        req.body
+      );
 
-    const redirectTarget =
+    const redirect =
       getRedirectTarget(req);
 
     if (
       Object.keys(errors)
-        .length > 0
+        .length
     ) {
       return res
         .status(422)
@@ -267,14 +245,13 @@ const register = (
                 values
               ),
             errors,
-            redirect:
-              redirectTarget,
+            redirect,
           }
         );
     }
 
     const result =
-      userModel.createUser(
+      await userModel.createUser(
         values
       );
 
@@ -308,8 +285,7 @@ const register = (
               ),
             errors:
               modelErrors,
-            redirect:
-              redirectTarget,
+            redirect,
           }
         );
     }
@@ -319,7 +295,7 @@ const register = (
       res,
       next,
       result.user,
-      redirectTarget
+      redirect
     );
   } catch (error) {
     return next(error);

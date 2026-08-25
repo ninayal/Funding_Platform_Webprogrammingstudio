@@ -1,19 +1,13 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
+const { randomUUID } = require("node:crypto");
+
+const User = require("./schemas/User");
 
 const {
   hashPassword,
   verifyPassword,
 } = require("../utils/passwordUtils");
-
-const USERS_FILE =
-  path.join(
-    __dirname,
-    "../data/users.json"
-  );
 
 const DEFAULT_PREFERENCES = {
   emailUpdates: true,
@@ -25,83 +19,24 @@ const DEFAULT_PREFERENCES = {
   productCareGuides: true,
 };
 
-const clean = (
-  value
-) =>
-  String(value || "")
-    .trim();
+const clean = (value) =>
+  String(value || "").trim();
 
-const normalise = (
-  value
-) =>
-  clean(value)
-    .toLowerCase();
-
-const ensureUsersFile = () => {
-  if (!fs.existsSync(USERS_FILE)) {
-    fs.writeFileSync(
-      USERS_FILE,
-      "[]\n",
-      "utf8"
-    );
-  }
-};
-
-const readUsers = () => {
-  ensureUsersFile();
-
-  try {
-    const data =
-      JSON.parse(
-        fs.readFileSync(
-          USERS_FILE,
-          "utf8"
-        )
-      );
-
-    return Array.isArray(data)
-      ? data
-      : [];
-  } catch {
-    return [];
-  }
-};
-
-const writeUsers = (
-  users
-) => {
-  const tempFile =
-    `${USERS_FILE}.tmp`;
-
-  fs.writeFileSync(
-    tempFile,
-    `${JSON.stringify(
-      users,
-      null,
-      2
-    )}\n`,
-    "utf8"
-  );
-
-  fs.renameSync(
-    tempFile,
-    USERS_FILE
-  );
-};
+const normalise = (value) =>
+  clean(value).toLowerCase();
 
 const createInitials = (
   firstname,
   lastname,
   username
 ) => {
-  const initials =
-    [
-      clean(firstname)[0],
-      clean(lastname)[0],
-    ]
-      .filter(Boolean)
-      .join("")
-      .toUpperCase();
+  const initials = [
+    clean(firstname)[0],
+    clean(lastname)[0],
+  ]
+    .filter(Boolean)
+    .join("")
+    .toUpperCase();
 
   return (
     initials ||
@@ -111,133 +46,131 @@ const createInitials = (
   );
 };
 
-const isAdminRole = (
-  role
-) =>
+const isAdminRole = (role) =>
   normalise(role) === "admin";
 
-const toPublicUser = (
-  user
-) => {
-  if (!user) {
-    return null;
-  }
+const toPublicUser = (user) => {
+  if (!user) return null;
+
+  const data =
+    typeof user.toObject === "function"
+      ? user.toObject()
+      : user;
 
   const name =
-    `${user.firstname || ""} ${user.lastname || ""}`
-      .trim() ||
-    user.name ||
-    user.username ||
+    `${data.firstname || ""} ${data.lastname || ""}`.trim() ||
+    data.username ||
     "";
 
   return {
-    id: user.id,
-    firstname:
-      user.firstname || "",
-    lastname:
-      user.lastname || "",
+    id: String(data._id),
+
+    firstname: data.firstname || "",
+    lastname: data.lastname || "",
     name,
-    username:
-      user.username || "",
-    email:
-      user.email || "",
-    initials:
-      createInitials(
-        user.firstname,
-        user.lastname,
-        user.username
-      ),
-    role:
-      user.role || "user",
-    status:
-      user.status || "active",
-    gender:
-      user.gender || "",
-    description:
-      user.description || "",
-    phone:
-      user.phone || "",
-    location:
-      user.location || "",
-    postalCode:
-      user.postalCode || "",
-    address:
-      user.address || "",
+
+    username: data.username || "",
+    email: data.email || "",
+
+    initials: createInitials(
+      data.firstname,
+      data.lastname,
+      data.username
+    ),
+
+    role: data.role || "user",
+    status: data.status || "active",
+
+    gender: data.gender || "",
+    description: data.description || "",
+    phone: data.phone || "",
+    location: data.location || "",
+    postalCode: data.postalCode || "",
+    address: data.address || "",
+
     about:
-      user.about ||
-      user.description ||
+      data.about ||
+      data.description ||
       "",
+
     avatar:
-      user.avatar ||
+      data.avatar ||
       "/images/profile.png",
+
     tier:
-      user.tier ||
+      data.tier ||
       "Craft Collector",
+
     preferences: {
       ...DEFAULT_PREFERENCES,
-      ...(user.preferences || {}),
+      ...(data.preferences || {}),
     },
+
     joinDate:
-      user.joinDate ||
-      user.createdAt ||
+      data.joinDate ||
+      data.createdAt ||
       "",
+
     requiresPasswordChange:
       Boolean(
-        user.requiresPasswordChange
+        data.requiresPasswordChange
       ),
+
     createdAt:
-      user.createdAt ||
-      user.joinDate ||
+      data.createdAt ||
+      data.joinDate ||
       "",
+
     updatedAt:
-      user.updatedAt ||
-      user.createdAt ||
-      user.joinDate ||
+      data.updatedAt ||
+      data.createdAt ||
       "",
   };
 };
 
-const findUserById = (
-  id
-) =>
-  readUsers().find(
-    (user) =>
-      String(user.id) ===
-      String(id)
-  ) || null;
+const findUserById = async (id) => {
+  if (!id) return null;
 
-const findUserByEmail = (
+  return User.findById(
+    String(id)
+  ).lean();
+};
+
+const findUserByEmail = async (
   email
 ) => {
   const target =
     normalise(email);
 
-  return (
-    readUsers().find(
-      (user) =>
-        normalise(user.email) ===
-        target
-    ) || null
+  if (!target) return null;
+
+  return User.findOne({
+    email: target,
+  }).lean();
+};
+
+const findById = async (id) =>
+  toPublicUser(
+    await findUserById(id)
+  );
+
+const getAllUsers = async () => {
+  const users =
+    await User.find()
+      .sort({ createdAt: -1 })
+      .lean();
+
+  return users.map(
+    toPublicUser
   );
 };
 
-const findById = (
-  id
-) =>
-  toPublicUser(
-    findUserById(id)
-  );
-
-const getAllUsers = () =>
-  readUsers()
-    .map(toPublicUser);
-
-const authenticate = (
+const authenticate = async (
   email,
   password
 ) => {
   const user =
-    findUserByEmail(email);
+    await findUserByEmail(email);
 
   if (!user) {
     return {
@@ -252,18 +185,17 @@ const authenticate = (
   ) {
     return {
       ok: false,
-      reason:
-        "blocked",
+      reason: "blocked",
     };
   }
 
   if (
-    user.status === "deactivated"
+    user.status ===
+    "deactivated"
   ) {
     return {
       ok: false,
-      reason:
-        "deactivated",
+      reason: "deactivated",
     };
   }
 
@@ -282,158 +214,136 @@ const authenticate = (
 
   return {
     ok: true,
-    user:
-      toPublicUser(user),
+    user: toPublicUser(user),
   };
 };
 
-const createUser = (
+const createUser = async (
   values
 ) => {
-  const users =
-    readUsers();
-
   const email =
     normalise(values.email);
 
   const username =
     clean(values.username);
 
-  if (
-    users.some(
-      (user) =>
-        normalise(user.email) ===
-        email
-    )
-  ) {
+  const duplicate =
+    await User.findOne({
+      $or: [
+        { email },
+        { username },
+      ],
+    }).lean();
+
+  if (duplicate) {
     return {
       ok: false,
       reason:
-        "email-exists",
+        duplicate.email === email
+          ? "email-exists"
+          : "username-exists",
     };
   }
 
-  if (
-    users.some(
-      (user) =>
-        normalise(user.username) ===
-        normalise(username)
-    )
-  ) {
+  try {
+    const user =
+      await User.create({
+        _id: randomUUID(),
+
+        firstname:
+          clean(values.firstname),
+
+        lastname:
+          clean(values.lastname),
+
+        username,
+        email,
+
+        gender:
+          clean(values.gender),
+
+        description:
+          clean(values.description),
+
+        about:
+          clean(values.description),
+
+        passwordHash:
+          hashPassword(
+            values.password
+          ),
+
+        role: "user",
+        status: "active",
+
+        preferences: {
+          ...DEFAULT_PREFERENCES,
+        },
+
+        requiresPasswordChange:
+          false,
+
+        joinDate: new Date(),
+      });
+
     return {
-      ok: false,
-      reason:
-        "username-exists",
+      ok: true,
+      user:
+        toPublicUser(user),
     };
+  } catch (error) {
+    if (
+      error?.code === 11000
+    ) {
+      return {
+        ok: false,
+        reason:
+          error.keyPattern?.email
+            ? "email-exists"
+            : "username-exists",
+      };
+    }
+
+    throw error;
   }
-
-  const now =
-    new Date()
-      .toISOString();
-
-  const user = {
-    id:
-      crypto.randomUUID(),
-    firstname:
-      clean(values.firstname),
-    lastname:
-      clean(values.lastname),
-    username,
-    email,
-    gender:
-      clean(values.gender),
-    description:
-      clean(values.description),
-    role:
-      "user",
-    status:
-      "active",
-    phone:
-      "",
-    location:
-      "",
-    postalCode:
-      "",
-    address:
-      "",
-    about:
-      clean(values.description),
-    avatar:
-      "/images/profile.png",
-    tier:
-      "Craft Collector",
-    preferences:
-    {
-      ...DEFAULT_PREFERENCES,
-    },
-    passwordHash:
-      hashPassword(
-        values.password
-      ),
-    requiresPasswordChange:
-      false,
-    joinDate:
-      now.slice(0, 10),
-    createdAt:
-      now,
-    updatedAt:
-      now,
-  };
-
-  users.push(user);
-
-  writeUsers(users);
-
-  return {
-    ok: true,
-    user:
-      toPublicUser(user),
-  };
 };
 
-const updateAccount = (
+const updateAccount = async (
   userId,
   values
 ) => {
-  const users =
-    readUsers();
+  const user =
+    await findUserById(userId);
 
-  const index =
-    users.findIndex(
-      (user) =>
-        String(user.id) ===
-        String(userId)
-    );
-
-  if (index === -1) {
+  if (!user) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
 
+  const email =
+    normalise(values.email);
+
   const duplicateEmail =
-    users.some(
-      (user, userIndex) =>
-        userIndex !== index &&
-        normalise(user.email) ===
-        normalise(values.email)
-    );
+    await User.exists({
+      email,
+      _id: {
+        $ne: String(userId),
+      },
+    });
 
   if (duplicateEmail) {
     return {
       ok: false,
-      reason:
-        "email-exists",
+      reason: "email-exists",
     };
   }
 
-  const user =
-    users[index];
-
   const changingPassword =
-    Boolean(values.newPassword);
+    Boolean(
+      values.newPassword
+    );
 
   if (
     changingPassword &&
@@ -449,211 +359,166 @@ const updateAccount = (
     };
   }
 
-  const updatedUser = {
-    ...user,
+  const updates = {
     firstname:
       clean(values.firstname),
+
     lastname:
       clean(values.lastname),
-    email:
-      normalise(values.email),
+
+    email,
+
     phone:
       clean(values.phone),
+
     location:
       clean(values.location),
+
     postalCode:
       clean(values.postalCode),
+
     address:
       clean(values.address),
+
     about:
       clean(values.about),
+
     description:
       clean(values.about),
-    updatedAt:
-      new Date()
-        .toISOString(),
   };
 
   if (changingPassword) {
-    updatedUser.passwordHash =
+    updates.passwordHash =
       hashPassword(
         values.newPassword
       );
 
-    updatedUser.requiresPasswordChange =
+    updates.requiresPasswordChange =
       false;
   }
 
-  users[index] =
-    updatedUser;
-
-  writeUsers(users);
+  const updatedUser =
+    await User.findByIdAndUpdate(
+      String(userId),
+      { $set: updates },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).lean();
 
   return {
     ok: true,
     user:
-      toPublicUser(
-        updatedUser
-      ),
+      toPublicUser(updatedUser),
   };
 };
 
-const updateAvatar = (
+const updateAvatar = async (
   userId,
   avatar
 ) => {
-  const users =
-    readUsers();
+  const user =
+    await User.findByIdAndUpdate(
+      String(userId),
+      {
+        $set: {
+          avatar:
+            clean(avatar),
+        },
+      },
+      { new: true }
+    ).lean();
 
-  const index =
-    users.findIndex(
-      (user) =>
-        String(user.id) ===
-        String(userId)
-    );
-
-  if (index === -1) {
+  if (!user) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
-
-  users[index] = {
-    ...users[index],
-    avatar,
-    updatedAt:
-      new Date()
-        .toISOString(),
-  };
-
-  writeUsers(users);
 
   return {
     ok: true,
     user:
-      toPublicUser(
-        users[index]
-      ),
+      toPublicUser(user),
   };
 };
 
-const updatePreferences = (
-  userId,
-  preferences
-) => {
-  const users =
-    readUsers();
+const updatePreferences =
+  async (
+    userId,
+    preferences
+  ) => {
+    const user =
+      await User.findByIdAndUpdate(
+        String(userId),
+        {
+          $set: {
+            preferences: {
+              ...DEFAULT_PREFERENCES,
+              ...preferences,
+            },
+          },
+        },
+        { new: true }
+      ).lean();
 
-  const index =
-    users.findIndex(
-      (user) =>
-        String(user.id) ===
-        String(userId)
-    );
+    if (!user) {
+      return {
+        ok: false,
+        reason:
+          "user-not-found",
+      };
+    }
 
-  if (index === -1) {
     return {
-      ok: false,
-      reason:
-        "user-not-found",
+      ok: true,
+      user:
+        toPublicUser(user),
     };
-  }
-
-  users[index] = {
-    ...users[index],
-    preferences: {
-      ...DEFAULT_PREFERENCES,
-      ...preferences,
-    },
-    updatedAt:
-      new Date()
-        .toISOString(),
   };
 
-  writeUsers(users);
-
-  return {
-    ok: true,
-    user:
-      toPublicUser(
-        users[index]
-      ),
-  };
-};
-
-const deactivateUser = (
+const deactivateUser = async (
   userId
 ) => {
-  const users =
-    readUsers();
+  const user =
+    await User.findByIdAndUpdate(
+      String(userId),
+      {
+        $set: {
+          status:
+            "deactivated",
+        },
+      },
+      { new: true }
+    ).lean();
 
-  const index =
-    users.findIndex(
-      (user) =>
-        String(user.id) ===
-        String(userId)
-    );
-
-  if (index === -1) {
+  if (!user) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
-
-  users[index] = {
-    ...users[index],
-    status:
-      "deactivated",
-    updatedAt:
-      new Date()
-        .toISOString(),
-  };
-
-  writeUsers(users);
 
   return {
     ok: true,
     user:
-      toPublicUser(
-        users[index]
-      ),
+      toPublicUser(user),
   };
 };
 
-const updateUser = (
+const updateUser = async (
   userId,
   updates
-) => {
-  const users =
-    readUsers();
-
-  const index =
-    users.findIndex(
-      (user) =>
-        String(user.id) ===
-        String(userId)
-    );
-
-  if (index === -1) {
-    return null;
-  }
-
-  users[index] = {
-    ...users[index],
-    ...updates,
-    updatedAt:
-      new Date()
-        .toISOString(),
-  };
-
-  writeUsers(users);
-
-  return users[index];
-};
+) =>
+  User.findByIdAndUpdate(
+    String(userId),
+    { $set: updates },
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).lean();
 
 module.exports = {
   authenticate,
