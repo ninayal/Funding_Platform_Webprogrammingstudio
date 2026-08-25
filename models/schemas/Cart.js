@@ -13,7 +13,6 @@ const cartSchema = new mongoose.Schema(
             ref: "Users",
             required: true,
             unique: true,
-            index: true,
         },
     },
     {
@@ -22,16 +21,9 @@ const cartSchema = new mongoose.Schema(
     }
 );
 
-cartSchema.index(
-    {
-        userId: 1,
-    },
-    {
-        unique: true,
-    }
-);
-
-module.exports = mongoose.model(
-    "Carts",
-    cartSchema
-);
+module.exports =
+    mongoose.models.Carts ||
+    mongoose.model(
+        "Carts",
+        cartSchema
+    );
