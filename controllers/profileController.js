@@ -1,297 +1,166 @@
 "use strict";
 
-const giftcardModel =
-  require("../models/giftcardModel");
-
-const userModel = require(
-  "../models/userModel"
-);
-
-const orderModel = require(
-  "../models/orderModel"
-);
+const giftcardModel = require("../models/giftcardModel");
+const userModel = require("../models/userModel");
+const orderModel = require("../models/orderModel");
 
 const {
   validatePreferences,
-  validateProfile
-} = require(
-  "../validators/profileValidators"
-);
+  validateProfile,
+} = require("../validators/profileValidators");
 
-const ALLOWED_TABS =
-  new Set([
-    "user",
-    "orders",
-    "settings",
-    "notifications"
-  ]);
+const ALLOWED_TABS = new Set([
+  "user",
+  "orders",
+  "settings",
+  "notifications",
+]);
 
-const getActiveTab = (
-  value
-) =>
-  ALLOWED_TABS.has(
-    String(value || "")
-  )
+const getActiveTab = (value) =>
+  ALLOWED_TABS.has(String(value || ""))
     ? String(value)
     : "user";
 
-const formatMemberSince = (
-  value
-) => {
-  const date =
-    new Date(value);
+const formatMemberSince = (value) => {
+  const date = new Date(value);
 
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
+  if (Number.isNaN(date.getTime())) {
     return "Recently";
   }
 
-  return new Intl.DateTimeFormat(
-    "en",
-    {
-      month:
-        "long",
-      year:
-        "numeric"
-    }
-  ).format(date);
+  return new Intl.DateTimeFormat("en", {
+    month: "long",
+    year: "numeric",
+  }).format(date);
 };
 
-const formatOrderDate = (
-  value
-) => {
-  const date =
-    new Date(value);
+const formatOrderDate = (value) => {
+  const date = new Date(value);
 
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
+  if (Number.isNaN(date.getTime())) {
     return "Recently";
   }
 
-  return new Intl.DateTimeFormat(
-    "en",
-    {
-      day:
-        "2-digit",
-      month:
-        "short",
-      year:
-        "numeric"
-    }
-  ).format(date);
+  return new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
 };
 
-const formatMoney = (
-  value
-) =>
-  `$${Number(
-    value || 0
-  ).toFixed(2)}`;
+const formatMoney = (value) =>
+  `$${Number(value || 0).toFixed(2)}`;
 
-const buildOrderData = (
-  userId
-) => {
+/* =========================
+   ORDERS
+========================= */
+
+const buildOrderData = async (userId) => {
   const rawOrders =
-    orderModel
-      .getOrdersByUserId(
-        String(userId)
-      )
-      .slice()
-      .sort(
-        (a, b) =>
-          new Date(
-            b.createdAt
-          ) -
-          new Date(
-            a.createdAt
-          )
-      );
+    await orderModel.getOrdersByUserId(
+      String(userId)
+    );
 
-  const orders =
-    rawOrders.map(
-      (order) => {
-        const items =
-          Array.isArray(
-            order.items
-          )
-            ? order.items
-            : [];
+  const orders = rawOrders.map((order) => {
+    const items = Array.isArray(order.items)
+      ? order.items
+      : [];
 
-        const itemCount =
-          items.reduce(
-            (
-              total,
-              item
-            ) =>
-              total +
-              Number(
-                item.quantity || 0
-              ),
-            0
+    const itemCount = items.reduce(
+      (total, item) =>
+        total + Number(item.quantity || 0),
+      0
+    );
+
+    const status = String(
+      order.status || "confirmed"
+    ).toLowerCase();
+
+    const statusLabel =
+      status === "confirmed"
+        ? "Confirmed"
+        : status
+          .replace(/-/g, " ")
+          .replace(/\b\w/g, (letter) =>
+            letter.toUpperCase()
           );
 
-        const status =
-          String(
-            order.status ||
-            "confirmed"
-          ).toLowerCase();
+    return {
+      id: order.id,
+      status,
+      statusLabel,
+      placedOn: formatOrderDate(
+        order.createdAt
+      ),
 
-        return {
-          id:
-            order.id,
+      total: Number(order.total || 0),
+      totalFormatted: formatMoney(
+        order.total
+      ),
 
-          status,
+      subtotal: Number(
+        order.subtotal || 0
+      ),
+      subtotalFormatted: formatMoney(
+        order.subtotal
+      ),
 
-          statusLabel:
-            status ===
-              "confirmed"
-              ? "Confirmed"
-              : status
-                .replace(
-                  /-/g,
-                  " "
-                )
-                .replace(
-                  /\b\w/g,
-                  (letter) =>
-                    letter.toUpperCase()
-                ),
+      itemCount,
+      items,
 
-          placedOn:
-            formatOrderDate(
-              order.createdAt
-            ),
+      delivery: order.delivery || {},
+      shipping: order.shipping || {},
+      payment: order.payment || {},
+      giftNote: order.giftNote || "",
 
-          total:
-            Number(
-              order.total || 0
-            ),
+      detailsUrl:
+        `/cart/order-confirmation?orderId=${encodeURIComponent(
+          order.id
+        )}`,
+    };
+  });
 
-          totalFormatted:
-            formatMoney(
-              order.total
-            ),
+  const totalItems = orders.reduce(
+    (total, order) =>
+      total + order.itemCount,
+    0
+  );
 
-          subtotal:
-            Number(
-              order.subtotal || 0
-            ),
-
-          subtotalFormatted:
-            formatMoney(
-              order.subtotal
-            ),
-
-          itemCount,
-
-          items,
-
-          delivery:
-            order.delivery ||
-            {},
-
-          shipping:
-            order.shipping ||
-            {},
-
-          payment:
-            order.payment ||
-            {},
-
-          giftNote:
-            order.giftNote ||
-            "",
-
-          detailsUrl:
-            `/cart/order-confirmation?orderId=${encodeURIComponent(
-              order.id
-            )}`
-        };
-      }
-    );
-
-  const totalItems =
-    orders.reduce(
-      (
-        total,
-        order
-      ) =>
-        total +
-        order.itemCount,
-      0
-    );
-
-  const totalSpent =
-    orders.reduce(
-      (
-        total,
-        order
-      ) =>
-        total +
-        order.total,
-      0
-    );
+  const totalSpent = orders.reduce(
+    (total, order) =>
+      total + order.total,
+    0
+  );
 
   const orderSummary = [
     {
-      label:
-        "Orders placed",
-
-      value:
-        String(
-          orders.length
-        ).padStart(
-          2,
-          "0"
-        ),
-
+      label: "Orders placed",
+      value: String(
+        orders.length
+      ).padStart(2, "0"),
       description:
-        "Orders linked to this account."
+        "Orders linked to this account.",
     },
-
     {
-      label:
-        "Pieces ordered",
-
-      value:
-        String(
-          totalItems
-        ).padStart(
-          2,
-          "0"
-        ),
-
+      label: "Pieces ordered",
+      value: String(
+        totalItems
+      ).padStart(2, "0"),
       description:
-        "Handcrafted pieces across your orders."
+        "Handcrafted pieces across your orders.",
     },
-
     {
-      label:
-        "Total spent",
-
-      value:
-        formatMoney(
-          totalSpent
-        ),
-
+      label: "Total spent",
+      value: formatMoney(totalSpent),
       description:
-        "Total value of confirmed orders."
-    }
+        "Total value of confirmed orders.",
+    },
   ];
 
   return {
     orders,
-
     orderSummary,
-
-    profileStats:
-      orderSummary
+    profileStats: orderSummary,
   };
 };
 
@@ -299,136 +168,93 @@ const buildNotifications = (
   orders,
   user
 ) => {
-  const preferences =
-    user.preferences ||
-    {};
-
   if (
-    preferences.orderNotifications ===
-    false
+    user.preferences
+      ?.orderNotifications === false
   ) {
     return [];
   }
 
-  return orders.map(
-    (order) => {
-      const firstItem =
-        order.items?.[0];
+  return orders.map((order) => {
+    const firstItem =
+      order.items?.[0];
 
-      const itemName =
-        firstItem?.product?.name ||
-        "Your order";
+    const itemName =
+      firstItem?.name ||
+      firstItem?.title ||
+      "Your order";
 
-      const orderId =
-        order.id;
-
-      if (
-        order.status ===
-        "confirmed"
-      ) {
-        return {
-          type:
-            "Order",
-
-          title:
-            `${itemName} has been confirmed.`,
-
-          description:
-            `Order ${orderId} is being prepared.`
-        };
-      }
-
-      if (
-        order.status ===
-        "shipped"
-      ) {
-        return {
-          type:
-            "Order",
-
-          title:
-            `${itemName} is now in transit.`,
-
-          description:
-            `Order ${orderId} has been shipped and is on the way.`
-        };
-      }
-
-      if (
-        order.status ===
-        "delivered"
-      ) {
-        return {
-          type:
-            "Order",
-
-          title:
-            `${itemName} has been delivered.`,
-
-          description:
-            `Order ${orderId} was successfully delivered.`
-        };
-      }
-
+    if (order.status === "confirmed") {
       return {
-        type:
-          "Order",
-
+        type: "Order",
         title:
-          `${itemName} order update.`,
-
+          `${itemName} has been confirmed.`,
         description:
-          `Order ${orderId} has a new status: ${order.status}.`
+          `Order ${order.id} is being prepared.`,
       };
     }
-  );
+
+    if (order.status === "shipped") {
+      return {
+        type: "Order",
+        title:
+          `${itemName} is now in transit.`,
+        description:
+          `Order ${order.id} has been shipped and is on the way.`,
+      };
+    }
+
+    if (order.status === "delivered") {
+      return {
+        type: "Order",
+        title:
+          `${itemName} has been delivered.`,
+        description:
+          `Order ${order.id} was successfully delivered.`,
+      };
+    }
+
+    return {
+      type: "Order",
+      title:
+        `${itemName} order update.`,
+      description:
+        `Order ${order.id} has a new status: ${order.status}.`,
+    };
+  });
 };
 
-const toFormValues = (
-  user
-) => ({
-  firstname:
-    user.firstname || "",
+/* =========================
+   PROFILE DATA
+========================= */
 
-  lastname:
-    user.lastname || "",
-
-  email:
-    user.email || "",
-
-  phone:
-    user.phone || "",
-
-  location:
-    user.location || "",
-
-  postalCode:
-    user.postalCode || "",
-
-  address:
-    user.address || "",
-
-  about:
-    user.about || ""
+const toFormValues = (user) => ({
+  firstname: user.firstname || "",
+  lastname: user.lastname || "",
+  email: user.email || "",
+  phone: user.phone || "",
+  location: user.location || "",
+  postalCode: user.postalCode || "",
+  address: user.address || "",
+  about: user.about || "",
 });
 
-const getPageMessage = (
-  status
-) => {
+const getPageMessage = (status) => {
   const messages = {
     "profile-saved":
       "Your account information has been saved.",
 
     "preferences-saved":
-      "Your account preferences have been saved."
+      "Your account preferences have been saved.",
   };
 
-  return messages[
-    String(status || "")
-  ] || "";
+  return (
+    messages[String(status || "")] ||
+    ""
+  );
 };
 
-const buildViewData = (
+const buildViewData = async (
   req,
   res,
   {
@@ -437,54 +263,42 @@ const buildViewData = (
     errors = {},
     activeTab,
     pageMessage = "",
-    giftCode = ""
+    giftCode = "",
   }
 ) => {
   const {
     orders,
     orderSummary,
-    profileStats
-  } =
-    buildOrderData(
-      user.id
-    );
+    profileStats,
+  } = await buildOrderData(user.id);
 
   const notifications =
-    buildNotifications(
-      orders,
-      user
-    );
+    buildNotifications(orders, user);
+
   const highlightedGift =
     giftCode
       ? giftcardModel.getGiftcardByCode(
         giftCode
       )
       : null;
-  return {
-    activePage:
-      "profile",
 
+  return {
+    activePage: "profile",
     activeTab:
-      getActiveTab(
-        activeTab
-      ),
+      getActiveTab(activeTab),
 
     cartCount:
       Number(
-        res.locals.cartCount ||
-        0
+        res.locals.cartCount || 0
       ),
 
-    currentUser:
-      req.currentUser,
-
+    currentUser: req.currentUser,
     errors,
 
     isAdmin:
       String(
         user.role || ""
-      ).toLowerCase() ===
-      "admin",
+      ).toLowerCase() === "admin",
 
     memberSince:
       formatMemberSince(
@@ -492,21 +306,15 @@ const buildViewData = (
       ),
 
     notifications,
-
     orders,
-
     orderSummary,
-
     highlightedGift,
-
     pageMessage,
 
     preferences:
       user.preferences,
 
-    profile:
-      user,
-
+    profile: user,
     profileStats,
 
     tier:
@@ -515,15 +323,11 @@ const buildViewData = (
 
     values:
       values ||
-      toFormValues(
-        user
-      )
+      toFormValues(user),
   };
 };
 
-const getStoredUser = (
-  req
-) =>
+const getStoredUser = (req) =>
   userModel.findById(
     req.currentUser?.id
   );
@@ -532,68 +336,76 @@ const redirectStaleSession = (
   req,
   res
 ) => {
-  req.session.destroy(
-    () => {
-      res.redirect(
-        "/shared/login?redirect=%2Fshared%2Fprofile"
-      );
-    }
-  );
-};
-  
-const getProfilePage = (
-  req,
-  res
-) => {
-  const user =
-    getStoredUser(
-      req
+  req.session.destroy(() => {
+    res.redirect(
+      "/shared/login?redirect=%2Fshared%2Fprofile"
     );
-
-  if (!user) {
-    return redirectStaleSession(
-      req,
-      res
-    );
-  }
-
-  return res.render(
-    "shared/profile",
-    buildViewData(
-      req,
-      res,
-      {
-        user,
-
-        activeTab:
-          req.query.tab,
-
-        pageMessage:
-          getPageMessage(
-            req.query.status
-          ),
-
-        giftCode:
-          String(
-            req.query.giftCode || ""
-          )
-            .trim()
-            .toUpperCase()
-      }
-    )
-  );
+  });
 };
 
-const updateProfile = (
+/* =========================
+   PROFILE PAGE
+========================= */
+
+const getProfilePage = async (
   req,
   res,
   next
 ) => {
   try {
     const user =
-      getStoredUser(
-        req
+      getStoredUser(req);
+
+    if (!user) {
+      return redirectStaleSession(
+        req,
+        res
       );
+    }
+
+    const viewData =
+      await buildViewData(
+        req,
+        res,
+        {
+          user,
+          activeTab:
+            req.query.tab,
+
+          pageMessage:
+            getPageMessage(
+              req.query.status
+            ),
+
+          giftCode: String(
+            req.query.giftCode || ""
+          )
+            .trim()
+            .toUpperCase(),
+        }
+      );
+
+    return res.render(
+      "shared/profile",
+      viewData
+    );
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/* =========================
+   UPDATE PROFILE
+========================= */
+
+const updateProfile = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const user =
+      getStoredUser(req);
 
     if (!user) {
       return redirectStaleSession(
@@ -604,32 +416,29 @@ const updateProfile = (
 
     const {
       errors,
-      values
-    } =
-      validateProfile(
-        req.body
-      );
+      values,
+    } = validateProfile(req.body);
 
     if (
-      Object.keys(
-        errors
-      ).length > 0
+      Object.keys(errors).length > 0
     ) {
+      const viewData =
+        await buildViewData(
+          req,
+          res,
+          {
+            user,
+            values,
+            errors,
+            activeTab: "user",
+          }
+        );
+
       return res
         .status(422)
         .render(
           "shared/profile",
-          buildViewData(
-            req,
-            res,
-            {
-              user,
-              values,
-              errors,
-              activeTab:
-                "user"
-            }
-          )
+          viewData
         );
     }
 
@@ -656,56 +465,42 @@ const updateProfile = (
           "The current password is incorrect.";
       }
 
+      const viewData =
+        await buildViewData(
+          req,
+          res,
+          {
+            user,
+            values,
+            errors,
+            activeTab: "user",
+          }
+        );
+
       return res
         .status(409)
         .render(
           "shared/profile",
-          buildViewData(
-            req,
-            res,
-            {
-              user,
-              values,
-              errors,
-              activeTab:
-                "user"
-            }
-          )
+          viewData
         );
     }
 
     req.session.user = {
       ...req.session.user,
-
-      id:
-        result.user.id,
-
-      name:
-        result.user.name,
-
+      id: result.user.id,
+      name: result.user.name,
       username:
         result.user.username,
-
-      email:
-        result.user.email,
-
+      email: result.user.email,
       initials:
         result.user.initials,
-
-      role:
-        result.user.role
+      role: result.user.role,
     };
 
     return req.session.save(
-      (
-        saveError
-      ) => {
-        if (
-          saveError
-        ) {
-          return next(
-            saveError
-          );
+      (saveError) => {
+        if (saveError) {
+          return next(saveError);
         }
 
         return res.redirect(
@@ -714,11 +509,13 @@ const updateProfile = (
       }
     );
   } catch (error) {
-    return next(
-      error
-    );
+    return next(error);
   }
 };
+
+/* =========================
+   PREFERENCES
+========================= */
 
 const updatePreferences = (
   req,
@@ -749,6 +546,10 @@ const updatePreferences = (
   }
 };
 
+/* =========================
+   DEACTIVATE
+========================= */
+
 const deactivateAccount = (
   req,
   res,
@@ -771,48 +572,68 @@ const deactivateAccount = (
       );
 
     if (!result.ok) {
-      return res.status(400).send(
-        "Unable to deactivate account."
-      );
+      return res
+        .status(400)
+        .send(
+          "Unable to deactivate account."
+        );
     }
 
-    req.session.destroy(
-      () => {
-        res.redirect(
-          "/shared/login?deactivated=1"
-        );
-      }
-    );
+    req.session.destroy(() => {
+      res.redirect(
+        "/shared/login?deactivated=1"
+      );
+    });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
+/* =========================
+   AVATAR
+========================= */
+
 const wantsJson = (req) =>
   req.xhr ||
-  (req.get("Accept") || "").includes("application/json");
+  (req.get("Accept") || "").includes(
+    "application/json"
+  );
 
-const updateAvatar = (req, res, next) => {
+const updateAvatar = (
+  req,
+  res,
+  next
+) => {
   try {
-    const user = getStoredUser(req);
+    const user =
+      getStoredUser(req);
 
     if (!user) {
       if (wantsJson(req)) {
-        return res.status(401).json({
-          ok: false,
-          message: "Your session has expired."
-        });
+        return res
+          .status(401)
+          .json({
+            ok: false,
+            message:
+              "Your session has expired.",
+          });
       }
 
-      return redirectStaleSession(req, res);
+      return redirectStaleSession(
+        req,
+        res
+      );
     }
 
     if (!req.file) {
       if (wantsJson(req)) {
-        return res.status(400).json({
-          ok: false,
-          message: "Choose a new photo first."
-        });
+        return res
+          .status(400)
+          .json({
+            ok: false,
+            message:
+              "Choose a new photo first.",
+          });
       }
 
       return res.redirect(
@@ -820,33 +641,43 @@ const updateAvatar = (req, res, next) => {
       );
     }
 
-    const result = userModel.updateAvatar(
-      user.id,
-      `/uploads/profile/${req.file.filename}`
-    );
+    const result =
+      userModel.updateAvatar(
+        user.id,
+        `/uploads/profile/${req.file.filename}`
+      );
 
     if (!result.ok) {
       if (wantsJson(req)) {
-        return res.status(409).json({
-          ok: false,
-          message: "Could not update your photo. Try again."
-        });
+        return res
+          .status(409)
+          .json({
+            ok: false,
+            message:
+              "Could not update your photo. Try again.",
+          });
       }
 
-      return redirectStaleSession(req, res);
+      return redirectStaleSession(
+        req,
+        res
+      );
     }
 
     req.session.user = {
       ...req.session.user,
-      avatar: result.user.avatar,
-      initials: result.user.initials
+      avatar:
+        result.user.avatar,
+      initials:
+        result.user.initials,
     };
 
     return req.session.save(() => {
       if (wantsJson(req)) {
         return res.json({
           ok: true,
-          avatar: result.user.avatar
+          avatar:
+            result.user.avatar,
         });
       }
 
@@ -855,7 +686,7 @@ const updateAvatar = (req, res, next) => {
       );
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -864,5 +695,5 @@ module.exports = {
   updatePreferences,
   deactivateAccount,
   updateProfile,
-  updateAvatar
+  updateAvatar,
 };
