@@ -419,6 +419,10 @@ const updateProfile = async (
   }
 };
 
+/* =========================
+   PREFERENCES
+========================= */
+
 const updatePreferences = async (
   req,
   res,
@@ -442,6 +446,10 @@ const updatePreferences = async (
     return next(error);
   }
 };
+
+/* =========================
+   DEACTIVATE
+========================= */
 
 const deactivateAccount = async (
   req,

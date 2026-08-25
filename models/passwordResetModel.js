@@ -1,97 +1,101 @@
-const fs = require("fs");
-const path = require("path");
+"use strict";
 
-const requestsFilePath = path.join(__dirname, "..", "data", "passwordResetRequests.json");
+const PasswordResetRequests = require("./schemas/PasswordResetRequest");
 
-const readRequests = () => {
-  const raw = fs.readFileSync(requestsFilePath, "utf-8");
-  return JSON.parse(raw);
+const toIso = (value) => (value ? new Date(value).toISOString() : null);
+
+const toRuntimeRequest = (request) => {
+  if (!request) {
+    return null;
+  }
+
+  return {
+    ...request,
+    id: String(request._id),
+    requestedAt: toIso(request.requestedAt),
+    resolvedAt: toIso(request.resolvedAt),
+  };
 };
 
-const writeRequests = (requests) => {
-  fs.writeFileSync(requestsFilePath, JSON.stringify(requests, null, 2));
+const getAllRequests = async () => {
+  const requests = await PasswordResetRequests.find().lean();
+  return requests.map(toRuntimeRequest);
 };
 
-const getAllRequests = () => readRequests();
+const getPendingRequests = async () => {
+  const requests = await PasswordResetRequests.find({ status: "pending" })
+    .sort({ requestedAt: 1 })
+    .lean();
 
-const getPendingRequests = () => {
-  return readRequests()
-    .filter((request) => request.status === "pending")
-    .sort((a, b) => new Date(a.requestedAt) - new Date(b.requestedAt));
+  return requests.map(toRuntimeRequest);
 };
 
-const getResolvedRequests = (limit = 10) => {
-  return readRequests()
-    .filter((request) => request.status !== "pending")
-    .sort((a, b) => new Date(b.resolvedAt) - new Date(a.resolvedAt))
-    .slice(0, limit);
+const getResolvedRequests = async (limit = 10) => {
+  const requests = await PasswordResetRequests.find({ status: { $ne: "pending" } })
+    .sort({ resolvedAt: -1 })
+    .limit(limit)
+    .lean();
+
+  return requests.map(toRuntimeRequest);
 };
 
-const createRequest = (email) => {
-  const requests = readRequests();
-  const request = {
-    id: `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+const createRequest = async (email) => {
+  const request = await PasswordResetRequests.create({
+    _id: `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     email,
     status: "pending",
-    requestedAt: new Date().toISOString(),
+    requestedAt: new Date(),
     resolvedAt: null,
     tempPassword: null,
-  };
-  requests.push(request);
-  writeRequests(requests);
-  return request;
+  });
+
+  return toRuntimeRequest(request.toObject());
 };
 
-const findRequestById = (id) => {
-  return readRequests().find((request) => request.id === id) || null;
-};
-
-const resolveRequest = (id, tempPassword) => {
-  const requests = readRequests();
-  const index = requests.findIndex((request) => request.id === id);
-
-  if (index === -1) {
+const findRequestById = async (id) => {
+  if (!id) {
     return null;
   }
 
-  requests[index] = {
-    ...requests[index],
-    status: "resolved",
-    resolvedAt: new Date().toISOString(),
-    tempPassword,
-  };
-  writeRequests(requests);
-  return requests[index];
+  return toRuntimeRequest(
+    await PasswordResetRequests.findById(String(id)).lean()
+  );
 };
 
-const rejectRequest = (id) => {
-  const requests = readRequests();
-  const index = requests.findIndex((request) => request.id === id);
+const resolveRequest = async (id, tempPassword) => {
+  const request = await PasswordResetRequests.findByIdAndUpdate(
+    String(id),
+    {
+      $set: {
+        status: "resolved",
+        resolvedAt: new Date(),
+        tempPassword,
+      },
+    },
+    { new: true }
+  ).lean();
 
-  if (index === -1) {
-    return null;
-  }
-
-  requests[index] = {
-    ...requests[index],
-    status: "rejected",
-    resolvedAt: new Date().toISOString(),
-  };
-  writeRequests(requests);
-  return requests[index];
+  return toRuntimeRequest(request);
 };
 
-const deleteRequest = (id) => {
-  const requests = readRequests();
-  const index = requests.findIndex((request) => request.id === id);
+const rejectRequest = async (id) => {
+  const request = await PasswordResetRequests.findByIdAndUpdate(
+    String(id),
+    {
+      $set: {
+        status: "rejected",
+        resolvedAt: new Date(),
+      },
+    },
+    { new: true }
+  ).lean();
 
-  if (index === -1) {
-    return null;
-  }
+  return toRuntimeRequest(request);
+};
 
-  const [deleted] = requests.splice(index, 1);
-  writeRequests(requests);
-  return deleted;
+const deleteRequest = async (id) => {
+  const request = await PasswordResetRequests.findByIdAndDelete(String(id)).lean();
+  return toRuntimeRequest(request);
 };
 
 module.exports = {

@@ -1,8 +1,8 @@
 "use strict";
 
-const { randomUUID } = require("node:crypto");
+const crypto = require("crypto");
 
-const User = require("./schemas/User");
+const Users = require("./schemas/User");
 
 const {
   hashPassword,
@@ -19,24 +19,37 @@ const DEFAULT_PREFERENCES = {
   productCareGuides: true,
 };
 
-const clean = (value) =>
-  String(value || "").trim();
+const clean = (
+  value
+) =>
+  String(value || "")
+    .trim();
 
-const normalise = (value) =>
-  clean(value).toLowerCase();
+const normalise = (
+  value
+) =>
+  clean(value)
+    .toLowerCase();
+
+const escapeRegex = (
+  value
+) =>
+  String(value || "")
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const createInitials = (
   firstname,
   lastname,
   username
 ) => {
-  const initials = [
-    clean(firstname)[0],
-    clean(lastname)[0],
-  ]
-    .filter(Boolean)
-    .join("")
-    .toUpperCase();
+  const initials =
+    [
+      clean(firstname)[0],
+      clean(lastname)[0],
+    ]
+      .filter(Boolean)
+      .join("")
+      .toUpperCase();
 
   return (
     initials ||
@@ -46,123 +59,152 @@ const createInitials = (
   );
 };
 
-const isAdminRole = (role) =>
+const isAdminRole = (
+  role
+) =>
   normalise(role) === "admin";
 
-const toPublicUser = (user) => {
-  if (!user) return null;
+// Bridges the gap between Mongoose's `_id` and the `id` field every view/
+// controller in this app already expects (mirrors toRuntimeProduct in
+// adminProductModel.js).
+const toRuntimeUser = (
+  user
+) => {
+  if (!user) {
+    return null;
+  }
 
-  const data =
-    typeof user.toObject === "function"
-      ? user.toObject()
-      : user;
+  const toIso = (value) =>
+    value ? new Date(value).toISOString() : null;
+
+  return {
+    ...user,
+    id: String(user._id),
+    joinDate:
+      user.joinDate
+        ? toIso(user.joinDate).slice(0, 10)
+        : "",
+    createdAt: toIso(user.createdAt),
+    updatedAt: toIso(user.updatedAt),
+  };
+};
+
+const toPublicUser = (
+  user
+) => {
+  if (!user) {
+    return null;
+  }
 
   const name =
-    `${data.firstname || ""} ${data.lastname || ""}`.trim() ||
-    data.username ||
+    `${user.firstname || ""} ${user.lastname || ""}`
+      .trim() ||
+    user.name ||
+    user.username ||
     "";
 
   return {
-    id: String(data._id),
-
-    firstname: data.firstname || "",
-    lastname: data.lastname || "",
+    id: user.id,
+    firstname:
+      user.firstname || "",
+    lastname:
+      user.lastname || "",
     name,
-
-    username: data.username || "",
-    email: data.email || "",
-
-    initials: createInitials(
-      data.firstname,
-      data.lastname,
-      data.username
-    ),
-
-    role: data.role || "user",
-    status: data.status || "active",
-
-    gender: data.gender || "",
-    description: data.description || "",
-    phone: data.phone || "",
-    location: data.location || "",
-    postalCode: data.postalCode || "",
-    address: data.address || "",
-
+    username:
+      user.username || "",
+    email:
+      user.email || "",
+    initials:
+      createInitials(
+        user.firstname,
+        user.lastname,
+        user.username
+      ),
+    role:
+      user.role || "user",
+    status:
+      user.status || "active",
+    gender:
+      user.gender || "",
+    description:
+      user.description || "",
+    phone:
+      user.phone || "",
+    location:
+      user.location || "",
+    postalCode:
+      user.postalCode || "",
+    address:
+      user.address || "",
     about:
-      data.about ||
-      data.description ||
+      user.about ||
+      user.description ||
       "",
-
     avatar:
-      data.avatar ||
+      user.avatar ||
       "/images/profile.png",
-
     tier:
-      data.tier ||
+      user.tier ||
       "Craft Collector",
-
     preferences: {
       ...DEFAULT_PREFERENCES,
-      ...(data.preferences || {}),
+      ...(user.preferences || {}),
     },
-
     joinDate:
-      data.joinDate ||
-      data.createdAt ||
+      user.joinDate ||
+      user.createdAt ||
       "",
-
     requiresPasswordChange:
       Boolean(
-        data.requiresPasswordChange
+        user.requiresPasswordChange
       ),
-
     createdAt:
-      data.createdAt ||
-      data.joinDate ||
+      user.createdAt ||
+      user.joinDate ||
       "",
-
     updatedAt:
-      data.updatedAt ||
-      data.createdAt ||
+      user.updatedAt ||
+      user.createdAt ||
+      user.joinDate ||
       "",
   };
 };
 
-const findUserById = async (id) => {
-  if (!id) return null;
+const findUserById = async (
+  id
+) => {
+  if (!id) {
+    return null;
+  }
 
-  return User.findById(
-    String(id)
-  ).lean();
+  return toRuntimeUser(
+    await Users.findById(String(id)).lean()
+  );
 };
 
 const findUserByEmail = async (
   email
-) => {
-  const target =
-    normalise(email);
+) =>
+  toRuntimeUser(
+    await Users.findOne({
+      email: normalise(email),
+    }).lean()
+  );
 
-  if (!target) return null;
-
-  return User.findOne({
-    email: target,
-  }).lean();
-};
-
-const findById = async (id) =>
+const findById = async (
+  id
+) =>
   toPublicUser(
     await findUserById(id)
   );
 
 const getAllUsers = async () => {
   const users =
-    await User.find()
-      .sort({ createdAt: -1 })
-      .lean();
+    await Users.find().lean();
 
-  return users.map(
-    toPublicUser
-  );
+  return users
+    .map(toRuntimeUser)
+    .map(toPublicUser);
 };
 
 const authenticate = async (
@@ -185,17 +227,18 @@ const authenticate = async (
   ) {
     return {
       ok: false,
-      reason: "blocked",
+      reason:
+        "blocked",
     };
   }
 
   if (
-    user.status ===
-    "deactivated"
+    user.status === "deactivated"
   ) {
     return {
       ok: false,
-      reason: "deactivated",
+      reason:
+        "deactivated",
     };
   }
 
@@ -214,7 +257,8 @@ const authenticate = async (
 
   return {
     ok: true,
-    user: toPublicUser(user),
+    user:
+      toPublicUser(user),
   };
 };
 
@@ -227,85 +271,81 @@ const createUser = async (
   const username =
     clean(values.username);
 
-  const duplicate =
-    await User.findOne({
-      $or: [
-        { email },
-        { username },
-      ],
-    }).lean();
+  const emailTaken =
+    await Users.exists({ email });
 
-  if (duplicate) {
+  if (emailTaken) {
     return {
       ok: false,
       reason:
-        duplicate.email === email
-          ? "email-exists"
-          : "username-exists",
+        "email-exists",
     };
   }
 
-  try {
-    const user =
-      await User.create({
-        _id: randomUUID(),
+  const usernameTaken =
+    await Users.exists({
+      username: new RegExp(
+        `^${escapeRegex(username)}$`,
+        "i"
+      ),
+    });
 
-        firstname:
-          clean(values.firstname),
-
-        lastname:
-          clean(values.lastname),
-
-        username,
-        email,
-
-        gender:
-          clean(values.gender),
-
-        description:
-          clean(values.description),
-
-        about:
-          clean(values.description),
-
-        passwordHash:
-          hashPassword(
-            values.password
-          ),
-
-        role: "user",
-        status: "active",
-
-        preferences: {
-          ...DEFAULT_PREFERENCES,
-        },
-
-        requiresPasswordChange:
-          false,
-
-        joinDate: new Date(),
-      });
-
+  if (usernameTaken) {
     return {
-      ok: true,
-      user:
-        toPublicUser(user),
+      ok: false,
+      reason:
+        "username-exists",
     };
-  } catch (error) {
-    if (
-      error?.code === 11000
-    ) {
-      return {
-        ok: false,
-        reason:
-          error.keyPattern?.email
-            ? "email-exists"
-            : "username-exists",
-      };
-    }
-
-    throw error;
   }
+
+  const now = new Date();
+
+  const user =
+    await Users.create({
+      _id:
+        crypto.randomUUID(),
+      firstname:
+        clean(values.firstname),
+      lastname:
+        clean(values.lastname),
+      username,
+      email,
+      gender:
+        clean(values.gender),
+      description:
+        clean(values.description),
+      role:
+        "user",
+      status:
+        "active",
+      about:
+        clean(values.description),
+      avatar:
+        "/images/profile.png",
+      tier:
+        "Craft Collector",
+      preferences:
+      {
+        ...DEFAULT_PREFERENCES,
+      },
+      passwordHash:
+        hashPassword(
+          values.password
+        ),
+      requiresPasswordChange:
+        false,
+      joinDate: now,
+    });
+
+  return {
+    ok: true,
+    user:
+      toPublicUser(
+        toRuntimeUser(
+          user.toObject()
+        )
+      ),
+  };
 };
 
 const updateAccount = async (
@@ -313,12 +353,15 @@ const updateAccount = async (
   values
 ) => {
   const user =
-    await findUserById(userId);
+    await Users.findById(
+      String(userId)
+    ).lean();
 
   if (!user) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
@@ -326,7 +369,7 @@ const updateAccount = async (
     normalise(values.email);
 
   const duplicateEmail =
-    await User.exists({
+    await Users.exists({
       email,
       _id: {
         $ne: String(userId),
@@ -336,14 +379,13 @@ const updateAccount = async (
   if (duplicateEmail) {
     return {
       ok: false,
-      reason: "email-exists",
+      reason:
+        "email-exists",
     };
   }
 
   const changingPassword =
-    Boolean(
-      values.newPassword
-    );
+    Boolean(values.newPassword);
 
   if (
     changingPassword &&
@@ -362,27 +404,19 @@ const updateAccount = async (
   const updates = {
     firstname:
       clean(values.firstname),
-
     lastname:
       clean(values.lastname),
-
     email,
-
     phone:
       clean(values.phone),
-
     location:
       clean(values.location),
-
     postalCode:
       clean(values.postalCode),
-
     address:
       clean(values.address),
-
     about:
       clean(values.about),
-
     description:
       clean(values.about),
   };
@@ -398,19 +432,24 @@ const updateAccount = async (
   }
 
   const updatedUser =
-    await User.findByIdAndUpdate(
+    await Users.findByIdAndUpdate(
       String(userId),
-      { $set: updates },
+      {
+        $set: updates,
+      },
       {
         new: true,
-        runValidators: true,
       }
     ).lean();
 
   return {
     ok: true,
     user:
-      toPublicUser(updatedUser),
+      toPublicUser(
+        toRuntimeUser(
+          updatedUser
+        )
+      ),
   };
 };
 
@@ -418,71 +457,82 @@ const updateAvatar = async (
   userId,
   avatar
 ) => {
-  const user =
-    await User.findByIdAndUpdate(
+  const updatedUser =
+    await Users.findByIdAndUpdate(
       String(userId),
       {
         $set: {
-          avatar:
-            clean(avatar),
+          avatar,
         },
       },
-      { new: true }
+      {
+        new: true,
+      }
     ).lean();
 
-  if (!user) {
+  if (!updatedUser) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
   return {
     ok: true,
     user:
-      toPublicUser(user),
+      toPublicUser(
+        toRuntimeUser(
+          updatedUser
+        )
+      ),
   };
 };
 
-const updatePreferences =
-  async (
-    userId,
-    preferences
-  ) => {
-    const user =
-      await User.findByIdAndUpdate(
-        String(userId),
-        {
-          $set: {
-            preferences: {
-              ...DEFAULT_PREFERENCES,
-              ...preferences,
-            },
+const updatePreferences = async (
+  userId,
+  preferences
+) => {
+  const updatedUser =
+    await Users.findByIdAndUpdate(
+      String(userId),
+      {
+        $set: {
+          preferences: {
+            ...DEFAULT_PREFERENCES,
+            ...preferences,
           },
         },
-        { new: true }
-      ).lean();
+      },
+      {
+        new: true,
+      }
+    ).lean();
 
-    if (!user) {
-      return {
-        ok: false,
-        reason:
-          "user-not-found",
-      };
-    }
-
+  if (!updatedUser) {
     return {
-      ok: true,
-      user:
-        toPublicUser(user),
+      ok: false,
+      reason:
+        "user-not-found",
     };
+  }
+
+  return {
+    ok: true,
+    user:
+      toPublicUser(
+        toRuntimeUser(
+          updatedUser
+        )
+      ),
   };
+};
 
 const deactivateUser = async (
   userId
 ) => {
-  const user =
-    await User.findByIdAndUpdate(
+  const updatedUser =
+    await Users.findByIdAndUpdate(
       String(userId),
       {
         $set: {
@@ -490,35 +540,49 @@ const deactivateUser = async (
             "deactivated",
         },
       },
-      { new: true }
+      {
+        new: true,
+      }
     ).lean();
 
-  if (!user) {
+  if (!updatedUser) {
     return {
       ok: false,
-      reason: "user-not-found",
+      reason:
+        "user-not-found",
     };
   }
 
   return {
     ok: true,
     user:
-      toPublicUser(user),
+      toPublicUser(
+        toRuntimeUser(
+          updatedUser
+        )
+      ),
   };
 };
 
 const updateUser = async (
   userId,
   updates
-) =>
-  User.findByIdAndUpdate(
-    String(userId),
-    { $set: updates },
-    {
-      new: true,
-      runValidators: true,
-    }
-  ).lean();
+) => {
+  const updatedUser =
+    await Users.findByIdAndUpdate(
+      String(userId),
+      {
+        $set: updates,
+      },
+      {
+        new: true,
+      }
+    ).lean();
+
+  return toRuntimeUser(
+    updatedUser
+  );
+};
 
 module.exports = {
   authenticate,

@@ -11,17 +11,24 @@ const isAdminUser = (user) => userModel.isAdminRole(user?.role);
 
 const plainTextLength = (html) => String(html || "").replace(/<[^>]*>/g, "").trim().length;
 
-const getForumHome = (req, res) => {
-  const members = userModel.getAllUsers();
+const getForumHome = async (req, res) => {
+  const members = await userModel.getAllUsers();
   const latestMember = members
     .slice()
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
 
+  const [categorySummary, totals, trendingThreads, latestThreads] = await Promise.all([
+    forumModel.getForumSummary(),
+    forumModel.getForumTotals(),
+    forumModel.getTrendingThreads(3),
+    forumModel.getLatestThreads(5),
+  ]);
+
   res.render("forum/forum", {
-    categorySummary: forumModel.getForumSummary(),
-    totals: forumModel.getForumTotals(),
-    trendingThreads: forumModel.getTrendingThreads(3),
-    latestThreads: forumModel.getLatestThreads(5),
+    categorySummary,
+    totals,
+    trendingThreads,
+    latestThreads,
     memberCount: members.length,
     latestMemberUsername: latestMember ? latestMember.username : "—",
     getLatestPost: forumModel.getLatestPost,
@@ -29,7 +36,7 @@ const getForumHome = (req, res) => {
   });
 };
 
-const getThreadList = (req, res, next) => {
+const getThreadList = async (req, res, next) => {
   const categoryId = req.params.category || "all";
   const categoryMeta = categoryId === "all" ? null : forumModel.getCategoryMeta(categoryId);
 
@@ -38,11 +45,12 @@ const getThreadList = (req, res, next) => {
   }
 
   const sortBy = SORT_OPTIONS.includes(req.query.sort) ? req.query.sort : "new";
+  const threads = await forumModel.getThreadsByCategory(categoryId, sortBy);
 
   res.render("forum/thread_list", {
     categoryId,
     categoryLabel: categoryMeta ? categoryMeta.label : "New Posts",
-    threads: forumModel.getThreadsByCategory(categoryId, sortBy),
+    threads,
     categories: forumModel.categories,
     sortBy,
     getLatestPost: forumModel.getLatestPost,
@@ -50,16 +58,17 @@ const getThreadList = (req, res, next) => {
   });
 };
 
-const getThreadContent = (req, res, next) => {
+const getThreadContent = async (req, res, next) => {
   const viewerId = req.currentUser?.id || null;
   const isAdmin = isAdminUser(req.currentUser);
-  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
+  const thread = await forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
 
   if (!thread) {
     return next();
   }
 
-  forumModel.incrementViews(thread.slug);
+  await forumModel.incrementViews(thread.slug);
+  thread.views += 1;
 
   const decoratedThread = {
     ...thread,
@@ -74,7 +83,7 @@ const getThreadContent = (req, res, next) => {
   });
 };
 
-const searchForum = (req, res) => {
+const searchForum = async (req, res) => {
   const query = String(req.query.q || "").trim();
   const filters = {
     category: String(req.query.category || "").trim(),
@@ -86,12 +95,17 @@ const searchForum = (req, res) => {
 
   const hasFilters = Object.values(filters).some(Boolean);
 
+  const [tags, results] = await Promise.all([
+    forumModel.getAllTags(),
+    query || hasFilters ? forumModel.searchThreads(query, filters) : Promise.resolve([]),
+  ]);
+
   res.render("forum/search_results", {
     query,
     filters,
     categories: forumModel.categories,
-    tags: forumModel.getAllTags(),
-    results: query || hasFilters ? forumModel.searchThreads(query, filters) : [],
+    tags,
+    results,
     getRepliesCount: forumModel.getRepliesCount,
     getLatestPost: forumModel.getLatestPost,
   });
@@ -106,8 +120,8 @@ const getCreateThreadPage = (req, res) => {
   });
 };
 
-const getEditThreadPage = (req, res, next) => {
-  const thread = forumModel.getThreadBySlug(req.params.slug);
+const getEditThreadPage = async (req, res, next) => {
+  const thread = await forumModel.getThreadBySlug(req.params.slug);
 
   if (!thread || thread.authorId !== req.currentUser.id) {
     return next();
@@ -121,7 +135,7 @@ const getEditThreadPage = (req, res, next) => {
   });
 };
 
-const createThread = (req, res) => {
+const createThread = async (req, res) => {
   const { category, title, content, status, tags } = req.body;
   const categoryMeta = forumModel.getCategoryMeta(category);
 
@@ -139,7 +153,7 @@ const createThread = (req, res) => {
 
   const author = req.currentUser;
 
-  const thread = forumModel.addThread({
+  const thread = await forumModel.addThread({
     category,
     title: String(title).trim(),
     content,
@@ -158,7 +172,7 @@ const createThread = (req, res) => {
   return res.redirect(`/forum/thread/${thread.slug}`);
 };
 
-const editThread = (req, res) => {
+const editThread = async (req, res) => {
   const { category, title, content, tags } = req.body;
 
   if (
@@ -169,7 +183,7 @@ const editThread = (req, res) => {
     return res.redirect(`/forum/thread/${req.params.slug}/edit`);
   }
 
-  const thread = forumModel.editThread(req.params.slug, req.currentUser.id, {
+  const thread = await forumModel.editThread(req.params.slug, req.currentUser.id, {
     title,
     category,
     tags,
@@ -183,9 +197,9 @@ const editThread = (req, res) => {
   return res.redirect(`/forum/thread/${thread.slug}`);
 };
 
-const deleteThread = (req, res) => {
+const deleteThread = async (req, res) => {
   const isAdmin = isAdminUser(req.currentUser);
-  const ok = forumModel.deleteThread(req.params.slug, req.currentUser.id, isAdmin);
+  const ok = await forumModel.deleteThread(req.params.slug, req.currentUser.id, isAdmin);
 
   if (!ok) {
     return res.status(403).redirect(`/forum/thread/${req.params.slug}`);
@@ -194,8 +208,8 @@ const deleteThread = (req, res) => {
   return res.redirect("/forum/your-posts");
 };
 
-const getEditPostPage = (req, res, next) => {
-  const found = forumModel.findPost(req.params.slug, req.params.postId);
+const getEditPostPage = async (req, res, next) => {
+  const found = await forumModel.findPost(req.params.slug, req.params.postId);
 
   if (!found || found.post.authorId !== req.currentUser.id) {
     return next();
@@ -208,14 +222,14 @@ const getEditPostPage = (req, res, next) => {
   });
 };
 
-const editPost = (req, res) => {
+const editPost = async (req, res) => {
   const { content } = req.body;
 
   if (String(content || "").length > MAX_CONTENT_LENGTH || plainTextLength(content) > MAX_TEXT_LENGTH) {
     return res.redirect(`/forum/thread/${req.params.slug}/post/${req.params.postId}/edit`);
   }
 
-  const result = forumModel.editPost(req.params.slug, req.params.postId, req.currentUser.id, content);
+  const result = await forumModel.editPost(req.params.slug, req.params.postId, req.currentUser.id, content);
 
   if (!result) {
     return res.redirect(`/forum/thread/${req.params.slug}/post/${req.params.postId}/edit`);
@@ -224,12 +238,12 @@ const editPost = (req, res) => {
   return res.redirect(`/forum/thread/${req.params.slug}#post-${req.params.postId}`);
 };
 
-const deletePost = (req, res) => {
+const deletePost = async (req, res) => {
   const isAdmin = isAdminUser(req.currentUser);
-  const found = forumModel.findPost(req.params.slug, req.params.postId);
+  const found = await forumModel.findPost(req.params.slug, req.params.postId);
   const wasOriginalPost = Boolean(found && found.thread.posts[0].id === req.params.postId);
 
-  const ok = forumModel.deletePost(req.params.slug, req.params.postId, req.currentUser.id, isAdmin);
+  const ok = await forumModel.deletePost(req.params.slug, req.params.postId, req.currentUser.id, isAdmin);
 
   if (!ok) {
     return res.status(403).redirect(`/forum/thread/${req.params.slug}`);
@@ -242,9 +256,9 @@ const deletePost = (req, res) => {
   return res.redirect(`/forum/thread/${req.params.slug}`);
 };
 
-const reportPost = (req, res) => {
+const reportPost = async (req, res) => {
   const { reason } = req.body;
-  const result = forumModel.reportPost(req.params.slug, req.params.postId, req.currentUser.id, reason);
+  const result = await forumModel.reportPost(req.params.slug, req.params.postId, req.currentUser.id, reason);
 
   if (!result) {
     if (requestWantsJson(req)) {
@@ -260,8 +274,8 @@ const reportPost = (req, res) => {
   return res.redirect(`/forum/thread/${req.params.slug}#post-${req.params.postId}`);
 };
 
-const getPostPreview = (req, res) => {
-  const preview = forumModel.getPostPreview(req.params.slug, req.params.postId);
+const getPostPreview = async (req, res) => {
+  const preview = await forumModel.getPostPreview(req.params.slug, req.params.postId);
 
   if (!preview) {
     return res.status(404).json({ ok: false, message: "Post not found." });
@@ -270,10 +284,10 @@ const getPostPreview = (req, res) => {
   return res.json({ ok: true, ...preview });
 };
 
-const replyToThread = (req, res) => {
+const replyToThread = async (req, res) => {
   const viewerId = req.currentUser?.id || null;
   const isAdmin = isAdminUser(req.currentUser);
-  const thread = forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
+  const thread = await forumModel.getVisibleThreadBySlug(req.params.slug, viewerId, isAdmin);
 
   if (!thread) {
     return res.status(404).redirect("/forum/new-posts");
@@ -295,7 +309,7 @@ const replyToThread = (req, res) => {
 
   const author = req.currentUser;
 
-  const result = forumModel.addPost(thread.slug, {
+  const result = await forumModel.addPost(thread.slug, {
     author: author.name,
     authorId: author.id,
     initials: author.initials || "GU",
@@ -307,8 +321,8 @@ const replyToThread = (req, res) => {
   return res.redirect(`/forum/thread/${thread.slug}#post-${result.post.id}`);
 };
 
-const getYourPostsPage = (req, res) => {
-  const threads = forumModel.getThreadsByAuthor(req.currentUser.id);
+const getYourPostsPage = async (req, res) => {
+  const threads = await forumModel.getThreadsByAuthor(req.currentUser.id);
 
   res.render("forum/your_posts", {
     threads,
@@ -318,8 +332,8 @@ const getYourPostsPage = (req, res) => {
   });
 };
 
-const publishThread = (req, res) => {
-  const thread = forumModel.publishThread(req.params.slug, req.currentUser.id);
+const publishThread = async (req, res) => {
+  const thread = await forumModel.publishThread(req.params.slug, req.currentUser.id);
 
   if (!thread) {
     return res.status(404).redirect("/forum/your-posts");
@@ -328,8 +342,8 @@ const publishThread = (req, res) => {
   return res.redirect("/forum/your-posts");
 };
 
-const getBookmarkedPage = (req, res) => {
-  const bookmarks = forumModel.getBookmarkedPosts(req.currentUser.id);
+const getBookmarkedPage = async (req, res) => {
+  const bookmarks = await forumModel.getBookmarkedPosts(req.currentUser.id);
 
   res.render("forum/bookmarked", {
     bookmarks,
@@ -337,15 +351,15 @@ const getBookmarkedPage = (req, res) => {
   });
 };
 
-const getNotificationsPage = (req, res) => {
-  const notifications = forumModel.getNotificationsForUser(req.currentUser.id);
-  forumModel.markAllRead(req.currentUser.id);
+const getNotificationsPage = async (req, res) => {
+  const notifications = await forumModel.getNotificationsForUser(req.currentUser.id);
+  await forumModel.markAllRead(req.currentUser.id);
 
   res.render("forum/notifications", { notifications });
 };
 
-const getUserProfilePage = (req, res, next) => {
-  const profileUser = userModel.findById(req.params.userId);
+const getUserProfilePage = async (req, res, next) => {
+  const profileUser = await userModel.findById(req.params.userId);
 
   if (!profileUser) {
     return next();
@@ -354,7 +368,8 @@ const getUserProfilePage = (req, res, next) => {
   const isAdmin = isAdminUser(req.currentUser);
   const viewerId = req.currentUser?.id || null;
 
-  const threads = forumModel.getThreadsByAuthor(profileUser.id).filter((t) => {
+  const authoredThreads = await forumModel.getThreadsByAuthor(profileUser.id);
+  const threads = authoredThreads.filter((t) => {
     if (isAdmin || t.authorId === viewerId) {
       return true;
     }
@@ -368,26 +383,27 @@ const getUserProfilePage = (req, res, next) => {
   });
 };
 
-const getAdminModerationPage = (req, res) => {
-  const threads = forumModel.threads
-    .slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const getAdminModerationPage = async (req, res) => {
+  const [threads, reports] = await Promise.all([
+    forumModel.getAllThreadsForAdmin(),
+    forumModel.getOpenReports(),
+  ]);
 
   res.render("forum/admin_moderation", {
     threads,
     categories: forumModel.categories,
-    reports: forumModel.getOpenReports(),
+    reports,
     getRepliesCount: forumModel.getRepliesCount,
   });
 };
 
-const moderateThread = (req, res) => {
-  forumModel.moderateThread(req.params.slug, req.params.action);
+const moderateThread = async (req, res) => {
+  await forumModel.moderateThread(req.params.slug, req.params.action);
   return res.redirect("/forum/admin");
 };
 
-const resolveReport = (req, res) => {
-  forumModel.resolveReport(req.params.id, req.params.status);
+const resolveReport = async (req, res) => {
+  await forumModel.resolveReport(req.params.id, req.params.status);
   return res.redirect("/forum/admin");
 };
 
@@ -406,18 +422,18 @@ const respondToReaction = (req, res, result) => {
   return res.redirect(`/forum/thread/${req.params.slug}#post-${req.params.postId}`);
 };
 
-const toggleLike = (req, res) => {
-  const result = forumModel.toggleLike(req.params.slug, req.params.postId, req.currentUser.id);
+const toggleLike = async (req, res) => {
+  const result = await forumModel.toggleLike(req.params.slug, req.params.postId, req.currentUser.id);
   return respondToReaction(req, res, result);
 };
 
-const toggleDislike = (req, res) => {
-  const result = forumModel.toggleDislike(req.params.slug, req.params.postId, req.currentUser.id);
+const toggleDislike = async (req, res) => {
+  const result = await forumModel.toggleDislike(req.params.slug, req.params.postId, req.currentUser.id);
   return respondToReaction(req, res, result);
 };
 
-const toggleBookmark = (req, res) => {
-  const result = forumModel.toggleBookmark(req.params.slug, req.params.postId, req.currentUser.id);
+const toggleBookmark = async (req, res) => {
+  const result = await forumModel.toggleBookmark(req.params.slug, req.params.postId, req.currentUser.id);
   return respondToReaction(req, res, result);
 };
 

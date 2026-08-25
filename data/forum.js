@@ -1,7 +1,7 @@
-// Static seed data for the forum. This mirrors the original demo content that shipped
-// with the app. Runtime changes (new threads, edits, deletions, reports, notifications)
-// are layered on top of this at startup by models/forumModel.js and persisted separately
-// in data/forum-storage.json, so this file itself is never rewritten by the app.
+// Original demo content for the forum. `categories` is still read at runtime by
+// models/forumModel.js (categories aren't a Mongo collection, see DATABASE_Schema
+// notes). `threads` is no longer read at runtime — it is only the seed source
+// consumed by scripts/seed.js, which inserts it into the ForumThreads collection.
 
 const categories = [
   {

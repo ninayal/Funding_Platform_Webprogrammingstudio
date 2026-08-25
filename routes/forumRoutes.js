@@ -6,9 +6,9 @@ const requireAdmin = require("../middlewares/requireAdmin");
 
 const router = express.Router();
 
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
   res.locals.forumUnreadCount = req.currentUser
-    ? forumModel.getUnreadCount(req.currentUser.id)
+    ? await forumModel.getUnreadCount(req.currentUser.id)
     : 0;
   res.locals.isForumAdmin = Boolean(
     req.currentUser && String(req.currentUser.role || "").toLowerCase() === "admin"

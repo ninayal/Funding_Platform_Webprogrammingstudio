@@ -9,7 +9,7 @@ async function connectDB() {
   }
 
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, { dbName: "langandco" });
     console.log("[DB] Connected to MongoDB Atlas");
   } catch (err) {
     console.error("[DB] Connection Failed:", err.message);

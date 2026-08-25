@@ -1,93 +1,20 @@
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
+const { randomUUID } = require("node:crypto");
+
+const ForumThreads = require("./schemas/ForumThread");
+const ForumReports = require("./schemas/ForumReport");
+const ForumNotifications = require("./schemas/ForumNotification");
 const userModel = require("./userModel");
-const { categories, threads: seedThreads } = require("../data/forum.js");
-
-const STORAGE_FILE = path.join(__dirname, "../data/forum-storage.json");
-
-const EMPTY_STORAGE = { threads: [], deletedThreadSlugs: [], reports: [], notifications: [] };
-
-const ensureStorageFile = () => {
-  if (!fs.existsSync(STORAGE_FILE)) {
-    fs.writeFileSync(STORAGE_FILE, JSON.stringify(EMPTY_STORAGE, null, 2), "utf8");
-  }
-};
-
-const readStorage = () => {
-  ensureStorageFile();
-  try {
-    const raw = JSON.parse(fs.readFileSync(STORAGE_FILE, "utf8"));
-    return {
-      threads: Array.isArray(raw.threads) ? raw.threads : [],
-      deletedThreadSlugs: Array.isArray(raw.deletedThreadSlugs) ? raw.deletedThreadSlugs : [],
-      reports: Array.isArray(raw.reports) ? raw.reports : [],
-      notifications: Array.isArray(raw.notifications) ? raw.notifications : [],
-    };
-  } catch {
-    return { ...EMPTY_STORAGE };
-  }
-};
-
-// Merge the static seed threads (data/forum.js) with whatever has been created/edited
-// at runtime (data/forum-storage.json). Stored threads win over seed threads sharing the
-// same slug (this is how an edit to a seed thread "sticks"), and deletedThreadSlugs keeps
-// a removed thread from reappearing out of the seed on the next server start.
-const mergeThreads = (deletedSlugs, storedThreads) => {
-  const deleted = new Set(deletedSlugs);
-  const bySlug = new Map();
-
-  seedThreads.forEach((thread) => {
-    if (!deleted.has(thread.slug)) bySlug.set(thread.slug, thread);
-  });
-
-  storedThreads.forEach((thread) => {
-    if (!deleted.has(thread.slug)) bySlug.set(thread.slug, thread);
-  });
-
-  return Array.from(bySlug.values());
-};
-
-const initialStorage = readStorage();
-const deletedThreadSlugs = initialStorage.deletedThreadSlugs;
-const threads = mergeThreads(deletedThreadSlugs, initialStorage.threads);
-const reports = initialStorage.reports;
-const notifications = initialStorage.notifications;
-
-const parseDate = (ddmmyyyy) => {
-  const [day, month, year] = ddmmyyyy.split("/").map(Number);
-  return new Date(year, month - 1, day);
-};
-
-// Normalize older thread/post records so newly-added fields always exist.
-threads.forEach((thread) => {
-  if (thread.tags === undefined) thread.tags = [];
-  if (thread.pinned === undefined) thread.pinned = false;
-  if (thread.locked === undefined) thread.locked = false;
-  if (thread.hidden === undefined) thread.hidden = false;
-
-  thread.posts.forEach((post, index) => {
-    if (post.editedAt === undefined) post.editedAt = null;
-    if (post.parentPostId === undefined) post.parentPostId = null;
-    if (post.reportedBy === undefined) post.reportedBy = [];
-    // Legacy posts only recorded a day-level date, so same-day posts couldn't
-    // be ordered against each other. Fall back to that date plus the post's
-    // position in the thread so existing order is at least preserved.
-    if (post.createdAt === undefined) {
-      post.createdAt = new Date(parseDate(post.date).getTime() + index).toISOString();
-    }
-  });
-});
+const { categories } = require("../data/forum.js");
 
 const MAX_REPORT_REASON_LENGTH = 500;
+
+const VISIBLE_FILTER = { status: { $ne: "draft" }, hidden: false };
 
 const getCategoryMeta = (categoryId) => categories.find((c) => c.id === categoryId);
 
 const isPublished = (thread) => thread.status !== "draft";
 const isHidden = (thread) => Boolean(thread.hidden);
 const isPubliclyVisible = (thread) => isPublished(thread) && !isHidden(thread);
-
-const getThreadBySlug = (slug) => threads.find((t) => t.slug === slug);
 
 const getLatestPost = (thread) => thread.posts[thread.posts.length - 1];
 
@@ -144,13 +71,25 @@ const SORT_COMPARATORS = {
   top: (a, b) => b.views - a.views,
 };
 
-const getThreadsByCategory = (categoryId, sortBy = "new") => {
-  const visible = threads.filter(isPubliclyVisible);
-  const filtered =
-    categoryId === "all" ? visible : visible.filter((t) => t.category === categoryId);
+/* =========================
+   READS
+========================= */
+
+const getThreadBySlug = async (slug) => ForumThreads.findOne({ slug }).lean();
+
+// Live Mongoose document (not lean) for callers that need to mutate + save.
+const getThreadDocBySlug = async (slug) => ForumThreads.findOne({ slug });
+
+const getThreadsByCategory = async (categoryId, sortBy = "new") => {
+  const filter = { ...VISIBLE_FILTER };
+  if (categoryId !== "all") {
+    filter.category = categoryId;
+  }
+
+  const visible = await ForumThreads.find(filter).lean();
 
   const comparator = SORT_COMPARATORS[sortBy] || SORT_COMPARATORS.new;
-  const sorted = filtered.slice().sort(comparator);
+  const sorted = visible.slice().sort(comparator);
 
   const pinned = sorted.filter((t) => t.pinned);
   const rest = sorted.filter((t) => !t.pinned);
@@ -158,8 +97,8 @@ const getThreadsByCategory = (categoryId, sortBy = "new") => {
   return [...pinned, ...rest];
 };
 
-const getVisibleThreadBySlug = (slug, viewerId, isAdmin = false) => {
-  const thread = getThreadBySlug(slug);
+const getVisibleThreadBySlug = async (slug, viewerId, isAdmin = false) => {
+  const thread = await getThreadBySlug(slug);
 
   if (!thread) {
     return null;
@@ -176,27 +115,34 @@ const getVisibleThreadBySlug = (slug, viewerId, isAdmin = false) => {
   return thread;
 };
 
-const incrementViews = (slug) => {
-  const thread = getThreadBySlug(slug);
-
-  if (!thread) {
-    return;
-  }
-
-  thread.views += 1;
-  saveThreadsToFile();
+const incrementViews = async (slug) => {
+  await ForumThreads.updateOne({ slug }, { $inc: { views: 1 } });
 };
 
-const getThreadsByAuthor = (authorId) =>
-  threads
-    .filter((t) => t.authorId === authorId)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const getThreadsByAuthor = async (authorId) =>
+  ForumThreads.find({ authorId }).sort({ createdAt: -1 }).lean();
 
-const findPost = (slug, postId) => {
-  const thread = getThreadBySlug(slug);
+const getAllThreadsForAdmin = async () =>
+  ForumThreads.find().sort({ createdAt: -1 }).lean();
+
+const findPost = async (slug, postId) => {
+  const thread = await getThreadBySlug(slug);
   const post = thread?.posts.find((p) => p.id === postId);
 
   return post ? { thread, post } : null;
+};
+
+// Live document + live subdocument, for reaction/edit/delete/report mutations.
+const findPostDoc = async (slug, postId) => {
+  const threadDoc = await getThreadDocBySlug(slug);
+
+  if (!threadDoc) {
+    return null;
+  }
+
+  const post = threadDoc.posts.find((p) => p.id === postId);
+
+  return post ? { threadDoc, post } : null;
 };
 
 const decoratePost = (post, viewerId) => ({
@@ -209,13 +155,17 @@ const decoratePost = (post, viewerId) => ({
   reportedByCurrentUser: Boolean(viewerId) && post.reportedBy.includes(viewerId),
 });
 
-const addNotification = ({ userId, type, threadSlug, postId, actorId, actorName }) => {
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+const addNotification = async ({ userId, type, threadSlug, postId, actorId, actorName }) => {
   if (!userId || userId === actorId) {
     return null;
   }
 
-  const notification = {
-    id: crypto.randomUUID(),
+  const notification = await ForumNotifications.create({
+    _id: randomUUID(),
     userId,
     type,
     threadSlug,
@@ -223,45 +173,34 @@ const addNotification = ({ userId, type, threadSlug, postId, actorId, actorName 
     actorId,
     actorName,
     read: false,
-    createdAt: new Date().toISOString(),
-  };
-
-  notifications.push(notification);
-
-  return notification;
-};
-
-const getNotificationsForUser = (userId) =>
-  notifications
-    .filter((n) => n.userId === userId)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-const getUnreadCount = (userId) =>
-  notifications.filter((n) => n.userId === userId && !n.read).length;
-
-const markAllRead = (userId) => {
-  let changed = false;
-
-  notifications.forEach((n) => {
-    if (n.userId === userId && !n.read) {
-      n.read = true;
-      changed = true;
-    }
+    createdAt: new Date(),
   });
 
-  if (changed) {
-    saveThreadsToFile();
-  }
+  return notification.toObject();
 };
 
-const toggleReaction = (slug, postId, userId, kind) => {
-  const found = findPost(slug, postId);
+const getNotificationsForUser = async (userId) =>
+  ForumNotifications.find({ userId }).sort({ createdAt: -1 }).lean();
+
+const getUnreadCount = async (userId) =>
+  ForumNotifications.countDocuments({ userId, read: false });
+
+const markAllRead = async (userId) => {
+  await ForumNotifications.updateMany({ userId, read: false }, { $set: { read: true } });
+};
+
+/* =========================
+   REACTIONS
+========================= */
+
+const toggleReaction = async (slug, postId, userId, kind) => {
+  const found = await findPostDoc(slug, postId);
 
   if (!found || !userId) {
     return null;
   }
 
-  const { post, thread } = found;
+  const { post, threadDoc } = found;
   const [ownList, oppositeList] =
     kind === "like" ? [post.likedBy, post.dislikedBy] : [post.dislikedBy, post.likedBy];
 
@@ -281,18 +220,18 @@ const toggleReaction = (slug, postId, userId, kind) => {
   }
 
   if (kind === "like" && active && post.authorId && post.authorId !== userId) {
-    const actor = userModel.findById(userId);
-    addNotification({
+    const actor = await userModel.findById(userId);
+    await addNotification({
       userId: post.authorId,
       type: "like",
-      threadSlug: thread.slug,
+      threadSlug: threadDoc.slug,
       postId: post.id,
       actorId: userId,
       actorName: actor ? actor.name : "Someone",
     });
   }
 
-  saveThreadsToFile();
+  await threadDoc.save();
 
   return {
     ok: true,
@@ -307,14 +246,14 @@ const toggleReaction = (slug, postId, userId, kind) => {
 const toggleLike = (slug, postId, userId) => toggleReaction(slug, postId, userId, "like");
 const toggleDislike = (slug, postId, userId) => toggleReaction(slug, postId, userId, "dislike");
 
-const toggleBookmark = (slug, postId, userId) => {
-  const found = findPost(slug, postId);
+const toggleBookmark = async (slug, postId, userId) => {
+  const found = await findPostDoc(slug, postId);
 
   if (!found || !userId) {
     return null;
   }
 
-  const { post } = found;
+  const { post, threadDoc } = found;
   const index = post.bookmarkedBy.indexOf(userId);
   let bookmarked;
 
@@ -326,12 +265,13 @@ const toggleBookmark = (slug, postId, userId) => {
     bookmarked = false;
   }
 
-  saveThreadsToFile();
+  await threadDoc.save();
 
   return { ok: true, bookmarked, bookmarkCount: post.bookmarkedBy.length };
 };
 
-const getBookmarkedPosts = (userId) => {
+const getBookmarkedPosts = async (userId) => {
+  const threads = await ForumThreads.find({ "posts.bookmarkedBy": userId }).lean();
   const entries = [];
 
   threads.forEach((thread) => {
@@ -355,23 +295,21 @@ const getBookmarkedPosts = (userId) => {
   return entries;
 };
 
-const publishThread = (slug, userId) => {
-  const thread = getThreadBySlug(slug);
+/* =========================
+   THREAD / POST MUTATIONS
+========================= */
 
-  if (!thread || thread.authorId !== userId) {
-    return null;
-  }
+const publishThread = async (slug, userId) =>
+  ForumThreads.findOneAndUpdate(
+    { slug, authorId: userId },
+    { $set: { status: "published" } },
+    { new: true }
+  ).lean();
 
-  thread.status = "published";
-  saveThreadsToFile();
+const editThread = async (slug, userId, { title, category, tags, content }) => {
+  const threadDoc = await getThreadDocBySlug(slug);
 
-  return thread;
-};
-
-const editThread = (slug, userId, { title, category, tags, content }) => {
-  const thread = getThreadBySlug(slug);
-
-  if (!thread || thread.authorId !== userId || thread.locked) {
+  if (!threadDoc || threadDoc.authorId !== userId || threadDoc.locked) {
     return null;
   }
 
@@ -381,21 +319,21 @@ const editThread = (slug, userId, { title, category, tags, content }) => {
     return null;
   }
 
-  thread.title = String(title).trim();
-  thread.category = category;
-  thread.tags = parseTags(tags);
-  thread.posts[0].content = content;
-  thread.posts[0].editedAt = new Date().toISOString();
+  threadDoc.title = String(title).trim();
+  threadDoc.category = category;
+  threadDoc.tags = parseTags(tags);
+  threadDoc.posts[0].content = content;
+  threadDoc.posts[0].editedAt = new Date();
 
-  saveThreadsToFile();
+  await threadDoc.save();
 
-  return thread;
+  return threadDoc.toObject();
 };
 
-const editPost = (slug, postId, userId, content) => {
-  const found = findPost(slug, postId);
+const editPost = async (slug, postId, userId, content) => {
+  const found = await findPostDoc(slug, postId);
 
-  if (!found || found.post.authorId !== userId || found.thread.locked) {
+  if (!found || found.post.authorId !== userId || found.threadDoc.locked) {
     return null;
   }
 
@@ -404,96 +342,76 @@ const editPost = (slug, postId, userId, content) => {
   }
 
   found.post.content = content;
-  found.post.editedAt = new Date().toISOString();
+  found.post.editedAt = new Date();
 
-  saveThreadsToFile();
+  await found.threadDoc.save();
 
-  return found;
+  return { thread: found.threadDoc.toObject(), post: found.post.toObject() };
 };
 
-const purgeReferencesToThread = (slug) => {
-  for (let i = reports.length - 1; i >= 0; i -= 1) {
-    if (reports[i].threadSlug === slug) {
-      reports.splice(i, 1);
-    }
-  }
-
-  for (let i = notifications.length - 1; i >= 0; i -= 1) {
-    if (notifications[i].threadSlug === slug) {
-      notifications.splice(i, 1);
-    }
-  }
+const purgeReferencesToThread = async (slug) => {
+  await Promise.all([
+    ForumReports.deleteMany({ threadSlug: slug }),
+    ForumNotifications.deleteMany({ threadSlug: slug }),
+  ]);
 };
 
-const deleteThread = (slug, userId, isAdmin = false) => {
-  const index = threads.findIndex((t) => t.slug === slug);
-
-  if (index === -1) {
-    return false;
-  }
-
-  const thread = threads[index];
-
-  if (thread.authorId !== userId && !isAdmin) {
-    return false;
-  }
-
-  threads.splice(index, 1);
-  purgeReferencesToThread(slug);
-
-  if (!deletedThreadSlugs.includes(slug)) {
-    deletedThreadSlugs.push(slug);
-  }
-
-  saveThreadsToFile();
-
-  return true;
-};
-
-const deletePost = (slug, postId, userId, isAdmin = false) => {
-  const thread = getThreadBySlug(slug);
+const deleteThread = async (slug, userId, isAdmin = false) => {
+  const thread = await ForumThreads.findOne({ slug }).select("authorId").lean();
 
   if (!thread) {
     return false;
   }
 
-  const index = thread.posts.findIndex((p) => p.id === postId);
+  if (thread.authorId !== userId && !isAdmin) {
+    return false;
+  }
+
+  await ForumThreads.deleteOne({ slug });
+  await purgeReferencesToThread(slug);
+
+  return true;
+};
+
+const deletePost = async (slug, postId, userId, isAdmin = false) => {
+  const threadDoc = await getThreadDocBySlug(slug);
+
+  if (!threadDoc) {
+    return false;
+  }
+
+  const index = threadDoc.posts.findIndex((p) => p.id === postId);
 
   if (index === -1) {
     return false;
   }
 
-  const post = thread.posts[index];
+  const post = threadDoc.posts[index];
 
   if (post.authorId !== userId && !isAdmin) {
     return false;
   }
 
   if (index === 0) {
-    return deleteThread(slug, thread.authorId, true);
+    return deleteThread(slug, threadDoc.authorId, true);
   }
 
-  thread.posts.splice(index, 1);
+  threadDoc.posts.splice(index, 1);
+  await threadDoc.save();
 
-  for (let i = reports.length - 1; i >= 0; i -= 1) {
-    if (reports[i].postId === postId) {
-      reports.splice(i, 1);
-    }
-  }
-
-  saveThreadsToFile();
+  await ForumReports.deleteMany({ postId });
 
   return true;
 };
 
-const reportPost = (slug, postId, reporterId, reason) => {
-  const found = findPost(slug, postId);
+const reportPost = async (slug, postId, reporterId, reason) => {
+  const found = await findPostDoc(slug, postId);
 
   if (!found || !reporterId) {
     return null;
   }
 
-  const { post, thread } = found;
+  const { post, threadDoc } = found;
 
   if (post.reportedBy.includes(reporterId)) {
     return { ok: false, message: "You already reported this post." };
@@ -506,24 +424,23 @@ const reportPost = (slug, postId, reporterId, reason) => {
   }
 
   post.reportedBy.push(reporterId);
+  await threadDoc.save();
 
-  reports.push({
-    id: crypto.randomUUID(),
-    threadSlug: thread.slug,
+  await ForumReports.create({
+    _id: randomUUID(),
+    threadSlug: threadDoc.slug,
     postId: post.id,
     reporterId,
     reason: trimmedReason,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(),
     status: "open",
   });
-
-  saveThreadsToFile();
 
   return { ok: true, message: "Report submitted. Thank you." };
 };
 
-const getPostPreview = (slug, postId) => {
-  const found = findPost(slug, postId);
+const getPostPreview = async (slug, postId) => {
+  const found = await findPost(slug, postId);
 
   if (!found || !isPubliclyVisible(found.thread)) {
     return null;
@@ -541,104 +458,119 @@ const getPostPreview = (slug, postId) => {
   };
 };
 
-const getOpenReports = () =>
-  reports
-    .filter((r) => r.status === "open")
-    .map((r) => {
-      const found = findPost(r.threadSlug, r.postId);
-      return { ...r, thread: found ? found.thread : null, post: found ? found.post : null };
+/* =========================
+   REPORTS (MODERATION)
+========================= */
+
+const getOpenReports = async () => {
+  const reports = await ForumReports.find({ status: "open" }).sort({ createdAt: -1 }).lean();
+
+  return Promise.all(
+    reports.map(async (r) => {
+      const found = await findPost(r.threadSlug, r.postId);
+
+      return {
+        ...r,
+        id: String(r._id),
+        thread: found ? found.thread : null,
+        post: found ? found.post : null,
+      };
     })
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  );
+};
 
-const resolveReport = (reportId, status) => {
-  const report = reports.find((r) => r.id === reportId);
+const resolveReport = async (reportId, status) =>
+  ForumReports.findByIdAndUpdate(
+    String(reportId),
+    { $set: { status: status === "dismissed" ? "dismissed" : "resolved" } },
+    { new: true }
+  ).lean();
 
-  if (!report) {
+const MODERATION_UPDATES = {
+  hide: { hidden: true },
+  unhide: { hidden: false },
+  lock: { locked: true },
+  unlock: { locked: false },
+  pin: { pinned: true },
+  unpin: { pinned: false },
+};
+
+const moderateThread = async (slug, action) => {
+  const update = MODERATION_UPDATES[action];
+
+  if (!update) {
     return null;
   }
 
-  report.status = status === "dismissed" ? "dismissed" : "resolved";
-  saveThreadsToFile();
-
-  return report;
+  return ForumThreads.findOneAndUpdate({ slug }, { $set: update }, { new: true }).lean();
 };
 
-const MODERATION_ACTIONS = {
-  hide: (t) => { t.hidden = true; },
-  unhide: (t) => { t.hidden = false; },
-  lock: (t) => { t.locked = true; },
-  unlock: (t) => { t.locked = false; },
-  pin: (t) => { t.pinned = true; },
-  unpin: (t) => { t.pinned = false; },
-};
+/* =========================
+   HOME / LISTING AGGREGATES
+========================= */
 
-const moderateThread = (slug, action) => {
-  const thread = getThreadBySlug(slug);
-  const apply = MODERATION_ACTIONS[action];
+const getForumSummary = async () =>
+  Promise.all(
+    categories.map(async (cat) => {
+      const catThreads = await getThreadsByCategory(cat.id);
+      const totalViews = catThreads.reduce((sum, t) => sum + t.views, 0);
+      const latestThread = catThreads.reduce((best, t) => {
+        if (!best) return t;
+        return getLatestPostTime(t) >= getLatestPostTime(best) ? t : best;
+      }, null);
+      return {
+        ...cat,
+        threadCount: catThreads.length,
+        totalViews,
+        latestThread,
+      };
+    })
+  );
 
-  if (!thread || !apply) {
-    return null;
-  }
+const getTrendingThreads = async (limit = 5) => {
+  const threads = await ForumThreads.find(VISIBLE_FILTER).lean();
 
-  apply(thread);
-  saveThreadsToFile();
-
-  return thread;
-};
-
-const getForumSummary = () =>
-  categories.map((cat) => {
-    const catThreads = getThreadsByCategory(cat.id);
-    const totalViews = catThreads.reduce((sum, t) => sum + t.views, 0);
-    const latestThread = catThreads.reduce((best, t) => {
-      if (!best) return t;
-      return getLatestPostTime(t) >= getLatestPostTime(best) ? t : best;
-    }, null);
-    return {
-      ...cat,
-      threadCount: catThreads.length,
-      totalViews,
-      latestThread,
-    };
-  });
-
-const getTrendingThreads = (limit = 5) =>
-  threads
-    .filter(isPubliclyVisible)
+  return threads
     .slice()
     .sort((a, b) => getThreadEngagementScore(b) - getThreadEngagementScore(a))
     .slice(0, limit);
+};
 
-const getLatestThreads = (limit = 5) =>
-  threads
-    .filter(isPubliclyVisible)
+const getLatestThreads = async (limit = 5) => {
+  const threads = await ForumThreads.find(VISIBLE_FILTER).lean();
+
+  return threads
     .slice()
     .sort((a, b) => getLatestPostTime(b) - getLatestPostTime(a))
     .slice(0, limit);
+};
 
-const getForumTotals = () => {
-  const published = threads.filter(isPubliclyVisible);
+const getForumTotals = async () => {
+  const published = await ForumThreads.find(VISIBLE_FILTER).select("views").lean();
+
   return {
     posts: published.length,
     views: published.reduce((sum, t) => sum + t.views, 0),
   };
 };
 
-const getAllTags = () => {
+const getAllTags = async () => {
+  const threads = await ForumThreads.find(VISIBLE_FILTER).select("tags").lean();
   const tagSet = new Set();
-  threads.filter(isPubliclyVisible).forEach((t) => (t.tags || []).forEach((tag) => tagSet.add(tag)));
+  threads.forEach((t) => (t.tags || []).forEach((tag) => tagSet.add(tag)));
   return Array.from(tagSet).sort();
 };
 
-const searchThreads = (rawQuery, filters = {}) => {
+const searchThreads = async (rawQuery, filters = {}) => {
   const query = String(rawQuery || "").trim();
   const { category, tag, author, from, to } = filters;
 
-  let candidates = threads.filter(isPubliclyVisible);
-
+  const dbFilter = { ...VISIBLE_FILTER };
   if (category) {
-    candidates = candidates.filter((t) => t.category === category);
+    dbFilter.category = category;
   }
+
+  let candidates = await ForumThreads.find(dbFilter).lean();
 
   if (tag) {
     const needleTag = String(tag).trim().toLowerCase();
@@ -699,26 +631,18 @@ const slugify = (title) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const generateUniqueSlug = (title) => {
+const generateUniqueSlug = async (title) => {
   const base = slugify(title) || "thread";
   let slug = base;
   let counter = 2;
 
-  while (getThreadBySlug(slug)) {
+  while (await ForumThreads.exists({ slug })) {
     slug = `${base}-${counter}`;
     counter += 1;
   }
 
   return slug;
 };
-
-function saveThreadsToFile() {
-  fs.writeFileSync(
-    STORAGE_FILE,
-    JSON.stringify({ threads, deletedThreadSlugs, reports, notifications }, null, 2),
-    "utf8"
-  );
-}
 
 const formatDate = (date) =>
   [
@@ -727,11 +651,13 @@ const formatDate = (date) =>
     date.getFullYear(),
   ].join("/");
 
-const addThread = ({ category, title, content, author, authorId, initials, rank, status, tags }) => {
+const addThread = async ({ category, title, content, author, authorId, initials, rank, status, tags }) => {
   const now = new Date();
+  const slug = await generateUniqueSlug(title);
 
-  const newThread = {
-    slug: generateUniqueSlug(title),
+  const thread = await ForumThreads.create({
+    _id: `thread-${randomUUID()}`,
+    slug,
     category,
     title,
     tags: parseTags(tags),
@@ -741,16 +667,15 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
     views: 0,
     authorId: authorId || null,
     status: status === "draft" ? "draft" : "published",
-    createdAt: now.toISOString(),
     posts: [
       {
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         author,
         authorId: authorId || null,
         initials,
         rank,
         date: formatDate(now),
-        createdAt: now.toISOString(),
+        createdAt: now,
         content,
         editedAt: null,
         parentPostId: null,
@@ -760,31 +685,28 @@ const addThread = ({ category, title, content, author, authorId, initials, rank,
         reportedBy: [],
       },
     ],
-  };
+  });
 
-  threads.push(newThread);
-  saveThreadsToFile();
-
-  return newThread;
+  return thread.toObject();
 };
 
-const addPost = (slug, { author, authorId, initials, rank, content, parentPostId }) => {
-  const thread = getThreadBySlug(slug);
+const addPost = async (slug, { author, authorId, initials, rank, content, parentPostId }) => {
+  const threadDoc = await getThreadDocBySlug(slug);
 
-  if (!thread) {
+  if (!threadDoc) {
     return null;
   }
 
   const now = new Date();
 
   const post = {
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     author,
     authorId: authorId || null,
     initials,
     rank,
     date: formatDate(now),
-    createdAt: now.toISOString(),
+    createdAt: now,
     content,
     editedAt: null,
     parentPostId: parentPostId || null,
@@ -794,31 +716,30 @@ const addPost = (slug, { author, authorId, initials, rank, content, parentPostId
     reportedBy: [],
   };
 
-  thread.posts.push(post);
+  threadDoc.posts.push(post);
+  await threadDoc.save();
 
-  if (thread.authorId && thread.authorId !== authorId) {
-    addNotification({
-      userId: thread.authorId,
+  if (threadDoc.authorId && threadDoc.authorId !== authorId) {
+    await addNotification({
+      userId: threadDoc.authorId,
       type: "reply",
-      threadSlug: thread.slug,
+      threadSlug: threadDoc.slug,
       postId: post.id,
       actorId: authorId,
       actorName: author,
     });
   }
 
-  saveThreadsToFile();
-
-  return { thread, post };
+  return { thread: threadDoc.toObject(), post };
 };
 
 module.exports = {
   categories,
-  threads,
   getCategoryMeta,
   getThreadsByCategory,
   getThreadBySlug,
   getVisibleThreadBySlug,
+  getAllThreadsForAdmin,
   incrementViews,
   getThreadsByAuthor,
   findPost,
