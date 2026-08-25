@@ -199,7 +199,7 @@ const redirectToReviews = (
 
   return res.redirect(
     `${product.href}?${params}` +
-    "#customer-reviews"
+      "#customer-reviews"
   );
 };
 
