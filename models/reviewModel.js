@@ -1,398 +1,182 @@
 "use strict";
 
-const fs = require("node:fs");
-const path = require("node:path");
+const { randomUUID } = require("node:crypto");
+const Review = require("./schemas/Review");
 
-const {
-  randomUUID
-} = require("node:crypto");
+const normaliseImages = (images) =>
+  Array.isArray(images)
+    ? images
+        .map((image) => String(image || ""))
+        .filter(Boolean)
+        .slice(0, 3)
+    : [];
 
-const reviewsFilePath = path.join(
-  __dirname,
-  "../data/reviews.json"
-);
-
-const clone = (value) =>
-  JSON.parse(
-    JSON.stringify(value)
-  );
-
-const ensureReviewsFile = () => {
-  if (
-    !fs.existsSync(
-      reviewsFilePath
-    )
-  ) {
-    fs.writeFileSync(
-      reviewsFilePath,
-      "[]\n",
-      "utf8"
-    );
-  }
-};
-
-const normaliseImages = (
-  review
-) => {
-  if (
-    Array.isArray(
-      review.images
-    )
-  ) {
-    return review.images
-      .map((image) =>
-        String(image || "")
-      )
-      .filter(Boolean)
-      .slice(0, 3);
+const toRuntimeReview = (review) => {
+  if (!review) {
+    return null;
   }
 
-  if (review.image) {
-    return [
-      String(review.image)
-    ];
-  }
-
-  return [];
-};
-
-const normaliseReview = (
-  review
-) => {
-  const images =
-    normaliseImages(review);
+  const images = normaliseImages(review.images);
 
   return {
     ...review,
+    id: String(review._id),
+    _id: String(review._id),
+    productId: String(review.productId),
+    userId: String(review.userId),
     images,
-
-    /*
-     * Runtime compatibility alias for old
-     * templates/controller code.
-     * It is removed before JSON is written.
-     */
-    image:
-      images[0] || ""
+    image: images[0] || ""
   };
 };
 
-const serialiseReview = (
-  review
-) => {
-  const normalised =
-    normaliseReview(review);
+const calculateStats = (reviews) => {
+  const totalReviews = reviews.length;
 
-  const {
-    image,
-    ...storedReview
-  } = normalised;
-
-  return {
-    ...storedReview,
-    images:
-      normalised.images
-  };
-};
-
-const readReviews = () => {
-  ensureReviewsFile();
-
-  const raw = fs.readFileSync(
-    reviewsFilePath,
-    "utf8"
+  const totalRating = reviews.reduce(
+    (total, review) =>
+      total + Number(review.rating || 0),
+    0
   );
 
-  const parsed =
-    JSON.parse(raw || "[]");
+  const averageRating = totalReviews
+    ? totalRating / totalReviews
+    : 0;
 
-  if (!Array.isArray(parsed)) {
-    throw new TypeError(
-      "data/reviews.json " +
-      "must contain an array."
-    );
-  }
+  const ratingBreakdown = [5, 4, 3, 2, 1].map(
+    (rating) => {
+      const count = reviews.filter(
+        (review) =>
+          Number(review.rating) === rating
+      ).length;
 
-  return parsed.map(
-    normaliseReview
+      return {
+        rating,
+        count,
+        percentage: totalReviews
+          ? Math.round(
+              (count / totalReviews) * 100
+            )
+          : 0
+      };
+    }
   );
-};
-
-const writeReviews = (
-  reviews
-) => {
-  const temporaryPath =
-    `${reviewsFilePath}.` +
-    `${process.pid}.tmp`;
-
-  const storedReviews =
-    reviews.map(
-      serialiseReview
-    );
-
-  fs.writeFileSync(
-    temporaryPath,
-    `${JSON.stringify(
-      storedReviews,
-      null,
-      2
-    )}\n`,
-    "utf8"
-  );
-
-  fs.renameSync(
-    temporaryPath,
-    reviewsFilePath
-  );
-};
-
-const sortNewestFirst = (
-  reviews
-) =>
-  reviews.sort(
-    (first, second) =>
-      new Date(
-        second.dateAdded
-      ) -
-      new Date(
-        first.dateAdded
-      )
-  );
-
-const calculateStats = (
-  reviews
-) => {
-  const totalReviews =
-    reviews.length;
-
-  const totalRating =
-    reviews.reduce(
-      (total, review) =>
-        total +
-        Number(
-          review.rating || 0
-        ),
-      0
-    );
-
-  const averageRating =
-    totalReviews
-      ? totalRating /
-        totalReviews
-      : 0;
-
-  const ratingBreakdown =
-    [5, 4, 3, 2, 1].map(
-      (rating) => {
-        const count =
-          reviews.filter(
-            (review) =>
-              Number(
-                review.rating
-              ) === rating
-          ).length;
-
-        return {
-          rating,
-          count,
-
-          percentage:
-            totalReviews
-              ? Math.round(
-                  (
-                    count /
-                    totalReviews
-                  ) * 100
-                )
-              : 0
-        };
-      }
-    );
 
   return {
     totalReviews,
-
-    averageRating:
-      Number(
-        averageRating
-          .toFixed(1)
-      ),
-
+    averageRating: Number(
+      averageRating.toFixed(1)
+    ),
     ratingBreakdown
   };
 };
 
-const getReviewsByProductId = (
+const getReviewsByProductId = async (
   productId
 ) => {
-  const reviews =
-    readReviews().filter(
-      (review) =>
-        review.productId ===
-        String(productId)
-    );
+  const reviews = await Review.find({
+    productId: String(productId)
+  })
+    .sort({ dateAdded: -1 })
+    .lean();
 
-  return clone(
-    sortNewestFirst(
-      reviews
-    )
-  );
+  return reviews.map(toRuntimeReview);
 };
 
-const getReviewById = (
+const getReviewById = async (
   productId,
   reviewId
 ) => {
-  const review =
-    readReviews().find(
-      (item) =>
-        item.id ===
-          String(reviewId) &&
-        item.productId ===
-          String(productId)
-    );
+  const review = await Review.findOne({
+    _id: String(reviewId),
+    productId: String(productId)
+  }).lean();
 
-  return review
-    ? clone(review)
-    : null;
+  return toRuntimeReview(review);
 };
 
-const getReviewStats = (
+const getReviewStats = async (
   productId
-) =>
-  calculateStats(
-    readReviews().filter(
-      (review) =>
-        review.productId ===
-        String(productId)
-    )
-  );
+) => {
+  const reviews = await Review.find({
+    productId: String(productId)
+  })
+    .select({ rating: 1 })
+    .lean();
 
-const getAllReviewStats = () => {
-  const reviews =
-    readReviews();
+  return calculateStats(reviews);
+};
+
+const getAllReviewStats = async () => {
+  const reviews = await Review.find({})
+    .select({
+      productId: 1,
+      rating: 1
+    })
+    .lean();
 
   const groupedReviews = {};
 
-  reviews.forEach(
-    (review) => {
-      if (
-        !groupedReviews[
-          review.productId
-        ]
-      ) {
-        groupedReviews[
-          review.productId
-        ] = [];
-      }
+  reviews.forEach((review) => {
+    const productId =
+      String(review.productId);
 
-      groupedReviews[
-        review.productId
-      ].push(review);
+    if (!groupedReviews[productId]) {
+      groupedReviews[productId] = [];
     }
-  );
+
+    groupedReviews[productId].push(review);
+  });
 
   return Object.fromEntries(
-    Object.entries(
-      groupedReviews
-    ).map(
-      ([
+    Object.entries(groupedReviews).map(
+      ([productId, productReviews]) => [
         productId,
-        productReviews
-      ]) => [
-        productId,
-        calculateStats(
-          productReviews
-        )
+        calculateStats(productReviews)
       ]
     )
   );
 };
 
-const createReview = (
+const createReview = async (
   productId,
   reviewData
 ) => {
-  const reviews =
-    readReviews();
-
-  const images =
-    Array.isArray(
+  const review = await Review.create({
+    _id: `review-${randomUUID()}`,
+    productId: String(productId),
+    userId: String(reviewData.userId),
+    name: String(reviewData.name || ""),
+    rating: Number(reviewData.rating),
+    title: String(reviewData.title),
+    comment: String(reviewData.comment),
+    images: normaliseImages(
       reviewData.images
-    )
-      ? reviewData.images
-          .map((image) =>
-            String(image || "")
-          )
-          .filter(Boolean)
-          .slice(0, 3)
-      : [];
+    ),
+    dateAdded: new Date()
+  });
 
-  const review = {
-    id:
-      `review-${randomUUID()}`,
-
-    productId:
-      String(productId),
-
-    userId:
-      String(
-        reviewData.userId
-      ),
-
-    name:
-      String(
-        reviewData.name
-      ),
-
-    dateAdded:
-      new Date()
-        .toISOString(),
-
-    rating:
-      Number(
-        reviewData.rating
-      ),
-
-    title:
-      String(
-        reviewData.title
-      ),
-
-    comment:
-      String(
-        reviewData.comment
-      ),
-
-    images
-  };
-
-  reviews.unshift(review);
-  writeReviews(reviews);
-
-  return clone(
-    normaliseReview(review)
+  return toRuntimeReview(
+    review.toObject()
   );
 };
 
-const updateReview = (
+const updateReview = async (
   productId,
   reviewId,
   currentUserId,
   reviewData
 ) => {
-  const reviews =
-    readReviews();
+  const filter = {
+    _id: String(reviewId),
+    productId: String(productId)
+  };
 
-  const index =
-    reviews.findIndex(
-      (review) =>
-        review.id ===
-          String(reviewId) &&
-        review.productId ===
-          String(productId)
-    );
+  const existingReview =
+    await Review.findOne(filter)
+      .select({ userId: 1 })
+      .lean();
 
-  if (index === -1) {
+  if (!existingReview) {
     return {
       status: "not-found",
       review: null
@@ -400,7 +184,7 @@ const updateReview = (
   }
 
   if (
-    reviews[index].userId !==
+    String(existingReview.userId) !==
     String(currentUserId)
   ) {
     return {
@@ -409,75 +193,50 @@ const updateReview = (
     };
   }
 
-  const images =
-    Array.isArray(
-      reviewData.images
-    )
-      ? reviewData.images
-          .map((image) =>
-            String(image || "")
-          )
-          .filter(Boolean)
-          .slice(0, 3)
-      : [];
-
-  reviews[index] = {
-    ...reviews[index],
-
-    rating:
-      Number(
-        reviewData.rating
-      ),
-
-    title:
-      String(
-        reviewData.title
-      ),
-
-    comment:
-      String(
-        reviewData.comment
-      ),
-
-    images,
-
-    dateAdded:
-      new Date()
-        .toISOString()
-  };
-
-  writeReviews(reviews);
+  const updatedReview =
+    await Review.findOneAndUpdate(
+      {
+        ...filter,
+        userId: String(currentUserId)
+      },
+      {
+        rating: Number(reviewData.rating),
+        title: String(reviewData.title),
+        comment: String(reviewData.comment),
+        images: normaliseImages(
+          reviewData.images
+        )
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    ).lean();
 
   return {
     status: "updated",
-
-    review:
-      clone(
-        normaliseReview(
-          reviews[index]
-        )
-      )
+    review: toRuntimeReview(
+      updatedReview
+    )
   };
 };
 
-const deleteReview = (
+const deleteReview = async (
   productId,
   reviewId,
   currentUserId
 ) => {
-  const reviews =
-    readReviews();
+  const filter = {
+    _id: String(reviewId),
+    productId: String(productId)
+  };
 
-  const index =
-    reviews.findIndex(
-      (review) =>
-        review.id ===
-          String(reviewId) &&
-        review.productId ===
-          String(productId)
-    );
+  const existingReview =
+    await Review.findOne(filter)
+      .select({ userId: 1 })
+      .lean();
 
-  if (index === -1) {
+  if (!existingReview) {
     return {
       status: "not-found",
       review: null
@@ -485,7 +244,7 @@ const deleteReview = (
   }
 
   if (
-    reviews[index].userId !==
+    String(existingReview.userId) !==
     String(currentUserId)
   ) {
     return {
@@ -495,20 +254,18 @@ const deleteReview = (
   }
 
   const deletedReview =
-    reviews[index];
-
-  reviews.splice(index, 1);
-  writeReviews(reviews);
+    await Review.findOneAndDelete({
+      ...filter,
+      userId: String(currentUserId)
+    });
 
   return {
     status: "deleted",
-
-    review:
-      clone(
-        normaliseReview(
-          deletedReview
+    review: deletedReview
+      ? toRuntimeReview(
+          deletedReview.toObject()
         )
-      )
+      : null
   };
 };
 

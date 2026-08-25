@@ -258,7 +258,7 @@ const redirectToReviews = (
   );
 };
 
-const createReview = (
+const createReview = async (
   req,
   res,
   next
@@ -307,7 +307,7 @@ const createReview = (
       Object.keys(errors)
         .length
     ) {
-      return renderProductDetail(
+      return await renderProductDetail(
         req,
         res,
         {
@@ -330,26 +330,15 @@ const createReview = (
       );
     }
 
-    reviewModel.createReview(
+    await reviewModel.createReview(
       product.id,
       {
-        userId:
-          currentUser.id,
-
-        name:
-          currentUser.name,
-
-        rating:
-          values.rating,
-
-        title:
-          values.reviewTitle,
-
-        comment:
-          values.review,
-
-        images:
-          newImages
+        userId: currentUser.id,
+        name: currentUser.name,
+        rating: values.rating,
+        title: values.reviewTitle,
+        comment: values.review,
+        images: newImages
       }
     );
 
@@ -363,7 +352,7 @@ const createReview = (
   }
 };
 
-const showEditReviewPage = (
+const showEditReviewPage = async (
   req,
   res,
   next
@@ -390,7 +379,7 @@ const showEditReviewPage = (
     }
 
     const review =
-      reviewModel.getReviewById(
+      await reviewModel.getReviewById(
         product.id,
         req.params.reviewId
       );
@@ -415,7 +404,7 @@ const showEditReviewPage = (
         );
     }
 
-    return renderProductDetail(
+    return await renderProductDetail(
       req,
       res,
       {
@@ -450,8 +439,7 @@ const showEditReviewPage = (
     return next(error);
   }
 };
-
-const updateReview = (
+const updateReview = async (
   req,
   res,
   next
@@ -478,7 +466,7 @@ const updateReview = (
     }
 
     const existingReview =
-      reviewModel.getReviewById(
+      await reviewModel.getReviewById(
         product.id,
         req.params.reviewId
       );
@@ -537,7 +525,7 @@ const updateReview = (
       Object.keys(errors)
         .length
     ) {
-      return renderProductDetail(
+      return await renderProductDetail(
         req,
         res,
         {
@@ -566,7 +554,7 @@ const updateReview = (
     }
 
     const result =
-      reviewModel.updateReview(
+      await reviewModel.updateReview(
         product.id,
         existingReview.id,
         currentUser.id,
@@ -618,7 +606,7 @@ const updateReview = (
   }
 };
 
-const deleteReview = (
+const deleteReview = async (
   req,
   res,
   next
@@ -645,7 +633,7 @@ const deleteReview = (
     }
 
     const result =
-      reviewModel.deleteReview(
+      await reviewModel.deleteReview(
         product.id,
         req.params.reviewId,
         currentUser.id

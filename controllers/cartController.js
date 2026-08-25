@@ -1,4 +1,7 @@
+"use strict";
+
 const productModel = require("../models/productModel");
+const reviewModel = require("../models/reviewModel");
 const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const giftcardModel = require("../models/giftcardModel");
@@ -6,17 +9,14 @@ const { validateCheckout } = require("../validators/cartValidators");
 
 const EXPRESS_SHIPPING_FEE = 12;
 
-const getCurrentUser = (req, res) => {
-  return res.locals.currentUser || req.session?.user || null;
-};
+const getCurrentUser = (req, res) =>
+  res.locals.currentUser || req.session?.user || null;
 
-const getCurrentUserId = (req) => {
-  return req.cartUserId || null;
-};
+const getCurrentUserId = (req) =>
+  req.cartUserId || null;
 
-const wantsJson = (req) => {
-  return req.get("accept")?.includes("application/json");
-};
+const wantsJson = (req) =>
+  req.get("accept")?.includes("application/json");
 
 const prepareCartView = (cart) => {
   const items = cart.items.map((item) => ({
@@ -51,11 +51,12 @@ const prepareCartView = (cart) => {
   };
 };
 
-const getProductsPage = (req, res, next) => {
+const getProductsPage = async (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const cart = prepareCartView(cartModel.getCartSummary(userId));
-    const productsPageData = productModel.getProductsPageData(req.query);
+    const statsMap = await reviewModel.getAllReviewStats();
+    const productsPageData = productModel.getProductsPageData(req.query, statsMap);
 
     return res.render("cart/products", {
       ...productsPageData,
@@ -68,18 +69,18 @@ const getProductsPage = (req, res, next) => {
   }
 };
 
-const getCartPage = (req, res, next) => {
+const getCartPage = async (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const cart = prepareCartView(cartModel.getCartSummary(userId));
-
     const excludedIds = cart.items
       .filter((item) => item.itemType === "product")
       .map((item) => item.productId);
-
+    const statsMap = await reviewModel.getAllReviewStats();
     const recommendedProducts = productModel.getRecommendedProducts(
       excludedIds,
-      4
+      4,
+      statsMap
     );
 
     return res.render("cart/cart", {
@@ -100,9 +101,7 @@ const getCheckoutPage = (req, res, next) => {
     const userId = getCurrentUserId(req);
     const cart = prepareCartView(cartModel.getCartSummary(userId));
 
-    if (!cart.hasItems) {
-      return res.redirect("/cart");
-    }
+    if (!cart.hasItems) return res.redirect("/cart");
 
     return res.render("cart/checkout", {
       pageTitle: "Checkout",
@@ -124,9 +123,7 @@ const getOrderConfirmationPage = (req, res, next) => {
     const orderId = String(req.query.orderId || "");
     const order = orderModel.getOrderById(orderId);
 
-    if (!order || order.userId !== userId) {
-      return res.redirect("/cart");
-    }
+    if (!order || order.userId !== userId) return res.redirect("/cart");
 
     return res.render("cart/order_confirmation", {
       pageTitle: "Order Confirmation",
@@ -144,17 +141,10 @@ const addToCart = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId, quantity = 1 } = req.body;
-    const result = cartModel.addItemToCart(
-      userId,
-      productId,
-      quantity
-    );
+    const result = cartModel.addItemToCart(userId, productId, quantity);
 
     if (!result.success) {
-      if (wantsJson(req)) {
-        return res.status(400).json(result);
-      }
-
+      if (wantsJson(req)) return res.status(400).json(result);
       return res.status(400).send(result.message);
     }
 
@@ -178,17 +168,10 @@ const updateCartItem = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId, quantity } = req.body;
-    const result = cartModel.updateCartItem(
-      userId,
-      productId,
-      quantity
-    );
+    const result = cartModel.updateCartItem(userId, productId, quantity);
 
     if (!result.success) {
-      if (wantsJson(req)) {
-        return res.status(400).json(result);
-      }
-
+      if (wantsJson(req)) return res.status(400).json(result);
       return res.status(400).send(result.message);
     }
 
@@ -212,16 +195,10 @@ const removeCartItem = (req, res, next) => {
   try {
     const userId = getCurrentUserId(req);
     const { productId } = req.body;
-    const result = cartModel.removeCartItem(
-      userId,
-      productId
-    );
+    const result = cartModel.removeCartItem(userId, productId);
 
     if (!result.success) {
-      if (wantsJson(req)) {
-        return res.status(400).json(result);
-      }
-
+      if (wantsJson(req)) return res.status(400).json(result);
       return res.status(400).send(result.message);
     }
 
@@ -246,9 +223,7 @@ const submitCheckout = (req, res, next) => {
     const userId = getCurrentUserId(req);
     const cart = prepareCartView(cartModel.getCartSummary(userId));
 
-    if (!cart.hasItems) {
-      return res.redirect("/cart");
-    }
+    if (!cart.hasItems) return res.redirect("/cart");
 
     const validation = validateCheckout(req.body);
 
@@ -265,18 +240,19 @@ const submitCheckout = (req, res, next) => {
     }
 
     const shippingFee =
-      req.body.shipping === "express"
-        ? EXPRESS_SHIPPING_FEE
-        : 0;
+      req.body.shipping === "express" ? EXPRESS_SHIPPING_FEE : 0;
 
     const createdGiftcards = new Map();
+
+    cartModel.getPendingGiftcardDrafts(userId).forEach((item) => {
+      const giftcard = giftcardModel.createGiftcard(item.values, userId);
+      createdGiftcards.set(item.productId, giftcard);
+    });
 
     const orderItems = cart.items.map((item) => {
       const giftcard = createdGiftcards.get(item.productId);
 
-      if (!giftcard) {
-        return item;
-      }
+      if (!giftcard) return item;
 
       return {
         ...item,
@@ -308,32 +284,16 @@ const submitCheckout = (req, res, next) => {
       payment: {
         method: "card",
         cardName: req.body.card_name.trim(),
-        cardLastFour: String(req.body.card_number)
-          .replace(/\s/g, "")
-          .slice(-4)
+        cardLastFour: String(req.body.card_number).replace(/\s/g, "").slice(-4)
       },
       giftNote: String(req.body.gift_note || "").trim(),
       subtotal: cart.subtotal,
       total: cart.subtotal + shippingFee
     });
-    cartModel
-  .getPendingGiftcardDrafts(userId)
-  .forEach((item) => {
-    const giftcard = giftcardModel.createGiftcard(
-      item.values,
-      userId
-    );
 
-    createdGiftcards.set(
-      item.productId,
-      giftcard
-    );
-  });
     cartModel.clearCart(userId);
 
-    return res.redirect(
-      `/cart/order-confirmation?orderId=${order.id}`
-    );
+    return res.redirect(`/cart/order-confirmation?orderId=${order.id}`);
   } catch (error) {
     return next(error);
   }

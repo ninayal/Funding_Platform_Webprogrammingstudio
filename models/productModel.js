@@ -1,13 +1,7 @@
 "use strict";
 
 const adminProductModel = require("./adminProductModel");
-const reviewModel = require("./reviewModel");
 
-// All products (including the original static catalog, which has been
-// migrated into data/products.json) live in the admin-managed store so the
-// admin panel and the shopping cart/shop pages share one live product list.
-// Recomputed on every call (rather than once at module load) since admin CRUD
-// can happen while the server is running.
 const getBaseProducts = () =>
   adminProductModel
     .getAvailableStorefrontProducts()
@@ -29,14 +23,11 @@ const createStars = (rating) => {
 };
 
 const toArray = (value) => {
-  if (!value) {
-    return [];
-  }
-
+  if (!value) return [];
   return (Array.isArray(value) ? value : [value]).map(String);
 };
 
-const decorateProduct = (product, statsMap) => {
+const decorateProduct = (product, statsMap = {}) => {
   const stats = statsMap[String(product.id)] || {
     averageRating: 0,
     totalReviews: 0,
@@ -51,13 +42,9 @@ const decorateProduct = (product, statsMap) => {
     priceDisplay: formatCurrency(product.price),
     priceFormatted: formatCurrency(product.price),
     oldPriceDisplay:
-      product.oldPrice == null
-        ? ""
-        : formatCurrency(product.oldPrice),
+      product.oldPrice == null ? "" : formatCurrency(product.oldPrice),
     oldPriceFormatted:
-      product.oldPrice == null
-        ? null
-        : formatCurrency(product.oldPrice),
+      product.oldPrice == null ? null : formatCurrency(product.oldPrice),
     rating: stats.averageRating,
     reviewCount: stats.totalReviews,
     ratingStars: createStars(stats.averageRating),
@@ -65,13 +52,8 @@ const decorateProduct = (product, statsMap) => {
   };
 };
 
-const getDecoratedProducts = () => {
-  const statsMap = reviewModel.getAllReviewStats();
-
-  return getBaseProducts().map((product) =>
-    decorateProduct(product, statsMap),
-  );
-};
+const getDecoratedProducts = (statsMap = {}) =>
+  getBaseProducts().map((product) => decorateProduct(product, statsMap));
 
 const getSelectedFilters = (query = {}) => ({
   price: toArray(query.price),
@@ -82,60 +64,33 @@ const getSelectedFilters = (query = {}) => ({
 });
 
 const matchesPrice = (price, selected) => {
-  if (!selected.length) {
-    return true;
-  }
+  if (!selected.length) return true;
 
   return selected.some((range) => {
-    if (range === "under-25") {
-      return price < 25;
-    }
-
-    if (range === "25-50") {
-      return price >= 25 && price < 50;
-    }
-
-    if (range === "50-100") {
-      return price >= 50 && price < 100;
-    }
-
-    if (range === "100-plus") {
-      return price >= 100;
-    }
-
+    if (range === "under-25") return price < 25;
+    if (range === "25-50") return price >= 25 && price < 50;
+    if (range === "50-100") return price >= 50 && price < 100;
+    if (range === "100-plus") return price >= 100;
     return false;
   });
 };
 
 const matchesAvailability = (stock, selected) => {
-  if (!selected.length) {
-    return true;
-  }
+  if (!selected.length) return true;
 
   return selected.some((value) => {
-    if (value === "in-stock") {
-      return stock > 5;
-    }
-
-    if (value === "low-stock") {
-      return stock > 0 && stock <= 5;
-    }
-
+    if (value === "in-stock") return stock > 5;
+    if (value === "low-stock") return stock > 0 && stock <= 5;
     return false;
   });
 };
 
 const matchesRating = (rating, selected) => {
-  if (!selected.length) {
-    return true;
-  }
+  if (!selected.length) return true;
 
   return selected.some((value) => {
     const minimum = Number(value);
-
-    if (!Number.isFinite(minimum)) {
-      return false;
-    }
+    if (!Number.isFinite(minimum)) return false;
 
     return minimum === 5
       ? rating === 5
@@ -143,8 +98,8 @@ const matchesRating = (rating, selected) => {
   });
 };
 
-const getFilteredProducts = (filters) =>
-  getDecoratedProducts().filter((product) => {
+const getFilteredProducts = (filters, statsMap = {}) =>
+  getDecoratedProducts(statsMap).filter((product) => {
     const makerMatches =
       !filters.maker.length ||
       filters.maker.includes(product.maker);
@@ -157,38 +112,30 @@ const getFilteredProducts = (filters) =>
       matchesPrice(product.price, filters.price) &&
       makerMatches &&
       materialMatches &&
-      matchesAvailability(
-        product.stock,
-        filters.availability,
-      ) &&
+      matchesAvailability(product.stock, filters.availability) &&
       matchesRating(product.rating, filters.rating)
     );
   });
 
-const getAllProducts = () =>
-  getDecoratedProducts();
+const getAllProducts = (statsMap = {}) =>
+  getDecoratedProducts(statsMap);
 
-const getProductById = (productId) =>
-  getDecoratedProducts().find(
-    (product) =>
-      String(product.id) === String(productId),
+const getProductById = (productId, statsMap = {}) =>
+  getDecoratedProducts(statsMap).find(
+    (product) => String(product.id) === String(productId),
   ) || null;
 
-const getProductBySlug = (slug) =>
-  getDecoratedProducts().find(
-    (product) =>
-      String(product.slug) === String(slug),
+const getProductBySlug = (slug, statsMap = {}) =>
+  getDecoratedProducts(statsMap).find(
+    (product) => String(product.slug) === String(slug),
   ) || null;
 
-const getProductByLegacyNumber = (legacyNumber) => {
+const getProductByLegacyNumber = (legacyNumber, statsMap = {}) => {
   const number = Number(legacyNumber);
-
-  if (!Number.isInteger(number)) {
-    return null;
-  }
+  if (!Number.isInteger(number)) return null;
 
   return (
-    getDecoratedProducts().find(
+    getDecoratedProducts(statsMap).find(
       (product) => product.featuredOrder === number,
     ) || null
   );
@@ -197,12 +144,11 @@ const getProductByLegacyNumber = (legacyNumber) => {
 const getRecommendedProducts = (
   excludedIds = [],
   limit = 4,
+  statsMap = {},
 ) => {
-  const excluded = new Set(
-    excludedIds.map(String),
-  );
+  const excluded = new Set(excludedIds.map(String));
 
-  return getDecoratedProducts()
+  return getDecoratedProducts(statsMap)
     .filter(
       (product) =>
         product.stock > 0 &&
@@ -253,7 +199,9 @@ const getCategoryCounts = () => {
 
 const getFilterOptions = () => ({
   makers: [
-    ...new Set(getBaseProducts().map((product) => product.maker)),
+    ...new Set(
+      getBaseProducts().map((product) => product.maker),
+    ),
   ].sort(),
 
   materials: [
@@ -316,14 +264,12 @@ const getSortOptions = () => [
   },
 ];
 
-const getProductsPageData = (query = {}) => {
-  const selectedFilters =
-    getSelectedFilters(query);
+const getProductsPageData = (query = {}, statsMap = {}) => {
+  const selectedFilters = getSelectedFilters(query);
 
   return {
     pageTitle: "Shop All",
-    products:
-      getFilteredProducts(selectedFilters),
+    products: getFilteredProducts(selectedFilters, statsMap),
     categories: getCategories(),
     categoryCounts: getCategoryCounts(),
     filterOptions: getFilterOptions(),
@@ -332,8 +278,8 @@ const getProductsPageData = (query = {}) => {
   };
 };
 
-const getFeaturedProducts = (limit = 6) =>
-  getDecoratedProducts()
+const getFeaturedProducts = (limit = 6, statsMap = {}) =>
+  getDecoratedProducts(statsMap)
     .filter((product) => product.stock > 0)
     .sort(
       (a, b) =>
@@ -345,19 +291,16 @@ const getFeaturedProducts = (limit = 6) =>
 const getRelatedProducts = (
   currentProductId,
   limit = 3,
+  statsMap = {},
 ) => {
-  const allProducts =
-    getDecoratedProducts();
+  const allProducts = getDecoratedProducts(statsMap);
 
   const currentProduct = allProducts.find(
     (product) =>
-      String(product.id) ===
-      String(currentProductId),
+      String(product.id) === String(currentProductId),
   );
 
-  if (!currentProduct) {
-    return [];
-  }
+  if (!currentProduct) return [];
 
   const sameCategory = allProducts.filter(
     (product) =>
@@ -371,10 +314,7 @@ const getRelatedProducts = (
       product.category !== currentProduct.category,
   );
 
-  return [
-    ...sameCategory,
-    ...fallback,
-  ].slice(0, limit);
+  return [...sameCategory, ...fallback].slice(0, limit);
 };
 
 module.exports = {

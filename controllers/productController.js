@@ -448,7 +448,7 @@ const buildReviewList = (
   searchFields
 });
 
-const buildReviewData = (
+const buildReviewData = async (
   req,
   product,
   options = {}
@@ -461,17 +461,15 @@ const buildReviewData = (
       currentUser?.id
     );
 
-  const rawReviews =
-    reviewModel
-      .getReviewsByProductId(
+  const [rawReviews, stats] =
+    await Promise.all([
+      reviewModel.getReviewsByProductId(
         product.id
-      );
-
-  const stats =
-    reviewModel
-      .getReviewStats(
+      ),
+      reviewModel.getReviewStats(
         product.id
-      );
+      )
+    ]);
 
   const serverErrors =
     options.serverErrors || {};
@@ -561,7 +559,7 @@ const buildReviewData = (
   };
 };
 
-const renderProductDetail = (
+const renderProductDetail = async (
   req,
   res,
   options = {}
@@ -588,12 +586,10 @@ const renderProductDetail = (
     Boolean(
       req.query.status
     );
-
   const stats =
-    reviewModel
-      .getReviewStats(
-        product.id
-      );
+    await reviewModel.getReviewStats(
+      product.id
+    );
 
   const productData = {
     ...product,
@@ -615,6 +611,12 @@ const renderProductDetail = (
         ? "1 review"
         : `${stats.totalReviews} reviews`
   };
+  const reviewData =
+    await buildReviewData(
+      req,
+      product,
+      options
+    );
 
   return res
     .status(
@@ -652,22 +654,18 @@ const renderProductDetail = (
             openReview
           ),
 
-        ...buildReviewData(
-          req,
-          product,
-          options
-        )
+        ...reviewData
       }
     );
 };
 
-const showProductDetail = (
+const showProductDetail = async (
   req,
   res,
   next
 ) => {
   try {
-    return renderProductDetail(
+    return await renderProductDetail(
       req,
       res
     );
