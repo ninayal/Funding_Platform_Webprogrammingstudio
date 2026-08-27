@@ -19,37 +19,30 @@ const DEFAULT_PREFERENCES = {
   productCareGuides: true,
 };
 
-const clean = (
-  value
-) =>
-  String(value || "")
-    .trim();
+const clean = (value) =>
+  String(value || "").trim();
 
-const normalise = (
-  value
-) =>
-  clean(value)
-    .toLowerCase();
+const normalise = (value) =>
+  clean(value).toLowerCase();
 
-const escapeRegex = (
-  value
-) =>
-  String(value || "")
-    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const escapeRegex = (value) =>
+  String(value || "").replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&"
+  );
 
 const createInitials = (
   firstname,
   lastname,
   username
 ) => {
-  const initials =
-    [
-      clean(firstname)[0],
-      clean(lastname)[0],
-    ]
-      .filter(Boolean)
-      .join("")
-      .toUpperCase();
+  const initials = [
+    clean(firstname)[0],
+    clean(lastname)[0],
+  ]
+    .filter(Boolean)
+    .join("")
+    .toUpperCase();
 
   return (
     initials ||
@@ -59,83 +52,62 @@ const createInitials = (
   );
 };
 
-const isAdminRole = (
-  role
-) =>
+const isAdminRole = (role) =>
   normalise(role) === "admin";
 
-// Bridges the gap between Mongoose's `_id` and the `id` field every view/
-// controller in this app already expects (mirrors toRuntimeProduct in
-// adminProductModel.js).
-const toRuntimeUser = (
-  user
-) => {
+const toRuntimeUser = (user) => {
   if (!user) {
     return null;
   }
 
   const toIso = (value) =>
-    value ? new Date(value).toISOString() : null;
+    value
+      ? new Date(value).toISOString()
+      : null;
 
   return {
     ...user,
     id: String(user._id),
-    joinDate:
-      user.joinDate
-        ? toIso(user.joinDate).slice(0, 10)
-        : "",
+    joinDate: user.joinDate
+      ? toIso(user.joinDate).slice(0, 10)
+      : "",
     createdAt: toIso(user.createdAt),
     updatedAt: toIso(user.updatedAt),
   };
 };
 
-const toPublicUser = (
-  user
-) => {
+const toPublicUser = (user) => {
   if (!user) {
     return null;
   }
 
   const name =
-    `${user.firstname || ""} ${user.lastname || ""}`
-      .trim() ||
+    `${user.firstname || ""} ${user.lastname || ""
+      }`.trim() ||
     user.name ||
     user.username ||
     "";
 
   return {
     id: user.id,
-    firstname:
-      user.firstname || "",
-    lastname:
-      user.lastname || "",
+    firstname: user.firstname || "",
+    lastname: user.lastname || "",
     name,
-    username:
-      user.username || "",
-    email:
-      user.email || "",
-    initials:
-      createInitials(
-        user.firstname,
-        user.lastname,
-        user.username
-      ),
-    role:
-      user.role || "user",
-    status:
-      user.status || "active",
-    gender:
-      user.gender || "",
-    description:
-      user.description || "",
-    phone:
-      user.phone || "",
-    location:
-      user.location || "",
-    postalCode:
-      user.postalCode || "",
-    address:
-      user.address || "",
+    username: user.username || "",
+    email: user.email || "",
+    initials: createInitials(
+      user.firstname,
+      user.lastname,
+      user.username
+    ),
+    role: user.role || "user",
+    status: user.status || "active",
+    gender: user.gender || "",
+    description: user.description || "",
+    phone: user.phone || "",
+    location: user.location || "",
+    postalCode: user.postalCode || "",
+    address: user.address || "",
     about:
       user.about ||
       user.description ||
@@ -154,10 +126,9 @@ const toPublicUser = (
       user.joinDate ||
       user.createdAt ||
       "",
-    requiresPasswordChange:
-      Boolean(
-        user.requiresPasswordChange
-      ),
+    requiresPasswordChange: Boolean(
+      user.requiresPasswordChange
+    ),
     createdAt:
       user.createdAt ||
       user.joinDate ||
@@ -170,30 +141,26 @@ const toPublicUser = (
   };
 };
 
-const findUserById = async (
-  id
-) => {
+const findUserById = async (id) => {
   if (!id) {
     return null;
   }
 
   return toRuntimeUser(
-    await Users.findById(String(id)).lean()
+    await Users.findById(
+      String(id)
+    ).lean()
   );
 };
 
-const findUserByEmail = async (
-  email
-) =>
+const findUserByEmail = async (email) =>
   toRuntimeUser(
     await Users.findOne({
       email: normalise(email),
     }).lean()
   );
 
-const findById = async (
-  id
-) =>
+const findById = async (id) =>
   toPublicUser(
     await findUserById(id)
   );
@@ -217,18 +184,14 @@ const authenticate = async (
   if (!user) {
     return {
       ok: false,
-      reason:
-        "invalid-credentials",
+      reason: "invalid-credentials",
     };
   }
 
-  if (
-    user.status === "blocked"
-  ) {
+  if (user.status === "blocked") {
     return {
       ok: false,
-      reason:
-        "blocked",
+      reason: "blocked",
     };
   }
 
@@ -237,8 +200,7 @@ const authenticate = async (
   ) {
     return {
       ok: false,
-      reason:
-        "deactivated",
+      reason: "deactivated",
     };
   }
 
@@ -250,21 +212,17 @@ const authenticate = async (
   ) {
     return {
       ok: false,
-      reason:
-        "invalid-credentials",
+      reason: "invalid-credentials",
     };
   }
 
   return {
     ok: true,
-    user:
-      toPublicUser(user),
+    user: toPublicUser(user),
   };
 };
 
-const createUser = async (
-  values
-) => {
+const createUser = async (values) => {
   const email =
     normalise(values.email);
 
@@ -272,13 +230,14 @@ const createUser = async (
     clean(values.username);
 
   const emailTaken =
-    await Users.exists({ email });
+    await Users.exists({
+      email,
+    });
 
   if (emailTaken) {
     return {
       ok: false,
-      reason:
-        "email-exists",
+      reason: "email-exists",
     };
   }
 
@@ -293,8 +252,7 @@ const createUser = async (
   if (usernameTaken) {
     return {
       ok: false,
-      reason:
-        "username-exists",
+      reason: "username-exists",
     };
   }
 
@@ -302,49 +260,60 @@ const createUser = async (
 
   const user =
     await Users.create({
-      _id:
-        crypto.randomUUID(),
-      firstname:
-        clean(values.firstname),
-      lastname:
-        clean(values.lastname),
+      _id: crypto.randomUUID(),
+
+      firstname: clean(
+        values.firstname
+      ),
+
+      lastname: clean(
+        values.lastname
+      ),
+
       username,
       email,
-      gender:
-        clean(values.gender),
-      description:
-        clean(values.description),
-      role:
-        "user",
-      status:
-        "active",
-      about:
-        clean(values.description),
+
+      gender: clean(
+        values.gender
+      ),
+
+      description: clean(
+        values.description
+      ),
+
+      role: "user",
+      status: "active",
+
+      about: clean(
+        values.description
+      ),
+
       avatar:
         "/images/profile.png",
-      tier:
-        "Craft Collector",
-      preferences:
-      {
+
+      tier: "Craft Collector",
+
+      preferences: {
         ...DEFAULT_PREFERENCES,
       },
-      passwordHash:
-        hashPassword(
-          values.password
-        ),
+
+      passwordHash: hashPassword(
+        values.password
+      ),
+
       requiresPasswordChange:
         false,
+
       joinDate: now,
     });
 
   return {
     ok: true,
-    user:
-      toPublicUser(
-        toRuntimeUser(
-          user.toObject()
-        )
-      ),
+    user: toPublicUser(
+      toRuntimeUser(
+        user.toObject()
+      )
+    ),
   };
 };
 
@@ -360,8 +329,7 @@ const updateAccount = async (
   if (!user) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
 
@@ -379,8 +347,7 @@ const updateAccount = async (
   if (duplicateEmail) {
     return {
       ok: false,
-      reason:
-        "email-exists",
+      reason: "email-exists",
     };
   }
 
@@ -402,23 +369,39 @@ const updateAccount = async (
   }
 
   const updates = {
-    firstname:
-      clean(values.firstname),
-    lastname:
-      clean(values.lastname),
+    firstname: clean(
+      values.firstname
+    ),
+
+    lastname: clean(
+      values.lastname
+    ),
+
     email,
-    phone:
-      clean(values.phone),
-    location:
-      clean(values.location),
-    postalCode:
-      clean(values.postalCode),
-    address:
-      clean(values.address),
-    about:
-      clean(values.about),
-    description:
-      clean(values.about),
+
+    phone: clean(
+      values.phone
+    ),
+
+    location: clean(
+      values.location
+    ),
+
+    postalCode: clean(
+      values.postalCode
+    ),
+
+    address: clean(
+      values.address
+    ),
+
+    about: clean(
+      values.about
+    ),
+
+    description: clean(
+      values.about
+    ),
   };
 
   if (changingPassword) {
@@ -444,12 +427,11 @@ const updateAccount = async (
 
   return {
     ok: true,
-    user:
-      toPublicUser(
-        toRuntimeUser(
-          updatedUser
-        )
-      ),
+    user: toPublicUser(
+      toRuntimeUser(
+        updatedUser
+      )
+    ),
   };
 };
 
@@ -473,19 +455,17 @@ const updateAvatar = async (
   if (!updatedUser) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
 
   return {
     ok: true,
-    user:
-      toPublicUser(
-        toRuntimeUser(
-          updatedUser
-        )
-      ),
+    user: toPublicUser(
+      toRuntimeUser(
+        updatedUser
+      )
+    ),
   };
 };
 
@@ -512,19 +492,17 @@ const updatePreferences = async (
   if (!updatedUser) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
 
   return {
     ok: true,
-    user:
-      toPublicUser(
-        toRuntimeUser(
-          updatedUser
-        )
-      ),
+    user: toPublicUser(
+      toRuntimeUser(
+        updatedUser
+      )
+    ),
   };
 };
 
@@ -548,19 +526,17 @@ const deactivateUser = async (
   if (!updatedUser) {
     return {
       ok: false,
-      reason:
-        "user-not-found",
+      reason: "user-not-found",
     };
   }
 
   return {
     ok: true,
-    user:
-      toPublicUser(
-        toRuntimeUser(
-          updatedUser
-        )
-      ),
+    user: toPublicUser(
+      toRuntimeUser(
+        updatedUser
+      )
+    ),
   };
 };
 
