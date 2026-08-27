@@ -201,7 +201,7 @@ textarea {
 }
 
 .profile-logout-form {
-    margin-top: auto;
+    margin-top: 18px;
 }
 
 .profile-logout {
@@ -215,7 +215,7 @@ textarea {
     color: var(--red);
     text-decoration: none;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 700;
     cursor: pointer;
     position: relative;
@@ -246,7 +246,7 @@ textarea {
     background: rgba(163, 29, 29, .08);
     color: var(--red);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 700;
     transition:
         transform .2s ease,
@@ -340,6 +340,23 @@ textarea {
 #tab-notifications:focus-visible~.profile-shell label[for="tab-notifications"] {
     outline: 3px solid rgba(163, 29, 29, 0.45);
     outline-offset: 3px;
+}
+
+/* ================================================
+   ORDER PANEL INTERNAL SCROLL
+   ================================================ */
+
+@media (min-width: 1161px) {
+    #tab-orders:checked ~ .profile-shell {
+        height: 860px;
+        min-height: 0;
+    }
+
+    #tab-orders:checked ~ .profile-shell .profile-content {
+        min-height: 0;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
 }
 
 /* ================================================

@@ -5,6 +5,7 @@ const path = require("path");
 
 const userModel = require("../models/userModel");
 const adminProductModel = require("../models/adminProductModel");
+const orderModel = require("../models/orderModel");
 const passwordResetModel = require("../models/passwordResetModel");
 
 const {
@@ -325,6 +326,21 @@ const deleteManagedImage = (
     return;
   }
 
+  const deleteManagedImageIfUnused = async (
+    imagePath
+  ) => {
+    if (!imagePath) return;
+
+    const usedInOrder =
+      await orderModel.isImageUsedInOrders(
+        imagePath
+      );
+
+    if (!usedInOrder) {
+      deleteManagedImage(imagePath);
+    }
+  };
+
   const filePath = path.join(
     __dirname,
     "..",
@@ -587,18 +603,19 @@ const postUpdateProduct = async (
     }
   );
 
-  existing.images.forEach(
-    (oldImage, index) => {
-      if (
-        oldImage &&
-        oldImage !==
-        images[index]
-      ) {
-        deleteManagedImage(
-          oldImage
-        );
+  await Promise.all(
+    existing.images.map(
+      async (oldImage, index) => {
+        if (
+          oldImage &&
+          oldImage !== images[index]
+        ) {
+          await deleteManagedImageIfUnused(
+            oldImage
+          );
+        }
       }
-    }
+    )
   );
 
   return res.redirect(
@@ -618,10 +635,10 @@ const postDeleteProduct = async (
     );
 
   if (product) {
-    (
-      product.images || []
-    ).forEach(
-      deleteManagedImage
+    await Promise.all(
+      (product.images || []).map(
+        deleteManagedImageIfUnused
+      )
     );
   }
 

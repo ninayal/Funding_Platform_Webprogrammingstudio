@@ -9,9 +9,11 @@ const toRuntimeItem = (item) => ({
     id: String(item._id),
     orderId: String(item.orderId),
     itemType: item.itemType,
+
     productId: item.productId
         ? String(item.productId)
         : null,
+
     giftcardId: item.giftcardId
         ? String(item.giftcardId)
         : null,
@@ -29,9 +31,9 @@ const toRuntimeItem = (item) => ({
 
     subtotal: Number(item.lineTotal),
     lineTotal: Number(item.lineTotal),
-    subtotalFormatted: `$${Number(
-        item.lineTotal
-    ).toFixed(2)}`,
+
+    subtotalFormatted:
+        `$${Number(item.lineTotal).toFixed(2)}`,
 
     giftcardCode: item.giftcardCode,
 });
@@ -103,7 +105,9 @@ const createOrder = async (orderData) => {
                     0
                 ),
 
-                quantity: Number(item.quantity),
+                quantity: Number(
+                    item.quantity
+                ),
 
                 lineTotal: Number(
                     item.subtotal ??
@@ -158,8 +162,20 @@ const getOrdersByUserId = async (userId) => {
     );
 };
 
+const isImageUsedInOrders = async (image) => {
+    if (!image) return false;
+
+    const orderItem =
+        await OrderItem.exists({
+            image: String(image),
+        });
+
+    return Boolean(orderItem);
+};
+
 module.exports = {
     createOrder,
     getOrderById,
     getOrdersByUserId,
+    isImageUsedInOrders,
 };
