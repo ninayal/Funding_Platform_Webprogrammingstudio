@@ -110,8 +110,17 @@ const getLoginPage = (
     );
   }
 
+  const errors =
+    req.query.blocked === "1"
+      ? {
+        form:
+          "This account has been blocked.",
+      }
+      : {};
+
   return renderLogin(res, {
     redirect,
+    errors,
   });
 };
 

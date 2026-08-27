@@ -1,5 +1,7 @@
 "use strict";
 
+const userModel = require("../models/userModel");
+
 const safeRedirectPath = (
   value,
   fallback = "/"
@@ -43,30 +45,104 @@ const safeRedirectPath = (
   }
 };
 
-const attachCurrentUser = (
+const clearCurrentUser = (
+  req,
+  res
+) => {
+  req.currentUser = null;
+  res.locals.currentUser = null;
+  res.locals.currentUserId = null;
+  res.locals.currentUrl =
+    req.originalUrl || "/";
+};
+
+const setCurrentUser = (
+  req,
+  res,
+  user
+) => {
+  req.currentUser = user;
+  res.locals.currentUser = user;
+  res.locals.currentUserId =
+    String(user.id);
+  res.locals.currentUrl =
+    req.originalUrl || "/";
+};
+
+const kickBlockedUser = (
+  req,
+  res,
+  next
+) =>
+  req.session.destroy(
+    (destroyError) => {
+      if (destroyError) {
+        return next(destroyError);
+      }
+
+      clearCurrentUser(req, res);
+
+      const loginUrl =
+        `/shared/login?blocked=1&redirect=${encodeURIComponent(
+          req.originalUrl || "/"
+        )}`;
+
+      if (requestWantsJson(req)) {
+        return res.status(401).json({
+          success: false,
+          requiresAuth: true,
+          blocked: true,
+          redirect: loginUrl,
+          message:
+            "This account has been blocked.",
+        });
+      }
+
+      return res.redirect(loginUrl);
+    }
+  );
+
+const attachCurrentUser = async (
   req,
   res,
   next
 ) => {
-  const currentUser =
+  const sessionUser =
     req.session?.user ||
     null;
 
-  req.currentUser =
-    currentUser;
+  if (!sessionUser) {
+    clearCurrentUser(req, res);
+    return next();
+  }
 
-  res.locals.currentUser =
-    currentUser;
+  let liveUser;
 
-  res.locals.currentUserId =
-    currentUser
-      ? String(
-        currentUser.id
-      )
-      : null;
+  try {
+    liveUser =
+      await userModel.findById(
+        sessionUser.id
+      );
+  } catch (error) {
+    return next(error);
+  }
 
-  res.locals.currentUrl =
-    req.originalUrl || "/";
+  if (
+    !liveUser ||
+    liveUser.status === "blocked"
+  ) {
+    return kickBlockedUser(
+      req,
+      res,
+      next
+    );
+  }
+
+  setCurrentUser(
+    req,
+    res,
+    sessionUser
+  );
 
   return next();
 };
