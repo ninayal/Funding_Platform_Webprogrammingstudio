@@ -1,5 +1,7 @@
 "use strict";
 
+const { MongoStore } = require("connect-mongo");
+
 const isProduction =
   process.env.NODE_ENV ===
   "production";
@@ -17,6 +19,13 @@ const sessionConfig = {
 
   saveUninitialized:
     false,
+
+  store:
+    MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      dbName: "langandco",
+      collectionName: "sessions",
+    }),
 
   cookie: {
     httpOnly:

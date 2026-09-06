@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
   "bugs": {
     "url": "https://github.com/ninayal/Funding_Platform_Webprogrammingstudio/issues"
   },
@@ -25,6 +28,7 @@
   },
   "dependencies": {
     "connect-mongo": "^6.0.0",
+    "cron": "^4.4.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",

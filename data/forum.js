@@ -213,7 +213,7 @@ const threads = [
         "initials": "AD",
         "rank": "Admin",
         "date": "18/08/2026",
-        "content": "http://localhost:3000/forum/thread/qa-battrang-chudau#post-2242d496-bb83-4606-858c-798274cab478<p><br /></p><p><br /></p><p>hay</p>",
+        "content": "/forum/thread/qa-battrang-chudau#post-2242d496-bb83-4606-858c-798274cab478<p><br /></p><p><br /></p><p>hay</p>",
         "editedAt": null,
         "parentPostId": null,
         "likedBy": [],

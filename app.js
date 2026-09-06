@@ -19,6 +19,16 @@ const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
+/* =========================
+   HEALTH CHECK (keep-alive)
+========================= */
+
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 /* =========================
    EJS
 ========================= */
