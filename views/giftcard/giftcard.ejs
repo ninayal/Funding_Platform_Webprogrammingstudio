@@ -8,7 +8,7 @@
 
   <title><%= pageTitle %></title>
 
-  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/header_v2.css">
   <link rel="stylesheet" href="/css/root.css">
   <link rel="stylesheet" href="/css/shared-include.css">
   <link rel="stylesheet" href="/css/giftcard/giftcard.css">
@@ -26,7 +26,7 @@
   data-giftcard-review="<%= page.isReviewMode %>"
   data-giftcard-server-errors="<%= page.hasServerErrors %>"
 >
-  <%- include("../partials/header",{activePage,cartCount}) %>
+  <%- include("../partials/header_v2",{activePage,cartCount,currentUser}) %>
 
   <% giftTypes.forEach((giftType)=>{ %>
     <input

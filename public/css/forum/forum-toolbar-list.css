@@ -144,6 +144,7 @@
 }
 
 .wishlist-header h1 {
+  margin: 0;
   font-family: var(--ff-script);
   font-weight: 500;
   font-style: italic;
@@ -153,6 +154,7 @@
 }
 
 .wishlist-header__sub {
+  margin: 0;
   font-family: var(--ff-body);
   font-size: 20px;
   color: var(--ink);
