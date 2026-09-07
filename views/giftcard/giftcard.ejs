@@ -26,8 +26,6 @@
   data-giftcard-review="<%= page.isReviewMode %>"
   data-giftcard-server-errors="<%= page.hasServerErrors %>"
 >
-  <%- include("../partials/header_v2",{activePage,cartCount,currentUser}) %>
-
   <% giftTypes.forEach((giftType)=>{ %>
     <input
       class="ui-state"
@@ -69,6 +67,8 @@
 
   <section class="gift-hero" id="start">
     <div class="gift-hero__bg" aria-hidden="true"></div>
+
+    <%- include("../partials/header_v2",{activePage,cartCount,currentUser,heroOverlay:true}) %>
 
     <div class="gift-hero__content">
       <h1>

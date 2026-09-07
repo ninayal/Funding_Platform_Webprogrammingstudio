@@ -289,6 +289,43 @@ body {
 }
 
 /* =====================================================
+   HERO OVERLAY VARIANT
+   (header floats over a hero image instead of
+   pushing it down)
+   ===================================================== */
+
+.header-v2--overlay {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    left: 0;
+    z-index: 120;
+    background: transparent;
+    background-image: none;
+}
+
+.header-v2--overlay .header-v2__links {
+    border-color: rgba(254, 249, 225, 0.22);
+    background: rgba(1, 1, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.header-v2--overlay .header-v2__links a {
+    color: rgba(254, 249, 225, 0.9);
+}
+
+.header-v2--overlay .header-v2__links a:hover,
+.header-v2--overlay .header-v2__links a.is-active {
+    color: var(--red, #a31d1d);
+}
+
+@media (max-width: 700px) {
+    .header-v2--overlay {
+        top: 38px;
+    }
+}
+
+/* =====================================================
    TABLET
    ===================================================== */
 
