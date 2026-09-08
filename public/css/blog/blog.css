@@ -158,7 +158,7 @@
     padding: 6px 14px 6px 7px;
     border: 1px solid var(--darkred);
     border-radius: 999px;
-    background: #74512D;
+    background: #a31d1d;
     color: var(--cream);
     box-shadow: 0 10px 24px rgba(109, 35, 35, 0.18);
     text-decoration: none;
@@ -975,7 +975,7 @@ body:has(#post-created:target) .created-post {
 
 .blog-pagination__number.is-active,
 .blog-pagination__number[aria-current="page"] {
-    background: var(--deep);
+    background: #a31d1d;
     color: var(--cream);
     pointer-events: none;
 }
