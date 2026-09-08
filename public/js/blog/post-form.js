@@ -5,6 +5,41 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form) return;
 
   const feedback = form.querySelector("[data-post-feedback]");
+  const draftStorageKey = "langco.blog.post.draft";
+
+  const saveDraft = () => {
+    const data = {};
+
+    form.querySelectorAll("[data-post-field]").forEach((field) => {
+      data[field.dataset.postField] = field.value;
+    });
+
+    localStorage.setItem(
+      draftStorageKey,
+      JSON.stringify(data)
+    );
+  };
+
+  const restoreDraft = () => {
+    const saved = localStorage.getItem(draftStorageKey);
+
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+
+      Object.entries(data).forEach(([key, value]) => {
+        const field = getField(key);
+
+        if (field && !field.value) {
+          field.value = value;
+        }
+      });
+
+    } catch (error) {
+      localStorage.removeItem(draftStorageKey);
+    }
+  };
 
   const getField = (name) => form.querySelector(`[data-post-field="${name}"]`);
   const getError = (name) => form.querySelector(`[data-post-error="${name}"]`);
@@ -114,6 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   form.addEventListener("input", (event) => {
+    saveDraft();
     const name = event.target.dataset.postField;
     if (name) validateField(name, false);
 
@@ -145,13 +181,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    localStorage.removeItem(draftStorageKey);
+    
     if (previewStatus) previewStatus.textContent = publishing ? "Published" : "Draft";
     if (previewStatusText) previewStatusText.textContent = publishing ? "Published" : "Draft";
     if (feedback) feedback.textContent = publishing ? "Publishing post…" : "Saving draft…";
   });
 
+  restoreDraft();
+
   updateCount("title", 150);
   updateCount("summary", 400);
   updateCount("content", 20000);
+
   updatePreview();
 });

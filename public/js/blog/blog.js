@@ -304,25 +304,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  searchInput.addEventListener("input", () => applyFilters());
+  searchInput.addEventListener(
+    "input",
+    () => {
+      localStorage.setItem(
+        storageKeys.search,
+        searchInput.value
+      );
+    });
 
   /* ---------- Category events ---------- */
 
-  categoryInputs.forEach((input) => {
-    input.addEventListener("change", () => {
-      applyFilters();
-      scrollToArchive();
-    });
+  categoryInputs.forEach(input => {
+    input.addEventListener(
+      "change",
+      () => {
+        localStorage.setItem(
+          storageKeys.category,
+          getActiveCategory()
+        );
+      });
   });
 
   /* ---------- Sort events ---------- */
 
-  sortSelect?.addEventListener("change", () => {
-    currentPage = 1;
-    updateSortDropdown(sortSelect.value);
-    applySort();
-    applyFilters({ resetPage: false });
-  });
+  sortSelect?.addEventListener(
+    "change",
+    () => {
+      localStorage.setItem(
+        storageKeys.sort,
+        sortSelect.value
+      );
+    });
 
   sortButton?.addEventListener("click", (event) => {
     event.stopPropagation();
