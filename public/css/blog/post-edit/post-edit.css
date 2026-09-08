@@ -6,7 +6,7 @@
     position: relative;
     z-index: 2;
     min-height: 100vh;
-    margin-top: -46px;
+    margin-top: 0px;
     padding: 18px 0 96px;
 }
 
@@ -28,6 +28,7 @@
     font-family: var(--ff-ui);
     font-size: 18px;
     font-weight: 500;
+    padding-left: 28px;
 }
 
 .post-edit-breadcrumb a {

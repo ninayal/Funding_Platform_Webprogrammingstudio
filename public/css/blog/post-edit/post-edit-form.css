@@ -6,6 +6,7 @@
   background: rgba(255, 255, 255, .38);
   box-shadow: 0 16px 38px rgba(73, 40, 22, .1);
 }
+
 .post-edit-panel__heading {
   display: flex;
   align-items: center;
@@ -15,6 +16,7 @@
   padding-bottom: 22px;
   border-bottom: 1px solid var(--line);
 }
+
 .post-edit-panel__heading h2 {
   margin: 0;
   color: var(--deep);
@@ -22,6 +24,7 @@
   font-size: 30px;
   font-weight: 400;
 }
+
 .post-edit-status {
   padding: 7px 13px;
   border-radius: 999px;
@@ -33,6 +36,7 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
 .post-form-error {
   margin: 0 0 22px;
   padding: 14px 18px;
@@ -46,13 +50,15 @@
 
 /* ---------- Post Edit — Fieldsets ---------- */
 .post-edit-section {
-  margin: 0 0 34px;
+  margin: 0 0 20px;
   padding: 0;
   border: 0;
 }
+
 .post-edit-section:last-of-type {
   margin-bottom: 0;
 }
+
 .post-edit-section legend {
   margin-bottom: 18px;
   padding: 0;
@@ -70,6 +76,7 @@
   gap: 16px;
   margin-bottom: 16px;
 }
+
 .post-edit-grid--two {
   grid-template-columns: 2fr 1fr;
 }
@@ -85,6 +92,7 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
 .post-edit-field input,
 .post-edit-field select,
 .post-edit-field textarea {
@@ -102,20 +110,24 @@
   text-transform: none;
   resize: vertical;
 }
+
 .post-edit-field input {
   height: 46px;
 }
+
 .post-edit-field input:focus,
 .post-edit-field select:focus,
 .post-edit-field textarea:focus {
   border-color: rgba(163, 29, 29, .58);
   box-shadow: 0 0 0 4px rgba(163, 29, 29, .08);
 }
+
 .post-edit-field input[readonly] {
   color: var(--muted);
   background: rgba(229, 208, 172, .28);
   cursor: not-allowed;
 }
+
 .post-edit-field input[aria-invalid="true"],
 .post-edit-field select[aria-invalid="true"],
 .post-edit-field textarea[aria-invalid="true"] {
@@ -134,19 +146,23 @@
   letter-spacing: normal;
   text-transform: none;
 }
+
 .post-field-meta [data-post-count] {
   margin-left: auto;
   color: var(--muted);
 }
+
 .post-field-error {
   display: block;
   min-height: 15px;
   color: var(--red);
   font-weight: 500;
 }
+
 .post-field-error:empty {
   display: none;
 }
+
 .post-form-help {
   color: var(--muted);
   font-size: 11px;
@@ -163,6 +179,7 @@
   font-size: 12px;
   font-weight: 600;
 }
+
 .post-form-feedback:empty {
   display: none;
 }
@@ -176,9 +193,11 @@
   padding-top: 24px;
   border-top: 1px solid var(--line);
 }
+
 .post-edit-actions .post-edit-button:first-child {
   margin-right: auto;
 }
+
 .post-edit-button {
   min-height: 46px;
   display: inline-flex;
@@ -198,36 +217,62 @@
   cursor: pointer;
   transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
+
 .post-edit-button:hover {
   border-color: var(--red);
   color: var(--red);
 }
+
 .post-edit-button--secondary {
   border-color: rgba(116, 81, 45, .38);
   color: var(--deep);
   background: rgba(229, 208, 172, .38);
 }
+
 .post-edit-button--secondary:hover {
   border-color: var(--red);
   background: rgba(229, 208, 172, .6);
   color: var(--red);
 }
+
 .post-edit-button--primary {
   border-color: var(--darkred);
   color: var(--cream);
   background: var(--darkred);
 }
+
 .post-edit-button--primary:hover {
   border-color: var(--red);
   background: var(--red);
   transform: translateY(-1px);
 }
+
 .post-edit-button--danger {
   border-color: var(--red);
   color: var(--cream);
   background: var(--red);
 }
+
 .post-edit-button--danger:hover {
   border-color: var(--darkred);
   background: var(--darkred);
+}
+
+.post-edit-grid--two {
+  align-items: start;
+}
+
+.post-edit-field {
+  align-content: start;
+}
+
+.post-field-meta {
+  height: 15px;
+  margin-top: -4px;
+}
+
+.post-edit-field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
 }
