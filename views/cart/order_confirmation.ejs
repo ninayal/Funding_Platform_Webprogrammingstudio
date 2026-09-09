@@ -15,9 +15,10 @@
 </head>
 
 <body>
-  <%- include("../partials/header_v2",{activePage,currentUser,cartCount}) %>
-    <section class="hero">
-      <div class="hero__bg"></div>
+  <section class="hero">
+    <div class="hero__bg"></div>
+
+    <%- include("../partials/header_v2",{activePage,currentUser,cartCount,heroOverlay:true}) %>
 
       <div class="hero__title">
         <a class="hero__kicker" href="/">
