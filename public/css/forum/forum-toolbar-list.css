@@ -266,6 +266,36 @@
 .notification-card--unread {
   background: rgba(175, 143, 111, 0.14);
   border-left: 3px solid var(--darkred);
+  padding-left: 17px;
+}
+
+.notification-card .thread-card__title {
+  font-size: 20px;
+}
+
+.notification-card .thread-card__meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.notification-card .thread-card__title-link {
+  flex: none;
+  padding: 8px 20px;
+  border: 1px solid var(--brown);
+  border-radius: 999px;
+  font-family: var(--ff-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background .18s ease, color .18s ease;
+}
+
+.notification-card .thread-card__title-link:hover {
+  background: var(--brown);
+  color: var(--white);
+  text-decoration: none;
 }
 
 .forum-user-profile__bio {

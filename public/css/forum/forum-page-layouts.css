@@ -34,6 +34,17 @@
   background: rgba(163, 29, 29, .04);
 }
 
+/* Notifications page — the card only has content + a "View" action, so it
+   needs its own 2-column track instead of the avatar/stats/latest-reply
+   grid used for the forum thread list. */
+.thread-card--row.notification-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 20px;
+  border-radius: 14px;
+}
+
 .thread-card__avatar {
   display: grid;
   flex: none;
