@@ -16,6 +16,12 @@ const {
   "../middlewares/reviewImageUpload"
 );
 
+const {
+  requirePurchasedProduct
+} = require(
+  "../middlewares/purchaseMiddleware"
+);
+
 const productController = require(
   "../controllers/productController"
 );
@@ -31,6 +37,7 @@ router.post(
   "/:slug/reviews",
   requireAuth,
   uploadReviewImages,
+  requirePurchasedProduct,
   reviewController.createReview
 );
 

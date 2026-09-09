@@ -64,6 +64,8 @@ const getStatusMessage = (status) =>
       "Your review was updated successfully.",
     deleted:
       "Your review was deleted successfully.",
+    "purchase-required":
+      "You need to purchase this product before writing a review.",
   })[status] || "";
 
 const emptyFormValues = () => ({

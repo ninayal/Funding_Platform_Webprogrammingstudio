@@ -17,6 +17,13 @@
     <button class="pr-form__close" id="close-review-composer" type="button" aria-label="Close review form">×</button>
   </div>
 
+  <% if (reviewForm.errors.purchase) { %>
+    <div class="pr-form__purchase-alert" role="alert" aria-live="assertive">
+      <strong>Purchase required</strong>
+      <span><%= reviewForm.errors.purchase %></span>
+    </div>
+  <% } %>
+
   <fieldset class="pr-rating-fieldset" aria-describedby="rating-error">
     <legend class="pr-field-label">Your rating</legend>
     <div class="pr-form__rating">
