@@ -2,7 +2,7 @@ node_modules/
 
 # Admin-uploaded product images (user-generated, not seed assets)
 public/images/uploads/
-
+public/uploads/
 .env
 .env.*
 !.env.example
