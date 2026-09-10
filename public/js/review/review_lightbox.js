@@ -17,18 +17,13 @@
     button.title = "Go back";
 
     button.addEventListener("click", () => {
-      const referrer = document.referrer;
+      const shopState = sessionStorage.getItem("shopReturnState");
 
-      if (referrer) {
-        try {
-          const previousUrl = new URL(referrer);
-          if (previousUrl.origin === window.location.origin) {
-            window.history.back();
-            return;
-          }
-        } catch {
-          // Fall through to the safe Shop page.
-        }
+      if (shopState) {
+        const state = JSON.parse(shopState);
+        const target = `${state.url}?restoreScroll=${state.scrollY}`;
+        window.location.assign(target);
+        return;
       }
 
       window.location.assign("/cart/products");

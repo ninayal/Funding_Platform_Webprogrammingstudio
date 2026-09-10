@@ -3,6 +3,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!grid) return;
 
     const cards = [...grid.querySelectorAll(".shop-card")];
+
+    // Save Shop All position before opening a product detail page
+    document.querySelectorAll(".shop-card__product-link, .shop-card__title a, .shop-card__rating-link")
+        .forEach((link) => {
+            link.addEventListener("click", () => {
+                sessionStorage.setItem(
+                    "shopReturnState",
+                    JSON.stringify({
+                        url: window.location.pathname + window.location.search,
+                        scrollY: window.scrollY
+                    })
+                );
+            });
+        });
+
+    const restoreScroll = new URLSearchParams(window.location.search).get("restoreScroll");
+
+    if (restoreScroll) {
+        setTimeout(() => {
+            window.scrollTo({
+                top: Number(restoreScroll),
+                behavior: "instant"
+            });
+        }, 100);
+    }
     const count = document.querySelector("#results-count");
     const emptyState = document.querySelector("#products-empty-state");
     const filterForm = document.querySelector("#product-filter-form");

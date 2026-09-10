@@ -256,25 +256,6 @@
 .pd-add-btn:hover {
   background: var(--red);
 }
-.pd-wish-btn {
-  width: 50px;
-  height: 50px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--line);
-  border-radius: 8px;
-  background: var(--white);
-  color: var(--deep);
-  cursor: pointer;
-  transition: none;
-}
-.pd-wish-btn:hover {
-  color: var(--red);
-  border-color: var(--red);
-  transform: scale(1.05);
-}
 
 @media (max-width: 960px) {
   .pd-main {
@@ -309,9 +290,6 @@
 .pd-option__label,
 .pd-qty,
 .pd-add-btn,
-.pd-wish-btn {
-  font-family: var(--ff-body);
-}
 .breadcrumb,
 .pd-detail__desc {
   font-family: var(--ff-body);

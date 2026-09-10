@@ -1,118 +1,64 @@
 "use strict";
 
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
 
+const UPLOAD_DIR = path.join(__dirname, "../public/uploads/reviews");
 const MAX_REVIEW_IMAGE_COUNT = 3;
-const MAX_REVIEW_IMAGE_SIZE =
-  1024 * 1024; // 1 MB per image
 
-const allowedMimeTypes = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp"
-]);
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
-const uploader = multer({
-  storage: multer.memoryStorage(),
+const allowedSignatures = [
+  { mime: "image/jpeg", bytes: [0xff,0xd8,0xff], ext: ".jpg" },
+  { mime: "image/png", bytes: [0x89,0x50,0x4e,0x47], ext: ".png" },
+  { mime: "image/webp", bytes: [0x52,0x49,0x46,0x46], ext: ".webp" }
+];
 
-  limits: {
-    fileSize:
-      MAX_REVIEW_IMAGE_SIZE,
+const checkMagicBytes = (buffer) => {
+  const match = allowedSignatures.find(item =>
+    item.bytes.every((byte, index) => buffer[index] === byte)
+  );
+  return match || null;
+};
 
-    files:
-      MAX_REVIEW_IMAGE_COUNT
-  },
-
-  fileFilter: (
-    req,
-    file,
-    callback
-  ) => {
-    if (
-      allowedMimeTypes.has(
-        file.mimetype
-      )
-    ) {
-      return callback(null, true);
-    }
-
-    const error = new Error(
-      "Upload JPG, PNG, or WEBP images."
-    );
-
-    error.code =
-      "INVALID_REVIEW_IMAGE_TYPE";
-
-    return callback(error);
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => cb(null, UPLOAD_DIR),
+  filename: (_, file, cb) => {
+    cb(null, `${crypto.randomUUID()}${path.extname(file.originalname).toLowerCase()}`);
   }
 });
 
-const getUploadErrorMessage = (
-  error
-) => {
-  if (!error) {
-    return "";
-  }
+const uploader = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024, files: MAX_REVIEW_IMAGE_COUNT }
+});
 
-  if (
-    error.code ===
-    "LIMIT_FILE_SIZE"
-  ) {
-    return (
-      "Each image must be " +
-      "1 MB or smaller."
-    );
-  }
-
-  if (
-    error.code ===
-      "LIMIT_FILE_COUNT" ||
-    error.code ===
-      "LIMIT_UNEXPECTED_FILE"
-  ) {
-    return (
-      "Upload no more than " +
-      "3 images."
-    );
-  }
-
-  if (
-    error.code ===
-    "INVALID_REVIEW_IMAGE_TYPE"
-  ) {
-    return error.message;
-  }
-
-  return (
-    "The review images " +
-    "could not be processed."
-  );
-};
-
-const uploadReviewImages = (
-  req,
-  res,
-  next
-) => {
-  uploader.array(
-    "reviewImages",
-    MAX_REVIEW_IMAGE_COUNT
-  )(
-    req,
-    res,
-    (error) => {
-      req.reviewUploadError =
-        getUploadErrorMessage(
-          error
-        );
-
+const uploadReviewImages = (req, res, next) => {
+  uploader.array("reviewImages", MAX_REVIEW_IMAGE_COUNT)(req,res,(error)=>{
+    if (error) {
+      req.reviewUploadError = error.code === "LIMIT_FILE_SIZE"
+        ? "Each image must be 1 MB or smaller."
+        : "Upload no more than 3 images.";
       return next();
     }
-  );
+
+    const invalid = (req.files || []).find(file => {
+      const buffer = fs.readFileSync(file.path);
+      return !checkMagicBytes(buffer);
+    });
+
+    if (invalid) {
+      fs.unlinkSync(invalid.path);
+      req.reviewUploadError = "Upload JPG, PNG, or WEBP images only.";
+    }
+
+    next();
+  });
 };
 
 module.exports = {
   MAX_REVIEW_IMAGE_COUNT,
-  MAX_REVIEW_IMAGE_SIZE,
   uploadReviewImages
 };

@@ -2,6 +2,8 @@
 
 const productModel = require("../models/productModel");
 const reviewModel = require("../models/reviewModel");
+const fs = require("fs");
+const path = require("path");
 
 const {
   getCurrentUser,
@@ -24,12 +26,14 @@ const cleanParagraph = (value) =>
 const convertImagesToDataUrls = (files) => {
   if (!Array.isArray(files)) return [];
 
-  return files
-    .filter((file) => file?.buffer && file?.mimetype)
-    .map(
-      (file) =>
-        `data:${file.mimetype};base64,${file.buffer.toString("base64")}`
-    );
+  return files.map((file) => `/uploads/reviews/${file.filename}`);
+};
+
+const removeReviewImages = (images = []) => {
+  images.forEach((image) => {
+    const filePath = path.join(__dirname, "../public", image);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  });
 };
 
 const toArray = (value) => {
@@ -494,12 +498,18 @@ const deleteReview = async (
 
     if (!currentUser) return;
 
+    const oldReview = await reviewModel.getReviewById(product.id, req.params.reviewId);
+
     const result =
       await reviewModel.deleteReview(
         product.id,
         req.params.reviewId,
         currentUser.id
       );
+
+    if (result.status === "deleted" && oldReview) {
+      removeReviewImages(oldReview.images);
+    }
 
     if (
       result.status === "not-found"

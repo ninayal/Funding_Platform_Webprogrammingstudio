@@ -538,7 +538,8 @@
   const pagination = document.querySelector("#review-pagination");
 
   const REVIEWS_PER_PAGE = 5;
-  let activeRating = "all";
+  const ratingStorageKey = `reviewRatingFilter:${productId}`;
+  let activeRating = localStorage.getItem(ratingStorageKey) || "all";
   let currentPage = 1;
 
   const normaliseSearch = (value) => String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
@@ -665,6 +666,7 @@
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       activeRating = button.dataset.ratingFilter;
+      localStorage.setItem(ratingStorageKey, activeRating);
       currentPage = 1;
 
       filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
@@ -677,6 +679,10 @@
       const confirmed = window.confirm("Delete your review and its uploaded photos? This action cannot be undone.");
       if (!confirmed) event.preventDefault();
     });
+  });
+
+  filterButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.ratingFilter === activeRating);
   });
 
   applyReviewControls();

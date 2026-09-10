@@ -36,8 +36,8 @@ const router =
 router.post(
   "/:slug/reviews",
   requireAuth,
-  uploadReviewImages,
   requirePurchasedProduct,
+  uploadReviewImages,
   reviewController.createReview
 );
 
