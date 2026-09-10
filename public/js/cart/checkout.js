@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardExpiry = form.querySelector("#card_expiry");
     const cardCvv = form.querySelector("#card_cvv");
 
+    const sensitiveFields = [
+        "card_number",
+        "cardNumber",
+        "card_expiry",
+        "cardExpiry",
+        "card_cvv",
+        "cardCvv",
+        "security_code",
+        "securityCode",
+        "cvv"
+    ];
+
     const messages = {
         email: "Enter a valid email address.",
         first_name: "Enter your first name.",
@@ -23,15 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
         card_cvv: "Enter a valid 3 or 4 digit security code."
     };
 
+    const fields = [
+        ...form.querySelectorAll(
+            'input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), select, textarea'
+        )
+    ];
+
+    const shouldPersist = (field) => {
+        if (!field.name) return false;
+        if (field.hasAttribute("data-no-persist")) return false;
+        return !sensitiveFields.includes(field.name);
+    };
+
     const saveFormData = () => {
         const data = {};
-
         fields.forEach((field) => {
-            if (field.name) {
+            if (shouldPersist(field)) {
                 data[field.name] = field.value;
             }
         });
-
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     };
 
@@ -39,18 +61,36 @@ document.addEventListener("DOMContentLoaded", () => {
         const savedData = localStorage.getItem(STORAGE_KEY);
         if (!savedData) return;
 
-        const data = JSON.parse(savedData);
-
-        fields.forEach((field) => {
-            if (field.name && data[field.name] !== undefined) {
-                field.value = data[field.name];
-            }
-        });
+        try {
+            const data = JSON.parse(savedData);
+            fields.forEach((field) => {
+                if (shouldPersist(field) && data[field.name] !== undefined) {
+                    field.value = data[field.name];
+                }
+            });
+        } catch {
+            localStorage.removeItem(STORAGE_KEY);
+        }
     };
 
     const clearFormData = () => {
         localStorage.removeItem(STORAGE_KEY);
     };
+
+    const clearSensitivePaymentData = () => {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (!savedData) return;
+
+        try {
+            const data = JSON.parse(savedData);
+            sensitiveFields.forEach((field) => delete data[field]);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+    };
+
+    clearSensitivePaymentData();
 
     const formatCardNumber = () => {
         const digits = cardNumber.value.replace(/\D/g, "").slice(0, 16);
@@ -59,10 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const formatCardExpiry = () => {
         const digits = cardExpiry.value.replace(/\D/g, "").slice(0, 4);
-        cardExpiry.value =
-            digits.length <= 2
-                ? digits
-                : `${digits.slice(0, 2)} / ${digits.slice(2)}`;
+        cardExpiry.value = digits.length <= 2 ? digits : `${digits.slice(0, 2)} / ${digits.slice(2)}`;
     };
 
     const formatCvv = () => {
@@ -81,9 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (month < 1 || month > 12) return "Enter a valid expiry month.";
 
         const now = new Date();
-        const expired =
-            year < now.getFullYear() ||
-            (year === now.getFullYear() && month < now.getMonth() + 1);
+        const expired = year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1);
 
         return expired ? "The card expiry date must not be in the past." : "";
     };
@@ -92,26 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const { validity } = field;
 
         if (validity.valueMissing) {
-            return field.tagName === "SELECT"
-                ? messages[field.name] || "Select an option."
-                : "This field is required.";
+            return field.tagName === "SELECT" ? messages[field.name] || "Select an option." : "This field is required.";
         }
 
-        if (validity.typeMismatch) {
-            return messages[field.name] || "Enter a valid value.";
-        }
-
-        if (validity.tooShort) {
-            return `Enter at least ${field.minLength} characters.`;
-        }
-
-        if (validity.tooLong) {
-            return `Use no more than ${field.maxLength} characters.`;
-        }
-
-        if (validity.patternMismatch) {
-            return messages[field.name] || "Enter a valid value.";
-        }
+        if (validity.typeMismatch) return messages[field.name] || "Enter a valid value.";
+        if (validity.tooShort) return `Enter at least ${field.minLength} characters.`;
+        if (validity.tooLong) return `Use no more than ${field.maxLength} characters.`;
+        if (validity.patternMismatch) return messages[field.name] || "Enter a valid value.";
 
         return "";
     };
@@ -151,24 +173,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return true;
         }
 
-        const message =
-            field === cardExpiry
-                ? getExpiryError()
-                : field.validity.valid
-                    ? ""
-                    : getValidationMessage(field);
+        const message = field === cardExpiry ? getExpiryError() : field.validity.valid ? "" : getValidationMessage(field);
 
         field.setCustomValidity(message);
         showFieldError(field, message);
 
         return !message;
     };
-
-    const fields = [
-        ...form.querySelectorAll(
-            'input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), select, textarea'
-        )
-    ];
 
     restoreFormData();
 
@@ -190,19 +201,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cardNumber?.addEventListener("input", () => {
         formatCardNumber();
-        saveFormData();
         validateField(cardNumber);
     });
 
     cardExpiry?.addEventListener("input", () => {
         formatCardExpiry();
-        saveFormData();
         validateField(cardExpiry);
     });
 
     cardCvv?.addEventListener("input", () => {
         formatCvv();
-        saveFormData();
         validateField(cardCvv);
     });
 
