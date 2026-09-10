@@ -29,6 +29,15 @@ const convertImagesToDataUrls = (files) => {
   return files.map((file) => `/uploads/reviews/${file.filename}`);
 };
 
+
+const removeUploadedFiles = (files = []) => {
+  files.forEach((file) => {
+    if (file?.path && fs.existsSync(file.path)) {
+      fs.unlinkSync(file.path);
+    }
+  });
+};
+
 const removeReviewImages = (images = []) => {
   images.forEach((image) => {
     const filePath = path.join(__dirname, "../public", image);
@@ -238,6 +247,7 @@ const createReview = async (
     });
 
     if (Object.keys(errors).length) {
+      removeUploadedFiles(req.files);
       return await renderProductDetail(
         req,
         res,
@@ -414,6 +424,7 @@ const updateReview = async (
     });
 
     if (Object.keys(errors).length) {
+      removeUploadedFiles(req.files);
       return await renderProductDetail(
         req,
         res,

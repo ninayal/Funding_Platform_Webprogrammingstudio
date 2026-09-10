@@ -17,9 +17,18 @@ const allowedSignatures = [
 ];
 
 const checkMagicBytes = (buffer) => {
-  const match = allowedSignatures.find(item =>
-    item.bytes.every((byte, index) => buffer[index] === byte)
-  );
+  const match = allowedSignatures.find((item) => {
+    if (!item.bytes.every((byte, index) => buffer[index] === byte)) {
+      return false;
+    }
+
+    if (item.mime === "image/webp") {
+      return buffer.toString("ascii", 8, 12) === "WEBP";
+    }
+
+    return true;
+  });
+
   return match || null;
 };
 
@@ -44,13 +53,18 @@ const uploadReviewImages = (req, res, next) => {
       return next();
     }
 
-    const invalid = (req.files || []).find(file => {
+    const invalidFiles = (req.files || []).filter((file) => {
       const buffer = fs.readFileSync(file.path);
       return !checkMagicBytes(buffer);
     });
 
-    if (invalid) {
-      fs.unlinkSync(invalid.path);
+    invalidFiles.forEach((file) => {
+      if (fs.existsSync(file.path)) {
+        fs.unlinkSync(file.path);
+      }
+    });
+
+    if (invalidFiles.length) {
       req.reviewUploadError = "Upload JPG, PNG, or WEBP images only.";
     }
 
