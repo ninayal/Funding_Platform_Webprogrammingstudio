@@ -271,14 +271,12 @@ const createPost = async (
     ).trim(),
     image: {
       url: imageUrl,
-      listUrl: imageUrl,
       alt: String(
         postData.imageAlt ||
         title ||
         "Blog image"
       ).trim(),
-      caption: imageCaption,
-      listCaption: imageCaption
+      caption: imageCaption
     },
     tags: Array.isArray(postData.tags)
       ? postData.tags

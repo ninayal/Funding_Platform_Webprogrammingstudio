@@ -3,37 +3,55 @@
 const mongoose=require("mongoose");
 
 const authorSchema=new mongoose.Schema({
+
   id:{
     type:String,
     ref:"Users",
     required:true
   },
+
   name:{
     type:String,
     required:true,
     trim:true
   },
+
   initials:{
     type:String,
     default:"",
     trim:true
   },
+
   role:{
     type:String,
     default:"Author",
     trim:true
   }
+
 },{
   _id:false
 });
 
 const imageSchema=new mongoose.Schema({
-  url:{type:String,default:""},
-  listUrl:{type:String,default:""},
-  alt:{type:String,default:""},
-  caption:{type:String,default:""},
-  listCaption:{type:String,default:""}
-},{_id:false});
+
+ url:{
+  type:String,
+  default:""
+ },
+
+ alt:{
+  type:String,
+  default:""
+ },
+
+ caption:{
+  type:String,
+  default:""
+ }
+
+},{
+ _id:false
+});
 
 const blogPostSchema=new mongoose.Schema({
   _id:{type:String,required:true},
@@ -61,7 +79,11 @@ const blogPostSchema=new mongoose.Schema({
 });
 
 blogPostSchema.index({"author.id":1,updatedAt:-1});
-blogPostSchema.index({status:1,category:1,publishedAt:-1});
+blogPostSchema.index({
+ "author.id":1,
+ status:1,
+ updatedAt:-1
+});
 blogPostSchema.index({
   title:"text",
   summary:"text",
