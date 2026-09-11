@@ -40,7 +40,6 @@ body {
 @media (max-width: 1024px) {
     .giftcard-page .gift-hero {
         height: 700px;
-        padding: 0;
     }
 }
 
@@ -48,7 +47,6 @@ body {
     .giftcard-page .gift-hero {
         height: 620px;
         min-height: 520px;
-        padding: 0;
     }
 
     .giftcard-page .gift-hero__content {
@@ -61,13 +59,10 @@ body {
     .giftcard-page .gift-hero {
         height: 560px;
         min-height: 500px;
-        padding: 0;
     }
 
     .giftcard-page .gift-hero__content {
-        top: 44%;
         width: 92%;
-        padding: 0;
     }
 
     .giftcard-wave {
