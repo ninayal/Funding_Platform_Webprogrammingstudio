@@ -73,7 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const syncHiddenInput = () => {
       const html = content.innerHTML.trim();
       hiddenInput.value = html === "<br>" ? "" : html;
+      // formPersistence.js only saves a field when it sees an "input" event fire on
+      // it directly; the hidden textarea's value above is only ever set from code,
+      // so dispatch one here to opt this field into the same draft-persistence flow.
+      hiddenInput.dispatchEvent(new Event("input", { bubbles: true }));
     };
+
+    // If a form-persistence script restored a draft into the hidden textarea before
+    // this editor initialized, mirror it into the visible contenteditable surface.
+    if (hiddenInput.value && !content.innerHTML.trim()) {
+      content.innerHTML = hiddenInput.value;
+    }
 
     const updateActiveStates = () => {
       root.querySelectorAll("[data-cmd]").forEach((button) => {

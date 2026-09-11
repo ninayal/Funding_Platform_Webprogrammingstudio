@@ -26,20 +26,44 @@
       <h1><%= thread ? "Edit Thread" : "Create Thread" %></h1>
     </div>
 
-    <form class="create-thread-form" id="createThreadForm" action="/forum/<%= thread ? `thread/${thread.slug}/edit` : "create" %>" method="POST">
+    <%
+      var fieldErrors = typeof errors !== "undefined" && errors ? errors : {};
+      var values = typeof formValues !== "undefined" && formValues
+        ? formValues
+        : (thread
+          ? { title: thread.title, category: thread.category, tags: thread.tags ? thread.tags.join(", ") : "", content: thread.posts[0].content }
+          : { title: "", category: "", tags: "", content: "" });
+      var tagsValue = Array.isArray(values.tags) ? values.tags.join(", ") : (values.tags || "");
+      var hasErrors = Object.keys(fieldErrors).length > 0;
+    %>
 
-      <input type="text" name="title" class="create-thread-title-input" placeholder="Title" maxlength="<%= maxTitleLength %>" value="<%= thread ? thread.title : "" %>" required>
-      <span class="create-thread-title-counter" data-title-counter><%= thread ? thread.title.length : 0 %>/<%= maxTitleLength %></span>
+    <% if (hasErrors) { %>
+    <div class="form-error-summary" role="alert">
+      <p>Please fix the following before <%= thread ? "saving your changes" : "posting" %>:</p>
+      <ul>
+        <% Object.values(fieldErrors).forEach((message) => { %>
+        <li><%= message %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <% } %>
+
+    <form class="create-thread-form" id="createThreadForm" action="/forum/<%= thread ? `thread/${thread.slug}/edit` : "create" %>" method="POST" <% if (!thread) { %>data-persist-form="forum-create-thread"<% } %> novalidate>
+
+      <input type="text" name="title" class="create-thread-title-input" placeholder="Title" maxlength="<%= maxTitleLength %>" minlength="<%= minTitleLength %>" value="<%= values.title %>" aria-invalid="<%= fieldErrors.title ? "true" : "false" %>" aria-describedby="title-error" required>
+      <span class="create-thread-title-counter" data-title-counter><%= values.title.length %>/<%= maxTitleLength %></span>
+      <span class="field-error" id="title-error" data-title-error<% if (!fieldErrors.title) { %> hidden<% } %>><%= fieldErrors.title || "" %></span>
 
       <div class="create-thread-topic-row">
-        <select name="category" class="create-thread-category-select" required>
-          <option value="" disabled <%= !thread ? "selected" : "" %>>Choose a category</option>
+        <select name="category" class="create-thread-category-select" aria-invalid="<%= fieldErrors.category ? "true" : "false" %>" aria-describedby="category-error" required>
+          <option value="" disabled <%= !values.category ? "selected" : "" %>>Choose a category</option>
           <% categories.forEach((cat) => { %>
-          <option value="<%= cat.id %>" <%= thread && thread.category === cat.id ? "selected" : "" %>><%= cat.label %></option>
+          <option value="<%= cat.id %>" <%= values.category === cat.id ? "selected" : "" %>><%= cat.label %></option>
           <% }) %>
         </select>
-        <input type="text" name="tags" class="create-thread-tags-input" placeholder="Tags (comma separated)" value="<%= thread && thread.tags ? thread.tags.join(', ') : '' %>">
+        <input type="text" name="tags" class="create-thread-tags-input" placeholder="Tags (comma separated)" value="<%= tagsValue %>">
       </div>
+      <span class="field-error" id="category-error" data-category-error<% if (!fieldErrors.category) { %> hidden<% } %>><%= fieldErrors.category || "" %></span>
 
       <%- include("../partials/forum/rich_editor", {
         fieldName: "content",
@@ -47,8 +71,9 @@
         editorId: "createThreadEditor",
         variant: "full",
         maxTextLength: maxTextLength,
-        value: thread ? thread.posts[0].content : ""
+        value: values.content
       }) %>
+      <span class="field-error" id="content-error" data-content-error<% if (!fieldErrors.content) { %> hidden<% } %>><%= fieldErrors.content || "" %></span>
 
       <div class="create-thread-actions">
         <a href="<%= thread ? `/forum/thread/${thread.slug}` : "/forum" %>" class="draft-btn" id="cancelBtn">Cancel</a>
@@ -64,11 +89,49 @@
 
     <script>
       (function () {
+        var MIN_TITLE_LENGTH = <%= minTitleLength %>;
         var titleInput = document.querySelector(".create-thread-title-input");
         var counter = document.querySelector("[data-title-counter]");
+        var titleError = document.querySelector("[data-title-error]");
+        var categorySelect = document.querySelector(".create-thread-category-select");
+        var categoryError = document.querySelector("[data-category-error]");
+
+        var setFieldError = function (field, errorEl, message) {
+          if (!field || !errorEl) return;
+          if (message) {
+            errorEl.textContent = message;
+            errorEl.hidden = false;
+            field.setAttribute("aria-invalid", "true");
+          } else {
+            errorEl.textContent = "";
+            errorEl.hidden = true;
+            field.setAttribute("aria-invalid", "false");
+          }
+        };
+
         if (titleInput && counter) {
           titleInput.addEventListener("input", function () {
-            counter.textContent = titleInput.value.length + "/" + titleInput.getAttribute("maxlength");
+            var maxLength = titleInput.getAttribute("maxlength");
+            counter.textContent = titleInput.value.length + "/" + maxLength;
+
+            var trimmedLength = titleInput.value.trim().length;
+            if (trimmedLength === 0) {
+              setFieldError(titleInput, titleError, "Title is required.");
+            } else if (trimmedLength < MIN_TITLE_LENGTH) {
+              setFieldError(titleInput, titleError, "Title must be at least " + MIN_TITLE_LENGTH + " characters.");
+            } else {
+              setFieldError(titleInput, titleError, null);
+            }
+          });
+        }
+
+        if (categorySelect && categoryError) {
+          categorySelect.addEventListener("change", function () {
+            if (!categorySelect.value) {
+              setFieldError(categorySelect, categoryError, "Please choose a category.");
+            } else {
+              setFieldError(categorySelect, categoryError, null);
+            }
           });
         }
       })();
@@ -78,6 +141,7 @@
 
   <%- include("../partials/footer") %>
 
+  <script src="/js/shared/formPersistence.js" defer></script>
   <script src="/js/forum/rich_editor.js" defer></script>
 
 </body>

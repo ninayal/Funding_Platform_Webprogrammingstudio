@@ -5,11 +5,47 @@ const { requestWantsJson } = require("../middlewares/authMiddleware");
 const MAX_CONTENT_LENGTH = 3_000_000;
 const MAX_TITLE_LENGTH = 150;
 const MAX_TEXT_LENGTH = 10_000;
+const MIN_TITLE_LENGTH = 5;
+const MIN_TEXT_LENGTH = 10;
 const SORT_OPTIONS = ["new", "top"];
 
 const isAdminUser = (user) => userModel.isAdminRole(user?.role);
 
 const plainTextLength = (html) => String(html || "").replace(/<[^>]*>/g, "").trim().length;
+
+const validateThreadFields = ({ category, title, content }) => {
+  const categoryMeta = forumModel.getCategoryMeta(category);
+  const trimmedTitle = String(title || "").trim();
+  const sanitizedContent = forumModel.sanitizeContent(content);
+  const hasImage = /<img\b/i.test(sanitizedContent);
+  const plainLength = plainTextLength(sanitizedContent);
+
+  const errors = {};
+
+  if (!categoryMeta) {
+    errors.category = "Please choose a category.";
+  }
+
+  if (!trimmedTitle) {
+    errors.title = "Title is required.";
+  } else if (trimmedTitle.length < MIN_TITLE_LENGTH) {
+    errors.title = `Title must be at least ${MIN_TITLE_LENGTH} characters.`;
+  } else if (trimmedTitle.length > MAX_TITLE_LENGTH) {
+    errors.title = `Title must be ${MAX_TITLE_LENGTH} characters or fewer.`;
+  }
+
+  if (forumModel.isContentEmpty(sanitizedContent)) {
+    errors.content = "Content is required.";
+  } else if (!hasImage && plainLength < MIN_TEXT_LENGTH) {
+    errors.content = `Content must be at least ${MIN_TEXT_LENGTH} characters.`;
+  } else if (!hasImage && plainLength > MAX_TEXT_LENGTH) {
+    errors.content = `Content must be ${MAX_TEXT_LENGTH} characters or fewer.`;
+  } else if (sanitizedContent.length > MAX_CONTENT_LENGTH) {
+    errors.content = "Content is too large.";
+  }
+
+  return { errors, categoryMeta, trimmedTitle, sanitizedContent };
+};
 
 const getForumHome = async (req, res) => {
   const members = await userModel.getAllUsers();
@@ -115,8 +151,11 @@ const getCreateThreadPage = (req, res) => {
   res.render("forum/Create_thread", {
     categories: forumModel.categories,
     maxTitleLength: MAX_TITLE_LENGTH,
+    minTitleLength: MIN_TITLE_LENGTH,
     maxTextLength: MAX_TEXT_LENGTH,
     thread: null,
+    errors: {},
+    formValues: null,
   });
 };
 
@@ -130,33 +169,36 @@ const getEditThreadPage = async (req, res, next) => {
   res.render("forum/Create_thread", {
     categories: forumModel.categories,
     maxTitleLength: MAX_TITLE_LENGTH,
+    minTitleLength: MIN_TITLE_LENGTH,
     maxTextLength: MAX_TEXT_LENGTH,
     thread,
+    errors: {},
+    formValues: null,
   });
 };
 
 const createThread = async (req, res) => {
   const { category, title, content, status, tags } = req.body;
-  const categoryMeta = forumModel.getCategoryMeta(category);
+  const { errors, trimmedTitle, sanitizedContent } = validateThreadFields({ category, title, content });
 
-  if (
-    String(content || "").length > MAX_CONTENT_LENGTH ||
-    String(title || "").length > MAX_TITLE_LENGTH ||
-    plainTextLength(content) > MAX_TEXT_LENGTH
-  ) {
-    return res.redirect("/forum/create");
-  }
-
-  if (!categoryMeta || !String(title || "").trim() || forumModel.isContentEmpty(content)) {
-    return res.redirect("/forum/create");
+  if (Object.keys(errors).length) {
+    return res.render("forum/Create_thread", {
+      categories: forumModel.categories,
+      maxTitleLength: MAX_TITLE_LENGTH,
+      minTitleLength: MIN_TITLE_LENGTH,
+      maxTextLength: MAX_TEXT_LENGTH,
+      thread: null,
+      errors,
+      formValues: { title, category, tags, content: sanitizedContent },
+    });
   }
 
   const author = req.currentUser;
 
   const thread = await forumModel.addThread({
     category,
-    title: String(title).trim(),
-    content,
+    title: trimmedTitle,
+    content: sanitizedContent,
     author: author.name,
     authorId: author.id,
     initials: author.initials || "GU",
@@ -172,22 +214,33 @@ const createThread = async (req, res) => {
   return res.redirect(`/forum/thread/${thread.slug}`);
 };
 
-const editThread = async (req, res) => {
+const editThread = async (req, res, next) => {
   const { category, title, content, tags } = req.body;
+  const { errors, trimmedTitle, sanitizedContent } = validateThreadFields({ category, title, content });
 
-  if (
-    String(content || "").length > MAX_CONTENT_LENGTH ||
-    String(title || "").length > MAX_TITLE_LENGTH ||
-    plainTextLength(content) > MAX_TEXT_LENGTH
-  ) {
-    return res.redirect(`/forum/thread/${req.params.slug}/edit`);
+  if (Object.keys(errors).length) {
+    const thread = await forumModel.getThreadBySlug(req.params.slug);
+
+    if (!thread || thread.authorId !== req.currentUser.id) {
+      return next();
+    }
+
+    return res.render("forum/Create_thread", {
+      categories: forumModel.categories,
+      maxTitleLength: MAX_TITLE_LENGTH,
+      minTitleLength: MIN_TITLE_LENGTH,
+      maxTextLength: MAX_TEXT_LENGTH,
+      thread,
+      errors,
+      formValues: { title, category, tags, content: sanitizedContent },
+    });
   }
 
   const thread = await forumModel.editThread(req.params.slug, req.currentUser.id, {
-    title,
+    title: trimmedTitle,
     category,
     tags,
-    content,
+    content: sanitizedContent,
   });
 
   if (!thread) {

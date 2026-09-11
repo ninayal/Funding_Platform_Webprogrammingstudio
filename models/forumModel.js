@@ -1,4 +1,5 @@
 const { randomUUID } = require("node:crypto");
+const sanitizeHtml = require("sanitize-html");
 
 const ForumThreads = require("./schemas/ForumThread");
 const ForumReports = require("./schemas/ForumReport");
@@ -52,6 +53,26 @@ const buildSnippet = (text, query, radius = 80) => {
 };
 
 const isContentEmpty = (html) => !/<img\b/i.test(html) && !stripHtml(html);
+
+// Posts come from a contenteditable rich-text editor, so their HTML must be
+// allowlist-sanitized before it is ever stored or re-rendered with `<%- %>`.
+const CONTENT_SANITIZE_OPTIONS = {
+  allowedTags: ["b", "i", "u", "strong", "em", "p", "br", "div", "ul", "ol", "li", "a", "img", "blockquote", "span"],
+  allowedAttributes: {
+    a: ["href", "target", "rel"],
+    img: ["src", "alt"],
+  },
+  allowedClasses: {
+    blockquote: ["forum-quote-embed"],
+    a: ["forum-quote-embed__link"],
+    span: ["forum-quote-embed__author", "forum-quote-embed__snippet"],
+  },
+  allowedSchemes: ["http", "https", "mailto"],
+  allowedSchemesByTag: { img: ["http", "https", "data"] },
+  allowProtocolRelative: false,
+};
+
+const sanitizeContent = (html) => sanitizeHtml(String(html || ""), CONTENT_SANITIZE_OPTIONS);
 
 const parseTags = (rawTags) => {
   const source = Array.isArray(rawTags) ? rawTags.join(",") : rawTags;
@@ -147,6 +168,7 @@ const findPostDoc = async (slug, postId) => {
 
 const decoratePost = (post, viewerId) => ({
   ...post,
+  content: sanitizeContent(post.content),
   likeCount: post.likedBy.length,
   dislikeCount: post.dislikedBy.length,
   likedByCurrentUser: Boolean(viewerId) && post.likedBy.includes(viewerId),
@@ -315,14 +337,16 @@ const editThread = async (slug, userId, { title, category, tags, content }) => {
 
   const categoryMeta = getCategoryMeta(category);
 
-  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(content)) {
+  const sanitizedContent = sanitizeContent(content);
+
+  if (!categoryMeta || !String(title || "").trim() || isContentEmpty(sanitizedContent)) {
     return null;
   }
 
   threadDoc.title = String(title).trim();
   threadDoc.category = category;
   threadDoc.tags = parseTags(tags);
-  threadDoc.posts[0].content = content;
+  threadDoc.posts[0].content = sanitizedContent;
   threadDoc.posts[0].editedAt = new Date();
 
   await threadDoc.save();
@@ -337,11 +361,13 @@ const editPost = async (slug, postId, userId, content) => {
     return null;
   }
 
-  if (isContentEmpty(content)) {
+  const sanitizedContent = sanitizeContent(content);
+
+  if (isContentEmpty(sanitizedContent)) {
     return null;
   }
 
-  found.post.content = content;
+  found.post.content = sanitizedContent;
   found.post.editedAt = new Date();
 
   await found.threadDoc.save();
@@ -473,7 +499,7 @@ const getOpenReports = async () => {
         ...r,
         id: String(r._id),
         thread: found ? found.thread : null,
-        post: found ? found.post : null,
+        post: found ? { ...found.post, content: sanitizeContent(found.post.content) } : null,
       };
     })
   );
@@ -676,7 +702,7 @@ const addThread = async ({ category, title, content, author, authorId, initials,
         rank,
         date: formatDate(now),
         createdAt: now,
-        content,
+        content: sanitizeContent(content),
         editedAt: null,
         parentPostId: null,
         likedBy: [],
@@ -707,7 +733,7 @@ const addPost = async (slug, { author, authorId, initials, rank, content, parent
     rank,
     date: formatDate(now),
     createdAt: now,
-    content,
+    content: sanitizeContent(content),
     editedAt: null,
     parentPostId: parentPostId || null,
     likedBy: [],
@@ -768,6 +794,7 @@ module.exports = {
   addThread,
   addPost,
   isContentEmpty,
+  sanitizeContent,
   searchThreads,
   addNotification,
   getNotificationsForUser,

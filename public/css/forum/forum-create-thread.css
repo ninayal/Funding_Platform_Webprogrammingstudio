@@ -26,6 +26,45 @@
   color: var(--ink);
 }
 
+.create-thread-title-input[aria-invalid="true"],
+.create-thread-category-select[aria-invalid="true"] {
+  border-color: var(--red);
+}
+
+.form-error-summary {
+  width: min(900px, calc(100% - 48px));
+  margin: 0 auto 18px;
+  padding: 14px 20px;
+  border: 1px solid var(--red);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 14px;
+}
+
+.form-error-summary p {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.form-error-summary ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.field-error {
+  display: block;
+  margin-top: -8px;
+  color: var(--red);
+  font-family: var(--ff-ui);
+  font-size: 13px;
+}
+
+.field-error[hidden] {
+  display: none;
+}
+
 .create-thread-topic-row {
   display: flex;
   flex-wrap: wrap;
