@@ -164,7 +164,7 @@
                     <% relatedPosts.forEach((relatedPost)=> { %>
                       <article class="blog-related-card">
                         <a class="blog-related-card__image" href="<%= relatedPost.url %>">
-                          <img src="<%= relatedPost.image.listUrl || relatedPost.image.url %>"
+                          <img src="<%= relatedPost.image.url || relatedPost.image.url %>"
                             alt="<%= relatedPost.image.alt %>" />
                         </a>
                         <div class="blog-related-card__content">

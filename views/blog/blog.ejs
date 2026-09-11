@@ -143,9 +143,9 @@
                       <img src="<%= leadStory.image.listUrl || leadStory.image.url %>"
                         alt="<%= leadStory.image.alt || leadStory.title %>" />
                       <% } %>
-                        <% if (leadStory.image && leadStory.image.listCaption) { %>
+                        <% if (leadStory.image && leadStory.image.caption) { %>
                           <span class="image-caption">
-                            <%= leadStory.image.listCaption %>
+                            <%= leadStory.image.caption %>
                           </span>
                           <% } %>
                   </a>
@@ -213,8 +213,8 @@
                           data-category="<%= post.categorySlug %>" data-search="<%= post.searchableText %>">
                           <!-- Image -->
                           <a class="card-image" href="<%= post.url %>">
-                            <% if (post.image && (post.image.listUrl || post.image.url)) { %>
-                              <img src="<%= post.image.listUrl || post.image.url %>"
+                            <% if (post.image && (post.image.url || post.image.url)) { %>
+                              <img src="<%= post.image.url || post.image.url %>"
                                 alt="<%= post.image.alt || post.title %>" />
                               <% } %>
                           </a>
@@ -309,8 +309,8 @@
                             data-title="<%= String(post.title || '').toLowerCase() %>">
                             <!-- Post Thumbnail -->
                             <a class="row-thumb" href="<%= post.url %>">
-                              <% if (post.image && (post.image.listUrl || post.image.url)) { %>
-                                <img src="<%= post.image.listUrl || post.image.url %>"
+                              <% if (post.image && (post.image.url || post.image.url)) { %>
+                                <img src="<%= post.image.url || post.image.url %>"
                                   alt="<%= post.image.alt || post.title %>" loading="lazy" />
                                 <% } else { %>
                                   <span class="placeholder-thumb" aria-hidden="true">Story</span>

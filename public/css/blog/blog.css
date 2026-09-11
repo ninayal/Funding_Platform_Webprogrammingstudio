@@ -990,7 +990,11 @@ body:has(#post-created:target) .created-post {
 
 html,
 body {
-    overflow-x: hidden;
+    min-width: 320px;
+    overflow-x: auto;
+}
+* {
+    box-sizing: border-box;
 }
 
 img,
