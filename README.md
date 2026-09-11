@@ -393,11 +393,14 @@ http://localhost:3000
 
 # 👥 Development Team
 
-| Member | Main Contribution |
-|---|---|
-| Nina | Project coordination and core features |
-| Ai Phuc Canh Khoi | Product Review and Rating Module |
-| Other Team Members | Full-stack modules and integrations |
+The project was collaboratively developed by four team members, with each member responsible for designing, implementing, testing, and integrating a specific full-stack module.
+
+| Member | Student ID | Module Responsibility |
+|---|---|---|
+| Nguyen Dinh Phuc Khang | S4208144 | Blog Module — Responsible for blog creation, display, and management features. |
+| Vu Quang Minh | S4220184 | Discussion Forum Module — Responsible for forum discussions, replies, and community interaction features. |
+| Lam Thanh Yen Nhi | S4203654 | Shopping Cart Module — Responsible for cart management, item updates, and checkout integration. |
+| Ai Phuc Canh Khoi | S4124826 | Product Review and Rating Module — Responsible for review submission, rating system, validation, image upload handling, and review management. |
 
 ---
 
