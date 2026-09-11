@@ -539,8 +539,22 @@
 
   const REVIEWS_PER_PAGE = 5;
   const ratingStorageKey = `reviewRatingFilter:${productId}`;
-  let activeRating = localStorage.getItem(ratingStorageKey) || "all";
+  const reviewControlsStorageKey = `reviewControls:${productId}`;
+  const savedReviewControls = JSON.parse(localStorage.getItem(reviewControlsStorageKey) || "{}");
+  let activeRating = savedReviewControls.rating || localStorage.getItem(ratingStorageKey) || "all";
   let currentPage = 1;
+
+  if (searchInput && savedReviewControls.search) {
+    searchInput.value = savedReviewControls.search;
+  }
+
+  if (searchField && savedReviewControls.field) {
+    searchField.value = savedReviewControls.field;
+  }
+
+  if (sortSelect && savedReviewControls.sort) {
+    sortSelect.value = savedReviewControls.sort;
+  }
 
   const normaliseSearch = (value) => String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
 
@@ -649,16 +663,28 @@
   });
 
   searchInput?.addEventListener("input", () => {
+    localStorage.setItem(reviewControlsStorageKey, JSON.stringify({
+      ...JSON.parse(localStorage.getItem(reviewControlsStorageKey) || "{}"),
+      search: searchInput.value
+    }));
     currentPage = 1;
     applyReviewControls();
   });
 
   searchField?.addEventListener("change", () => {
+    localStorage.setItem(reviewControlsStorageKey, JSON.stringify({
+      ...JSON.parse(localStorage.getItem(reviewControlsStorageKey) || "{}"),
+      field: searchField.value
+    }));
     currentPage = 1;
     applyReviewControls();
   });
 
   sortSelect?.addEventListener("change", () => {
+    localStorage.setItem(reviewControlsStorageKey, JSON.stringify({
+      ...JSON.parse(localStorage.getItem(reviewControlsStorageKey) || "{}"),
+      sort: sortSelect.value
+    }));
     currentPage = 1;
     applyReviewControls();
   });
@@ -667,6 +693,10 @@
     button.addEventListener("click", () => {
       activeRating = button.dataset.ratingFilter;
       localStorage.setItem(ratingStorageKey, activeRating);
+      localStorage.setItem(reviewControlsStorageKey, JSON.stringify({
+        ...JSON.parse(localStorage.getItem(reviewControlsStorageKey) || "{}"),
+        rating: activeRating
+      }));
       currentPage = 1;
 
       filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
