@@ -7,6 +7,21 @@ const authorSchema=new mongoose.Schema({
     type:String,
     ref:"Users",
     required:true
+  },
+  name:{
+    type:String,
+    required:true,
+    trim:true
+  },
+  initials:{
+    type:String,
+    default:"",
+    trim:true
+  },
+  role:{
+    type:String,
+    default:"Author",
+    trim:true
   }
 },{
   _id:false

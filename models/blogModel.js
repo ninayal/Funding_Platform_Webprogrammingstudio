@@ -1,80 +1,80 @@
 "use strict";
 
-const BlogPost=require("./schemas/BlogPost");
+const BlogPost = require("./schemas/BlogPost");
 
-const allowedStatuses=new Set([
+const allowedStatuses = new Set([
   "draft",
   "published"
 ]);
 
-const normaliseId=(value)=>
-  String(value||"").trim();
+const normaliseId = (value) =>
+  String(value || "").trim();
 
-const toRuntimePost=(post)=>{
-  if(!post)return null;
+const toRuntimePost = (post) => {
+  if (!post) return null;
 
-  const data=post.toObject
-    ?post.toObject()
-    :post;
+  const data = post.toObject
+    ? post.toObject()
+    : post;
 
-  return{
+  return {
     ...data,
-    id:String(data._id),
-    _id:String(data._id)
+    id: String(data._id),
+    _id: String(data._id)
   };
 };
 
-const sortNewestFirst=(postA,postB)=>{
-  const dateA=new Date(
-    postA.publishedAt||
-    postA.updatedAt||
-    postA.createdAt||
+const sortNewestFirst = (postA, postB) => {
+  const dateA = new Date(
+    postA.publishedAt ||
+    postA.updatedAt ||
+    postA.createdAt ||
     0
   ).getTime();
 
-  const dateB=new Date(
-    postB.publishedAt||
-    postB.updatedAt||
-    postB.createdAt||
+  const dateB = new Date(
+    postB.publishedAt ||
+    postB.updatedAt ||
+    postB.createdAt ||
     0
   ).getTime();
 
-  return dateB-dateA;
+  return dateB - dateA;
 };
 
-const createSlug=async(title)=>{
-  const baseSlug=
-    String(title||"post")
+const createSlug = async (title) => {
+  const baseSlug =
+    String(title || "post")
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"")
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g,"-")
-      .replace(/^-+|-+$/g,"")||
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") ||
     "post";
 
-  let slug=baseSlug;
-  let counter=2;
+  let slug = baseSlug;
+  let counter = 2;
 
-  while(await BlogPost.exists({_id:slug})){
-    slug=`${baseSlug}-${counter}`;
-    counter+=1;
+  while (await BlogPost.exists({ _id: slug })) {
+    slug = `${baseSlug}-${counter}`;
+    counter += 1;
   }
 
   return slug;
 };
 
-const getInitials=(name)=>
-  String(name||"User")
+const getInitials = (name) =>
+  String(name || "User")
     .split(/\s+/)
     .filter(Boolean)
-    .map((part)=>part[0])
+    .map((part) => part[0])
     .join("")
-    .slice(0,2)
+    .slice(0, 2)
     .toUpperCase();
 
-const getPublishedPosts=async()=>{
-  const posts=await BlogPost.find({
-    status:"published"
+const getPublishedPosts = async () => {
+  const posts = await BlogPost.find({
+    status: "published"
   }).lean();
 
   return posts
@@ -82,51 +82,51 @@ const getPublishedPosts=async()=>{
     .sort(sortNewestFirst);
 };
 
-const getPostById=async(postId)=>{
-  const post=await BlogPost.findById(
+const getPostById = async (postId) => {
+  const post = await BlogPost.findById(
     normaliseId(postId)
   ).lean();
 
   return toRuntimePost(post);
 };
 
-const getVisiblePostById=async(
+const getVisiblePostById = async (
   postId,
-  viewerId=null
-)=>{
-  const post=await getPostById(postId);
+  viewerId = null
+) => {
+  const post = await getPostById(postId);
 
-  if(!post)return null;
+  if (!post) return null;
 
-  const canViewDraft=
-    post.status==="draft"&&
-    normaliseId(viewerId)&&
-    normaliseId(viewerId)===
-      normaliseId(post.author?.id);
+  const canViewDraft =
+    post.status === "draft" &&
+    normaliseId(viewerId) &&
+    normaliseId(viewerId) ===
+    normaliseId(post.author?.id);
 
-  if(
-    post.status!=="published"&&
+  if (
+    post.status !== "published" &&
     !canViewDraft
-  ){
+  ) {
     return null;
   }
 
   return post;
 };
 
-const getLeadStory=async()=>{
-  const post=await BlogPost.findOne({
-    status:"published",
-    isLead:true
+const getLeadStory = async () => {
+  const post = await BlogPost.findOne({
+    status: "published",
+    isLead: true
   }).lean();
 
   return toRuntimePost(post);
 };
 
-const getFeaturedPosts=async()=>{
-  const posts=await BlogPost.find({
-    status:"published",
-    isFeatured:true
+const getFeaturedPosts = async () => {
+  const posts = await BlogPost.find({
+    status: "published",
+    isFeatured: true
   }).lean();
 
   return posts
@@ -134,45 +134,45 @@ const getFeaturedPosts=async()=>{
     .sort(sortNewestFirst);
 };
 
-const getRelatedPosts=async(
+const getRelatedPosts = async (
   postId,
-  limit=3
-)=>{
-  const sourcePost=await getPostById(postId);
+  limit = 3
+) => {
+  const sourcePost = await getPostById(postId);
 
-  if(!sourcePost)return[];
+  if (!sourcePost) return [];
 
-  const posts=await BlogPost.find({
-    status:"published",
-    _id:{$ne:sourcePost.id}
+  const posts = await BlogPost.find({
+    status: "published",
+    _id: { $ne: sourcePost.id }
   }).lean();
 
-  const runtimePosts=
+  const runtimePosts =
     posts.map(toRuntimePost);
 
-  const sameCategory=
+  const sameCategory =
     runtimePosts.filter(
-      (post)=>
-        post.category===sourcePost.category
+      (post) =>
+        post.category === sourcePost.category
     );
 
-  const otherCategories=
+  const otherCategories =
     runtimePosts.filter(
-      (post)=>
-        post.category!==sourcePost.category
+      (post) =>
+        post.category !== sourcePost.category
     );
 
-  return[
+  return [
     ...sameCategory,
     ...otherCategories
   ]
     .sort(sortNewestFirst)
-    .slice(0,Number(limit)||3);
+    .slice(0, Number(limit) || 3);
 };
 
-const getPostsByAuthorId=async(authorId)=>{
-  const posts=await BlogPost.find({
-    "author.id":normaliseId(authorId)
+const getPostsByAuthorId = async (authorId) => {
+  const posts = await BlogPost.find({
+    "author.id": normaliseId(authorId)
   }).lean();
 
   return posts
@@ -180,142 +180,149 @@ const getPostsByAuthorId=async(authorId)=>{
     .sort(sortNewestFirst);
 };
 
-const countPostsByAuthorId=async(authorId)=>
+const countPostsByAuthorId = async (authorId) =>
   BlogPost.countDocuments({
-    "author.id":normaliseId(authorId)
+    "author.id": normaliseId(authorId)
   });
 
-const getCategories=async()=>{
-  const categories=await BlogPost.distinct(
+const getCategories = async () => {
+  const categories = await BlogPost.distinct(
     "category"
   );
 
   return categories
-    .map((category)=>
-      String(category||"").trim()
+    .map((category) =>
+      String(category || "").trim()
     )
     .filter(Boolean)
-    .sort((a,b)=>a.localeCompare(b));
+    .sort((a, b) => a.localeCompare(b));
 };
 
-const createPost=async(
-  postData={},
+const createPost = async (
+  postData = {},
   owner
-)=>{
-  if(!owner||!normaliseId(owner.id)){
+) => {
+  if (!owner || !normaliseId(owner.id)) {
     throw new Error(
       "An owner is required to create a post."
     );
   }
 
-  const status=allowedStatuses.has(
+  const status = allowedStatuses.has(
     postData.status
   )
-    ?postData.status
-    :"draft";
+    ? postData.status
+    : "draft";
 
-  const title=
+  const title =
     String(
-      postData.title||
+      postData.title ||
       "Untitled draft"
-    ).trim()||
+    ).trim() ||
     "Untitled draft";
 
-  const imageUrl=
-    String(postData.imageUrl||"").trim();
+  const imageUrl =
+    String(postData.imageUrl || "").trim();
 
-  const imageCaption=
+  const imageCaption =
     String(
-      postData.imageCaption||""
+      postData.imageCaption || ""
     ).trim();
 
-  const post=await BlogPost.create({
-    _id:await createSlug(title),
+  const post = await BlogPost.create({
+    _id: await createSlug(title),
     title,
-    category:String(
-      postData.category||"Guide"
+    category: String(
+      postData.category || "Guide"
     ).trim(),
-    author:{
-      id:normaliseId(owner.id),
-      name:String(
-        owner.name||"Current user"
+    author: {
+      id: normaliseId(owner.id),
+      name: String(
+        owner.name ||
+        owner.username ||
+        `${owner.firstname || ""} ${owner.lastname || ""}`.trim() ||
+        "Current user"
       ).trim(),
-      initials:String(
-        owner.initials||
-        getInitials(owner.name)
+      initials: String(
+        owner.initials ||
+        getInitials(
+          owner.name ||
+          owner.username ||
+          `${owner.firstname || ""} ${owner.lastname || ""}`
+        )
       ).trim(),
-      role:String(
-        owner.role||"Author"
+      role: String(
+        owner.role || "Author"
       ).trim()
     },
     publishedAt:
-      status==="published"
-        ?new Date()
-        :null,
+      status === "published"
+        ? new Date()
+        : null,
     readTime:
-      Number(postData.readTime)||1,
-    summary:String(
-      postData.summary||""
+      Number(postData.readTime) || 1,
+    summary: String(
+      postData.summary || ""
     ).trim(),
-    archiveSummary:String(
-      postData.archiveSummary||
-      postData.summary||
+    archiveSummary: String(
+      postData.archiveSummary ||
+      postData.summary ||
       ""
     ).trim(),
-    image:{
-      url:imageUrl,
-      listUrl:imageUrl,
-      alt:String(
-        postData.imageAlt||
-        title||
+    image: {
+      url: imageUrl,
+      listUrl: imageUrl,
+      alt: String(
+        postData.imageAlt ||
+        title ||
         "Blog image"
       ).trim(),
-      caption:imageCaption,
-      listCaption:imageCaption
+      caption: imageCaption,
+      listCaption: imageCaption
     },
-    tags:Array.isArray(postData.tags)
-      ?postData.tags
-      :[],
+    tags: Array.isArray(postData.tags)
+      ? postData.tags
+      : [],
     status,
-    isLead:Boolean(postData.isLead),
-    isFeatured:Boolean(
+    isLead: Boolean(postData.isLead),
+    isFeatured: Boolean(
       postData.isFeatured
     ),
-    content:Array.isArray(postData.content)
-      ?postData.content
-      :[]
+    content: Array.isArray(postData.content)
+      ? postData.content
+      : []
   });
 
   return toRuntimePost(post);
 };
 
-const updatePost=async(
+const updatePost = async (
   postId,
   ownerId,
-  updates={}
-)=>{
-  const post=await BlogPost.findById(
+  updates = {}
+) => {
+  const post = await BlogPost.findById(
     normaliseId(postId)
   );
 
-  if(!post){
-    return{
-      ok:false,
-      reason:"not-found"
+  if (!post) {
+    return {
+      ok: false,
+      reason: "not-found"
     };
   }
 
-  if(
-    normaliseId(post.author?.id)!==
+  if (
+    normaliseId(post.author?.id) !==
     normaliseId(ownerId)
-  ){
-    return{
-      ok:false,
-      reason:"forbidden"
+  ) {
+    return {
+      ok: false,
+      reason: "forbidden"
     };
   }
 
-  const editableFields=[
+  const editableFields = [
     "title",
     "category",
     "summary",
@@ -327,89 +334,89 @@ const updatePost=async(
     "isFeatured"
   ];
 
-  editableFields.forEach((field)=>{
-    if(
+  editableFields.forEach((field) => {
+    if (
       Object.prototype
         .hasOwnProperty
-        .call(updates,field)
-    ){
-      post[field]=updates[field];
+        .call(updates, field)
+    ) {
+      post[field] = updates[field];
     }
   });
 
-  if(
-    updates.image&&
-    typeof updates.image==="object"
-  ){
-    const currentImage=
+  if (
+    updates.image &&
+    typeof updates.image === "object"
+  ) {
+    const currentImage =
       post.image?.toObject
-        ?post.image.toObject()
-        :post.image||{};
+        ? post.image.toObject()
+        : post.image || {};
 
-    post.image={
+    post.image = {
       ...currentImage,
       ...updates.image
     };
   }
 
-  if(allowedStatuses.has(updates.status)){
-    const wasDraft=post.status==="draft";
+  if (allowedStatuses.has(updates.status)) {
+    const wasDraft = post.status === "draft";
 
-    post.status=updates.status;
+    post.status = updates.status;
 
-    if(
-      wasDraft&&
-      updates.status==="published"&&
+    if (
+      wasDraft &&
+      updates.status === "published" &&
       !post.publishedAt
-    ){
-      post.publishedAt=new Date();
+    ) {
+      post.publishedAt = new Date();
     }
   }
 
   await post.save();
 
-  return{
-    ok:true,
-    post:toRuntimePost(post)
+  return {
+    ok: true,
+    post: toRuntimePost(post)
   };
 };
 
-const deletePost=async(
+const deletePost = async (
   postId,
   ownerId
-)=>{
-  const post=await BlogPost.findById(
+) => {
+  const post = await BlogPost.findById(
     normaliseId(postId)
   );
 
-  if(!post){
-    return{
-      ok:false,
-      reason:"not-found"
+  if (!post) {
+    return {
+      ok: false,
+      reason: "not-found"
     };
   }
 
-  if(
-    normaliseId(post.author?.id)!==
+  if (
+    normaliseId(post.author?.id) !==
     normaliseId(ownerId)
-  ){
-    return{
-      ok:false,
-      reason:"forbidden"
+  ) {
+    return {
+      ok: false,
+      reason: "forbidden"
     };
   }
 
-  const deletedPost=toRuntimePost(post);
+  const deletedPost = toRuntimePost(post);
 
   await post.deleteOne();
 
-  return{
-    ok:true,
-    post:deletedPost
+  return {
+    ok: true,
+    post: deletedPost
   };
 };
 
-module.exports={
+module.exports = {
   getPublishedPosts,
   getPostById,
   getVisiblePostById,

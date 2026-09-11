@@ -249,7 +249,7 @@ body > iframe.shared-include.shared-header.shared-header--light {
 }
 .blog-article-share__links button, .blog-article-share__links a {
   display: inline-flex;
-  min-height: 48px;
+  min-height: 35px;
   align-items: center;
   justify-content: center;
   padding: 0 22px;
