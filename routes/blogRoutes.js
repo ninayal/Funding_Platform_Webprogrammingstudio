@@ -14,6 +14,10 @@ const {
   "../middlewares/authMiddleware"
 );
 
+const uploadBlogImage = require(
+  "../middlewares/blogUpload"
+);
+
 const router =
   express.Router();
 
@@ -47,6 +51,7 @@ router.get(
 router.post(
   "/",
   requireAuth,
+  uploadBlogImage.single("image"),
   blogController.createPost
 );
 
@@ -62,6 +67,7 @@ router.get(
 router.post(
   "/:id/update",
   requireAuth,
+  uploadBlogImage.single("image"),
   blogController.updatePost
 );
 

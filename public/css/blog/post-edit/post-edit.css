@@ -422,6 +422,99 @@ body:has(.post-delete-overlay:target) {
     margin: 0;
 }
 
+.image-drop-zone {
+
+    border: 2px dashed #c9b79c;
+
+    border-radius: 16px;
+
+    min-height: 180px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    background:#faf7f0;
+
+    transition:0.2s ease;
+}
+
+
+.image-drop-zone:hover {
+
+    background:#f3eadc;
+
+}
+
+
+.image-drop-zone.drag-over {
+
+    border-color:#8b5e3c;
+
+}
+
+
+.image-drop-message {
+
+    text-align:center;
+
+    color:#7a6045;
+
+}
+
+
+.image-drop-message p {
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+
+.image-preview-wrapper {
+
+    margin-top:16px;
+
+}
+
+
+.image-preview-wrapper img {
+
+    width:100%;
+
+    max-height:280px;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+}
+
+.image-drop-zone.has-image {
+    border-style: solid;
+    background: rgba(163,29,29,0.05);
+}
+
+.image-upload-success {
+    text-align: center;
+}
+
+.image-upload-success p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.image-upload-success button {
+    border: none;
+    background: transparent;
+    color: #a31d1d;
+    cursor: pointer;
+}
 
 /* ---------- Post Edit — Responsive ---------- */
 @media (max-width: 1080px) {

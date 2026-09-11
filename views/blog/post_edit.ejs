@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#A31D1D" />
-    <title><%= pageTitle %> — Làng &amp; Co.</title>
 
-    <!-- Shared styles -->
-    <link rel="stylesheet" href="/css/landingpage/index.css" />
-    <link rel="stylesheet" href="/css/root.css">
-    <link rel="stylesheet" href="/css/header_v2.css" />
-    <link rel="stylesheet" href="/css/shared-include.css" />
-    <link rel="stylesheet" href="/css/footer.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#A31D1D" />
+  <title>
+    <%= pageTitle %> — Làng &amp; Co.
+  </title>
 
-    <!-- Post form styles -->
-    <link rel="stylesheet" href="/css/blog/post-edit/post-edit.css" />
-    <link rel="stylesheet" href="/css/blog/post-edit/post-edit-dynamic.css" />
-    <script src="/js/blog/post-form.js" defer></script>
-    <script src="/js/shared/formPersistence.js" defer></script>
-  </head>
-  <body>
-    <%- include("../partials/header_v2", { activePage: "blog", showAccountIcon: false }) %>
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="/css/landingpage/index.css" />
+  <link rel="stylesheet" href="/css/root.css">
+  <link rel="stylesheet" href="/css/header_v2.css" />
+  <link rel="stylesheet" href="/css/shared-include.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+
+  <!-- Post form styles -->
+  <link rel="stylesheet" href="/css/blog/post-edit/post-edit.css" />
+  <link rel="stylesheet" href="/css/blog/post-edit/post-edit-dynamic.css" />
+  <script src="/js/blog/post-form.js" defer></script>
+  <script src="/js/shared/formPersistence.js" defer></script>
+</head>
+
+<body>
+  <%- include("../partials/header_v2", { activePage: "blog" , showAccountIcon: false }) %>
     <main class="post-edit-page" id="edit-top">
 
       <!-- Breadcrumb -->
@@ -31,20 +35,24 @@
         <span aria-hidden="true">•</span>
         <a href="/blog/my-posts">My Posts</a>
         <span aria-hidden="true">•</span>
-        <span aria-current="page"><%= mode === "create" ? "Create Post" : "Edit Post" %></span>
+        <span aria-current="page">
+          <%= mode==="create" ? "Create Post" : "Edit Post" %>
+        </span>
       </nav>
 
       <!-- Page heading -->
       <header class="post-edit-header post-edit-container">
         <div class="post-edit-header__copy">
           <p class="post-edit-kicker">Author workspace</p>
-          <h1><%= pageTitle %></h1>
+          <h1>
+            <%= pageTitle %>
+          </h1>
           <p>
-            <% if (mode === "create") { %>
+            <% if (mode==="create" ) { %>
               Create a new story, save it as a draft, or publish it to the Journal.
-            <% } else { %>
-              Refine the story, update its publishing details, or move it back to draft status.
-            <% } %>
+              <% } else { %>
+                Refine the story, update its publishing details, or move it back to draft status.
+                <% } %>
           </p>
         </div>
       </header>
@@ -57,151 +65,223 @@
           <div class="post-edit-panel__heading">
             <div>
               <p class="post-edit-kicker">Post details</p>
-              <h2 id="post-edit-form-heading"><%= mode === "create" ? "Create story" : "Edit story" %></h2>
+              <h2 id="post-edit-form-heading">
+                <%= mode==="create" ? "Create story" : "Edit story" %>
+              </h2>
             </div>
-            <span class="post-edit-status" data-preview-status><%= values.status === "published" ? "Published" : "Draft" %></span>
+            <span class="post-edit-status" data-preview-status>
+              <%= values.status==="published" ? "Published" : "Draft" %>
+            </span>
           </div>
           <% if (errors.form) { %>
-            <p class="post-form-error" role="alert"><%= errors.form %></p>
-          <% } %>
-          <form class="post-edit-form" action="<%= mode === 'create' ? '/blog' : `/blog/${encodeURIComponent(post.id)}/update` %>" method="post" novalidate data-post-form data-mode="<%= mode %>" data-persist-form="<%= mode === 'create' ? 'blog-post-create' : `blog-post-edit-${post.id}` %>">
-            <!-- Values retained by the model -->
-            <input type="hidden" name="readTime" value="<%= values.readTime || 5 %>" />
-            <input type="hidden" name="archiveSummary" value="<%= values.archiveSummary || "" %>" />
-            <input type="hidden" name="imageAlt" value="<%= values.imageAlt || "" %>" />
-            <input type="hidden" name="imageCaption" value="<%= values.imageCaption || "" %>" />
+            <p class="post-form-error" role="alert">
+              <%= errors.form %>
+            </p>
+            <% } %>
+              <form class="post-edit-form"
+                action="<%= mode === 'create' ? '/blog' : `/blog/${encodeURIComponent(post.id)}/update` %>"
+                method="post" enctype="multipart/form-data" novalidate data-post-form data-mode="<%= mode %>"
+                data-persist-form="<%= mode === 'create' ? 'blog-post-create' : `blog-post-edit-${post.id}` %>">
+                <!-- Values retained by the model -->
+                <input type="hidden" name="readTime" value="<%= values.readTime || 5 %>" />
+                <input type="hidden" name="archiveSummary" value="<%= values.archiveSummary || "" %>" />
+                <input type="hidden" name="imageAlt" value="<%= values.imageAlt || "" %>" />
+                <input type="hidden" name="imageCaption" value="<%= values.imageCaption || "" %>" />
 
-            <!-- Basic information -->
-            <fieldset class="post-edit-section">
-              <legend>Basic information</legend>
-              <div class="post-edit-grid post-edit-grid--two">
-                <label class="post-edit-field post-edit-field--title">
-                  Post title
-                  <input type="text" name="title" value="<%= values.title || "" %>" minlength="5" maxlength="150" required aria-invalid="<%= errors.title ? 'true' : 'false' %>" data-post-field="title" />
-                  <span class="post-field-meta">
-                    <small class="post-field-error" data-post-error="title"><%= errors.title || "" %></small>
-                    <small data-post-count="title">0 / 150</small>
-                  </span>
-                </label>
-                <label class="post-edit-field post-edit-field--compact">
-                  Author
-                  <input type="text" value="<%= author.name %>" readonly aria-readonly="true" />
-                </label>
-              </div>
-              <div class="post-edit-grid post-edit-grid--two">
-                <label class="post-edit-field post-edit-field--compact">
-                  Date added
-                  <input type="date" value="<%= values.dateAdded || "" %>" readonly aria-readonly="true" data-preview-date-source />
-                </label>
-                <label class="post-edit-field post-edit-field--compact">
-                  Category
-                  <select name="category" required aria-invalid="<%= errors.category ? 'true' : 'false' %>" data-post-field="category">
-                    <% categories.forEach((category) => { %>
-                      <option value="<%= category %>" <%= values.category === category ? "selected" : "" %>>
-                        <%= category %>
-                      </option>
-                    <% }); %>
-                  </select>
-                  <small class="post-field-error" data-post-error="category"><%= errors.category || "" %></small>
-                </label>
-              </div>
-              <label class="post-edit-field">
-                Tags
-                <input type="text" name="tags" value="<%= values.tags || "" %>" maxlength="240" placeholder="Community, Makers, Social Impact" data-post-field="tags" />
-                <small class="post-form-help">Separate up to 12 tags with commas.</small>
-                <small class="post-field-error" data-post-error="tags"><%= errors.tags || "" %></small>
-              </label>
-            </fieldset>
-            <!-- Image and summary -->
-            <fieldset class="post-edit-section">
-              <legend>Story preview</legend>
-              <label class="post-edit-field">
-                Image URL
-                <input type="url" name="imageUrl" value="<%= values.imageUrl || "" %>" placeholder="https://images.example.com/story.jpg" required aria-invalid="<%= errors.imageUrl ? 'true' : 'false' %>" data-post-field="imageUrl" />
-                <small class="post-field-error" data-post-error="imageUrl"><%= errors.imageUrl || "" %></small>
-              </label>
-              <label class="post-edit-field">
-                Short summary
-                <textarea name="summary" rows="4" minlength="20" maxlength="400" required aria-invalid="<%= errors.summary ? 'true' : 'false' %>" data-post-field="summary"><%= values.summary || "" %></textarea>
-                <span class="post-field-meta">
-                  <small class="post-field-error" data-post-error="summary"><%= errors.summary || "" %></small>
-                  <small data-post-count="summary">0 / 400</small>
-                </span>
-              </label>
-            </fieldset>
-            <!-- Main content -->
-            <fieldset class="post-edit-section">
-              <legend>Main content</legend>
-              <label class="post-edit-field">
-                Article text
-                <textarea name="content" rows="16" minlength="50" maxlength="20000" required aria-invalid="<%= errors.content ? 'true' : 'false' %>" data-post-field="content"><%= values.content || "" %></textarea>
-                <span class="post-field-meta">
-                  <small class="post-field-error" data-post-error="content"><%= errors.content || "" %></small>
-                  <small data-post-count="content">0 / 20000</small>
-                </span>
-              </label>
-            </fieldset>
-            <p class="post-form-feedback" data-post-feedback aria-live="polite"></p>
+                <!-- Basic information -->
+                <fieldset class="post-edit-section">
+                  <legend>Basic information</legend>
+                  <div class="post-edit-grid post-edit-grid--two">
+                    <label class="post-edit-field post-edit-field--title">
+                      Post title
+                      <input type="text" name="title" value="<%= values.title || "" %>" minlength="5" maxlength="150"
+                        required aria-invalid="<%= errors.title ? 'true' : 'false' %>" data-post-field="title" />
+                      <span class="post-field-meta">
+                        <small class="post-field-error" data-post-error="title">
+                          <%= errors.title || "" %>
+                        </small>
+                        <small data-post-count="title">0 / 150</small>
+                      </span>
+                    </label>
+                    <label class="post-edit-field post-edit-field--compact">
+                      Author
+                      <input type="text" value="<%= author.name %>" readonly aria-readonly="true" />
+                    </label>
+                  </div>
+                  <div class="post-edit-grid post-edit-grid--two">
+                    <label class="post-edit-field post-edit-field--compact">
+                      Date added
+                      <input type="date" value="<%= values.dateAdded || "" %>" readonly aria-readonly="true"
+                        data-preview-date-source />
+                    </label>
+                    <label class="post-edit-field post-edit-field--compact">
+                      Category
+                      <select name="category" required aria-invalid="<%= errors.category ? 'true' : 'false' %>"
+                        data-post-field="category">
+                        <% categories.forEach((category)=> { %>
+                          <option value="<%= category %>" <%=values.category===category ? "selected" : "" %>>
+                            <%= category %>
+                          </option>
+                          <% }); %>
+                      </select>
+                      <small class="post-field-error" data-post-error="category">
+                        <%= errors.category || "" %>
+                      </small>
+                    </label>
+                  </div>
+                  <label class="post-edit-field">
+                    Tags
+                    <input type="text" name="tags" value="<%= values.tags || "" %>" maxlength="240"
+                      placeholder="Community, Makers, Social Impact" data-post-field="tags" />
+                    <small class="post-form-help">Separate up to 12 tags with commas.</small>
+                    <small class="post-field-error" data-post-error="tags">
+                      <%= errors.tags || "" %>
+                    </small>
+                  </label>
+                </fieldset>
+                <!-- Image and summary -->
+                <fieldset class="post-edit-section">
+                  <legend>Story preview</legend>
+                  <label class="post-edit-field image-upload-field">
 
-            <!-- Form actions -->
-            <div class="post-edit-actions">
-              <a class="post-edit-button" href="/blog/my-posts">Cancel</a>
-              <button class="post-edit-button post-edit-button--secondary" type="submit" name="status" value="draft" data-submit-status="draft">Save as Draft</button>
-              <button class="post-edit-button post-edit-button--primary" type="submit" name="status" value="published" data-submit-status="published">
-                <% if (mode !== "create" && values.status === "published") { %>
-                  Save Changes
-                <% } else { %>
-                  Publish Post
-                <% } %>
-              </button>
-            </div>
-          </form>
+                    <span>IMAGE</span>
+
+                    <div class="image-drop-zone" data-image-drop-zone>
+
+                      <input type="file" name="image" accept="image/png,image/jpeg,image/webp" hidden data-image-input>
+
+                      <div class="image-drop-message" data-drop-message>
+                        <p>Drag & drop your image here</p>
+                        <span>or click to browse</span>
+                      </div>
+
+                      <div class="image-upload-success" data-upload-success hidden>
+                        <p data-file-name></p>
+                        <button type="button" data-remove-image>
+                          Remove image
+                        </button>
+                      </div>
+
+                    </div>
+
+
+                    <div class="image-preview-wrapper" data-image-preview-wrapper hidden>
+
+                      <img src="" alt="Preview" data-image-preview>
+
+                    </div>
+
+
+                    <small data-post-error="imageUrl"></small>
+
+                  </label>
+                  <label class="post-edit-field">
+                    Short summary
+                    <textarea name="summary" rows="4" minlength="20" maxlength="400" required
+                      aria-invalid="<%= errors.summary ? 'true' : 'false' %>"
+                      data-post-field="summary"><%= values.summary || "" %></textarea>
+                    <span class="post-field-meta">
+                      <small class="post-field-error" data-post-error="summary">
+                        <%= errors.summary || "" %>
+                      </small>
+                      <small data-post-count="summary">0 / 400</small>
+                    </span>
+                  </label>
+                </fieldset>
+                <!-- Main content -->
+                <fieldset class="post-edit-section">
+                  <legend>Main content</legend>
+                  <label class="post-edit-field">
+                    Article text
+                    <textarea name="content" rows="16" minlength="50" maxlength="20000" required
+                      aria-invalid="<%= errors.content ? 'true' : 'false' %>"
+                      data-post-field="content"><%= values.content || "" %></textarea>
+                    <span class="post-field-meta">
+                      <small class="post-field-error" data-post-error="content">
+                        <%= errors.content || "" %>
+                      </small>
+                      <small data-post-count="content">0 / 20000</small>
+                    </span>
+                  </label>
+                </fieldset>
+                <p class="post-form-feedback" data-post-feedback aria-live="polite"></p>
+
+                <!-- Form actions -->
+                <div class="post-edit-actions">
+                  <a class="post-edit-button" href="/blog/my-posts">Cancel</a>
+                  <button class="post-edit-button post-edit-button--secondary" type="submit" name="status" value="draft"
+                    data-submit-status="draft">Save as Draft</button>
+                  <button class="post-edit-button post-edit-button--primary" type="submit" name="status"
+                    value="published" data-submit-status="published">
+                    <% if (mode !=="create" && values.status==="published" ) { %>
+                      Save Changes
+                      <% } else { %>
+                        Publish Post
+                        <% } %>
+                  </button>
+                </div>
+              </form>
         </section>
         <!-- Post summary sidebar -->
         <aside class="post-edit-sidebar">
           <section class="post-edit-preview" data-post-preview>
             <div class="post-edit-preview__image">
-              <img src="<%= values.imageUrl || "" %>" alt="<%= values.imageAlt || values.title || "" %>" data-preview-image <%= values.imageUrl ? "" : "hidden" %> />
-              <div class="post-preview-placeholder" data-preview-placeholder <%= values.imageUrl ? "hidden" : "" %>>
+              <img src="<%= values.imageUrl || "" %>" alt="<%= values.imageAlt || values.title || "" %>"
+                data-preview-image <%=values.imageUrl ? "" : "hidden" %> />
+              <div class="post-preview-placeholder" data-preview-placeholder <%=values.imageUrl ? "hidden" : "" %>>
                 Story image preview
               </div>
             </div>
             <div class="post-edit-preview__body">
               <div class="post-edit-preview__meta">
-                <span data-preview-category><%= values.category || "Guide" %></span>
+                <span data-preview-category>
+                  <%= values.category || "Guide" %>
+                </span>
                 <time datetime="<%= values.dateAdded || "" %>" data-preview-date>
                   <%= values.displayDate || "Not published" %>
                 </time>
               </div>
-              <h2 data-preview-title><%= values.title || "Your story title" %></h2>
-              <p data-preview-summary><%= values.summary || "Your summary will appear here as you type." %></p>
+              <h2 data-preview-title>
+                <%= values.title || "Your story title" %>
+              </h2>
+              <p data-preview-summary>
+                <%= values.summary || "Your summary will appear here as you type." %>
+              </p>
               <dl class="post-edit-preview__statistics">
                 <div>
                   <dt>Status</dt>
-                  <dd data-preview-status-text><%= values.status === "published" ? "Published" : "Draft" %></dd>
+                  <dd data-preview-status-text>
+                    <%= values.status==="published" ? "Published" : "Draft" %>
+                  </dd>
                 </div>
                 <div>
                   <dt>Comments</dt>
-                  <dd><%= previewStats.commentCount %></dd>
+                  <dd>
+                    <%= previewStats.commentCount %>
+                  </dd>
                 </div>
                 <div>
                   <dt>Views</dt>
-                  <dd><%= previewStats.viewCount %></dd>
+                  <dd>
+                    <%= previewStats.viewCount %>
+                  </dd>
                 </div>
                 <div>
                   <dt>Last edited</dt>
-                  <dd><%= previewStats.lastEdited %></dd>
+                  <dd>
+                    <%= previewStats.lastEdited %>
+                  </dd>
                 </div>
               </dl>
-              <% if (mode !== "create" && post) { %>
+              <% if (mode !=="create" && post) { %>
                 <a class="post-edit-preview__link" href="/blog/<%= encodeURIComponent(post.id) %>">
                   Open current post
                   <span aria-hidden="true">↗</span>
                 </a>
-              <% } %>
+                <% } %>
             </div>
           </section>
-          <% if (mode === "create") { %>
+          <% if (mode==="create" ) { %>
             <section class="post-edit-help">
               <p class="post-edit-kicker">Publishing checks</p>
               <h2>Before publishing</h2>
@@ -211,20 +291,20 @@
                 <li>Save a draft when the article is not ready.</li>
               </ul>
             </section>
-          <% } else { %>
-            <section class="post-edit-danger">
-              <h2>Delete this post</h2>
-              <p>Remove the post permanently from the Journal.</p>
-              <a class="post-edit-delete-button" href="#delete-post">Delete Post</a>
-            </section>
-          <% } %>
+            <% } else { %>
+              <section class="post-edit-danger">
+                <h2>Delete this post</h2>
+                <p>Remove the post permanently from the Journal.</p>
+                <a class="post-edit-delete-button" href="#delete-post">Delete Post</a>
+              </section>
+              <% } %>
         </aside>
       </div>
       <div class="post-edit-return post-edit-container">
         <a href="/blog/my-posts">← Return to My Posts</a>
       </div>
     </main>
-    <% if (mode !== "create" && post) { %>
+    <% if (mode !=="create" && post) { %>
       <!-- Delete confirmation overlay -->
       <section id="delete-post" class="post-delete-overlay" aria-labelledby="delete-post-heading">
         <a class="post-delete-overlay__backdrop" href="#edit-top" aria-label="Close delete confirmation"></a>
@@ -249,7 +329,8 @@
           </div>
         </div>
       </section>
-    <% } %>
-    <%- include("../partials/footer") %>
-  </body>
+      <% } %>
+        <%- include("../partials/footer") %>
+</body>
+
 </html>
