@@ -716,7 +716,8 @@
     html,
     body {
         width: 100%;
-        overflow-x: hidden;
+        min-width: 320px;
+        overflow-x: auto;
         -webkit-text-size-adjust: 100%;
     }
 
@@ -727,6 +728,7 @@
     .checkout-shell {
         width: 94%;
         max-width: 100%;
+        min-width: 320px;
         margin: 0 auto;
         grid-template-columns: 1fr;
         gap: 22px;
@@ -745,6 +747,7 @@
     .checkout-fieldset,
     .summary-card {
         width: 100%;
+        min-width: 0;
         padding: 22px 16px;
     }
 
@@ -777,6 +780,7 @@
 
     .shipping-option {
         width: 100%;
+        min-width: 0;
         grid-template-columns: 22px minmax(0, 1fr);
         gap: 10px;
         padding: 16px 14px;
@@ -837,9 +841,7 @@
     }
 }
 
-/* ================================================
-   PHONE FIX — SHIPPING METHOD ALIGNMENT
-   ================================================ */
+/* Phone fix - shipping alignment */
 @media (max-width: 600px) {
     .shipping-options {
         width: 100%;
@@ -927,4 +929,16 @@
         font-size: 15px;
         margin-top: 4px;
     }
+}
+
+/* Prevent zoom layout breaking */
+* {
+    box-sizing: border-box;
+}
+
+.checkout-shell,
+.checkout-fieldset,
+.summary-card,
+.shipping-option {
+    min-width: 0;
 }
