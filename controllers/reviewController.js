@@ -26,7 +26,7 @@ const cleanParagraph = (value) =>
 const convertImagesToDataUrls = (files) => {
   if (!Array.isArray(files)) return [];
 
-  return files.map((file) => `/uploads/reviews/${file.filename}`);
+  return files.map((file) => `/images/uploads/reviews/${file.filename}`);
 };
 
 

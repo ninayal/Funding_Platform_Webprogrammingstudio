@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 
-const UPLOAD_DIR = path.join(__dirname, "../public/uploads/reviews");
+const UPLOAD_DIR = path.join(__dirname, "../public/images/uploads/reviews");
 const MAX_REVIEW_IMAGE_COUNT = 3;
 
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -35,7 +35,7 @@ const checkMagicBytes = (buffer) => {
 const storage = multer.diskStorage({
   destination: (_, __, cb) => cb(null, UPLOAD_DIR),
   filename: (_, file, cb) => {
-    cb(null, `${crypto.randomUUID()}${path.extname(file.originalname).toLowerCase()}`);
+    cb(null,`review-${Date.now()}-${Math.random().toString(36).slice(2, 8)}${path.extname(file.originalname).toLowerCase()}`);
   }
 });
 
