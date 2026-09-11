@@ -77,35 +77,95 @@ https://github.com/ninayal/Funding_Platform_Webprogrammingstudio
 
 ```text
 Funding_Platform_Webprogrammingstudio/
-├── config/          # Shared configuration
-├── controllers/     # Request handlers and module flow
-├── data/            # Application data
-├── middlewares/     # Authentication, upload, error and access middleware
-├── models/          # Data access and module models
-├── public/
-│   ├── css/         # Shared and module styles
-│   ├── images/      # Static images and assets
-│   ├── js/          # Shared and module client-side JavaScript
-│   └── uploads/     # Runtime-uploaded assets
-├── routes/          # Express route definitions
-├── scripts/         # Project scripts/utilities
-├── utils/           # Reusable helpers and view-data utilities
-├── validators/      # Server-side validation
-├── views/
-│   ├── blog/
-│   ├── cart/
-│   ├── forum/
-│   ├── giftcard/
-│   ├── home/
-│   ├── partials/
-│   ├── products/
-│   └── shared/
-├── app.js           # Express application configuration
-├── server.js        # Application entry point
-├── package.json
+│
+├── config/                         # Shared configuration files
+│
+├── controllers/                    # Request handlers and business logic
+│   ├── authController.js           # Authentication and account management
+│   ├── blogController.js           # Blog module logic
+│   ├── cartController.js           # Shopping cart operations
+│   ├── forumController.js          # Discussion forum functionality
+│   ├── reviewController.js         # Product review and rating management
+│   └── sharedController.js         # Shared pages and admin operations
+│
+├── data/                            # Application data and seed data
+│
+├── middlewares/                     # Authentication, validation, upload and access control middleware
+│
+├── models/                          # MongoDB/Mongoose data models
+│   ├── User.js
+│   ├── Product.js
+│   ├── Order.js
+│   ├── Cart.js
+│   ├── Review.js
+│   └── Forum.js
+│
+├── public/                          # Static frontend resources
+│   │
+│   ├── css/                         # Shared and module-specific styling
+│   │   ├── blog/
+│   │   ├── cart/
+│   │   ├── forum/
+│   │   ├── review/
+│   │   └── shared/
+│   │
+│   ├── images/                      # Static images and product assets
+│   │
+│   ├── js/                          # Client-side JavaScript
+│   │   ├── cart/
+│   │   ├── review/
+│   │   └── shared/
+│   │
+│   └── uploads/                     # User-uploaded files
+│
+├── routes/                          # Express route definitions
+│   ├── authRoutes.js
+│   ├── blogRoutes.js
+│   ├── cartRoutes.js
+│   ├── forumRoutes.js
+│   ├── reviewRoutes.js
+│   └── sharedRoutes.js
+│
+├── scripts/                         # Database scripts and utilities
+│
+├── utils/                           # Reusable helper functions
+│
+├── validators/                      # Server-side input validation
+│
+├── views/                            # EJS templates
+│   │
+│   ├── blog/                         # Blog pages
+│   │
+│   ├── cart/                         # Shopping cart and checkout pages
+│   │
+│   ├── forum/                        # Discussion forum pages
+│   │
+│   ├── giftcard/                     # Gift card pages
+│   │
+│   ├── home/                         # Landing and homepage views
+│   │
+│   ├── partials/                     # Reusable components
+│   │   ├── header.ejs
+│   │   ├── footer.ejs
+│   │   └── shared components
+│   │
+│   ├── products/                     # Product listing and details pages
+│   │
+│   └── shared/                       # Authentication and account pages
+│       ├── login.ejs
+│       ├── register.ejs
+│       ├── forgot_password.ejs
+│       ├── reset_password.ejs
+│       └── profile.ejs
+│
+├── app.js                            # Express application configuration
+│
+├── server.js                         # Application entry point
+│
+├── package.json                      # Project dependencies and scripts
+│
 └── package-lock.json
 ```
-
 ---
 
 ## Tech Stack
@@ -244,86 +304,131 @@ Admin account allows testing:
 
 ## Recommended Testing Flow
 
-### 1. Customer Experience
+The following testing flow is recommended to evaluate the main functionalities of the Làng & Co. platform.
+
+---
+
+# 1. Customer Experience
+
+Login using the customer account.
+
+Test the following features:
+
+### Product Browsing
+
+1. Browse available handcrafted products.
+2. Search products using keywords.
+3. Filter and sort products.
+4. View detailed product information.
+
+### Shopping Cart and Checkout
+
+1. Add products to cart.
+2. Update product quantities.
+3. Remove products from cart.
+4. Proceed through checkout.
+5. Complete an order.
+6. View order history and tracking information.
+
+### Product Review and Rating
+
+1. Purchase a product first.
+2. Navigate back to the purchased product.
+3. Submit a product rating and review.
+4. Upload review images.
+5. Edit or delete own reviews.
+
+**Important:**
+Only customers who have purchased a product are allowed to submit reviews. The system validates purchase history before allowing review submission.
+
+---
+
+# 2. Community Experience
+
+Login using the customer account.
+
+## Discussion Forum
+
+Test:
+
+1. View existing forum discussions.
+2. Create a new discussion post.
+3. Reply to other users' discussions.
+4. Edit or delete own posts/replies.
+
+---
+
+# 3. Blog Experience
+
+Access the Blog module.
+
+Test:
+
+1. Browse available blog posts.
+2. View blog post details.
+3. Navigate between different blog contents.
+4. Check blog display and content organisation.
+
+---
+
+# 4. Gift Card Experience
+
+Test:
+
+1. Browse available gift cards.
+2. View gift card details.
+3. Add gift cards to cart.
+4. Complete purchase flow.
+
+---
+
+# 5. User Account Management
 
 Login using the customer account.
 
 Test:
 
-1. Browse products
-2. Search/filter products
-3. Add products to cart
-4. Update cart quantity
-5. Complete checkout
-6. View order tracking
-7. Submit product review
+1. View profile information.
+2. Update personal details.
+3. Upload profile image.
+4. Manage account preferences.
+5. Test password-related functions.
 
 ---
 
-## Product Review Testing
+# 6. Admin Experience
 
-Important rule:
-
-> Only customers who have purchased a product can submit a review.
-
-To test:
-
-1. Login as customer.
-2. Purchase a product.
-3. Navigate back to the product page.
-4. Submit rating and review.
-5. Upload review images.
-
-The system validates:
-- User authentication
-- Purchase history
-- Review ownership
-- Image upload format
-
----
-
-## Shopping Cart Testing
+Login using the administrator account.
 
 Test:
 
-- Add/remove products
-- Update quantities
-- Cart persistence
-- Checkout validation
+## Product Management
+
+1. Create new products.
+2. Update product information.
+3. Upload product images.
+4. Delete products.
+
+## User Management
+
+1. View registered users.
+2. Manage user status.
+3. Handle administrative actions.
+
+## Password Reset Management
+
+1. View password reset requests.
+2. Approve or reject requests.
 
 ---
 
-## Forum Testing
+# 7. Responsive Design Testing
 
-Test:
+Test the application across different screen sizes:
 
-- Create discussion posts
-- Reply to posts
-- Edit/delete own content
-
----
-
-## Gift Card Testing
-
-Test:
-
-- Browse gift cards
-- Add gift card to cart
-- Complete purchase flow
-
----
-
-## Admin Testing
-
-Login with admin credentials.
-
-Test:
-
-- Create products
-- Update product details
-- Delete products
-- Manage users
-- Review system requests
+- Desktop
+- Tablet
+- Mobile
 
 ---
 
