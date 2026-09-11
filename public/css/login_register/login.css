@@ -1259,3 +1259,34 @@ body {
 .is-hidden {
     display: none !important;
 }
+
+/* ================================================
+   RESPONSIVE MINIMUM WIDTH FIX (A3 REQUIREMENT)
+   Prevent layout collapse below 320px
+   ================================================ */
+
+html,
+body {
+    min-width: 320px;
+}
+
+.login-page {
+    min-width: 320px;
+}
+
+.login-brand,
+.login-glass {
+    flex-shrink: 0;
+}
+
+@media (max-width: 320px) {
+    .login-page {
+        width: 320px;
+        min-width: 320px;
+    }
+
+    .login-brand,
+    .login-glass {
+        flex-shrink: 0;
+    }
+}
