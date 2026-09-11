@@ -19,6 +19,9 @@
     <div class="wishlist-header container">
       <h1>Forum Moderation</h1>
       <p class="wishlist-header__sub">Admin-only tools to keep the community tidy</p>
+      <a href="/forum/notifications" class="forum-toolbar__bell" aria-label="Notifications">
+        <img src="/images/forum_icon/notification.png" alt="" class="forum-toolbar__bell-icon"><% if (forumUnreadCount > 0) { %><span class="forum-toolbar__badge"><%= forumUnreadCount %></span><% } %>
+      </a>
     </div>
 
     <div class="forum-container new-post-list admin-moderation">

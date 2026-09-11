@@ -174,6 +174,15 @@ const getAllUsers = async () => {
     .map(toPublicUser);
 };
 
+const getAdminUsers = async () => {
+  const admins =
+    await Users.find({ role: "admin" }).lean();
+
+  return admins
+    .map(toRuntimeUser)
+    .map(toPublicUser);
+};
+
 const authenticate = async (
   email,
   password
@@ -567,6 +576,7 @@ module.exports = {
   findUserByEmail,
   findUserById,
   getAllUsers,
+  getAdminUsers,
   isAdminRole,
   toPublicUser,
   updateAccount,

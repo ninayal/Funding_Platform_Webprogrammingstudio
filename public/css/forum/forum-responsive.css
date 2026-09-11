@@ -4,7 +4,8 @@
 
 html,
 body {
-  overflow-x: hidden;
+  min-width: 320px;
+  overflow-x: auto;
 }
 
 img,
@@ -237,4 +238,35 @@ svg {
     width: 46px;
     height: 46px;
   }
+}
+
+/* =========================================================
+   GLOBAL MINIMUM WIDTH FIX (320px)
+   Prevent forum pages shrinking below mobile limit
+   ========================================================= */
+
+.forum-container,
+.forum-toolbar,
+.forum-breadcrumb,
+.forum-layout,
+.thread-layout,
+.forum-sidebar,
+.sidebar-box,
+.thread-card,
+.forum-title,
+.create-thread-content,
+.forum-post {
+  min-width: 320px;
+}
+
+.forum-layout,
+.thread-layout {
+  overflow-x: auto;
+}
+
+img,
+textarea,
+input,
+button {
+  max-width: 100%;
 }
