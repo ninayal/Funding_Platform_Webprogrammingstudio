@@ -206,3 +206,35 @@
     min-height: 0;
   }
 }
+
+
+ /* Minimum width behaviour required for responsive testing */
+.sitemap-page {
+  min-width: 320px;
+}
+
+.sitemap-grid,
+.sitemap-card {
+  min-width: 320px;
+}
+
+@media (max-width: 320px) {
+  html,
+  body {
+    min-width: 320px;
+  }
+
+  .sitemap-page {
+    width: 320px;
+  }
+
+  .sitemap-grid {
+    width: 320px;
+    grid-template-columns: 320px;
+  }
+
+  .sitemap-card {
+    width: 320px;
+    flex-shrink: 0;
+  }
+}
