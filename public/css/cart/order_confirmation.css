@@ -646,8 +646,7 @@
     html,
     body {
         width: 100%;
-        min-width: 320px;
-        overflow-x: auto;
+        overflow-x: hidden;
         -webkit-text-size-adjust: 100%;
     }
 
@@ -659,7 +658,6 @@
         width: 94%;
         max-width: 100%;
         margin: 0 auto;
-        min-width: 320px;
     }
 
     .confirm-summary,
@@ -667,7 +665,6 @@
     .confirm-note {
         width: 100%;
         max-width: 100%;
-        min-width: 0;
     }
 
     .confirm-summary {
@@ -759,16 +756,4 @@
     .confirm-item__price {
         grid-column: 2;
     }
-}
-
-/* Prevent layout breaking when zooming */
-* {
-    box-sizing: border-box;
-}
-
-.confirm-shell,
-.confirm-card,
-.confirm-summary,
-.confirm-note {
-    min-width: 0;
 }

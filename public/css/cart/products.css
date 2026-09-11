@@ -991,14 +991,68 @@
 /* =========================================
    RESPONSIVE
 ========================================= */
+
+/* Laptop */
+@media (max-width: 1280px) {
+
+    .container,
+    .shop-shell {
+        width: 92%;
+        max-width: 1180px;
+    }
+
+    .shop-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Small laptop / large tablet */
+@media (max-width: 1024px) {
+
+    .container,
+    .shop-shell {
+        width: 92%;
+    }
+
+    .shop-shell {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .shop-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+
+    .container,
+    .shop-shell {
+        width: 94%;
+    }
+
+    .shop-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-sidebar {
+        width: 100%;
+    }
+
+    .shop-toolbar {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}
+
 /* Phone */
 @media (max-width: 600px) {
 
     html,
     body {
         width: 100%;
-        min-width: 320px;
-        overflow-x: auto;
+        overflow-x: hidden;
         -webkit-text-size-adjust: 100%;
     }
 
@@ -1006,7 +1060,6 @@
     .shop-shell {
         width: 94%;
         max-width: 100%;
-        min-width: 320px;
     }
 
     .breadcrumb,
@@ -1081,5 +1134,23 @@
     .pagination__pages a {
         width: 40px;
         height: 40px;
+    }
+}
+
+/* Small phone */
+@media (max-width: 430px) {
+
+    .container,
+    .shop-shell {
+        width: 95%;
+    }
+
+    .shop-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .shop-header h1 {
+        font-size: 30px;
     }
 }
