@@ -193,6 +193,20 @@ router.post(
   sharedController.postDeleteProduct
 );
 
+/* Legal */
+
+router.get(
+  "/terms-of-service",
+  (req, res) => {
+    res.render("shared/terms-of-service");
+  }
+);
+router.get(
+  "/privacy-policy",
+  (req, res) => {
+    res.render("shared/privacy-policy");
+  }
+);
 
 /* Sitemap */
 
