@@ -1,3 +1,38 @@
+
+/* ================================================
+   MINIMUM WIDTH PROTECTION (320px REQUIREMENT)
+   Prevent layout components from continuously shrinking
+   below the supported viewport width.
+   ================================================ */
+
+html,
+body {
+    min-width: 320px;
+}
+
+.giftcard-page {
+    min-width: 320px;
+}
+
+.giftcard-page .section-shell,
+.giftcard-page .gift-hero,
+.giftcard-page .flow-section,
+.giftcard-page .gift-view-card,
+.giftcard-page .details-layout {
+    min-width: 320px;
+}
+
+@media (max-width: 320px) {
+    .giftcard-page {
+        width: 320px;
+        min-width: 320px;
+    }
+
+    .giftcard-page * {
+        flex-shrink: 0;
+    }
+}
+
 /* =====================================================
    RESPONSIVE — MATCH HOME HERO/WAVE BREAKPOINTS
    ===================================================== */

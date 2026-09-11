@@ -261,3 +261,39 @@
         font-size: 14px;
     }
 }
+
+/* ================================================
+   REGISTER MINIMUM WIDTH FIX (A3 REQUIREMENT)
+   ================================================ */
+
+html,
+body {
+    min-width: 320px;
+}
+
+.register-page-body {
+    min-width: 320px;
+}
+
+.register-page {
+    min-width: 320px;
+    width: 100%;
+}
+
+.register-page .login-brand,
+.register-page .login-glass--wide {
+    flex-shrink: 0;
+}
+
+@media (max-width: 320px) {
+
+    .register-page {
+        width: 320px;
+        min-width: 320px;
+    }
+
+    .register-page .login-brand,
+    .register-page .login-glass--wide {
+        flex-shrink: 0;
+    }
+}
