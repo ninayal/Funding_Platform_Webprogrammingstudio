@@ -35,6 +35,12 @@
               <span><%= n.actorName %> replied to your thread</span>
               <% } else if (n.type === "like") { %>
               <span><%= n.actorName %> liked your post</span>
+              <% } else if (n.type === "thread_hidden") { %>
+              <span>Your thread was hidden by an admin</span>
+              <% } else if (n.type === "report_created") { %>
+              <span><%= n.actorName %> reported a post</span>
+              <% } else if (n.type === "post_removed") { %>
+              <span>Your post was removed by an admin after a report</span>
               <% } else { %>
               <span>New activity on your post</span>
               <% } %>

@@ -311,7 +311,13 @@ const deletePost = async (req, res) => {
 
 const reportPost = async (req, res) => {
   const { reason } = req.body;
-  const result = await forumModel.reportPost(req.params.slug, req.params.postId, req.currentUser.id, reason);
+  const result = await forumModel.reportPost(
+    req.params.slug,
+    req.params.postId,
+    req.currentUser.id,
+    reason,
+    req.currentUser.name
+  );
 
   if (!result) {
     if (requestWantsJson(req)) {
@@ -451,12 +457,18 @@ const getAdminModerationPage = async (req, res) => {
 };
 
 const moderateThread = async (req, res) => {
-  await forumModel.moderateThread(req.params.slug, req.params.action);
+  await forumModel.moderateThread(req.params.slug, req.params.action, {
+    id: req.currentUser.id,
+    name: req.currentUser.name,
+  });
   return res.redirect("/forum/admin");
 };
 
 const resolveReport = async (req, res) => {
-  await forumModel.resolveReport(req.params.id, req.params.status);
+  await forumModel.resolveReport(req.params.id, req.params.status, {
+    id: req.currentUser.id,
+    name: req.currentUser.name,
+  });
   return res.redirect("/forum/admin");
 };
 

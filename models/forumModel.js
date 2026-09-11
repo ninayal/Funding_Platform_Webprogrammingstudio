@@ -430,7 +430,7 @@ const deletePost = async (slug, postId, userId, isAdmin = false) => {
   return true;
 };
 
-const reportPost = async (slug, postId, reporterId, reason) => {
+const reportPost = async (slug, postId, reporterId, reason, reporterName) => {
   const found = await findPostDoc(slug, postId);
 
   if (!found || !reporterId) {
@@ -461,6 +461,20 @@ const reportPost = async (slug, postId, reporterId, reason) => {
     createdAt: new Date(),
     status: "open",
   });
+
+  const admins = await userModel.getAdminUsers();
+  await Promise.all(
+    admins.map((admin) =>
+      addNotification({
+        userId: admin.id,
+        type: "report_created",
+        threadSlug: threadDoc.slug,
+        postId: post.id,
+        actorId: reporterId,
+        actorName: reporterName || "A member",
+      })
+    )
+  );
 
   return { ok: true, message: "Report submitted. Thank you." };
 };
@@ -505,12 +519,46 @@ const getOpenReports = async () => {
   );
 };
 
-const resolveReport = async (reportId, status) =>
-  ForumReports.findByIdAndUpdate(
+const resolveReport = async (reportId, status, actor = {}) => {
+  const report = await ForumReports.findById(String(reportId)).lean();
+
+  if (!report) {
+    return null;
+  }
+
+  const finalStatus = status === "dismissed" ? "dismissed" : "resolved";
+
+  // Capture the updated report before any deletion below, since deleting the
+  // reported post/thread can cascade-delete this very report document.
+  const updated = await ForumReports.findByIdAndUpdate(
     String(reportId),
-    { $set: { status: status === "dismissed" ? "dismissed" : "resolved" } },
+    { $set: { status: finalStatus } },
     { new: true }
   ).lean();
+
+  if (finalStatus === "resolved") {
+    const found = await findPost(report.threadSlug, report.postId);
+
+    if (found) {
+      const { post } = found;
+
+      await deletePost(report.threadSlug, report.postId, actor.id || null, true);
+
+      if (post.authorId) {
+        await addNotification({
+          userId: post.authorId,
+          type: "post_removed",
+          threadSlug: report.threadSlug,
+          postId: post.id,
+          actorId: actor.id || null,
+          actorName: actor.name || "Admin",
+        });
+      }
+    }
+  }
+
+  return updated;
+};
 
 const MODERATION_UPDATES = {
   hide: { hidden: true },
@@ -521,14 +569,27 @@ const MODERATION_UPDATES = {
   unpin: { pinned: false },
 };
 
-const moderateThread = async (slug, action) => {
+const moderateThread = async (slug, action, actor = {}) => {
   const update = MODERATION_UPDATES[action];
 
   if (!update) {
     return null;
   }
 
-  return ForumThreads.findOneAndUpdate({ slug }, { $set: update }, { new: true }).lean();
+  const thread = await ForumThreads.findOneAndUpdate({ slug }, { $set: update }, { new: true }).lean();
+
+  if (thread && action === "hide" && thread.authorId) {
+    await addNotification({
+      userId: thread.authorId,
+      type: "thread_hidden",
+      threadSlug: thread.slug,
+      postId: thread.posts[0]?.id || null,
+      actorId: actor.id || null,
+      actorName: actor.name || "Admin",
+    });
+  }
+
+  return thread;
 };
 
 /* =========================
