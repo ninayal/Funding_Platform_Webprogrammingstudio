@@ -112,13 +112,8 @@ button {
 
 .gift-hero {
     position: relative;
-    min-height: 700px;
-
-    display: grid;
-    place-items: center;
-
-    /* 145px header height + extra spacing */
-    padding: 210px 24px 120px;
+    height: 800px;
+    min-height: 520px;
 
     margin: 0;
     overflow: hidden;
@@ -143,14 +138,13 @@ button {
 }
 
 .gift-hero__content {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     z-index: 3;
     width: min(1280px, calc(100% - 48px));
-    margin: 0 auto;
-    padding:
-        20px 0 100px;
+    transform: translate(-50%, -50%);
     text-align: center;
-    justify-self: center;
 }
 
 .gift-hero .eyebrow {
