@@ -2503,3 +2503,38 @@ summary {
         height: 54px;
     }
 }
+
+/* =========================================================
+   GLOBAL MINIMUM RESPONSIVE WIDTH
+   Prevent layout shrinking below 320px
+   ========================================================= */
+
+html,
+body {
+    min-width: 320px;
+}
+
+body {
+    overflow-x: auto;
+}
+
+/* Keep main sections stable when viewport is smaller than 320px */
+.hero,
+.wave,
+.below,
+.marquee,
+.quicknav,
+.categories,
+.impact-banner,
+.story,
+.story__gallery,
+.process,
+.featured,
+.editorial,
+.testimonials,
+.journal-preview,
+.faq,
+.finder-cta,
+.community-split {
+    min-width: 320px;
+}

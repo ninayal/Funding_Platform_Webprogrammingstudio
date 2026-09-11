@@ -1430,3 +1430,46 @@ textarea {
         align-items: flex-start;
     }
 }
+
+/* =========================================================
+   GLOBAL MINIMUM WIDTH FIX (320px)
+   Prevent profile page shrinking below mobile limit
+   ========================================================= */
+
+html,
+body {
+    min-width: 320px;
+}
+
+body {
+    overflow-x: auto;
+}
+
+.profile-page,
+.profile-shell,
+.profile-sidebar,
+.profile-content,
+.profile-panel,
+.profile-form,
+.profile-hero,
+.order-card,
+.setting-group,
+.notification-list {
+    min-width: 320px;
+}
+
+/* Keep grids readable instead of squeezing */
+.profile-shell {
+    overflow-x: auto;
+}
+
+.profile-content {
+    overflow-wrap: break-word;
+}
+
+img,
+textarea,
+input,
+button {
+    max-width: 100%;
+}

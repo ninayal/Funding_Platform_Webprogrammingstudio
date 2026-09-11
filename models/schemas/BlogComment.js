@@ -3,10 +3,34 @@
 const mongoose=require("mongoose");
 
 const authorSchema=new mongoose.Schema({
-  id:{type:String,ref:"Users",required:true},
-  name:{type:String,required:true,trim:true},
-  initials:{type:String,default:"",trim:true}
-},{_id:false});
+
+ id:{
+   type:String,
+   ref:"Users",
+   required:true
+ },
+
+ name:{
+   type:String,
+   required:true,
+   trim:true
+ },
+
+ initials:{
+   type:String,
+   default:"",
+   trim:true
+ },
+
+ role:{
+   type:String,
+   default:"Author",
+   trim:true
+ }
+
+},{
+ _id:false
+});
 
 const blogCommentSchema=new mongoose.Schema({
   _id:{type:String,required:true},
