@@ -44,6 +44,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-color: #0a0a0a;
+    pointer-events: none;
 }
 
 /* Soft shadow transition toward login panel */
@@ -765,17 +766,40 @@ body {
 
 /* ================================================
    RESPONSIVE — MOBILE
+   (also covers short-height landscape phones, which
+   would otherwise stay stuck in the desktop 2-column
+   layout with a locked body scroll)
    ================================================ */
 
-@media (max-width: 768px) {
-  html,
-  body {
+@media (max-width: 768px), (max-height: 500px) and (orientation: landscape) {
+  /* Only <html> should own page scroll here. If <body> also gets its
+     own overflow-y:auto, it becomes a second, nested scroll box whose
+     height can end up shorter than its content — the user hits the
+     <html> scroll limit while extra content is still trapped inside
+     that inner <body> box, which feels like scrolling gets "stuck"
+     before reaching the end. */
+  html {
     width: 100%;
     min-height: 100%;
     height: auto;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior-y: none;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /* overflow must be reset on BOTH axes together here: leaving
+       overflow-x: hidden while only overflow-y is set to visible makes
+       the CSS spec force that visible value to compute as "auto"
+       instead, turning <body> into a second, nested scroll box that
+       gets stuck short of the real bottom (see comment above). <html>
+       above already clips horizontal overflow for the whole document,
+       so <body> doesn't need its own overflow-x here. */
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    overflow: visible;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -885,6 +909,15 @@ body {
   .login-glass::before,
   .login-glass::after {
     opacity: .7;
+  }
+
+  /* Panel background is already near-opaque here; drop the
+     blur so scrolling over the fixed bg image stays smooth
+     on lower-power phones. */
+  .login-glass,
+  .login-glass--wide {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .login-glass__logo {
